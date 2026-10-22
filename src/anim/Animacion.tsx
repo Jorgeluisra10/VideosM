@@ -1,12 +1,14 @@
-import React from "react";
-import { AbsoluteFill, Sequence } from "remotion";
+import React, { useMemo } from "react";
+import { AbsoluteFill, Sequence, useCurrentFrame } from "remotion";
 import { cargarFuentes } from "../lib/fuentes";
-import { prog, useT } from "../lib/anim";
+import { easeRetro, prog, useT } from "../lib/anim";
+import { H, W } from "../lib/colores";
 import { SondaQA } from "../components/SondaQA";
 import { SoundEffect } from "../components/SoundEffect";
-import { Elementos2D, Fondo2D } from "./motor2d";
+import { CapaRetro, Elementos2D, Fondo2D } from "./motor2d";
 import { Escena3DView } from "./motor3d";
 import { ProveedorColor, useTema } from "./contexto";
+import { paletaPorId } from "./paletas";
 import { eventosSfx } from "./sonido";
 import { FPS_ANIM } from "./parser";
 import type { Animacion as Anim, EscenaGuardada } from "./tipos";
@@ -19,13 +21,56 @@ const Fundido: React.FC<{ aparece: boolean; children: React.ReactNode }> = ({ ap
   return <AbsoluteFill style={{ opacity: aparece ? prog(t, 0, SOLAPE) : 1 }}>{children}</AbsoluteFill>;
 };
 
+/** Duración (s) de la transición de semitono entre escenas del estilo retro. */
+const SEG_SEMITONO = 0.7;
+const PASO = 64; // separación de la retícula de puntos (a 45°)
+
+/**
+ * Halftone Wipe: círculos de semitono que crecen de radio 0 % a 100 % hasta cubrir TODA la pantalla con el color de fondo de la escena que entra.
+ * El barrido avanza en diagonal (los puntos de la esquina superior izquierda arrancan antes) con la curva global retro.
+ */
+const Semitono: React.FC<{ color: string; frames: number; adelanto?: string }> = ({ color, frames, adelanto }) => {
+  const f = useCurrentFrame();
+  const p = easeRetro(Math.min(1, Math.max(0, (f - (adelanto ? 0.22 * frames : 0)) / Math.max(1, frames * (adelanto ? 0.78 : 1)))));
+  const pAdelanto = easeRetro(Math.min(1, f / Math.max(1, frames)));
+  const puntos = useMemo(() => {
+    const c = Math.SQRT1_2 * PASO;
+    const lista: { x: number; y: number; d: number }[] = [];
+    for (let u = -60; u <= 60; u++)
+      for (let v = -60; v <= 60; v++) {
+        const x = W / 2 + (u - v) * c, y = H / 2 + (u + v) * c;
+        if (x < -PASO || x > W + PASO || y < -PASO || y > H + PASO) continue;
+        lista.push({ x, y, d: Math.min(1, Math.max(0, (x / W + y / H) / 2)) });
+      }
+    return lista;
+  }, []);
+  const rMax = PASO * 0.72; // radio que cierra todos los huecos de la retícula
+  return (
+    <AbsoluteFill>
+      <svg width={W} height={H}>
+        {/* entre escenas del mismo tema (oscuro→oscuro o papel→papel) el barrido va en dos tintas: primero el color de acento y detrás el fondo */}
+        {adelanto &&
+          puntos.map((d, i) => {
+            const r = Math.min(1, Math.max(0, pAdelanto * 1.7 - d.d * 0.7)) * rMax;
+            return r > 0.3 ? <circle key={`a${i}`} cx={d.x} cy={d.y} r={r} fill={adelanto} /> : null;
+          })}
+        {puntos.map((d, i) => {
+          const r = Math.min(1, Math.max(0, p * 1.7 - d.d * 0.7)) * rMax;
+          return r > 0.3 ? <circle key={i} cx={d.x} cy={d.y} r={r} fill={color} /> : null;
+        })}
+      </svg>
+    </AbsoluteFill>
+  );
+};
+
 const Contenido: React.FC<{ e: EscenaGuardada }> = ({ e }) => {
-  const { tema } = useTema();
+  const { paleta, tema } = useTema();
   return (
     <>
       <Fondo2D ambiente={e.modo === "SVG" ? e.ambiente : "ninguno"} id={`e${e.n}${tema}`} solido={e.modo === "3D" && e.suelo !== "ninguno"} />
       {e.modo === "3D" && <Escena3DView escena={e} />}
       <Elementos2D elementos={e.modo === "SVG" ? e.elementos : e.overlay} />
+      {paleta.estilo === "retro" && <CapaRetro titulo={e.titulo} tituloTam={e.tituloTam} subtitulo={e.subtitulo} medidores={e.medidores} />}
     </>
   );
 };
@@ -40,6 +85,9 @@ export type PropsAnimacion = { animacion: Anim; qa?: boolean };
 export const Animacion: React.FC<PropsAnimacion> = ({ animacion, qa }) => {
   cargarFuentes();
   const efectos = eventosSfx(animacion);
+  const paleta = paletaPorId(animacion.paleta);
+  const retro = paleta.estilo === "retro";
+  const framesSemitono = Math.round(SEG_SEMITONO * FPS_ANIM);
   return (
     <AbsoluteFill style={{ backgroundColor: "#000" }}>
       {animacion.escenas.map((e, k) => {
@@ -48,13 +96,25 @@ export const Animacion: React.FC<PropsAnimacion> = ({ animacion, qa }) => {
         return (
           <Sequence key={e.n} from={desde} durationInFrames={Math.max(1, largo)} layout="none">
             <ProveedorColor paleta={animacion.paleta} tema={e.tema}>
-              <Fundido aparece={k > 0}>
+              <Fundido aparece={k > 0 && !retro}>
                 <Contenido e={e} />
               </Fundido>
             </ProveedorColor>
           </Sequence>
         );
       })}
+      {/* estilo retro: entre escenas, barrido de semitono con el color de fondo de la escena que entra */}
+      {retro &&
+        animacion.escenas.slice(1).map((e, i) => {
+          const hasta = Math.round(e.inicio * FPS_ANIM);
+          const k = e.tema === "claro" ? paleta.claro : paleta.oscuro;
+          const mismoTema = animacion.escenas[i].tema === e.tema;
+          return (
+            <Sequence key={`sw${e.n}`} from={Math.max(0, hasta - framesSemitono)} durationInFrames={framesSemitono + 1} layout="none">
+              <Semitono color={k.fondoBorde} frames={framesSemitono} adelanto={mismoTema ? k.primario : undefined} />
+            </Sequence>
+          );
+        })}
       {efectos.map((s, i) => (
         <SoundEffect key={i} type={s.tipo} frame={s.frame} volume={s.vol} />
       ))}

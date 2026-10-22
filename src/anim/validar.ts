@@ -5,13 +5,19 @@
  * Lógica PURA: la usan el agente (Node), las pruebas y, si hace falta, Remotion.
  */
 import { getBoundingBox, parsePath, scalePath, translatePath } from "@remotion/paths";
-import { TOKENS } from "./paletas";
+import { TOKENS, esRetro } from "./paletas";
 import { iconosPermitidos } from "./iconos";
-import { AMBIENTES, ENTRADAS_2D, ENTRADAS_3D, FORMAS, GRAFICAS, REMATES, SFX_TIPOS, SUELOS, TEMAS, TIPOS_2D, TIPOS_3D, TIPOS_OVERLAY } from "./esquema";
+import { AMBIENTES, ENTRADAS_2D, ENTRADAS_3D, FORMAS, GRAFICAS, REMATES, SFX_TIPOS, SUELOS, TEMAS, TIPOS_2D, TIPOS_2D_RETRO, TIPOS_3D, TIPOS_3D_RETRO, TIPOS_OVERLAY, TIPOS_OVERLAY_RETRO, FORMAS_MODELO } from "./esquema";
 import { FPS_ANIM, type EscenaBloque } from "./parser";
-import type { Animacion, EscenaGuardada, EventoSfx } from "./tipos";
+import type { Animacion, EscenaGuardada, EventoSfx, Medidor } from "./tipos";
 
-const X0 = 90, X1 = 990, Y0 = 150, Y1 = 1770;
+// Zona segura de los elementos. En el estilo retro el escenario es la franja central (y 350–1450): arriba va el título y abajo el HUD.
+// Son variables de módulo que ensamblar() fija al empezar y restaura al terminar (todo es síncrono, no hay carreras).
+let X0 = 90, X1 = 990, Y0 = 150, Y1 = 1770;
+let retroActivo = false;
+const ZONA_CLASICA = { y0: 150, y1: 1770 }, ZONA_RETRO = { y0: 350, y1: 1450 };
+/** Avance de JetBrains Mono: 0,6 em por carácter. */
+export const anchoMono = (n: number, tam: number): number => n * tam * 0.6;
 
 export type Resultado = { anim: Animacion | null; errores: string[]; correcciones: string[] };
 
@@ -62,6 +68,57 @@ const centrar = (x: number, y: number, w: number, h: number) => ({
   x: Math.min(X1 - w / 2, Math.max(X0 + w / 2, x)),
   y: Math.min(Y1 - h / 2, Math.max(Y0 + h / 2, y)),
 });
+
+/** Envuelve un texto monoespaciado en líneas de `maxCh` caracteres como máximo. */
+function envolverMono(texto: string, maxCh: number): string[] {
+  const out: string[] = [];
+  let actual = "";
+  for (const p of texto.split(/\s+/).filter(Boolean)) {
+    const palabra = p.length > maxCh ? p.slice(0, maxCh) : p;
+    const prueba = actual ? `${actual} ${palabra}` : palabra;
+    if (actual && prueba.length > maxCh) {
+      out.push(actual);
+      actual = palabra;
+    } else actual = prueba;
+  }
+  if (actual) out.push(actual);
+  return out.length ? out : [""];
+}
+
+/** Título H1 retro: MAYÚSCULAS, Inter Black, tracking -0.03em (≈ 0,66 em por letra), centrado, máx. 2 líneas dentro de 900 px. */
+const FACTOR_TITULO = 0.66;
+function ajustarTitulo(texto: string, c: Ctx): { texto: string; tam: number } {
+  const palabras = cadena(texto, 70).toUpperCase().replace(/[.]+$/, "").split(/\s+/).filter(Boolean);
+  const ancho = X1 - X0;
+  for (let tam = 96; tam >= 44; tam -= 4) {
+    const maxCh = Math.floor(ancho / (tam * FACTOR_TITULO));
+    const lineas = envolverMono(palabras.join(" "), maxCh);
+    const limite = lineas.length === 1 ? 96 : 76;
+    if (lineas.length <= 2 && tam <= limite && Math.max(...lineas.map((l) => l.length)) <= maxCh) {
+      if (tam < 96) aviso(c, `título reducido a ${tam}px para que quepa en ${lineas.length} línea(s)`);
+      return { texto: lineas.join("\n"), tam };
+    }
+  }
+  aviso(c, "título demasiado largo: se recortó");
+  const t = palabras.join(" ").slice(0, 2 * Math.floor(ancho / (44 * FACTOR_TITULO)));
+  return { texto: envolverMono(t, Math.floor(ancho / (44 * FACTOR_TITULO))).slice(0, 2).join("\n"), tam: 44 };
+}
+
+function sanearMedidores(raw: unknown, c: Ctx): Medidor[] {
+  const lista = (Array.isArray(raw) ? raw : []).slice(0, 3).map((m: any): Medidor => {
+    let min = num(m?.min, 0), max = num(m?.max, 100);
+    if (max <= min) max = min + 1;
+    const dur = num(m?.dur, 1.4, 0.4, Math.max(0.4, c.dur - 0.5));
+    const t = num(m?.t, 0.6, 0, Math.max(0, c.dur - dur - 0.3));
+    return {
+      etiqueta: cadena(m?.etiqueta, 14).toUpperCase(), unidad: cadena(m?.unidad, 6),
+      min, max, inicio: num(m?.inicio, min, min, max), fin: num(m?.fin, max, min, max),
+      t: +t.toFixed(2), dur: +dur.toFixed(2), decimales: entero(m?.decimales, 0, 0, 2),
+    };
+  });
+  if (!lista.length) fallo(c, "el estilo retro necesita al menos 1 medidor para el HUD");
+  return lista;
+}
 
 type Ctx = { dur: number; n: number; iconos: Set<string>; errores: string[]; correcciones: string[] };
 const aviso = (c: Ctx, m: string) => c.correcciones.push(`Escena ${c.n}: ${m}`);
@@ -124,7 +181,7 @@ function sanearElemento(raw: any, c: Ctx, permitidos: readonly string[]): any | 
         fallo(c, `el trazo tiene un path SVG inválido («${d.slice(0, 40)}…»)`);
         return null;
       }
-      return { ...b, d, color: tokenDe(raw.color), grosor: num(raw.grosor, 6, 1, 24), relleno: raw.relleno ? tokenDe(raw.relleno) : null, dur: num(raw.dur, 1.2, 0.2, 6), brillo: !!raw.brillo };
+      return { ...b, d, color: tokenDe(raw.color), grosor: retroActivo ? 3 : num(raw.grosor, 6, 1, 24), relleno: raw.relleno ? tokenDe(raw.relleno) : null, dur: num(raw.dur, 1.2, 0.2, 6), brillo: retroActivo ? false : !!raw.brillo, ...(retroActivo ? { punteado: !!raw.punteado } : {}) };
     }
     case "linea": {
       const pts = (Array.isArray(raw.puntos) ? raw.puntos : []).slice(0, 40).map((p: any) => ({ x: Math.round(num(p?.x, 540, X0, X1)), y: Math.round(num(p?.y, 960, Y0, Y1)) }));
@@ -132,12 +189,23 @@ function sanearElemento(raw: any, c: Ctx, permitidos: readonly string[]): any | 
         fallo(c, "una línea tiene menos de 2 puntos");
         return null;
       }
-      return { ...b, puntos: pts, color: tokenDe(raw.color), grosor: num(raw.grosor, 6, 1, 24), flecha: !!raw.flecha, curva: !!raw.curva, dur: num(raw.dur, 1, 0.2, 6) };
+      return { ...b, puntos: pts, color: tokenDe(raw.color), grosor: retroActivo ? 3 : num(raw.grosor, 6, 1, 24), flecha: !!raw.flecha, curva: !!raw.curva, dur: num(raw.dur, 1, 0.2, 6), ...(retroActivo ? { punteado: !!raw.punteado } : {}) };
     }
     case "forma": {
       const w = num(raw.w, 200, 10, 900), h = num(raw.h, 200, 10, 1500);
       const p = centrar(num(raw.x, 540), num(raw.y, 960), w, h);
       return { ...b, forma: en(raw.forma, FORMAS, "redondeado"), x: Math.round(p.x), y: Math.round(p.y), w: Math.round(w), h: Math.round(h), color: tokenDe(raw.color), relleno: !!raw.relleno, borde: num(raw.borde, 4, 0, 20) };
+    }
+    case "terminal": {
+      const tam = num(raw.tam, 34, 22, 56);
+      const maxCh = Math.max(8, Math.floor((X1 - X0) / anchoMono(1, tam)));
+      const lineas = envolverMono(cadena(raw.texto, 240), maxCh).slice(0, 6);
+      const w = anchoMono(Math.max(...lineas.map((l) => l.length), 1), tam);
+      const alinear = raw.alinear === "izquierda" ? "izquierda" : "centro";
+      const x = alinear === "centro" ? Math.min(X1 - w / 2, Math.max(X0 + w / 2, num(raw.x, 540))) : Math.min(X1 - w, Math.max(X0, num(raw.x, X0)));
+      const h = lineas.length * tam * 1.4;
+      const y = Math.min(Y1 - h / 2, Math.max(Y0 + h / 2, num(raw.y, 700)));
+      return { ...b, texto: lineas.join("\n"), x: Math.round(x), y: Math.round(y), tam, color: tokenDe(raw.color), alinear };
     }
     case "icono": {
       const tam = num(raw.tam, 140, 50, 360);
@@ -226,7 +294,7 @@ function sanearSfx(raw: unknown, dur: number): EventoSfx[] {
 }
 
 function sanearObjeto3D(raw: any, c: Ctx): any | null {
-  if (!raw || !TIPOS_3D.includes(raw.tipo)) {
+  if (!raw || !(retroActivo ? TIPOS_3D_RETRO : TIPOS_3D).includes(raw.tipo)) {
     aviso(c, `objeto 3D «${raw?.tipo}» no permitido: se descartó`);
     return null;
   }
@@ -274,6 +342,10 @@ function sanearObjeto3D(raw: any, c: Ctx): any | null {
       return { ...o, x: P(raw.x), z: P(raw.z), w: S(raw.w, 3, 0.5, 10), d: S(raw.d, 3, 0.5, 10), h: S(raw.h, 2, 0.5, 8) };
     case "anillo":
       return { ...o, x: P(raw.x), y: P(raw.y, 1), z: P(raw.z), radio: S(raw.radio, 2, 0.2, 10), grosor: S(raw.grosor, 0.12, 0.02, 1) };
+    case "modelo": {
+      const v = (x: unknown) => (x == null ? null : entero(x, 0, 0, 2));
+      return { ...o, forma: en(raw.forma, FORMAS_MODELO, "toroide"), x: P(raw.x), z: P(raw.z), escala: S(raw.escala, 1.2, 0.3, 3), v1: v(raw.v1), v2: v(raw.v2), v3: v(raw.v3), b1: +num(raw.b1, 0.5, 0, 1).toFixed(3), b2: +num(raw.b2, 0.5, 0, 1).toFixed(3), b3: +num(raw.b3, 0.3, 0, 1).toFixed(3) };
+    }
   }
   return null;
 }
@@ -281,18 +353,27 @@ function sanearObjeto3D(raw: any, c: Ctx): any | null {
 function sanearEscena(raw: any, b: EscenaBloque, c: Ctx, sfx: boolean): EscenaGuardada | null {
   const comunes = { n: b.n, inicio: b.inicio, fin: b.fin, dur: b.dur, texto: b.texto, tema: en(raw.tema, TEMAS, "oscuro") };
   const sonido = sfx ? { sfx: sanearSfx(raw.sfx, b.dur) } : {};
+  // estilo retro: título, subtítulo de terminal y medidores del HUD (los tres van en la escena, no como elementos)
+  let retro: Record<string, unknown> = {};
+  if (retroActivo) {
+    const t = ajustarTitulo(String(raw.titulo ?? ""), c);
+    const sub = raw.subtitulo == null || !String(raw.subtitulo).trim() ? null : envolverMono(cadena(raw.subtitulo, 110), Math.floor((X1 - X0) / anchoMono(1, 30))).slice(0, 2).join("\n");
+    retro = { titulo: t.texto, tituloTam: t.tam, subtitulo: sub, medidores: sanearMedidores(raw.medidores, c) };
+    if (!t.texto.trim()) fallo(c, "el estilo retro necesita un título (H1) en cada escena");
+  }
   if (b.modo === "SVG") {
-    const elementos = (Array.isArray(raw.elementos) ? raw.elementos : []).slice(0, 26).map((e: any) => sanearElemento(e, c, TIPOS_2D)).filter(Boolean);
+    const elementos = (Array.isArray(raw.elementos) ? raw.elementos : []).slice(0, 26).map((e: any) => sanearElemento(e, c, retroActivo ? TIPOS_2D_RETRO : TIPOS_2D)).filter(Boolean);
     if (elementos.length < 2) fallo(c, `la escena SVG tiene ${elementos.length} elemento(s) válidos; necesita al menos 2`);
-    return { ...comunes, modo: "SVG", ambiente: en(raw.ambiente, AMBIENTES, "cuadricula"), elementos, ...sonido } as EscenaGuardada;
+    return { ...comunes, modo: "SVG", ambiente: en(raw.ambiente, AMBIENTES, "cuadricula"), ...retro, elementos, ...sonido } as EscenaGuardada;
   }
   const cam = raw.camara ?? {};
   const lu = raw.luces ?? {};
   const objetos = (Array.isArray(raw.objetos) ? raw.objetos : []).slice(0, 30).map((o: any) => sanearObjeto3D(o, c)).filter(Boolean);
   if (!objetos.length) fallo(c, "la escena 3D no tiene objetos válidos");
-  const overlay = (Array.isArray(raw.overlay) ? raw.overlay : []).slice(0, 8).map((e: any) => sanearElemento(e, c, TIPOS_OVERLAY)).filter(Boolean);
+  const overlay = (Array.isArray(raw.overlay) ? raw.overlay : []).slice(0, 8).map((e: any) => sanearElemento(e, c, retroActivo ? TIPOS_OVERLAY_RETRO : TIPOS_OVERLAY)).filter(Boolean);
   return {
     ...comunes,
+    ...retro,
     modo: "3D",
     camara: {
       radio: num(cam.radio, 18, 4, 60), radioFin: num(cam.radioFin, 15, 4, 60), altura: num(cam.altura, 7, -2, 30), alturaFin: num(cam.alturaFin, 6, -2, 30),
@@ -318,6 +399,10 @@ export function ensamblar(raw: any, bloques: EscenaBloque[], o: { paleta: string
   const crudas: any[] = Array.isArray(raw?.escenas) ? raw.escenas : [];
   const iconos = new Set(iconosPermitidos(o.paleta));
   const escenas: EscenaGuardada[] = [];
+  retroActivo = esRetro(o.paleta);
+  Y0 = (retroActivo ? ZONA_RETRO : ZONA_CLASICA).y0;
+  Y1 = (retroActivo ? ZONA_RETRO : ZONA_CLASICA).y1;
+  try {
   for (const b of bloques) {
     const c: Ctx = { dur: b.dur, n: b.n, iconos, errores, correcciones };
     const r = crudas.find((x) => Number(x?.n) === b.n) ?? (crudas.length === bloques.length ? crudas[bloques.indexOf(b)] : undefined);
@@ -331,6 +416,11 @@ export function ensamblar(raw: any, bloques: EscenaBloque[], o: { paleta: string
     }
     const esc = sanearEscena(r, b, c, o.sfx);
     if (esc) escenas.push(esc);
+  }
+  } finally {
+    retroActivo = false;
+    Y0 = ZONA_CLASICA.y0;
+    Y1 = ZONA_CLASICA.y1;
   }
   const fin = bloques.length ? bloques[bloques.length - 1].fin : 0;
   const anim: Animacion = {

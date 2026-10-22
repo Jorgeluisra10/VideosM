@@ -329,8 +329,10 @@ async function lanzarAnim(nombre, o = {}) {
       writeFileSync(f, o.guion);
       return lanzar({ nombre, titulo: "Generar animación (SVG + 3D)", pasos: [{ titulo: `Dibujar ${r.escenas.length} escenas con ${modelo}`, cmd: [script("anim", "generar.mjs"), `--guion=${f}`, `--modelo=${modelo}`, `--sfx=${o.sfx === false ? "no" : "si"}`, `--paleta=${paleta}`] }] });
     }
-    case "anim-ejemplo":
-      return lanzar({ nombre, titulo: "Cargar el ejemplo IMNOBA", pasos: [{ titulo: "Cargar el ejemplo (sin IA, sin coste)", cmd: [script("anim", "ejemplo.mjs"), ...(o.sfx === false ? ["--sin-sfx"] : []), ...(o.paleta ? [`--paleta=${o.paleta === "medicina" ? "medicina" : "imnoba"}`] : [])] }] });
+    case "anim-ejemplo": {
+      const N_PALETAS = Object.keys((await cargarNucleoAnim()).PALETAS);
+      return lanzar({ nombre, titulo: "Cargar el ejemplo IMNOBA", pasos: [{ titulo: "Cargar el ejemplo (sin IA, sin coste)", cmd: [script("anim", "ejemplo.mjs"), ...(o.sfx === false ? ["--sin-sfx"] : []), ...(o.paleta ? [`--paleta=${N_PALETAS.includes(o.paleta) ? o.paleta : "imnoba"}`] : [])] }] });
+    }
     case "anim-previa":
       pedir(leerAnim(), "Primero genera la animación (o carga el ejemplo).", 412);
       return lanzar({ nombre, titulo: "Capturas y control de calidad", pasos: [{ titulo: "Una captura por escena + QA (márgenes, vacíos, movimiento)", cmd: [script("anim", "previa.mjs"), "--qa"] }] });
@@ -439,7 +441,11 @@ async function api(req, res, url) {
     return json(res, 200, { ok: true });
   }
   if (m === "GET" && recurso === "anim" && a === "estado") return json(res, 200, estadoAnim());
-  if (m === "GET" && recurso === "anim" && a === "ejemplo") return json(res, 200, { guion: readFileSync(join(RAIZ, "ejemplos", "animacion-imnoba", "guion.txt"), "utf8") });
+  if (m === "GET" && recurso === "anim" && a === "ejemplo") {
+    const N = await cargarNucleoAnim();
+    const dirEj = N.esRetro(url.searchParams.get("paleta") ?? "") ? "animacion-retro" : "animacion-imnoba";
+    return json(res, 200, { guion: readFileSync(join(RAIZ, "ejemplos", dirEj, "guion.txt"), "utf8") });
+  }
   if (m === "POST" && recurso === "anim" && a === "cargar") {
     const o = await leerJson(req);
     const f = join(dirAnim("historial"), `${String(o.id ?? "").replace(/[^0-9A-Za-z_-]/g, "")}.json`);

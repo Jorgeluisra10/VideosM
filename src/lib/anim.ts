@@ -65,3 +65,6 @@ export function sacudida(t: number, t0: number, amp = 10, dur = 0.45): { x: numb
 }
 
 export const lerp = (a: number, b: number, k: number): number => a + (b - a) * k;
+
+/** Curva global del estilo retro: cubic-bezier(0.22, 1, 0.36, 1) — arranque rápido, frenado muy largo y suave, SIN rebote ni elástico. */
+export const easeRetro = Easing.bezier(0.22, 1, 0.36, 1);

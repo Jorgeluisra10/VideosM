@@ -5,7 +5,7 @@
  *  - promptFormateador: el texto que el usuario copia para ordenar su guion con cualquier chat externo.
  */
 import { esquemaAnimacion, type OpcionesEsquema } from "./esquema";
-import { paletaPorId } from "./paletas";
+import { esRetro, paletaPorId } from "./paletas";
 import { tokensDeTexto } from "./costos";
 import type { EscenaBloque } from "./parser";
 
@@ -29,6 +29,20 @@ const REGLAS_3D = `ESCENAS «3D» (Three.js; unidades ≈ metros; el suelo es y 
 
 const REGLAS_SFX = `SONIDO: para cada escena devuelve «sfx»: 2–6 eventos {t, tipo, vol} sincronizados con lo que aparece (pop = aparece un elemento; whoosh = transición/movimiento amplio; cash = precio o dinero; ding = logro/cifra clave; thud = impacto; tick = conteo; zap; heartbeat). vol 0.05–0.25.`;
 
+const REGLAS_RETRO = `ESTILO «RETRO-CIENTÍFICA» (infografía técnica de los años 60 + telemetría moderna, 1080×1920):
+- Composición fija: ZONA SUPERIOR (y 0–350) = título e instrucciones de terminal, que el motor dibuja desde los campos de la escena; ZONA CENTRAL (y 350–1450) = el escenario (aquí van tus elementos y el modelo 3D); ZONA INFERIOR (y 1450–1920) = panel HUD con hasta 3 medidores que el motor dibuja desde «medidores». NUNCA pongas elementos fuera de y 350–1450 ni textos que repitan el título.
+- Cada escena DEBE llevar: «titulo» (H1 en MAYÚSCULAS, 1–5 palabras impactantes, sin punto final), «subtitulo» (una línea técnica tipo terminal, p. ej. «> CALCULANDO VALORIZACIÓN…», máx. 60 caracteres, o null) y «medidores» (1–3, con los datos REALES del bloque: etiqueta ≤ 12 caracteres en MAYÚSCULAS, unidad ≤ 5, min/max razonables, valor inicial y final, cuándo cambia (t, en s) y cuánto tarda (dur ≥ 0.8 s)). Si el bloque no trae cifras, usa porcentajes o índices coherentes y márcalos como ilustrativos en el subtítulo; no inventes datos oficiales.
+- SINCRONÍA DE DATOS: cuando un medidor cambia, el motor mueve a la vez la aguja, el número, el borde (lima/activo) y el modelo vinculado. Escalona los medidores (uno por vez: t distintos) para que cada cambio se note.
+- Movimiento mecánico y preciso: sin rebotes ni elásticos. Líneas de 3 px (grosor 3), sólidas o punteadas (punteado = true para ejes y guías).
+- Usa el color «primario» para el OBJETO DE ESTUDIO, «acento» para telemetría, «alerta» para anomalías y destacados de contraste. Alterna temas: «oscuro» (negro mate) y «claro» (papel hueso, para citas, documentos, comparativas históricas).
+- «terminal»: líneas de texto monoespaciado que se escriben solas carácter a carácter (30 ms) con cursor; úsalas para notas técnicas cortas dentro del escenario.`;
+
+const REGLAS_2D_RETRO = `ESCENAS «SVG» retro: el escenario es y entre 350 y 1450, x entre ${LIENZO.margen} y ${LIENZO.w - LIENZO.margen}. Elementos como en SVG normal (trazo, linea, forma, texto, icono, plano, grafica, contador, anillo, ondas, lista, tarjeta) más «terminal». Dibuja ejes, gráficas, planos y formas técnicas cuyos valores coincidan con los medidores; 5–10 elementos escalonados. El título NO va como elemento «texto».`;
+
+const REGLAS_3D_RETRO = `ESCENAS «3D» retro (cel-shading de 3 niveles: luz, tono base y sombra con semitono; contornos negros): el escenario es un recuadro de 1080×1100 px; a distancia «radio» caben ≈ 0.75×radio de ancho y ≈ 0.77×radio de alto (radio 14 → 10 × 10).
+- Incluye UN objeto «modelo» central y paramétrico: forma toroide | esfera | columna | superficie; v1, v2, v3 = índice (0–2) del medidor que controla cada parámetro (o null) y b1, b2, b3 = valor base 0–1 cuando no hay vínculo. toroide: v1 radio mayor, v2 grosor del tubo, v3 ondulación; esfera: v1 radio, v2 estiramiento vertical, v3 picos; columna: v1 altura, v2 radio, v3 conicidad; superficie: v1 amplitud, v2 frecuencia, v3 ondulación animada. Escala típica 1–1.6; x,z cerca de 0.
+- Puedes añadir otros objetos (edificio, caja, ciudad…) como contexto, pero el protagonista es el modelo. Cámara: órbita lenta 20–60°, radio 12–24, fov 35–45. Overlay solo para anotaciones puntuales (2–3, en y 350–1450).`;
+
 export type OpcionesPrompt = OpcionesEsquema;
 
 export function sistemaAnimacion(o: OpcionesPrompt): string {
@@ -36,11 +50,13 @@ export function sistemaAnimacion(o: OpcionesPrompt): string {
   const partes = [
     `Eres el director de arte de un estudio de motion graphics. Conviertes un guion dividido en escenas en INSTRUCCIONES GEOMÉTRICAS DECLARATIVAS que un motor (Remotion + Three.js) dibuja y anima. No escribes código ni colores hexadecimales: solo eliges tokens de color y rellenas el esquema JSON.`,
     `Devuelve UNA escena por cada bloque recibido, en el mismo orden y con el mismo número «n». El «modo» de cada escena es el que indica el bloque (SVG o 3D); no lo cambies. La duración de la escena (en segundos) ya viene dada: todos los tiempos (t, hasta, dur, sfx.t) deben caber en ella.`,
-    `PALETA «${p.nombre}» (tokens de color): ${p.uso}. Usa SOLO estos tokens: primario, acento, blanco, tinta, suave, ok, alerta. Cada escena elige tema «oscuro» (fondo azul profundo) o «claro» (fondo blanco); alterna para dar ritmo y usa el que mejor sirva al contenido. Usa «acento» con moderación para lo que el espectador debe recordar.`,
+    `PALETA «${p.nombre}» (tokens de color): ${p.uso}. Usa SOLO estos tokens: primario, acento, blanco, tinta, suave, ok, alerta. Cada escena elige tema «oscuro» (fondo oscuro de la paleta) o «claro» (fondo blanco o papel); alterna para dar ritmo y usa el que mejor sirva al contenido. Usa «acento» con moderación para lo que el espectador debe recordar.`,
     `Lee en cada bloque la locución y los requerimientos visuales: dibuja lo que se dice (cifras exactas, nombres, lugares) y respeta lo que el bloque pida explícitamente. Textos cortos, en el idioma del guion, sin faltas. Nunca inventes datos que el bloque no dé.`,
   ];
-  if (o.svg) partes.push(REGLAS_2D);
-  if (o.tres) partes.push(REGLAS_3D);
+  const retro = esRetro(o.paleta);
+  if (retro) partes.push(REGLAS_RETRO);
+  if (o.svg) partes.push(retro ? REGLAS_2D_RETRO : REGLAS_2D);
+  if (o.tres) partes.push(retro ? REGLAS_3D_RETRO : REGLAS_3D);
   partes.push(o.sfx ? REGLAS_SFX : "NO incluyas sonido: el esquema no tiene campo de efectos.");
   partes.push(`Responde SOLO con el JSON del esquema.`);
   return partes.join("\n\n");

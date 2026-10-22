@@ -298,7 +298,7 @@ function calcularEstimacion() {
   if (!r.escenas.length) return { r, svg, tres, est: null };
   const clave = `${EST.paleta}|${EST.sfx}|${svg > 0}|${tres > 0}`;
   if (!fijosCache.has(clave)) fijosCache.set(clave, N.tokensFijos({ paleta: EST.paleta, sfx: EST.sfx, svg: svg > 0, tres: tres > 0 }));
-  const est = N.estimar({ modelo: EST.modelo, caracteres: r.caracteres, escenasSVG: svg, escenas3D: tres, sfx: EST.sfx, tokensFijos: fijosCache.get(clave) });
+  const est = N.estimar({ modelo: EST.modelo, caracteres: r.caracteres, escenasSVG: svg, escenas3D: tres, sfx: EST.sfx, tokensFijos: fijosCache.get(clave), retro: N.esRetro(EST.paleta) });
   return { r, svg, tres, est };
 }
 
@@ -402,7 +402,7 @@ async function vistaEstudio(cont) {
     h("div.tarjeta.estudio",
       h("div.fila", h("label.etq", { for: "guion" }, "1 · Guion y requerimientos visuales"), h("span.espacio"),
         h("button.btn.chico", { type: "button", onclick: async () => aviso((await copiarTexto(N.PROMPT_FORMATEADOR)) ? "📋 Prompt copiado. Pégalo en ChatGPT/Claude junto a tu guion y vuelve a pegar aquí el resultado." : "No pude copiar automáticamente: selecciona el texto a mano.", "ok", 7000) }, "📋 Copiar Prompt Formateador"),
-        h("button.btn.chico", { type: "button", onclick: async () => { try { EST.guion = (await api("/api/anim/ejemplo")).guion; $("#guion").value = EST.guion; guardarEstado(); pintarEstimacion(); } catch (e) { fallo(e); } } }, "🧪 Cargar ejemplo")),
+        h("button.btn.chico", { type: "button", onclick: async () => { try { EST.guion = (await api(`/api/anim/ejemplo?paleta=${encodeURIComponent(EST.paleta)}`)).guion; $("#guion").value = EST.guion; guardarEstado(); pintarEstimacion(); } catch (e) { fallo(e); } } }, "🧪 Cargar ejemplo")),
       h("textarea#guion.guion", { rows: 15, spellcheck: false, placeholder: "[ESCENA 1 | 0s-4s | MODO: SVG]\nLocución: …\nVisual: …\n\n[ESCENA 2 | 4s-9s | MODO: 3D]\nLocución: …\nVisual: …", value: EST.guion, oninput: (e) => { EST.guion = e.target.value; guardarEstado(); pintarEstimacion(); } }),
       h("div#guion-info.guion-info"),
       h("div.ajustes-3",

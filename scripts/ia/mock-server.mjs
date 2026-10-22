@@ -187,7 +187,9 @@ function marcasSimuladas(texto, conDefectos = false) {
 // Animación (motor SVG + 3D): respuesta simulada a partir del ejemplo incluido
 // ---------------------------------------------------------------------------
 function respuestaAnimacion(entradaTexto, esquema) {
-  const ej = JSON.parse(readFileSync(join(RAIZ, "ejemplos", "animacion-imnoba", "respuesta-ia.json"), "utf8"));
+  // el estilo retro (su esquema tiene «medidores») responde con el ejemplo retro; el resto, con el de IMNOBA
+  const retro = JSON.stringify(esquema ?? {}).includes('"medidores"');
+  const ej = JSON.parse(readFileSync(join(RAIZ, "ejemplos", retro ? "animacion-retro" : "animacion-imnoba", "respuesta-ia.json"), "utf8"));
   const porModo = { SVG: ej.escenas.filter((e) => e.modo === "SVG"), "3D": ej.escenas.filter((e) => e.modo === "3D") };
   const conSfx = JSON.stringify(esquema ?? {}).includes('"vol"');
   const sinInmobiliaria = !JSON.stringify(esquema ?? {}).includes('"bano"');

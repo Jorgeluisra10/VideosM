@@ -41,6 +41,7 @@ const SALIDA_SVG = 1300;
 const SALIDA_3D = 1000;
 const SALIDA_SFX = 70;
 /** Tokens de razonamiento que añaden los modelos «o»: base + por escena. */
+const SALIDA_RETRO = 230;
 const RAZONAMIENTO_BASE = 3500;
 const RAZONAMIENTO_ESCENA = 900;
 
@@ -53,6 +54,8 @@ export type EntradaEstimacion = {
   sfx: boolean;
   /** tokens fijos del prompt de sistema + esquema para esta configuración (los da prompt.ts) */
   tokensFijos: number;
+  /** estilo retro: cada escena añade título, subtítulo terminal y hasta 3 medidores */
+  retro?: boolean;
 };
 
 export type Estimacion = { tokensEntrada: number; tokensSalida: number; costo: number };
@@ -61,7 +64,7 @@ export function estimar(e: EntradaEstimacion): Estimacion {
   const m = modeloPorId(e.modelo);
   const n = e.escenasSVG + e.escenas3D;
   const tokensEntrada = e.tokensFijos + tokensDeTexto(e.caracteres) + 14 * n;
-  let tokensSalida = e.escenasSVG * SALIDA_SVG + e.escenas3D * SALIDA_3D + (e.sfx ? n * SALIDA_SFX : 0);
+  let tokensSalida = e.escenasSVG * SALIDA_SVG + e.escenas3D * SALIDA_3D + (e.sfx ? n * SALIDA_SFX : 0) + (e.retro ? n * SALIDA_RETRO : 0);
   if (m.razonador && n > 0) tokensSalida += RAZONAMIENTO_BASE + RAZONAMIENTO_ESCENA * n;
   return { tokensEntrada, tokensSalida, costo: (tokensEntrada * m.entrada + tokensSalida * m.salida) / 1_000_000 };
 }

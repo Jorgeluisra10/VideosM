@@ -3,7 +3,7 @@
  * declarativas —nunca código ni colores hexadecimales— y el motor de Remotion las dibuja.
  * Todas las propiedades son obligatorias; lo opcional se declara como "tipo | null".
  */
-import { TOKENS } from "./paletas";
+import { TOKENS, esRetro } from "./paletas";
 import { iconosPermitidos } from "./iconos";
 
 export const ENTRADAS_2D = ["aparecer", "pop", "deslizar-arriba", "deslizar-abajo", "deslizar-izq", "deslizar-der", "crecer"] as const;
@@ -18,6 +18,11 @@ export const SUELOS = ["ninguno", "plano", "cuadricula"] as const;
 export const TIPOS_2D = ["trazo", "linea", "forma", "texto", "icono", "plano", "grafica", "contador", "anillo", "ondas", "lista", "tarjeta"] as const;
 export const TIPOS_3D = ["edificio", "caja", "cilindro", "esfera", "piramide", "extrusion", "barras3d", "ciudad", "casa", "anillo"] as const;
 export const TIPOS_OVERLAY = ["texto", "contador", "icono", "tarjeta", "lista", "anillo"] as const;
+/** Estilo retro: añade la línea de terminal (texto que se escribe carácter a carácter) y el modelo paramétrico central. */
+export const TIPOS_2D_RETRO = [...TIPOS_2D, "terminal"] as const;
+export const TIPOS_OVERLAY_RETRO = [...TIPOS_OVERLAY, "terminal"] as const;
+export const TIPOS_3D_RETRO = [...TIPOS_3D, "modelo"] as const;
+export const FORMAS_MODELO = ["toroide", "esfera", "columna", "superficie"] as const;
 
 type Sch = Record<string, unknown>;
 const n = (): Sch => ({ type: "number" });
@@ -38,10 +43,12 @@ const tokN = (): Sch => nul(e(TOKENS));
 const base2D = (): Record<string, Sch> => ({ t: n(), hasta: nul(n()), entrada: e(ENTRADAS_2D) });
 const el = (nombre: string, props: Record<string, Sch>): Sch => obj({ tipo: tipo(nombre), ...base2D(), ...props });
 
-function elementos2D(iconos: string[], solo: readonly string[]): Sch[] {
+function elementos2D(iconos: string[], solo: readonly string[], retro = false): Sch[] {
+  const pun: Record<string, Sch> = retro ? { punteado: b() } : {};
   const todos: Record<string, Sch> = {
-    trazo: el("trazo", { d: s(), color: tok(), grosor: n(), relleno: tokN(), dur: n(), brillo: b() }),
-    linea: el("linea", { puntos: arr(obj({ x: n(), y: n() })), color: tok(), grosor: n(), flecha: b(), curva: b(), dur: n() }),
+    trazo: el("trazo", { d: s(), color: tok(), grosor: n(), relleno: tokN(), dur: n(), brillo: b(), ...pun }),
+    linea: el("linea", { puntos: arr(obj({ x: n(), y: n() })), color: tok(), grosor: n(), flecha: b(), curva: b(), dur: n(), ...pun }),
+    terminal: el("terminal", { texto: s(), x: n(), y: n(), tam: n(), color: tok(), alinear: e(["centro", "izquierda"]) }),
     forma: el("forma", { forma: e(FORMAS), x: n(), y: n(), w: n(), h: n(), color: tok(), relleno: b(), borde: n() }),
     texto: el("texto", { texto: s(), x: n(), y: n(), tam: n(), color: tok(), peso: e([500, 700, 900]), alinear: e(["centro", "izquierda", "derecha"]) }),
     icono: el("icono", { nombre: e(iconos), x: n(), y: n(), tam: n(), color: tok(), fondo: b() }),
@@ -59,7 +66,10 @@ function elementos2D(iconos: string[], solo: readonly string[]): Sch[] {
   return solo.map((k) => todos[k]);
 }
 
-function objetos3D(): Sch[] {
+/** Medidor del HUD: su valor se mueve de `inicio` a `fin` y arrastra aguja, número, borde y modelo en el mismo fotograma. */
+const medidorEsq = (): Sch => obj({ etiqueta: s(), unidad: s(), min: n(), max: n(), inicio: n(), fin: n(), t: n(), dur: n(), decimales: i() });
+
+function objetos3D(retro = false): Sch[] {
   const base = (): Record<string, Sch> => ({ t: n(), dur: n(), entrada: e(ENTRADAS_3D), giro: n(), color: tok(), emisivo: b() });
   const o = (nombre: string, props: Record<string, Sch>): Sch => obj({ tipo: tipo(nombre), ...base(), ...props });
   return [
@@ -73,6 +83,7 @@ function objetos3D(): Sch[] {
     o("ciudad", { semilla: i(), filas: i(), columnas: i(), resaltar: nul(i()) }),
     o("casa", { x: n(), z: n(), w: n(), d: n(), h: n() }),
     o("anillo", { x: n(), y: n(), z: n(), radio: n(), grosor: n() }),
+    ...(retro ? [o("modelo", { forma: e(FORMAS_MODELO), x: n(), z: n(), escala: n(), v1: nul(i()), v2: nul(i()), v3: nul(i()), b1: n(), b2: n(), b3: n() })] : []),
   ];
 }
 
@@ -83,11 +94,14 @@ export type OpcionesEsquema = { paleta: string; sfx: boolean; svg: boolean; tres
 /** Esquema de la respuesta completa. Solo incluye las variantes que el guion necesita (esquema más corto = menos tokens). */
 export function esquemaAnimacion(o: OpcionesEsquema): { name: string; strict: true; schema: Sch } {
   const iconos = iconosPermitidos(o.paleta);
+  const retro = esRetro(o.paleta);
+  const extraRetro: Record<string, Sch> = retro ? { titulo: s(), subtitulo: nul(s()), medidores: arr(medidorEsq()) } : {};
   const variantes: Sch[] = [];
   if (o.svg) {
     const props: Record<string, Sch> = {
       modo: tipo("SVG"), n: i(), tema: e(TEMAS), ambiente: e(AMBIENTES),
-      elementos: arr({ anyOf: elementos2D(iconos, TIPOS_2D) }),
+      ...extraRetro,
+      elementos: arr({ anyOf: elementos2D(iconos, retro ? TIPOS_2D_RETRO : TIPOS_2D, retro) }),
     };
     if (o.sfx) props.sfx = sfxEsq();
     variantes.push(obj(props));
@@ -95,11 +109,12 @@ export function esquemaAnimacion(o: OpcionesEsquema): { name: string; strict: tr
   if (o.tres) {
     const props: Record<string, Sch> = {
       modo: tipo("3D"), n: i(), tema: e(TEMAS),
+      ...extraRetro,
       camara: obj({ radio: n(), radioFin: n(), altura: n(), alturaFin: n(), anguloInicio: n(), anguloFin: n(), mirarX: n(), mirarY: n(), mirarZ: n(), fov: n() }),
       luces: obj({ ambiente: n(), direccional: n(), dirX: n(), dirY: n(), dirZ: n(), puntoAcento: n() }),
       suelo: e(SUELOS), niebla: b(),
-      objetos: arr({ anyOf: objetos3D() }),
-      overlay: arr({ anyOf: elementos2D(iconos, TIPOS_OVERLAY) }),
+      objetos: arr({ anyOf: objetos3D(retro) }),
+      overlay: arr({ anyOf: elementos2D(iconos, retro ? TIPOS_OVERLAY_RETRO : TIPOS_OVERLAY, retro) }),
     };
     if (o.sfx) props.sfx = sfxEsq();
     variantes.push(obj(props));

@@ -1,0 +1,15 @@
+[ESCENA 1 | 0s-5s | MODO: SVG]
+Locución: El valor de un inmueble sale de una fórmula simple: área por precio por metro cuadrado.
+Visual: ejes punteados y una curva de valor que sube; tres medidores en el HUD: ÁREA de 40 a 90 m², PRECIO/M² de 3 a 5,5 millones y VALOR de 120 a 495 millones.
+
+[ESCENA 2 | 5s-11s | MODO: 3D]
+Locución: Pero el mercado deforma esa fórmula: el área, la ubicación y la demanda cambian la forma del valor.
+Visual: un toroide rojo central que se deforma según tres medidores (ÁREA, UBICACIÓN, DEMANDA) y dos edificios de contexto.
+
+[ESCENA 3 | 11s-16s | MODO: SVG]
+Locución: Mira cómo evolucionó el índice de precios: de 100 a 158 puntos, un 58 por ciento más.
+Visual: escena en papel con barras del índice ilustrativo 2020–2024 (100, 108, 121, 139, 158) y los medidores ÍNDICE y VARIACIÓN.
+
+[ESCENA 4 | 16s-22s | MODO: 3D]
+Locución: Y recuerda que el mercado sube y baja en ciclos: la volatilidad también se puede medir.
+Visual: una superficie ondulante cuya amplitud y frecuencia dependen de los medidores VOLATILIDAD y CICLO.

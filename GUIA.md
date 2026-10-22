@@ -52,6 +52,19 @@ Al abrir el panel entras al **Estudio**: una pantalla minimalista para producir 
 3. **Incluir SFX automáticos: Sí / No.** No = el video sale **sin pista de audio** y la IA ni siquiera pide efectos.
 4. **Paleta:** *IMNOBA (Colores oficiales de marca)* o *Medicina Clínica*.
 
+### 🧪 Estilo Retro-Científica (cuarto control: paleta)
+
+En **4 · Paleta** hay dos opciones extra que cambian TODO el lenguaje visual (IMNOBA y Medicina siguen igual y IMNOBA sigue siendo la predeterminada):
+
+| Paleta | Colores |
+|---|---|
+| **Retro-Científica (hex del brief)** | fondo `#0B0C10` · papel `#F4F1EA` · rojo bermellón `#E63926` (objeto de estudio) · luz `#FF9E8A` · lima `#D4FF33` (telemetría) · cobalto `#2B44FF` (anomalías) |
+| **Retro-Científica IMNOBA (esencia de marca)** | mismo diseño con el navy `#02224E` de fondo, el amarillo `#FFC500` como objeto de estudio y un azul claro de telemetría (el lima chocaría con el amarillo) |
+
+Qué cambia al elegirla: **título H1** en Inter Black, MAYÚSCULAS, centrado en Y = 180 · **subtítulo tipo terminal** (JetBrains Mono, se escribe carácter a carácter a 30 ms con un bloque que parpadea cada 250 ms) · **escenario central** en y 350–1450 · **HUD fijo abajo** (y 1450–1920) con hasta 3 medidores de aguja · modelos 3D en **cel-shading** (3 niveles duros: luz, base y sombra con semitono de puntos a 45°, contornos negros y divisiones visibles) · **modelo paramétrico** (toroide, esfera, columna o superficie) que se deforma con los medidores · movimiento con `cubic-bezier(0.22, 1, 0.36, 1)` y **sin rebotes** · transición **Halftone Wipe** (círculos de semitono que crecen hasta cubrir la pantalla). Cuando un medidor cambia, **en el mismo fotograma** se mueven la aguja, el número, el borde (lima 6 px; los inactivos quedan a 2 px y opacidad 0,4) y el modelo.
+
+En tu guion no cambia nada: sigues usando los bloques `[ESCENA N | inicio-fin | MODO: SVG|3D]`. Si quieres que un medidor mande en el modelo, pídelo en «Visual» (por ejemplo: «un toroide que se deforma con ÁREA, UBICACIÓN y DEMANDA»). **🧪 Cargar ejemplo** carga el ejemplo retro cuando tienes esa paleta elegida. Terminal: `npm run anim:ejemplo -- --paleta=retro`.
+
 **Costo en dólares:** mientras escribes ves **«Costo estimado de este video: $0.0000 USD»** (cuenta los bloques `[ESCENA]` y los caracteres; es una estimación). Al terminar de generar ves el **costo real** con 5 decimales, calculado con los `prompt_tokens` y `completion_tokens` que devuelve OpenAI × el precio del modelo.
 
 **Cómo se calculan los tiempos:** un parser local (sin IA, sin costo) lee `inicio-fin` de cada bloque; **fotogramas = segundos × 60**. Entiende `0s-4s`, `4-9`, `00:09-00:15`, y avisa de huecos, solapes o escenas demasiado cortas.

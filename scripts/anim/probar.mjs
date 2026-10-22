@@ -79,7 +79,7 @@ try {
   prueba("solo SVG → el esquema no incluye la cámara 3D (menos tokens)", !JSON.stringify(N.esquemaAnimacion({ paleta: "imnoba", sfx: true, svg: true, tres: false }).schema).includes('"camara"'));
   const imn = N.PALETAS.imnoba;
   prueba("IMNOBA es la paleta por defecto y usa los hex oficiales #02224E, #FFC500 y #FFFFFF", N.PALETA_DEFECTO === "imnoba" && imn.claro.primario === "#02224E" && imn.oscuro.fondoBorde === "#02224E" && imn.oscuro.acento === "#FFC500" && imn.claro.acento === "#FFC500" && imn.oscuro.blanco === "#FFFFFF");
-  prueba("hay solo dos paletas: IMNOBA y Medicina Clínica", Object.keys(N.PALETAS).sort().join() === "imnoba,medicina" && /IMNOBA \(Colores oficiales de marca\)/.test(imn.nombre) && N.PALETAS.medicina.nombre === "Medicina Clínica");
+  prueba("las paletas son IMNOBA, Medicina Clínica y las dos Retro-Científica (los nombres de IMNOBA y Medicina no cambian)", Object.keys(N.PALETAS).sort().join() === "imnoba,medicina,retro,retro-imnoba" && /IMNOBA \(Colores oficiales de marca\)/.test(imn.nombre) && N.PALETAS.medicina.nombre === "Medicina Clínica");
   prueba("el prompt no deja que la IA escriba hexadecimales (solo tokens)", /No escribes código ni colores hexadecimales/.test(N.sistemaAnimacion({ paleta: "imnoba", sfx: true, svg: true, tres: true })));
   const valida = validarEsquema(respuestaEjemplo, N.esquemaAnimacion({ paleta: "imnoba", sfx: true, svg: true, tres: true }).schema);
   prueba("la respuesta de ejemplo cumple su propio esquema", valida.length === 0, valida[0]);
@@ -124,7 +124,70 @@ try {
   const root = readFileSync(p("src", "Root.tsx"), "utf8");
   prueba("la composición «Animacion» es 1080×1920 a 60 fps y calcula su duración desde las escenas", /id="Animacion"/.test(root) && /calculateMetadata/.test(root));
   const m3d = readFileSync(p("src", "anim", "motor3d.tsx"), "utf8");
-  prueba("las escenas 3D usan <ThreeCanvas width={W} height={H}>, luces, extrusión y la cámara interpolada con useCurrentFrame()/spring()", /<ThreeCanvas width=\{W\} height=\{H\}/.test(m3d) && /directionalLight/.test(m3d) && /ambientLight/.test(m3d) && /ExtrudeGeometry/.test(m3d) && /useCurrentFrame/.test(m3d) && /spring\(/.test(m3d));
+  prueba("las escenas 3D usan <ThreeCanvas width={W} height={H}>, luces, extrusión y la cámara interpolada con useCurrentFrame()/spring()", /<ThreeCanvas width=\{W\} height=\{alto\}/.test(m3d) && /directionalLight/.test(m3d) && /ambientLight/.test(m3d) && /ExtrudeGeometry/.test(m3d) && /useCurrentFrame/.test(m3d) && /spring\(/.test(m3d));
+
+
+  // ------------------------------------------------------------ estilo Retro-Científica
+  console.log("\nEstilo Retro-Científica (sin romper IMNOBA)");
+  const R = N.PALETAS.retro, RI = N.PALETAS["retro-imnoba"];
+  prueba("retro usa los hex EXACTOS del brief: fondo #0B0C10, papel #F4F1EA, bermellón #E63926, luz #FF9E8A, lima #D4FF33, cobalto #2B44FF", R.oscuro.fondoBorde === "#0B0C10" && R.claro.fondoBorde === "#F4F1EA" && R.oscuro.primario === "#E63926" && R.oscuro.luz === "#FF9E8A" && R.oscuro.acento === "#D4FF33" && R.oscuro.alerta === "#2B44FF" && R.oscuro.tinta === "#FFFFFF" && R.claro.tinta === "#0B0C10" && R.claro.acento === "#E63926");
+  prueba("retro-imnoba conserva la ESENCIA de la marca: navy #02224E de fondo y amarillo #FFC500 como objeto de estudio", RI.oscuro.fondoBorde === "#02224E" && RI.oscuro.primario === "#FFC500" && RI.claro.primario === "#02224E" && RI.estilo === "retro");
+  prueba("IMNOBA clásica y Medicina siguen siendo estilo clásico y IMNOBA sigue de paleta por defecto", imn.estilo === undefined && N.PALETAS.medicina.estilo === undefined && N.PALETA_DEFECTO === "imnoba" && N.esRetro("retro") && N.esRetro("retro-imnoba") && !N.esRetro("imnoba"));
+  for (const paleta of ["retro", "retro-imnoba"]) for (const sfx of [true, false]) for (const [svg, tres] of [[true, true], [true, false], [false, true]]) {
+    const e = comprobarEstricto(N.esquemaAnimacion({ paleta, sfx, svg, tres }).schema);
+    prueba(`esquema ${paleta} sfx=${sfx} svg=${svg} 3d=${tres} cumple el modo estricto`, e.length === 0, e[0]);
+  }
+  const esqRetro = JSON.stringify(N.esquemaAnimacion({ paleta: "retro", sfx: true, svg: true, tres: true }).schema);
+  const esqClasico = JSON.stringify(N.esquemaAnimacion({ paleta: "imnoba", sfx: true, svg: true, tres: true }).schema);
+  prueba("el esquema retro pide título, subtítulo, medidores, línea de terminal y modelo paramétrico; el clásico no", ["titulo", "subtitulo", "medidores", "terminal", "modelo", "punteado"].every((k) => esqRetro.includes(`"${k}"`)) && ["subtitulo", "medidores", "terminal", "modelo", "punteado"].every((k) => !esqClasico.includes(`"${k}"`)));
+  const sisRetro = N.sistemaAnimacion({ paleta: "retro", sfx: true, svg: true, tres: true });
+  prueba("el prompt retro describe el layout (350–1450), el HUD de medidores, el modelo paramétrico y prohíbe rebotes", /y 350–1450/.test(sisRetro) && /medidores/.test(sisRetro) && /modelo/.test(sisRetro) && /sin rebotes/i.test(sisRetro) && /grosor 3/.test(sisRetro));
+  const e1c = N.estimar({ modelo: "gpt-4.1-mini", caracteres: 1500, escenasSVG: 3, escenas3D: 2, sfx: true, tokensFijos: 9000 });
+  prueba("la estimación del estilo retro es mayor (cada escena añade título, terminal y medidores)", N.estimar({ modelo: "gpt-4.1-mini", caracteres: 1500, escenasSVG: 3, escenas3D: 2, sfx: true, tokensFijos: 9000, retro: true }).costo > e1c.costo);
+
+  const guionRetro = readFileSync(p("ejemplos", "animacion-retro", "guion.txt"), "utf8");
+  const rawRetro = JSON.parse(readFileSync(p("ejemplos", "animacion-retro", "respuesta-ia.json"), "utf8"));
+  const pr = N.parsearGuion(guionRetro);
+  prueba("el ejemplo retro se interpreta: 4 escenas, 22 s", pr.errores.length === 0 && pr.escenas.length === 4 && pr.duracion === 22);
+  prueba("la respuesta del ejemplo retro cumple su esquema estricto", validarEsquema(rawRetro, N.esquemaAnimacion({ paleta: "retro", sfx: true, svg: true, tres: true }).schema).length === 0);
+  for (const paleta of ["retro", "retro-imnoba"]) {
+    const rr = N.ensamblar(rawRetro, pr.escenas, { paleta, sfx: true });
+    prueba(`ensamblar (${paleta}): sin errores y con título MAYÚSCULAS, subtítulo y 1–3 medidores por escena`, Boolean(rr.anim) && rr.anim.escenas.every((e) => e.titulo === e.titulo.toUpperCase() && e.titulo.length > 0 && e.medidores.length >= 1 && e.medidores.length <= 3), rr.errores.join(" | "));
+  }
+  const rr = N.ensamblar(rawRetro, pr.escenas, { paleta: "retro", sfx: true });
+  const todos2D = rr.anim.escenas.flatMap((e) => (e.modo === "SVG" ? e.elementos : e.overlay));
+  prueba("zona del escenario retro: todo elemento queda entre y 350 y 1450 (arriba el título, abajo el HUD)", todos2D.every((x) => ["y"].every(() => x.tipo === "linea" ? x.puntos.every((q) => q.y >= 350 && q.y <= 1450) : x.tipo === "trazo" || x.y === undefined || (x.y >= 350 && x.y <= 1450))));
+  prueba("las líneas y trazos retro miden 3 px y admiten punteado", todos2D.filter((x) => x.tipo === "linea" || x.tipo === "trazo").every((x) => x.grosor === 3 && typeof x.punteado === "boolean"));
+  prueba("el modelo paramétrico conserva sus vínculos a medidores (índices 0–2)", rr.anim.escenas.filter((e) => e.modo === "3D").flatMap((e) => e.objetos).filter((o) => o.tipo === "modelo").every((o) => [o.v1, o.v2, o.v3].every((v) => v === null || (v >= 0 && v <= 2))) && rr.anim.escenas[1].objetos.some((o) => o.tipo === "modelo" && o.v1 === 0 && o.v2 === 1 && o.v3 === 2));
+  const sucioRetro = JSON.parse(JSON.stringify(rawRetro));
+  sucioRetro.escenas[0].elementos[2].y = 200; sucioRetro.escenas[0].titulo = "un título larguísimo que no cabe en una sola línea de la pantalla vertical"; sucioRetro.escenas[0].medidores = [];
+  const sr = N.ensamblar(sucioRetro, pr.escenas, { paleta: "retro", sfx: true });
+  prueba("un elemento fuera del escenario retro se recoloca (y ≥ 350) y un HUD sin medidores es un error", sr.errores.some((e) => /necesita al menos 1 medidor/.test(e)));
+  sucioRetro.escenas[0].medidores = rawRetro.escenas[0].medidores;
+  const sr2 = N.ensamblar(sucioRetro, pr.escenas, { paleta: "retro", sfx: true });
+  prueba("título largo: se envuelve en ≤ 2 líneas dentro de 900 px", sr2.anim.escenas[0].titulo.split("\n").length <= 2 && sr2.anim.escenas[0].titulo.split("\n").every((l) => l.length * sr2.anim.escenas[0].tituloTam * 0.66 <= 901), sr2.anim.escenas[0].titulo);
+  prueba("la zona del escenario retro no se «pega»: IMNOBA clásica vuelve a usar y 150–1770", (() => { const cl = JSON.parse(JSON.stringify(respuestaEjemplo)); cl.escenas[0].elementos[3].y = 300; const x = N.ensamblar(cl, bloques, { paleta: "imnoba", sfx: true }); return x.anim.escenas[0].elementos[3].y === 300; })());
+  const sinMed = JSON.parse(JSON.stringify(rawRetro)); sinMed.escenas[1].objetos[0].v1 = 7;
+  prueba("un vínculo a un medidor inexistente se acota a 0–2 (sin romper)", N.ensamblar(sinMed, pr.escenas, { paleta: "retro", sfx: true }).anim.escenas[1].objetos[0].v1 === 2);
+
+  // código fuente del motor retro: lo que pide el brief (se comprueba en el código porque el render real se verifica con capturas)
+  const m2d = readFileSync(p("src", "anim", "motor2d.tsx"), "utf8"), anim = readFileSync(p("src", "anim", "Animacion.tsx"), "utf8"), libAnim = readFileSync(p("src", "lib", "anim.ts"), "utf8"), retroTs = readFileSync(p("src", "anim", "retro.ts"), "utf8");
+  prueba("curva global cubic-bezier(0.22, 1, 0.36, 1) y sin rebotes en retro (Entrada/barras/cámara usan easeRetro, no spring)", /Easing\.bezier\(0\.22, 1, 0\.36, 1\)/.test(libAnim) && /retro \? prog\(t, el\.t, 0\.7, easeRetro\)/.test(m2d) && /retro \? easeRetro\(Math\.min\(1, f \/ dur\)\)/.test(m3d) && /retro \? easeRetro\(Math\.min\(1, frame \/ total\)\)/.test(m3d));
+  prueba("terminal: 30 ms por carácter, cursor de 0,6 em × 1,1 em que parpadea cada 250 ms al terminar", /S_CARACTER = 0\.03/.test(m2d) && /S_PARPADEO = 0\.25/.test(m2d) && /width=\{tam \* 0\.6\} height=\{tam \* 1\.1\}/.test(m2d));
+  prueba("H1: Inter Black (900), MAYÚSCULAS, tracking -0.03em, centrado en Y = 180", /fontWeight=\{900\}[^>]*fontSize=\{tam\}/.test(m2d) && /letterSpacing: "-0\.03em"/.test(m2d) && /y=\{180 - alto \/ 2/.test(m2d) && /\.toUpperCase\(\)/.test(readFileSync(p("src", "anim", "validar.ts"), "utf8")));
+  prueba("HUD: panel desde y 1450, hasta 3 medidores; activo = borde 6 px del acento, inactivo = 2 px y opacidad 0,4; aguja y número del mismo reloj", /y=\{1450\}/.test(m2d) && /activo \? 6 : 2/.test(m2d) && /opacity=\{activo \? 1 : 0\.4\}/.test(m2d) && /normMedidor\(m, t\)/.test(m2d) && /valorMedidor\(m, t\)/.test(m2d) && /slice\(0, 3\)/.test(readFileSync(p("src", "anim", "validar.ts"), "utf8")));
+  prueba("el modelo 3D usa el MISMO reloj de los medidores (normMedidor) para deformarse", /normMedidor\(medidores\[v\], t\)/.test(m3d) && /export const normMedidor/.test(retroTs));
+  prueba("transición Halftone Wipe: círculos de radio 0 → 100 % que cubren la pantalla con el fondo de la escena que entra", /Semitono/.test(anim) && /rMax = PASO \* 0\.72/.test(anim) && /fill=\{color\}/.test(anim));
+  prueba("cel-shading: 3 niveles duros (luz/base/semitono a 45°), contorno de 2 px y aristas negras; hex exacto sin conversión de color", /uLuz/.test(m3d) && /uSombra/.test(m3d) && /0\.70710678/.test(m3d) && /uPx: \{ value: 2 \}/.test(m3d) && /EdgesGeometry/.test(m3d) && /hexARgb/.test(m3d));
+  prueba("el contexto de color se vuelve a montar dentro del Canvas 3D (los contextos de React no lo cruzan)", /<ProveedorColor paleta=\{paleta\.id\} tema=\{tema\}>/.test(m3d));
+  prueba("JetBrains Mono (400 y 700) viene en public/fonts y se carga junto a Inter", existsSync(p("public", "fonts", "jetbrains-mono-latin-400-normal.woff2")) && existsSync(p("public", "fonts", "jetbrains-mono-latin-700-normal.woff2")) && /JetBrains Mono/.test(readFileSync(p("src", "lib", "fuentes.ts"), "utf8")));
+
+  // agente con el estilo retro (OpenAI simulado)
+  const mockR = await iniciarMock(0);
+  const resR = await generarAnimacion({ guion: guionRetro, modelo: "gpt-4.1-mini", sfx: true, paleta: "retro", cfg: cfgMock(mockR) });
+  prueba("agente retro: una llamada, escenas con título/medidores y costo real calculado", resR.uso.llamadas === 1 && resR.anim.escenas.length === 4 && resR.anim.escenas.every((e) => e.medidores.length > 0) && resR.uso.costo_usd > 0 && /medidores/.test(mockR.estado.ultimaAnimacion.sistema), JSON.stringify(resR.uso));
+  prueba("agente retro: paleta guardada y el prompt de sistema es el retro", resR.anim.paleta === "retro" && /RETRO-CIENTÍFICA/.test(mockR.estado.ultimaAnimacion.sistema));
+  await mockR.cerrar();
 
   // ------------------------------------------------------------ agente con servidor simulado
   console.log("\nAgente (OpenAI simulado)");
@@ -198,6 +261,8 @@ try {
     prueba("el Estudio tiene los 4 controles: textarea, modelo, SFX y paleta, más el costo en vivo y copiar prompt", ["textarea#guion", "select#modelo", "input#sfx", "select#paleta", "costo-estimado", "Copiar Prompt Formateador", "Costo estimado de este video", "Costo real de este video"].every((t) => h.texto.includes(t)));
     h = await http("GET", "/api/anim/ejemplo");
     prueba("API: entrega el guion de ejemplo", h.codigo === 200 && /\[ESCENA 1/.test(h.json.guion));
+    h = await http("GET", "/api/anim/ejemplo?paleta=retro");
+    prueba("API: con la paleta retro entrega el ejemplo retro (medidores)", h.codigo === 200 && /MEDIDORES|medidores/.test(h.json.guion) && /valor de un inmueble/i.test(h.json.guion));
     h = await http("POST", "/api/accion", { nombre: "anim-generar", opciones: { guion: "[ESCENA 1 | 5s-2s | MODO: X]\nhola", modelo: "gpt-4.1-mini" } });
     prueba("API: un guion inválido se rechaza con 400 y explica el problema", h.codigo === 400 && /problemas/.test(h.json.error), h.texto.slice(0, 200));
     h = await http("POST", "/api/accion", { nombre: "anim-generar", opciones: { guion: guionEjemplo, modelo: "gpt-4.1-mini", sfx: false, paleta: "imnoba" } });

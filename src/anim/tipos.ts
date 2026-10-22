@@ -11,15 +11,21 @@ export type Base2D = { tipo: string; t: number; hasta: number | null; entrada: E
 
 export type Elemento2D = Base2D & Record<string, any>;
 
+/** Medidor del HUD (estilo retro): su valor va de `inicio` a `fin` a partir de `t` (s) durante `dur` (s), y mueve aguja, número, borde y modelo a la vez. */
+export type Medidor = { etiqueta: string; unidad: string; min: number; max: number; inicio: number; fin: number; t: number; dur: number; decimales: number };
+
+/** Campos extra de una escena en estilo retro. */
+export type CamposRetro = { titulo?: string; tituloTam?: number; subtitulo?: string | null; medidores?: Medidor[] };
+
 export type EventoSfx = { t: number; tipo: SfxTipoAnim; vol: number };
 
-export type EscenaSVG = { modo: "SVG"; n: number; tema: TemaEscena; ambiente: Ambiente; elementos: Elemento2D[]; sfx?: EventoSfx[] };
+export type EscenaSVG = { modo: "SVG"; n: number; tema: TemaEscena; ambiente: Ambiente; elementos: Elemento2D[]; sfx?: EventoSfx[] } & CamposRetro;
 
 export type Camara = { radio: number; radioFin: number; altura: number; alturaFin: number; anguloInicio: number; anguloFin: number; mirarX: number; mirarY: number; mirarZ: number; fov: number };
 export type Luces = { ambiente: number; direccional: number; dirX: number; dirY: number; dirZ: number; puntoAcento: number };
 export type Objeto3D = { tipo: string; t: number; dur: number; entrada: Entrada3D; giro: number; color: string; emisivo: boolean } & Record<string, any>;
 
-export type Escena3D = { modo: "3D"; n: number; tema: TemaEscena; camara: Camara; luces: Luces; suelo: "ninguno" | "plano" | "cuadricula"; niebla: boolean; objetos: Objeto3D[]; overlay: Elemento2D[]; sfx?: EventoSfx[] };
+export type Escena3D = { modo: "3D"; n: number; tema: TemaEscena; camara: Camara; luces: Luces; suelo: "ninguno" | "plano" | "cuadricula"; niebla: boolean; objetos: Objeto3D[]; overlay: Elemento2D[]; sfx?: EventoSfx[] } & CamposRetro;
 
 /** Escena tal como se guarda en animacion.json: lo que devuelve la IA + lo que se sabe localmente (tiempos y texto). */
 export type EscenaGuardada = (EscenaSVG | Escena3D) & { inicio: number; fin: number; dur: number; texto: string };

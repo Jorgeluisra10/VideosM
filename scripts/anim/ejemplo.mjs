@@ -10,12 +10,13 @@ import { cargarNucleoAnim, RAIZ } from "./nucleo.mjs";
 
 const args = process.argv.slice(2);
 const N = await cargarNucleoAnim();
-const dir = join(RAIZ, "ejemplos", "animacion-imnoba");
+const paleta = args.find((a) => a.startsWith("--paleta="))?.split("=")[1] ?? "imnoba";
+// el estilo Retro-Científica tiene su propio ejemplo (título, terminal, medidores y modelo paramétrico)
+const dir = join(RAIZ, "ejemplos", N.esRetro(paleta) ? "animacion-retro" : "animacion-imnoba");
 const parsed = N.parsearGuion(readFileSync(join(dir, "guion.txt"), "utf8"));
 if (parsed.errores.length) throw new Error(parsed.errores.join("\n"));
 const raw = JSON.parse(readFileSync(join(dir, "respuesta-ia.json"), "utf8"));
 const sfx = !args.includes("--sin-sfx");
-const paleta = args.find((a) => a.startsWith("--paleta="))?.split("=")[1] ?? "imnoba";
 const r = N.ensamblar(raw, parsed.escenas, { paleta, sfx });
 if (!r.anim) throw new Error(r.errores.join("\n"));
 for (const c of r.correcciones) console.log("  ~", c);

@@ -2,10 +2,160 @@ import React from "react";
 import { Easing } from "remotion";
 import { evolvePath } from "@remotion/paths";
 import { FUENTE, H, W } from "../lib/colores";
-import { azar, onda, pop, prog, resorte, useT } from "../lib/anim";
+import { azar, easeRetro, onda, pop, prog, resorte, useT } from "../lib/anim";
 import { dibujarIcono } from "../dsl/elementos/dibujo";
 import { useColor, useTema } from "./contexto";
-import type { Ambiente, Elemento2D } from "./tipos";
+import { luminancia } from "./paletas";
+import { medidorActivo, valorMedidor, normMedidor } from "./retro";
+import type { Ambiente, Elemento2D, Medidor } from "./tipos";
+
+/* ───────────────────────── estilo retro: título, terminal y HUD ───────────────────────── */
+
+const MONO = "'JetBrains Mono', ui-monospace, Menlo, Consolas, monospace";
+/** Velocidad del efecto terminal: 30 ms por carácter. Parpadeo del cursor al terminar la frase: 250 ms. */
+const S_CARACTER = 0.03;
+const S_PARPADEO = 0.25;
+
+/**
+ * Texto de terminal: aparece carácter por carácter precedido por un bloque sólido (0,6 em × 1,1 em) que, al terminar la frase, parpadea cada 250 ms.
+ * Las medidas son exactas porque JetBrains Mono avanza 0,6 em por carácter.
+ */
+export const TerminalTexto: React.FC<{ texto: string; x: number; y: number; tam: number; color: string; alinear: "centro" | "izquierda"; t0: number; franja?: string | null; cursor: string }> = ({ texto, x, y, tam, color, alinear, t0, franja, cursor }) => {
+  const t = useT();
+  if (t < t0) return null;
+  const total = texto.length;
+  const escritos = Math.min(total, Math.floor((t - t0) / S_CARACTER));
+  const lineas = texto.split("\n");
+  const w = Math.max(...lineas.map((l) => l.length), 1) * tam * 0.6;
+  const lh = tam * 1.4;
+  const x0 = alinear === "centro" ? x - w / 2 : x;
+  const arriba = y - (lineas.length * lh) / 2;
+  const vistos = texto.slice(0, escritos).split("\n");
+  const li = vistos.length - 1;
+  const col = vistos[li].length;
+  const terminado = escritos >= total;
+  // al escribir, el bloque está fijo; al terminar parpadea (250 ms encendido / 250 ms apagado)
+  const visible = !terminado || Math.floor((t - t0 - total * S_CARACTER) / S_PARPADEO) % 2 === 0;
+  return (
+    <g>
+      {franja && <rect x={x0 - 18} y={arriba - 8} width={w + 40} height={lineas.length * lh + 16} rx={6} fill={franja} />}
+      <text data-texto="terminal" fontFamily={MONO} fontWeight={700} fontSize={tam} fill={color} xmlSpace="preserve">
+        {vistos.map((l, i) => (
+          <tspan key={i} x={x0} y={arriba + (i + 0.5) * lh} dominantBaseline="central">
+            {l}
+          </tspan>
+        ))}
+      </text>
+      {visible && <rect x={x0 + col * tam * 0.6} y={arriba + (li + 0.5) * lh - tam * 0.55} width={tam * 0.6} height={tam * 1.1} fill={cursor} />}
+    </g>
+  );
+};
+
+/** H1 retro: Inter Black, MAYÚSCULAS, tracking -0.03em, centrado, bloque centrado en Y = 180. */
+const TituloRetro: React.FC<{ texto: string; tam: number }> = ({ texto, tam }) => {
+  const t = useT();
+  const c = useColor();
+  const { paleta } = useTema();
+  const p = prog(t, 0.05, 0.7, easeRetro);
+  if (p <= 0.001) return null;
+  const lineas = texto.split("\n");
+  const alto = lineas.length * tam;
+  return (
+    <g opacity={Math.min(1, p * 1.5)} transform={`translate(0 ${(1 - p) * -36})`}>
+      <text data-texto="titulo" x={W / 2} textAnchor="middle" fontFamily={FUENTE} fontWeight={900} fontSize={tam} fill={c("tinta")} style={{ letterSpacing: "-0.03em" }}>
+        {lineas.map((l, i) => (
+          <tspan key={i} x={W / 2} y={180 - alto / 2 + (i + 0.5) * tam} dominantBaseline="central">
+            {l}
+          </tspan>
+        ))}
+      </text>
+      <rect x={W / 2 - 48} y={180 + alto / 2 + 10} width={96} height={4} fill={c("acento") === c("tinta") ? paleta.oscuro.acento : c("acento")} />
+    </g>
+  );
+};
+
+const ARCO_INI = -120, ARCO_FIN = 120; // grados desde la vertical: 240° de recorrido
+
+const Medidor2D: React.FC<{ m: Medidor; cx: number; activo: boolean; t: number }> = ({ m, cx, activo, t }) => {
+  const { paleta } = useTema();
+  const k = paleta.oscuro; // el HUD siempre va sobre panel oscuro
+  const w = 280, x0 = cx - w / 2, y0 = 1500, h = 360, cy = 1672, R = 98;
+  const norm = normMedidor(m, t);
+  const v = valorMedidor(m, t);
+  const ang = ARCO_INI + (ARCO_FIN - ARCO_INI) * norm;
+  const pt = (deg: number, r: number) => ({ x: cx + Math.sin((deg * Math.PI) / 180) * r, y: cy - Math.cos((deg * Math.PI) / 180) * r });
+  const arco = (a0: number, a1: number, r: number) => {
+    const A = pt(a0, r), B = pt(a1, r);
+    return `M ${A.x} ${A.y} A ${r} ${r} 0 ${a1 - a0 > 180 ? 1 : 0} 1 ${B.x} ${B.y}`;
+  };
+  const punta = pt(ang, R * 0.88);
+  const cola = pt(ang + 180, R * 0.14);
+  const fmt = miles(v, m.decimales);
+  return (
+    // activo: borde lima 6 px; inactivo: borde 2 px y todo el medidor a opacidad 0,4 (cambia en el mismo fotograma que la aguja)
+    <g opacity={activo ? 1 : 0.4}>
+      <rect x={x0} y={y0} width={w} height={h} rx={14} fill={k.fondoBorde} stroke={activo ? k.acento : k.suave} strokeWidth={activo ? 6 : 2} />
+      <text data-texto="medidor" x={cx} y={y0 + 40} textAnchor="middle" dominantBaseline="central" fontFamily={MONO} fontWeight={700} fontSize={22} fill={k.tinta}>
+        {m.etiqueta}
+      </text>
+      <path d={arco(ARCO_INI, ARCO_FIN, R)} fill="none" stroke={k.suave} strokeWidth={3} strokeDasharray="6 6" />
+      {norm > 0.002 && <path d={arco(ARCO_INI, ang, R)} fill="none" stroke={k.acento} strokeWidth={5} />}
+      {Array.from({ length: 11 }, (_, i) => {
+        const a = ARCO_INI + ((ARCO_FIN - ARCO_INI) * i) / 10;
+        const A = pt(a, R + 6), B = pt(a, R + (i % 5 === 0 ? 20 : 13));
+        return <line key={i} x1={A.x} y1={A.y} x2={B.x} y2={B.y} stroke={k.tinta} strokeWidth={i % 5 === 0 ? 3 : 2} />;
+      })}
+      <line x1={cola.x} y1={cola.y} x2={punta.x} y2={punta.y} stroke={k.primario} strokeWidth={5} strokeLinecap="round" />
+      <circle cx={cx} cy={cy} r={9} fill={k.tinta} stroke={k.fondoBorde} strokeWidth={3} />
+      <text data-texto="medidor" x={cx} y={y0 + 314} textAnchor="middle" dominantBaseline="central" fontFamily={MONO} fontWeight={700} fontSize={fmt.length > 7 ? 38 : 46} fill={k.acento} style={{ fontVariantNumeric: "tabular-nums" }}>
+        {fmt}
+        {m.unidad ? <tspan fontSize={22} fill={k.tinta}> {m.unidad}</tspan> : null}
+      </text>
+      <text data-texto="medidor" x={x0 + 26} y={cy + R * 0.82 + 22} textAnchor="start" dominantBaseline="central" fontFamily={MONO} fontSize={16} fill={k.suave}>
+        {miles(m.min, m.decimales)}
+      </text>
+      <text data-texto="medidor" x={x0 + w - 26} y={cy + R * 0.82 + 22} textAnchor="end" dominantBaseline="central" fontFamily={MONO} fontSize={16} fill={k.suave}>
+        {miles(m.max, m.decimales)}
+      </text>
+    </g>
+  );
+};
+
+/** Panel HUD fijo (y 1450–1920) con hasta 3 medidores alineados horizontalmente. */
+const HudRetro: React.FC<{ medidores: Medidor[] }> = ({ medidores }) => {
+  const t = useT();
+  const { paleta } = useTema();
+  const k = paleta.oscuro;
+  const p = prog(t, 0.1, 0.7, easeRetro);
+  const n = medidores.length;
+  const total = n * 280 + (n - 1) * 30;
+  const ini = 540 - total / 2;
+  return (
+    <g opacity={Math.min(1, p * 1.6)} transform={`translate(0 ${(1 - p) * 70})`}>
+      <rect x={0} y={1450} width={W} height={H - 1450} fill={k.fondoBorde} />
+      <line x1={0} x2={W} y1={1450} y2={1450} stroke={k.suave} strokeWidth={3} strokeDasharray="6 6" />
+      {medidores.map((m, i) => (
+        <Medidor2D key={i} m={m} cx={ini + 140 + i * 310} activo={medidorActivo(m, t)} t={t} />
+      ))}
+    </g>
+  );
+};
+
+/** Capa retro de una escena: título, subtítulo de terminal y HUD. Va encima de todo. */
+export const CapaRetro: React.FC<{ titulo?: string; tituloTam?: number; subtitulo?: string | null; medidores?: Medidor[] }> = ({ titulo, tituloTam = 80, subtitulo, medidores = [] }) => {
+  const { paleta, tema } = useTema();
+  const c = useColor();
+  const claro = tema === "claro";
+  return (
+    <svg width={W} height={H} style={{ position: "absolute", left: 0, top: 0 }}>
+      {titulo ? <TituloRetro texto={titulo} tam={tituloTam} /> : null}
+      {subtitulo ? (
+        <TerminalTexto texto={subtitulo} x={W / 2} y={300} tam={30} color={claro ? paleta.oscuro.acento : c("acento")} alinear="centro" t0={0.7} franja={claro ? paleta.oscuro.fondoBorde : null} cursor={paleta.oscuro.acento} />
+      ) : null}
+      {medidores.length ? <HudRetro medidores={medidores} /> : null}
+    </svg>
+  );
+};
 
 /* ───────────────────────── fondo ───────────────────────── */
 
@@ -15,7 +165,7 @@ const useEstiloTexto = () => {
   const { tema } = useTema();
   return (token: string, tam: number): React.SVGAttributes<SVGTextElement> => {
     const fill = c(token);
-    if (tema === "claro" && token === "acento") return { fill, stroke: c("primario"), strokeWidth: Math.max(2, tam * 0.07), paintOrder: "stroke", strokeLinejoin: "round" };
+    if (tema === "claro" && token === "acento" && luminancia(fill) > 0.6) return { fill, stroke: c("primario"), strokeWidth: Math.max(2, tam * 0.07), paintOrder: "stroke", strokeLinejoin: "round" };
     return { fill };
   };
 };
@@ -26,9 +176,14 @@ export const Fondo2D: React.FC<{ ambiente: Ambiente; id: string; solido?: boolea
   const { paleta, tema } = useTema();
   const col = tema === "claro" ? paleta.claro : paleta.oscuro;
   const desp = (t * 9) % 80;
+  const retro = paleta.estilo === "retro";
   return (
     <svg width={W} height={H} style={{ position: "absolute", left: 0, top: 0 }}>
       <defs>
+        {/* retro: trama de puntos de semitono a 45° (en vez de la cuadrícula de líneas) */}
+        <pattern id={`pt-${id}`} width="54" height="54" patternUnits="userSpaceOnUse" patternTransform={`rotate(45) translate(${desp * 0.5} 0)`}>
+          <circle cx="27" cy="27" r="2.6" fill={c("suave")} />
+        </pattern>
         <radialGradient id={`fg-${id}`} cx="50%" cy="42%" r="75%">
           <stop offset="0" stopColor={solido ? col.fondoBorde : col.fondoCentro} />
           <stop offset="1" stopColor={col.fondoBorde} />
@@ -37,8 +192,9 @@ export const Fondo2D: React.FC<{ ambiente: Ambiente; id: string; solido?: boolea
           <path d="M 80 0 L 0 0 L 0 80" fill="none" stroke={c("suave")} strokeWidth="2" />
         </pattern>
       </defs>
-      <rect width={W} height={H} fill={`url(#fg-${id})`} />
-      {ambiente === "cuadricula" && <rect width={W} height={H} fill={`url(#rej-${id})`} opacity={tema === "claro" ? 0.22 : 0.16} />}
+      <rect width={W} height={H} fill={retro ? col.fondoBorde : `url(#fg-${id})`} />
+      {ambiente === "cuadricula" && !retro && <rect width={W} height={H} fill={`url(#rej-${id})`} opacity={tema === "claro" ? 0.22 : 0.16} />}
+      {ambiente === "cuadricula" && retro && <rect width={W} height={H} fill={`url(#pt-${id})`} opacity={tema === "claro" ? 0.35 : 0.3} />}
       {ambiente === "particulas" &&
         Array.from({ length: 34 }, (_, i) => {
           const vel = 14 + azar(i + 9) * 30;
@@ -67,11 +223,14 @@ const Entrada: React.FC<{ el: Elemento2D; children: React.ReactNode }> = ({ el, 
   if (t < el.t) return null;
   const fuera = el.hasta != null ? 1 - prog(t, el.hasta, 0.3) : 1;
   if (fuera <= 0.001) return null;
-  const entra = prog(t, el.t, 0.4);
+  const { paleta } = useTema();
+  const retro = paleta.estilo === "retro";
+  // retro: movimiento mecánico y preciso con cubic-bezier(0.22,1,0.36,1); nada de rebotes ni elásticos
+  const entra = retro ? prog(t, el.t, 0.7, easeRetro) : prog(t, el.t, 0.4);
   const k = el.entrada as string;
-  const r = k === "pop" || k === "crecer" ? (k === "pop" ? pop(t, el.t) : resorte(t, el.t, { damping: 15, stiffness: 120 })) : entra;
+  const r = retro ? entra : k === "pop" || k === "crecer" ? (k === "pop" ? pop(t, el.t) : resorte(t, el.t, { damping: 15, stiffness: 120 })) : entra;
   let transform: string | undefined;
-  if (k === "pop") transform = `scale(${0.55 + 0.45 * r})`;
+  if (k === "pop") transform = `scale(${retro ? 0.8 + 0.2 * r : 0.55 + 0.45 * r})`;
   else if (k === "crecer") transform = `scale(${r})`;
   else if (k === "deslizar-arriba") transform = `translate(0px, ${(1 - entra) * 90}px)`;
   else if (k === "deslizar-abajo") transform = `translate(0px, ${-(1 - entra) * 90}px)`;
@@ -105,11 +264,13 @@ function rutaDePuntos(p: { x: number; y: number }[], curva: boolean): string {
   return d;
 }
 
-const TrazoDibujado: React.FC<{ d: string; color: string; grosor: number; ini: number; dur: number; brillo?: boolean; relleno?: string | null }> = ({ d, color, grosor, ini, dur, brillo, relleno }) => {
+const TrazoDibujado: React.FC<{ d: string; color: string; grosor: number; ini: number; dur: number; brillo?: boolean; relleno?: string | null; punteado?: boolean }> = ({ d, color, grosor, ini, dur, brillo, relleno, punteado }) => {
   const t = useT();
-  const p = suave(t, ini, dur);
+  const retro = useTema().paleta.estilo === "retro";
+  const p = retro ? prog(t, ini, dur, easeRetro) : suave(t, ini, dur);
   if (p <= 0.001) return null;
-  const evo = evolvePath(p, d);
+  // punteado retro: trazo discontinuo 6,6 que se «recorre» con el avance (se revela con una máscara de dash largo)
+  const evo = punteado ? { strokeDasharray: "6 6" } : evolvePath(p, d);
   return (
     <g>
       {relleno && <path d={d} fill={relleno} fillOpacity={0.28 * prog(t, ini + dur * 0.7, 0.5)} stroke="none" />}
@@ -193,7 +354,7 @@ const Linea: React.FC<P> = ({ el }) => {
   const pf = suave(t, el.t + el.dur * 0.85, 0.3);
   return (
     <g>
-      <TrazoDibujado d={d} color={col} grosor={el.grosor} ini={el.t} dur={el.dur} brillo />
+      <TrazoDibujado d={d} color={col} grosor={el.grosor} ini={el.t} dur={el.dur} brillo={!el.punteado} punteado={el.punteado} />
       {el.flecha && pf > 0.01 && (
         <path
           d={`M ${b.x - Math.cos(ang - 0.5) * L} ${b.y - Math.sin(ang - 0.5) * L} L ${b.x} ${b.y} L ${b.x - Math.cos(ang + 0.5) * L} ${b.y - Math.sin(ang + 0.5) * L}`}
@@ -206,7 +367,7 @@ const Linea: React.FC<P> = ({ el }) => {
 
 const Trazo2D: React.FC<P> = ({ el }) => {
   const c = useColor();
-  return <TrazoDibujado d={el.d} color={c(el.color)} grosor={el.grosor} ini={el.t} dur={el.dur} brillo={el.brillo} relleno={el.relleno ? c(el.relleno) : null} />;
+  return <TrazoDibujado d={el.d} color={c(el.color)} grosor={el.grosor} ini={el.t} dur={el.dur} brillo={el.brillo} relleno={el.relleno ? c(el.relleno) : null} punteado={el.punteado} />;
 };
 
 const Plano: React.FC<P> = ({ el }) => {
@@ -268,6 +429,7 @@ const CICLO = ["primario", "acento", "ok", "alerta", "suave", "blanco"];
 const Grafica: React.FC<P> = ({ el }) => {
   const c = useColor();
   const t = useT();
+  const retro = useTema().paleta.estilo === "retro";
   const datos = el.datos as { etiqueta: string; valor: number }[];
   const x0 = el.x - el.w / 2, y0 = el.y - el.h / 2;
   const max = Math.max(...datos.map((d) => d.valor), 1e-9);
@@ -287,7 +449,8 @@ const Grafica: React.FC<P> = ({ el }) => {
       <g>
         <line x1={x0} x2={x0 + el.w} y1={y0 + alto} y2={y0 + alto} stroke={c("suave")} strokeWidth={4} strokeLinecap="round" opacity={prog(t, el.t, 0.4)} />
         {datos.map((d, i) => {
-          const r = resorte(t, el.t + 0.2 + (i * el.dur) / (n + 1), { damping: 16, stiffness: 90 });
+          const ini = el.t + 0.2 + (i * el.dur) / (n + 1);
+          const r = retro ? prog(t, ini, 1.0, easeRetro) : resorte(t, ini, { damping: 16, stiffness: 90 });
           const h = (d.valor / max) * (alto - 50) * r;
           const cx = x0 + slot * (i + 0.5);
           const resalta = d.valor === max;
@@ -467,7 +630,16 @@ const Tarjeta: React.FC<P> = ({ el }) => {
   );
 };
 
-const POR_TIPO: Record<string, React.FC<P>> = { texto: Texto, forma: Forma, icono: Icono, linea: Linea, trazo: Trazo2D, plano: Plano, grafica: Grafica, contador: Contador, anillo: Anillo, ondas: Ondas, lista: Lista, tarjeta: Tarjeta };
+const TerminalEl: React.FC<P> = ({ el }) => {
+  const { paleta, tema } = useTema();
+  const c = useColor();
+  const claro = tema === "claro";
+  // sobre papel el lima no se lee: la línea de terminal lleva su propia franja oscura
+  const color = claro ? (paleta.oscuro as Record<string, string>)[el.color] ?? paleta.oscuro.acento : c(el.color);
+  return <TerminalTexto texto={el.texto} x={el.x} y={el.y} tam={el.tam} color={color} alinear={el.alinear} t0={el.t} franja={claro ? paleta.oscuro.fondoBorde : null} cursor={paleta.oscuro.acento} />;
+};
+
+const POR_TIPO: Record<string, React.FC<P>> = { terminal: TerminalEl, texto: Texto, forma: Forma, icono: Icono, linea: Linea, trazo: Trazo2D, plano: Plano, grafica: Grafica, contador: Contador, anillo: Anillo, ondas: Ondas, lista: Lista, tarjeta: Tarjeta };
 
 /** Capa SVG con todos los elementos 2D de una escena (o el overlay de una escena 3D). */
 export const Elementos2D: React.FC<{ elementos: Elemento2D[] }> = ({ elementos }) => (
