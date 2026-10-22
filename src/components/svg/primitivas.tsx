@@ -1,5 +1,6 @@
 import React from "react";
 import { Easing } from "remotion";
+import { evolvePath } from "@remotion/paths";
 import { C, FUENTE, MARGEN, W } from "../../lib/colores";
 
 /** Margen local = 80 px + holgura por el acercamiento de cámara (×1.035) => en pantalla queda ≥ 80 px. */
@@ -104,9 +105,8 @@ export const Trazo: React.FC<TrazoProps> = ({
     fill: relleno,
     strokeLinecap: "round" as const,
     strokeLinejoin: "round" as const,
-    pathLength: 1,
-    strokeDasharray: "1 2",
-    strokeDashoffset: 1 - p,
+    // evolvePath (@remotion/paths): dasharray/dashoffset exactos para que el trazo "crezca" de 0 a 100 %
+    ...evolvePath(p, d),
   };
   return (
     <g opacity={opacidad * salida}>

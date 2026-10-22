@@ -1,0 +1,55 @@
+{
+  "perfil": "inmobiliario-co",
+  "id": "apartamento-chapinero-bogota",
+  "tema": "Apartamento de 3 habitaciones con terraza y vista a los cerros en Chapinero, Bogotá",
+  "duracion": 35,
+  "tono": "cercano y confiable",
+  "voz": "co",
+  "velocidad": "+3%",
+  "marca": {
+    "nombre": "Altos del Norte Inmobiliaria",
+    "etiqueta": "ALTOS DEL NORTE",
+    "paleta": "colombia"
+  },
+  "datos": {
+    "operacion": "Venta",
+    "tipo": "Apartamento",
+    "ubicacion": "Chapinero, Bogotá",
+    "precio": 520000000,
+    "moneda": "COP",
+    "detallePrecio": "Administración 650 mil pesos",
+    "estrato": "5",
+    "ambientes": 5,
+    "dormitorios": 3,
+    "banos": 2,
+    "cocheras": 2,
+    "supTotal": 112,
+    "antiguedad": "excelente estado",
+    "amenities": ["terraza", "gimnasio", "salón social", "vigilancia 24 horas"],
+    "puntosFuertes": [
+      "terraza con vista a los cerros orientales",
+      "sala-comedor con ventanal de piso a techo",
+      "cocina integrada con isla"
+    ],
+    "cercanias": [
+      "estación de TransMilenio a cinco minutos",
+      "Parque de la 93",
+      "colegios y universidades"
+    ],
+    "rentabilidad": 6.5,
+    "valorizacion": 4.5,
+    "agente": "Camila",
+    "telefono": "300 555 0100",
+    "whatsapp": "300 555 0100",
+    "web": "@altosdelnorte.co"
+  },
+  "medios": "ejemplos/inmobiliario-co-apartamento/media",
+  "fotos": [
+    { "archivo": "fachada.png", "descripcion": "Fachada del edificio al atardecer" },
+    { "archivo": "sala.png", "descripcion": "Sala-comedor con ventanal a los cerros" },
+    { "archivo": "cocina.png", "descripcion": "Cocina integrada con isla" },
+    { "archivo": "habitacion.png", "descripcion": "Habitación principal luminosa" },
+    { "archivo": "terraza.png", "descripcion": "Terraza con vista a la ciudad" }
+  ],
+  "notas": "EJEMPLO DE PRUEBA: datos, precio y teléfono ficticios; las imágenes son ilustraciones generadas, no fotos reales."
+}

@@ -1,0 +1,44 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>VideMed · Panel</title>
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='14' fill='%230F172A'/%3E%3Cpath d='M20 16l28 16-28 16z' fill='%2310B981'/%3E%3C/svg%3E">
+<link rel="stylesheet" href="/estilos.css">
+</head>
+<body>
+<header class="barra">
+  <a class="marca" href="#/" aria-label="Inicio">
+    <svg viewBox="0 0 64 64" width="28" height="28" aria-hidden="true"><rect width="64" height="64" rx="14" fill="#0F172A"/><path d="M22 16l28 16-28 16z" fill="#10B981"/></svg>
+    <span>VideMed</span>
+  </a>
+  <nav class="menu" aria-label="Secciones">
+    <a href="#/" data-nav="inicio">🎬 Proyectos</a>
+    <a href="#/ajustes" data-nav="ajustes">⚙️ Ajustes</a>
+    <a href="#/guia" data-nav="guia">📘 Guía</a>
+  </nav>
+  <button id="trabajo" class="trabajo reposo" type="button" title="Ver el registro del trabajo en curso">
+    <span class="punto"></span><span id="trabajo-texto">Sin trabajos en curso</span>
+    <span class="barra-prog" id="trabajo-prog" hidden><i></i></span>
+  </button>
+  <button id="tema" class="icono-btn" type="button" title="Cambiar claro / oscuro" aria-label="Cambiar tema">🌓</button>
+</header>
+
+<main id="vista" tabindex="-1"></main>
+
+<aside id="registro" class="registro" hidden aria-label="Registro del trabajo">
+  <div class="registro-cab">
+    <strong id="registro-titulo">Registro</strong>
+    <span class="espacio"></span>
+    <button id="registro-cancelar" class="btn peligro chico" type="button" hidden>⏹ Cancelar trabajo</button>
+    <button id="registro-cerrar" class="btn chico" type="button">Cerrar ✕</button>
+  </div>
+  <pre id="registro-cuerpo" tabindex="0"></pre>
+</aside>
+
+<div id="avisos" class="avisos" aria-live="polite"></div>
+<div id="modal" class="modal" hidden></div>
+<script src="/app.js" type="module"></script>
+</body>
+</html>

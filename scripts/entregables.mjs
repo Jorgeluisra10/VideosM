@@ -13,7 +13,8 @@ import "./_tmp.mjs"; // temporales dentro del proyecto (evita discos del sistema
 import { copyFileSync, existsSync, mkdirSync, readFileSync, statSync, writeFileSync } from "node:fs";
 import { dirname, join, resolve } from "node:path";
 import { fileURLToPath } from "node:url";
-import { openBrowser, renderStill, selectComposition } from "@remotion/renderer";
+import { renderStill, selectComposition } from "@remotion/renderer";
+import { abrirNavegador } from "./navegador.mjs";
 import { dormir, esperarMemoria, obtenerPaquete } from "./_comun.mjs";
 
 const RAIZ = resolve(dirname(fileURLToPath(import.meta.url)), "..");
@@ -36,7 +37,7 @@ for (let intento = 1; intento <= 5 && !portadaLista; intento++) {
   await esperarMemoria("renderizar la portada", { min: 0.5 });
   let nav = null;
   try {
-    nav = await openBrowser("chrome", { logLevel: "error" });
+    nav = await abrirNavegador();
     const composition = await selectComposition({ serveUrl, id: "Portada", puppeteerInstance: nav });
     await renderStill({ composition, serveUrl, output: portada, imageFormat: "jpeg", jpegQuality: 95, overwrite: true, puppeteerInstance: nav });
     portadaLista = existsSync(portada) && statSync(portada).size > 20000;

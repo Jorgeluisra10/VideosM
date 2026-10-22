@@ -10,6 +10,9 @@ import { spawnSync } from "node:child_process";
 import { existsSync, readFileSync, writeFileSync } from "node:fs";
 import { join, resolve } from "node:path";
 import { Cliente } from "./cliente.mjs";
+import { activarProyecto } from "./activar.mjs";
+import { PERFIL_BASE, cargarPerfil } from "./perfil.mjs";
+import { leerMedios } from "../medios.mjs";
 import { normalizarPlan, sanear } from "./plan-util.mjs";
 import { RAIZ } from "./puente.mjs";
 import { resumirProblemas, validarPlan } from "./validar-plan.mjs";
@@ -31,12 +34,15 @@ const tema = existsSync(d("tema.json")) ? JSON.parse(readFileSync(d("tema.json")
 plan = normalizarPlan(plan, { id: plan.proyecto?.id ?? tema.id, etiqueta: plan.proyecto?.etiqueta ?? tema.etiqueta, titulo: plan.proyecto?.titulo ?? tema.titulo });
 const palabras = JSON.parse(readFileSync(d("timestamps.json"), "utf8"));
 
-let r = await validarPlan(plan, palabras);
+const perfil = cargarPerfil(tema.perfil ?? PERFIL_BASE);
+const briefActivo = existsSync(d("brief.json")) ? JSON.parse(readFileSync(d("brief.json"), "utf8")) : null;
+const medios = leerMedios();
+let r = await validarPlan(plan, palabras, { perfil, media: medios });
 console.log(`${r.metricas.escenas ?? "?"} escenas · ${r.metricas.elementos ?? "?"} elementos · ${r.errores.length} error(es), ${r.avisos.length} aviso(s)`);
 if (!r.ok) {
   const s = sanear(plan, r);
   if (s.quitados) {
-    const r2 = await validarPlan(s.plan, palabras);
+    const r2 = await validarPlan(s.plan, palabras, { perfil, media: medios });
     console.log(`✂ Quitando ${s.quitados} elemento(s) defectuoso(s) quedaría: ${r2.errores.length} error(es)`);
     if (r2.ok) { plan = s.plan; r = r2; }
   }
@@ -47,7 +53,5 @@ if (!r.ok && !resto.includes("--forzar")) {
   console.error("\n❌ El plan tiene errores. Pega esta lista de problemas a la IA para que lo corrija y vuelve a importar (o usa --forzar).");
   process.exit(1);
 }
-writeFileSync(d("plan.json"), JSON.stringify(plan, null, 2) + "\n");
-writeFileSync(d("tema.json"), JSON.stringify({ id: plan.proyecto.id, etiqueta: plan.proyecto.etiqueta, titulo: plan.proyecto.titulo }, null, 2) + "\n");
-spawnSync(process.execPath, [join(RAIZ, "scripts", "activar-tema.mjs"), "dinamico"], { cwd: RAIZ, stdio: "inherit" });
+activarProyecto({ plan, proyecto: plan.proyecto, perfil, brief: briefActivo, medios });
 console.log("✅ Plan activado. Mira las escenas con  npm run ia:capturas  o  npm start, y produce con  npm run producir -- --sin-voz");

@@ -135,7 +135,7 @@ export function cajasDe(el: Elemento): Pieza[] {
     }
     case "forma": {
       const w = pu(el.ancho, 20);
-      const h = el.forma === "circulo" ? w : pu(el.alto, 20);
+      const h = ["circulo", "estrella", "hexagono", "triangulo", "pastel"].includes(String(el.forma)) ? w : pu(el.alto, 20);
       const tenue = !el.relleno || num(el.opacidad, 0.35) < 0.45;
       return [{ caja: centrada(x, y, w, h), clase: tenue ? "fondo" : "pieza", nombre: t }];
     }

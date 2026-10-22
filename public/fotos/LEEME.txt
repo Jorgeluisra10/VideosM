@@ -1,0 +1,10 @@
+Fotos reales (modo híbrido: foto + vectores)
+============================================
+Deja aquí las fotos del inmueble o vehículo (jpg, png, webp) y el logo de tu marca (un archivo cuyo nombre
+empiece por «logo», p. ej. logo.png). Si el brief del proyecto no indica otra carpeta, el video usa las de aquí.
+
+• Se reducen solas a ≤ 1600 px y se copian a public/media (no toques esa carpeta a mano).
+• El orden de las fotos es el orden natural de sus nombres (01-fachada.jpg, 02-sala.jpg…); puedes darle una
+  descripción a cada una en el brief («fotos»: [{ "archivo": "01-fachada.jpg", "descripcion": "Fachada" }]).
+• Cada foto lleva efecto Ken Burns (zoom suave de 1.0 a 1.12) y las tarjetas de datos son de cristal esmerilado.
+• Con el panel (npm run panel) no hace falta tocar carpetas: las subes arrastrándolas.

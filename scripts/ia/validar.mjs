@@ -24,7 +24,7 @@ if (!existsSync(rutaPlan) || !existsSync(rutaTs)) {
   process.exit(2);
 }
 const leer = (r) => (existsSync(r) ? JSON.parse(readFileSync(r, "utf8")) : null);
-const idPerfil = perfilForzado ?? leer(join(dir, "tema.json"))?.perfil ?? leer(join(dir, "brief.json"))?.perfil ?? "medicina";
+const idPerfil = perfilForzado ?? leer(join(dir, "tema.json"))?.perfil ?? leer(join(dir, "brief.json"))?.perfil ?? "medicina-ar";
 const perfil = cargarPerfil(idPerfil);
 const media = leer(join(dir, "media.json"));
 const r = await validarPlan(JSON.parse(readFileSync(rutaPlan, "utf8")), JSON.parse(readFileSync(rutaTs, "utf8")), { perfil, media });

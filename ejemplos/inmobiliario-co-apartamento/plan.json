@@ -1,0 +1,295 @@
+{
+  "proyecto": {
+    "id": "apartamento-chapinero-bogota",
+    "etiqueta": "ALTOS DEL NORTE",
+    "titulo": "Apartamento en venta en Chapinero"
+  },
+  "escenas": [
+    {
+      "id": "gancho",
+      "titulo": "Apartamento en Chapinero",
+      "acento": "amarillo",
+      "desde": "Ojo a",
+      "elementos": [
+        {
+          "tipo": "rotulo",
+          "cuando": "Chapinero",
+          "x": 50,
+          "y": 22,
+          "texto": "CHAPINERO",
+          "color": "amarillo",
+          "tam": 12
+        },
+        {
+          "tipo": "cinta",
+          "cuando": "Chapinero",
+          "desfase": 0.2,
+          "x": 50,
+          "y": 80,
+          "texto": "EN VENTA",
+          "color": "rojo",
+          "estilo": "pastilla",
+          "tam": 6
+        }
+      ],
+      "fondo": {
+        "foto": "fachada.jpg",
+        "modo": "cubrir",
+        "mov": "zoom-in",
+        "oscurecer": 0.28
+      }
+    },
+    {
+      "id": "presentacion",
+      "titulo": "Terraza con vista",
+      "acento": "azul",
+      "desde": "Es un",
+      "elementos": [
+        {
+          "tipo": "etiqueta",
+          "cuando": "terraza",
+          "x": 50,
+          "y": 78,
+          "texto": "Terraza con vista a\nlos cerros orientales",
+          "color": "amarillo"
+        },
+        {
+          "tipo": "icono",
+          "cuando": "mejor",
+          "x": 50,
+          "y": 24,
+          "icono": "estrella",
+          "color": "amarillo",
+          "tam": 13
+        }
+      ],
+      "fondo": {
+        "foto": "habitacion.jpg",
+        "modo": "cubrir",
+        "mov": "izquierda",
+        "oscurecer": 0.3
+      }
+    },
+    {
+      "id": "ficha",
+      "titulo": "Lo que tiene",
+      "acento": "rojo",
+      "desde": "Tiene tres",
+      "elementos": [
+        {
+          "tipo": "ficha",
+          "cuando": "Tiene",
+          "x": 50,
+          "y": 50,
+          "ancho": 86,
+          "items": [
+            {
+              "icono": "cama",
+              "valor": "3",
+              "etiqueta": "Habitaciones",
+              "cuando": "habitaciones",
+              "color": null
+            },
+            {
+              "icono": "bano",
+              "valor": "2",
+              "etiqueta": "Baños",
+              "cuando": "baños",
+              "color": null
+            },
+            {
+              "icono": "medida",
+              "valor": "112 m^{2}",
+              "etiqueta": "Área total",
+              "cuando": "cuadrados",
+              "color": null
+            },
+            {
+              "icono": "auto",
+              "valor": "2",
+              "etiqueta": "Parqueaderos",
+              "cuando": "parqueaderos",
+              "color": null
+            }
+          ],
+          "color": "amarillo"
+        }
+      ],
+      "fondo": {
+        "foto": "terraza.jpg",
+        "modo": "cubrir",
+        "mov": "zoom-out",
+        "oscurecer": 0.5
+      }
+    },
+    {
+      "id": "ubicacion",
+      "titulo": "Ubicación",
+      "acento": "amarillo",
+      "desde": "Está en",
+      "elementos": [
+        {
+          "tipo": "mapa",
+          "cuando": "Está",
+          "x": 50,
+          "y": 50,
+          "ancho": 86,
+          "alto": 60,
+          "texto": "Chapinero",
+          "color": "rojo",
+          "radio": 14,
+          "pinY": 0.62,
+          "puntos": [
+            {
+              "texto": "Estación de\nTransMilenio a cinco\nminutos",
+              "x": 0.2,
+              "y": 0.13,
+              "cuando": "estación"
+            },
+            {
+              "texto": "Parque de la 93",
+              "x": 0.8,
+              "y": 0.13,
+              "cuando": "Parque"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "inversion",
+      "titulo": "Retorno de inversión",
+      "acento": "azul",
+      "desde": "La rentabilidad",
+      "elementos": [
+        {
+          "tipo": "icono",
+          "cuando": "rentabilidad",
+          "x": 50,
+          "y": 20,
+          "icono": "lu-tendencia-alza",
+          "color": "azul",
+          "tam": 12
+        },
+        {
+          "tipo": "dato",
+          "cuando": "rentabilidad",
+          "x": 50,
+          "y": 42,
+          "valor": "6,5",
+          "unidad": "% anual",
+          "etiqueta": "Rentabilidad estimada",
+          "color": "azul",
+          "tam": 13
+        },
+        {
+          "tipo": "dato",
+          "cuando": "valoriza",
+          "x": 50,
+          "y": 66,
+          "valor": "4,5",
+          "unidad": "% anual",
+          "etiqueta": "Valorización estimada",
+          "color": "azul",
+          "tam": 13
+        }
+      ],
+      "fondo": {
+        "foto": "sala.jpg",
+        "modo": "cubrir",
+        "mov": "derecha",
+        "oscurecer": 0.6
+      }
+    },
+    {
+      "id": "precio",
+      "titulo": "Precio",
+      "acento": "rojo",
+      "desde": "Se vende",
+      "elementos": [
+        {
+          "tipo": "precio",
+          "cuando": "Se vende",
+          "x": 50,
+          "y": 48,
+          "valor": "520",
+          "sufijo": "millones",
+          "moneda": "COP",
+          "operacion": "EN VENTA",
+          "detalle": "Administración 650 mil pesos",
+          "color": "amarillo",
+          "tam": 14
+        },
+        {
+          "tipo": "icono",
+          "cuando": "Se vende",
+          "desfase": 0.2,
+          "x": 50,
+          "y": 24,
+          "icono": "lu-dolar",
+          "color": "amarillo",
+          "tam": 12
+        }
+      ],
+      "fondo": {
+        "foto": "cocina.jpg",
+        "modo": "cubrir",
+        "mov": "abajo",
+        "oscurecer": 0.55
+      }
+    },
+    {
+      "id": "cierre",
+      "titulo": "Agenda tu visita",
+      "acento": "amarillo",
+      "desde": "Escríbenos por",
+      "elementos": [
+        {
+          "tipo": "logo",
+          "cuando": "Escríbenos",
+          "x": 50,
+          "y": 7,
+          "tam": 17
+        },
+        {
+          "tipo": "cta",
+          "cuando": "Escríbenos",
+          "x": 50,
+          "y": 55,
+          "ancho": 84,
+          "titulo": "Agenda tu visita",
+          "subtitulo": "Te atiende Camila",
+          "contactos": [
+            {
+              "icono": "whatsapp",
+              "texto": "300 555 0100"
+            },
+            {
+              "icono": "web",
+              "texto": "@altosdelnorte.co"
+            }
+          ],
+          "boton": "Escríbenos",
+          "color": "amarillo"
+        }
+      ],
+      "fondo": {
+        "foto": "fachada.jpg",
+        "modo": "cubrir",
+        "mov": "zoom-in",
+        "oscurecer": 0.6
+      }
+    }
+  ],
+  "portada": {
+    "lineas": [
+      "APARTAMENTO",
+      "EN CHAPINERO",
+      "EN VENTA"
+    ],
+    "resaltar": 2,
+    "escena": "gancho",
+    "segundo": 2.8,
+    "foto": "fachada.jpg"
+  }
+}

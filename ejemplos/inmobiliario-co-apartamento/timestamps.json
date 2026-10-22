@@ -1,0 +1,492 @@
+[
+  {
+    "word": "Ojo",
+    "start": 0.15,
+    "end": 0.334
+  },
+  {
+    "word": "a",
+    "start": 0.374,
+    "end": 0.502
+  },
+  {
+    "word": "este",
+    "start": 0.542,
+    "end": 0.754
+  },
+  {
+    "word": "dato",
+    "start": 0.794,
+    "end": 1.006
+  },
+  {
+    "word": "si",
+    "start": 1.046,
+    "end": 1.202
+  },
+  {
+    "word": "vas",
+    "start": 1.242,
+    "end": 1.426
+  },
+  {
+    "word": "a",
+    "start": 1.466,
+    "end": 1.594
+  },
+  {
+    "word": "comprar",
+    "start": 1.634,
+    "end": 1.93
+  },
+  {
+    "word": "un",
+    "start": 1.97,
+    "end": 2.126
+  },
+  {
+    "word": "apartamento",
+    "start": 2.166,
+    "end": 2.574
+  },
+  {
+    "word": "en",
+    "start": 2.614,
+    "end": 2.77
+  },
+  {
+    "word": "Chapinero.",
+    "start": 2.81,
+    "end": 3.442
+  },
+  {
+    "word": "Es",
+    "start": 3.482,
+    "end": 3.638
+  },
+  {
+    "word": "un",
+    "start": 3.678,
+    "end": 3.834
+  },
+  {
+    "word": "apartamento",
+    "start": 3.874,
+    "end": 4.282
+  },
+  {
+    "word": "de",
+    "start": 4.322,
+    "end": 4.478
+  },
+  {
+    "word": "excelente",
+    "start": 4.518,
+    "end": 4.87
+  },
+  {
+    "word": "estado,",
+    "start": 4.91,
+    "end": 5.318
+  },
+  {
+    "word": "estrato",
+    "start": 5.358,
+    "end": 5.654
+  },
+  {
+    "word": "cinco.",
+    "start": 5.694,
+    "end": 6.214
+  },
+  {
+    "word": "Lo",
+    "start": 6.254,
+    "end": 6.41
+  },
+  {
+    "word": "mejor:",
+    "start": 6.45,
+    "end": 6.69
+  },
+  {
+    "word": "terraza",
+    "start": 6.73,
+    "end": 7.026
+  },
+  {
+    "word": "con",
+    "start": 7.066,
+    "end": 7.25
+  },
+  {
+    "word": "vista",
+    "start": 7.29,
+    "end": 7.53
+  },
+  {
+    "word": "a",
+    "start": 7.57,
+    "end": 7.698
+  },
+  {
+    "word": "los",
+    "start": 7.738,
+    "end": 7.922
+  },
+  {
+    "word": "cerros",
+    "start": 7.962,
+    "end": 8.23
+  },
+  {
+    "word": "orientales.",
+    "start": 8.27,
+    "end": 8.93
+  },
+  {
+    "word": "Tiene",
+    "start": 8.97,
+    "end": 9.21
+  },
+  {
+    "word": "tres",
+    "start": 9.25,
+    "end": 9.462
+  },
+  {
+    "word": "habitaciones,",
+    "start": 9.502,
+    "end": 10.078
+  },
+  {
+    "word": "dos",
+    "start": 10.118,
+    "end": 10.302
+  },
+  {
+    "word": "baños,",
+    "start": 10.342,
+    "end": 10.722
+  },
+  {
+    "word": "ciento",
+    "start": 10.762,
+    "end": 11.03
+  },
+  {
+    "word": "doce",
+    "start": 11.07,
+    "end": 11.282
+  },
+  {
+    "word": "metros",
+    "start": 11.322,
+    "end": 11.59
+  },
+  {
+    "word": "cuadrados",
+    "start": 11.63,
+    "end": 11.982
+  },
+  {
+    "word": "y",
+    "start": 12.022,
+    "end": 12.15
+  },
+  {
+    "word": "dos",
+    "start": 12.19,
+    "end": 12.374
+  },
+  {
+    "word": "parqueaderos.",
+    "start": 12.414,
+    "end": 13.13
+  },
+  {
+    "word": "Está",
+    "start": 13.17,
+    "end": 13.382
+  },
+  {
+    "word": "en",
+    "start": 13.422,
+    "end": 13.578
+  },
+  {
+    "word": "Chapinero,",
+    "start": 13.618,
+    "end": 14.11
+  },
+  {
+    "word": "con",
+    "start": 14.15,
+    "end": 14.334
+  },
+  {
+    "word": "estación",
+    "start": 14.374,
+    "end": 14.698
+  },
+  {
+    "word": "de",
+    "start": 14.738,
+    "end": 14.894
+  },
+  {
+    "word": "TransMilenio",
+    "start": 14.934,
+    "end": 15.37
+  },
+  {
+    "word": "a",
+    "start": 15.41,
+    "end": 15.538
+  },
+  {
+    "word": "cinco",
+    "start": 15.578,
+    "end": 15.818
+  },
+  {
+    "word": "minutos",
+    "start": 15.858,
+    "end": 16.154
+  },
+  {
+    "word": "y",
+    "start": 16.194,
+    "end": 16.322
+  },
+  {
+    "word": "Parque",
+    "start": 16.362,
+    "end": 16.63
+  },
+  {
+    "word": "de",
+    "start": 16.67,
+    "end": 16.826
+  },
+  {
+    "word": "la",
+    "start": 16.866,
+    "end": 17.022
+  },
+  {
+    "word": "93",
+    "start": 17.062,
+    "end": 17.218
+  },
+  {
+    "word": "cerca.",
+    "start": 17.258,
+    "end": 17.778
+  },
+  {
+    "word": "La",
+    "start": 17.818,
+    "end": 17.974
+  },
+  {
+    "word": "rentabilidad",
+    "start": 18.014,
+    "end": 18.45
+  },
+  {
+    "word": "estimada",
+    "start": 18.49,
+    "end": 18.814
+  },
+  {
+    "word": "por",
+    "start": 18.854,
+    "end": 19.038
+  },
+  {
+    "word": "arriendo",
+    "start": 19.078,
+    "end": 19.402
+  },
+  {
+    "word": "es",
+    "start": 19.442,
+    "end": 19.598
+  },
+  {
+    "word": "de",
+    "start": 19.638,
+    "end": 19.794
+  },
+  {
+    "word": "seis",
+    "start": 19.834,
+    "end": 20.046
+  },
+  {
+    "word": "coma",
+    "start": 20.086,
+    "end": 20.298
+  },
+  {
+    "word": "cinco",
+    "start": 20.338,
+    "end": 20.578
+  },
+  {
+    "word": "por",
+    "start": 20.618,
+    "end": 20.802
+  },
+  {
+    "word": "ciento",
+    "start": 20.842,
+    "end": 21.11
+  },
+  {
+    "word": "anual",
+    "start": 21.15,
+    "end": 21.39
+  },
+  {
+    "word": "y",
+    "start": 21.43,
+    "end": 21.558
+  },
+  {
+    "word": "se",
+    "start": 21.598,
+    "end": 21.754
+  },
+  {
+    "word": "valoriza",
+    "start": 21.794,
+    "end": 22.118
+  },
+  {
+    "word": "unos",
+    "start": 22.158,
+    "end": 22.37
+  },
+  {
+    "word": "cuatro",
+    "start": 22.41,
+    "end": 22.678
+  },
+  {
+    "word": "coma",
+    "start": 22.718,
+    "end": 22.93
+  },
+  {
+    "word": "cinco",
+    "start": 22.97,
+    "end": 23.21
+  },
+  {
+    "word": "por",
+    "start": 23.25,
+    "end": 23.434
+  },
+  {
+    "word": "ciento",
+    "start": 23.474,
+    "end": 23.742
+  },
+  {
+    "word": "al",
+    "start": 23.782,
+    "end": 23.938
+  },
+  {
+    "word": "año,",
+    "start": 23.978,
+    "end": 24.302
+  },
+  {
+    "word": "según",
+    "start": 24.342,
+    "end": 24.582
+  },
+  {
+    "word": "estimaciones.",
+    "start": 24.622,
+    "end": 25.338
+  },
+  {
+    "word": "Se",
+    "start": 25.378,
+    "end": 25.534
+  },
+  {
+    "word": "vende",
+    "start": 25.574,
+    "end": 25.814
+  },
+  {
+    "word": "por",
+    "start": 25.854,
+    "end": 26.038
+  },
+  {
+    "word": "quinientos",
+    "start": 26.078,
+    "end": 26.458
+  },
+  {
+    "word": "veinte",
+    "start": 26.498,
+    "end": 26.766
+  },
+  {
+    "word": "millones",
+    "start": 26.806,
+    "end": 27.13
+  },
+  {
+    "word": "de",
+    "start": 27.17,
+    "end": 27.326
+  },
+  {
+    "word": "pesos.",
+    "start": 27.366,
+    "end": 27.886
+  },
+  {
+    "word": "Escríbenos",
+    "start": 27.926,
+    "end": 28.306
+  },
+  {
+    "word": "por",
+    "start": 28.346,
+    "end": 28.53
+  },
+  {
+    "word": "WhatsApp",
+    "start": 28.57,
+    "end": 28.894
+  },
+  {
+    "word": "y",
+    "start": 28.934,
+    "end": 29.062
+  },
+  {
+    "word": "agenda",
+    "start": 29.102,
+    "end": 29.37
+  },
+  {
+    "word": "tu",
+    "start": 29.41,
+    "end": 29.566
+  },
+  {
+    "word": "visita.",
+    "start": 29.606,
+    "end": 30.154
+  }
+]

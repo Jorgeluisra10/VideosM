@@ -3,6 +3,10 @@
  * Es determinista (mismo brief → mismo video), no inventa nada que no esté en el brief y deja el plan listo
  * para validar y renderizar. Con IA (npm run ia) el resultado es más variado; esto es la red de seguridad
  * gratuita y también un punto de partida que puedes retocar a mano.
+ *
+ * Localización (locale): "ar" = español rioplatense (voseo, departamento, alquiler); "co" = español colombiano
+ * (tuteo, apartamento, arriendo, parqueadero, precios en «millones de pesos», estrato) e incluye VEHÍCULOS
+ * (carro, camioneta, moto) y una escena de INVERSIÓN (rentabilidad y valorización estimadas, solo si el brief las trae).
  */
 
 // ---------------------------------------------------------------------------
@@ -56,6 +60,7 @@ const MONEDAS = {
   BRL: ["real", "reales"],
 };
 
+const miles = (n) => String(Math.round(n)).replace(/\B(?=(\d{3})+(?!\d))/g, ".");
 const limpia = (w) => String(w).replace(/[¿?¡!.,;:"«»()]/g, "").trim();
 const norm = (s) => s.normalize("NFD").replace(/[̀-ͯ]/g, "").toLowerCase().replace(/[^a-z0-9]/g, "");
 const slug = (s) => String(s).normalize("NFD").replace(/[̀-ͯ]/g, "").toLowerCase().replace(/[^a-z0-9]+/g, "-").replace(/^-+|-+$/g, "");
@@ -80,12 +85,23 @@ const envolver = (t, max = 22) => {
 const corto = (t, max = 30) => {
   const s = String(t).trim();
   if (s.length <= max) return s;
-  return s.slice(0, max).replace(/\s+\S*$/, "");
+  let r = s.slice(0, max).replace(/\s+\S*$/, "");
+  // no terminar en artículo, preposición o conjunción («Terraza con vista a los» → «Terraza con vista»)
+  while (/\s+(a|al|de|del|la|las|el|los|un|una|con|en|y|e|o|u|para|por|sin|que|su|sus)$/i.test(r)) r = r.replace(/\s+\S+$/, "");
+  return r;
 };
 const enumera = (xs) => (xs.length <= 1 ? xs.join("") : `${xs.slice(0, -1).join(", ")} y ${xs.at(-1)}`);
 
 const ARTICULO = {
   casa: ["una casa", "casa"],
+  apartamento: ["un apartamento", "apartamento"],
+  apartaestudio: ["un apartaestudio", "apartaestudio"],
+  lote: ["un lote", "lote"],
+  bodega: ["una bodega", "bodega"],
+  finca: ["una finca", "finca"],
+  carro: ["un carro", "carro"],
+  camioneta: ["una camioneta", "camioneta"],
+  moto: ["una moto", "moto"],
   departamento: ["un departamento", "departamento"],
   ph: ["un PH", "PH"],
   "casa quinta": ["una casa quinta", "casa quinta"],
@@ -94,23 +110,30 @@ const ARTICULO = {
   oficina: ["una oficina", "oficina"],
   cochera: ["una cochera", "cochera"],
 };
-const VARIANTE_CASA = { casa: "casa", departamento: "departamento", ph: "departamento", "casa quinta": "casa", terreno: "terreno", "local comercial": "local", oficina: "edificio", cochera: "edificio" };
+const ES_VEHICULO = /^(carro|camioneta|moto|auto|vehículo|vehiculo)$/i;
+const VARIANTE_CASA = { casa: "casa", apartamento: "departamento", apartaestudio: "departamento", lote: "terreno", bodega: "edificio", finca: "casa", carro: "casa", camioneta: "casa", moto: "casa", departamento: "departamento", ph: "departamento", "casa quinta": "casa", terreno: "terreno", "local comercial": "local", oficina: "edificio", cochera: "edificio" };
 
 // ---------------------------------------------------------------------------
 // Generador
 // ---------------------------------------------------------------------------
-export function generarInmobiliaria({ brief, medios = [] }) {
+export function generarInmobiliaria({ brief, medios = [], locale = null }) {
   const d = brief.datos ?? {};
-  const voseo = ["ar", "ar-f", "uy"].includes(brief.voz ?? "ar") || /es-AR/i.test(String(brief.voz));
+  const co = locale === "co" || ["co", "co-f"].includes(String(brief.voz)) || /es-CO/i.test(String(brief.voz));
+  const voseo = !co && (["ar", "ar-f", "uy"].includes(brief.voz ?? "ar") || /es-AR/i.test(String(brief.voz)));
   const v = (vo, tu) => (voseo ? vo : tu);
   const tono = String(brief.tono ?? "cercano").toLowerCase();
   const tipoKey = String(d.tipo ?? "Casa").toLowerCase();
-  const [art, tipoTxt] = ARTICULO[tipoKey] ?? [`una ${tipoKey}`, tipoKey];
-  const barrio = String(d.ubicacion ?? "").split(",")[0].trim() || "tu zona";
+  const esVehiculo = ES_VEHICULO.test(tipoKey);
+  const tipoNorm = co && tipoKey === "departamento" ? "apartamento" : tipoKey;
+  const [art, tipoTxt] = ARTICULO[tipoNorm] ?? [`una ${tipoNorm}`, tipoNorm];
+  const barrio = String(d.ubicacion ?? "").split(",")[0].trim() || (esVehiculo ? "tu ciudad" : "tu zona");
   const operacion = String(d.operacion ?? "Venta");
-  const esAlquiler = /alquiler/i.test(operacion);
-  const esPreventa = /preventa/i.test(operacion);
-  const etqOperacion = esAlquiler ? "EN ALQUILER" : esPreventa ? "PREVENTA" : "EN VENTA";
+  const esAlquiler = /alquiler|arriendo/i.test(operacion);
+  const esPreventa = /preventa|sobre planos/i.test(operacion);
+  const etqOperacion = esAlquiler ? (co ? "EN ARRIENDO" : "EN ALQUILER") : esPreventa ? "PREVENTA" : "EN VENTA";
+  const modeloVeh = [d.marca, d.modelo].filter(tiene).map(String).join(" ");
+  const anioVeh = num(d.anio);
+  const nombreVeh = [modeloVeh, Number.isFinite(anioVeh) ? String(anioVeh) : ""].filter(Boolean).join(" ");
   const fotos = medios.filter((m) => m.tipo === "foto");
   const logo = medios.find((m) => m.tipo === "logo");
   const puntos = lista(d.puntosFuertes);
@@ -134,18 +157,39 @@ export function generarInmobiliaria({ brief, medios = [] }) {
 
   // ---- segmentos: cada uno es una frase y una escena ----
   const segs = [];
-  const S = (id, titulo, texto, prioridad, construir, necesitaFoto = false, foto = null) => segs.push({ id, titulo, texto, prioridad, construir, necesitaFoto, foto });
+  const mk = (id, titulo, texto, prioridad, construir, necesitaFoto = false, foto = null) => ({ id, titulo, texto, prioridad, construir, necesitaFoto, foto });
+  const S = (...args) => {
+    const s = mk(...args);
+    segs.push(s);
+    return s;
+  };
 
   // 1. gancho
-  const gancho = {
-    cercano: `¿${v("Buscás", "Buscas")} ${art} en ${barrio}? ${v("Mirá", "Mira")} lo que encontramos.`,
-    premium: `${v("Descubrí", "Descubre")} ${art} en ${barrio}. Un espacio pensado para vivir mejor.`,
-    urgente: `¡Atención! ${cap(art)} en ${barrio} que no ${v("vas", "vas")} a querer perderte.`,
-    profesional: `Presentamos ${art} en ${barrio}${esAlquiler ? ", disponible para alquilar" : ""}.`,
-    divertido: `¿${v("Te imaginás", "Te imaginas")} viviendo en ${barrio}? ${v("Mirá", "Mira")} esto.`,
-  };
+  const gancho = esVehiculo
+    ? {
+        cercano: `Ojo a este ${nombreVeh || tipoTxt} en ${barrio}. ${v("Mirá", "Mira")} lo que tiene.`,
+        premium: `${v("Descubrí", "Descubre")} ${art} que combina estilo y confianza${nombreVeh ? `: ${nombreVeh}` : ""}.`,
+        urgente: `¡Atención! ${cap(art)}${nombreVeh ? ` ${nombreVeh}` : ""} que no vas a querer perder.`,
+        profesional: `Presentamos ${art}${nombreVeh ? ` ${nombreVeh}` : ""} disponible en ${barrio}.`,
+        divertido: `¿Te imaginas manejando esto en ${barrio}? ${v("Mirá", "Mira")}.`,
+      }
+    : co
+      ? {
+          cercano: `Ojo a este dato si ${esAlquiler ? "buscas" : "vas a comprar"} ${art} en ${barrio}.`,
+          premium: `Descubre ${art} en ${barrio}. Un espacio pensado para vivir mejor.`,
+          urgente: `¡Atención! ${cap(art)} en ${barrio} que no vas a querer perder.`,
+          profesional: `Presentamos ${art} en ${barrio}${esAlquiler ? ", disponible en arriendo" : ""}.`,
+          divertido: `¿Te imaginas viviendo en ${barrio}? Mira esto.`,
+        }
+      : {
+          cercano: `¿${v("Buscás", "Buscas")} ${art} en ${barrio}? ${v("Mirá", "Mira")} lo que encontramos.`,
+          premium: `${v("Descubrí", "Descubre")} ${art} en ${barrio}. Un espacio pensado para vivir mejor.`,
+          urgente: `¡Atención! ${cap(art)} en ${barrio} que no ${v("vas", "vas")} a querer perderte.`,
+          profesional: `Presentamos ${art} en ${barrio}${esAlquiler ? ", disponible para alquilar" : ""}.`,
+          divertido: `¿${v("Te imaginás", "Te imaginas")} viviendo en ${barrio}? ${v("Mirá", "Mira")} esto.`,
+        };
   const textoGancho = Object.entries(gancho).find(([k]) => tono.includes(k.slice(0, 5)))?.[1] ?? gancho.cercano;
-  S("gancho", `${cap(tipoTxt)} en ${barrio}`.slice(0, 34), textoGancho, 10, (a, f) => ({
+  S("gancho", (esVehiculo && nombreVeh ? nombreVeh : `${cap(tipoTxt)} en ${barrio}`).slice(0, 34), textoGancho, 10, (a, f) => ({
     fondo: fondoDe(f ?? null, 0.28),
     elementos: [
       { tipo: "rotulo", cuando: a(barrio.split(" ")[0]), x: 50, y: 22, texto: barrio.toUpperCase().slice(0, 16), color: "amarillo", tam: barrio.length > 9 ? 9 : 12 },
@@ -155,8 +199,9 @@ export function generarInmobiliaria({ brief, medios = [] }) {
 
   // 2. presentación con los puntos fuertes
   if (puntos.length) {
-    const estado = tiene(d.antiguedad) ? (/estrenar/i.test(d.antiguedad) ? "a estrenar" : `de ${String(d.antiguedad).toLowerCase()}`) : "";
-    const t = `${estado ? `Es ${art} ${estado}. ` : ""}Lo mejor: ${puntos[0]}.`;
+    const estado = esVehiculo ? "" : tiene(d.antiguedad) ? (/estrenar|sobre planos/i.test(d.antiguedad) ? (/planos/i.test(d.antiguedad) ? "sobre planos" : "a estrenar") : `de ${String(d.antiguedad).toLowerCase()}`) : "";
+    const estrato = !esVehiculo && tiene(d.estrato) ? `, estrato ${numeroALetras(num(d.estrato))}` : "";
+    const t = `${estado || estrato ? `Es ${art} ${estado}${estrato}. `.replace(/ ,/, ",").replace(/  +/g, " ") : ""}Lo mejor: ${puntos[0]}.`;
     S("presentacion", cap(corto(puntos[0], 30)), t, 9, (a, f) => ({
       fondo: fondoDe(f, 0.3),
       elementos: [
@@ -168,7 +213,11 @@ export function generarInmobiliaria({ brief, medios = [] }) {
 
   // 3. recorrido: una frase por foto con descripción (máx. 2)
   recorrido.forEach((m, i) => {
-    const t = `${cap(m.descripcion.trim().replace(/[.!]+$/, ""))}.`;
+    // frase de ≥ 7 palabras (≈ 2,5 s de voz): las descripciones muy cortas llevan un enlace natural delante
+    const desc = m.descripcion.trim().replace(/[.!]+$/, "");
+    const lista = desc.split(/\s+/).length;
+    const enlace = i === 0 ? v("Mirá", "Mira") : "Y también";
+    const t = lista >= 6 ? `${cap(desc)}.` : lista >= 4 ? `${enlace}: ${desc.charAt(0).toLowerCase() + desc.slice(1)}.` : `${enlace} esto: ${desc.charAt(0).toLowerCase() + desc.slice(1)}.`;
     S(`recorrido-${i + 1}`, cap(corto(m.descripcion, 30)), t, 7 - i, (a) => ({
       fondo: fondoDe(m, 0.25),
       elementos: [{ tipo: "etiqueta", cuando: a(limpia(t.split(" ")[0])), x: 50, y: 80, texto: envolver(m.descripcion, 22), color: "hueso" }],
@@ -182,16 +231,26 @@ export function generarInmobiliaria({ brief, medios = [] }) {
   const sup = num(d.supTotal) || num(d.supCubierta);
   const amb = num(d.ambientes);
   const items = [];
-  if (Number.isFinite(dorm) && dorm > 0) items.push({ icono: "cama", valor: String(dorm), etiqueta: dorm === 1 ? "Dormitorio" : "Dormitorios", frase: `${numeroALetras(dorm).replace(/^uno$/, "un")} ${dorm === 1 ? "dormitorio" : "dormitorios"}`, clave: dorm === 1 ? "dormitorio" : "dormitorios" });
-  if (Number.isFinite(ban) && ban > 0) items.push({ icono: "bano", valor: String(ban), etiqueta: ban === 1 ? "Baño" : "Baños", frase: `${numeroALetras(ban).replace(/^uno$/, "un")} ${ban === 1 ? "baño" : "baños"}`, clave: ban === 1 ? "baño" : "baños" });
-  if (Number.isFinite(sup) && sup > 0) items.push({ icono: "medida", valor: `${sup} m^{2}`, etiqueta: tiene(d.supTotal) ? "Superficie total" : "Cubiertos", frase: `${numeroALetras(sup)} metros cuadrados`, clave: "cuadrados" });
-  if (Number.isFinite(coch) && coch > 0) items.push({ icono: "auto", valor: String(coch), etiqueta: coch === 1 ? "Cochera" : "Cocheras", frase: coch === 1 ? "cochera" : `${numeroALetras(coch)} cocheras`, clave: coch === 1 ? "cochera" : "cocheras" });
-  if (!items.length && Number.isFinite(amb) && amb > 0) items.push({ icono: "casa", valor: String(amb), etiqueta: "Ambientes", frase: `${numeroALetras(amb)} ambientes`, clave: "ambientes" });
+  const nDorm = co ? ["Habitación", "Habitaciones", "habitación", "habitaciones"] : ["Dormitorio", "Dormitorios", "dormitorio", "dormitorios"];
+  const nCoch = co ? ["Parqueadero", "Parqueaderos", "parqueadero", "parqueaderos"] : ["Cochera", "Cocheras", "cochera", "cocheras"];
+  if (esVehiculo) {
+    // ficha de vehículo: año, kilometraje, combustible y transmisión (solo los que vengan en el brief)
+    const km = num(d.kilometraje);
+    if (Number.isFinite(anioVeh) && anioVeh > 1950) items.push({ icono: "calendario", valor: String(anioVeh), etiqueta: "Modelo", frase: `del ${numeroALetras(anioVeh)}`, clave: numeroALetras(anioVeh).split(" ")[0] });
+    if (Number.isFinite(km) && km >= 0) items.push({ icono: "lu-velocimetro", valor: miles(km), etiqueta: "Kilómetros", frase: km === 0 ? "cero kilómetros" : `${numeroALetras(km)} kilómetros`, clave: "kilómetros" });
+    if (tiene(d.combustible)) items.push({ icono: "lu-combustible", valor: cap(String(d.combustible)).slice(0, 10), etiqueta: "Combustible", frase: `motor a ${String(d.combustible).toLowerCase()}`, clave: limpia(String(d.combustible).toLowerCase()) });
+    if (tiene(d.transmision)) items.push({ icono: "llave", valor: cap(String(d.transmision)).slice(0, 10), etiqueta: "Transmisión", frase: `transmisión ${String(d.transmision).toLowerCase()}`, clave: "transmisión" });
+  }
+  if (!esVehiculo && Number.isFinite(dorm) && dorm > 0) items.push({ icono: "cama", valor: String(dorm), etiqueta: dorm === 1 ? nDorm[0] : nDorm[1], frase: `${numeroALetras(dorm).replace(/^uno$/, "un")} ${dorm === 1 ? nDorm[2] : nDorm[3]}`, clave: dorm === 1 ? nDorm[2] : nDorm[3] });
+  if (!esVehiculo && Number.isFinite(ban) && ban > 0) items.push({ icono: "bano", valor: String(ban), etiqueta: ban === 1 ? "Baño" : "Baños", frase: `${numeroALetras(ban).replace(/^uno$/, "un")} ${ban === 1 ? "baño" : "baños"}`, clave: ban === 1 ? "baño" : "baños" });
+  if (!esVehiculo && Number.isFinite(sup) && sup > 0) items.push({ icono: "medida", valor: `${sup} m^{2}`, etiqueta: co ? (tiene(d.supTotal) ? "Área total" : "Área construida") : tiene(d.supTotal) ? "Superficie total" : "Cubiertos", frase: `${numeroALetras(sup)} metros cuadrados`, clave: "cuadrados" });
+  if (!esVehiculo && Number.isFinite(coch) && coch > 0) items.push({ icono: "auto", valor: String(coch), etiqueta: coch === 1 ? nCoch[0] : nCoch[1], frase: coch === 1 ? nCoch[2] : `${numeroALetras(coch)} ${nCoch[3]}`, clave: coch === 1 ? nCoch[2] : nCoch[3] });
+  if (!esVehiculo && !items.length && Number.isFinite(amb) && amb > 0) items.push({ icono: "casa", valor: String(amb), etiqueta: "Ambientes", frase: `${numeroALetras(amb)} ambientes`, clave: "ambientes" });
   if (items.length >= 2) {
-    const frase = `Tiene ${enumera(items.map((i) => i.frase))}.`;
+    const frase = esVehiculo ? `Es ${enumera(items.map((i) => i.frase))}.`.replace(/^Es (?=del )/, "Es un modelo ").replace(/ y transmisión/, ", con transmisión") : `Tiene ${enumera(items.map((i) => i.frase))}.`;
     S("ficha", "Lo que tiene", frase, 9, (a, f) => ({
       fondo: fondoDe(f, 0.5),
-      elementos: [{ tipo: "ficha", cuando: a("Tiene"), x: 50, y: 50, ancho: 86, items: items.map((i) => ({ icono: i.icono, valor: i.valor, etiqueta: i.etiqueta, cuando: a(i.clave), color: null })), color: "amarillo" }],
+      elementos: [{ tipo: "ficha", cuando: a(esVehiculo ? "Es" : "Tiene"), x: 50, y: 50, ancho: 86, items: items.map((i) => ({ icono: i.icono, valor: i.valor, etiqueta: i.etiqueta, cuando: a(i.clave), color: null })), color: "amarillo" }],
     }), true);
   }
 
@@ -207,30 +266,70 @@ export function generarInmobiliaria({ brief, medios = [] }) {
 
   // 6. ubicación
   if (tiene(d.ubicacion)) {
-    const cerca = cercanias.slice(0, 3);
-    const frase = cerca.length ? `Está en ${barrio}, con ${enumera(cerca)} cerca.` : `Está en ${d.ubicacion}.`;
     const posiciones = [[0.2, 0.13], [0.8, 0.13], [0.5, 0.9]]; // esquinas: lejos del pin y de su etiqueta
-    S("ubicacion", "Ubicación", frase, 8, (a) => ({
+    /** Escena de ubicación con n cercanías; si el guion se pasa de largo, se REDUCE (n−1) antes de quitar la escena. */
+    const ubicacion = (n) => {
+      const cerca = cercanias.slice(0, n);
+      const frase = cerca.length ? `Está en ${barrio}, con ${enumera(cerca)} cerca.` : `Está en ${d.ubicacion}.`;
+      const seg = mk("ubicacion", "Ubicación", frase, 8, (a) => ({
+        elementos: [
+          { tipo: "mapa", cuando: a("Está"), x: 50, y: 50, ancho: 86, alto: 60, texto: barrio.slice(0, 22), color: "rojo", radio: 14, pinY: cerca.length >= 3 ? 0.5 : 0.62, puntos: cerca.map((c, i) => ({ texto: envolver(cap(c), 22), x: posiciones[i][0], y: posiciones[i][1], cuando: a(limpia(c.split(" ")[0])) })) },
+        ],
+      }));
+      if (n > 1 && cercanias.length >= n) seg.reducir = () => ubicacion(n - 1);
+      return seg;
+    };
+    segs.push(ubicacion(3));
+  }
+
+  // 6b. inversión (solo con datos del brief; siempre como cifra ESTIMADA)
+  const rent = num(d.rentabilidad);
+  const valor = num(d.valorizacion);
+  const hayRent = Number.isFinite(rent) && rent > 0;
+  const hayVal = Number.isFinite(valor) && valor > 0;
+  if (co && !esVehiculo && (hayRent || hayVal)) {
+    const aLetras = (n) => {
+      const [ent, dec] = String(n).split(".");
+      return dec ? `${numeroALetras(Number(ent))} coma ${dec.split("").map((x) => UNIDADES[Number(x)]).join(" ")}` : numeroALetras(Number(ent));
+    };
+    const coma = (n) => String(n).replace(".", ",");
+    const partes = [];
+    if (hayRent) partes.push(`La rentabilidad estimada por arriendo es de ${aLetras(rent)} por ciento anual`);
+    if (hayVal) partes.push(`${hayRent ? "y" : "La zona"} se valoriza unos ${aLetras(valor)} por ciento al año, según estimaciones`);
+    const frase = `${partes.join(" ")}.`;
+    S("inversion", "Retorno de inversión", frase, 8, (a, f) => ({
+      fondo: fondoDe(f, 0.6),
       elementos: [
-        { tipo: "mapa", cuando: a("Está"), x: 50, y: 50, ancho: 86, alto: 60, texto: barrio.slice(0, 22), color: "rojo", radio: 14, pinY: 0.62, puntos: cerca.map((c, i) => ({ texto: envolver(cap(c), 22), x: posiciones[i][0], y: posiciones[i][1], cuando: a(limpia(c.split(" ")[0])) })) },
+        { tipo: "icono", cuando: a(hayRent ? "rentabilidad" : "zona"), x: 50, y: 20, icono: "lu-tendencia-alza", color: "azul", tam: 12 },
+        ...(hayRent ? [{ tipo: "dato", cuando: a("rentabilidad"), x: 50, y: hayVal ? 42 : 50, valor: coma(rent), unidad: "% anual", etiqueta: "Rentabilidad estimada", color: "azul", tam: hayVal ? 13 : 16 }] : []),
+        ...(hayVal ? [{ tipo: "dato", cuando: a(hayRent ? "valoriza" : "zona"), x: 50, y: hayRent ? 66 : 50, valor: coma(valor), unidad: "% anual", etiqueta: "Valorización estimada", color: "azul", tam: hayRent ? 13 : 16 }] : []),
       ],
-    }));
+    }), true);
   }
 
   // 7. precio
   const precio = num(d.precio);
-  const moneda = String(d.moneda ?? "USD").toUpperCase();
+  const moneda = String(d.moneda ?? (co ? "COP" : "USD")).toUpperCase();
   if (Number.isFinite(precio) && precio > 0) {
-    const [uno, varios] = MONEDAS[moneda] ?? [moneda, moneda];
-    const cifra = `${numeroALetras(precio)} ${precio === 1 ? uno : varios}`;
-    const verbo = esAlquiler ? "Se alquila" : esPreventa ? "Preventa desde" : "Se vende";
+    const [uno, varios] = co && moneda === "COP" ? ["peso", "pesos"] : (MONEDAS[moneda] ?? [moneda, moneda]);
+    const cifra = `${numeroALetras(precio)} ${precio % 1e6 === 0 && precio >= 1e6 ? "de " : ""}${precio === 1 ? uno : varios}`;
+    const verbo = esAlquiler ? (co ? "Se arrienda" : "Se alquila") : esPreventa ? "Preventa desde" : "Se vende";
     const frase = esAlquiler ? `${verbo} por ${cifra} por mes.` : esPreventa ? `${verbo} ${cifra}.` : `${verbo} por ${cifra}.`;
-    S("precio", esAlquiler ? "Alquiler" : "Precio", frase, 10, (a, f) => ({
+    // pesos colombianos redondos a millones: «450 millones» en vez de «450.000.000» (cabe en pantalla y se lee de un vistazo)
+    const enMillones = co && moneda === "COP" && precio >= 1e6 && precio % 1e6 === 0;
+    // valor por m² (dato derivado del brief: precio ÷ área), solo si no hay detalle propio
+    const porM2 = !esVehiculo && !esAlquiler && Number.isFinite(sup) && sup > 0 && precio >= 1e6 ? precio / sup : NaN;
+    const detalle = tiene(d.detallePrecio) ? String(d.detallePrecio).slice(0, 34) : co && Number.isFinite(porM2) && moneda === "COP" ? `Unos ${(Math.round(porM2 / 1e5) / 10).toLocaleString("es-CO")} millones por m^{2}` : null;
+    const verboPrecio = esAlquiler ? (co ? "Se arrienda" : "Se alquila") : esPreventa ? "Preventa" : "Se vende";
+    S("precio", esAlquiler ? (co ? "Arriendo" : "Alquiler") : "Precio", frase, 10, (a, f) => ({
       fondo: fondoDe(f, 0.55),
-      elementos: [{ tipo: "precio", cuando: a(esAlquiler ? "Se alquila" : esPreventa ? "Preventa" : "Se vende"), x: 50, y: 48, valor: String(precio), moneda: moneda === "USD" ? "USD" : moneda, operacion: etqOperacion, detalle: tiene(d.detallePrecio) ? String(d.detallePrecio).slice(0, 34) : null, color: "amarillo", tam: 14 }],
+      elementos: [
+        { tipo: "precio", cuando: a(verboPrecio), x: 50, y: 48, valor: enMillones ? String(precio / 1e6) : String(precio), ...(enMillones ? { sufijo: "millones" } : {}), moneda: moneda === "USD" ? "USD" : moneda, operacion: etqOperacion, detalle, color: "amarillo", tam: co && !enMillones && precio >= 1e7 ? 11 : 14 },
+        ...(co ? [{ tipo: "icono", cuando: a(verboPrecio), desfase: 0.2, x: 50, y: 24, icono: "lu-dolar", color: "amarillo", tam: 12 }] : []),
+      ],
     }), true);
   } else {
-    S("precio", "Consultá el precio", `${v("Consultá", "Consulta")} el precio y las condiciones.`, 5, (a) => ({ elementos: [{ tipo: "rotulo", cuando: a(v("Consultá", "Consulta")), x: 50, y: 50, texto: "CONSULTAR", color: "amarillo", tam: 13 }, { tipo: "cinta", cuando: a("precio"), x: 50, y: 70, texto: etqOperacion, color: "rojo", estilo: "pastilla", tam: 6 }] }));
+    S("precio", v("Consultá el precio", "Consulta el precio"), `${v("Consultá", "Consulta")} el precio y las condiciones.`, 5, (a) => ({ elementos: [{ tipo: "rotulo", cuando: a(v("Consultá", "Consulta")), x: 50, y: 50, texto: "CONSULTAR", color: "amarillo", tam: 13 }, { tipo: "cinta", cuando: a("precio"), x: 50, y: 70, texto: etqOperacion, color: "rojo", estilo: "pastilla", tam: 6 }] }));
   }
 
   // 8. cierre con contacto
@@ -238,16 +337,17 @@ export function generarInmobiliaria({ brief, medios = [] }) {
   const tel = tiene(d.telefono) ? String(d.telefono) : tiene(brief.marca?.telefono) ? String(brief.marca.telefono) : "";
   const web = tiene(d.web) ? String(d.web) : tiene(brief.marca?.web) ? String(brief.marca.web) : "";
   const medio = wa || tel ? v(wa ? "Escribinos por WhatsApp" : "Llamanos", wa ? "Escríbenos por WhatsApp" : "Llámanos") : web ? v("Visitá nuestra web", "Visita nuestra web") : v("Escribinos", "Escríbenos");
-  const cierre = `${medio} y ${v("agendá", "agenda")} tu visita.`;
+  const quePide = esVehiculo ? "prueba de manejo" : "visita";
+  const cierre = `${medio} y ${v("agendá", "agenda")} tu ${quePide}.`;
   const contactos = [];
   if (wa) contactos.push({ icono: "whatsapp", texto: wa });
   if (tel && tel !== wa) contactos.push({ icono: "telefono", texto: tel });
   if (web) contactos.push({ icono: "web", texto: web });
-  S("cierre", v("Agendá tu visita", "Agenda tu visita"), cierre, 10, (a, f) => ({
+  S("cierre", v(`Agendá tu ${quePide}`, `Agenda tu ${quePide}`), cierre, 10, (a, f) => ({
     fondo: fondoDe(f, 0.6),
     elementos: [
       ...(logo ? [{ tipo: "logo", cuando: a(medio.split(" ")[0]), x: 50, y: 7, tam: 17 }] : []),
-      { tipo: "cta", cuando: a(medio.split(" ")[0]), x: 50, y: logo ? 55 : 48, ancho: 84, titulo: v("Agendá tu visita", "Agenda tu visita"), subtitulo: tiene(d.agente) ? `Te atiende ${d.agente}` : null, contactos, boton: wa ? v("Escribinos", "Escríbenos") : tel ? v("Llamanos", "Llámanos") : v("Contactanos", "Contáctanos"), color: "amarillo" },
+      { tipo: "cta", cuando: a(medio.split(" ")[0]), x: 50, y: logo ? 55 : 48, ancho: 84, titulo: v(`Agendá tu ${quePide}`, `Agenda tu ${quePide}`), subtitulo: tiene(d.agente) ? `Te atiende ${d.agente}` : null, contactos, boton: wa ? v("Escribinos", "Escríbenos") : tel ? v("Llamanos", "Llámanos") : v("Contactanos", "Contáctanos"), color: "amarillo" },
     ],
   }), true);
 
@@ -256,9 +356,11 @@ export function generarInmobiliaria({ brief, medios = [] }) {
   const palabrasDe = (t) => t.trim().split(/\s+/).length;
   let elegidos = [...segs];
   while (elegidos.reduce((s, x) => s + palabrasDe(x.texto), 0) > maxP) {
-    const quitable = [...elegidos].filter((x) => x.prioridad < 9).sort((a, b) => a.prioridad - b.prioridad)[0];
-    if (!quitable) break;
-    elegidos = elegidos.filter((x) => x !== quitable);
+    // se actúa sobre la escena de MENOR prioridad: si admite versión reducida se acorta; si no, se quita
+    const candidata = elegidos.filter((x) => x.reducir || x.prioridad < 9).sort((a, b) => a.prioridad - b.prioridad)[0];
+    if (!candidata) break;
+    if (candidata.reducir) elegidos[elegidos.indexOf(candidata)] = candidata.reducir();
+    else elegidos = elegidos.filter((x) => x !== candidata);
   }
   void minP;
 
@@ -337,15 +439,21 @@ export function generarInmobiliaria({ brief, medios = [] }) {
 
   const etiqueta = String(brief.marca?.etiqueta || brief.marca?.nombre || "INMOBILIARIA").toUpperCase().slice(0, 28);
   const id = slug(brief.id || `${tipoTxt}-${barrio}`);
-  const titulo = `${cap(tipoTxt)} ${esAlquiler ? "en alquiler" : esPreventa ? "en preventa" : "en venta"} en ${barrio}`;
+  const titulo = `${esVehiculo && nombreVeh ? nombreVeh : cap(tipoTxt)} ${esAlquiler ? (co ? "en arriendo" : "en alquiler") : esPreventa ? "en preventa" : "en venta"} en ${barrio}`;
 
   // ---- post ----
-  const hashtags = ["#inmobiliaria", `#${slug(barrio).replace(/-/g, "")}`, `#${slug(tipoTxt).replace(/-/g, "")}${esAlquiler ? "enalquiler" : "enventa"}`, "#bienesraices", "#propiedades"].filter((h, i, arr) => h.length > 2 && arr.indexOf(h) === i);
-  const lineasPost = [`${titulo} 🏠`, ""];
+  const sufOp = esAlquiler ? (co ? "enarriendo" : "enalquiler") : "enventa";
+  const hashtags = (esVehiculo
+    ? ["#vehiculoscolombia", `#${slug(barrio).replace(/-/g, "")}`, `#${slug(tipoTxt).replace(/-/g, "")}${sufOp}`, "#carrosusados", "#autos"]
+    : co
+      ? ["#bienesraicescolombia", `#${slug(barrio).replace(/-/g, "")}`, `#${slug(tipoTxt).replace(/-/g, "")}${sufOp}`, hayRent || hayVal ? "#inversioninmobiliaria" : "#inmobiliaria", "#propiedades"]
+      : ["#inmobiliaria", `#${slug(barrio).replace(/-/g, "")}`, `#${slug(tipoTxt).replace(/-/g, "")}${sufOp}`, "#bienesraices", "#propiedades"]
+  ).filter((h, i, arr) => h.length > 2 && arr.indexOf(h) === i);
+  const lineasPost = [`${titulo} ${esVehiculo ? "🚗" : "🏠"}`, ""];
   const datos = items.map((i) => `${i.valor.replace(/\^\{2\}/, "²")} ${i.etiqueta.toLowerCase()}`);
   if (datos.length) lineasPost.push(datos.join(" · "));
   if (puntos.length) lineasPost.push(puntos.slice(0, 2).map(cap).join(" · "));
-  if (Number.isFinite(precio) && precio > 0) lineasPost.push(`${etqOperacion === "EN ALQUILER" ? "Alquiler" : "Precio"}: ${moneda} ${precio.toLocaleString("es-AR")}${tiene(d.detallePrecio) ? ` · ${d.detallePrecio}` : ""}`);
+  if (Number.isFinite(precio) && precio > 0) lineasPost.push(`${etqOperacion === "EN ALQUILER" ? "Alquiler" : "Precio"}: ${moneda} ${precio.toLocaleString(co ? "es-CO" : "es-AR")}${tiene(d.detallePrecio) ? ` · ${d.detallePrecio}` : ""}`);
   lineasPost.push("");
   lineasPost.push(contactos.length ? `${v("Escribinos", "Escríbenos")}: ${contactos.map((c) => c.texto).join(" · ")}` : v("Escribinos para coordinar tu visita.", "Escríbenos para coordinar tu visita."));
   lineasPost.push("Consultá disponibilidad y condiciones.".replace("Consultá", v("Consultá", "Consulta")));
@@ -359,6 +467,35 @@ export function generarInmobiliaria({ brief, medios = [] }) {
     portada,
   };
   return { guion, plan, post, proyecto: { id, etiqueta, titulo }, imagenes: { variante: VARIANTE_CASA[tipoKey] ?? "casa" } };
+}
+
+/**
+ * Con la voz real, una frase corta («Cocina integrada con isla.») puede durar menos de 2 s y el validador exige
+ * ≥ 2 s por escena. Aquí se FUSIONA cada escena demasiado corta con su vecina (la fusionada conserva el inicio y el
+ * título de la primera, los elementos de ambas —siguen atados a sus palabras— y la foto de fondo de la primera que tenga).
+ * `tiempos(plan)` debe devolver { inicios, fines } en segundos. Devuelve cuántas fusiones hizo.
+ */
+export function fusionarEscenasCortas(plan, tiempos, minimo = 2.05) {
+  let fusiones = 0;
+  for (let vuelta = 0; vuelta < 8 && plan.escenas.length > 1; vuelta++) {
+    const { inicios, fines } = tiempos(plan);
+    const k = plan.escenas.findIndex((_, i) => fines[i] - inicios[i] < minimo);
+    if (k < 0) break;
+    const i0 = k < plan.escenas.length - 1 ? k : k - 1; // se une con la siguiente; la última, con la anterior
+    const [a, b] = [plan.escenas[i0], plan.escenas[i0 + 1]];
+    // lo de la primera se retira cuando empieza la segunda (si no, los textos se pisarían), y la foto de la
+    // segunda —si es otra— entra como foto enmarcada en ese momento
+    const CON_SALIDA = new Set(["etiqueta", "rotulo", "cinta", "lista", "ficha", "cta", "precio", "dato", "mapa", "foto"]);
+    const deA = a.elementos.map((el) => (CON_SALIDA.has(el.tipo) && !el.hasta ? { ...el, hasta: b.desde } : el));
+    const fotoB = b.fondo?.foto && b.fondo.foto !== a.fondo?.foto ? [{ tipo: "foto", cuando: b.desde, x: 50, y: 42, archivo: b.fondo.foto, ancho: 80, alto: 52, mov: "zoom-in" }] : [];
+    const fusion = { ...a, elementos: [...deA, ...fotoB, ...b.elementos] };
+    if (!fusion.fondo && b.fondo && !fotoB.length) fusion.fondo = b.fondo;
+    if (!fusion.fondo && fotoB.length) fusion.fondo = { ...b.fondo };
+    if (plan.portada?.escena === b.id) plan.portada.escena = a.id;
+    plan.escenas.splice(i0, 2, fusion);
+    fusiones++;
+  }
+  return fusiones;
 }
 
 /** Ajusta portada.segundo cuando ya se conocen los tiempos de las escenas (segundos de inicio y fin de la primera). */

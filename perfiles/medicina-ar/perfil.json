@@ -1,0 +1,92 @@
+{
+  "id": "medicina-ar",
+  "niche": "medicina-ar",
+  "nombre": "Medicina y salud · divulgación (Argentina)",
+  "descripcion": "Reels explicativos de anatomía, fisiología, farmacología y casos clínicos para público argentino: voseo rioplatense natural, dibujos vectoriales animados con íconos de healthicons, recorridos nerviosos y vasculares que se dibujan solos, subtítulos palabra por palabra y revisión médica del guion.",
+  "icono": "🩺",
+  "locale": "ar",
+  "paquetes": [
+    "base",
+    "medicina"
+  ],
+  "etiquetaPorDefecto": "MEDICINA",
+  "duracion": 35,
+  "palabras": [
+    85,
+    110
+  ],
+  "voz": "ar",
+  "velocidad": "+5%",
+  "voces": {
+    "dev": {
+      "voz": "es-AR-TomasNeural",
+      "velocidad": "+5%"
+    },
+    "prod": {
+      "openai": {
+        "voz": "ash",
+        "instrucciones": "Habla con ritmo ágil, cálido y claro, con acento argentino rioplatense (voseo natural: «fijate», «mirá»). Tono de divulgador médico que cuenta algo fascinante: pausas breves antes de los datos clave, énfasis en los términos anatómicos, y cierre con convicción."
+      },
+      "elevenlabs": {
+        "modelo": "eleven_multilingual_v2"
+      }
+    }
+  },
+  "tonos": [
+    "didáctico y atrapante",
+    "cercano",
+    "profesional"
+  ],
+  "paleta": "medico",
+  "marca": {
+    "ambiente": true,
+    "fondo": {
+      "rejilla": 0.04,
+      "particulas": true
+    }
+  },
+  "revision": {
+    "nombre": "revisor médico",
+    "verificacion": "afirmaciones médicas clave"
+  },
+  "plantilla": null,
+  "ejemplos": [
+    "infarto-dolor-referido",
+    "potencial-accion"
+  ],
+  "datosPost": {
+    "hashtags": 5
+  },
+  "hashtagsBase": [
+    "#medicina",
+    "#fisiologia",
+    "#anatomia",
+    "#salud",
+    "#estudiantesdemedicina"
+  ],
+  "campos": [
+    {
+      "clave": "especialidad",
+      "etiqueta": "Especialidad (para la pastilla superior)",
+      "tipo": "texto",
+      "ayuda": "p. ej. CARDIOLOGÍA, NEUROFISIOLOGÍA. Vacío = la elige la IA."
+    },
+    {
+      "clave": "publico",
+      "etiqueta": "Público",
+      "tipo": "opcion",
+      "opciones": [
+        "Estudiantes de medicina",
+        "Público general",
+        "Profesionales de la salud"
+      ],
+      "defecto": "Estudiantes de medicina"
+    },
+    {
+      "clave": "enfoque",
+      "etiqueta": "Enfoque o gancho que quieres",
+      "tipo": "multilinea",
+      "ayuda": "p. ej. «por qué un infarto duele en el brazo». Si lo dejas vacío, la IA propone uno."
+    }
+  ]
+}

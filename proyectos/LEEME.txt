@@ -1,0 +1,7 @@
+Aquí viven TUS proyectos (uno por carpeta):
+
+  proyectos/<id>/brief.json   los datos del video (nicho, tema, datos del inmueble o vehículo, marca…)
+  proyectos/<id>/media/       tus fotos, el logo (nombre que empiece por «logo») y, si quieres, una música
+
+Los crea el panel (npm run panel), el asistente (npm run crear) o crear-video (npm run crear-video).
+Esta carpeta NO se sube a git (ver .gitignore): son tus datos y tus fotos.

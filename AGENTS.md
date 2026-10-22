@@ -5,6 +5,10 @@ Léelo entero antes de tocar nada. Está escrito para una IA con acceso a termin
 ## 1. Qué es
 Productor automático de reels de medicina (1080×1920, 60 fps, ~35 s): guion → voz gratuita con tiempos por palabra → escenas SVG animadas (Remotion) sincronizadas con la voz → QA → render → portada + texto del post. Stack: Remotion 4.0.536 (versión exacta, no `^`), React/TypeScript, Node 18+, Python 3 solo para `edge-tts`.
 
+## 0. Novedades (2026-10-22): panel web, modo dual, voz dev/prod
+
+Lee `GUIA.md` (uso) y la sección «Estado actual» de `CLAUDE.md` (arquitectura). Resumen: `npm run panel` (interfaz completa), nichos `medicina-ar` / `inmobiliario-co` (perfiles con voces, paletas y prompts propios), voz `--mode dev|prod` (edge-tts · OpenAI tts+whisper · ElevenLabs), íconos healthicons/lucide, `<SoundEffect>` en `public/sfx`, transiciones, cristal esmerilado, vehículos e inversión en el nicho colombiano, `npm run test` (72 pruebas sin coste). Sigue sin probarse con claves reales: primer paso en un PC con claves = Ajustes → «Probar conexión» y `npm run ia:diagnostico`.
+
 ## 2. Estado a 2026-10-21
 | Qué | Estado |
 |---|---|

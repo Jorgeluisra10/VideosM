@@ -17,6 +17,8 @@ export type Marca = {
   musica: string | null;
   volumenMusica: number;
   ambiente: boolean;
+  /** transición entre escenas: zoom (por defecto) | fade | slide | wipe | flip | reloj */
+  transicion?: string;
   fondo: { rejilla: number; particulas: boolean };
 };
 

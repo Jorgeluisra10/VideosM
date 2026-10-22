@@ -9,3 +9,10 @@ trabajo/ia/debug/
 # los videos terminados y capturas pesan: no van al repositorio
 trabajo/salida/*.mp4
 trabajo/archivo/*/*.mp4
+
+# tus proyectos (datos y fotos del cliente) y el panel
+proyectos/*
+!proyectos/LEEME.txt
+trabajo/panel/
+public/fotos/*
+!public/fotos/LEEME.txt

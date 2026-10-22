@@ -11,6 +11,7 @@ import { tiempoAncla } from "../anclas";
 import { movimientoFoto } from "../kenburns";
 import { formatoMonto, medidasCta, medidasFicha, medidasLista, medidasPrecio, miles, valorMonto } from "../layout-negocio";
 import { pu, px, py } from "../medidas";
+import { Cristal } from "../vidrio";
 import { Aparece, El, ElProps, col, lineasDe, num, texto } from "./comun";
 import { TextoCaja, ajustarTexto } from "./datos";
 import { dibujarIcono } from "./dibujo";
@@ -107,7 +108,7 @@ export const ListaEl: React.FC<ElProps> = ({ el, t0, t1 }) => {
   return (
     <Aparece t0={t0} t1={t1} fade={0.25}>
       <g transform={`translate(${x0 + m.w / 2} ${y0 + m.h / 2}) scale(${0.94 + 0.06 * kp}) translate(${-(x0 + m.w / 2)} ${-(y0 + m.h / 2)})`}>
-        <rect x={x0} y={y0} width={m.w} height={m.h} rx={32} fill={C.fondo} fillOpacity={0.9} stroke={color} strokeWidth={5} />
+        <Cristal x={x0} y={y0} w={m.w} h={m.h} r={32} color={color} />
         {m.tituloH > 0 && (
           <g>
             <TextoCaja lineas={tit.lineas} fs={tit.fs} x={x0 + m.w / 2} y={y0 + m.tituloH / 2 + 6} color={C.hueso} peso={900} />
@@ -150,8 +151,7 @@ export const CtaEl: React.FC<ElProps> = ({ el, t0, t1 }) => {
   return (
     <Aparece t0={t0} t1={t1} fade={0.3}>
       <g transform={`translate(${x0 + m.w / 2} ${y0 + m.h / 2}) scale(${0.92 + 0.08 * kp}) translate(${-(x0 + m.w / 2)} ${-(y0 + m.h / 2)})`}>
-        <rect x={x0} y={y0} width={m.w} height={m.h} rx={38} fill={C.fondo} fillOpacity={0.93} stroke={color} strokeWidth={6} />
-        <rect x={x0} y={y0} width={m.w} height={m.h} rx={38} fill={color} fillOpacity={0.07} />
+        <Cristal x={x0} y={y0} w={m.w} h={m.h} r={38} color={color} velo={0.5} />
         <TextoCaja lineas={tit.lineas} fs={tit.fs} x={x0 + m.w / 2} y={y0 + 48 + m.tituloH / 2} color={C.hueso} peso={900} />
         {m.subH > 0 && (
           <text x={x0 + m.w / 2} y={y0 + 48 + m.tituloH + 38} textAnchor="middle" fontFamily={FUENTE} fontWeight={600} fontSize={32} fill={C.hueso} fillOpacity={0.85} data-texto="cta-sub">
@@ -246,8 +246,7 @@ export const FichaEl: React.FC<ElProps> = ({ el, t0, t1 }) => {
         const etq = ajustarTexto(texto(it.etiqueta), m.cw - 24, 64, 30, 22);
         return (
           <g key={i} transform={`translate(${x + m.cw / 2} ${y + m.ch / 2}) scale(${0.7 + 0.3 * Math.min(1, k)}) translate(${-(x + m.cw / 2)} ${-(y + m.ch / 2)})`} opacity={Math.min(1, k)}>
-            <rect x={x} y={y} width={m.cw} height={m.ch} rx={30} fill={C.fondo} fillOpacity={0.9} stroke={c} strokeWidth={5} />
-            <rect x={x} y={y} width={m.cw} height={m.ch} rx={30} fill={c} fillOpacity={0.09} />
+            <Cristal x={x} y={y} w={m.cw} h={m.ch} r={30} color={c} />
             <g transform={`translate(${x + m.cw / 2} ${y + 54}) scale(0.58)`}>{dibujarIcono(texto(it.icono, "casa"), c)}</g>
             <text x={x + m.cw / 2} y={y + 128} textAnchor="middle" fontFamily={FUENTE} fontWeight={900} fontSize={fsV} fill={C.hueso} stroke={C.fondo} strokeWidth={6} paintOrder="stroke" data-texto="ficha-valor">
               <Marcas texto={valor} tam={fsV} />
@@ -294,6 +293,11 @@ export const PrecioEl: React.FC<ElProps> = ({ el, t0, t1 }) => {
           <tspan dy={m.moneda ? m.fs * 0.28 : 0} dx={m.moneda ? 16 : 0}>
             {mostrado}
           </tspan>
+          {m.sufijo && (
+            <tspan fontSize={m.fs * 0.34} fontWeight={800} dx={18}>
+              {m.sufijo}
+            </tspan>
+          )}
         </text>
         {m.detalle && (
           <text x={cx} y={top + m.pillH + m.fs * 1.0 + 54} textAnchor="middle" fontFamily={FUENTE} fontWeight={700} fontSize={34} fill={C.hueso} stroke={C.fondo} strokeWidth={7} paintOrder="stroke" opacity={brillo}>

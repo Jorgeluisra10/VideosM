@@ -1,5 +1,6 @@
 import React from "react";
 import { C, FUENTE } from "../../lib/colores";
+import { ICONOS_HI, ICONOS_LU } from "./iconosPro.generated";
 
 /**
  * Iconos de línea para videos de inmobiliaria, negocios y marketing. Caja de 100×100 centrada en (0,0),
@@ -28,7 +29,26 @@ export const ICONOS_EXTRA = [
 
 export type IconoExtra = (typeof ICONOS_EXTRA)[number];
 
+/**
+ * Iconos profesionales: «hi-*» (healthicons-react: órganos, células, aparatos médicos) y «lu-*» (lucide-react:
+ * propiedades, autos, ubicación, finanzas). Caja 100×100 centrada en (0,0), igual que los dibujados a mano.
+ * La lista vive en src/dsl/iconos-pro.json (npm run iconos la sincroniza con el catálogo).
+ */
+export function iconoPro(tipo: string, color: string): React.ReactNode | null {
+  if (tipo.startsWith("hi-")) {
+    const Comp = ICONOS_HI[tipo.slice(3)];
+    return Comp ? <Comp x={-50} y={-50} width={100} height={100} color={color} fill={color} /> : null;
+  }
+  if (tipo.startsWith("lu-")) {
+    const Comp = ICONOS_LU[tipo.slice(3)];
+    return Comp ? <Comp x={-50} y={-50} width={100} height={100} color={color} stroke={color} strokeWidth={1.7} /> : null;
+  }
+  return null;
+}
+
 export function iconoExtra(tipo: string, color: string): React.ReactNode | null {
+  const pro = iconoPro(tipo, color);
+  if (pro) return pro;
   const l = { fill: "none", stroke: color, strokeWidth: 6.5, strokeLinecap: "round" as const, strokeLinejoin: "round" as const };
   const suave = { fill: color, fillOpacity: 0.22 };
   switch (tipo) {

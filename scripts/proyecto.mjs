@@ -12,7 +12,7 @@
  *   node scripts/proyecto.mjs activar <id>       restaura ese proyecto como activo (datos + tema); también acepta los
  *                                                 ejemplos de la carpeta ejemplos/ (insulina-glucosa, potencial-accion...)
  */
-import { copyFileSync, existsSync, mkdirSync, readFileSync, readdirSync, writeFileSync } from "node:fs";
+import { copyFileSync, cpSync, existsSync, mkdirSync, readFileSync, readdirSync, rmSync, writeFileSync } from "node:fs";
 import { dirname, join, resolve } from "node:path";
 import { fileURLToPath } from "node:url";
 import { spawnSync } from "node:child_process";
@@ -28,9 +28,27 @@ const ARCHIVOS = [
   ["src/data/tema.json", "tema.json"],
   ["src/data/post.txt", "post.txt"],
   ["src/data/plan.json", "plan.json"],
+  ["src/data/marca.json", "marca.json"],
+  ["src/data/brief.json", "brief.json"],
+  ["src/data/media.json", "media.json"],
   ["public/audios/voz.mp3", "voz.mp3"],
   ["public/audios/tiempos.vtt", "tiempos.vtt"],
 ];
+
+/** Marca de los proyectos anteriores a los perfiles: paleta médica, ambiente de fondo, sin logo ni música. */
+const MARCA_ANTIGUA = {
+  colores: { fondo: "#0B0F19", rojo: "#EF4444", azul: "#3B82F6", amarillo: "#FACC15", hueso: "#F8FAFC", panel: "#121A2B", panelClaro: "#1B2740" },
+  nombre: "",
+  etiqueta: "",
+  logo: null,
+  telefono: "",
+  web: "",
+  musica: null,
+  volumenMusica: 0.14,
+  ambiente: true,
+  transicion: "zoom",
+  fondo: { rejilla: 0.05, particulas: true },
+};
 
 function temaActivo() {
   const t = readFileSync(join(RAIZ, "src", "tema.ts"), "utf8");
@@ -52,6 +70,10 @@ function guardar() {
     }
   }
   writeFileSync(join(destino, "tema-activo.txt"), tema + "\n", "utf8");
+  // fotos, logo y música importados (public/media): sin ellos no se podría volver a renderizar un video con fotos
+  const medios = join(RAIZ, "public", "media");
+  rmSync(join(destino, "media"), { recursive: true, force: true });
+  if (existsSync(medios) && readdirSync(medios).length) cpSync(medios, join(destino, "media"), { recursive: true });
   console.log(`✅ Proyecto "${info.id}" guardado (${n} archivos, tema ${tema}) en trabajo/archivo/${info.id}/datos/`);
 }
 
@@ -75,6 +97,19 @@ function activar(id) {
   for (const [destino, nombre] of ARCHIVOS) {
     const ruta = join(datos, nombre);
     if (existsSync(ruta)) copyFileSync(ruta, join(RAIZ, destino));
+    else if (["marca.json", "brief.json", "media.json"].includes(nombre)) {
+      // proyecto antiguo (sin marca/brief/medios): vuelve a la marca médica de siempre y sin fotos
+      if (nombre === "brief.json") rmSync(join(RAIZ, destino), { force: true });
+      else writeFileSync(join(RAIZ, destino), nombre === "media.json" ? "[]\n" : JSON.stringify(MARCA_ANTIGUA, null, 2) + "\n");
+    }
+  }
+  // medios del proyecto → public/media
+  const medios = join(RAIZ, "public", "media");
+  const guardados = join(datos, "media");
+  if (existsSync(guardados) || !existsSync(join(datos, "media.json"))) {
+    rmSync(medios, { recursive: true, force: true });
+    mkdirSync(medios, { recursive: true });
+    if (existsSync(guardados)) cpSync(guardados, medios, { recursive: true });
   }
   const tema = existsSync(join(datos, "tema-activo.txt")) ? readFileSync(join(datos, "tema-activo.txt"), "utf8").trim() : existsSync(join(datos, "plan.json")) ? "dinamico" : "dolor-referido";
   const r = spawnSync("node", [join(RAIZ, "scripts", "activar-tema.mjs"), tema], { stdio: "inherit" });

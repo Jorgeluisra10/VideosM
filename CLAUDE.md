@@ -1,9 +1,21 @@
-# VideMed — productor automático de reels de medicina (Video-as-Code)
+# VideMed — productor automático de reels (Video-as-Code) · modo dual medicina-ar / inmobiliario-co
 
 @GEMINI.md
 
 Lo de arriba es el prompt original del proyecto (roles, fases, reglas de diseño). Todo ya está implementado;
 esto explica **cómo** y en qué se aparta del prompt, para trabajar sin redescubrirlo.
+
+## Estado actual (resumen para trabajar sin redescubrir)
+
+- **Nichos (perfiles)**: `perfiles/medicina-ar` (voseo, fondo #0B0F19) y `perfiles/inmobiliario-co` (tuteo colombiano, #0F172A/esmeralda/ámbar, COP en «millones», vehículos, inversión). También `inmobiliaria` (AR, antiguo) y `generico`. `medicina` = alias de `medicina-ar`. Cada perfil define voces dev/prod (`voces`), paleta, campos del formulario (con `si:` condicionales), prompts (guion/revisor/plan/critica/post). Un **brief** (`proyectos/<id>/brief.json`) lleva los datos.
+- **Panel web**: `npm run panel` (`scripts/panel/`): servidor Node sin dependencias en 127.0.0.1:4173 + SPA (`web/`). Ejecuta los mismos scripts como *trabajos* (uno a la vez), registro por SSE, subida de fotos, ajustes `.env` (claves enmascaradas), guía. **Una sola "ranura activa"** (`src/data` + `public/media`): `activarBorrador(id)` (en `panel/proyectos.mjs`) guarda el proyecto activo y deja el elegido; `proyecto.mjs guardar/activar` ahora archiva también marca, brief, media.json y `public/media`.
+- **Voz** (`scripts/generar-voz.mjs --mode dev|prod`, módulos `scripts/voz/`): dev = edge-tts; prod = OpenAI `gpt-4o-mini-tts`+`whisper-1` (word timestamps) o ElevenLabs `/with-timestamps`. `alinearConGuion` (DP) empareja palabras del servicio con las del guion. Pruebas con `scripts/ia/mock-server.mjs` (simula OpenAI audio y ElevenLabs).
+- **Agente** (`scripts/ia/agente.mjs`) ya usa perfil+brief+medios (`--nicho`, `--brief`); `scripts/crear-video.mjs` es la entrada simple; `scripts/plantilla.mjs` = guion+escenas SIN IA (inmobiliario; `--solo-guion`; fusiona escenas < 2 s).
+- **Motor**: íconos `hi-*` (healthicons) / `lu-*` (lucide) desde `src/dsl/iconos-pro.json` (`npm run iconos` regenera `iconosPro.generated.tsx` y el enum del catálogo); formas de `@remotion/shapes`; `Trazo` usa `evolvePath`; transiciones `@remotion/transitions` por marca (`marca.transicion`, desactivadas en el QA); cristal esmerilado `src/dsl/vidrio.tsx` (copia desenfocada de la foto alineada con la cámara); precio con `sufijo` («millones»); Ken Burns 1.0→1.12.
+- **SFX**: `public/sfx/<tipo>.wav` (pop, whoosh, heartbeat, cash, tick, thud, zap, ding; `latido` = alias de `heartbeat`), componente `<SoundEffect>` (vol 0.15), `scripts/audio.mjs` mezcla lo mismo en Node (respeta `marca.ambiente`/`musica`). Se sintetizan solos si faltan.
+- **Navegador**: `scripts/navegador.mjs` usa Chrome de Remotion o, si no se puede descargar, Chromium de Playwright/sistema (o `BROWSER_EXECUTABLE`).
+- **QA**: usa el color de fondo de la marca, no da «vacío/sin movimiento» en escenas con foto, y los subtítulos reducen letra con palabras largas.
+- Pruebas: `npm run test` (tipos + 72 pruebas con servidores simulados, restaura el proyecto activo). **Nunca se probó con claves reales ni edge-tts** (sin internet en el entorno de desarrollo). Guía de usuario: `GUIA.md`.
 
 ## Stack y comandos
 
@@ -19,6 +31,7 @@ Remotion 4.0.536 (exacto, no usar `^`) + React + TypeScript · edge-tts (voz gra
 | `npm run producir` | Encadena voz → QA → render → entregables. `-- --sin-voz`, `-- --sin-qa`. |
 | `npm run sfx` | Regenera los efectos sintetizados en `public/audios/` (ya están generados). |
 | `npm start` | Remotion Studio para previsualizar. |
+| `npm run panel` | Interfaz web · `npm run crear` asistente · `npm run crear-video` un comando · `npm run plantilla` sin IA · `npm run test` pruebas |
 
 **No lances dos renders/QA a la vez**: Chrome se cae con "Target closed".
 

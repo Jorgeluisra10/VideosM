@@ -1,9 +1,9 @@
 #!/usr/bin/env node
 /**
- * VideMed · agente de IA (API de OpenAI). Convierte un TEMA en un video terminado:
+ * VideMed · agente de IA (API de OpenAI). Convierte un TEMA (o los DATOS de un inmueble/vehículo) en un video terminado:
  *
- *   1. Guion      → escribe 85–110 palabras, lo revisa un segundo "médico revisor" y te lo enseña para aprobarlo.
- *   2. Voz        → edge-tts (gratis) con tiempos por palabra.
+ *   1. Guion      → escribe 85–110 palabras (70–100 en inmobiliario), lo revisa un segundo revisor (médico o de datos) y te lo enseña para aprobarlo.
+ *   2. Voz        → modo dev: edge-tts (gratis) · modo prod: OpenAI gpt-4o-mini-tts + whisper-1 o ElevenLabs, con tiempos por palabra.
  *   3. Plan       → el modelo diseña las escenas (JSON estricto); el validador lo mide y el modelo lo repara.
  *   4. Visión     → se renderizan capturas reales y un modelo con visión las critica; se corrige y se repite.
  *   5. Post       → descripción + 5 hashtags.
@@ -14,14 +14,18 @@
  *   npm run ia -- --guion mi-guion.txt            (usa TU guion: no lo modifica)
  *   npm run ia -- --solo-plan                     (el guion/voz de src/data ya existen: solo diseña las escenas)
  *   npm run ia -- --prueba "tema"                 (usa el servidor simulado: sin clave ni coste)
+ *   npm run ia -- --nicho inmobiliario-co --brief proyectos/mi-apto     (datos del inmueble → video; ver GUIA.md)
+ *   npm run ia -- --nicho medicina-ar "Por qué la insulina baja el azúcar"
  *
+ * Nichos (perfiles): medicina-ar (por defecto) · inmobiliario-co · inmobiliaria · generico.
+ * Opciones de voz: --mode dev|prod · --proveedor openai|elevenlabs (solo prod) · --voz ar|co|mx|es|… (dev)
  * Opciones: --si · --render · --solo-guion · --solo-plan · --sin-voz · --sin-revision · --sin-vision · --reanudar
  *           --voz ar|mx|es|ar-f|mx-f|es-f · --velocidad +5% · --modelo <id> · --rondas N · --comentario "..."
  *           --emergencia (si no hay plan válido, usa uno sencillo) · --aceptar-errores · --ayuda
  */
 import { spawnSync } from "node:child_process";
-import { copyFileSync, existsSync, mkdirSync, readFileSync, writeFileSync } from "node:fs";
-import { join } from "node:path";
+import { copyFileSync, existsSync, mkdirSync, readFileSync, statSync, writeFileSync } from "node:fs";
+import { dirname, join, resolve } from "node:path";
 import { createInterface } from "node:readline/promises";
 import { Cliente, ErrorApi, anotarUso } from "./cliente.mjs";
 import { configuracion, enmascarar } from "./entorno.mjs";
@@ -29,13 +33,16 @@ import { construirEsquemaPlan, esquemaCritica, esquemaGuion, esquemaPost, esquem
 import { normalizarPlan, planDeEmergencia, puntuacion, sanear } from "./plan-util.mjs";
 import { entradaCritica, entradaGuion, entradaPlan, entradaPost, entradaReparacion, entradaRevisor, sistemaCritica, sistemaGuion, sistemaPlan, sistemaPost, sistemaRevisor } from "./prompts.mjs";
 import { renderizarCapturas } from "./capturas.mjs";
+import { activarProyecto as activarCompartido, prepararMedios, sintetizarVoz } from "./activar.mjs";
+import { PERFIL_BASE, cargarPerfil, etiquetaDe, leerBrief, objetivoPalabras, perfilActivo, temaDe, validarBrief } from "./perfil.mjs";
+import { leerMedios } from "../medios.mjs";
 import { RAIZ } from "./puente.mjs";
 import { resumirProblemas, validarPlan } from "./validar-plan.mjs";
 
 // ---------------------------------------------------------------------------
 // Argumentos
 // ---------------------------------------------------------------------------
-const CON_VALOR = new Set(["guion", "voz", "velocidad", "tono", "modelo", "rondas", "comentario", "id"]);
+const CON_VALOR = new Set(["guion", "voz", "velocidad", "tono", "modelo", "rondas", "comentario", "id", "nicho", "perfil", "brief", "mode", "modo", "proveedor"]);
 function leerArgs(argv) {
   const a = { _: [] };
   for (let i = 0; i < argv.length; i++) {
@@ -94,13 +101,46 @@ if (!cfg.clave) {
   sal(2, "❌ Falta la clave de OpenAI.\n   1. Copia .env.example como .env\n   2. Pon tu clave en OPENAI_API_KEY=sk-...   (créala en https://platform.openai.com/api-keys)\n   3. Vuelve a ejecutar.\n   Para probar sin clave: añade --prueba");
 }
 
-const tema = args._.join(" ").trim();
+let tema = args._.join(" ").trim();
 const soloPlan = Boolean(args["solo-plan"]);
-if (!tema && !args.guion && !soloPlan) sal(2, '❌ Indica el tema:  npm run ia -- "Por qué la insulina baja el azúcar"\n   (o --guion archivo.txt, o --solo-plan con el guion ya en src/data). Más ayuda: npm run ia -- --ayuda');
 
-const dirNombre = slug(args.id ?? (tema || (args.guion ? String(args.guion).replace(/\.[^.]+$/, "").split(/[\\/]/).pop() : "plan")));
+// ---- nicho (perfil) y brief: qué tipo de video es y con qué datos ----
+let brief = null;
+let dirBrief = null;
+if (args.brief) {
+  const r = resolve(String(args.brief));
+  const rb = existsSync(r) && statSync(r).isDirectory() ? join(r, "brief.json") : r;
+  if (!existsSync(rb)) sal(2, `❌ No encuentro el brief: ${rb}`);
+  brief = leerBrief(rb);
+  dirBrief = dirname(rb);
+}
+let perfil;
+try {
+  perfil = cargarPerfil(args.nicho ?? args.perfil ?? brief?.perfil ?? (soloPlan ? perfilActivo().id : PERFIL_BASE));
+} catch (e) {
+  sal(2, `❌ ${e.message}`);
+}
+if (brief) {
+  brief.perfil = perfil.id;
+  const vb = validarBrief(brief, perfil);
+  vb.avisos.forEach((a) => info(`⚠ ${a}`));
+  if (!vb.ok) sal(2, vb.errores.map((e) => `❌ ${e}`).join("\n"));
+  tema ||= temaDe(brief, perfil);
+} else if (perfil.id !== PERFIL_BASE && tema) {
+  // nicho que vive de datos (inmobiliario, genérico) pero solo se dio un tema: brief mínimo
+  brief = { perfil: perfil.id, tema, datos: {}, marca: {} };
+}
+if (!tema && !args.guion && !soloPlan) sal(2, '❌ Indica el tema:  npm run ia -- "Por qué la insulina baja el azúcar"\n   (o --brief carpeta-con-brief.json, --guion archivo.txt, o --solo-plan con el guion ya en src/data). Más ayuda: npm run ia -- --ayuda');
+
+const dirNombre = slug(args.id ?? brief?.id ?? (tema || (args.guion ? String(args.guion).replace(/\.[^.]+$/, "").split(/[\\/]/).pop() : "plan")));
 const DIR = p("trabajo", "ia", dirNombre);
 mkdirSync(DIR, { recursive: true });
+const objetivo = objetivoPalabras(perfil, brief ?? {});
+
+// ---- medios (fotos, logo, música) del brief; con --solo-plan, los del proyecto activo ----
+let medios = [];
+if (brief && (brief.medios || dirBrief)) medios = prepararMedios(brief, { dir: dirBrief, log: info });
+else if (soloPlan) medios = leerMedios();
 const registro = join(DIR, "llamadas.jsonl");
 const cl = new Cliente(cfg, { log: info });
 const llamar = async (descripcion, opciones) => {
@@ -113,7 +153,7 @@ const llamar = async (descripcion, opciones) => {
 const guardarJson = (n, o) => writeFileSync(join(DIR, n), JSON.stringify(o, null, 2) + "\n");
 const leerJson = (n) => (existsSync(join(DIR, n)) ? JSON.parse(readFileSync(join(DIR, n), "utf8")) : null);
 
-info(`🤖 Agente VideMed · API ${cfg.url} · clave ${enmascarar(cfg.clave)} · carpeta de trabajo trabajo/ia/${dirNombre}/`);
+info(`🤖 Agente VideMed · nicho ${perfil.id} · API ${cfg.url} · clave ${enmascarar(cfg.clave)} · carpeta de trabajo trabajo/ia/${dirNombre}/`);
 
 // ---------------------------------------------------------------------------
 // 1. Guion
@@ -129,12 +169,12 @@ function mostrarGuion(g, revision) {
   info(`Título : ${g.titulo}\nÁrea   : ${g.etiqueta}\nLongitud: ${n} palabras (≈ ${Math.round(n / 2.7)} s de voz)\n`);
   info(g.guion + "\n");
   if (g.verificacion?.length) {
-    info("Afirmaciones clave y certeza:");
+    info(`Afirmaciones clave y certeza (${perfil.revision?.verificacion ?? "afirmaciones"}):`);
     for (const v of g.verificacion) info(`  • [${v.certeza}] ${v.afirmacion} — ${v.nota}`);
   }
   if (g.simplificaciones?.length) info("Simplificaciones didácticas: " + g.simplificaciones.join(" · "));
   if (revision?.problemas?.length) {
-    info("\nObservaciones del revisor médico:");
+    info(`\nObservaciones del revisor (${perfil.revision?.nombre ?? "revisor"}):`);
     for (const x of revision.problemas) info(`  • (${x.tipo}) «${x.fragmento}» → ${x.correccion}`);
   }
 }
@@ -160,35 +200,35 @@ async function etapaGuion() {
   for (let vuelta = 1; ; vuelta++) {
     hr(`FASE 1 · Guion${vuelta > 1 ? ` (versión ${vuelta})` : ""}`);
     let g = await llamar("redactar guion", {
-      rol: "general", nombre: "guion", esquema: esquemaGuion, instrucciones: sistemaGuion(), maxSalida: 24000,
-      entrada: entradaGuion({ tema: temaTxt, previo: fijo ? `GUION DEL USUARIO — NO LO CAMBIES: devuélvelo idéntico en «guion» y completa el resto de campos.\n${fijo}` : previo, comentario }),
+      rol: "general", nombre: "guion", esquema: esquemaGuion, instrucciones: sistemaGuion(perfil, brief ?? {}), maxSalida: 24000,
+      entrada: entradaGuion({ perfil, brief, tema: temaTxt, previo: fijo ? `GUION DEL USUARIO — NO LO CAMBIES: devuélvelo idéntico en «guion» y completa el resto de campos.\n${fijo}` : previo, comentario }),
     });
     g.guion = fijo ?? limpiarGuion(g.guion);
-    g.proyectoId = slug(args.id ?? g.proyectoId);
+    g.proyectoId = slug(args.id ?? brief?.id ?? g.proyectoId);
     g.etiqueta = String(g.etiqueta).toUpperCase();
 
-    // longitud 85–110 palabras
+    // longitud objetivo del perfil (medicina 85–110; inmobiliario 70–100)
     for (let k = 0; !fijo && k < 3; k++) {
       const n = contarPalabras(g.guion);
-      if (n >= 85 && n <= 110) break;
-      info(`   ⚠ El guion tiene ${n} palabras (objetivo 85–110): pido ajuste (${k + 1}/3)…`);
+      if (n >= objetivo.min && n <= objetivo.max) break;
+      info(`   ⚠ El guion tiene ${n} palabras (objetivo ${objetivo.min}–${objetivo.max}): pido ajuste (${k + 1}/3)…`);
       const g2 = await llamar("ajustar longitud", {
-        rol: "general", nombre: "guion", esquema: esquemaGuion, instrucciones: sistemaGuion(), maxSalida: 24000,
-        entrada: entradaGuion({ tema: temaTxt, previo: g.guion, comentario: `El texto tiene ${n} palabras y debe tener entre 90 y 105. ${n < 85 ? "Amplía el mecanismo con un paso más" : "Condensa"} sin perder precisión. ${comentario}` }),
+        rol: "general", nombre: "guion", esquema: esquemaGuion, instrucciones: sistemaGuion(perfil, brief ?? {}), maxSalida: 24000,
+        entrada: entradaGuion({ perfil, brief, tema: temaTxt, previo: g.guion, comentario: `El texto tiene ${n} palabras y debe tener entre ${objetivo.min + 5} y ${objetivo.max - 5}. ${n < objetivo.min ? "Amplía con un paso o dato más (solo datos reales)" : "Condensa"} sin perder precisión. ${comentario}` }),
       });
       g = { ...g2, guion: limpiarGuion(g2.guion), proyectoId: g.proyectoId };
       g.etiqueta = String(g.etiqueta).toUpperCase();
     }
     const palabras = contarPalabras(g.guion);
-    if (!fijo && (palabras < 80 || palabras > 118)) info(`   ⚠ Aun así quedó en ${palabras} palabras; lo dejo a tu criterio.`);
+    if (!fijo && (palabras < objetivo.min - 5 || palabras > objetivo.max + 8)) info(`   ⚠ Aun así quedó en ${palabras} palabras; lo dejo a tu criterio.`);
 
     // revisión médica
     let revision = null;
     if (!args["sin-revision"]) {
       for (let r = 1; r <= 2; r++) {
-        revision = await llamar("revisión médica", { rol: "revisor", nombre: "revision", esquema: esquemaRevision, instrucciones: sistemaRevisor(), maxSalida: 25000, entrada: entradaRevisor({ tema: temaTxt, guion: g.guion }) });
+        revision = await llamar(`revisión (${perfil.revision?.nombre ?? "revisor"})`, { rol: "revisor", nombre: "revision", esquema: esquemaRevision, instrucciones: sistemaRevisor(perfil, brief ?? {}), maxSalida: 25000, entrada: entradaRevisor({ perfil, brief, tema: temaTxt, guion: g.guion }) });
         if (revision.aprobado || !revision.guionCorregido) break;
-        if (fijo) { info("   ⚠ El revisor médico ve problemas en TU guion (no lo toco; revísalos abajo)."); break; }
+        if (fijo) { info("   ⚠ El revisor ve problemas en TU guion (no lo toco; revísalos abajo)."); break; }
         info(`   ✎ El revisor corrige el guion (${revision.problemas.length} observación/es).`);
         g.guion = limpiarGuion(revision.guionCorregido);
       }
@@ -224,14 +264,20 @@ function respaldoDelProyectoActivo() {
 }
 
 function etapaVoz(g) {
-  hr("FASE 2 · Voz y tiempos por palabra");
+  const modoVoz = String(args.mode ?? args.modo ?? process.env.VOZ_MODE ?? "dev");
+  hr(`FASE 2 · Voz y tiempos por palabra (modo ${modoVoz})`);
   if (!args["sin-voz"]) {
     respaldoDelProyectoActivo();
-    writeFileSync(dato("guion.txt"), g.guion + "\n");
-    const extra = [];
-    for (const k of ["voz", "velocidad", "tono"]) if (args[k]) extra.push(`--${k}`, String(args[k]));
-    const r = spawnSync(process.execPath, [p("scripts", "generar-voz.mjs"), ...extra], { cwd: RAIZ, stdio: "inherit" });
-    if (r.status !== 0) sal(1, "❌ Falló la síntesis de voz (edge-tts necesita internet y Python 3). Revisa el mensaje de arriba.");
+    const ok = sintetizarVoz({
+      guion: g.guion,
+      voz: args.voz ?? (brief?.voz && brief.voz !== perfil.voz ? brief.voz : undefined),
+      velocidad: args.velocidad ?? brief?.velocidad,
+      tono: args.tono,
+      modo: args.mode ?? args.modo,
+      proveedor: args.proveedor,
+      perfil: perfil.id,
+    });
+    if (!ok) sal(1, "❌ Falló la síntesis de voz (modo dev: edge-tts necesita internet y Python 3; modo prod: revisa OPENAI_API_KEY / ELEVENLABS_API_KEY en .env). Revisa el mensaje de arriba.");
   } else {
     info("↩ --sin-voz: reutilizo src/data/timestamps.json");
   }
@@ -247,20 +293,21 @@ function etapaVoz(g) {
 // ---------------------------------------------------------------------------
 // 3. Plan
 // ---------------------------------------------------------------------------
-const esquemaPlan = construirEsquemaPlan();
+const esquemaPlan = construirEsquemaPlan({ paquetes: perfil.paquetes });
 let instruccionesPlan = null;
-const sistemaDelPlan = () => (instruccionesPlan ??= sistemaPlan());
+const sistemaDelPlan = () => (instruccionesPlan ??= sistemaPlan(perfil));
+const validar = (plan, palabras) => validarPlan(plan, palabras, { perfil, media: medios });
 
 /** Indicaciones del usuario para el plan (solo con --solo-plan --comentario "..."). */
 const indicaciones = soloPlan && args.comentario ? String(args.comentario) : "";
 
 async function pedirPlan(g, palabras, proyecto) {
-  const r = await llamar("diseñar escenas", { rol: "plan", nombre: "plan", esquema: esquemaPlan, instrucciones: sistemaDelPlan(), maxSalida: 48000, entrada: entradaPlan({ guion: g.guion, palabras, proyecto, indicaciones }) });
+  const r = await llamar("diseñar escenas", { rol: "plan", nombre: "plan", esquema: esquemaPlan, instrucciones: sistemaDelPlan(), maxSalida: 48000, entrada: entradaPlan({ guion: g.guion, palabras, proyecto, indicaciones, brief, perfil, medios }) });
   return normalizarPlan(r, proyecto);
 }
 
 async function repararPlan(g, palabras, proyecto, plan, problemas, critica, indic = "") {
-  const r = await llamar("reparar plan", { rol: "plan", nombre: "plan", esquema: esquemaPlan, instrucciones: sistemaDelPlan(), maxSalida: 48000, entrada: entradaReparacion({ guion: g.guion, palabras, plan, problemas, critica, indicaciones: indic }) });
+  const r = await llamar("reparar plan", { rol: "plan", nombre: "plan", esquema: esquemaPlan, instrucciones: sistemaDelPlan(), maxSalida: 48000, entrada: entradaReparacion({ guion: g.guion, palabras, plan, problemas, critica, indicaciones: indic, brief, perfil, medios }) });
   return normalizarPlan(r, proyecto);
 }
 
@@ -272,7 +319,7 @@ async function etapaPlan(g, palabras, proyecto) {
   let mejor = null;
 
   if (guardado) {
-    const r = await validarPlan(guardado, palabras);
+    const r = await validar(guardado, palabras);
     info(`↩ Plan guardado: ${resumen(r)}`);
     if (r.ok) return { plan: guardado, resultado: r };
     mejor = { plan: guardado, r };
@@ -282,14 +329,14 @@ async function etapaPlan(g, palabras, proyecto) {
   if (!plan && indicaciones && existsSync(dato("plan.json"))) {
     // retoque de un plan que ya existe: se parte de él y se aplican las indicaciones del usuario
     const actual = JSON.parse(readFileSync(dato("plan.json"), "utf8"));
-    const ra = await validarPlan(actual, palabras);
+    const ra = await validar(actual, palabras);
     info(`↻ Retoco el plan actual (${resumen(ra)}) con tus indicaciones.`);
     plan = await repararPlan(g, palabras, proyecto, actual, resumirProblemas(ra, 40), "", indicaciones);
   }
   plan ??= await pedirPlan(g, palabras, proyecto);
   let sinMejora = 0;
   for (let ronda = 0; ; ronda++) {
-    const r = await validarPlan(plan, palabras);
+    const r = await validar(plan, palabras);
     info(`   ▸ ronda ${ronda}: ${r.metricas.escenas ?? "?"} escenas · ${r.metricas.elementos ?? "?"} elementos · ${resumen(r)}`);
     if (!mejor || puntuacion(r) < puntuacion(mejor.r)) { mejor = { plan, r }; sinMejora = 0; } else sinMejora++;
     guardarJson("plan-mejor.json", mejor.plan);
@@ -309,7 +356,7 @@ async function etapaPlan(g, palabras, proyecto) {
   if (!res.ok) {
     const s = sanear(elegido, res);
     if (s.quitados) {
-      const r2 = await validarPlan(s.plan, palabras);
+      const r2 = await validar(s.plan, palabras);
       info(`   ✂ Saneado automático: quito ${s.quitados} elemento(s) defectuoso(s) → ${resumen(r2)}`);
       if (puntuacion(r2) < puntuacion(res)) { elegido = s.plan; res = r2; }
     }
@@ -319,7 +366,7 @@ async function etapaPlan(g, palabras, proyecto) {
     if (args.emergencia) {
       info("   🛟 Uso el plan de emergencia (sencillo pero válido).");
       const pe = await planDeEmergencia(palabras, proyecto);
-      const r3 = await validarPlan(pe, palabras);
+      const r3 = await validar(pe, palabras);
       if (!r3.ok) sal(4, `❌ Ni el plan de emergencia valida:\n${resumirProblemas(r3, 20)}`);
       return { plan: pe, resultado: r3, emergencia: true };
     }
@@ -336,10 +383,12 @@ async function etapaPlan(g, palabras, proyecto) {
 // 4. Activar + revisión visual
 // ---------------------------------------------------------------------------
 function activarProyecto(plan, proyecto) {
-  writeFileSync(dato("plan.json"), JSON.stringify(plan, null, 2) + "\n");
-  writeFileSync(dato("tema.json"), JSON.stringify(proyecto, null, 2) + "\n");
-  const r = spawnSync(process.execPath, [p("scripts", "activar-tema.mjs"), "dinamico"], { cwd: RAIZ, stdio: "ignore" });
-  if (r.status !== 0) sal(1, "❌ No pude activar el tema dinámico (scripts/activar-tema.mjs).");
+  try {
+    // deja activos plan, tema (con el perfil), marca (paleta del nicho), brief y medios del proyecto
+    activarCompartido({ plan, proyecto, perfil, brief, medios });
+  } catch (e) {
+    sal(1, `❌ No pude activar el proyecto: ${e.message}`);
+  }
 }
 
 async function etapaVision(g, palabras, proyecto, hecho) {
@@ -358,7 +407,7 @@ async function etapaVision(g, palabras, proyecto, hecho) {
 
     let critica;
     try {
-      critica = await llamar("crítica visual", { rol: "vision", nombre: "critica", esquema: esquemaCritica, instrucciones: sistemaCritica(), maxSalida: 32000, imagenes: capturas.map((c) => ({ dataUrl: c.dataUrl, detalle: "high" })), entrada: entradaCritica({ guion: g.guion, plan, capturas }) });
+      critica = await llamar("crítica visual", { rol: "vision", nombre: "critica", esquema: esquemaCritica, instrucciones: sistemaCritica(perfil), maxSalida: 32000, imagenes: capturas.map((c) => ({ dataUrl: c.dataUrl, detalle: "high" })), entrada: entradaCritica({ guion: g.guion, plan, capturas }) });
     } catch (e) {
       if (e instanceof ErrorApi && !e.fatal) { info(`   ⚠ La revisión visual falló (${e.message.slice(0, 100)}); sigo sin ella.`); break; }
       throw e;
@@ -374,7 +423,7 @@ async function etapaVision(g, palabras, proyecto, hecho) {
 
     const txt = critica.problemas.filter((x) => x.gravedad !== "baja").map((x) => `[${x.gravedad}] escena ${x.escena} (${x.tipo}): ${x.descripcion} → ${x.arreglo}`).join("\n");
     const nuevo = await repararPlan(g, palabras, proyecto, plan, resumirProblemas(resultado, 20), txt);
-    const r2 = await validarPlan(nuevo, palabras);
+    const r2 = await validar(nuevo, palabras);
     info(`   ▸ plan corregido: ${resumen(r2)}`);
     if (r2.ok && puntuacion(r2) <= puntuacion(resultado) + 3) { plan = nuevo; resultado = r2; guardarJson("plan.json", plan); }
     else { info("   ↩ La corrección empeora el plan: me quedo con el anterior."); break; }
@@ -387,8 +436,8 @@ async function etapaVision(g, palabras, proyecto, hecho) {
 // ---------------------------------------------------------------------------
 async function etapaPost(g) {
   hr("FASE 5 · Texto del post");
-  const post = await llamar("texto del post", { rol: "general", nombre: "post", esquema: esquemaPost, instrucciones: sistemaPost(), maxSalida: 16000, entrada: entradaPost({ titulo: g.titulo, guion: g.guion }) });
-  const base = ["#medicina", "#fisiologia", "#anatomia", "#salud", "#estudiantesdemedicina"];
+  const post = await llamar("texto del post", { rol: "general", nombre: "post", esquema: esquemaPost, instrucciones: sistemaPost(perfil), maxSalida: 16000, entrada: entradaPost({ titulo: g.titulo, guion: g.guion, brief, perfil }) });
+  const base = perfil.hashtagsBase ?? ["#medicina", "#fisiologia", "#anatomia", "#salud", "#estudiantesdemedicina"];
   const tags = [];
   for (const h of [...post.hashtags, ...base]) {
     const t = "#" + norm(String(h).replace(/^#/, ""));
@@ -407,11 +456,11 @@ async function etapaPost(g) {
 function escribirInforme(g, hecho, critica, emergencia) {
   const l = [];
   l.push(`# ${g.titulo}\n`, `Proyecto: \`${g.proyectoId}\` · ${g.etiqueta}\n`, "## Guion\n", g.guion + "\n");
-  l.push("## Verificación médica (hecha por el modelo: revísala tú)\n");
+  l.push(`## Verificación: ${perfil.revision?.verificacion ?? "afirmaciones clave"} (hecha por el modelo: revísala tú)\n`);
   for (const v of g.verificacion ?? []) l.push(`- **${v.certeza}** — ${v.afirmacion}. _${v.nota}_`);
   if (g.simplificaciones?.length) l.push("\nSimplificaciones: " + g.simplificaciones.join("; "));
   if (g.revision?.problemas?.length) {
-    l.push("\n### Observaciones del revisor médico\n");
+    l.push(`\n### Observaciones del revisor (${perfil.revision?.nombre ?? "revisor"})\n`);
     for (const x of g.revision.problemas) l.push(`- (${x.tipo}) «${x.fragmento}» → ${x.correccion}`);
   }
   l.push("\n## Plan de escenas\n", `Validador: ${resumen(hecho.resultado)}${emergencia ? " · **PLAN DE EMERGENCIA**" : ""}\n`);
@@ -432,7 +481,7 @@ async function main() {
     if (!existsSync(dato("guion.txt")) || !existsSync(dato("timestamps.json"))) sal(2, "❌ --solo-plan necesita src/data/guion.txt y timestamps.json (ejecuta antes  npm run voz).");
     const guion = limpiarGuion(readFileSync(dato("guion.txt"), "utf8"));
     const t = existsSync(dato("tema.json")) ? JSON.parse(readFileSync(dato("tema.json"), "utf8")) : {};
-    g = { proyectoId: args.id ? slug(args.id) : t.id ?? "video", etiqueta: t.etiqueta ?? "MEDICINA", titulo: t.titulo ?? guion.split(/(?<=[?.!])\s/)[0], guion, verificacion: [], simplificaciones: [] };
+    g = { proyectoId: args.id ? slug(args.id) : t.id ?? "video", etiqueta: t.etiqueta ?? perfil.etiquetaPorDefecto ?? "VIDEO", titulo: t.titulo ?? guion.split(/(?<=[?.!])\s/)[0], guion, verificacion: [], simplificaciones: [] };
     palabras = JSON.parse(readFileSync(dato("timestamps.json"), "utf8"));
     info(`📄 Guion de src/data (${contarPalabras(guion)} palabras) · ${palabras.length} palabras con tiempos`);
   } else {
@@ -445,7 +494,7 @@ async function main() {
     }
     palabras = etapaVoz(g);
   }
-  const proyecto = { id: g.proyectoId, etiqueta: g.etiqueta, titulo: g.titulo };
+  const proyecto = { id: g.proyectoId, etiqueta: etiquetaDe(perfil, brief ?? {}, g.etiqueta), titulo: g.titulo };
 
   let hecho = await etapaPlan(g, palabras, proyecto);
   guardarJson("plan.json", hecho.plan);

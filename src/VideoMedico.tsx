@@ -1,5 +1,7 @@
 import React from "react";
-import { AbsoluteFill, Audio, Easing, interpolate, interpolateColors, Sequence, staticFile, useCurrentFrame, useVideoConfig } from "remotion";
+import { AbsoluteFill, Audio, Easing, interpolate, interpolateColors, staticFile, useCurrentFrame, useVideoConfig } from "remotion";
+import { SoundEffects } from "./components/SoundEffect";
+import { Transicion, esTransicionExterna } from "./components/Transicion";
 import { Encabezado } from "./components/Encabezado";
 import { Escenario } from "./components/Escenario";
 import { Fondo } from "./components/Fondo";
@@ -10,7 +12,8 @@ import { cargarFuentes } from "./lib/fuentes";
 import { MARCA } from "./lib/marca";
 import { lerp, prog, sacudida } from "./lib/anim";
 import { tema } from "./tema";
-import { DUR_SFX, type EscenaDef } from "./scenes/tipos";
+import { CamaraCtx } from "./dsl/vidrio";
+import { type EscenaDef } from "./scenes/tipos";
 
 cargarFuentes();
 
@@ -24,7 +27,7 @@ export type VideoProps = {
 const SOLAPE_ENTRADA = 0.22;
 const SOLAPE_SALIDA = 0.3;
 
-const Escena: React.FC<{ e: EscenaDef; i: number; total: number; hasta: number; fin: number; modo: "normal" | "soloEscena" }> = ({ e, i, total, hasta, fin, modo }) => {
+const Escena: React.FC<{ e: EscenaDef; i: number; total: number; hasta: number; fin: number; modo: "normal" | "soloEscena"; qa: boolean }> = ({ e, i, total, hasta, fin, modo, qa }) => {
   const frame = useCurrentFrame();
   const t = frame / FPS;
   const primera = i === 0;
@@ -36,7 +39,9 @@ const Escena: React.FC<{ e: EscenaDef; i: number; total: number; hasta: number; 
   const entra = primera ? 1 : prog(t, ini, 0.5, Easing.out(Easing.cubic));
   const sale = ultima ? 1 : 1 - prog(t, hasta - 0.12, SOLAPE_SALIDA + 0.12, Easing.in(Easing.cubic));
   const deriva = prog(t, e.desde, Math.max(1, hasta - e.desde), (n) => n);
-  const escala = lerp(0.92, 1, entra) * lerp(1, 1.08, 1 - sale) * (1 + 0.035 * deriva);
+  // en el QA se mide con la transición clásica (las externas desplazan el contenido a propósito mientras duran)
+  const externa = modo !== "soloEscena" && !qa && esTransicionExterna(MARCA.transicion) ? MARCA.transicion : null;
+  const escala = externa ? 1 + 0.035 * deriva : lerp(0.92, 1, entra) * lerp(1, 1.08, 1 - sale) * (1 + 0.035 * deriva);
 
   let dx = 0;
   let dy = 0;
@@ -48,18 +53,29 @@ const Escena: React.FC<{ e: EscenaDef; i: number; total: number; hasta: number; 
 
   const Comp = e.Componente;
   const Fondo = e.Fondo;
-  return (
+  const opacidad = externa ? 1 : entra * sale;
+  const contenido = (
     <>
       {/* foto de fondo a pantalla completa (no se pinta en el QA de movimiento "soloEscena") */}
       {Fondo && modo !== "soloEscena" && (
-        <AbsoluteFill style={{ opacity: entra * sale }}>
+        <AbsoluteFill style={{ opacity: opacidad }}>
           <Fondo ini={e.desde} fin={hasta} />
         </AbsoluteFill>
       )}
-      <Escenario opacidad={entra * sale} escala={escala} dx={dx} dy={dy}>
-        <Comp ini={e.desde} fin={hasta} />
+      <Escenario opacidad={opacidad} escala={escala} dx={dx} dy={dy}>
+        <CamaraCtx.Provider value={{ escala, dx, dy }}>
+          <Comp ini={e.desde} fin={hasta} />
+        </CamaraCtx.Provider>
       </Escenario>
     </>
+  );
+  if (!externa) return contenido;
+  // transición de @remotion/transitions: la escena que sale usa el progreso inverso a su "sale"; la que entra, su "entra"
+  const saliendo = !ultima && t >= hasta - 0.12;
+  return (
+    <Transicion tipo={externa} direccion={saliendo ? "exiting" : "entering"} progreso={saliendo ? 1 - sale : entra}>
+      {contenido}
+    </Transicion>
   );
 };
 
@@ -91,7 +107,7 @@ export const VideoMedico: React.FC<VideoProps> = ({ modo = "normal", qa = false 
       {modo !== "soloEscena" && <Fondo acento={acento} />}
 
       {tramos.map(({ e, hasta }, i) => (
-        <Escena key={e.id} e={e} i={i} total={tramos.length} hasta={hasta} fin={total} modo={modo} />
+        <Escena key={e.id} e={e} i={i} total={tramos.length} hasta={hasta} fin={total} modo={modo} qa={qa} />
       ))}
 
       {modo !== "soloEscena" && (
@@ -117,11 +133,7 @@ export const VideoMedico: React.FC<VideoProps> = ({ modo = "normal", qa = false 
           volume={(f) => interpolate(f, [0, 60, durationInFrames - 90, durationInFrames], [0, MARCA.volumenMusica, MARCA.volumenMusica, 0], { extrapolateLeft: "clamp", extrapolateRight: "clamp" })}
         />
       )}
-      {tema.sfx.map((s, k) => (
-        <Sequence key={k} from={Math.round(s.t * FPS)} durationInFrames={Math.ceil(DUR_SFX[s.tipo] * FPS)} layout="none">
-          <Audio src={staticFile(`audios/sfx-${s.tipo}.wav`)} volume={s.vol ?? 0.35} />
-        </Sequence>
-      ))}
+      <SoundEffects lista={tema.sfx} />
 
       {qa && <SondaQA />}
     </AbsoluteFill>

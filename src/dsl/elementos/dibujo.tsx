@@ -1,4 +1,5 @@
 import React from "react";
+import { makePie, makePolygon, makeStar, makeTriangle } from "@remotion/shapes";
 import { C, FUENTE } from "../../lib/colores";
 import { onda, pop, prog, useT } from "../../lib/anim";
 import { anchoEstimado } from "../../lib/texto";
@@ -31,6 +32,9 @@ export const RotuloEl: React.FC<ElProps> = ({ el, t0, t1 }) => (
 );
 
 export const FormaEl: React.FC<ElProps> = ({ el, t0, t1 }) => {
+  const t = useT();
+  /** "pastel": porción que se va llenando durante ~1,2 s desde que aparece (rentabilidad, porcentajes) */
+  const pie = Math.max(0.02, num(el.progreso, 0.75, 0, 1) * prog(t, t0, 1.2));
   const relleno = el.relleno ? col(el.relleno) : "none";
   const borde = el.borde ? col(el.borde) : "none";
   const op = num(el.opacidad, 0.35, 0.05, 1);
@@ -53,6 +57,23 @@ export const FormaEl: React.FC<ElProps> = ({ el, t0, t1 }) => {
     case "poligono":
       if (puntosValidos(el.puntos)) forma = <path d={`${polilinea(el.puntos as Punto[])} Z`} {...comun} />;
       break;
+    // figuras de @remotion/shapes: trazado exacto, centradas en (x, y) y de ancho = "ancho"
+    case "estrella":
+    case "hexagono":
+    case "triangulo":
+    case "pastel": {
+      const r = w / 2;
+      const f =
+        el.forma === "estrella"
+          ? makeStar({ points: 5, innerRadius: r * 0.45, outerRadius: r })
+          : el.forma === "hexagono"
+            ? makePolygon({ points: 6, radius: r })
+            : el.forma === "triangulo"
+              ? makeTriangle({ length: w, direction: "up" })
+              : makePie({ radius: r, progress: pie, closePath: true });
+      forma = <path d={f.path} transform={`translate(${cx - f.width / 2} ${cy - f.height / 2})`} {...comun} />;
+      break;
+    }
     default:
       forma = <rect x={cx - w / 2} y={cy - h / 2} width={w} height={h} {...comun} />;
   }

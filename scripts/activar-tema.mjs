@@ -44,7 +44,7 @@ writeFileSync(
  * para mezclar el audio sin abrir Chrome. Apunta a la misma carpeta que src/tema.ts.
  */
 export { sfx } from "./scenes/${nombre}/sonido";
-export { DUR_SFX } from "./scenes/tipos";
+export { DUR_SFX, VOL_SFX, archivoSfx } from "./scenes/tipos";
 `,
 );
 console.log(`✅ Tema activo: ${nombre}`);

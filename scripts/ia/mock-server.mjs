@@ -14,6 +14,12 @@
  *   MOCK_CRITICA=1         la 1.ª crítica visual marca un problema grave
  *   MOCK_ERRORES=429:2     las 2 primeras peticiones fallan con ese código (prueba los reintentos)
  *   MOCK_SIN_RESPONSES=1   /responses devuelve 404 (prueba la caída a chat/completions)
+ *   MOCK_WHISPER_ERRORES=1 la transcripción de /audio/transcriptions trae una palabra menos, una errata y una de más
+ *
+ * También simula la VOZ de producción:
+ *   POST /v1/audio/speech            → un mp3 de ejemplo (gpt-4o-mini-tts)
+ *   POST /v1/audio/transcriptions    → verbose_json con `words` (whisper-1), tiempos inventados a ≈ 0,34 s por palabra
+ *   POST /v1/text-to-speech/:voz/with-timestamps → { audio_base64, alignment } de ElevenLabs (cabecera xi-api-key)
  */
 import { createServer } from "node:http";
 import { existsSync, readFileSync, readdirSync } from "node:fs";
@@ -103,10 +109,12 @@ function cargarEjemplos() {
       guion: readFileSync(join(dir, d.name, "guion.txt"), "utf8").trim(),
       plan: JSON.parse(readFileSync(join(dir, d.name, "plan.json"), "utf8")),
       tema: JSON.parse(readFileSync(join(dir, d.name, "tema.json"), "utf8")),
+      post: existsSync(join(dir, d.name, "post.txt")) ? readFileSync(join(dir, d.name, "post.txt"), "utf8").trim() : null,
     }));
 }
 
 const POR_TEMA = [
+  [/apartamento|chapinero|bogot[aá]|inmueble|arriendo|inmobiliari/i, "inmobiliario-co-apartamento"],
   [/infarto|brazo|dolor referido|coraz/i, "infarto-dolor-referido"],
   [/insulina|glucosa|az[uú]car|diabetes/i, "insulina-glucosa"],
   [/potencial|impulso|neurona|nervios/i, "potencial-accion"],
@@ -148,12 +156,40 @@ function estropear(plan) {
 }
 
 // ---------------------------------------------------------------------------
+// Voz simulada (OpenAI audio / ElevenLabs)
+// ---------------------------------------------------------------------------
+function mp3Ejemplo() {
+  const dir = join(RAIZ, "ejemplos");
+  for (const d of existsSync(dir) ? readdirSync(dir) : []) {
+    const f = join(dir, d, "voz.mp3");
+    if (existsSync(f)) return readFileSync(f);
+  }
+  return Buffer.alloc(4000, 1);
+}
+
+/** Tiempos inventados pero verosímiles: 0,34 s por palabra + pausa tras los signos de puntuación. */
+function marcasSimuladas(texto, conDefectos = false) {
+  let t = 0.15;
+  let palabras = texto.split(/\s+/).filter(Boolean).map((w) => {
+    const ini = t;
+    t += 0.14 + 0.028 * w.replace(/[^\p{L}\p{N}]/gu, "").length + (/[.?!]$/.test(w) ? 0.28 : /,$/.test(w) ? 0.14 : 0);
+    return { word: w.replace(/[¿¡?!.,;:"«»()]/g, ""), start: Math.round(ini * 1000) / 1000, end: Math.round((t - 0.04) * 1000) / 1000 };
+  });
+  if (conDefectos && palabras.length > 12) {
+    palabras.splice(7, 1); // palabra que Whisper "no oyó"
+    palabras[3] = { ...palabras[3], word: palabras[3].word.slice(0, -1) + "x" }; // errata
+    palabras.splice(10, 0, { word: "eh", start: palabras[9].end, end: palabras[9].end + 0.05 }); // palabra de más
+  }
+  return palabras;
+}
+
+// ---------------------------------------------------------------------------
 // Servidor
 // ---------------------------------------------------------------------------
 export function iniciarMock(puerto = 0) {
   const ejemplos = cargarEjemplos();
   const cat = cargarCatalogo();
-  const estado = { peticiones: 0, porEsquema: {}, fallosEmitidos: 0, avisos: [], estilos: { responses: 0, chat: 0 } };
+  const estado = { peticiones: 0, porEsquema: {}, fallosEmitidos: 0, avisos: [], estilos: { responses: 0, chat: 0 }, voz: { speech: 0, transcriptions: 0, elevenlabs: 0 } };
   const [codigoFallo, cuantosFallos] = (process.env.MOCK_ERRORES ?? "").split(":").map(Number);
   const una = { guion: false, revision: false, plan: false, critica: false };
   let esquemaPlan = null;
@@ -206,6 +242,12 @@ export function iniciarMock(puerto = 0) {
     }
     if (nombre === "post") {
       const x = ej();
+      if (x.post) {
+        // ejemplos con post.txt (inmobiliario…): la última línea son los hashtags
+        const lineas = x.post.split("\n");
+        const tags = (lineas.pop() ?? "").split(/\s+/).filter((h) => h.startsWith("#"));
+        return { descripcion: lineas.join("\n").trim(), hashtags: tags.slice(0, 5) };
+      }
       return { descripcion: `${x.tema.titulo} 🧠\n\nExplicación breve del mecanismo (texto simulado).\n\nGuárdalo para repasar y compártelo. Divulgación: no sustituye una consulta médica.`, hashtags: ["#medicina", "#fisiologia", "#anatomia", "#estudiantesdemedicina", "#saludhumana"] };
     }
     void hayImagenes;
@@ -218,6 +260,34 @@ export function iniciarMock(puerto = 0) {
       res.end(JSON.stringify(obj));
     };
     if (req.url === "/_mock/estado") return json(200, estado);
+    // ElevenLabs: cabecera xi-api-key en vez de Bearer
+    if (req.url.startsWith("/v1/text-to-speech/")) {
+      let c = "";
+      req.on("data", (x) => (c += x));
+      req.on("end", () => {
+        estado.peticiones++;
+        estado.voz.elevenlabs++;
+        if (!req.headers["xi-api-key"]) return json(401, { detail: { status: "invalid_api_key", message: "Falta xi-api-key (simulado)" } });
+        const b = JSON.parse(c || "{}");
+        const texto = String(b.text ?? "");
+        const marcas = marcasSimuladas(texto);
+        // tiempo de cada carácter: reparto uniforme dentro de su palabra; el espacio previo cae en el hueco entre palabras
+        const ch = [...texto];
+        const ini = new Array(ch.length).fill(0);
+        const fin = new Array(ch.length).fill(0);
+        let cursor = 0;
+        texto.split(/\s+/).filter(Boolean).forEach((w, n) => {
+          const i0 = texto.indexOf(w, cursor);
+          const mk = marcas[n];
+          const dur = (mk.end - mk.start) / w.length;
+          for (let q = 0; q < w.length; q++) { ini[i0 + q] = mk.start + dur * q; fin[i0 + q] = mk.start + dur * (q + 1); }
+          for (let q = cursor; q < i0; q++) { ini[q] = marcas[n - 1]?.end ?? 0; fin[q] = mk.start; }
+          cursor = i0 + w.length;
+        });
+        json(200, { audio_base64: mp3Ejemplo().toString("base64"), alignment: { characters: ch, character_start_times_seconds: ini, character_end_times_seconds: fin }, normalized_alignment: null });
+      });
+      return;
+    }
     if (!(req.headers.authorization ?? "").startsWith("Bearer ")) return json(401, { error: { message: "Falta la clave (simulado)", type: "invalid_request_error", code: "invalid_api_key" } });
 
     let cuerpo = "";
@@ -233,6 +303,26 @@ export function iniciarMock(puerto = 0) {
         return json(200, { object: "list", data: ["gpt-6.1-sol", "gpt-6-astra", "gpt-6-luna", "gpt-5.6-sol", "gpt-realtime-mini", "gpt-6-transcribe", "text-embedding-3-large", "dall-e-3", "gpt-4o"].map((id) => ({ id, object: "model" })) });
       }
       if (req.method !== "POST") return json(404, { error: { message: "No existe", code: "not_found" } });
+      // voz de OpenAI: texto → mp3 y mp3 → palabras con tiempos
+      if (ruta === "/audio/speech") {
+        estado.voz.speech++;
+        let q = {};
+        try { q = JSON.parse(cuerpo); } catch { /* cuerpo no JSON */ }
+        if (!q.model || !q.input || !q.voice) return json(400, { error: { message: "Faltan model, input o voice (simulado)" } });
+        estado.ultimaVoz = { modelo: q.model, voz: q.voice, instrucciones: q.instructions ?? null, formato: q.response_format ?? null, entrada: String(q.input) };
+        res.writeHead(200, { "Content-Type": "audio/mpeg" });
+        return res.end(mp3Ejemplo());
+      }
+      if (ruta === "/audio/transcriptions") {
+        estado.voz.transcriptions++;
+        const campo = (n) => cuerpo.match(new RegExp(`name="${n.replace(/[\[\]]/g, "\\$&")}"\\r?\\n\\r?\\n([\\s\\S]*?)\\r?\\n--`))?.[1];
+        const modelo = campo("model");
+        estado.ultimaTranscripcion = { modelo, formato: campo("response_format"), granularidad: campo("timestamp_granularities[]"), idioma: campo("language") };
+        if (campo("response_format") !== "verbose_json" || campo("timestamp_granularities[]") !== "word") return json(400, { error: { message: "Se esperaba verbose_json con timestamp_granularities[]=word (simulado)" } });
+        const guion = campo("prompt") ?? "";
+        const words = marcasSimuladas(guion, Boolean(process.env.MOCK_WHISPER_ERRORES));
+        return json(200, { task: "transcribe", language: "spanish", duration: words.at(-1)?.end ?? 0, text: words.map((w) => w.word).join(" "), words });
+      }
       let b;
       try { b = JSON.parse(cuerpo); } catch { return json(400, { error: { message: "JSON inválido" } }); }
 

@@ -1,0 +1,426 @@
+{
+  "id": "inmobiliario-co",
+  "niche": "inmobiliario-co",
+  "nombre": "Inmobiliario · Colombia (inmuebles, vehículos e inversión)",
+  "descripcion": "Reels para vender o arrendar apartamentos, casas, lotes y vehículos en Colombia: fotos reales con Ken Burns y tarjetas de cristal esmerilado, precio animado en COP («450 millones»), ficha técnica en m², mapa de ubicación y retorno de inversión. Español colombiano persuasivo y directo.",
+  "icono": "🏙️",
+  "locale": "co",
+  "paquetes": [
+    "base",
+    "inmobiliaria"
+  ],
+  "etiquetaPorDefecto": "INMOBILIARIA",
+  "duracion": 35,
+  "palabras": [
+    70,
+    100
+  ],
+  "voz": "co",
+  "velocidad": "+3%",
+  "voces": {
+    "dev": {
+      "voz": "es-CO-GonzaloNeural",
+      "velocidad": "+3%"
+    },
+    "prod": {
+      "openai": {
+        "voz": "onyx",
+        "instrucciones": "Habla con acento colombiano comercial y confiable, ritmo ágil y seguro, tono cercano y profesional de asesor inmobiliario. Enfatiza el precio y la ubicación, haz una pausa breve antes del precio y cierra con una invitación cálida a escribir por WhatsApp."
+      },
+      "elevenlabs": {
+        "modelo": "eleven_multilingual_v2"
+      }
+    }
+  },
+  "tonos": [
+    "cercano y confiable",
+    "premium y elegante",
+    "urgente (oportunidad)",
+    "profesional",
+    "divertido"
+  ],
+  "paleta": "colombia",
+  "marca": {
+    "ambiente": false,
+    "volumenMusica": 0.14,
+    "transicion": "fade",
+    "fondo": {
+      "rejilla": 0,
+      "particulas": false
+    }
+  },
+  "revision": {
+    "nombre": "verificador de datos y de publicidad",
+    "verificacion": "datos del inmueble o vehículo usados en el guion"
+  },
+  "plantilla": "inmobiliaria",
+  "ejemplos": [
+    "inmobiliario-co-apartamento"
+  ],
+  "datosPost": {
+    "hashtags": 5
+  },
+  "hashtagsBase": [
+    "#bienesraicescolombia",
+    "#inmobiliaria",
+    "#propiedades",
+    "#apartamentos",
+    "#inversioninmobiliaria"
+  ],
+  "campos": [
+    {
+      "clave": "operacion",
+      "etiqueta": "Operación",
+      "tipo": "opcion",
+      "opciones": [
+        "Venta",
+        "Arriendo",
+        "Preventa (sobre planos)"
+      ],
+      "defecto": "Venta",
+      "requerido": true,
+      "grupo": "Inmueble o vehículo"
+    },
+    {
+      "clave": "tipo",
+      "etiqueta": "Tipo",
+      "tipo": "opcion",
+      "opciones": [
+        "Apartamento",
+        "Casa",
+        "Apartaestudio",
+        "Lote",
+        "Local comercial",
+        "Oficina",
+        "Bodega",
+        "Finca",
+        "Carro",
+        "Camioneta",
+        "Moto"
+      ],
+      "defecto": "Apartamento",
+      "requerido": true,
+      "grupo": "Inmueble o vehículo"
+    },
+    {
+      "clave": "ubicacion",
+      "etiqueta": "Ubicación (barrio y ciudad)",
+      "tipo": "texto",
+      "requerido": true,
+      "ayuda": "p. ej. Chapinero, Bogotá · El Poblado, Medellín. No pongas la dirección exacta si no quieres mostrarla.",
+      "grupo": "Inmueble o vehículo"
+    },
+    {
+      "clave": "precio",
+      "etiqueta": "Precio o canon (solo número, en pesos)",
+      "tipo": "numero",
+      "ayuda": "p. ej. 450000000 (450 millones) o 2800000 de arriendo. Vacío = el video dirá «consulta el precio».",
+      "grupo": "Precio"
+    },
+    {
+      "clave": "moneda",
+      "etiqueta": "Moneda",
+      "tipo": "opcion",
+      "opciones": [
+        "COP",
+        "USD"
+      ],
+      "defecto": "COP",
+      "grupo": "Precio"
+    },
+    {
+      "clave": "detallePrecio",
+      "etiqueta": "Detalle del precio (opcional)",
+      "tipo": "texto",
+      "ayuda": "p. ej. «Administración $450.000» o «Acepta crédito hipotecario». Si lo dejas vacío y hay área, se calcula el valor por m².",
+      "grupo": "Precio"
+    },
+    {
+      "clave": "estrato",
+      "etiqueta": "Estrato",
+      "tipo": "opcion",
+      "opciones": [
+        "",
+        "1",
+        "2",
+        "3",
+        "4",
+        "5",
+        "6"
+      ],
+      "grupo": "Características",
+      "si": {
+        "clave": "tipo",
+        "excepto": [
+          "Carro",
+          "Camioneta",
+          "Moto"
+        ]
+      }
+    },
+    {
+      "clave": "ambientes",
+      "etiqueta": "Ambientes",
+      "tipo": "numero",
+      "grupo": "Características",
+      "si": {
+        "clave": "tipo",
+        "excepto": [
+          "Carro",
+          "Camioneta",
+          "Moto"
+        ]
+      }
+    },
+    {
+      "clave": "dormitorios",
+      "etiqueta": "Habitaciones",
+      "tipo": "numero",
+      "grupo": "Características",
+      "si": {
+        "clave": "tipo",
+        "excepto": [
+          "Carro",
+          "Camioneta",
+          "Moto"
+        ]
+      }
+    },
+    {
+      "clave": "banos",
+      "etiqueta": "Baños",
+      "tipo": "numero",
+      "grupo": "Características",
+      "si": {
+        "clave": "tipo",
+        "excepto": [
+          "Carro",
+          "Camioneta",
+          "Moto"
+        ]
+      }
+    },
+    {
+      "clave": "cocheras",
+      "etiqueta": "Parqueaderos",
+      "tipo": "numero",
+      "grupo": "Características",
+      "si": {
+        "clave": "tipo",
+        "excepto": [
+          "Carro",
+          "Camioneta",
+          "Moto"
+        ]
+      }
+    },
+    {
+      "clave": "supTotal",
+      "etiqueta": "Área total (m²)",
+      "tipo": "numero",
+      "grupo": "Características",
+      "si": {
+        "clave": "tipo",
+        "excepto": [
+          "Carro",
+          "Camioneta",
+          "Moto"
+        ]
+      }
+    },
+    {
+      "clave": "supCubierta",
+      "etiqueta": "Área construida (m²)",
+      "tipo": "numero",
+      "grupo": "Características",
+      "si": {
+        "clave": "tipo",
+        "excepto": [
+          "Carro",
+          "Camioneta",
+          "Moto"
+        ]
+      }
+    },
+    {
+      "clave": "antiguedad",
+      "etiqueta": "Antigüedad / estado",
+      "tipo": "texto",
+      "ayuda": "p. ej. «sobre planos», «5 años», «excelente estado»",
+      "grupo": "Características",
+      "si": {
+        "clave": "tipo",
+        "excepto": [
+          "Carro",
+          "Camioneta",
+          "Moto"
+        ]
+      }
+    },
+    {
+      "clave": "amenities",
+      "etiqueta": "Comodidades (separadas por coma)",
+      "tipo": "lista",
+      "ayuda": "p. ej. piscina, gimnasio, zona BBQ, vigilancia 24 h",
+      "grupo": "Características",
+      "si": {
+        "clave": "tipo",
+        "excepto": [
+          "Carro",
+          "Camioneta",
+          "Moto"
+        ]
+      }
+    },
+    {
+      "clave": "marca",
+      "etiqueta": "Marca",
+      "tipo": "texto",
+      "ayuda": "p. ej. Mazda, Renault, Yamaha",
+      "grupo": "Vehículo",
+      "si": {
+        "clave": "tipo",
+        "en": [
+          "Carro",
+          "Camioneta",
+          "Moto"
+        ]
+      }
+    },
+    {
+      "clave": "modelo",
+      "etiqueta": "Modelo / línea",
+      "tipo": "texto",
+      "ayuda": "p. ej. CX-30 Touring",
+      "grupo": "Vehículo",
+      "si": {
+        "clave": "tipo",
+        "en": [
+          "Carro",
+          "Camioneta",
+          "Moto"
+        ]
+      }
+    },
+    {
+      "clave": "anio",
+      "etiqueta": "Año del modelo",
+      "tipo": "numero",
+      "grupo": "Vehículo",
+      "si": {
+        "clave": "tipo",
+        "en": [
+          "Carro",
+          "Camioneta",
+          "Moto"
+        ]
+      }
+    },
+    {
+      "clave": "kilometraje",
+      "etiqueta": "Kilometraje",
+      "tipo": "numero",
+      "grupo": "Vehículo",
+      "si": {
+        "clave": "tipo",
+        "en": [
+          "Carro",
+          "Camioneta",
+          "Moto"
+        ]
+      }
+    },
+    {
+      "clave": "combustible",
+      "etiqueta": "Combustible",
+      "tipo": "opcion",
+      "opciones": [
+        "Gasolina",
+        "Diésel",
+        "Híbrido",
+        "Eléctrico",
+        "Gas"
+      ],
+      "grupo": "Vehículo",
+      "si": {
+        "clave": "tipo",
+        "en": [
+          "Carro",
+          "Camioneta",
+          "Moto"
+        ]
+      }
+    },
+    {
+      "clave": "transmision",
+      "etiqueta": "Transmisión",
+      "tipo": "opcion",
+      "opciones": [
+        "Mecánica",
+        "Automática"
+      ],
+      "grupo": "Vehículo",
+      "si": {
+        "clave": "tipo",
+        "en": [
+          "Carro",
+          "Camioneta",
+          "Moto"
+        ]
+      }
+    },
+    {
+      "clave": "puntosFuertes",
+      "etiqueta": "Los 2–3 puntos más fuertes (separados por coma)",
+      "tipo": "lista",
+      "requerido": true,
+      "ayuda": "Lo que hace especial a este inmueble o vehículo. La IA se basa en esto.",
+      "grupo": "Gancho"
+    },
+    {
+      "clave": "cercanias",
+      "etiqueta": "Qué hay cerca (separado por coma)",
+      "tipo": "lista",
+      "ayuda": "p. ej. estación de TransMilenio a 5 min, Parque de la 93, colegios",
+      "grupo": "Ubicación"
+    },
+    {
+      "clave": "rentabilidad",
+      "etiqueta": "Rentabilidad anual estimada por arriendo (%)",
+      "tipo": "numero",
+      "ayuda": "Solo si la conoces con base real (canon ÷ precio). Aparece como «estimada».",
+      "grupo": "Inversión (opcional)"
+    },
+    {
+      "clave": "valorizacion",
+      "etiqueta": "Valorización anual estimada de la zona (%)",
+      "tipo": "numero",
+      "ayuda": "Solo si tienes una fuente. Aparece como «estimada».",
+      "grupo": "Inversión (opcional)"
+    },
+    {
+      "clave": "agente",
+      "etiqueta": "Nombre de quien atiende",
+      "tipo": "texto",
+      "grupo": "Contacto"
+    },
+    {
+      "clave": "telefono",
+      "etiqueta": "Teléfono",
+      "tipo": "texto",
+      "grupo": "Contacto"
+    },
+    {
+      "clave": "whatsapp",
+      "etiqueta": "WhatsApp (si es distinto)",
+      "tipo": "texto",
+      "grupo": "Contacto"
+    },
+    {
+      "clave": "web",
+      "etiqueta": "Web o usuario de Instagram",
+      "tipo": "texto",
+      "grupo": "Contacto"
+    }
+  ]
+}

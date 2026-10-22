@@ -1,26 +1,86 @@
 {
   "medico": {
     "nombre": "Médico (por defecto)",
-    "colores": { "fondo": "#0B0F19", "rojo": "#EF4444", "azul": "#3B82F6", "amarillo": "#FACC15", "hueso": "#F8FAFC", "panel": "#121A2B", "panelClaro": "#1B2740" }
+    "colores": {
+      "fondo": "#0B0F19",
+      "rojo": "#EF4444",
+      "azul": "#3B82F6",
+      "amarillo": "#FACC15",
+      "hueso": "#F8FAFC",
+      "panel": "#121A2B",
+      "panelClaro": "#1B2740"
+    }
   },
   "premium": {
     "nombre": "Premium · azul noche y dorado",
-    "colores": { "fondo": "#0A0F1C", "rojo": "#E5484D", "azul": "#5B9BD5", "amarillo": "#D4AF37", "hueso": "#F5F1E8", "panel": "#111A2E", "panelClaro": "#1A2742" }
+    "colores": {
+      "fondo": "#0A0F1C",
+      "rojo": "#E5484D",
+      "azul": "#5B9BD5",
+      "amarillo": "#D4AF37",
+      "hueso": "#F5F1E8",
+      "panel": "#111A2E",
+      "panelClaro": "#1A2742"
+    }
   },
   "confianza": {
     "nombre": "Confianza · petróleo y turquesa",
-    "colores": { "fondo": "#07131A", "rojo": "#FF6B6B", "azul": "#4EA8DE", "amarillo": "#2EC4B6", "hueso": "#F1F7F9", "panel": "#0E222D", "panelClaro": "#16323F" }
+    "colores": {
+      "fondo": "#07131A",
+      "rojo": "#FF6B6B",
+      "azul": "#4EA8DE",
+      "amarillo": "#2EC4B6",
+      "hueso": "#F1F7F9",
+      "panel": "#0E222D",
+      "panelClaro": "#16323F"
+    }
   },
   "calido": {
     "nombre": "Cálido · café y naranja",
-    "colores": { "fondo": "#140D0A", "rojo": "#E63946", "azul": "#3FA7D6", "amarillo": "#FF9F1C", "hueso": "#FFF4E6", "panel": "#201510", "panelClaro": "#2D1E17" }
+    "colores": {
+      "fondo": "#140D0A",
+      "rojo": "#E63946",
+      "azul": "#3FA7D6",
+      "amarillo": "#FF9F1C",
+      "hueso": "#FFF4E6",
+      "panel": "#201510",
+      "panelClaro": "#2D1E17"
+    }
   },
   "moderno": {
     "nombre": "Moderno · negro y lima",
-    "colores": { "fondo": "#0D0D12", "rojo": "#FB7185", "azul": "#38BDF8", "amarillo": "#A3E635", "hueso": "#F8FAFC", "panel": "#16161F", "panelClaro": "#20202D" }
+    "colores": {
+      "fondo": "#0D0D12",
+      "rojo": "#FB7185",
+      "azul": "#38BDF8",
+      "amarillo": "#A3E635",
+      "hueso": "#F8FAFC",
+      "panel": "#16161F",
+      "panelClaro": "#20202D"
+    }
   },
   "clasico": {
     "nombre": "Clásico · azul marino y granate",
-    "colores": { "fondo": "#0B1226", "rojo": "#C0392B", "azul": "#6C8EBF", "amarillo": "#E8C872", "hueso": "#F4F1EA", "panel": "#121C38", "panelClaro": "#1B2A50" }
+    "colores": {
+      "fondo": "#0B1226",
+      "rojo": "#C0392B",
+      "azul": "#6C8EBF",
+      "amarillo": "#E8C872",
+      "hueso": "#F4F1EA",
+      "panel": "#121C38",
+      "panelClaro": "#1B2A50"
+    }
+  },
+  "colombia": {
+    "nombre": "Colombia · azul noche, esmeralda y ámbar",
+    "colores": {
+      "fondo": "#0F172A",
+      "rojo": "#F87171",
+      "azul": "#10B981",
+      "amarillo": "#F59E0B",
+      "hueso": "#F1F5F9",
+      "panel": "#1E293B",
+      "panelClaro": "#334155"
+    }
   }
 }

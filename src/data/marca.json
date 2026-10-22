@@ -1,23 +1,24 @@
 {
   "colores": {
-    "fondo": "#0A0F1C",
-    "rojo": "#E5484D",
-    "azul": "#5B9BD5",
-    "amarillo": "#D4AF37",
-    "hueso": "#F5F1E8",
-    "panel": "#111A2E",
-    "panelClaro": "#1A2742"
+    "fondo": "#0B0F19",
+    "rojo": "#EF4444",
+    "azul": "#3B82F6",
+    "amarillo": "#FACC15",
+    "hueso": "#F8FAFC",
+    "panel": "#121A2B",
+    "panelClaro": "#1B2740"
   },
-  "nombre": "Casa Norte Propiedades",
-  "etiqueta": "CASA NORTE",
-  "logo": "logo.png",
-  "telefono": "11 5555-0000",
-  "web": "@casanorte.propiedades",
+  "nombre": "",
+  "etiqueta": "",
+  "logo": null,
+  "telefono": "",
+  "web": "",
   "musica": null,
   "volumenMusica": 0.14,
-  "ambiente": false,
+  "ambiente": true,
+  "transicion": "zoom",
   "fondo": {
-    "rejilla": 0,
-    "particulas": false
+    "rejilla": 0.05,
+    "particulas": true
   }
 }

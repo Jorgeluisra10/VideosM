@@ -2,15 +2,21 @@
 /**
  * Genera los efectos de sonido sintetizados (100% propios, sin licencias ni descargas).
  *   node scripts/generar-sfx.mjs
- * Escribe WAV mono 44.1 kHz en public/audios/: sfx-*.wav y ambiente.wav
+ * Escribe WAV mono 44.1 kHz:
+ *   public/sfx/      pop, tick, whoosh, thud, heartbeat, zap, ding, cash   (efectos de <SoundEffect />)
+ *   public/audios/   ambiente.wav                                          (colchón de fondo)
+ * Con --solo-faltantes no pisa los que ya existan.
  */
-import { mkdirSync, writeFileSync } from "node:fs";
+import { existsSync, mkdirSync, writeFileSync } from "node:fs";
 import { dirname, join, resolve } from "node:path";
 import { fileURLToPath } from "node:url";
 
 const RAIZ = resolve(dirname(fileURLToPath(import.meta.url)), "..");
-const SALIDA = join(RAIZ, "public", "audios");
+const SALIDA = join(RAIZ, "public", "sfx");
+const SALIDA_AUDIOS = join(RAIZ, "public", "audios");
 mkdirSync(SALIDA, { recursive: true });
+mkdirSync(SALIDA_AUDIOS, { recursive: true });
+const soloFaltantes = process.argv.includes("--solo-faltantes");
 const SR = 44100;
 const TAU = Math.PI * 2;
 
@@ -21,7 +27,8 @@ const rnd = () => {
   return semilla / 4294967296 - 0.5;
 };
 
-function escribirWav(nombre, muestras) {
+function escribirWav(nombre, muestras, carpeta = SALIDA) {
+  if (soloFaltantes && existsSync(join(carpeta, nombre))) return;
   let pico = 0;
   for (const m of muestras) pico = Math.max(pico, Math.abs(m));
   const norm = pico > 0 ? 0.92 / pico : 1;
@@ -41,7 +48,7 @@ function escribirWav(nombre, muestras) {
   for (let i = 0; i < muestras.length; i++) {
     datos.writeInt16LE(Math.round(Math.max(-1, Math.min(1, muestras[i] * norm)) * 32767), 44 + i * 2);
   }
-  writeFileSync(join(SALIDA, nombre), datos);
+  writeFileSync(join(carpeta, nombre), datos);
   console.log(`  ${nombre}  (${(muestras.length / SR).toFixed(2)} s)`);
 }
 
@@ -55,7 +62,7 @@ const ataque = (t, a) => Math.min(1, t / a);
 
 // --- pop: burbuja suave al aparecer una etiqueta
 escribirWav(
-  "sfx-pop.wav",
+  "pop.wav",
   crear(0.2, (t) => {
     const f = 480 + 520 * (1 - Math.exp(-t * 38));
     return Math.sin(TAU * f * t) * Math.exp(-t * 24) * ataque(t, 0.004) * 0.9 + Math.sin(TAU * f * 2 * t) * Math.exp(-t * 40) * 0.18;
@@ -63,14 +70,14 @@ escribirWav(
 );
 
 // --- tick: clic corto
-escribirWav("sfx-tick.wav", crear(0.07, (t) => Math.sin(TAU * 2100 * t) * Math.exp(-t * 90) * ataque(t, 0.001)));
+escribirWav("tick.wav", crear(0.07, (t) => Math.sin(TAU * 2100 * t) * Math.exp(-t * 90) * ataque(t, 0.001)));
 
 // --- whoosh: ruido filtrado que barre de grave a agudo
 {
   let low = 0;
   let band = 0;
   escribirWav(
-    "sfx-whoosh.wav",
+    "whoosh.wav",
     crear(0.6, (t) => {
       const fc = 350 + 4200 * Math.pow(t / 0.6, 1.6);
       const f = 2 * Math.sin((Math.PI * fc) / SR);
@@ -87,7 +94,7 @@ escribirWav("sfx-tick.wav", crear(0.07, (t) => Math.sin(TAU * 2100 * t) * Math.e
 
 // --- thud: golpe grave de impacto (bloqueo)
 escribirWav(
-  "sfx-thud.wav",
+  "thud.wav",
   crear(0.7, (t) => {
     const f = 38 + 90 * Math.exp(-t * 16);
     const cuerpo = Math.sin(TAU * f * t) * Math.exp(-t * 7.5) * ataque(t, 0.002);
@@ -98,7 +105,7 @@ escribirWav(
 
 // --- latido: lub-dub
 escribirWav(
-  "sfx-latido.wav",
+  "heartbeat.wav",
   crear(0.9, (t) => {
     const golpe = (t0, amp, f0) => {
       const dt = t - t0;
@@ -111,7 +118,7 @@ escribirWav(
 
 // --- zap: chispa nerviosa
 escribirWav(
-  "sfx-zap.wav",
+  "zap.wav",
   crear(0.28, (t) => {
     const f = 900 + 2600 * (t / 0.28);
     const mod = Math.sin(TAU * 60 * t);
@@ -121,10 +128,25 @@ escribirWav(
 
 // --- ding: campana suave de cierre
 escribirWav(
-  "sfx-ding.wav",
+  "ding.wav",
   crear(1.6, (t) => {
     const parcial = (f, a, d) => Math.sin(TAU * f * t) * a * Math.exp(-t * d);
     return (parcial(1318.5, 1, 3.2) + parcial(1976, 0.4, 4.2) + parcial(2637, 0.18, 6)) * ataque(t, 0.004);
+  }),
+);
+
+// --- cash: "cha-ching" de caja registradora (dos golpes metálicos + brillo de monedas)
+escribirWav(
+  "cash.wav",
+  crear(1.0, (t) => {
+    const clink = (t0, amp, f0) => {
+      const dt = t - t0;
+      if (dt < 0) return 0;
+      const parciales = [1, 2.76, 5.4, 8.93].map((r, i) => Math.sin(TAU * f0 * r * dt) * Math.exp(-dt * (16 + i * 13)) / (1 + i * 0.7));
+      return parciales.reduce((a, b) => a + b, 0) * ataque(dt, 0.0015) * amp + rnd() * Math.exp(-dt * 120) * 0.25 * amp;
+    };
+    const brillo = (Math.sin(TAU * 4186 * t) + Math.sin(TAU * 5274 * t) * 0.6 + Math.sin(TAU * 6272 * t) * 0.4) * Math.exp(-(t - 0.2) * 7) * (t > 0.2 ? 1 : 0) * ataque(Math.max(0, t - 0.2), 0.004);
+    return clink(0, 0.8, 1568) + clink(0.11, 1, 2093) + brillo * 0.22;
   }),
 );
 
@@ -150,6 +172,7 @@ escribirWav(
       }
       return s * 0.3;
     }),
+    SALIDA_AUDIOS,
   );
 }
-console.log("✅ Efectos listos en public/audios/");
+console.log("✅ Efectos listos en public/sfx/ (y ambiente en public/audios/)");

@@ -63,12 +63,13 @@ export function medidasPrecio(el: El) {
   const fs = acotar(pu(el.tam, 15), 70, 170);
   const monto = formatoMonto(el.valor);
   const moneda = txt(el.moneda);
+  const sufijo = txt(el.sufijo);
   const operacion = txt(el.operacion);
   const detalle = txt(el.detalle);
-  const wMonto = anchoEstimado(monto, fs, 900) + (moneda ? anchoEstimado(moneda, fs * 0.42, 800) + 16 : 0);
+  const wMonto = anchoEstimado(monto, fs, 900) + (moneda ? anchoEstimado(moneda, fs * 0.42, 800) + 16 : 0) + (sufijo ? anchoEstimado(sufijo, fs * 0.34, 800) + 18 : 0);
   const pillW = operacion ? anchoEstimado(operacion, 34, 800) + 76 : 0;
   const detW = detalle ? anchoEstimado(detalle, 34, 700) : 0;
   const pillH = operacion ? 66 : 0;
   const detH = detalle ? 60 : 0;
-  return { fs, monto, moneda, operacion, detalle, wMonto, pillW, pillH, detH, w: Math.max(wMonto, pillW, detW) + 40, h: pillH + fs * 1.3 + detH + 24 };
+  return { fs, monto, moneda, sufijo, operacion, detalle, wMonto, pillW, pillH, detH, w: Math.max(wMonto, pillW, detW) + 40, h: pillH + fs * 1.3 + detH + 24 };
 }

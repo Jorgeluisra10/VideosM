@@ -50,7 +50,7 @@
           "cuando": "pileta",
           "x": 50,
           "y": 78,
-          "texto": "Pileta con deck y parrilla",
+          "texto": "Pileta con deck y\nparrilla",
           "color": "amarillo"
         },
         {
@@ -64,7 +64,7 @@
         }
       ],
       "fondo": {
-        "foto": "living.jpg",
+        "foto": "dormitorio.jpg",
         "modo": "cubrir",
         "mov": "izquierda",
         "oscurecer": 0.3
@@ -72,30 +72,8 @@
     },
     {
       "id": "recorrido-1",
-      "titulo": "Fachada con jardín al frente",
-      "acento": "rojo",
-      "desde": "Fachada con",
-      "elementos": [
-        {
-          "tipo": "etiqueta",
-          "cuando": "Fachada",
-          "x": 50,
-          "y": 80,
-          "texto": "Fachada con jardín al",
-          "color": "hueso"
-        }
-      ],
-      "fondo": {
-        "foto": "fachada.jpg",
-        "modo": "cubrir",
-        "mov": "zoom-out",
-        "oscurecer": 0.25
-      }
-    },
-    {
-      "id": "recorrido-2",
       "titulo": "Living amplio y luminoso",
-      "acento": "amarillo",
+      "acento": "rojo",
       "desde": "Living amplio",
       "elementos": [
         {
@@ -103,12 +81,34 @@
           "cuando": "Living",
           "x": 50,
           "y": 80,
-          "texto": "Living amplio y luminoso",
+          "texto": "Living amplio y\nluminoso",
           "color": "hueso"
         }
       ],
       "fondo": {
         "foto": "living.jpg",
+        "modo": "cubrir",
+        "mov": "zoom-out",
+        "oscurecer": 0.25
+      }
+    },
+    {
+      "id": "recorrido-2",
+      "titulo": "Cocina integrada con isla",
+      "acento": "amarillo",
+      "desde": "Cocina integrada",
+      "elementos": [
+        {
+          "tipo": "etiqueta",
+          "cuando": "Cocina",
+          "x": 50,
+          "y": 80,
+          "texto": "Cocina integrada con\nisla",
+          "color": "hueso"
+        }
+      ],
+      "fondo": {
+        "foto": "cocina.jpg",
         "modo": "cubrir",
         "mov": "derecha",
         "oscurecer": 0.25
@@ -160,7 +160,7 @@
         }
       ],
       "fondo": {
-        "foto": "cocina.jpg",
+        "foto": "jardin.jpg",
         "modo": "cubrir",
         "mov": "abajo",
         "oscurecer": 0.5
@@ -201,7 +201,7 @@
         }
       ],
       "fondo": {
-        "foto": "dormitorio.jpg",
+        "foto": "fachada.jpg",
         "modo": "cubrir",
         "mov": "zoom-in",
         "oscurecer": 0.5
@@ -223,23 +223,24 @@
           "texto": "Palermo",
           "color": "rojo",
           "radio": 14,
+          "pinY": 0.62,
           "puntos": [
             {
               "texto": "Subte a cinco minutos",
               "x": 0.2,
-              "y": 0.22,
+              "y": 0.13,
               "cuando": "subte"
             },
             {
               "texto": "Parque Tres de Febrero",
-              "x": 0.78,
-              "y": 0.3,
+              "x": 0.8,
+              "y": 0.13,
               "cuando": "Parque"
             },
             {
               "texto": "Colegios y comercios",
-              "x": 0.26,
-              "y": 0.82,
+              "x": 0.5,
+              "y": 0.9,
               "cuando": "colegios"
             }
           ]
@@ -266,7 +267,7 @@
         }
       ],
       "fondo": {
-        "foto": "jardin.jpg",
+        "foto": "fachada.jpg",
         "modo": "cubrir",
         "mov": "izquierda",
         "oscurecer": 0.55

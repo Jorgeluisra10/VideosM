@@ -3,7 +3,7 @@
  * Lo comparten el agente de IA, la plantilla sin IA y el asistente de terminal.
  */
 import { spawnSync } from "node:child_process";
-import { existsSync, rmSync, writeFileSync } from "node:fs";
+import { existsSync, readdirSync, rmSync, writeFileSync } from "node:fs";
 import { join, resolve } from "node:path";
 import { importarMedios, leerMedios, limpiarMedios } from "../medios.mjs";
 import { DIR_PROYECTOS, construirMarca, escribirMarca } from "./perfil.mjs";
@@ -16,10 +16,13 @@ export const dirProyecto = (id) => join(DIR_PROYECTOS, id);
 
 /**
  * Importa las fotos/logo/música del brief a public/media y devuelve la lista de medios.
- * Carpeta: brief.medios (relativa a la raíz del proyecto) o proyectos/<id>/media.
+ * Carpeta: brief.medios (relativa a la raíz del proyecto), proyectos/<id>/media o, si no hay ninguna, public/fotos.
  */
 export function prepararMedios(brief, { dir = null, log = () => {} } = {}) {
-  const candidata = brief.medios ? resolve(RAIZ, brief.medios) : dir ? join(dir, "media") : null;
+  const publica = join(RAIZ, "public", "fotos");
+  const hayFotosPublicas = existsSync(publica) && readdirSync(publica).some((f) => /\.(jpe?g|png|webp|gif|bmp|tiff?|mp3|wav|m4a)$/i.test(f));
+  let candidata = brief.medios ? resolve(RAIZ, brief.medios) : dir ? join(dir, "media") : null;
+  if ((!candidata || !existsSync(candidata)) && hayFotosPublicas) candidata = publica;
   if (!candidata || !existsSync(candidata)) {
     limpiarMedios();
     return [];
@@ -52,15 +55,19 @@ export function respaldarProyectoActivo() {
 }
 
 /**
- * Escribe el guion y genera la voz gratuita (edge-tts) con tiempos por palabra.
+ * Escribe el guion y genera la voz con tiempos por palabra: modo "dev" = edge-tts gratis (por defecto);
+ * modo "prod" = OpenAI (gpt-4o-mini-tts + whisper-1) o ElevenLabs.
  * Devuelve true si todo salió bien (y deja src/data/timestamps.json listo).
  */
-export function sintetizarVoz({ guion, voz, velocidad, tono, silencioso = false }) {
+export function sintetizarVoz({ guion, voz, velocidad, tono, modo, proveedor, perfil, silencioso = false }) {
   writeFileSync(dato("guion.txt"), guion.trim() + "\n");
   const extra = [];
   if (voz) extra.push("--voz", String(voz));
   if (velocidad) extra.push("--velocidad", String(velocidad));
   if (tono) extra.push("--tono", String(tono));
+  if (modo) extra.push("--mode", String(modo));
+  if (proveedor) extra.push("--proveedor", String(proveedor));
+  if (perfil) extra.push("--perfil", String(perfil));
   const r = spawnSync(process.execPath, [join(RAIZ, "scripts", "generar-voz.mjs"), ...extra], { cwd: RAIZ, stdio: silencioso ? "ignore" : "inherit" });
   return r.status === 0;
 }

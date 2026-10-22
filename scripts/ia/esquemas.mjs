@@ -4,11 +4,15 @@
  * TODAS las propiedades en "required" (lo opcional se declara como "tipo o null") y sin palabras
  * clave no soportadas (minLength, pattern, minItems...): esas validaciones las hace validar-plan.mjs.
  */
-import { cargarCatalogo } from "./puente.mjs";
+import { readFileSync } from "node:fs";
+import { join } from "node:path";
+import { RAIZ, cargarCatalogo } from "./puente.mjs";
 
 const COLORES = ["rojo", "azul", "amarillo", "hueso"];
 /** Iconos que admiten las fichas (los de propiedades y datos; el resto de iconos sigue disponible en el elemento "icono"). */
-const ICONOS_FICHA = ["casa", "cama", "bano", "auto", "medida", "pin", "llave", "estrella", "calendario", "dinero", "arbol", "piscina", "escudo", "sol", "reloj", "check", "telefono", "mail", "web"];
+const ICONOS_PRO = JSON.parse(readFileSync(join(RAIZ, "src", "dsl", "iconos-pro.json"), "utf8"));
+/** Los iconos «lu-*» (lucide: inmobiliaria, autos, finanzas) también valen en las fichas. */
+const ICONOS_FICHA = ["casa", "cama", "bano", "auto", "medida", "pin", "llave", "estrella", "calendario", "dinero", "arbol", "piscina", "escudo", "sol", "reloj", "check", "telefono", "mail", "web", ...Object.keys(ICONOS_PRO.lu).map((k) => `lu-${k}`)];
 
 /**
  * Valor opcional: "tipo o null". Los escalares usan la unión de tipos (type:["string","null"]), que no añade un nivel

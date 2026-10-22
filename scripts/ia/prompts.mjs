@@ -10,7 +10,7 @@ import { cargarPerfil, rellenar, textoBrief, textoMedios, varsDePrompt } from ".
 import { RAIZ, cargarCatalogo } from "./puente.mjs";
 
 const leer = (...p) => readFileSync(join(RAIZ, ...p), "utf8");
-const PERFIL_DEFECTO = () => cargarPerfil("medicina");
+const PERFIL_DEFECTO = () => cargarPerfil("medicina-ar");
 
 // ---------------------------------------------------------------------------
 // Catálogo en texto

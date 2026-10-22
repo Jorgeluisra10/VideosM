@@ -22,7 +22,8 @@ import { dirname, join, resolve } from "node:path";
 import { fileURLToPath } from "node:url";
 import { createRequire } from "node:module";
 import { esperarMemoria, obtenerPaquete } from "./_comun.mjs";
-import { openBrowser, renderStill, selectComposition } from "@remotion/renderer";
+import { renderStill, selectComposition } from "@remotion/renderer";
+import { abrirNavegador } from "./navegador.mjs";
 
 const require = createRequire(import.meta.url);
 const { PNG } = require("pngjs");
@@ -34,7 +35,15 @@ const H = 1920;
 const MARGEN = 80;
 const ESC = { y0: 350, y1: 1350 };
 const SUBS = { y0: 1450, y1: 1650 };
-const FONDO = [0x0b, 0x0f, 0x19];
+// color de fondo de la MARCA activa (cada nicho tiene el suyo: #0B0F19 médico, #0F172A inmobiliario…)
+const FONDO = (() => {
+  try {
+    const hex = JSON.parse(readFileSync(join(RAIZ, "src", "data", "marca.json"), "utf8")).colores?.fondo ?? "#0B0F19";
+    return [1, 3, 5].map((i) => parseInt(hex.slice(i, i + 2), 16));
+  } catch {
+    return [0x0b, 0x0f, 0x19];
+  }
+})();
 
 // ---------- args ----------
 const argv = process.argv.slice(2);
@@ -54,7 +63,7 @@ mkdirSync(tmp, { recursive: true });
 
 const serveUrl = await obtenerPaquete({ bundleDado: argv.find((a) => a.startsWith("--bundle="))?.split("=")[1] ?? arg("bundle") });
 await esperarMemoria("abrir el navegador", { min: 0.5 });
-let navegador = await openBrowser("chrome", { chromiumOptions: {}, logLevel: "error" });
+let navegador = await abrirNavegador({ chromiumOptions: {} });
 
 const logs = [];
 const onBrowserLog = (l) => {
@@ -63,7 +72,7 @@ const onBrowserLog = (l) => {
 
 async function reabrir() {
   try { await navegador.close({ silent: true }); } catch { /* ya estaba cerrado */ }
-  navegador = await openBrowser("chrome", { chromiumOptions: {}, logLevel: "error" });
+  navegador = await abrirNavegador({ chromiumOptions: {} });
 }
 
 async function compo(props) {
@@ -196,6 +205,23 @@ function cambio(a, b) {
   return c / n;
 }
 
+// Escenas con FOTO de fondo: el modo "solo ilustración" no la dibuja, pero la foto (con su movimiento Ken Burns) ES el
+// contenido y el movimiento de esa escena. Se calcula en qué segundos hay foto para no dar falsos «escenario vacío».
+const intervalosConFoto = await (async () => {
+  try {
+    if (!/dinamico/.test(readFileSync(join(RAIZ, "src", "tema.ts"), "utf8"))) return [];
+    const { cargarNucleo } = await import("./ia/puente.mjs");
+    const N = await cargarNucleo();
+    const plan = JSON.parse(readFileSync(join(RAIZ, "src", "data", "plan.json"), "utf8"));
+    const palabras = JSON.parse(readFileSync(join(RAIZ, "src", "data", "timestamps.json"), "utf8"));
+    const { inicios, fines } = N.tiemposDePlan(plan, palabras);
+    return plan.escenas.map((e, i) => (e.fondo?.foto && e.fondo.mov !== "fijo" ? [inicios[i], fines[i]] : null)).filter(Boolean);
+  } catch {
+    return [];
+  }
+})();
+const hayFotoEn = (f) => intervalosConFoto.some(([a, b]) => f / FPS >= a && f / FPS <= b);
+
 let anterior = null;
 let ultimoMovimiento = 0;
 const tablaMov = [];
@@ -212,13 +238,13 @@ for (const f of unicas) {
 
   // escena vacía
   const llena = actividad(png, ESC.y0 + 40, ESC.y1 - 40);
-  if (llena < 0.012 && f / FPS > 0.15 && f < total - 1.2 * FPS) avisar("escenario-vacio", f, `solo ${(llena * 100).toFixed(2)} % del escenario tiene dibujo`);
+  if (llena < 0.012 && f / FPS > 0.15 && f < total - 1.2 * FPS && !hayFotoEn(f)) avisar("escenario-vacio", f, `solo ${(llena * 100).toFixed(2)} % del escenario tiene dibujo`);
 
   // movimiento
   if (anterior) {
     const c = cambio(anterior.png, png);
     tablaMov.push({ s: +(f / FPS).toFixed(2), cambio: +c.toFixed(4) });
-    if (c > 0.0025) ultimoMovimiento = f;
+    if (c > 0.0025 || hayFotoEn(f)) ultimoMovimiento = f;
     else if ((f - ultimoMovimiento) / FPS > 2.0 && f < total - 1.2 * FPS) {
       avisar("sin-movimiento", f, `más de 2 s sin cambios visibles (desde ${(ultimoMovimiento / FPS).toFixed(1)} s)`);
       ultimoMovimiento = f; // un aviso por tramo

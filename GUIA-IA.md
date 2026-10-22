@@ -6,6 +6,13 @@ Dices un tema («por qué la insulina baja el azúcar») y el agente entrega un 
 
 ---
 
+## 0. Nichos, brief y voz de producción (novedad)
+
+- **Nicho**: `--nicho medicina-ar | inmobiliario-co | inmobiliaria | generico`. Cada uno trae sus prompts, paleta, voces y campos (carpeta `perfiles/<id>/`).
+- **Brief**: `--brief proyectos/<id>` (datos del inmueble/vehículo + fotos en `media/`). El agente solo usa datos del brief; las fotos entran en el plan (`fondo.foto`) y se validan.
+- **Entrada simple**: `npm run crear-video -- --niche inmobiliario-co --datos datos.json` (o `--sin-api` para la plantilla gratuita), o el **panel** (`npm run panel`).
+- **Voz**: `--mode dev` (gratis, edge-tts) o `--mode prod` con `--proveedor openai` (`gpt-4o-mini-tts` con la entonación del nicho + `whisper-1` para los tiempos por palabra) o `elevenlabs`. Claves en `.env` (ver `.env.example`).
+
 ## 1. Cómo funciona el generador
 
 ```

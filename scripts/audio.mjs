@@ -2,7 +2,8 @@
  * VideMed · mezcla de audio SIN navegador.
  *
  * Replica lo que monta src/VideoMedico.tsx — voz (volumen 1) + ambiente en bucle (rampa de entrada y
- * salida a 0,07) + cada efecto de tema.sfx en su fotograma — pero directamente en Node:
+ * salida a 0,07; solo si la marca lo pide) + música de la marca (si hay) + cada efecto de tema.sfx en su
+ * fotograma (public/sfx/<tipo>.wav) — pero directamente en Node:
  * es determinista, tarda segundos y no necesita Chrome (que en equipos justos de memoria es lo que falla).
  *
  *   import { mezclarAudio } from "./audio.mjs";
@@ -90,7 +91,10 @@ function escribirWavEstereo(ruta, mono) {
 }
 
 export async function mezclarAudio({ raiz, ffmpeg, segundos, salidaWav }) {
-  const { sfx, DUR_SFX } = await cargarSonido(raiz);
+  const { sfx, DUR_SFX, VOL_SFX, archivoSfx } = await cargarSonido(raiz);
+  // si falta algún efecto en public/sfx (o el ambiente), se sintetiza (propio, sin licencias ni descargas)
+  const faltan = [...new Set(sfx.map((s) => archivoSfx(s.tipo)))].some((f) => !existsSync(join(raiz, "public", f))) || !existsSync(join(raiz, "public", "audios", "ambiente.wav"));
+  if (faltan) spawnSync(process.execPath, [join(raiz, "scripts", "generar-sfx.mjs"), "--solo-faltantes"], { cwd: raiz, stdio: "ignore" });
   const audios = join(raiz, "public", "audios");
   const N = Math.ceil(segundos * SR);
   const mezcla = new Float32Array(N);
@@ -101,21 +105,40 @@ export async function mezclarAudio({ raiz, ffmpeg, segundos, salidaWav }) {
   const voz = decodificar(ffmpeg, join(audios, "voz.mp3"), tmpDir);
   for (let i = 0; i < Math.min(N, voz.length); i++) mezcla[i] += voz[i];
 
+  // La marca (src/data/marca.json) decide si hay ambiente y música; sin archivo = el comportamiento de siempre
+  let marca = {};
+  try {
+    marca = JSON.parse(readFileSync(join(raiz, "src", "data", "marca.json"), "utf8"));
+  } catch {
+    /* proyectos antiguos: ambiente activado, sin música */
+  }
+
   // Ambiente en bucle: 0 → 0,07 en los primeros 90 fotogramas, 0,07 → 0 en los últimos 120
-  const amb = decodificar(ffmpeg, join(audios, "ambiente.wav"), tmpDir);
-  const xs = [0, 90, totalFrames - 120, totalFrames];
-  const ys = [0, 0.07, 0.07, 0];
-  for (let i = 0; i < N; i++) mezcla[i] += amb[i % amb.length] * interpolar((i / SR) * FPS, xs, ys);
+  if (marca.ambiente !== false) {
+    const amb = decodificar(ffmpeg, join(audios, "ambiente.wav"), tmpDir);
+    const xs = [0, 90, totalFrames - 120, totalFrames];
+    const ys = [0, 0.07, 0.07, 0];
+    for (let i = 0; i < N; i++) mezcla[i] += amb[i % amb.length] * interpolar((i / SR) * FPS, xs, ys);
+  }
+
+  // Música de la marca en bucle: 0 → vol en 60 fotogramas, vol → 0 en los últimos 90
+  if (marca.musica && existsSync(join(raiz, "public", "media", marca.musica))) {
+    const mus = decodificar(ffmpeg, join(raiz, "public", "media", marca.musica), tmpDir);
+    const v = typeof marca.volumenMusica === "number" ? marca.volumenMusica : 0.14;
+    const xs = [0, 60, totalFrames - 90, totalFrames];
+    const ys = [0, v, v, 0];
+    for (let i = 0; i < N; i++) mezcla[i] += mus[i % mus.length] * interpolar((i / SR) * FPS, xs, ys);
+  }
 
   // Efectos: cada uno arranca en su fotograma (como <Sequence from>) y se corta a su duración
   const cache = new Map();
   let usados = 0;
   for (const s of sfx) {
-    if (!cache.has(s.tipo)) cache.set(s.tipo, decodificar(ffmpeg, join(audios, `sfx-${s.tipo}.wav`), tmpDir));
+    if (!cache.has(s.tipo)) cache.set(s.tipo, decodificar(ffmpeg, join(raiz, "public", archivoSfx(s.tipo)), tmpDir));
     const buf = cache.get(s.tipo);
     const inicio = Math.round((Math.round(s.t * FPS) / FPS) * SR);
     const largo = Math.min(buf.length, Math.ceil(DUR_SFX[s.tipo] * FPS) * (SR / FPS));
-    const vol = s.vol ?? 0.35;
+    const vol = s.vol ?? VOL_SFX;
     for (let k = 0; k < largo; k++) {
       const i = inicio + k;
       if (i >= 0 && i < N) mezcla[i] += buf[k] * vol;

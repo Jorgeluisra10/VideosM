@@ -27,7 +27,8 @@ import { existsSync, mkdirSync, readFileSync, readdirSync, renameSync, rmSync, s
 import os from "node:os";
 import { join } from "node:path";
 import { bundle } from "@remotion/bundler";
-import { openBrowser, renderFrames, selectComposition } from "@remotion/renderer";
+import { renderFrames, selectComposition } from "@remotion/renderer";
+import { abrirNavegador } from "./navegador.mjs";
 import { mezclarAudio } from "./audio.mjs";
 
 const args = process.argv.slice(2);
@@ -91,7 +92,7 @@ async function cerrarNavegador() {
 const chromeCayo = (e) => /target closed|protocol error|browser (has been )?closed|disconnected|crash|out of memory|ECONNRESET/i.test(String(e?.message ?? e));
 
 async function conNavegador(fn) {
-  navegador ??= await openBrowser("chrome", { logLevel: "error" });
+  navegador ??= await abrirNavegador();
   try {
     return await fn(navegador);
   } catch (e) {

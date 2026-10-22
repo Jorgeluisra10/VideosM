@@ -1,8 +1,10 @@
-# VideMed — reels de medicina automáticos
+# VideMed — reels automáticos (🩺 medicina Argentina · 🏙️ inmobiliario Colombia)
 
-Tú dices el tema. El sistema escribe el guion, genera la voz, anima los dibujos médicos en sincronía con cada palabra, revisa el resultado y exporta el video, la portada y el texto del post.
+> 🖥️ **Lo más fácil: el panel web.** `npm install` y luego `npm run panel -- --abrir` → http://localhost:4173. Eliges el nicho, cargas datos y fotos, y te lleva paso a paso hasta el .mp4. **Guía completa: [`GUIA.md`](GUIA.md).**
 
-Hay **dos formas de usarlo**:
+Tú dices el tema (o los datos del inmueble/vehículo). El sistema escribe el guion, genera la voz, anima los dibujos médicos en sincronía con cada palabra, revisa el resultado y exporta el video, la portada y el texto del post.
+
+Hay **tres formas de usarlo**: el **panel web** (recomendado, `npm run panel`), la **terminal** (`npm run crear`, `npm run crear-video`) y lo que sigue:
 
 | | Quién escribe guion y escenas | Necesita |
 |---|---|---|
@@ -41,6 +43,10 @@ Abre esta carpeta con Claude Code y escribe, por ejemplo: «Hazme un video sobre
 ## Comandos manuales
 
 ```bash
+npm run panel            # interfaz web para usar todo (http://localhost:4173)
+npm run crear            # asistente por preguntas (nicho, datos, fotos)
+npm run crear-video -- --niche inmobiliario-co --datos datos.json   # un comando
+npm run test             # tipos + 72 pruebas sin coste
 npm start                # previsualizar en el navegador (Remotion Studio)
 npm run voz              # voz y tiempos desde src/data/guion.txt   (--voz ar|mx|es|ar-f|mx-f|es-f  --velocidad +10%)
 npm run qa               # revisión automática de calidad (≈ 1 min)
