@@ -1,0 +1,407 @@
+[
+  {
+    "word": "¿Buscás",
+    "start": 0.099,
+    "end": 0.511
+  },
+  {
+    "word": "una",
+    "start": 0.548,
+    "end": 0.693
+  },
+  {
+    "word": "casa",
+    "start": 0.754,
+    "end": 0.972
+  },
+  {
+    "word": "en",
+    "start": 0.972,
+    "end": 1.033
+  },
+  {
+    "word": "Palermo?",
+    "start": 1.082,
+    "end": 1.494
+  },
+  {
+    "word": "Mirá",
+    "start": 2.404,
+    "end": 2.634
+  },
+  {
+    "word": "lo",
+    "start": 2.671,
+    "end": 2.743
+  },
+  {
+    "word": "que",
+    "start": 2.804,
+    "end": 2.865
+  },
+  {
+    "word": "encontramos.",
+    "start": 2.865,
+    "end": 3.605
+  },
+  {
+    "word": "Es",
+    "start": 4.49,
+    "end": 4.66
+  },
+  {
+    "word": "una",
+    "start": 4.697,
+    "end": 4.83
+  },
+  {
+    "word": "casa",
+    "start": 4.891,
+    "end": 5.097
+  },
+  {
+    "word": "de",
+    "start": 5.121,
+    "end": 5.182
+  },
+  {
+    "word": "excelente",
+    "start": 5.182,
+    "end": 5.643
+  },
+  {
+    "word": "estado.",
+    "start": 5.643,
+    "end": 6.019
+  },
+  {
+    "word": "Lo",
+    "start": 6.917,
+    "end": 7.099
+  },
+  {
+    "word": "mejor:",
+    "start": 7.136,
+    "end": 7.488
+  },
+  {
+    "word": "pileta",
+    "start": 7.767,
+    "end": 8.083
+  },
+  {
+    "word": "con",
+    "start": 8.143,
+    "end": 8.252
+  },
+  {
+    "word": "deck",
+    "start": 8.313,
+    "end": 8.471
+  },
+  {
+    "word": "y",
+    "start": 8.483,
+    "end": 8.523
+  },
+  {
+    "word": "parrilla.",
+    "start": 8.58,
+    "end": 9.029
+  },
+  {
+    "word": "Living",
+    "start": 9.928,
+    "end": 10.292
+  },
+  {
+    "word": "amplio",
+    "start": 10.316,
+    "end": 10.62
+  },
+  {
+    "word": "y",
+    "start": 10.632,
+    "end": 10.672
+  },
+  {
+    "word": "luminoso.",
+    "start": 10.692,
+    "end": 11.214
+  },
+  {
+    "word": "Cocina",
+    "start": 12.136,
+    "end": 12.512
+  },
+  {
+    "word": "integrada",
+    "start": 12.512,
+    "end": 12.985
+  },
+  {
+    "word": "con",
+    "start": 13.046,
+    "end": 13.168
+  },
+  {
+    "word": "isla.",
+    "start": 13.192,
+    "end": 13.507
+  },
+  {
+    "word": "Tiene",
+    "start": 14.405,
+    "end": 14.66
+  },
+  {
+    "word": "tres",
+    "start": 14.733,
+    "end": 14.903
+  },
+  {
+    "word": "dormitorios,",
+    "start": 14.939,
+    "end": 15.68
+  },
+  {
+    "word": "dos",
+    "start": 15.874,
+    "end": 16.007
+  },
+  {
+    "word": "baños,",
+    "start": 16.068,
+    "end": 16.517
+  },
+  {
+    "word": "ciento",
+    "start": 16.711,
+    "end": 17.063
+  },
+  {
+    "word": "ochenta",
+    "start": 17.063,
+    "end": 17.391
+  },
+  {
+    "word": "metros",
+    "start": 17.427,
+    "end": 17.694
+  },
+  {
+    "word": "cuadrados",
+    "start": 17.767,
+    "end": 18.277
+  },
+  {
+    "word": "y",
+    "start": 18.301,
+    "end": 18.341
+  },
+  {
+    "word": "cochera.",
+    "start": 18.386,
+    "end": 18.799
+  },
+  {
+    "word": "Además",
+    "start": 19.697,
+    "end": 20.109
+  },
+  {
+    "word": "suma",
+    "start": 20.109,
+    "end": 20.376
+  },
+  {
+    "word": "pileta,",
+    "start": 20.449,
+    "end": 20.85
+  },
+  {
+    "word": "parrilla,",
+    "start": 21.019,
+    "end": 21.481
+  },
+  {
+    "word": "jardín",
+    "start": 21.748,
+    "end": 22.124
+  },
+  {
+    "word": "y",
+    "start": 22.148,
+    "end": 22.188
+  },
+  {
+    "word": "balcón.",
+    "start": 22.221,
+    "end": 22.634
+  },
+  {
+    "word": "Está",
+    "start": 23.519,
+    "end": 23.811
+  },
+  {
+    "word": "en",
+    "start": 23.835,
+    "end": 23.932
+  },
+  {
+    "word": "Palermo,",
+    "start": 23.956,
+    "end": 24.393
+  },
+  {
+    "word": "con",
+    "start": 24.551,
+    "end": 24.709
+  },
+  {
+    "word": "subte",
+    "start": 24.721,
+    "end": 25.024
+  },
+  {
+    "word": "a",
+    "start": 25.024,
+    "end": 25.085
+  },
+  {
+    "word": "cinco",
+    "start": 25.097,
+    "end": 25.388
+  },
+  {
+    "word": "minutos,",
+    "start": 25.425,
+    "end": 25.947
+  },
+  {
+    "word": "Parque",
+    "start": 26.129,
+    "end": 26.371
+  },
+  {
+    "word": "Tres",
+    "start": 26.432,
+    "end": 26.553
+  },
+  {
+    "word": "de",
+    "start": 26.59,
+    "end": 26.663
+  },
+  {
+    "word": "Febrero",
+    "start": 26.687,
+    "end": 27.063
+  },
+  {
+    "word": "y",
+    "start": 27.087,
+    "end": 27.127
+  },
+  {
+    "word": "colegios",
+    "start": 27.16,
+    "end": 27.573
+  },
+  {
+    "word": "y",
+    "start": 27.597,
+    "end": 27.637
+  },
+  {
+    "word": "comercios",
+    "start": 27.682,
+    "end": 28.083
+  },
+  {
+    "word": "cerca.",
+    "start": 28.083,
+    "end": 28.459
+  },
+  {
+    "word": "Se",
+    "start": 29.357,
+    "end": 29.563
+  },
+  {
+    "word": "vende",
+    "start": 29.6,
+    "end": 29.818
+  },
+  {
+    "word": "por",
+    "start": 29.891,
+    "end": 29.988
+  },
+  {
+    "word": "ciento",
+    "start": 30.012,
+    "end": 30.328
+  },
+  {
+    "word": "ochenta",
+    "start": 30.328,
+    "end": 30.643
+  },
+  {
+    "word": "y",
+    "start": 30.667,
+    "end": 30.707
+  },
+  {
+    "word": "cinco",
+    "start": 30.716,
+    "end": 31.007
+  },
+  {
+    "word": "mil",
+    "start": 31.044,
+    "end": 31.201
+  },
+  {
+    "word": "dólares.",
+    "start": 31.262,
+    "end": 31.76
+  },
+  {
+    "word": "Escribinos",
+    "start": 32.658,
+    "end": 33.252
+  },
+  {
+    "word": "por",
+    "start": 33.313,
+    "end": 33.434
+  },
+  {
+    "word": "WhatsApp",
+    "start": 33.483,
+    "end": 33.896
+  },
+  {
+    "word": "y",
+    "start": 33.932,
+    "end": 33.993
+  },
+  {
+    "word": "agendá",
+    "start": 34.017,
+    "end": 34.345
+  },
+  {
+    "word": "tu",
+    "start": 34.405,
+    "end": 34.466
+  },
+  {
+    "word": "visita.",
+    "start": 34.478,
+    "end": 34.903
+  }
+]

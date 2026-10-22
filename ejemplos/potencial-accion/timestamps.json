@@ -1,0 +1,442 @@
+[
+  {
+    "word": "¿Cómo",
+    "start": 0.098,
+    "end": 0.336
+  },
+  {
+    "word": "viaja",
+    "start": 0.371,
+    "end": 0.681
+  },
+  {
+    "word": "un",
+    "start": 0.717,
+    "end": 0.8
+  },
+  {
+    "word": "impulso",
+    "start": 0.812,
+    "end": 1.217
+  },
+  {
+    "word": "nervioso",
+    "start": 1.252,
+    "end": 1.681
+  },
+  {
+    "word": "sin",
+    "start": 1.693,
+    "end": 1.836
+  },
+  {
+    "word": "apagarse?",
+    "start": 1.86,
+    "end": 2.395
+  },
+  {
+    "word": "En",
+    "start": 3.274,
+    "end": 3.429
+  },
+  {
+    "word": "reposo,",
+    "start": 3.452,
+    "end": 3.976
+  },
+  {
+    "word": "la",
+    "start": 4.286,
+    "end": 4.405
+  },
+  {
+    "word": "neurona",
+    "start": 4.44,
+    "end": 4.786
+  },
+  {
+    "word": "tiene",
+    "start": 4.845,
+    "end": 5.012
+  },
+  {
+    "word": "carga",
+    "start": 5.071,
+    "end": 5.298
+  },
+  {
+    "word": "negativa",
+    "start": 5.333,
+    "end": 5.774
+  },
+  {
+    "word": "por",
+    "start": 5.845,
+    "end": 5.929
+  },
+  {
+    "word": "dentro,",
+    "start": 5.964,
+    "end": 6.321
+  },
+  {
+    "word": "cerca",
+    "start": 6.548,
+    "end": 6.845
+  },
+  {
+    "word": "de",
+    "start": 6.881,
+    "end": 6.952
+  },
+  {
+    "word": "menos",
+    "start": 6.988,
+    "end": 7.214
+  },
+  {
+    "word": "setenta",
+    "start": 7.214,
+    "end": 7.583
+  },
+  {
+    "word": "milivoltios.",
+    "start": 7.619,
+    "end": 8.345
+  },
+  {
+    "word": "Un",
+    "start": 9.226,
+    "end": 9.381
+  },
+  {
+    "word": "estímulo",
+    "start": 9.393,
+    "end": 9.893
+  },
+  {
+    "word": "abre",
+    "start": 9.893,
+    "end": 10.06
+  },
+  {
+    "word": "canales",
+    "start": 10.119,
+    "end": 10.476
+  },
+  {
+    "word": "de",
+    "start": 10.488,
+    "end": 10.571
+  },
+  {
+    "word": "sodio",
+    "start": 10.583,
+    "end": 10.94
+  },
+  {
+    "word": "y",
+    "start": 10.976,
+    "end": 11.024
+  },
+  {
+    "word": "el",
+    "start": 11.036,
+    "end": 11.143
+  },
+  {
+    "word": "sodio",
+    "start": 11.155,
+    "end": 11.476
+  },
+  {
+    "word": "entra:",
+    "start": 11.512,
+    "end": 11.833
+  },
+  {
+    "word": "la",
+    "start": 12.107,
+    "end": 12.226
+  },
+  {
+    "word": "membrana",
+    "start": 12.262,
+    "end": 12.667
+  },
+  {
+    "word": "se",
+    "start": 12.69,
+    "end": 12.798
+  },
+  {
+    "word": "despolariza.",
+    "start": 12.833,
+    "end": 13.452
+  },
+  {
+    "word": "Al",
+    "start": 14.345,
+    "end": 14.512
+  },
+  {
+    "word": "llegar",
+    "start": 14.524,
+    "end": 14.798
+  },
+  {
+    "word": "al",
+    "start": 14.81,
+    "end": 14.869
+  },
+  {
+    "word": "umbral",
+    "start": 14.905,
+    "end": 15.214
+  },
+  {
+    "word": "se",
+    "start": 15.226,
+    "end": 15.345
+  },
+  {
+    "word": "dispara",
+    "start": 15.381,
+    "end": 15.702
+  },
+  {
+    "word": "el",
+    "start": 15.702,
+    "end": 15.75
+  },
+  {
+    "word": "potencial",
+    "start": 15.81,
+    "end": 16.238
+  },
+  {
+    "word": "de",
+    "start": 16.286,
+    "end": 16.326
+  },
+  {
+    "word": "acción,",
+    "start": 16.333,
+    "end": 16.774
+  },
+  {
+    "word": "todo",
+    "start": 16.976,
+    "end": 17.19
+  },
+  {
+    "word": "o",
+    "start": 17.226,
+    "end": 17.286
+  },
+  {
+    "word": "nada.",
+    "start": 17.321,
+    "end": 17.619
+  },
+  {
+    "word": "Después",
+    "start": 18.5,
+    "end": 18.917
+  },
+  {
+    "word": "se",
+    "start": 18.917,
+    "end": 19.06
+  },
+  {
+    "word": "abren",
+    "start": 19.083,
+    "end": 19.31
+  },
+  {
+    "word": "canales",
+    "start": 19.357,
+    "end": 19.679
+  },
+  {
+    "word": "de",
+    "start": 19.702,
+    "end": 19.774
+  },
+  {
+    "word": "potasio,",
+    "start": 19.833,
+    "end": 20.321
+  },
+  {
+    "word": "el",
+    "start": 20.607,
+    "end": 20.702
+  },
+  {
+    "word": "potasio",
+    "start": 20.762,
+    "end": 21.143
+  },
+  {
+    "word": "sale",
+    "start": 21.155,
+    "end": 21.405
+  },
+  {
+    "word": "y",
+    "start": 21.417,
+    "end": 21.457
+  },
+  {
+    "word": "la",
+    "start": 21.464,
+    "end": 21.56
+  },
+  {
+    "word": "célula",
+    "start": 21.583,
+    "end": 21.94
+  },
+  {
+    "word": "se",
+    "start": 21.964,
+    "end": 22.083
+  },
+  {
+    "word": "repolariza.",
+    "start": 22.119,
+    "end": 22.726
+  },
+  {
+    "word": "En",
+    "start": 23.607,
+    "end": 23.738
+  },
+  {
+    "word": "las",
+    "start": 23.738,
+    "end": 23.917
+  },
+  {
+    "word": "fibras",
+    "start": 23.917,
+    "end": 24.262
+  },
+  {
+    "word": "mielinizadas",
+    "start": 24.298,
+    "end": 24.929
+  },
+  {
+    "word": "la",
+    "start": 24.964,
+    "end": 25.071
+  },
+  {
+    "word": "señal",
+    "start": 25.095,
+    "end": 25.417
+  },
+  {
+    "word": "salta",
+    "start": 25.429,
+    "end": 25.786
+  },
+  {
+    "word": "de",
+    "start": 25.821,
+    "end": 25.905
+  },
+  {
+    "word": "nodo",
+    "start": 25.929,
+    "end": 26.131
+  },
+  {
+    "word": "en",
+    "start": 26.143,
+    "end": 26.19
+  },
+  {
+    "word": "nodo,",
+    "start": 26.202,
+    "end": 26.524
+  },
+  {
+    "word": "como",
+    "start": 26.702,
+    "end": 26.881
+  },
+  {
+    "word": "una",
+    "start": 26.893,
+    "end": 27.071
+  },
+  {
+    "word": "chispa.",
+    "start": 27.119,
+    "end": 27.476
+  },
+  {
+    "word": "Por",
+    "start": 28.357,
+    "end": 28.524
+  },
+  {
+    "word": "eso",
+    "start": 28.536,
+    "end": 28.714
+  },
+  {
+    "word": "un",
+    "start": 28.714,
+    "end": 28.798
+  },
+  {
+    "word": "nervio",
+    "start": 28.81,
+    "end": 29.131
+  },
+  {
+    "word": "con",
+    "start": 29.19,
+    "end": 29.286
+  },
+  {
+    "word": "mielina",
+    "start": 29.31,
+    "end": 29.655
+  },
+  {
+    "word": "conduce",
+    "start": 29.714,
+    "end": 30.095
+  },
+  {
+    "word": "rápido",
+    "start": 30.131,
+    "end": 30.548
+  },
+  {
+    "word": "y",
+    "start": 30.607,
+    "end": 30.667
+  },
+  {
+    "word": "sin",
+    "start": 30.679,
+    "end": 30.905
+  },
+  {
+    "word": "perder",
+    "start": 30.917,
+    "end": 31.179
+  },
+  {
+    "word": "fuerza.",
+    "start": 31.202,
+    "end": 31.655
+  }
+]

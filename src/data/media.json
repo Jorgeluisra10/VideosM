@@ -1,0 +1,54 @@
+[
+  {
+    "archivo": "fachada.jpg",
+    "tipo": "foto",
+    "original": "fachada.png",
+    "ancho": 1280,
+    "alto": 960,
+    "fondo": "bg-fachada.jpg",
+    "descripcion": "Fachada con jardín al frente"
+  },
+  {
+    "archivo": "living.jpg",
+    "tipo": "foto",
+    "original": "living.png",
+    "ancho": 1280,
+    "alto": 960,
+    "fondo": "bg-living.jpg",
+    "descripcion": "Living amplio y luminoso"
+  },
+  {
+    "archivo": "cocina.jpg",
+    "tipo": "foto",
+    "original": "cocina.png",
+    "ancho": 1280,
+    "alto": 960,
+    "fondo": "bg-cocina.jpg",
+    "descripcion": "Cocina integrada con isla"
+  },
+  {
+    "archivo": "dormitorio.jpg",
+    "tipo": "foto",
+    "original": "dormitorio.png",
+    "ancho": 1280,
+    "alto": 960,
+    "fondo": "bg-dormitorio.jpg",
+    "descripcion": "Suite principal con ventanal"
+  },
+  {
+    "archivo": "jardin.jpg",
+    "tipo": "foto",
+    "original": "jardin.png",
+    "ancho": 1280,
+    "alto": 960,
+    "fondo": "bg-jardin.jpg",
+    "descripcion": "Jardín con pileta y deck"
+  },
+  {
+    "archivo": "logo.png",
+    "tipo": "logo",
+    "original": "logo.png",
+    "ancho": 600,
+    "alto": 600
+  }
+]

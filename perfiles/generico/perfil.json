@@ -1,0 +1,28 @@
+{
+  "id": "generico",
+  "nombre": "Genérico (cualquier tema: marketing, negocio, educación, producto…)",
+  "descripcion": "Reels para cualquier tema: explicaciones, promociones, lanzamientos, tutoriales, comparaciones. Usa tus fotos y tu marca; las escenas las compone la IA con listas, fichas, precios, gráficas, pasos y comparaciones.",
+  "icono": "🎬",
+  "paquetes": ["base"],
+  "etiquetaPorDefecto": "NOVEDAD",
+  "duracion": 35,
+  "palabras": [75, 105],
+  "voz": "mx",
+  "velocidad": "+3%",
+  "tonos": ["cercano", "profesional", "enérgico", "divertido", "premium y elegante"],
+  "paleta": "moderno",
+  "marca": { "ambiente": false, "volumenMusica": 0.14, "fondo": { "rejilla": 0.04, "particulas": true } },
+  "revision": { "nombre": "verificador de datos", "verificacion": "datos y afirmaciones del guion" },
+  "plantilla": null,
+  "ejemplos": ["inmobiliaria-casa"],
+  "datosPost": { "hashtags": 5 },
+  "campos": [
+    { "clave": "objetivo", "etiqueta": "Objetivo del video", "tipo": "opcion", "opciones": ["Vender / promocionar", "Informar o explicar", "Educar (paso a paso)", "Entretener", "Captar contactos"], "defecto": "Vender / promocionar", "requerido": true },
+    { "clave": "publico", "etiqueta": "A quién le hablas", "tipo": "texto", "ayuda": "p. ej. dueños de pequeños negocios, jóvenes de 20 a 30 años" },
+    { "clave": "puntosClave", "etiqueta": "Ideas o beneficios clave (separados por coma)", "tipo": "lista", "requerido": true, "ayuda": "Lo que SÍ o SÍ debe decir el video." },
+    { "clave": "datosDuros", "etiqueta": "Cifras, precios o datos exactos (separados por coma)", "tipo": "lista", "ayuda": "p. ej. 30 % de descuento, desde $9.990, entrega en 48 h. La IA no inventa cifras." },
+    { "clave": "llamadaAccion", "etiqueta": "Llamada a la acción", "tipo": "texto", "ayuda": "p. ej. «Escríbenos por WhatsApp»" },
+    { "clave": "telefono", "etiqueta": "Teléfono / WhatsApp", "tipo": "texto", "grupo": "Contacto" },
+    { "clave": "web", "etiqueta": "Web o usuario de redes", "tipo": "texto", "grupo": "Contacto" }
+  ]
+}

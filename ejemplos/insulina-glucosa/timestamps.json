@@ -1,0 +1,497 @@
+[
+  {
+    "word": "¿Por",
+    "start": 0.098,
+    "end": 0.252
+  },
+  {
+    "word": "qué",
+    "start": 0.312,
+    "end": 0.395
+  },
+  {
+    "word": "la",
+    "start": 0.419,
+    "end": 0.467
+  },
+  {
+    "word": "insulina",
+    "start": 0.49,
+    "end": 0.919
+  },
+  {
+    "word": "baja",
+    "start": 0.943,
+    "end": 1.181
+  },
+  {
+    "word": "el",
+    "start": 1.205,
+    "end": 1.264
+  },
+  {
+    "word": "azúcar",
+    "start": 1.264,
+    "end": 1.645
+  },
+  {
+    "word": "en",
+    "start": 1.645,
+    "end": 1.717
+  },
+  {
+    "word": "la",
+    "start": 1.717,
+    "end": 1.824
+  },
+  {
+    "word": "sangre?",
+    "start": 1.836,
+    "end": 2.229
+  },
+  {
+    "word": "Después",
+    "start": 3.095,
+    "end": 3.488
+  },
+  {
+    "word": "de",
+    "start": 3.5,
+    "end": 3.56
+  },
+  {
+    "word": "comer,",
+    "start": 3.619,
+    "end": 3.94
+  },
+  {
+    "word": "la",
+    "start": 4.024,
+    "end": 4.143
+  },
+  {
+    "word": "glucosa",
+    "start": 4.179,
+    "end": 4.583
+  },
+  {
+    "word": "sube",
+    "start": 4.595,
+    "end": 4.845
+  },
+  {
+    "word": "en",
+    "start": 4.845,
+    "end": 4.893
+  },
+  {
+    "word": "la",
+    "start": 4.893,
+    "end": 5
+  },
+  {
+    "word": "sangre.",
+    "start": 5.024,
+    "end": 5.405
+  },
+  {
+    "word": "El",
+    "start": 6.286,
+    "end": 6.44
+  },
+  {
+    "word": "páncreas",
+    "start": 6.512,
+    "end": 6.964
+  },
+  {
+    "word": "lo",
+    "start": 7.012,
+    "end": 7.107
+  },
+  {
+    "word": "detecta",
+    "start": 7.143,
+    "end": 7.56
+  },
+  {
+    "word": "y",
+    "start": 7.571,
+    "end": 7.619
+  },
+  {
+    "word": "libera",
+    "start": 7.631,
+    "end": 7.929
+  },
+  {
+    "word": "insulina.",
+    "start": 7.94,
+    "end": 8.44
+  },
+  {
+    "word": "La",
+    "start": 9.321,
+    "end": 9.464
+  },
+  {
+    "word": "insulina",
+    "start": 9.476,
+    "end": 9.905
+  },
+  {
+    "word": "viaja",
+    "start": 9.94,
+    "end": 10.238
+  },
+  {
+    "word": "por",
+    "start": 10.31,
+    "end": 10.393
+  },
+  {
+    "word": "la",
+    "start": 10.393,
+    "end": 10.488
+  },
+  {
+    "word": "sangre",
+    "start": 10.512,
+    "end": 10.857
+  },
+  {
+    "word": "y",
+    "start": 10.929,
+    "end": 10.988
+  },
+  {
+    "word": "se",
+    "start": 11,
+    "end": 11.131
+  },
+  {
+    "word": "une",
+    "start": 11.179,
+    "end": 11.345
+  },
+  {
+    "word": "a",
+    "start": 11.345,
+    "end": 11.393
+  },
+  {
+    "word": "su",
+    "start": 11.405,
+    "end": 11.512
+  },
+  {
+    "word": "receptor",
+    "start": 11.536,
+    "end": 11.964
+  },
+  {
+    "word": "en",
+    "start": 11.964,
+    "end": 12.024
+  },
+  {
+    "word": "la",
+    "start": 12.036,
+    "end": 12.131
+  },
+  {
+    "word": "membrana",
+    "start": 12.167,
+    "end": 12.536
+  },
+  {
+    "word": "de",
+    "start": 12.571,
+    "end": 12.631
+  },
+  {
+    "word": "las",
+    "start": 12.655,
+    "end": 12.762
+  },
+  {
+    "word": "células",
+    "start": 12.762,
+    "end": 13.119
+  },
+  {
+    "word": "musculares",
+    "start": 13.143,
+    "end": 13.69
+  },
+  {
+    "word": "y",
+    "start": 13.702,
+    "end": 13.742
+  },
+  {
+    "word": "grasas.",
+    "start": 13.774,
+    "end": 14.262
+  },
+  {
+    "word": "Esa",
+    "start": 15.131,
+    "end": 15.381
+  },
+  {
+    "word": "unión",
+    "start": 15.405,
+    "end": 15.631
+  },
+  {
+    "word": "activa",
+    "start": 15.643,
+    "end": 16.024
+  },
+  {
+    "word": "una",
+    "start": 16.048,
+    "end": 16.19
+  },
+  {
+    "word": "cascada",
+    "start": 16.238,
+    "end": 16.583
+  },
+  {
+    "word": "interna",
+    "start": 16.607,
+    "end": 17.036
+  },
+  {
+    "word": "que",
+    "start": 17.095,
+    "end": 17.179
+  },
+  {
+    "word": "lleva",
+    "start": 17.19,
+    "end": 17.429
+  },
+  {
+    "word": "transportadores",
+    "start": 17.476,
+    "end": 18.155
+  },
+  {
+    "word": "GLUT4",
+    "start": 18.19,
+    "end": 18.786
+  },
+  {
+    "word": "hasta",
+    "start": 18.869,
+    "end": 19.095
+  },
+  {
+    "word": "la",
+    "start": 19.119,
+    "end": 19.19
+  },
+  {
+    "word": "superficie.",
+    "start": 19.202,
+    "end": 19.821
+  },
+  {
+    "word": "Con",
+    "start": 20.702,
+    "end": 20.857
+  },
+  {
+    "word": "más",
+    "start": 20.881,
+    "end": 21.048
+  },
+  {
+    "word": "puertas",
+    "start": 21.119,
+    "end": 21.44
+  },
+  {
+    "word": "abiertas,",
+    "start": 21.44,
+    "end": 22.024
+  },
+  {
+    "word": "la",
+    "start": 22.143,
+    "end": 22.25
+  },
+  {
+    "word": "glucosa",
+    "start": 22.286,
+    "end": 22.702
+  },
+  {
+    "word": "entra",
+    "start": 22.738,
+    "end": 22.917
+  },
+  {
+    "word": "a",
+    "start": 22.917,
+    "end": 22.964
+  },
+  {
+    "word": "la",
+    "start": 22.988,
+    "end": 23.071
+  },
+  {
+    "word": "célula",
+    "start": 23.095,
+    "end": 23.488
+  },
+  {
+    "word": "y",
+    "start": 23.536,
+    "end": 23.595
+  },
+  {
+    "word": "deja",
+    "start": 23.631,
+    "end": 23.881
+  },
+  {
+    "word": "de",
+    "start": 23.917,
+    "end": 23.964
+  },
+  {
+    "word": "acumularse",
+    "start": 23.964,
+    "end": 24.548
+  },
+  {
+    "word": "en",
+    "start": 24.548,
+    "end": 24.595
+  },
+  {
+    "word": "la",
+    "start": 24.607,
+    "end": 24.714
+  },
+  {
+    "word": "sangre.",
+    "start": 24.738,
+    "end": 25.119
+  },
+  {
+    "word": "Por",
+    "start": 25.988,
+    "end": 26.155
+  },
+  {
+    "word": "eso",
+    "start": 26.155,
+    "end": 26.345
+  },
+  {
+    "word": "la",
+    "start": 26.381,
+    "end": 26.44
+  },
+  {
+    "word": "glucemia",
+    "start": 26.476,
+    "end": 26.857
+  },
+  {
+    "word": "baja.",
+    "start": 26.893,
+    "end": 27.202
+  },
+  {
+    "word": "Sin",
+    "start": 28.107,
+    "end": 28.333
+  },
+  {
+    "word": "insulina,",
+    "start": 28.345,
+    "end": 28.929
+  },
+  {
+    "word": "o",
+    "start": 29.06,
+    "end": 29.119
+  },
+  {
+    "word": "con",
+    "start": 29.179,
+    "end": 29.286
+  },
+  {
+    "word": "receptores",
+    "start": 29.31,
+    "end": 29.869
+  },
+  {
+    "word": "que",
+    "start": 29.917,
+    "end": 29.988
+  },
+  {
+    "word": "no",
+    "start": 30.012,
+    "end": 30.083
+  },
+  {
+    "word": "responden,",
+    "start": 30.107,
+    "end": 30.667
+  },
+  {
+    "word": "la",
+    "start": 30.881,
+    "end": 31
+  },
+  {
+    "word": "glucosa",
+    "start": 31.036,
+    "end": 31.429
+  },
+  {
+    "word": "se",
+    "start": 31.452,
+    "end": 31.548
+  },
+  {
+    "word": "queda",
+    "start": 31.607,
+    "end": 31.798
+  },
+  {
+    "word": "fuera:",
+    "start": 31.821,
+    "end": 32.167
+  },
+  {
+    "word": "eso",
+    "start": 32.405,
+    "end": 32.643
+  },
+  {
+    "word": "es",
+    "start": 32.702,
+    "end": 32.774
+  },
+  {
+    "word": "la",
+    "start": 32.798,
+    "end": 32.881
+  },
+  {
+    "word": "diabetes.",
+    "start": 32.917,
+    "end": 33.488
+  }
+]

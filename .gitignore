@@ -1,0 +1,11 @@
+# secretos
+.env
+
+# dependencias y temporales
+node_modules/
+trabajo/tmp/
+trabajo/ia/debug/
+
+# los videos terminados y capturas pesan: no van al repositorio
+trabajo/salida/*.mp4
+trabajo/archivo/*/*.mp4

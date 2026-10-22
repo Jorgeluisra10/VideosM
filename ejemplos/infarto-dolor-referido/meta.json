@@ -1,0 +1,10 @@
+{
+  "voz": "es-AR-TomasNeural",
+  "velocidad": "+5%",
+  "tono": "+0Hz",
+  "palabras": 104,
+  "duracionAudio": 35.64,
+  "ultimaPalabraFin": 34.75,
+  "texto": "¿Por qué un infarto duele en el brazo izquierdo y no solo en el corazón? Cuando una arteria coronaria se bloquea, el músculo cardíaco se queda sin oxígeno y libera sustancias que activan nervios sensitivos. Esas fibras viajan hasta la médula espinal, entre los segmentos T1 y T4. Pero ahí mismo entran también los nervios del brazo izquierdo. Las dos señales convergen en la misma neurona, que sube al tálamo y a la corteza. Como el cerebro está acostumbrado a recibir dolor de la piel, se equivoca y lo proyecta al brazo. Eso es el dolor referido: el corazón sufre, pero el brazo avisa.",
+  "generado": "2026-10-21T19:18:51.163Z"
+}

@@ -1,0 +1,76 @@
+{
+  "proyecto": { "id": "potencial-accion", "etiqueta": "NEUROFISIOLOGÍA", "titulo": "¿Cómo viaja un impulso nervioso sin apagarse?" },
+  "portada": { "lineas": ["¿CÓMO VIAJA", "UN IMPULSO", "NERVIOSO SIN", "APAGARSE?"], "resaltar": 3, "escena": "umbral", "segundo": 17.4 },
+  "escenas": [
+    {
+      "id": "gancho", "titulo": "¿Cómo viaja un impulso?", "acento": "amarillo", "desde": "Cómo viaja",
+      "elementos": [
+        { "tipo": "neurona", "cuando": "Cómo viaja", "x": 50, "y": 50, "tam": 90, "mielina": true, "impulso": true },
+        { "tipo": "rotulo", "cuando": "nervioso", "x": 50, "y": 20, "texto": "?", "color": "amarillo", "tam": 22 }
+      ]
+    },
+    {
+      "id": "reposo", "titulo": "1 · La neurona en reposo", "acento": "azul", "desde": "En reposo",
+      "elementos": [
+        { "tipo": "membrana", "cuando": "En reposo", "x": 50, "y": 54, "ancho": 84, "receptores": 0, "canales": 2, "bomba": true, "ladoSuperior": "Exterior", "ladoInferior": "Interior", "color": "azul" },
+        { "tipo": "dato", "cuando": "menos setenta", "x": 50, "y": 18, "valor": "−70", "unidad": "mV", "etiqueta": "Potencial de reposo", "color": "azul", "tam": 14 },
+        { "tipo": "molecula", "cuando": "neurona", "x": 31, "y": 38, "simbolo": "Na^{+}", "color": "amarillo", "tam": "m" },
+        { "tipo": "molecula", "cuando": "neurona", "desfase": 0.15, "x": 50, "y": 38, "simbolo": "Na^{+}", "color": "amarillo", "tam": "m" },
+        { "tipo": "molecula", "cuando": "negativa", "x": 30, "y": 76, "simbolo": "K^{+}", "color": "azul", "tam": "m" },
+        { "tipo": "icono", "cuando": "negativa", "desfase": 0.1, "x": 56, "y": 76, "icono": "menos", "color": "rojo", "tam": 8 },
+        { "tipo": "icono", "cuando": "dentro", "x": 70, "y": 76, "icono": "menos", "color": "rojo", "tam": 8 },
+        { "tipo": "etiqueta", "cuando": "carga", "x": 50, "y": 90, "texto": "Más negativo por dentro", "color": "rojo" }
+      ]
+    },
+    {
+      "id": "sodio", "titulo": "2 · Entra el sodio", "acento": "amarillo", "desde": "Un estímulo",
+      "elementos": [
+        { "tipo": "membrana", "cuando": "Un estímulo", "x": 50, "y": 52, "ancho": 84, "receptores": 0, "canales": 3, "ladoSuperior": "Exterior", "ladoInferior": "Interior", "color": "azul" },
+        { "tipo": "etiqueta", "cuando": "canales de sodio", "x": 50, "y": 12, "texto": "Se abren canales de sodio", "color": "amarillo" },
+        { "tipo": "particulas", "cuando": "sodio", "n": 2, "ruta": [[25, 20], [25, 52], [25, 82]], "color": "amarillo", "cantidad": 6, "velocidad": 0.3, "radio": 8 },
+        { "tipo": "particulas", "cuando": "entra", "ruta": [[50, 20], [50, 52], [50, 82]], "color": "amarillo", "cantidad": 6, "velocidad": 0.3, "radio": 8 },
+        { "tipo": "particulas", "cuando": "entra", "desfase": 0.3, "ruta": [[75, 20], [75, 52], [75, 82]], "color": "amarillo", "cantidad": 6, "velocidad": 0.3, "radio": 8 },
+        { "tipo": "etiqueta", "cuando": "despolariza", "x": 50, "y": 92, "texto": "Despolarización", "color": "amarillo" }
+      ]
+    },
+    {
+      "id": "umbral", "titulo": "3 · Todo o nada", "acento": "amarillo", "desde": "Al llegar",
+      "elementos": [
+        { "tipo": "grafica", "cuando": "Al llegar", "grafica": "potencial-accion", "x": 50, "y": 48, "ancho": 86, "alto": 58, "ejeX": "Tiempo (ms)", "ejeY": "Voltaje (mV)", "color": "amarillo", "duracion": 3.2,
+          "lineasH": [{ "y": 0.31, "texto": "Umbral", "color": "rojo" }],
+          "marcadores": [{ "x": 0.2, "texto": "Umbral", "cuando": "umbral" }, { "x": 0.27, "texto": "Pico", "cuando": "acción" }] },
+        { "tipo": "icono", "cuando": "dispara", "x": 86, "y": 14, "icono": "rayo", "color": "amarillo", "tam": 14 },
+        { "tipo": "rotulo", "cuando": "todo o nada", "x": 50, "y": 90, "texto": "TODO O NADA", "color": "amarillo", "tam": 10, "impacto": true }
+      ]
+    },
+    {
+      "id": "potasio", "titulo": "4 · Sale el potasio", "acento": "azul", "desde": "Después se abren",
+      "elementos": [
+        { "tipo": "membrana", "cuando": "Después se abren", "x": 50, "y": 52, "ancho": 84, "receptores": 0, "canales": 3, "ladoSuperior": "Exterior", "ladoInferior": "Interior", "color": "azul" },
+        { "tipo": "etiqueta", "cuando": "canales de potasio", "x": 50, "y": 12, "texto": "Se abren canales de potasio", "color": "azul" },
+        { "tipo": "particulas", "cuando": "sale", "ruta": [[25, 82], [25, 52], [25, 20]], "color": "azul", "cantidad": 6, "velocidad": 0.3, "radio": 8 },
+        { "tipo": "particulas", "cuando": "sale", "desfase": 0.25, "ruta": [[50, 82], [50, 52], [50, 20]], "color": "azul", "cantidad": 6, "velocidad": 0.3, "radio": 8 },
+        { "tipo": "particulas", "cuando": "sale", "desfase": 0.5, "ruta": [[75, 82], [75, 52], [75, 20]], "color": "azul", "cantidad": 6, "velocidad": 0.3, "radio": 8 },
+        { "tipo": "etiqueta", "cuando": "repolariza", "x": 50, "y": 92, "texto": "Repolarización", "color": "azul" }
+      ]
+    },
+    {
+      "id": "mielina", "titulo": "5 · La señal salta", "acento": "amarillo", "desde": "En las fibras",
+      "elementos": [
+        { "tipo": "neurona", "cuando": "En las fibras", "x": 50, "y": 52, "tam": 92, "mielina": true, "impulso": true },
+        { "tipo": "etiqueta", "cuando": "mielinizadas", "x": 24, "y": 28, "texto": "Mielina", "color": "hueso", "guia": [30, 50] },
+        { "tipo": "etiqueta", "cuando": "nodo", "x": 58, "y": 76, "texto": "Nodo de Ranvier", "color": "amarillo", "guia": [48, 55] },
+        { "tipo": "icono", "cuando": "chispa", "x": 84, "y": 24, "icono": "rayo", "color": "amarillo", "tam": 14 }
+      ]
+    },
+    {
+      "id": "cierre", "titulo": "Por eso conduce rápido", "acento": "amarillo", "desde": "Por eso",
+      "elementos": [
+        { "tipo": "comparacion", "cuando": "Por eso", "x": 50, "y": 46, "ancho": 88, "alto": 50,
+          "izquierda": { "titulo": "Con mielina", "color": "amarillo", "items": ["Conduce rápido", "Ahorra energía"] },
+          "derecha": { "titulo": "Sin mielina", "color": "rojo", "items": ["Conduce lento", "Gasta más energía"] } },
+        { "tipo": "rotulo", "cuando": "rápido", "x": 50, "y": 86, "texto": "RÁPIDO Y FUERTE", "color": "amarillo", "tam": 9, "impacto": true }
+      ]
+    }
+  ]
+}

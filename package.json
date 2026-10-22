@@ -1,0 +1,57 @@
+{
+  "name": "videmed",
+  "version": "1.0.0",
+  "description": "Productor automático de reels de medicina (Video-as-Code)",
+  "private": true,
+  "type": "module",
+  "main": "src/index.ts",
+  "scripts": {
+    "start": "remotion studio src/index.ts",
+    "voz": "node scripts/generar-voz.mjs",
+    "producir": "node scripts/producir.mjs",
+    "sfx": "node scripts/generar-sfx.mjs",
+    "check": "tsc --noEmit",
+    "qa": "node scripts/qa.mjs",
+    "still": "remotion still src/index.ts Portada trabajo/salida/portada.jpg --image-format=jpeg --jpeg-quality=95",
+    "build": "node scripts/render.mjs",
+    "entregables": "node scripts/entregables.mjs",
+    "ia": "node scripts/ia/agente.mjs",
+    "ia:validar": "node scripts/ia/validar.mjs",
+    "ia:diagnostico": "node scripts/ia/diagnostico.mjs",
+    "ia:prueba": "node scripts/ia/probar.mjs",
+    "ia:capturas": "node scripts/ia/capturas.mjs",
+    "ia:prompt": "node scripts/ia/exportar-prompt.mjs",
+    "ia:importar": "node scripts/ia/importar-plan.mjs",
+    "ia:mock": "node scripts/ia/mock-server.mjs",
+    "proyecto": "node scripts/proyecto.mjs"
+  },
+  "keywords": [
+    "remotion",
+    "medicine",
+    "video",
+    "education"
+  ],
+  "author": "",
+  "license": "MIT",
+  "dependencies": {
+    "@remotion/cli": "4.0.536",
+    "@remotion/media-utils": "4.0.536",
+    "@remotion/paths": "4.0.536",
+    "@remotion/player": "4.0.536",
+    "@remotion/renderer": "4.0.536",
+    "lucide-react": "^1.16.0",
+    "react": "^18.3.1",
+    "react-dom": "^18.3.1",
+    "remotion": "4.0.536"
+  },
+  "devDependencies": {
+    "@fontsource/inter": "^5.3.0",
+    "esbuild": "0.28.1",
+    "@remotion/bundler": "4.0.536",
+    "@types/node": "^22.8.7",
+    "@types/react": "^18.3.12",
+    "@types/react-dom": "^18.3.1",
+    "pngjs": "^7.0.0",
+    "typescript": "^5.6.3"
+  }
+}

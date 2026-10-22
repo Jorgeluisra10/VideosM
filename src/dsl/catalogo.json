@@ -1,0 +1,1408 @@
+{
+  "version": 2,
+  "descripcion": "Catálogo de elementos con los que la IA compone cada escena. Coordenadas x,y en una cuadrícula 0–100 (centro 50,50; x→derecha, y→abajo). Tamaños en unidades de esa misma cuadrícula. Cada elemento pertenece a un 'paquete' (base = sirve para cualquier video; medicina; inmobiliaria) y cada perfil de video activa los suyos.",
+  "base": {
+    "tipo": "Nombre del elemento (uno de los listados).",
+    "cuando": "Frase EXACTA del guion (1–4 palabras seguidas, tal como están escritas, sin signos) cuando el elemento aparece: aparece justo cuando la voz la dice.",
+    "n": "Si la frase aparece varias veces en el guion, cuál usar (1 = la primera). null = la primera.",
+    "desfase": "Segundos de ajuste sobre 'cuando' (negativo = antes, positivo = después). null = 0. Rango útil −1.5…+2.",
+    "hasta": "Frase del guion en la que el elemento DESAPARECE. null = dura hasta el final de la escena.",
+    "impacto": "true = golpe de cámara y sonido grave cuando aparece (úsalo como mucho 1–2 veces en todo el video, para el momento más dramático). null = no."
+  },
+  "elementos": {
+    "corazon": {
+      "categoria": "anatomia",
+      "descripcion": "Corazón anatómico (vista anterior) con aorta, vena cava, tronco pulmonar y arterias coronarias que se dibujan solas. Centro = (x,y). tam = ancho (normal 25–65; en un busto ≈ 20).",
+      "req": [
+        "x",
+        "y"
+      ],
+      "props": {
+        "x": {
+          "t": "num"
+        },
+        "y": {
+          "t": "num"
+        },
+        "tam": {
+          "t": "num",
+          "d": "ancho en unidades",
+          "def": 38
+        },
+        "latir": {
+          "t": "bool",
+          "d": "late (por defecto sí)",
+          "def": true
+        },
+        "vasos": {
+          "t": "bool",
+          "d": "dibuja aorta/pulmonar/cava (por defecto sí)",
+          "def": true
+        },
+        "trombo": {
+          "t": "bool",
+          "d": "coágulo que tapa la arteria coronaria descendente anterior (aparece 1 s después)"
+        },
+        "flujo": {
+          "t": "bool",
+          "d": "glóbulos rojos por la coronaria; se atascan contra el trombo si lo hay"
+        },
+        "isquemia": {
+          "t": "bool",
+          "d": "la pared anterior del ventrículo se apaga (gris)"
+        },
+        "dolor": {
+          "t": "bool",
+          "d": "halo y anillos rojos de dolor"
+        }
+      },
+      "paquete": "medicina"
+    },
+    "cerebro": {
+      "categoria": "anatomia",
+      "descripcion": "Cerebro en vista lateral (lóbulo frontal a la izquierda) con cerebelo y tronco. tam = ancho (normal 35–60).",
+      "req": [
+        "x",
+        "y"
+      ],
+      "props": {
+        "x": {
+          "t": "num"
+        },
+        "y": {
+          "t": "num"
+        },
+        "tam": {
+          "t": "num",
+          "def": 50
+        },
+        "talamo": {
+          "t": "bool",
+          "d": "ilumina el tálamo (óvalo central)"
+        },
+        "corteza": {
+          "t": "bool",
+          "d": "ilumina la corteza somatosensorial (franja arriba)"
+        },
+        "confusion": {
+          "t": "bool",
+          "d": "el cerebro se tiñe de rojo"
+        }
+      },
+      "paquete": "medicina"
+    },
+    "cuerpo": {
+      "categoria": "anatomia",
+      "descripcion": "Busto humano (cabeza, cuello, tronco y brazos; el torso se desvanece abajo). NO incluye órganos: pon encima un corazon (para tam=66 del cuerpo, un corazon de tam≈21 en x+5, y−6 cae en el pecho izquierdo del paciente). El brazo izquierdo del paciente es el de la DERECHA de la pantalla.",
+      "req": [
+        "x",
+        "y"
+      ],
+      "props": {
+        "x": {
+          "t": "num"
+        },
+        "y": {
+          "t": "num"
+        },
+        "tam": {
+          "t": "num",
+          "d": "ancho (hombro a hombro con brazos), normal 55–70",
+          "def": 60
+        },
+        "dolorBrazo": {
+          "t": "bool",
+          "d": "el brazo de la derecha de la pantalla (izquierdo del paciente) se ilumina en rojo"
+        }
+      },
+      "paquete": "medicina"
+    },
+    "brazo": {
+      "categoria": "anatomia",
+      "descripcion": "Brazo colgando con mano. tam = ALTO (normal 25–45). Centro = centro del brazo.",
+      "req": [
+        "x",
+        "y"
+      ],
+      "props": {
+        "x": {
+          "t": "num"
+        },
+        "y": {
+          "t": "num"
+        },
+        "tam": {
+          "t": "num",
+          "def": 40
+        },
+        "espejo": {
+          "t": "bool",
+          "d": "refleja horizontalmente"
+        },
+        "dolor": {
+          "t": "bool",
+          "d": "se ilumina en rojo con rayos de dolor"
+        },
+        "piel": {
+          "t": "bool",
+          "d": "resalta un parche de piel en la cara interna (usa 'color')"
+        },
+        "color": {
+          "t": "color",
+          "d": "color del parche de piel (por defecto rojo)"
+        }
+      },
+      "paquete": "medicina"
+    },
+    "columna": {
+      "categoria": "anatomia",
+      "descripcion": "Columna vertebral vista desde atrás (C7–T7) con la médula espinal, raíces nerviosas y etiquetas de nivel a la izquierda. tam = ALTO (normal 60–80). Ocupa además ≈ 0.6·tam de ancho (centrada en x).",
+      "req": [
+        "x",
+        "y"
+      ],
+      "props": {
+        "x": {
+          "t": "num"
+        },
+        "y": {
+          "t": "num"
+        },
+        "tam": {
+          "t": "num",
+          "def": 70
+        },
+        "resaltar": {
+          "t": "str",
+          "d": "niveles a iluminar uno a uno, p. ej. 'T1-T4' o 'T3'"
+        },
+        "brillo": {
+          "t": "bool",
+          "d": "la médula brilla (por defecto sí)",
+          "def": true
+        }
+      },
+      "paquete": "medicina"
+    },
+    "corte-medula": {
+      "categoria": "anatomia",
+      "descripcion": "Sección transversal de la médula espinal: sustancia blanca (óvalo), sustancia gris en mariposa con astas dorsales (arriba) y ventrales (abajo), conducto central. tam = ancho (normal 50–70). Úsala como fondo sobre el que dibujas neuronas con forma/linea.",
+      "req": [
+        "x",
+        "y"
+      ],
+      "props": {
+        "x": {
+          "t": "num"
+        },
+        "y": {
+          "t": "num"
+        },
+        "tam": {
+          "t": "num",
+          "def": 60
+        }
+      },
+      "paquete": "medicina"
+    },
+    "organo": {
+      "categoria": "anatomia",
+      "descripcion": "Órgano estilizado. tam = ancho. Proporciones alto/ancho aproximadas: pulmones 0.9, rinon 1.33, higado 0.64, estomago 1.27, pancreas 0.42, hueso 1.67.",
+      "req": [
+        "x",
+        "y",
+        "organo"
+      ],
+      "props": {
+        "x": {
+          "t": "num"
+        },
+        "y": {
+          "t": "num"
+        },
+        "organo": {
+          "t": "enum",
+          "valores": [
+            "pulmones",
+            "rinon",
+            "higado",
+            "estomago",
+            "pancreas",
+            "hueso"
+          ]
+        },
+        "tam": {
+          "t": "num",
+          "def": 40
+        },
+        "resaltar": {
+          "t": "bool",
+          "d": "halo y relleno de color"
+        },
+        "color": {
+          "t": "color",
+          "d": "color del resalte (por defecto rojo)"
+        }
+      },
+      "paquete": "medicina"
+    },
+    "vaso": {
+      "categoria": "anatomia",
+      "descripcion": "Vaso sanguíneo: tubo que se dibuja a lo largo de 'ruta'. Para mostrar sangre circulando añade 'particulas' con la misma ruta.",
+      "req": [
+        "ruta",
+        "vaso"
+      ],
+      "props": {
+        "ruta": {
+          "t": "puntos",
+          "d": "lista de 2–6 puntos [x,y]"
+        },
+        "vaso": {
+          "t": "enum",
+          "valores": [
+            "arteria",
+            "vena"
+          ],
+          "d": "arteria = rojo, vena = azul"
+        },
+        "grosor": {
+          "t": "num",
+          "d": "ancho del tubo en unidades (2–10)",
+          "def": 3
+        },
+        "curva": {
+          "t": "bool",
+          "d": "suaviza la ruta (por defecto sí)",
+          "def": true
+        }
+      },
+      "paquete": "medicina"
+    },
+    "celula": {
+      "categoria": "celular",
+      "descripcion": "Célula con membrana (azul), núcleo y orgánulos opcionales. tam = ancho (25–50; las alargadas hasta 70). Los receptores/canales se reparten uniformemente alrededor de la membrana (primero receptores, luego canales), empezando arriba.",
+      "req": [
+        "x",
+        "y"
+      ],
+      "props": {
+        "x": {
+          "t": "num"
+        },
+        "y": {
+          "t": "num"
+        },
+        "tam": {
+          "t": "num",
+          "def": 30
+        },
+        "forma": {
+          "t": "enum",
+          "valores": [
+            "redonda",
+            "alargada",
+            "eritrocito"
+          ],
+          "d": "alargada = fibra muscular/miocito (ancho:alto ≈ 2.5:1)"
+        },
+        "nucleo": {
+          "t": "bool",
+          "def": true
+        },
+        "organelos": {
+          "t": "bool",
+          "d": "mitocondrias (amarillo)"
+        },
+        "receptores": {
+          "t": "int",
+          "d": "0–8"
+        },
+        "canales": {
+          "t": "int",
+          "d": "0–6"
+        },
+        "color": {
+          "t": "color",
+          "d": "color de la membrana (por defecto azul)"
+        },
+        "activa": {
+          "t": "bool",
+          "d": "halo de actividad"
+        }
+      },
+      "paquete": "medicina"
+    },
+    "membrana": {
+      "categoria": "celular",
+      "descripcion": "Bicapa lipídica horizontal con proteínas. ancho = 60–90. receptores = 'Y' que sobresalen ≈ 11 unidades POR ENCIMA de y; canales = poros que atraviesan la bicapa (±4.5 unidades de y); bomba = bomba de ATP. Las proteínas se reparten uniformemente de izquierda a derecha: primero los receptores, luego los canales. Con N proteínas, la i-ésima (desde 0) está en x_membrana − ancho/2 + ancho·(0.05 + 0.9·(i+0.5)/N); si hay bomba, usa 0.05 + 0.7·(i+0.5)/N y la bomba queda en el 90 % del ancho. Úsala para que partículas/flechas apunten a receptores o atraviesen canales. Deja 20 unidades libres encima y debajo.",
+      "req": [
+        "x",
+        "y"
+      ],
+      "props": {
+        "x": {
+          "t": "num"
+        },
+        "y": {
+          "t": "num"
+        },
+        "ancho": {
+          "t": "num",
+          "def": 70
+        },
+        "receptores": {
+          "t": "int",
+          "d": "0–6"
+        },
+        "canales": {
+          "t": "int",
+          "d": "0–5"
+        },
+        "bomba": {
+          "t": "bool"
+        },
+        "ladoSuperior": {
+          "t": "str",
+          "d": "rótulo pequeño arriba a la izquierda (p. ej. 'Sangre', 'Exterior')"
+        },
+        "ladoInferior": {
+          "t": "str",
+          "d": "rótulo pequeño abajo a la izquierda (p. ej. 'Interior de la célula')"
+        },
+        "color": {
+          "t": "color",
+          "d": "por defecto azul"
+        }
+      },
+      "paquete": "medicina"
+    },
+    "neurona": {
+      "categoria": "celular",
+      "descripcion": "Neurona: dendritas, soma (izquierda), axón con mielina opcional y botones terminales (derecha). tam = ancho total (60–95); (x,y) = centro del dibujo. El soma queda en x − 0.37·tam; los nodos de Ranvier (huecos entre vainas) en x − 0.117·tam + 0.1205·k·tam, k=0..3; el axón corre en y+0.7.",
+      "req": [
+        "x",
+        "y"
+      ],
+      "props": {
+        "x": {
+          "t": "num"
+        },
+        "y": {
+          "t": "num"
+        },
+        "tam": {
+          "t": "num",
+          "def": 80
+        },
+        "mielina": {
+          "t": "bool",
+          "def": true
+        },
+        "impulso": {
+          "t": "bool",
+          "d": "un impulso recorre el axón repetidamente"
+        }
+      },
+      "paquete": "medicina"
+    },
+    "forma": {
+      "categoria": "dibujo",
+      "descripcion": "Figura geométrica sencilla (marcar una zona, un recipiente, un núcleo, una neurona esquemática…). Si el relleno es tenue (opacidad < 0.45) cuenta como fondo y puede quedar bajo otros elementos.",
+      "req": [
+        "forma",
+        "x",
+        "y"
+      ],
+      "props": {
+        "forma": {
+          "t": "enum",
+          "valores": [
+            "circulo",
+            "elipse",
+            "rectangulo",
+            "redondeado",
+            "poligono"
+          ]
+        },
+        "x": {
+          "t": "num"
+        },
+        "y": {
+          "t": "num"
+        },
+        "ancho": {
+          "t": "num",
+          "def": 20
+        },
+        "alto": {
+          "t": "num",
+          "d": "ignorado en 'circulo'",
+          "def": 20
+        },
+        "puntos": {
+          "t": "puntos",
+          "d": "solo 'poligono': vértices [x,y] (3–10)"
+        },
+        "relleno": {
+          "t": "color"
+        },
+        "borde": {
+          "t": "color"
+        },
+        "opacidad": {
+          "t": "num",
+          "d": "opacidad del relleno 0.05–1 (por defecto 0.35)"
+        },
+        "rotacion": {
+          "t": "num",
+          "d": "grados (−180…180)"
+        }
+      },
+      "paquete": "base"
+    },
+    "linea": {
+      "categoria": "dibujo",
+      "descripcion": "Línea/flecha que se dibuja sola a lo largo de 'puntos' (2–6 puntos [x,y]). Úsala para caminos nerviosos, flujos, conexiones causa→efecto. Una línea con flecha=true termina en punta de flecha.",
+      "req": [
+        "puntos"
+      ],
+      "props": {
+        "puntos": {
+          "t": "puntos"
+        },
+        "color": {
+          "t": "color",
+          "d": "por defecto hueso"
+        },
+        "grosor": {
+          "t": "num",
+          "d": "2–16 (por defecto 5)"
+        },
+        "estilo": {
+          "t": "enum",
+          "valores": [
+            "solida",
+            "punteada"
+          ]
+        },
+        "flecha": {
+          "t": "bool"
+        },
+        "curva": {
+          "t": "bool",
+          "d": "suaviza (por defecto sí)",
+          "def": true
+        },
+        "brillo": {
+          "t": "bool",
+          "d": "resplandor"
+        }
+      },
+      "paquete": "base"
+    },
+    "etiqueta": {
+      "categoria": "texto",
+      "descripcion": "Texto en cápsula con borde de color; SIEMPRE rotula las estructuras importantes con su nombre exacto. Líneas separadas por \\n, máx. 3 líneas de ≈ 22 caracteres. Admite subíndices/superíndices: O_{2}, H^{+}. (x,y) = centro de la cápsula; se recorta sola dentro de los márgenes. 'guia' = punto [x,y] al que apunta una línea.",
+      "req": [
+        "x",
+        "y",
+        "texto"
+      ],
+      "props": {
+        "x": {
+          "t": "num"
+        },
+        "y": {
+          "t": "num"
+        },
+        "texto": {
+          "t": "str"
+        },
+        "color": {
+          "t": "color",
+          "d": "color del borde (por defecto hueso)"
+        },
+        "tam": {
+          "t": "enum",
+          "valores": [
+            "s",
+            "m",
+            "l"
+          ],
+          "d": "s=30px, m=36px (defecto), l=44px"
+        },
+        "guia": {
+          "t": "punto",
+          "d": "[x,y] de la estructura señalada"
+        }
+      },
+      "paquete": "base"
+    },
+    "rotulo": {
+      "categoria": "texto",
+      "descripcion": "Texto GRANDE suelto con trazo oscuro (títulos de cierre, '?', '!', cifras clave). tam = altura de letra en unidades (8–22; 'DOLOR REFERIDO' en dos rótulos de tam 15).",
+      "req": [
+        "x",
+        "y",
+        "texto"
+      ],
+      "props": {
+        "x": {
+          "t": "num"
+        },
+        "y": {
+          "t": "num"
+        },
+        "texto": {
+          "t": "str"
+        },
+        "color": {
+          "t": "color",
+          "d": "por defecto amarillo"
+        },
+        "tam": {
+          "t": "num",
+          "def": 12
+        },
+        "rotacion": {
+          "t": "num",
+          "d": "−30…30 grados"
+        }
+      },
+      "paquete": "base"
+    },
+    "molecula": {
+      "categoria": "celular",
+      "descripcion": "Burbuja con el símbolo o nombre de una molécula/ion: 'Na^{+}', 'K^{+}', 'H^{+}', 'ATP', 'Glucosa', 'Insulina', 'GLUT4', 'O_{2}'. Flota suavemente.",
+      "req": [
+        "x",
+        "y",
+        "simbolo"
+      ],
+      "props": {
+        "x": {
+          "t": "num"
+        },
+        "y": {
+          "t": "num"
+        },
+        "simbolo": {
+          "t": "str"
+        },
+        "color": {
+          "t": "color",
+          "d": "por defecto amarillo"
+        },
+        "tam": {
+          "t": "enum",
+          "valores": [
+            "s",
+            "m",
+            "l"
+          ]
+        }
+      },
+      "paquete": "medicina"
+    },
+    "particulas": {
+      "categoria": "dibujo",
+      "descripcion": "Partículas que fluyen por una ruta (glóbulos, iones, moléculas): sangre, difusión por canales, señales. La dirección es la del primer al último punto.",
+      "req": [
+        "ruta"
+      ],
+      "props": {
+        "ruta": {
+          "t": "puntos",
+          "d": "2–6 puntos [x,y]"
+        },
+        "color": {
+          "t": "color",
+          "d": "por defecto rojo"
+        },
+        "cantidad": {
+          "t": "int",
+          "d": "2–16 (por defecto 7)"
+        },
+        "velocidad": {
+          "t": "num",
+          "d": "0.05–0.8 recorridos por segundo (por defecto 0.22)"
+        },
+        "radio": {
+          "t": "num",
+          "d": "3–20 px (por defecto 7)"
+        },
+        "curva": {
+          "t": "bool",
+          "def": true
+        }
+      },
+      "paquete": "base"
+    },
+    "impulso": {
+      "categoria": "dibujo",
+      "descripcion": "Destello brillante que viaja repetidamente por una ruta: señal nerviosa o eléctrica.",
+      "req": [
+        "ruta"
+      ],
+      "props": {
+        "ruta": {
+          "t": "puntos"
+        },
+        "color": {
+          "t": "color",
+          "d": "por defecto amarillo"
+        },
+        "duracion": {
+          "t": "num",
+          "d": "segundos por recorrido (0.4–4, defecto 1.2)"
+        },
+        "periodo": {
+          "t": "num",
+          "d": "segundos entre impulsos (defecto 1.8)"
+        },
+        "grosor": {
+          "t": "num",
+          "d": "4–16"
+        },
+        "curva": {
+          "t": "bool",
+          "def": true
+        }
+      },
+      "paquete": "base"
+    },
+    "aros": {
+      "categoria": "dibujo",
+      "descripcion": "Anillos que se expanden desde un punto (alarma, latido, activación).",
+      "req": [
+        "x",
+        "y"
+      ],
+      "props": {
+        "x": {
+          "t": "num"
+        },
+        "y": {
+          "t": "num"
+        },
+        "radio": {
+          "t": "num",
+          "d": "radio máximo en unidades",
+          "def": 12
+        },
+        "color": {
+          "t": "color"
+        }
+      },
+      "paquete": "base"
+    },
+    "rayos": {
+      "categoria": "dibujo",
+      "descripcion": "Rayitas de dolor/impacto estilo cómic alrededor de un punto.",
+      "req": [
+        "x",
+        "y"
+      ],
+      "props": {
+        "x": {
+          "t": "num"
+        },
+        "y": {
+          "t": "num"
+        },
+        "radio": {
+          "t": "num",
+          "def": 8
+        },
+        "color": {
+          "t": "color"
+        }
+      },
+      "paquete": "base"
+    },
+    "halo": {
+      "categoria": "dibujo",
+      "descripcion": "Resplandor suave de color detrás de una estructura (énfasis).",
+      "req": [
+        "x",
+        "y"
+      ],
+      "props": {
+        "x": {
+          "t": "num"
+        },
+        "y": {
+          "t": "num"
+        },
+        "radio": {
+          "t": "num",
+          "def": 20
+        },
+        "color": {
+          "t": "color"
+        }
+      },
+      "paquete": "base"
+    },
+    "icono": {
+      "categoria": "dibujo",
+      "descripcion": "Icono simple. tam = tamaño en unidades (6–20). Hay iconos médicos (pildora, jeringa, gota, bacteria, virus…), de uso general (rayo, reloj, check, cruz, alerta, interrogacion, mas, menos, flechas, estrella, dinero, calendario, escudo, sol, arbol), de propiedades (casa, cama, bano, auto, medida = m², pin, llave, piscina) y de contacto (telefono, whatsapp, mail, web).",
+      "req": [
+        "x",
+        "y",
+        "icono"
+      ],
+      "props": {
+        "x": {
+          "t": "num"
+        },
+        "y": {
+          "t": "num"
+        },
+        "icono": {
+          "t": "enum",
+          "valores": [
+            "pildora",
+            "jeringa",
+            "gota",
+            "rayo",
+            "reloj",
+            "bacteria",
+            "virus",
+            "check",
+            "cruz",
+            "alerta",
+            "interrogacion",
+            "mas",
+            "menos",
+            "flecha-arriba",
+            "flecha-abajo",
+            "casa",
+            "cama",
+            "bano",
+            "auto",
+            "medida",
+            "pin",
+            "llave",
+            "telefono",
+            "whatsapp",
+            "estrella",
+            "calendario",
+            "dinero",
+            "arbol",
+            "piscina",
+            "escudo",
+            "sol",
+            "mail",
+            "web"
+          ]
+        },
+        "tam": {
+          "t": "num",
+          "def": 10
+        },
+        "color": {
+          "t": "color",
+          "d": "por defecto amarillo"
+        }
+      },
+      "paquete": "base"
+    },
+    "svg-libre": {
+      "categoria": "dibujo",
+      "descripcion": "Dibujo propio en SVG para lo que el catálogo no cubre (una estructura anatómica concreta, un esquema). Caja de dibujo 100×100 centrada en (0,0) (coordenadas −50…50) que se escala a 'tam' unidades. Solo etiquetas g, path, circle, ellipse, rect, line, polyline, polygon, text, tspan; atributos geométricos y fill/stroke/stroke-width/opacity/transform. Colores: 'rojo','azul','amarillo','hueso','panel','fondo','ninguno' o #hex. Sin url(), imágenes, estilos ni scripts (se eliminan). Trazos de 3–6 de grosor, contornos cerrados, estilo minimalista de línea.",
+      "req": [
+        "x",
+        "y",
+        "svg"
+      ],
+      "props": {
+        "x": {
+          "t": "num"
+        },
+        "y": {
+          "t": "num"
+        },
+        "tam": {
+          "t": "num",
+          "d": "ancho de la caja en unidades",
+          "def": 20
+        },
+        "svg": {
+          "t": "str",
+          "d": "markup SVG sin la etiqueta <svg> exterior"
+        }
+      },
+      "paquete": "base"
+    },
+    "grafica": {
+      "categoria": "datos",
+      "descripcion": "Gráfica con ejes y una curva que se dibuja sola. 'grafica' elige la curva: potencial-accion (reposo −70 mV, umbral, pico, repolarización, hiperpolarización), ecg (2 latidos), farmacocinetica (sube, pico, baja), dosis-respuesta (sigmoide) o curva-libre con 'puntos' [x,y] normalizados 0–1 (y hacia ARRIBA). (x,y)=centro; ancho 60–90, alto 35–55. Deja 14 unidades libres arriba para etiquetas de marcadores.",
+      "req": [
+        "x",
+        "y",
+        "grafica"
+      ],
+      "props": {
+        "x": {
+          "t": "num"
+        },
+        "y": {
+          "t": "num"
+        },
+        "grafica": {
+          "t": "enum",
+          "valores": [
+            "potencial-accion",
+            "ecg",
+            "farmacocinetica",
+            "dosis-respuesta",
+            "curva-libre"
+          ]
+        },
+        "ancho": {
+          "t": "num",
+          "def": 80
+        },
+        "alto": {
+          "t": "num",
+          "def": 42
+        },
+        "ejeX": {
+          "t": "str",
+          "d": "nombre del eje horizontal"
+        },
+        "ejeY": {
+          "t": "str",
+          "d": "nombre del eje vertical"
+        },
+        "color": {
+          "t": "color",
+          "d": "color de la curva (por defecto amarillo)"
+        },
+        "puntos": {
+          "t": "puntos01",
+          "d": "solo curva-libre: puntos [x,y] con x,y en 0–1"
+        },
+        "duracion": {
+          "t": "num",
+          "d": "segundos que tarda en dibujarse (0.8–8, defecto 2.4); sincroniza con la narración"
+        },
+        "lineasH": {
+          "t": "lineasH",
+          "d": "líneas horizontales de referencia (máx. 4): {y 0–1, texto, color}"
+        },
+        "marcadores": {
+          "t": "marcadores",
+          "d": "puntos señalados sobre la curva (máx. 5): {x 0–1 a lo largo del eje horizontal, texto, cuando: frase del guion}. Cada uno aparece cuando la curva llega y la voz lo dice."
+        }
+      },
+      "paquete": "base"
+    },
+    "pasos": {
+      "categoria": "datos",
+      "descripcion": "Cadena de 2–6 nodos conectados por flechas (cascadas, vías, mecanismos). vertical (defecto): ancho 50–70, alto 60–80; horizontal: ancho 85–92, alto 18–26 y máx. 3–4 nodos. Cada nodo aparece cuando la voz dice su 'cuando'. Texto de cada nodo: máx. 2 líneas de ≈ 22 caracteres.",
+      "req": [
+        "x",
+        "y",
+        "nodos"
+      ],
+      "props": {
+        "x": {
+          "t": "num"
+        },
+        "y": {
+          "t": "num"
+        },
+        "ancho": {
+          "t": "num"
+        },
+        "alto": {
+          "t": "num"
+        },
+        "orientacion": {
+          "t": "enum",
+          "valores": [
+            "vertical",
+            "horizontal"
+          ]
+        },
+        "nodos": {
+          "t": "nodos",
+          "d": "[{texto, color, cuando}]"
+        }
+      },
+      "paquete": "base"
+    },
+    "comparacion": {
+      "categoria": "datos",
+      "descripcion": "Dos paneles lado a lado (A frente a B): agonista/antagonista, sano/enfermo, con/sin. Cada panel: titulo, color y 2–4 items cortos (máx. 28 caracteres). Los items aparecen escalonados cada ≈ 0.5 s desde 'cuando'. ancho 80–90, alto 45–60.",
+      "req": [
+        "x",
+        "y",
+        "izquierda",
+        "derecha"
+      ],
+      "props": {
+        "x": {
+          "t": "num"
+        },
+        "y": {
+          "t": "num"
+        },
+        "ancho": {
+          "t": "num"
+        },
+        "alto": {
+          "t": "num"
+        },
+        "izquierda": {
+          "t": "panel"
+        },
+        "derecha": {
+          "t": "panel"
+        }
+      },
+      "paquete": "base"
+    },
+    "dato": {
+      "categoria": "datos",
+      "descripcion": "Cifra grande con unidad y descripción: '−70 mV', '37 °C', '120/80 mmHg', '90 mg/dL'. tam = alto de letra en unidades (10–18). Ocupa además ≈ 7 unidades debajo si hay 'etiqueta'.",
+      "req": [
+        "x",
+        "y",
+        "valor"
+      ],
+      "props": {
+        "x": {
+          "t": "num"
+        },
+        "y": {
+          "t": "num"
+        },
+        "valor": {
+          "t": "str",
+          "d": "la cifra, p. ej. '−70'"
+        },
+        "unidad": {
+          "t": "str",
+          "d": "p. ej. 'mV'"
+        },
+        "etiqueta": {
+          "t": "str",
+          "d": "descripción bajo la cifra"
+        },
+        "color": {
+          "t": "color",
+          "d": "por defecto amarillo"
+        },
+        "tam": {
+          "t": "num",
+          "def": 14
+        }
+      },
+      "paquete": "base"
+    },
+    "foto": {
+      "categoria": "medios",
+      "paquete": "base",
+      "descripcion": "Foto enmarcada (con sombra y borde) con movimiento de cámara lento. Úsala cuando quieras la foto como PIEZA dentro de la escena (con otros elementos alrededor); para una foto a pantalla completa usa 'fondo' de la escena. ancho 60–90, alto 40–70 (una foto horizontal 4:3 queda bien con 80×60). 'pie' = leyenda corta dentro de la foto (abajo a la izquierda).",
+      "req": [
+        "x",
+        "y",
+        "archivo"
+      ],
+      "props": {
+        "x": {
+          "t": "num"
+        },
+        "y": {
+          "t": "num"
+        },
+        "archivo": {
+          "t": "str",
+          "d": "nombre de archivo exacto de la lista de fotos disponibles"
+        },
+        "ancho": {
+          "t": "num",
+          "def": 80
+        },
+        "alto": {
+          "t": "num",
+          "def": 56
+        },
+        "mov": {
+          "t": "enum",
+          "valores": [
+            "zoom-in",
+            "zoom-out",
+            "izquierda",
+            "derecha",
+            "arriba",
+            "abajo",
+            "fijo"
+          ],
+          "d": "movimiento de cámara (por defecto zoom-in)"
+        },
+        "forma": {
+          "t": "enum",
+          "valores": [
+            "redondeado",
+            "rect",
+            "circulo"
+          ],
+          "def": "redondeado"
+        },
+        "borde": {
+          "t": "color",
+          "d": "color del marco (por defecto un borde fino blanco)"
+        },
+        "pie": {
+          "t": "str",
+          "d": "leyenda corta sobre la foto, p. ej. Living con balcón"
+        }
+      }
+    },
+    "logo": {
+      "categoria": "medios",
+      "paquete": "base",
+      "descripcion": "Logo de la marca (la imagen 'logo' de los medios). Si no indicas 'archivo' usa el logo de la marca. tam = ancho en unidades (14–40). Ponlo en una esquina o junto al contacto final.",
+      "req": [
+        "x",
+        "y"
+      ],
+      "props": {
+        "x": {
+          "t": "num"
+        },
+        "y": {
+          "t": "num"
+        },
+        "tam": {
+          "t": "num",
+          "def": 22
+        },
+        "archivo": {
+          "t": "str",
+          "d": "opcional: otro archivo de logo de la lista de medios"
+        }
+      }
+    },
+    "lista": {
+      "categoria": "datos",
+      "paquete": "base",
+      "descripcion": "Panel con título y 2–6 viñetas (✓) que aparecen una a una, cada una cuando la voz dice su 'cuando'. Ideal para beneficios, características, pasos, requisitos. ancho 60–86; alto automático ≈ 10 unidades por viñeta + 11 del título. Texto de cada viñeta: máx. 2 líneas de ≈ 26 caracteres.",
+      "req": [
+        "x",
+        "y",
+        "items"
+      ],
+      "props": {
+        "x": {
+          "t": "num"
+        },
+        "y": {
+          "t": "num"
+        },
+        "ancho": {
+          "t": "num",
+          "def": 76
+        },
+        "titulo": {
+          "t": "str",
+          "d": "título del panel (opcional)"
+        },
+        "items": {
+          "t": "nodos",
+          "d": "[{texto, color, cuando}] (el color no se usa; cuando = frase del guion en que aparece esa viñeta)"
+        },
+        "color": {
+          "t": "color",
+          "d": "por defecto amarillo"
+        }
+      }
+    },
+    "cta": {
+      "categoria": "texto",
+      "paquete": "base",
+      "descripcion": "Tarjeta de llamada a la acción con título, subtítulo opcional, hasta 4 líneas de contacto con icono y un botón que late. Úsala en la última escena. ancho 70–88; el alto es automático (≈ 15 unidades de título + 8 por contacto + 13 del botón). Los datos de contacto SOLO los que haya en el brief.",
+      "req": [
+        "x",
+        "y",
+        "titulo"
+      ],
+      "props": {
+        "x": {
+          "t": "num"
+        },
+        "y": {
+          "t": "num"
+        },
+        "ancho": {
+          "t": "num",
+          "def": 84
+        },
+        "titulo": {
+          "t": "str",
+          "d": "p. ej. Agenda tu visita (máx. 2 líneas)"
+        },
+        "subtitulo": {
+          "t": "str",
+          "d": "opcional, 1 línea"
+        },
+        "contactos": {
+          "t": "contactos",
+          "d": "[{icono: telefono|whatsapp|mail|web|pin|calendario, texto}] máx. 4"
+        },
+        "boton": {
+          "t": "str",
+          "d": "texto del botón, p. ej. Escríbenos"
+        },
+        "color": {
+          "t": "color",
+          "d": "por defecto amarillo"
+        }
+      }
+    },
+    "cinta": {
+      "categoria": "texto",
+      "paquete": "base",
+      "descripcion": "Sello o pastilla llamativa: NUEVO, OPORTUNIDAD, ÚLTIMAS UNIDADES, -15 %. tam = alto de letra en unidades (4–9). Ponla en una esquina de la escena, sin tapar la pieza principal.",
+      "req": [
+        "x",
+        "y",
+        "texto"
+      ],
+      "props": {
+        "x": {
+          "t": "num"
+        },
+        "y": {
+          "t": "num"
+        },
+        "texto": {
+          "t": "str",
+          "d": "máx. 2 líneas cortas (≈ 14 caracteres)"
+        },
+        "color": {
+          "t": "color",
+          "d": "por defecto rojo"
+        },
+        "estilo": {
+          "t": "enum",
+          "valores": [
+            "pastilla",
+            "sello"
+          ],
+          "def": "pastilla"
+        },
+        "tam": {
+          "t": "num",
+          "def": 6
+        },
+        "rotacion": {
+          "t": "num",
+          "d": "−30…30 grados"
+        }
+      }
+    },
+    "ficha": {
+      "categoria": "datos",
+      "paquete": "base",
+      "descripcion": "Tarjetas con icono + cifra + etiqueta (dormitorios, baños, m², cochera / capacidad, plazo, garantía…). 2–6 items; con 2–3 van en una fila, con 4 en 2×2, con 5–6 en 3 columnas. ancho 70–90; alto automático (≈ 22 unidades por fila). En 'valor' usa m^{2} para metros cuadrados. Cada item aparece cuando la voz dice su 'cuando'.",
+      "req": [
+        "x",
+        "y",
+        "items"
+      ],
+      "props": {
+        "x": {
+          "t": "num"
+        },
+        "y": {
+          "t": "num"
+        },
+        "ancho": {
+          "t": "num",
+          "def": 86
+        },
+        "items": {
+          "t": "fichas",
+          "d": "[{icono, valor, etiqueta, color, cuando}] — valor corto (≤ 8 caracteres), etiqueta ≤ 2 palabras"
+        },
+        "color": {
+          "t": "color",
+          "d": "por defecto amarillo"
+        }
+      }
+    },
+    "precio": {
+      "categoria": "datos",
+      "paquete": "base",
+      "descripcion": "Precio con cuenta animada que sube hasta el valor. 'valor' en número sin separadores (185000) o texto (Consultar). 'operacion' = pastilla superior (VENTA, ALQUILER, OFERTA). tam = alto de la cifra en unidades (10–18). Ocupa ≈ 2.5 × tam de alto en total. SOLO precios que aparezcan en el brief.",
+      "req": [
+        "x",
+        "y",
+        "valor"
+      ],
+      "props": {
+        "x": {
+          "t": "num"
+        },
+        "y": {
+          "t": "num"
+        },
+        "valor": {
+          "t": "str",
+          "d": "cifra sin separadores, p. ej. 185000, o un texto como Consultar"
+        },
+        "moneda": {
+          "t": "str",
+          "d": "p. ej. USD, $, EUR"
+        },
+        "operacion": {
+          "t": "str",
+          "d": "pastilla superior, p. ej. EN VENTA"
+        },
+        "detalle": {
+          "t": "str",
+          "d": "línea inferior, p. ej. Expensas $45.000 o Acepta crédito"
+        },
+        "color": {
+          "t": "color",
+          "d": "por defecto amarillo"
+        },
+        "tam": {
+          "t": "num",
+          "def": 15
+        }
+      }
+    },
+    "mapa": {
+      "categoria": "inmobiliaria",
+      "paquete": "inmobiliaria",
+      "descripcion": "Mapa estilizado (calles, parque, agua) con un pin que cae sobre la ubicación, ondas y hasta 4 puntos de interés cercanos con etiqueta. NO es un mapa real: sirve para transmitir dónde está. ancho 70–90, alto 45–62. 'texto' = nombre del lugar sobre el pin. Los puntos usan coordenadas 0–1 DENTRO del mapa (x derecha, y abajo). El pin queda hacia el centro (pinY ≈ 0.6) con su nombre encima; coloca los puntos de interés en las ESQUINAS superiores (x 0.2 y 0.8, y 0.13) y en la franja inferior (x 0.5, y 0.9): las etiquetas son anchas y chocan si están cerca del pin o entre sí.",
+      "req": [
+        "x",
+        "y",
+        "texto"
+      ],
+      "props": {
+        "x": {
+          "t": "num"
+        },
+        "y": {
+          "t": "num"
+        },
+        "ancho": {
+          "t": "num",
+          "def": 84
+        },
+        "alto": {
+          "t": "num",
+          "def": 56
+        },
+        "texto": {
+          "t": "str",
+          "d": "nombre del lugar, p. ej. Palermo"
+        },
+        "color": {
+          "t": "color",
+          "d": "color del pin (por defecto rojo)"
+        },
+        "radio": {
+          "t": "num",
+          "d": "radio de zona resaltada en unidades (0 = ninguna)"
+        },
+        "pinX": {
+          "t": "num",
+          "d": "posición del pin dentro del mapa 0.1–0.9 (por defecto 0.5)"
+        },
+        "pinY": {
+          "t": "num",
+          "d": "0.2–0.85 (por defecto 0.56)"
+        },
+        "puntos": {
+          "t": "pois",
+          "d": "[{texto, x, y, cuando}] puntos de interés (máx. 4) con x,y 0–1 dentro del mapa; texto ≤ 18 caracteres, p. ej. Subte a 5 min"
+        }
+      }
+    },
+    "casa": {
+      "categoria": "inmobiliaria",
+      "paquete": "inmobiliaria",
+      "descripcion": "Ilustración de línea de una propiedad que se dibuja sola (con ventanas que se encienden). Úsala cuando NO haya foto o como acento. tam = ancho (35–70).",
+      "req": [
+        "x",
+        "y"
+      ],
+      "props": {
+        "x": {
+          "t": "num"
+        },
+        "y": {
+          "t": "num"
+        },
+        "tam": {
+          "t": "num",
+          "def": 50
+        },
+        "variante": {
+          "t": "enum",
+          "valores": [
+            "casa",
+            "departamento",
+            "edificio",
+            "terreno",
+            "local"
+          ],
+          "def": "casa"
+        },
+        "color": {
+          "t": "color",
+          "d": "por defecto amarillo"
+        }
+      }
+    }
+  },
+  "escena": {
+    "fondo": {
+      "descripcion": "Foto a pantalla completa DETRÁS de la escena (estilo reel). Cada escena puede llevar una. El título y los subtítulos se leen sobre degradados oscuros. 'cubrir' rellena la pantalla vertical (recorta los lados de una foto horizontal); 'marco' muestra la foto ENTERA sobre una copia desenfocada. Las piezas de la escena se dibujan encima: déjalas respirar (no tapes la foto con paneles enormes).",
+      "props": {
+        "foto": {
+          "t": "str",
+          "d": "nombre de archivo exacto de la lista de fotos disponibles"
+        },
+        "modo": {
+          "t": "enum",
+          "valores": [
+            "cubrir",
+            "marco"
+          ],
+          "d": "por defecto cubrir; usa marco con fotos horizontales cuando importe verlas enteras"
+        },
+        "mov": {
+          "t": "enum",
+          "valores": [
+            "zoom-in",
+            "zoom-out",
+            "izquierda",
+            "derecha",
+            "arriba",
+            "abajo",
+            "fijo"
+          ],
+          "d": "movimiento de cámara lento (por defecto zoom-in); alterna entre escenas"
+        },
+        "oscurecer": {
+          "t": "num",
+          "d": "0–0.8: velo oscuro para que se lea el texto (por defecto 0.3)"
+        }
+      },
+      "req": [
+        "foto"
+      ]
+    }
+  }
+}

@@ -1,0 +1,85 @@
+{
+  "proyecto": { "id": "insulina-glucosa", "etiqueta": "ENDOCRINOLOGÍA", "titulo": "¿Por qué la insulina baja el azúcar en la sangre?" },
+  "portada": { "lineas": ["¿POR QUÉ", "LA INSULINA", "BAJA EL", "AZÚCAR?"], "resaltar": 3, "escena": "puertas", "segundo": 23.4 },
+  "escenas": [
+    {
+      "id": "gancho", "titulo": "¿Por qué baja el azúcar?", "acento": "amarillo", "desde": "Por qué",
+      "elementos": [
+        { "tipo": "vaso", "cuando": "Por qué", "ruta": [[0, 62], [50, 66], [100, 62]], "vaso": "vena", "grosor": 7 },
+        { "tipo": "particulas", "cuando": "Por qué", "desfase": 0.4, "ruta": [[0, 62], [50, 66], [100, 62]], "color": "hueso", "cantidad": 8, "velocidad": 0.18, "radio": 8 },
+        { "tipo": "dato", "cuando": "insulina", "x": 50, "y": 28, "valor": "90", "unidad": "mg/dL", "etiqueta": "Glucosa en sangre", "color": "amarillo", "tam": 15 },
+        { "tipo": "etiqueta", "cuando": "sangre?", "x": 50, "y": 82, "texto": "Sangre", "color": "azul" }
+      ]
+    },
+    {
+      "id": "sube", "titulo": "1 · Después de comer, sube", "acento": "rojo", "desde": "Después de",
+      "elementos": [
+        { "tipo": "vaso", "cuando": "Después de", "ruta": [[0, 58], [50, 62], [100, 58]], "vaso": "vena", "grosor": 8 },
+        { "tipo": "particulas", "cuando": "glucosa", "desfase": -0.2, "ruta": [[0, 58], [50, 62], [100, 58]], "color": "hueso", "cantidad": 15, "velocidad": 0.26, "radio": 8 },
+        { "tipo": "etiqueta", "cuando": "glucosa", "x": 50, "y": 80, "texto": "Glucosa", "color": "hueso" },
+        { "tipo": "dato", "cuando": "sube", "x": 44, "y": 28, "valor": "180", "unidad": "mg/dL", "etiqueta": "Glucemia alta", "color": "rojo", "tam": 15 },
+        { "tipo": "icono", "cuando": "sube", "x": 84, "y": 27, "icono": "flecha-arriba", "color": "rojo", "tam": 16 }
+      ]
+    },
+    {
+      "id": "pancreas", "titulo": "2 · El páncreas responde", "acento": "amarillo", "desde": "El páncreas",
+      "elementos": [
+        { "tipo": "organo", "cuando": "El páncreas", "organo": "pancreas", "x": 50, "y": 30, "tam": 70, "resaltar": true, "color": "amarillo" },
+        { "tipo": "etiqueta", "cuando": "páncreas", "desfase": 0.2, "x": 50, "y": 8, "texto": "Páncreas", "color": "amarillo", "guia": [50, 26] },
+        { "tipo": "particulas", "cuando": "libera insulina", "ruta": [[50, 40], [48, 58], [50, 80]], "color": "azul", "cantidad": 7, "velocidad": 0.3, "radio": 9 },
+        { "tipo": "molecula", "cuando": "libera insulina", "desfase": 0.2, "x": 50, "y": 84, "simbolo": "Insulina", "color": "azul", "tam": "m" }
+      ]
+    },
+    {
+      "id": "receptor", "titulo": "3 · La insulina llama a la célula", "acento": "azul", "desde": "La insulina viaja",
+      "elementos": [
+        { "tipo": "membrana", "cuando": "La insulina viaja", "x": 50, "y": 66, "ancho": 84, "receptores": 3, "canales": 0, "ladoSuperior": "Sangre", "ladoInferior": "Interior de la célula", "color": "azul" },
+        { "tipo": "particulas", "cuando": "viaja", "ruta": [[8, 16], [30, 36], [50, 52]], "color": "azul", "cantidad": 5, "velocidad": 0.3, "radio": 9 },
+        { "tipo": "molecula", "cuando": "une", "x": 50, "y": 54, "simbolo": "Insulina", "color": "azul", "tam": "m" },
+        { "tipo": "etiqueta", "cuando": "receptor", "x": 78, "y": 38, "texto": "Receptor de\ninsulina", "color": "azul", "guia": [75, 61] },
+        { "tipo": "etiqueta", "cuando": "musculares", "x": 50, "y": 90, "texto": "Células musculares y grasas", "color": "hueso" }
+      ]
+    },
+    {
+      "id": "cascada", "titulo": "4 · Se activa una cascada", "acento": "amarillo", "desde": "Esa unión",
+      "elementos": [
+        { "tipo": "pasos", "cuando": "Esa unión", "x": 42, "y": 50, "ancho": 66, "alto": 72, "orientacion": "vertical", "nodos": [
+          { "texto": "La insulina se une\nal receptor", "color": "azul", "cuando": "unión" },
+          { "texto": "Se activa la\ncascada interna", "color": "amarillo", "cuando": "cascada" },
+          { "texto": "GLUT4 viaja a la\nsuperficie", "color": "amarillo", "cuando": "transportadores" }
+        ] },
+        { "tipo": "molecula", "cuando": "GLUT4", "x": 86, "y": 76, "simbolo": "GLUT4", "color": "amarillo", "tam": "m" },
+        { "tipo": "icono", "cuando": "superficie", "x": 86, "y": 30, "icono": "rayo", "color": "amarillo", "tam": 14 }
+      ]
+    },
+    {
+      "id": "puertas", "titulo": "5 · Se abren las puertas", "acento": "azul", "desde": "Con más puertas",
+      "elementos": [
+        { "tipo": "membrana", "cuando": "Con más puertas", "x": 50, "y": 52, "ancho": 84, "receptores": 0, "canales": 3, "ladoSuperior": "Sangre", "ladoInferior": "Interior de la célula", "color": "azul" },
+        { "tipo": "etiqueta", "cuando": "puertas abiertas", "x": 50, "y": 14, "texto": "Puertas GLUT4 abiertas", "color": "amarillo" },
+        { "tipo": "particulas", "cuando": "glucosa", "n": 2, "ruta": [[25, 18], [25, 52], [25, 82]], "color": "hueso", "cantidad": 6, "velocidad": 0.3, "radio": 8 },
+        { "tipo": "particulas", "cuando": "entra", "ruta": [[50, 18], [50, 52], [50, 82]], "color": "hueso", "cantidad": 6, "velocidad": 0.3, "radio": 8 },
+        { "tipo": "particulas", "cuando": "entra", "desfase": 0.3, "ruta": [[75, 18], [75, 52], [75, 82]], "color": "hueso", "cantidad": 6, "velocidad": 0.3, "radio": 8 },
+        { "tipo": "etiqueta", "cuando": "entra", "x": 50, "y": 90, "texto": "La glucosa entra a la célula", "color": "hueso" }
+      ]
+    },
+    {
+      "id": "baja", "titulo": "6 · La glucemia baja", "acento": "azul", "desde": "Por eso",
+      "elementos": [
+        { "tipo": "grafica", "cuando": "Por eso", "grafica": "curva-libre", "x": 50, "y": 58, "ancho": 80, "alto": 44, "ejeX": "Tiempo", "ejeY": "Glucosa", "color": "azul", "puntos": [[0, 0.88], [0.25, 0.9], [0.5, 0.6], [0.75, 0.38], [1, 0.3]], "duracion": 1.6,
+          "marcadores": [{ "x": 0.28, "texto": "Insulina", "cuando": "Por eso" }, { "x": 0.95, "texto": "Baja", "cuando": "glucemia baja" }] },
+        { "tipo": "dato", "cuando": "glucemia baja", "x": 50, "y": 10, "valor": "90", "unidad": "mg/dL", "etiqueta": "Glucemia normal", "color": "azul", "tam": 13 }
+      ]
+    },
+    {
+      "id": "diabetes", "titulo": "Sin insulina: diabetes", "acento": "rojo", "desde": "Sin insulina",
+      "elementos": [
+        { "tipo": "comparacion", "cuando": "Sin insulina", "x": 50, "y": 46, "ancho": 88, "alto": 58,
+          "izquierda": { "titulo": "Con insulina", "color": "azul", "items": ["El receptor responde", "GLUT4 en la superficie", "La glucosa entra"] },
+          "derecha": { "titulo": "Sin insulina o sin respuesta", "color": "rojo", "items": ["El receptor no recibe señal", "Puertas cerradas", "La glucosa se queda fuera"] } },
+        { "tipo": "icono", "cuando": "fuera", "x": 89, "y": 88, "icono": "alerta", "color": "rojo", "tam": 10 },
+        { "tipo": "rotulo", "cuando": "diabetes", "x": 50, "y": 88, "texto": "DIABETES", "color": "amarillo", "tam": 10, "impacto": true }
+      ]
+    }
+  ]
+}

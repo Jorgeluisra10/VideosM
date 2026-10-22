@@ -1,0 +1,10 @@
+{
+  "voz": "es-AR-TomasNeural",
+  "velocidad": "+5%",
+  "tono": "+0Hz",
+  "palabras": 99,
+  "duracionAudio": 34.34,
+  "ultimaPalabraFin": 33.488,
+  "texto": "¿Por qué la insulina baja el azúcar en la sangre? Después de comer, la glucosa sube en la sangre. El páncreas lo detecta y libera insulina. La insulina viaja por la sangre y se une a su receptor en la membrana de las células musculares y grasas. Esa unión activa una cascada interna que lleva transportadores GLUT4 hasta la superficie. Con más puertas abiertas, la glucosa entra a la célula y deja de acumularse en la sangre. Por eso la glucemia baja. Sin insulina, o con receptores que no responden, la glucosa se queda fuera: eso es la diabetes.",
+  "generado": "2026-10-22T00:15:28.363Z"
+}

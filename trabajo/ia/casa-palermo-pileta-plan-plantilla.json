@@ -1,0 +1,329 @@
+{
+  "proyecto": {
+    "id": "casa-palermo-pileta",
+    "etiqueta": "CASA NORTE",
+    "titulo": "Casa en venta en Palermo"
+  },
+  "escenas": [
+    {
+      "id": "gancho",
+      "titulo": "Casa en Palermo",
+      "acento": "amarillo",
+      "desde": "Buscás una",
+      "elementos": [
+        {
+          "tipo": "rotulo",
+          "cuando": "Palermo",
+          "x": 50,
+          "y": 22,
+          "texto": "PALERMO",
+          "color": "amarillo",
+          "tam": 12
+        },
+        {
+          "tipo": "cinta",
+          "cuando": "Palermo",
+          "desfase": 0.2,
+          "x": 50,
+          "y": 80,
+          "texto": "EN VENTA",
+          "color": "rojo",
+          "estilo": "pastilla",
+          "tam": 6
+        }
+      ],
+      "fondo": {
+        "foto": "fachada.jpg",
+        "modo": "cubrir",
+        "mov": "zoom-in",
+        "oscurecer": 0.28
+      }
+    },
+    {
+      "id": "presentacion",
+      "titulo": "Pileta con deck y parrilla",
+      "acento": "azul",
+      "desde": "Es una",
+      "elementos": [
+        {
+          "tipo": "etiqueta",
+          "cuando": "pileta",
+          "x": 50,
+          "y": 78,
+          "texto": "Pileta con deck y parrilla",
+          "color": "amarillo"
+        },
+        {
+          "tipo": "icono",
+          "cuando": "mejor",
+          "x": 50,
+          "y": 24,
+          "icono": "estrella",
+          "color": "amarillo",
+          "tam": 13
+        }
+      ],
+      "fondo": {
+        "foto": "living.jpg",
+        "modo": "cubrir",
+        "mov": "izquierda",
+        "oscurecer": 0.3
+      }
+    },
+    {
+      "id": "recorrido-1",
+      "titulo": "Fachada con jardín al frente",
+      "acento": "rojo",
+      "desde": "Fachada con",
+      "elementos": [
+        {
+          "tipo": "etiqueta",
+          "cuando": "Fachada",
+          "x": 50,
+          "y": 80,
+          "texto": "Fachada con jardín al",
+          "color": "hueso"
+        }
+      ],
+      "fondo": {
+        "foto": "fachada.jpg",
+        "modo": "cubrir",
+        "mov": "zoom-out",
+        "oscurecer": 0.25
+      }
+    },
+    {
+      "id": "recorrido-2",
+      "titulo": "Living amplio y luminoso",
+      "acento": "amarillo",
+      "desde": "Living amplio",
+      "elementos": [
+        {
+          "tipo": "etiqueta",
+          "cuando": "Living",
+          "x": 50,
+          "y": 80,
+          "texto": "Living amplio y luminoso",
+          "color": "hueso"
+        }
+      ],
+      "fondo": {
+        "foto": "living.jpg",
+        "modo": "cubrir",
+        "mov": "derecha",
+        "oscurecer": 0.25
+      }
+    },
+    {
+      "id": "ficha",
+      "titulo": "Lo que tiene",
+      "acento": "azul",
+      "desde": "Tiene tres",
+      "elementos": [
+        {
+          "tipo": "ficha",
+          "cuando": "Tiene",
+          "x": 50,
+          "y": 50,
+          "ancho": 86,
+          "items": [
+            {
+              "icono": "cama",
+              "valor": "3",
+              "etiqueta": "Dormitorios",
+              "cuando": "dormitorios",
+              "color": null
+            },
+            {
+              "icono": "bano",
+              "valor": "2",
+              "etiqueta": "Baños",
+              "cuando": "baños",
+              "color": null
+            },
+            {
+              "icono": "medida",
+              "valor": "180 m^{2}",
+              "etiqueta": "Superficie total",
+              "cuando": "cuadrados",
+              "color": null
+            },
+            {
+              "icono": "auto",
+              "valor": "1",
+              "etiqueta": "Cochera",
+              "cuando": "cochera",
+              "color": null
+            }
+          ],
+          "color": "amarillo"
+        }
+      ],
+      "fondo": {
+        "foto": "cocina.jpg",
+        "modo": "cubrir",
+        "mov": "abajo",
+        "oscurecer": 0.5
+      }
+    },
+    {
+      "id": "comodidades",
+      "titulo": "Comodidades",
+      "acento": "rojo",
+      "desde": "Además suma",
+      "elementos": [
+        {
+          "tipo": "lista",
+          "cuando": "Además",
+          "x": 50,
+          "y": 50,
+          "ancho": 74,
+          "titulo": "Comodidades",
+          "items": [
+            {
+              "texto": "Pileta",
+              "cuando": "pileta"
+            },
+            {
+              "texto": "Parrilla",
+              "cuando": "parrilla"
+            },
+            {
+              "texto": "Jardín",
+              "cuando": "jardín"
+            },
+            {
+              "texto": "Balcón",
+              "cuando": "balcón"
+            }
+          ],
+          "color": "amarillo"
+        }
+      ],
+      "fondo": {
+        "foto": "dormitorio.jpg",
+        "modo": "cubrir",
+        "mov": "zoom-in",
+        "oscurecer": 0.5
+      }
+    },
+    {
+      "id": "ubicacion",
+      "titulo": "Ubicación",
+      "acento": "amarillo",
+      "desde": "Está en",
+      "elementos": [
+        {
+          "tipo": "mapa",
+          "cuando": "Está",
+          "x": 50,
+          "y": 50,
+          "ancho": 86,
+          "alto": 60,
+          "texto": "Palermo",
+          "color": "rojo",
+          "radio": 14,
+          "puntos": [
+            {
+              "texto": "Subte a cinco minutos",
+              "x": 0.2,
+              "y": 0.22,
+              "cuando": "subte"
+            },
+            {
+              "texto": "Parque Tres de Febrero",
+              "x": 0.78,
+              "y": 0.3,
+              "cuando": "Parque"
+            },
+            {
+              "texto": "Colegios y comercios",
+              "x": 0.26,
+              "y": 0.82,
+              "cuando": "colegios"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "precio",
+      "titulo": "Precio",
+      "acento": "azul",
+      "desde": "Se vende",
+      "elementos": [
+        {
+          "tipo": "precio",
+          "cuando": "Se vende",
+          "x": 50,
+          "y": 48,
+          "valor": "185000",
+          "moneda": "USD",
+          "operacion": "EN VENTA",
+          "detalle": "Acepta crédito hipotecario",
+          "color": "amarillo",
+          "tam": 14
+        }
+      ],
+      "fondo": {
+        "foto": "jardin.jpg",
+        "modo": "cubrir",
+        "mov": "izquierda",
+        "oscurecer": 0.55
+      }
+    },
+    {
+      "id": "cierre",
+      "titulo": "Agendá tu visita",
+      "acento": "rojo",
+      "desde": "Escribinos por",
+      "elementos": [
+        {
+          "tipo": "logo",
+          "cuando": "Escribinos",
+          "x": 50,
+          "y": 7,
+          "tam": 17
+        },
+        {
+          "tipo": "cta",
+          "cuando": "Escribinos",
+          "x": 50,
+          "y": 55,
+          "ancho": 84,
+          "titulo": "Agendá tu visita",
+          "subtitulo": "Te atiende Lucía",
+          "contactos": [
+            {
+              "icono": "whatsapp",
+              "texto": "11 5555-0000"
+            },
+            {
+              "icono": "web",
+              "texto": "@casanorte.propiedades"
+            }
+          ],
+          "boton": "Escribinos",
+          "color": "amarillo"
+        }
+      ],
+      "fondo": {
+        "foto": "fachada.jpg",
+        "modo": "cubrir",
+        "mov": "zoom-out",
+        "oscurecer": 0.6
+      }
+    }
+  ],
+  "portada": {
+    "lineas": [
+      "CASA EN",
+      "PALERMO",
+      "EN VENTA"
+    ],
+    "resaltar": 2,
+    "escena": "gancho",
+    "segundo": 3.6,
+    "foto": "fachada.jpg"
+  }
+}

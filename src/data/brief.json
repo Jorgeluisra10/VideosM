@@ -1,0 +1,72 @@
+{
+  "perfil": "inmobiliaria",
+  "id": "casa-palermo-pileta",
+  "tema": "Casa de 3 dormitorios con pileta y jardín en Palermo, lista para mudarse",
+  "duracion": 35,
+  "tono": "cercano y cálido",
+  "voz": "ar",
+  "velocidad": "+3%",
+  "marca": {
+    "nombre": "Casa Norte Propiedades",
+    "etiqueta": "CASA NORTE",
+    "paleta": "premium"
+  },
+  "datos": {
+    "operacion": "Venta",
+    "tipo": "Casa",
+    "ubicacion": "Palermo, Buenos Aires",
+    "precio": 185000,
+    "moneda": "USD",
+    "detallePrecio": "Acepta crédito hipotecario",
+    "ambientes": 5,
+    "dormitorios": 3,
+    "banos": 2,
+    "cocheras": 1,
+    "supTotal": 180,
+    "antiguedad": "excelente estado",
+    "amenities": [
+      "pileta",
+      "parrilla",
+      "jardín",
+      "balcón"
+    ],
+    "puntosFuertes": [
+      "pileta con deck y parrilla",
+      "living luminoso con balcón",
+      "cocina integrada con isla"
+    ],
+    "cercanias": [
+      "subte a cinco minutos",
+      "Parque Tres de Febrero",
+      "colegios y comercios"
+    ],
+    "agente": "Lucía",
+    "telefono": "11 5555-0000",
+    "whatsapp": "11 5555-0000",
+    "web": "@casanorte.propiedades"
+  },
+  "medios": "ejemplos/inmobiliaria-casa/media",
+  "fotos": [
+    {
+      "archivo": "fachada.png",
+      "descripcion": "Fachada con jardín al frente"
+    },
+    {
+      "archivo": "living.png",
+      "descripcion": "Living amplio y luminoso"
+    },
+    {
+      "archivo": "cocina.png",
+      "descripcion": "Cocina integrada con isla"
+    },
+    {
+      "archivo": "dormitorio.png",
+      "descripcion": "Suite principal con ventanal"
+    },
+    {
+      "archivo": "jardin.png",
+      "descripcion": "Jardín con pileta y deck"
+    }
+  ],
+  "notas": "EJEMPLO DE PRUEBA: datos y teléfono ficticios; las imágenes son ilustraciones generadas, no fotos reales."
+}

@@ -1,0 +1,522 @@
+[
+  {
+    "word": "¿Por",
+    "start": 0.098,
+    "end": 0.252
+  },
+  {
+    "word": "qué",
+    "start": 0.312,
+    "end": 0.395
+  },
+  {
+    "word": "un",
+    "start": 0.419,
+    "end": 0.49
+  },
+  {
+    "word": "infarto",
+    "start": 0.502,
+    "end": 0.931
+  },
+  {
+    "word": "duele",
+    "start": 0.955,
+    "end": 1.205
+  },
+  {
+    "word": "en",
+    "start": 1.205,
+    "end": 1.252
+  },
+  {
+    "word": "el",
+    "start": 1.276,
+    "end": 1.371
+  },
+  {
+    "word": "brazo",
+    "start": 1.395,
+    "end": 1.669
+  },
+  {
+    "word": "izquierdo",
+    "start": 1.705,
+    "end": 2.157
+  },
+  {
+    "word": "y",
+    "start": 2.217,
+    "end": 2.3
+  },
+  {
+    "word": "no",
+    "start": 2.324,
+    "end": 2.431
+  },
+  {
+    "word": "solo",
+    "start": 2.455,
+    "end": 2.705
+  },
+  {
+    "word": "en",
+    "start": 2.705,
+    "end": 2.752
+  },
+  {
+    "word": "el",
+    "start": 2.764,
+    "end": 2.871
+  },
+  {
+    "word": "corazón?",
+    "start": 2.907,
+    "end": 3.371
+  },
+  {
+    "word": "Cuando",
+    "start": 4.238,
+    "end": 4.536
+  },
+  {
+    "word": "una",
+    "start": 4.571,
+    "end": 4.702
+  },
+  {
+    "word": "arteria",
+    "start": 4.702,
+    "end": 5.071
+  },
+  {
+    "word": "coronaria",
+    "start": 5.131,
+    "end": 5.571
+  },
+  {
+    "word": "se",
+    "start": 5.583,
+    "end": 5.69
+  },
+  {
+    "word": "bloquea,",
+    "start": 5.714,
+    "end": 6.202
+  },
+  {
+    "word": "el",
+    "start": 6.548,
+    "end": 6.643
+  },
+  {
+    "word": "músculo",
+    "start": 6.667,
+    "end": 7
+  },
+  {
+    "word": "cardíaco",
+    "start": 7.06,
+    "end": 7.5
+  },
+  {
+    "word": "se",
+    "start": 7.524,
+    "end": 7.643
+  },
+  {
+    "word": "queda",
+    "start": 7.702,
+    "end": 7.893
+  },
+  {
+    "word": "sin",
+    "start": 7.917,
+    "end": 8.06
+  },
+  {
+    "word": "oxígeno",
+    "start": 8.083,
+    "end": 8.619
+  },
+  {
+    "word": "y",
+    "start": 8.679,
+    "end": 8.738
+  },
+  {
+    "word": "libera",
+    "start": 8.762,
+    "end": 9.083
+  },
+  {
+    "word": "sustancias",
+    "start": 9.107,
+    "end": 9.619
+  },
+  {
+    "word": "que",
+    "start": 9.667,
+    "end": 9.714
+  },
+  {
+    "word": "activan",
+    "start": 9.714,
+    "end": 10.083
+  },
+  {
+    "word": "nervios",
+    "start": 10.095,
+    "end": 10.429
+  },
+  {
+    "word": "sensitivos.",
+    "start": 10.429,
+    "end": 11.131
+  },
+  {
+    "word": "Esas",
+    "start": 12,
+    "end": 12.321
+  },
+  {
+    "word": "fibras",
+    "start": 12.333,
+    "end": 12.69
+  },
+  {
+    "word": "viajan",
+    "start": 12.738,
+    "end": 13.083
+  },
+  {
+    "word": "hasta",
+    "start": 13.095,
+    "end": 13.286
+  },
+  {
+    "word": "la",
+    "start": 13.31,
+    "end": 13.381
+  },
+  {
+    "word": "médula",
+    "start": 13.417,
+    "end": 13.69
+  },
+  {
+    "word": "espinal,",
+    "start": 13.69,
+    "end": 14.155
+  },
+  {
+    "word": "entre",
+    "start": 14.298,
+    "end": 14.536
+  },
+  {
+    "word": "los",
+    "start": 14.56,
+    "end": 14.667
+  },
+  {
+    "word": "segmentos",
+    "start": 14.667,
+    "end": 15.131
+  },
+  {
+    "word": "T1",
+    "start": 15.19,
+    "end": 15.536
+  },
+  {
+    "word": "y",
+    "start": 15.583,
+    "end": 15.643
+  },
+  {
+    "word": "T4.",
+    "start": 15.69,
+    "end": 16.143
+  },
+  {
+    "word": "Pero",
+    "start": 17.024,
+    "end": 17.214
+  },
+  {
+    "word": "ahí",
+    "start": 17.214,
+    "end": 17.369
+  },
+  {
+    "word": "mismo",
+    "start": 17.393,
+    "end": 17.679
+  },
+  {
+    "word": "entran",
+    "start": 17.702,
+    "end": 17.952
+  },
+  {
+    "word": "también",
+    "start": 18.012,
+    "end": 18.274
+  },
+  {
+    "word": "los",
+    "start": 18.274,
+    "end": 18.417
+  },
+  {
+    "word": "nervios",
+    "start": 18.452,
+    "end": 18.762
+  },
+  {
+    "word": "del",
+    "start": 18.786,
+    "end": 18.893
+  },
+  {
+    "word": "brazo",
+    "start": 18.917,
+    "end": 19.155
+  },
+  {
+    "word": "izquierdo.",
+    "start": 19.19,
+    "end": 19.655
+  },
+  {
+    "word": "Las",
+    "start": 20.548,
+    "end": 20.738
+  },
+  {
+    "word": "dos",
+    "start": 20.762,
+    "end": 20.905
+  },
+  {
+    "word": "señales",
+    "start": 20.905,
+    "end": 21.381
+  },
+  {
+    "word": "convergen",
+    "start": 21.417,
+    "end": 21.833
+  },
+  {
+    "word": "en",
+    "start": 21.845,
+    "end": 21.917
+  },
+  {
+    "word": "la",
+    "start": 21.929,
+    "end": 22.036
+  },
+  {
+    "word": "misma",
+    "start": 22.071,
+    "end": 22.298
+  },
+  {
+    "word": "neurona,",
+    "start": 22.333,
+    "end": 22.786
+  },
+  {
+    "word": "que",
+    "start": 23.06,
+    "end": 23.143
+  },
+  {
+    "word": "sube",
+    "start": 23.167,
+    "end": 23.393
+  },
+  {
+    "word": "al",
+    "start": 23.393,
+    "end": 23.488
+  },
+  {
+    "word": "tálamo",
+    "start": 23.536,
+    "end": 23.905
+  },
+  {
+    "word": "y",
+    "start": 23.952,
+    "end": 24.024
+  },
+  {
+    "word": "a",
+    "start": 24.036,
+    "end": 24.083
+  },
+  {
+    "word": "la",
+    "start": 24.107,
+    "end": 24.179
+  },
+  {
+    "word": "corteza.",
+    "start": 24.226,
+    "end": 24.702
+  },
+  {
+    "word": "Como",
+    "start": 25.583,
+    "end": 25.81
+  },
+  {
+    "word": "el",
+    "start": 25.81,
+    "end": 25.881
+  },
+  {
+    "word": "cerebro",
+    "start": 25.893,
+    "end": 26.274
+  },
+  {
+    "word": "está",
+    "start": 26.286,
+    "end": 26.464
+  },
+  {
+    "word": "acostumbrado",
+    "start": 26.464,
+    "end": 27.048
+  },
+  {
+    "word": "a",
+    "start": 27.048,
+    "end": 27.088
+  },
+  {
+    "word": "recibir",
+    "start": 27.107,
+    "end": 27.464
+  },
+  {
+    "word": "dolor",
+    "start": 27.5,
+    "end": 27.75
+  },
+  {
+    "word": "de",
+    "start": 27.786,
+    "end": 27.845
+  },
+  {
+    "word": "la",
+    "start": 27.869,
+    "end": 27.952
+  },
+  {
+    "word": "piel,",
+    "start": 28.036,
+    "end": 28.286
+  },
+  {
+    "word": "se",
+    "start": 28.524,
+    "end": 28.655
+  },
+  {
+    "word": "equivoca",
+    "start": 28.655,
+    "end": 29.155
+  },
+  {
+    "word": "y",
+    "start": 29.19,
+    "end": 29.262
+  },
+  {
+    "word": "lo",
+    "start": 29.274,
+    "end": 29.357
+  },
+  {
+    "word": "proyecta",
+    "start": 29.417,
+    "end": 29.774
+  },
+  {
+    "word": "al",
+    "start": 29.774,
+    "end": 29.845
+  },
+  {
+    "word": "brazo.",
+    "start": 29.869,
+    "end": 30.226
+  },
+  {
+    "word": "Eso",
+    "start": 31.119,
+    "end": 31.393
+  },
+  {
+    "word": "es",
+    "start": 31.429,
+    "end": 31.56
+  },
+  {
+    "word": "el",
+    "start": 31.56,
+    "end": 31.631
+  },
+  {
+    "word": "dolor",
+    "start": 31.679,
+    "end": 31.905
+  },
+  {
+    "word": "referido:",
+    "start": 31.917,
+    "end": 32.429
+  },
+  {
+    "word": "el",
+    "start": 32.702,
+    "end": 32.821
+  },
+  {
+    "word": "corazón",
+    "start": 32.857,
+    "end": 33.238
+  },
+  {
+    "word": "sufre,",
+    "start": 33.238,
+    "end": 33.619
+  },
+  {
+    "word": "pero",
+    "start": 33.881,
+    "end": 34.036
+  },
+  {
+    "word": "el",
+    "start": 34.036,
+    "end": 34.095
+  },
+  {
+    "word": "brazo",
+    "start": 34.119,
+    "end": 34.381
+  },
+  {
+    "word": "avisa.",
+    "start": 34.381,
+    "end": 34.75
+  }
+]

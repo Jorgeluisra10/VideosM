@@ -1,0 +1,10 @@
+{
+  "voz": "es-AR-TomasNeural",
+  "velocidad": "+5%",
+  "tono": "+0Hz",
+  "palabras": 88,
+  "duracionAudio": 32.54,
+  "ultimaPalabraFin": 31.655,
+  "texto": "¿Cómo viaja un impulso nervioso sin apagarse? En reposo, la neurona tiene carga negativa por dentro, cerca de menos setenta milivoltios. Un estímulo abre canales de sodio y el sodio entra: la membrana se despolariza. Al llegar al umbral se dispara el potencial de acción, todo o nada. Después se abren canales de potasio, el potasio sale y la célula se repolariza. En las fibras mielinizadas la señal salta de nodo en nodo, como una chispa. Por eso un nervio con mielina conduce rápido y sin perder fuerza.",
+  "generado": "2026-10-22T00:15:37.435Z"
+}

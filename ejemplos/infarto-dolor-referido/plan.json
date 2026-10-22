@@ -1,0 +1,96 @@
+{
+  "proyecto": { "id": "infarto-dolor-referido-dsl", "etiqueta": "CARDIOLOGÍA", "titulo": "¿Por qué un infarto duele en el brazo izquierdo?" },
+  "portada": { "lineas": ["¿POR QUÉ", "UN INFARTO", "DUELE EN EL", "BRAZO?"], "resaltar": 3, "escena": "gancho", "segundo": 2.6 },
+  "escenas": [
+    {
+      "id": "gancho", "titulo": "¿Por qué duele el brazo?", "acento": "rojo", "desde": "Por qué",
+      "elementos": [
+        { "tipo": "cuerpo", "cuando": "Por qué", "x": 50, "y": 52, "tam": 66, "dolorBrazo": true },
+        { "tipo": "corazon", "cuando": "infarto", "desfase": -0.1, "x": 55, "y": 46, "tam": 21, "dolor": true, "impacto": true },
+        { "tipo": "etiqueta", "cuando": "infarto", "x": 19, "y": 30, "texto": "Infarto", "color": "rojo", "guia": [53, 43] },
+        { "tipo": "etiqueta", "cuando": "izquierdo", "x": 80, "y": 93, "texto": "Brazo\nizquierdo", "color": "rojo", "guia": [73, 74] },
+        { "tipo": "rotulo", "cuando": "no solo", "x": 85, "y": 14, "texto": "?", "color": "amarillo", "tam": 24 }
+      ]
+    },
+    {
+      "id": "oclusion", "titulo": "1 · La arteria se tapa", "acento": "rojo", "desde": "Cuando una",
+      "elementos": [
+        { "tipo": "corazon", "cuando": "Cuando una", "desfase": -0.1, "x": 50, "y": 56, "tam": 64, "trombo": true, "flujo": true },
+        { "tipo": "etiqueta", "cuando": "coronaria", "x": 22, "y": 24, "texto": "Arteria\ncoronaria", "color": "rojo", "guia": [31, 58] },
+        { "tipo": "etiqueta", "cuando": "bloquea", "desfase": 0.1, "x": 80, "y": 26, "texto": "Trombo", "color": "rojo", "guia": [53, 58] }
+      ]
+    },
+    {
+      "id": "isquemia", "titulo": "2 · El músculo pide auxilio", "acento": "amarillo", "desde": "el músculo",
+      "elementos": [
+        { "tipo": "celula", "cuando": "el músculo", "x": 50, "y": 42, "tam": 62, "forma": "alargada", "organelos": true, "color": "rojo" },
+        { "tipo": "etiqueta", "cuando": "cardíaco", "x": 50, "y": 14, "texto": "Músculo cardíaco", "color": "hueso" },
+        { "tipo": "molecula", "cuando": "oxígeno", "x": 24, "y": 70, "simbolo": "O_{2}", "color": "azul", "tam": "l" },
+        { "tipo": "icono", "cuando": "oxígeno", "desfase": 0.3, "x": 24, "y": 70, "icono": "cruz", "color": "rojo", "tam": 12 },
+        { "tipo": "etiqueta", "cuando": "oxígeno", "x": 24, "y": 84, "texto": "Sin oxígeno", "color": "rojo" },
+        { "tipo": "molecula", "cuando": "libera", "x": 46, "y": 66, "simbolo": "H^{+}", "color": "rojo", "tam": "m" },
+        { "tipo": "molecula", "cuando": "libera", "desfase": 0.12, "x": 60, "y": 72, "simbolo": "K^{+}", "color": "azul", "tam": "m" },
+        { "tipo": "molecula", "cuando": "libera", "desfase": 0.24, "x": 74, "y": 66, "simbolo": "ATP", "color": "amarillo", "tam": "m" },
+        { "tipo": "etiqueta", "cuando": "sustancias", "x": 70, "y": 84, "texto": "Sustancias químicas", "color": "hueso" }
+      ]
+    },
+    {
+      "id": "medula", "titulo": "3 · La señal sube a T1–T4", "acento": "amarillo", "desde": "Esas fibras",
+      "elementos": [
+        { "tipo": "corazon", "cuando": "Esas fibras", "x": 78, "y": 82, "tam": 22, "dolor": true },
+        { "tipo": "linea", "cuando": "fibras", "ruta": null, "puntos": [[70, 76], [62, 62], [62, 24]], "color": "amarillo", "grosor": 6, "flecha": true, "brillo": true },
+        { "tipo": "impulso", "cuando": "viajan", "ruta": [[70, 76], [62, 62], [62, 24]], "color": "amarillo", "periodo": 1.8 },
+        { "tipo": "columna", "cuando": "médula", "desfase": 0.3, "x": 38, "y": 52, "tam": 78, "resaltar": "T1-T4" },
+        { "tipo": "etiqueta", "cuando": "segmentos", "x": 82, "y": 40, "texto": "Segmentos\nT1–T4", "color": "amarillo" },
+        { "tipo": "brazo", "cuando": "brazo", "n": 2, "x": 90, "y": 22, "tam": 30, "espejo": false },
+        { "tipo": "etiqueta", "cuando": "izquierdo", "n": 2, "x": 80, "y": 62, "texto": "Brazo\nizquierdo", "color": "hueso", "guia": [90, 30] }
+      ]
+    },
+    {
+      "id": "convergencia", "titulo": "4 · Dos señales, una neurona", "acento": "amarillo", "desde": "Las dos",
+      "elementos": [
+        { "tipo": "corte-medula", "cuando": "Las dos", "desfase": -0.1, "x": 50, "y": 76, "tam": 62 },
+        { "tipo": "corazon", "cuando": "señales", "desfase": -0.3, "hasta": "sube", "x": 22, "y": 22, "tam": 18, "dolor": true },
+        { "tipo": "brazo", "cuando": "señales", "desfase": -0.2, "hasta": "sube", "x": 78, "y": 25, "tam": 26 },
+        { "tipo": "linea", "cuando": "señales", "puntos": [[22, 34], [24, 52], [40, 62], [44, 68]], "color": "amarillo", "grosor": 6, "flecha": false, "brillo": true },
+        { "tipo": "linea", "cuando": "señales", "desfase": 0.15, "puntos": [[76, 38], [70, 54], [52, 62], [46, 68]], "color": "amarillo", "grosor": 6, "flecha": false, "brillo": true },
+        { "tipo": "forma", "cuando": "convergen", "forma": "circulo", "x": 45, "y": 69, "ancho": 7, "relleno": "amarillo", "borde": "amarillo", "opacidad": 0.5 },
+        { "tipo": "aros", "cuando": "convergen", "x": 45, "y": 69, "radio": 14, "color": "amarillo" },
+        { "tipo": "etiqueta", "cuando": "misma", "x": 22, "y": 82, "texto": "Misma\nneurona", "color": "amarillo", "guia": [42, 70] },
+        { "tipo": "linea", "cuando": "sube", "puntos": [[48, 66], [54, 52], [52, 40], [50, 30]], "color": "amarillo", "grosor": 8, "flecha": true, "brillo": true },
+        { "tipo": "cerebro", "cuando": "tálamo", "desfase": -0.2, "x": 50, "y": 18, "tam": 44, "talamo": true, "corteza": true },
+        { "tipo": "etiqueta", "cuando": "tálamo", "x": 84, "y": 36, "texto": "Tálamo", "color": "amarillo" },
+        { "tipo": "etiqueta", "cuando": "corteza", "x": 20, "y": 36, "texto": "Corteza", "color": "amarillo" }
+      ]
+    },
+    {
+      "id": "cerebro", "titulo": "5 · El cerebro se confunde", "acento": "rojo", "desde": "Como el",
+      "elementos": [
+        { "tipo": "cerebro", "cuando": "Como el", "desfase": -0.1, "x": 50, "y": 28, "tam": 48, "corteza": true, "confusion": true },
+        { "tipo": "linea", "cuando": "acostumbrado", "puntos": [[82, 62], [74, 52], [60, 46]], "color": "amarillo", "grosor": 13, "brillo": true },
+        { "tipo": "impulso", "cuando": "recibir", "ruta": [[82, 62], [74, 52], [60, 46]], "color": "amarillo", "periodo": 0.5, "duracion": 0.9 },
+        { "tipo": "brazo", "cuando": "Como el", "x": 84, "y": 76, "tam": 38 },
+        { "tipo": "etiqueta", "cuando": "recibir", "x": 80, "y": 42, "texto": "Piel:\nlo habitual", "color": "azul" },
+        { "tipo": "corazon", "cuando": "Como el", "x": 20, "y": 82, "tam": 18, "dolor": true },
+        { "tipo": "linea", "cuando": "piel", "desfase": 0.2, "puntos": [[22, 70], [30, 56], [44, 46]], "color": "amarillo", "grosor": 4, "estilo": "punteada" },
+        { "tipo": "etiqueta", "cuando": "piel", "desfase": 0.3, "x": 20, "y": 50, "texto": "Corazón:\nlo raro", "color": "rojo" },
+        { "tipo": "rotulo", "cuando": "equivoca", "x": 86, "y": 22, "texto": "?", "color": "amarillo", "tam": 22, "impacto": true },
+        { "tipo": "linea", "cuando": "proyecta", "puntos": [[62, 36], [82, 46], [88, 62]], "color": "rojo", "grosor": 9, "flecha": true, "brillo": true },
+        { "tipo": "rayos", "cuando": "brazo", "n": 3, "x": 88, "y": 78, "radio": 10, "color": "rojo" },
+        { "tipo": "etiqueta", "cuando": "brazo", "n": 3, "desfase": 0.3, "x": 74, "y": 92, "texto": "Dolor percibido", "color": "rojo" }
+      ]
+    },
+    {
+      "id": "cierre", "titulo": "En resumen", "acento": "rojo", "desde": "Eso es",
+      "elementos": [
+        { "tipo": "corazon", "cuando": "Eso es", "desfase": -0.1, "x": 24, "y": 70, "tam": 24, "dolor": true },
+        { "tipo": "brazo", "cuando": "Eso es", "x": 80, "y": 66, "tam": 40, "dolor": true },
+        { "tipo": "rotulo", "cuando": "dolor referido", "x": 50, "y": 14, "texto": "DOLOR", "color": "hueso", "tam": 15 },
+        { "tipo": "rotulo", "cuando": "referido", "x": 50, "y": 29, "texto": "REFERIDO", "color": "amarillo", "tam": 15 },
+        { "tipo": "linea", "cuando": "referido", "desfase": 0.2, "puntos": [[34, 66], [52, 54], [70, 60]], "color": "rojo", "grosor": 8, "flecha": true, "estilo": "punteada", "brillo": true },
+        { "tipo": "etiqueta", "cuando": "sufre", "x": 24, "y": 94, "texto": "El corazón\nsufre", "color": "rojo" },
+        { "tipo": "etiqueta", "cuando": "avisa", "x": 78, "y": 94, "texto": "El brazo\navisa", "color": "rojo" }
+      ]
+    }
+  ]
+}
