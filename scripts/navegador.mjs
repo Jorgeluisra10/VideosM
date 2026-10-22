@@ -95,5 +95,15 @@ export const opcionesNavegador = () => {
   return browserExecutable ? { browserExecutable } : {};
 };
 
-/** openBrowser("chrome") con el ejecutable adecuado. */
-export const abrirNavegador = (opciones = {}) => openBrowser("chrome", { logLevel: "error", ...opcionesNavegador(), ...opciones });
+/**
+ * Motor gráfico para WebGL (escenas 3D). VIDEMED_GL = angle | swangle | egl | vulkan | angle-egl.
+ * Sin variable: en Linux (servidores, contenedores sin GPU) "swangle" (por software); en Windows/Mac el predeterminado de Remotion (usa la GPU si hay).
+ */
+export const glPorDefecto = () => process.env.VIDEMED_GL || (process.platform === "linux" ? "swangle" : undefined);
+
+/** openBrowser("chrome") con el ejecutable adecuado y WebGL configurado; `chromiumOptions` propias se combinan, no se pisan. */
+export const abrirNavegador = (opciones = {}) => {
+  const gl = glPorDefecto();
+  const { chromiumOptions = {}, ...resto } = opciones;
+  return openBrowser("chrome", { logLevel: "error", ...opcionesNavegador(), ...resto, chromiumOptions: { ...(gl ? { gl } : {}), ...chromiumOptions } });
+};

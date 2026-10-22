@@ -173,3 +173,34 @@ video.vertical { max-width: 340px; margin: 0 auto; display: block; aspect-ratio:
 .estado-lista { list-style: none; margin: 0; padding: 0; } .estado-lista li { display: flex; gap: 10px; padding: 7px 0; border-bottom: 1px solid var(--borde); align-items: flex-start; } .estado-lista li:last-child { border: 0; }
 .pista { display: inline-block; cursor: help; border-bottom: 1px dotted var(--suave); }
 details > summary { cursor: pointer; font-weight: 700; padding: 6px 0; }
+
+/* ───────── Estudio de animación ───────── */
+.estudio { display: flex; flex-direction: column; gap: 12px; }
+label.etq { font-weight: 700; display: block; margin-bottom: 4px; }
+textarea.guion { width: 100%; min-height: 280px; resize: vertical; font: 14px/1.5 ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; background: var(--fondo); color: var(--texto); border: 1px solid var(--borde); border-radius: 12px; padding: 14px; }
+textarea.guion:focus, .estudio select:focus { outline: 2px solid var(--azul); outline-offset: 1px; }
+.guion-info { display: flex; flex-direction: column; gap: 6px; }
+.guion-info .nota { margin: 0; }
+.nota.error { border-color: var(--rojo); }
+.fila.chicos { gap: 6px; flex-wrap: wrap; }
+.ajustes-3 { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 16px; align-items: start; }
+.ajustes-3 .campo { display: flex; flex-direction: column; gap: 6px; }
+.estudio select { width: 100%; padding: 10px 12px; background: var(--fondo); color: var(--texto); border: 1px solid var(--borde); border-radius: 10px; font: inherit; }
+.interruptor { display: inline-flex; align-items: center; gap: 10px; cursor: pointer; padding: 6px 0; }
+.interruptor input { position: absolute; opacity: 0; width: 1px; height: 1px; }
+.interruptor .pista { width: 48px; height: 26px; border-radius: 999px; background: var(--borde); position: relative; transition: background .15s; flex: none; }
+.interruptor .pista::after { content: ""; position: absolute; top: 3px; left: 3px; width: 20px; height: 20px; border-radius: 50%; background: #fff; transition: transform .15s; }
+.interruptor input:checked + .pista { background: var(--acento); }
+.interruptor input:checked + .pista::after { transform: translateX(22px); }
+.interruptor input:focus-visible + .pista { outline: 2px solid var(--azul); outline-offset: 2px; }
+.pie-estudio { align-items: center; gap: 14px; flex-wrap: wrap; border-top: 1px solid var(--borde); padding-top: 14px; }
+.costo { display: flex; flex-direction: column; gap: 2px; background: color-mix(in srgb, #ffc500 14%, var(--capa2)); border: 1px solid color-mix(in srgb, #ffc500 55%, var(--borde)); border-radius: 12px; padding: 8px 16px; }
+.costo strong { font-size: 1.35rem; font-variant-numeric: tabular-nums; }
+.costo-etq { font-weight: 600; } .costo-det { font-size: .78rem; color: var(--suave); }
+.costo.real { background: color-mix(in srgb, var(--acento) 12%, var(--capa2)); border-color: color-mix(in srgb, var(--acento) 55%, var(--borde)); }
+.chip.modo-SVG { color: #ffc500; border-color: #ffc50066; } .chip.modo-3D { color: var(--azul); border-color: #60a5fa66; }
+.rejilla-capturas { display: grid; grid-template-columns: repeat(auto-fill, minmax(150px, 1fr)); gap: 12px; margin-top: 10px; }
+.rejilla-capturas figure { margin: 0; } .rejilla-capturas img { width: 100%; aspect-ratio: 9 / 16; object-fit: cover; border-radius: 10px; border: 1px solid var(--borde); background: var(--capa2); }
+.rejilla-capturas figcaption { font-size: .78rem; color: var(--suave); text-align: center; margin-top: 4px; }
+video.reel { width: 270px; max-width: 100%; aspect-ratio: 9 / 16; background: #000; border-radius: 12px; }
+.ajustes-3 .campo:first-child { grid-column: 1 / -1; }

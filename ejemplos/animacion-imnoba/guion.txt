@@ -1,0 +1,19 @@
+[ESCENA 1 | 0s-5s | MODO: SVG]
+Locución: ¿Y si publicar tu casa, apartamento o vehículo fuera completamente gratis?
+Visual: icono de casa y de auto con ondas amarillas, título grande «¿Y si publicar fuera GRATIS?», tarjeta con «$0 COP».
+
+[ESCENA 2 | 5s-10s | MODO: 3D]
+Locución: En IMNOBA tu inmueble se ve en el mapa de la ciudad, las 24 horas.
+Visual: maqueta 3D de una ciudad con una manzana resaltada en amarillo y un edificio alto; la cámara orbita.
+
+[ESCENA 3 | 10s-16s | MODO: SVG]
+Locución: Con fotos claras y un plano que explica cada metro cuadrado.
+Visual: plano arquitectónico de un apartamento de 74 m² (sala 24, cocina 9, balcón 6, dos habitaciones de 14 y baño de 7) que se dibuja solo.
+
+[ESCENA 4 | 16s-22s | MODO: 3D]
+Locución: Y tu inversión crece con el tiempo.
+Visual: cinco barras 3D crecientes (100, 112, 127, 141, 158) y un contador +58 %, aclarando que es un ejemplo ilustrativo.
+
+[ESCENA 5 | 22s-28s | MODO: SVG]
+Locución: Publica hoy mismo en IMNOBA. Es gratis.
+Visual: logo IMNOBA en texto, casa que se dibuja con trazo, lista de tres beneficios y tarjeta «Es gratis».

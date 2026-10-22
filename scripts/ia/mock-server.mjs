@@ -184,6 +184,29 @@ function marcasSimuladas(texto, conDefectos = false) {
 }
 
 // ---------------------------------------------------------------------------
+// Animación (motor SVG + 3D): respuesta simulada a partir del ejemplo incluido
+// ---------------------------------------------------------------------------
+function respuestaAnimacion(entradaTexto, esquema) {
+  const ej = JSON.parse(readFileSync(join(RAIZ, "ejemplos", "animacion-imnoba", "respuesta-ia.json"), "utf8"));
+  const porModo = { SVG: ej.escenas.filter((e) => e.modo === "SVG"), "3D": ej.escenas.filter((e) => e.modo === "3D") };
+  const conSfx = JSON.stringify(esquema ?? {}).includes('"vol"');
+  const sinInmobiliaria = !JSON.stringify(esquema ?? {}).includes('"bano"');
+  const contador = { SVG: 0, "3D": 0 };
+  const escenas = [];
+  for (const m of entradaTexto.matchAll(/\[ESCENA (\d+) \| duración ([\d.]+) s \| MODO: (SVG|3D)\]/g)) {
+    const modo = m[3];
+    const base = JSON.parse(JSON.stringify(porModo[modo][contador[modo]++ % porModo[modo].length]));
+    base.n = Number(m[1]);
+    if (!conSfx) delete base.sfx;
+    escenas.push(base);
+  }
+  const datos = { titulo: "Animación de prueba", escenas };
+  let txt = JSON.stringify(datos);
+  if (sinInmobiliaria) txt = txt.replace(/"(casa|auto|dinero|pin|medida|web)"/g, '"check"');
+  return JSON.parse(txt);
+}
+
+// ---------------------------------------------------------------------------
 // Servidor
 // ---------------------------------------------------------------------------
 export function iniciarMock(puerto = 0) {
@@ -191,10 +214,20 @@ export function iniciarMock(puerto = 0) {
   const cat = cargarCatalogo();
   const estado = { peticiones: 0, porEsquema: {}, fallosEmitidos: 0, avisos: [], estilos: { responses: 0, chat: 0 }, voz: { speech: 0, transcriptions: 0, elevenlabs: 0 } };
   const [codigoFallo, cuantosFallos] = (process.env.MOCK_ERRORES ?? "").split(":").map(Number);
-  const una = { guion: false, revision: false, plan: false, critica: false };
+  const una = { guion: false, revision: false, plan: false, critica: false, anim: false };
   let esquemaPlan = null;
 
-  const respuesta = (nombre, entradaTexto, hayImagenes) => {
+  const respuesta = (nombre, entradaTexto, hayImagenes, esquema) => {
+    if (nombre === "animacion_imnoba") {
+      const datos = respuestaAnimacion(entradaTexto, esquema);
+      // MOCK_ANIM_ERRORES=1: la PRIMERA respuesta trae un path SVG inválido (prueba la reparación acotada)
+      if (process.env.MOCK_ANIM_ERRORES && !una.anim && !/Tu respuesta anterior/.test(entradaTexto)) {
+        const t = datos.escenas.flatMap((e) => e.elementos ?? []).find((el) => el.tipo === "trazo");
+        if (t) t.d = "esto no es un path";
+      }
+      una.anim = true;
+      return datos;
+    }
     const ej = () => {
       const porTexto = ejemplos.find((x) => entradaTexto.includes(x.guion.slice(0, 70)));
       if (porTexto) return porTexto;
@@ -352,14 +385,16 @@ export function iniciarMock(puerto = 0) {
         if (p.type === "input_image" || p.type === "image_url") imagenes++;
       }
       estado.porEsquema[nombre ?? "?"] = (estado.porEsquema[nombre ?? "?"] ?? 0) + 1;
+      if (nombre === "animacion_imnoba") estado.ultimaAnimacion = { modelo: b.model, razonamiento: b.reasoning_effort ?? null, maxTokens: b.max_completion_tokens ?? null, estricto: Boolean(estricto), ruta, sistema: (b.messages ?? []).find((m) => m.role === "system")?.content ?? "" };
 
-      const datos = respuesta(nombre, entradaTexto, imagenes);
+      const datos = respuesta(nombre, entradaTexto, imagenes, esquema);
       if (esquema && estricto && nombre !== "plan") {
         const errs = validarEsquema(datos, esquema);
         if (errs.length) estado.avisos.push(`Respuesta simulada de ${nombre} fuera de esquema: ${errs.slice(0, 3).join(" | ")}`);
       }
       const texto = JSON.stringify(datos);
-      const uso = { input: Math.round(entradaTexto.length / 4) + imagenes * 800, output: Math.round(texto.length / 3) };
+      const sistemaLen = nombre === "animacion_imnoba" ? (b.messages ?? []).filter((m) => m.role === "system").reduce((n, m) => n + String(m.content).length, 0) + JSON.stringify(esquema ?? {}).length : 0;
+      const uso = { input: Math.round((entradaTexto.length + sistemaLen) / 3.6) + imagenes * 800, output: Math.round(texto.length / 3) };
       if (esResponses) {
         return json(200, { id: "resp_mock", object: "response", status: "completed", model: b.model, output: [{ type: "message", role: "assistant", content: [{ type: "output_text", text: texto }] }], usage: { input_tokens: uso.input, output_tokens: uso.output } });
       }

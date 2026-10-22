@@ -55,6 +55,7 @@ export function huellaProyecto() {
     for (const e of readdirSync(dir, { withFileTypes: true }).sort((a, b) => a.name.localeCompare(b.name))) {
       const ruta = join(dir, e.name);
       if (e.isDirectory()) recorrer(ruta);
+      else if (/[\\/]data[\\/]animacion\.json$/.test(ruta)) continue; // la animación viaja como inputProps: cambiarla no obliga a empaquetar de nuevo
       else {
         const st = statSync(ruta);
         h.update(`${ruta}:${st.size}:${Math.round(st.mtimeMs)};`);

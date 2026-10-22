@@ -5,6 +5,10 @@
 Lo de arriba es el prompt original del proyecto (roles, fases, reglas de diseño). Todo ya está implementado;
 esto explica **cómo** y en qué se aparta del prompt, para trabajar sin redescubrirlo.
 
+## Estudio de animación SVG + 3D (añadido después; detalle en AGENTS.md §0b y GUIA.md §1b)
+
+Pantalla principal del panel: textarea de bloques `[ESCENA N | inicio-fin | MODO: SVG|3D]`, modelo (gpt-4.1-mini/o4-mini/gpt-4o-mini/gpt-4.1), SFX sí/no, paleta IMNOBA/Medicina, costo estimado en vivo y real en USD. Código en `src/anim/` (puro: parser, costos, paletas, esquema, prompt, validar, sonido; motor: Animacion/motor2d/motor3d) y `scripts/anim/`. Sin subtítulos ni TTS. `npm run anim:prueba` (80 pruebas, sin Chrome). Con Claude Code puedes saltarte la API: escribe `respuesta-ia.json` como en `ejemplos/animacion-imnoba/` y pásala por `ensamblar()` (`node scripts/anim/ejemplo.mjs` hace eso con el ejemplo). El modo clásico (voz+subtítulos) sigue intacto en `#/clasico`.
+
 ## Estado actual (resumen para trabajar sin redescubrir)
 
 - **Nichos (perfiles)**: `perfiles/medicina-ar` (voseo, fondo #0B0F19) y `perfiles/inmobiliario-co` (tuteo colombiano, #0F172A/esmeralda/ámbar, COP en «millones», vehículos, inversión). También `inmobiliaria` (AR, antiguo) y `generico`. `medicina` = alias de `medicina-ar`. Cada perfil define voces dev/prod (`voces`), paleta, campos del formulario (con `si:` condicionales), prompts (guion/revisor/plan/critica/post). Un **brief** (`proyectos/<id>/brief.json`) lleva los datos.

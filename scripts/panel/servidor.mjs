@@ -17,6 +17,7 @@ import { fileURLToPath, pathToFileURL } from "node:url";
 import { cargarEnv } from "../ia/entorno.mjs";
 import { PERFIL_BASE, cargarPerfil, listarPerfiles, paletas, slug } from "../ia/perfil.mjs";
 import { RAIZ } from "../ia/puente.mjs";
+import { cargarNucleoAnim, compilarNucleo } from "../anim/nucleo.mjs";
 import { archivosDoc, entorno, guardarAjustes, leerAjustes, probar } from "./ajustes.mjs";
 import { activarBorrador, borrarMedio, borrarProyecto, dirArchivo, dirProyecto, dirTrabajoIa, estadoProyecto, existeProyecto, guardarBriefProyecto, guardarMedio, guionDe, importarEjemplo, leerBriefProyecto, listarArchivo, listarEjemplos, listarMediosProyecto, listarProyectos, marcarEtapa, nombreSeguro, resumenActivo, temaActivoJson } from "./proyectos.mjs";
 import { bus, cancelar, detenerServicio, detenerTodo, estadoServicio, hayTrabajo, instantanea, iniciarServicio, lanzar, lineasDe } from "./trabajos.mjs";
@@ -258,6 +259,90 @@ function lanzarAccion(nombre, id, opciones) {
 }
 
 // ---------------------------------------------------------------------------
+// Estudio de animación (guion en bloques → SVG + 3D). No usa proyectos ni ranura activa: trabaja sobre src/data/animacion.json.
+// ---------------------------------------------------------------------------
+const dirAnim = (...p) => join(RAIZ, "trabajo", "anim", ...p);
+const archivoAnim = () => dato("animacion.json");
+const leerAnim = () => {
+  try {
+    return JSON.parse(readFileSync(archivoAnim(), "utf8"));
+  } catch {
+    return null;
+  }
+};
+
+let nucleoNavegador = null;
+const moduloNucleo = async () => (nucleoNavegador ??= await compilarNucleo("browser"));
+
+function historialAnim() {
+  const dir = dirAnim("historial");
+  if (!existsSync(dir)) return [];
+  return readdirSync(dir)
+    .filter((f) => f.endsWith(".json"))
+    .sort()
+    .reverse()
+    .slice(0, 30)
+    .map((f) => {
+      try {
+        const h = JSON.parse(readFileSync(join(dir, f), "utf8"));
+        return { id: h.id, creado: h.creado, titulo: h.animacion?.titulo ?? "", modelo: h.opciones?.modelo, escenas: h.animacion?.escenas?.length ?? 0, duracion: h.animacion?.duracion ?? 0, costo: h.animacion?.uso?.costo_usd ?? null };
+      } catch {
+        return null;
+      }
+    })
+    .filter(Boolean);
+}
+
+function estadoAnim() {
+  const a = leerAnim();
+  const dirPrevia = join(RAIZ, "trabajo", "tmp", "anim-previa");
+  const video = salida("video-animacion.mp4");
+  let qa = null;
+  try {
+    qa = JSON.parse(readFileSync(join(dirPrevia, "qa.json"), "utf8"));
+  } catch {
+    /* aún no se ha hecho */
+  }
+  return {
+    claveOpenAI: claveOpenAI(),
+    animacion: a ? { titulo: a.titulo, paleta: a.paleta, sfx: a.sfx, duracion: a.duracion, uso: a.uso, escenas: a.escenas.map((e) => ({ n: e.n, modo: e.modo, inicio: e.inicio, fin: e.fin, dur: e.dur, tema: e.tema, texto: e.texto })) } : null,
+    previas: existsSync(dirPrevia) ? readdirSync(dirPrevia).filter((f) => /^escena-\d+\.png$/.test(f)).sort().map((f) => `/anim-previa/${f}?t=${statSync(join(dirPrevia, f)).mtimeMs | 0}`) : [],
+    qa,
+    video: existsSync(video) ? { url: `/salida/video-animacion.mp4?t=${statSync(video).mtimeMs | 0}`, mb: +(statSync(video).size / 1048576).toFixed(1), fecha: statSync(video).mtimeMs } : null,
+    historial: historialAnim(),
+  };
+}
+
+/** Acciones del estudio (siempre «un trabajo a la vez», como el resto del panel). */
+async function lanzarAnim(nombre, o = {}) {
+  switch (nombre) {
+    case "anim-generar": {
+      pedir(claveOpenAI() || o.prueba, "Para generar la animación hace falta la clave de OpenAI (Ajustes). Mientras tanto puedes cargar el ejemplo y renderizarlo gratis.", 412);
+      pedir(typeof o.guion === "string" && o.guion.trim(), "Escribe o pega el guion en bloques.");
+      const N = await cargarNucleoAnim();
+      const r = N.parsearGuion(o.guion);
+      pedir(!r.errores.length, `El guion tiene problemas:\n· ${r.errores.join("\n· ")}`);
+      const modelo = N.MODELOS.some((m) => m.id === o.modelo) ? o.modelo : "gpt-4.1-mini";
+      const paleta = N.PALETAS[o.paleta] ? o.paleta : "imnoba";
+      mkdirSync(dirAnim(), { recursive: true });
+      const f = dirAnim("guion-actual.txt");
+      writeFileSync(f, o.guion);
+      return lanzar({ nombre, titulo: "Generar animación (SVG + 3D)", pasos: [{ titulo: `Dibujar ${r.escenas.length} escenas con ${modelo}`, cmd: [script("anim", "generar.mjs"), `--guion=${f}`, `--modelo=${modelo}`, `--sfx=${o.sfx === false ? "no" : "si"}`, `--paleta=${paleta}`] }] });
+    }
+    case "anim-ejemplo":
+      return lanzar({ nombre, titulo: "Cargar el ejemplo IMNOBA", pasos: [{ titulo: "Cargar el ejemplo (sin IA, sin coste)", cmd: [script("anim", "ejemplo.mjs"), ...(o.sfx === false ? ["--sin-sfx"] : []), ...(o.paleta ? [`--paleta=${o.paleta === "medicina" ? "medicina" : "imnoba"}`] : [])] }] });
+    case "anim-previa":
+      pedir(leerAnim(), "Primero genera la animación (o carga el ejemplo).", 412);
+      return lanzar({ nombre, titulo: "Capturas y control de calidad", pasos: [{ titulo: "Una captura por escena + QA (márgenes, vacíos, movimiento)", cmd: [script("anim", "previa.mjs"), "--qa"] }] });
+    case "anim-render":
+      pedir(leerAnim(), "Primero genera la animación (o carga el ejemplo).", 412);
+      return lanzar({ nombre, titulo: "Renderizar video (1080×1920 a 60 fps)", pasos: [{ titulo: "Renderizar la animación (SVG + 3D)", cmd: [script("render.mjs"), "--composicion=Animacion", ...(o.hilos ? [`--concurrency=${Number(o.hilos) || 1}`] : []), ...(o.desdeCero ? ["--desde-cero"] : [])] }] });
+    default:
+      throw Object.assign(new Error(`Acción desconocida: ${nombre}`), { codigo: 404 });
+  }
+}
+
+// ---------------------------------------------------------------------------
 // Enrutador
 // ---------------------------------------------------------------------------
 async function api(req, res, url) {
@@ -353,8 +438,26 @@ async function api(req, res, url) {
     if (t && existsSync(dirArchivo(t.id))) writeFileSync(join(dirArchivo(t.id), "texto-del-post.txt"), o.texto.trim() + "\n");
     return json(res, 200, { ok: true });
   }
+  if (m === "GET" && recurso === "anim" && a === "estado") return json(res, 200, estadoAnim());
+  if (m === "GET" && recurso === "anim" && a === "ejemplo") return json(res, 200, { guion: readFileSync(join(RAIZ, "ejemplos", "animacion-imnoba", "guion.txt"), "utf8") });
+  if (m === "POST" && recurso === "anim" && a === "cargar") {
+    const o = await leerJson(req);
+    const f = join(dirAnim("historial"), `${String(o.id ?? "").replace(/[^0-9A-Za-z_-]/g, "")}.json`);
+    pedir(existsSync(f), "No existe esa generación en el historial.", 404);
+    pedir(!hayTrabajo(), "Hay un trabajo en curso: espera a que termine.", 409);
+    const h = JSON.parse(readFileSync(f, "utf8"));
+    writeFileSync(archivoAnim(), JSON.stringify(h.animacion, null, 1));
+    return json(res, 200, { guion: h.guion, opciones: h.opciones });
+  }
   if (m === "POST" && recurso === "accion") {
     const o = await leerJson(req);
+    if (String(o.nombre ?? "").startsWith("anim-")) {
+      try {
+        return json(res, 200, { trabajo: await lanzarAnim(String(o.nombre), o.opciones ?? {}) });
+      } catch (e) {
+        return error(res, e.codigo ?? 500, e.message);
+      }
+    }
     try {
       return json(res, 200, { trabajo: lanzarAccion(String(o.nombre ?? ""), o.proyecto ? slug(o.proyecto) : null, o.opciones ?? {}) });
     } catch (e) {
@@ -439,6 +542,12 @@ function crearServidor(puerto) {
       if ((m = url.pathname.match(/^\/qa\/(.+)$/))) { const r = dentro(salida("qa"), m[1]); return r ? servirArchivo(req, res, r) : error(res, 403, "Ruta no válida."); }
       if ((m = url.pathname.match(/^\/capturas\/(.+)$/))) { const r = dentro(join(RAIZ, "trabajo", "ia", "capturas"), m[1]); return r ? servirArchivo(req, res, r) : error(res, 403, "Ruta no válida."); }
       if ((m = url.pathname.match(/^\/archivo\/([^/]+)\/(.+)$/))) { const r = dentro(dirArchivo(m[1]), m[2]); return r ? servirArchivo(req, res, r, { descarga: url.searchParams.has("descargar") }) : error(res, 403, "Ruta no válida."); }
+      if (url.pathname === "/modulos/anim-nucleo.js") {
+        const codigo = await moduloNucleo();
+        res.writeHead(200, { "Content-Type": "text/javascript; charset=utf-8", "Cache-Control": "no-cache" });
+        return res.end(codigo);
+      }
+      if ((m = url.pathname.match(/^\/anim-previa\/(.+)$/))) { const r = dentro(join(RAIZ, "trabajo", "tmp", "anim-previa"), m[1]); return r ? servirArchivo(req, res, r) : error(res, 403, "Ruta no válida."); }
       if (url.pathname === "/audio/voz.mp3") return servirArchivo(req, res, join(RAIZ, "public", "audios", "voz.mp3"));
       if ((m = url.pathname.match(/^\/p\/([^/]+)\/media\/(.+)$/))) { const r = dentro(join(dirProyecto(m[1]), "media"), m[2]); return r ? servirArchivo(req, res, r) : error(res, 403, "Ruta no válida."); }
 

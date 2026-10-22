@@ -155,3 +155,34 @@ export async function mezclarAudio({ raiz, ffmpeg, segundos, salidaWav }) {
   escribirWavEstereo(salidaWav, mezcla);
   return { efectos: usados, pico: Math.min(pico, 0.97), segundos: N / SR };
 }
+
+/**
+ * Mezcla SOLO efectos de sonido (sin voz, sin ambiente, sin música) para el motor de animación.
+ * `eventos` = [{ frame, tipo, vol }] con fotograma absoluto (lo da eventosSfx() de src/anim/sonido.ts).
+ */
+export async function mezclarSfx({ raiz, ffmpeg, segundos, salidaWav, eventos }) {
+  const { DUR_SFX, VOL_SFX, archivoSfx } = await cargarSonido(raiz);
+  const faltan = [...new Set(eventos.map((s) => archivoSfx(s.tipo)))].some((f) => !existsSync(join(raiz, "public", f)));
+  if (faltan) spawnSync(process.execPath, [join(raiz, "scripts", "generar-sfx.mjs"), "--solo-faltantes"], { cwd: raiz, stdio: "ignore" });
+  const N = Math.ceil(segundos * SR);
+  const mezcla = new Float32Array(N);
+  const tmpDir = join(dirname(salidaWav), "dec");
+  const cache = new Map();
+  for (const s of eventos) {
+    if (!cache.has(s.tipo)) cache.set(s.tipo, decodificar(ffmpeg, join(raiz, "public", archivoSfx(s.tipo)), tmpDir));
+    const buf = cache.get(s.tipo);
+    const inicio = Math.round(s.frame * (SR / FPS));
+    const largo = Math.min(buf.length, Math.ceil(DUR_SFX[s.tipo] * FPS) * (SR / FPS));
+    const vol = s.vol ?? VOL_SFX;
+    for (let k = 0; k < largo; k++) {
+      const i = inicio + k;
+      if (i >= 0 && i < N) mezcla[i] += buf[k] * vol;
+    }
+  }
+  let pico = 0;
+  for (let i = 0; i < N; i++) pico = Math.max(pico, Math.abs(mezcla[i]));
+  if (pico > 0.97) for (let i = 0; i < N; i++) mezcla[i] *= 0.97 / pico;
+  rmSync(tmpDir, { recursive: true, force: true });
+  escribirWavEstereo(salidaWav, mezcla);
+  return { efectos: eventos.length, pico: Math.min(pico, 0.97), segundos: N / SR };
+}

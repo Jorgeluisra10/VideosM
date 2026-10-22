@@ -1,0 +1,568 @@
+{
+ "version": 1,
+ "titulo": "IMNOBA · Publica gratis",
+ "paleta": "imnoba",
+ "sfx": true,
+ "fps": 60,
+ "duracion": 28,
+ "escenas": [
+  {
+   "n": 1,
+   "inicio": 0,
+   "fin": 5,
+   "dur": 5,
+   "texto": "Locución: ¿Y si publicar tu casa, apartamento o vehículo fuera completamente gratis?\nVisual: icono de casa y de auto con ondas amarillas, título grande «¿Y si publicar fuera GRATIS?», tarjeta con «$0 COP».",
+   "tema": "oscuro",
+   "modo": "SVG",
+   "ambiente": "particulas",
+   "elementos": [
+    {
+     "tipo": "ondas",
+     "t": 0,
+     "hasta": null,
+     "entrada": "aparecer",
+     "x": 540,
+     "y": 560,
+     "radio": 430,
+     "color": "acento"
+    },
+    {
+     "tipo": "icono",
+     "t": 0.3,
+     "hasta": null,
+     "entrada": "pop",
+     "nombre": "casa",
+     "x": 350,
+     "y": 560,
+     "tam": 210,
+     "color": "acento",
+     "fondo": true
+    },
+    {
+     "tipo": "icono",
+     "t": 0.6,
+     "hasta": null,
+     "entrada": "pop",
+     "nombre": "auto",
+     "x": 730,
+     "y": 560,
+     "tam": 210,
+     "color": "blanco",
+     "fondo": true
+    },
+    {
+     "tipo": "texto",
+     "t": 0.9,
+     "hasta": null,
+     "entrada": "deslizar-arriba",
+     "texto": "¿Y si publicar\nfuera GRATIS?",
+     "x": 540,
+     "y": 960,
+     "tam": 92,
+     "color": "tinta",
+     "peso": 900,
+     "alinear": "centro"
+    },
+    {
+     "tipo": "trazo",
+     "t": 1.6,
+     "hasta": null,
+     "entrada": "aparecer",
+     "d": "M 200 1090 Q 540 1135 880 1090",
+     "color": "acento",
+     "grosor": 9,
+     "relleno": null,
+     "dur": 0.8,
+     "brillo": true
+    },
+    {
+     "tipo": "texto",
+     "t": 2,
+     "hasta": null,
+     "entrada": "aparecer",
+     "texto": "Casas, apartamentos y vehículos",
+     "x": 540,
+     "y": 1230,
+     "tam": 52,
+     "color": "suave",
+     "peso": 700,
+     "alinear": "centro"
+    },
+    {
+     "tipo": "tarjeta",
+     "t": 2.8,
+     "hasta": null,
+     "entrada": "pop",
+     "x": 540,
+     "y": 1480,
+     "w": 740,
+     "h": 230,
+     "titulo": "Publicar en IMNOBA",
+     "valor": "$0 COP",
+     "icono": "dinero",
+     "color": "acento"
+    }
+   ],
+   "sfx": [
+    {
+     "t": 0.3,
+     "tipo": "pop",
+     "vol": 0.15
+    },
+    {
+     "t": 0.6,
+     "tipo": "pop",
+     "vol": 0.15
+    },
+    {
+     "t": 0.9,
+     "tipo": "whoosh",
+     "vol": 0.12
+    },
+    {
+     "t": 2.8,
+     "tipo": "cash",
+     "vol": 0.2
+    }
+   ]
+  },
+  {
+   "n": 2,
+   "inicio": 5,
+   "fin": 10,
+   "dur": 5,
+   "texto": "Locución: En IMNOBA tu inmueble se ve en el mapa de la ciudad, las 24 horas.\nVisual: maqueta 3D de una ciudad con una manzana resaltada en amarillo y un edificio alto; la cámara orbita.",
+   "tema": "oscuro",
+   "modo": "3D",
+   "camara": {
+    "radio": 34,
+    "radioFin": 27,
+    "altura": 20,
+    "alturaFin": 14,
+    "anguloInicio": 20,
+    "anguloFin": 90,
+    "mirarX": 0,
+    "mirarY": 1.6,
+    "mirarZ": 0,
+    "fov": 40
+   },
+   "luces": {
+    "ambiente": 0.5,
+    "direccional": 1.4,
+    "dirX": 8,
+    "dirY": 14,
+    "dirZ": 6,
+    "puntoAcento": 0.8
+   },
+   "suelo": "plano",
+   "niebla": false,
+   "objetos": [
+    {
+     "tipo": "ciudad",
+     "t": 0,
+     "dur": 1.8,
+     "entrada": "crecer",
+     "giro": 0,
+     "color": "primario",
+     "emisivo": false,
+     "semilla": 12,
+     "filas": 5,
+     "columnas": 4,
+     "resaltar": 9
+    },
+    {
+     "tipo": "edificio",
+     "t": 1.2,
+     "dur": 1.4,
+     "entrada": "crecer",
+     "giro": 0,
+     "color": "primario",
+     "emisivo": false,
+     "x": 0,
+     "z": -9,
+     "w": 1.8,
+     "d": 1.8,
+     "pisos": 26,
+     "remate": "antena",
+     "ventanas": true
+    }
+   ],
+   "overlay": [
+    {
+     "tipo": "texto",
+     "t": 0.5,
+     "hasta": null,
+     "entrada": "deslizar-abajo",
+     "texto": "Tu inmueble,\na la vista",
+     "x": 540,
+     "y": 300,
+     "tam": 80,
+     "color": "tinta",
+     "peso": 900,
+     "alinear": "centro"
+    },
+    {
+     "tipo": "tarjeta",
+     "t": 2.4,
+     "hasta": null,
+     "entrada": "pop",
+     "x": 540,
+     "y": 1580,
+     "w": 760,
+     "h": 200,
+     "titulo": "Visible en el mapa",
+     "valor": "24 / 7",
+     "icono": "pin",
+     "color": "acento"
+    }
+   ],
+   "sfx": [
+    {
+     "t": 0.1,
+     "tipo": "whoosh",
+     "vol": 0.15
+    },
+    {
+     "t": 1.2,
+     "tipo": "thud",
+     "vol": 0.12
+    },
+    {
+     "t": 2.4,
+     "tipo": "ding",
+     "vol": 0.15
+    }
+   ]
+  },
+  {
+   "n": 3,
+   "inicio": 10,
+   "fin": 16,
+   "dur": 6,
+   "texto": "Locución: Con fotos claras y un plano que explica cada metro cuadrado.\nVisual: plano arquitectónico de un apartamento de 74 m² (sala 24, cocina 9, balcón 6, dos habitaciones de 14 y baño de 7) que se dibuja solo.",
+   "tema": "claro",
+   "modo": "SVG",
+   "ambiente": "cuadricula",
+   "elementos": [
+    {
+     "tipo": "texto",
+     "t": 0.1,
+     "hasta": null,
+     "entrada": "deslizar-abajo",
+     "texto": "Cada metro,\nbien dibujado",
+     "x": 540,
+     "y": 330,
+     "tam": 70,
+     "color": "tinta",
+     "peso": 900,
+     "alinear": "centro"
+    },
+    {
+     "tipo": "plano",
+     "t": 0.7,
+     "hasta": null,
+     "entrada": "aparecer",
+     "x": 540,
+     "y": 900,
+     "w": 820,
+     "h": 760,
+     "color": "primario",
+     "cotas": true,
+     "dur": 3.2,
+     "habitaciones": [
+      {
+       "nombre": "Sala",
+       "x": 0,
+       "y": 0,
+       "w": 58,
+       "h": 50,
+       "m2": 24
+      },
+      {
+       "nombre": "Cocina",
+       "x": 58,
+       "y": 0,
+       "w": 42,
+       "h": 32,
+       "m2": 9
+      },
+      {
+       "nombre": "Balcón",
+       "x": 58,
+       "y": 32,
+       "w": 42,
+       "h": 18,
+       "m2": 6
+      },
+      {
+       "nombre": "Hab. 1",
+       "x": 0,
+       "y": 50,
+       "w": 36,
+       "h": 50,
+       "m2": 14
+      },
+      {
+       "nombre": "Baño",
+       "x": 36,
+       "y": 50,
+       "w": 24,
+       "h": 50,
+       "m2": 7
+      },
+      {
+       "nombre": "Hab. 2",
+       "x": 60,
+       "y": 50,
+       "w": 40,
+       "h": 50,
+       "m2": 14
+      }
+     ]
+    },
+    {
+     "tipo": "tarjeta",
+     "t": 4,
+     "hasta": null,
+     "entrada": "pop",
+     "x": 540,
+     "y": 1530,
+     "w": 780,
+     "h": 210,
+     "titulo": "Área construida",
+     "valor": "74 m² · 2 hab",
+     "icono": "medida",
+     "color": "primario"
+    }
+   ],
+   "sfx": [
+    {
+     "t": 0.1,
+     "tipo": "whoosh",
+     "vol": 0.12
+    },
+    {
+     "t": 0.7,
+     "tipo": "tick",
+     "vol": 0.1
+    },
+    {
+     "t": 4,
+     "tipo": "ding",
+     "vol": 0.15
+    }
+   ]
+  },
+  {
+   "n": 4,
+   "inicio": 16,
+   "fin": 22,
+   "dur": 6,
+   "texto": "Locución: Y tu inversión crece con el tiempo.\nVisual: cinco barras 3D crecientes (100, 112, 127, 141, 158) y un contador +58 %, aclarando que es un ejemplo ilustrativo.",
+   "tema": "oscuro",
+   "modo": "3D",
+   "camara": {
+    "radio": 32,
+    "radioFin": 26,
+    "altura": 10,
+    "alturaFin": 8,
+    "anguloInicio": -35,
+    "anguloFin": 30,
+    "mirarX": 0,
+    "mirarY": 3.6,
+    "mirarZ": 0,
+    "fov": 40
+   },
+   "luces": {
+    "ambiente": 0.5,
+    "direccional": 1.4,
+    "dirX": 8,
+    "dirY": 14,
+    "dirZ": 6,
+    "puntoAcento": 1
+   },
+   "suelo": "plano",
+   "niebla": false,
+   "objetos": [
+    {
+     "tipo": "barras3d",
+     "t": 0.2,
+     "dur": 1,
+     "entrada": "crecer",
+     "giro": 0,
+     "color": "primario",
+     "emisivo": false,
+     "x": 0,
+     "z": 0,
+     "w": 1.2,
+     "sep": 0.5,
+     "hmax": 8.5,
+     "datos": [
+      100,
+      112,
+      127,
+      141,
+      158
+     ]
+    }
+   ],
+   "overlay": [
+    {
+     "tipo": "texto",
+     "t": 0.2,
+     "hasta": null,
+     "entrada": "deslizar-abajo",
+     "texto": "Tu inversión crece",
+     "x": 540,
+     "y": 300,
+     "tam": 76,
+     "color": "tinta",
+     "peso": 900,
+     "alinear": "centro"
+    },
+    {
+     "tipo": "contador",
+     "t": 1.4,
+     "hasta": null,
+     "entrada": "aparecer",
+     "desde": 0,
+     "valor": 58,
+     "prefijo": "+",
+     "sufijo": "%",
+     "decimales": 0,
+     "x": 540,
+     "y": 1500,
+     "tam": 160,
+     "color": "acento",
+     "dur": 2.2
+    },
+    {
+     "tipo": "texto",
+     "t": 1.8,
+     "hasta": null,
+     "entrada": "aparecer",
+     "texto": "Ejemplo ilustrativo",
+     "x": 540,
+     "y": 1650,
+     "tam": 44,
+     "color": "suave",
+     "peso": 500,
+     "alinear": "centro"
+    }
+   ],
+   "sfx": [
+    {
+     "t": 0.3,
+     "tipo": "pop",
+     "vol": 0.12
+    },
+    {
+     "t": 1.4,
+     "tipo": "tick",
+     "vol": 0.1
+    },
+    {
+     "t": 3.6,
+     "tipo": "ding",
+     "vol": 0.18
+    }
+   ]
+  },
+  {
+   "n": 5,
+   "inicio": 22,
+   "fin": 28,
+   "dur": 6,
+   "texto": "Locución: Publica hoy mismo en IMNOBA. Es gratis.\nVisual: logo IMNOBA en texto, casa que se dibuja con trazo, lista de tres beneficios y tarjeta «Es gratis».",
+   "tema": "claro",
+   "modo": "SVG",
+   "ambiente": "aros",
+   "elementos": [
+    {
+     "tipo": "texto",
+     "t": 0.2,
+     "hasta": null,
+     "entrada": "pop",
+     "texto": "IMNOBA",
+     "x": 540,
+     "y": 300,
+     "tam": 130,
+     "color": "primario",
+     "peso": 900,
+     "alinear": "centro"
+    },
+    {
+     "tipo": "trazo",
+     "t": 0.5,
+     "hasta": null,
+     "entrada": "aparecer",
+     "d": "M 340 700 L 540 520 L 740 700 L 740 880 L 340 880 Z",
+     "color": "primario",
+     "grosor": 11,
+     "relleno": "primario",
+     "dur": 1.3,
+     "brillo": true
+    },
+    {
+     "tipo": "trazo",
+     "t": 1.7,
+     "hasta": null,
+     "entrada": "aparecer",
+     "d": "M 480 880 L 480 770 L 600 770 L 600 880",
+     "color": "acento",
+     "grosor": 11,
+     "relleno": null,
+     "dur": 0.8,
+     "brillo": false
+    },
+    {
+     "tipo": "lista",
+     "t": 2.2,
+     "hasta": null,
+     "entrada": "aparecer",
+     "items": [
+      "Publicas gratis",
+      "Fotos y mapa incluidos",
+      "Contacto directo"
+     ],
+     "x": 140,
+     "y": 990,
+     "tam": 56,
+     "color": "tinta"
+    },
+    {
+     "tipo": "tarjeta",
+     "t": 3.8,
+     "hasta": null,
+     "entrada": "pop",
+     "x": 540,
+     "y": 1560,
+     "w": 800,
+     "h": 220,
+     "titulo": "Publica hoy mismo",
+     "valor": "Es gratis",
+     "icono": "check",
+     "color": "ok"
+    }
+   ],
+   "sfx": [
+    {
+     "t": 0.2,
+     "tipo": "pop",
+     "vol": 0.15
+    },
+    {
+     "t": 0.5,
+     "tipo": "whoosh",
+     "vol": 0.1
+    },
+    {
+     "t": 3.8,
+     "tipo": "ding",
+     "vol": 0.18
+    }
+   ]
+  }
+ ],
+ "uso": null
+}

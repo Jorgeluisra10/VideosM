@@ -33,6 +33,39 @@ La **voz gratis**, el **render** y el **control de calidad** no necesitan ningun
 
 ---
 
+## 1b. ✨ Estudio de animación (la pantalla principal del panel)
+
+Al abrir el panel entras al **Estudio**: una pantalla minimalista para producir animaciones **SVG + 3D** con la paleta **IMNOBA** (azul navy `#02224E`, amarillo `#FFC500`, blanco `#FFFFFF`). **Sin subtítulos y sin voz sintética**: la locución la grabas tú y la pones en tu editor.
+
+**Lo único que haces (4 controles):**
+
+1. **Caja de texto grande** con el guion y lo que quieres ver, en bloques:
+   ```
+   [ESCENA 1 | 0s-4s | MODO: SVG]
+   Locución: …   Visual: …
+
+   [ESCENA 2 | 4s-9s | MODO: 3D]
+   Locución: …   Visual: …
+   ```
+   `MODO: SVG` = vectores 2D (planos arquitectónicos que se dibujan solos, gráficas dinámicas, iconos animados). `MODO: 3D` = Three.js (edificios 3D, barras financieras, maquetas, cámara que orbita). Si tu guion está desordenado, pulsa **📋 Copiar Prompt Formateador**, pégalo en ChatGPT/Claude con tu texto y vuelve a pegar aquí el resultado. **🧪 Cargar ejemplo** te deja probar sin escribir nada.
+2. **Modelo de IA** (con sus precios): `gpt-4.1-mini` (Recomendado calidad/precio), `o4-mini` (máxima precisión 3D y geometría), `gpt-4o-mini` (ultra económico, SVG), `gpt-4.1` (Estudio Pro).
+3. **Incluir SFX automáticos: Sí / No.** No = el video sale **sin pista de audio** y la IA ni siquiera pide efectos.
+4. **Paleta:** *IMNOBA (Colores oficiales de marca)* o *Medicina Clínica*.
+
+**Costo en dólares:** mientras escribes ves **«Costo estimado de este video: $0.0000 USD»** (cuenta los bloques `[ESCENA]` y los caracteres; es una estimación). Al terminar de generar ves el **costo real** con 5 decimales, calculado con los `prompt_tokens` y `completion_tokens` que devuelve OpenAI × el precio del modelo.
+
+**Cómo se calculan los tiempos:** un parser local (sin IA, sin costo) lee `inicio-fin` de cada bloque; **fotogramas = segundos × 60**. Entiende `0s-4s`, `4-9`, `00:09-00:15`, y avisa de huecos, solapes o escenas demasiado cortas.
+
+**Después de generar:** 👁️ *Ver capturas + control de calidad* (una captura por escena, márgenes ≥ 80 px, sin escenas vacías ni congeladas) → 🎬 *Renderizar video* (1080×1920, 60 fps; las escenas 3D tardan más) → ⬇️ descargar. Cada generación queda en el **Historial** (con su costo) para recargarla.
+
+**Terminal:** `npm run anim:ejemplo` (carga el ejemplo sin IA) · `npm run anim:generar -- --guion=mi.txt --modelo=gpt-4.1-mini --sfx=si --paleta=imnoba` · `npm run anim:previa -- --qa` · `npm run anim:render` · `npm run anim:prueba` (80 pruebas con OpenAI simulado). Salida: `trabajo/salida/video-animacion.mp4`.
+
+**3D y tu equipo:** WebGL necesita GPU o su emulación por software. En Windows/Mac se usa lo que haya; en Linux sin GPU el sistema usa `swangle` automáticamente. Puedes forzarlo con la variable `VIDEMED_GL` (`angle`, `swangle`, `egl`…). El render 3D por software es más lento (≈ 10 min para 28 s con 3 hilos).
+
+> El flujo anterior (nichos médico/inmobiliario con voz, subtítulos y fotos) sigue disponible en **🎬 Modo clásico**.
+
+---
+
 ## 2. El panel web, paso a paso
 
 El panel es una página local (solo accesible desde tu equipo). Arriba siempre ves el **trabajo en curso** (con barra de progreso); al pulsarlo se abre el **registro** en vivo, y puedes **cancelar** (lo ya renderizado se conserva).

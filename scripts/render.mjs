@@ -29,7 +29,8 @@ import { join } from "node:path";
 import { bundle } from "@remotion/bundler";
 import { renderFrames, selectComposition } from "@remotion/renderer";
 import { abrirNavegador } from "./navegador.mjs";
-import { mezclarAudio } from "./audio.mjs";
+import { mezclarAudio, mezclarSfx } from "./audio.mjs";
+import { cargarNucleoAnim } from "./anim/nucleo.mjs";
 
 const args = process.argv.slice(2);
 const valor = (nombre) => args.find((a) => a.startsWith(`--${nombre}=`))?.split("=")[1];
@@ -41,11 +42,18 @@ const MAX_INTENTOS = 6;
 const MEMORIA_MIN_GB = Number(valor("memoria-min") ?? 0.6);
 const ESPERA_MAX_MIN = Number(valor("espera-max") ?? 40);
 
-const TRABAJO = join(RAIZ_PROYECTO, "trabajo", "tmp", "render");
+const COMPOSICION = valor("composicion") ?? "VideoMedico";
+const ES_ANIMACION = COMPOSICION === "Animacion";
+/** La animación activa (motor SVG + 3D): se pasa como inputProps, así que no hace falta volver a empaquetar al cambiarla. */
+const ANIMACION = ES_ANIMACION ? JSON.parse(readFileSync(join(RAIZ_PROYECTO, "src", "data", "animacion.json"), "utf8")) : null;
+// cada animación tiene su propia carpeta de trabajo (huella de su contenido): cambiar el guion nunca reutiliza fotogramas viejos
+const HUELLA_ANIM = ES_ANIMACION ? createHash("sha1").update(JSON.stringify(ANIMACION)).digest("hex").slice(0, 10) : "";
+
+const TRABAJO = join(RAIZ_PROYECTO, "trabajo", "tmp", ES_ANIMACION ? `render-anim-${HUELLA_ANIM}` : "render");
 const FOTOGRAMAS = join(TRABAJO, "fotogramas");
 const TANDA_DIR = join(TRABAJO, "tanda");
 const AUDIO = join(TRABAJO, "mezcla.wav");
-const SALIDA = join(RAIZ_PROYECTO, "trabajo", "salida", "video-terminado.mp4");
+const SALIDA = join(RAIZ_PROYECTO, "trabajo", "salida", ES_ANIMACION ? "video-animacion.mp4" : "video-terminado.mp4");
 const FPS = 60;
 
 if (args.includes("--desde-cero")) rmSync(TRABAJO, { recursive: true, force: true });
@@ -153,6 +161,7 @@ function huellaProyecto() {
     for (const e of readdirSync(dir, { withFileTypes: true }).sort((a, b) => a.name.localeCompare(b.name))) {
       const ruta = join(dir, e.name);
       if (e.isDirectory()) recorrer(ruta);
+      else if (/[\\/]data[\\/]animacion\.json$/.test(ruta)) continue; // la animación viaja como inputProps: cambiarla no obliga a empaquetar de nuevo
       else {
         const st = statSync(ruta);
         h.update(`${ruta}:${st.size}:${Math.round(st.mtimeMs)};`);
@@ -188,11 +197,11 @@ async function obtenerPaquete() {
 }
 
 const serveUrl = await obtenerPaquete();
-const inputProps = { modo: "normal", qa: false };
+const inputProps = ES_ANIMACION ? { animacion: ANIMACION, qa: false } : { modo: "normal", qa: false };
 
 let composition = null;
 async function obtenerComposition() {
-  composition ??= await reintentar("composición", () => conNavegador((nav) => selectComposition({ serveUrl, id: "VideoMedico", inputProps, puppeteerInstance: nav })));
+  composition ??= await reintentar("composición", () => conNavegador((nav) => selectComposition({ serveUrl, id: COMPOSICION, inputProps, puppeteerInstance: nav })));
   return composition;
 }
 
@@ -209,8 +218,17 @@ if (composition) console.log(`   ${composition.width}×${composition.height} · 
 
 // ---------- 1. Audio (mezcla en Node, sin Chrome) ----------
 const { ffmpeg, ffprobe } = buscarFfmpeg();
-if (existsSync(AUDIO) && statSync(AUDIO).size > 1000 && !args.includes("--audio-nuevo")) {
+// La animación solo lleva audio si tiene SFX activados y al menos un efecto: si no, el mp4 sale sin pista de audio.
+const eventosAnim = ES_ANIMACION ? (await cargarNucleoAnim()).eventosSfx(ANIMACION) : [];
+const CON_AUDIO = !ES_ANIMACION || eventosAnim.length > 0;
+if (!CON_AUDIO) {
+  console.log(ANIMACION.sfx ? "🔇 La animación no tiene efectos de sonido: el video sale sin audio" : "🔇 SFX desactivados: el video sale sin pista de audio");
+} else if (existsSync(AUDIO) && statSync(AUDIO).size > 1000 && !args.includes("--audio-nuevo")) {
   console.log("🔊 Audio ya mezclado (se reutiliza)");
+} else if (ES_ANIMACION) {
+  console.log("🔊 Mezclando efectos de sonido (sin voz)...");
+  const m = await mezclarSfx({ raiz: RAIZ_PROYECTO, ffmpeg, segundos: total / FPS, salidaWav: AUDIO, eventos: eventosAnim });
+  console.log(`   ✔ audio listo: ${m.efectos} efectos, ${m.segundos.toFixed(1)} s, pico ${m.pico.toFixed(2)}`);
 } else {
   console.log("🔊 Mezclando audio (voz + ambiente + efectos)...");
   const m = await mezclarAudio({ raiz: RAIZ_PROYECTO, ffmpeg, segundos: total / FPS, salidaWav: AUDIO });
@@ -396,10 +414,8 @@ for (let intento = 1; intento <= MAX_INTENTOS && !unido; intento++) {
     [
       "-hide_banner", "-loglevel", "error", "-y",
       "-f", "concat", "-safe", "0", "-i", lista,
-      "-i", AUDIO,
-      "-map", "0:v:0", "-map", "1:a:0",
-      "-c:v", "copy", "-c:a", "aac", "-b:a", "192k",
-      "-shortest", "-movflags", "+faststart",
+      ...(CON_AUDIO ? ["-i", AUDIO, "-map", "0:v:0", "-map", "1:a:0", "-c:v", "copy", "-c:a", "aac", "-b:a", "192k", "-shortest"] : ["-map", "0:v:0", "-c:v", "copy", "-an"]),
+      "-movflags", "+faststart",
       SALIDA,
     ],
     { stdio: ["ignore", "ignore", "pipe"], encoding: "utf8" },

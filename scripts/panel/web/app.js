@@ -221,6 +221,7 @@ async function refrescarTrasTrabajo(job) {
     if (S.actual) await cargarProyecto(S.actual.id, { silencioso: true });
   } catch { /* sin conexión */ }
   const v = ruta();
+  if (v.vista === "estudio") return S.estudioRefrescar?.();
   if (v.vista === "proyecto" && (!["datos"].includes(v.paso) || job.estado === "ok")) pintarVista();
   else if (v.vista === "inicio") pintarVista();
 }
@@ -228,9 +229,9 @@ function refrescarSiVista(pasos) { const v = ruta(); if (v.vista === "proyecto" 
 function pintarProgresoVista() { const el = $("#prog-render"); if (el && S.trabajo?.progreso != null) { el.firstChild.style.width = `${S.trabajo.progreso}%`; const t = $("#prog-render-txt"); if (t) t.textContent = `${S.trabajo.progreso} %`; } }
 
 async function lanzar(nombre, opciones = {}, { abrirRegistro = true } = {}) {
-  if (!S.actual && !["ia-diagnostico", "sfx", "pruebas"].includes(nombre)) return aviso("Abre un proyecto primero.", "aviso");
+  if (!S.actual && !["ia-diagnostico", "sfx", "pruebas"].includes(nombre) && !nombre.startsWith("anim-")) return aviso("Abre un proyecto primero.", "aviso");
   try {
-    const r = await api("/api/accion", { metodo: "POST", cuerpo: { nombre, proyecto: S.actual?.id, opciones } });
+    const r = await api("/api/accion", { metodo: "POST", cuerpo: { nombre, proyecto: nombre.startsWith("anim-") ? undefined : S.actual?.id, opciones } });
     S.trabajo = r.trabajo;
     if (abrirRegistro) mostrarRegistro(true);
     pintarTrabajo();
@@ -244,7 +245,8 @@ const ocupado = () => S.trabajo?.estado === "corriendo";
 // ---------------------------------------------------------------------------
 function ruta() {
   const p = decodeURIComponent(location.hash.replace(/^#\/?/, "")).split("/").filter(Boolean);
-  if (!p.length) return { vista: "inicio" };
+  if (!p.length || p[0] === "estudio") return { vista: "estudio" };
+  if (p[0] === "clasico") return { vista: "inicio" };
   if (p[0] === "nuevo") return { vista: "nuevo" };
   if (p[0] === "p" && p[1]) return { vista: "proyecto", id: p[1], paso: ETAPAS.some((e) => e.id === p[2]) ? p[2] : null };
   if (p[0] === "ajustes") return { vista: "ajustes" };
@@ -255,10 +257,11 @@ const ir = (hash) => { if (location.hash === hash) pintarVista(); else location.
 
 async function pintarVista() {
   const v = ruta();
-  $$(".menu a").forEach((a) => a.classList.toggle("activo", (a.dataset.nav === "inicio" && ["inicio", "nuevo", "proyecto"].includes(v.vista)) || a.dataset.nav === v.vista));
+  $$(".menu a").forEach((a) => a.classList.toggle("activo", (a.dataset.nav === "clasico" && ["inicio", "nuevo", "proyecto"].includes(v.vista)) || a.dataset.nav === v.vista));
   const cont = $("#vista");
   try {
-    if (v.vista === "inicio") await vistaInicio(cont);
+    if (v.vista === "estudio") await vistaEstudio(cont);
+    else if (v.vista === "inicio") await vistaInicio(cont);
     else if (v.vista === "nuevo") vistaNuevo(cont);
     else if (v.vista === "proyecto") await vistaProyecto(cont, v);
     else if (v.vista === "ajustes") await vistaAjustes(cont);
@@ -266,6 +269,157 @@ async function pintarVista() {
   } catch (e) {
     cont.replaceChildren(h("div.tarjeta", h("h2", "😕 Algo salió mal"), h("p", e.message), h("button.btn", { onclick: () => pintarVista() }, "Reintentar")));
   }
+}
+
+
+// ---------------------------------------------------------------------------
+// Vista: ESTUDIO (guion en bloques → animación SVG + 3D). Una sola caja de texto y 3 ajustes.
+// ---------------------------------------------------------------------------
+const EST = { guion: leerLocal("videmed-anim-guion") ?? "", modelo: leerLocal("videmed-anim-modelo") ?? "gpt-4.1-mini", sfx: (leerLocal("videmed-anim-sfx") ?? "si") === "si", paleta: leerLocal("videmed-anim-paleta") ?? "imnoba", datos: null, N: null };
+const fijosCache = new Map();
+const num = (x, d = 0) => Number(x).toLocaleString("es-CO", { minimumFractionDigits: d, maximumFractionDigits: d });
+const reloj = (s) => `${Math.floor(s / 60)}:${String(Math.round(s % 60)).padStart(2, "0")}`;
+
+/** Copia al portapapeles (con alternativa si el navegador no da permiso). */
+async function copiarTexto(texto) {
+  try { await navigator.clipboard.writeText(texto); return true; } catch { /* alternativa */ }
+  const t = h("textarea", { style: "position:fixed;left:-9999px" }, texto);
+  document.body.append(t); t.select();
+  let ok = false; try { ok = document.execCommand("copy"); } catch { ok = false; }
+  t.remove();
+  return ok;
+}
+
+/** Costo estimado: parsea el guion localmente (sin IA) y aplica los precios del modelo elegido. */
+function calcularEstimacion() {
+  const N = EST.N;
+  const r = N.parsearGuion(EST.guion);
+  const svg = r.escenas.filter((e) => e.modo === "SVG").length, tres = r.escenas.filter((e) => e.modo === "3D").length;
+  if (!r.escenas.length) return { r, svg, tres, est: null };
+  const clave = `${EST.paleta}|${EST.sfx}|${svg > 0}|${tres > 0}`;
+  if (!fijosCache.has(clave)) fijosCache.set(clave, N.tokensFijos({ paleta: EST.paleta, sfx: EST.sfx, svg: svg > 0, tres: tres > 0 }));
+  const est = N.estimar({ modelo: EST.modelo, caracteres: r.caracteres, escenasSVG: svg, escenas3D: tres, sfx: EST.sfx, tokensFijos: fijosCache.get(clave) });
+  return { r, svg, tres, est };
+}
+
+function pintarEstimacion() {
+  const { r, svg, tres, est } = calcularEstimacion();
+  const N = EST.N;
+  const badge = $("#costo-estimado");
+  if (badge) {
+    badge.replaceChildren(h("span.costo-etq", "Costo estimado de este video: "), h("strong#costo-valor", N.formatoUSD(est?.costo ?? 0, 4)),
+      h("span.costo-det", est ? `≈ ${num(est.tokensEntrada)} tokens de entrada + ${num(est.tokensSalida)} de salida` : "pega el guion para calcularlo"));
+  }
+  const info = $("#guion-info");
+  if (info) {
+    const partes = [];
+    if (r.escenas.length) partes.push(h("div.fila.chicos", h("span.chip", `${r.escenas.length} escena${r.escenas.length > 1 ? "s" : ""} [ESCENA]`), h("span.chip", `${reloj(r.duracion)} min:s · ${num(r.duracion, 1)} s`), h("span.chip", `${svg} SVG`), h("span.chip", `${tres} 3D`), h("span.chip", `${num(r.caracteres)} caracteres`)));
+    else if (!r.errores.length) partes.push(h("p.suave.chico-t", "Cada escena empieza con su encabezado ", h("code", "[ESCENA 1 | 0s-4s | MODO: SVG]"), " y debajo va la locución y lo que quieres ver. Si prefieres ordenar tu guion con ChatGPT, copia el prompt con el botón de arriba."));
+    for (const e of r.errores) partes.push(h("div.nota.error", "⛔ " + e));
+    for (const a of r.avisos) partes.push(h("div.nota.aviso", "⚠️ " + a));
+    info.replaceChildren(...partes);
+  }
+  const gen = $("#btn-generar");
+  if (gen) {
+    const sinClave = !S.claves.openai;
+    gen.disabled = !r.escenas.length || r.errores.length > 0;
+    gen.title = !r.escenas.length ? "Escribe el guion en bloques" : r.errores.length ? "Corrige los errores del guion" : sinClave ? "Falta la clave de OpenAI (Ajustes)" : "";
+  }
+}
+
+async function estudioDatos() {
+  EST.datos = await api("/api/anim/estado");
+  return EST.datos;
+}
+
+function pintarResultadoEstudio() {
+  const cont = $("#estudio-resultado");
+  if (!cont) return;
+  const d = EST.datos, N = EST.N;
+  const a = d?.animacion;
+  const hijos = [];
+  if (a) {
+    const uso = a.uso;
+    hijos.push(h("div.tarjeta",
+      h("div.cab-vista", h("div", h("h2", `🎞️ ${a.titulo || "Animación lista"}`), h("p.suave", `${a.escenas.length} escenas · ${num(a.duracion, 1)} s · paleta ${N.PALETAS[a.paleta]?.nombre ?? a.paleta} · SFX ${a.sfx ? "sí" : "no"} · sin subtítulos ni voz`)),
+        h("span.espacio"),
+        uso ? h("div.costo.real", h("span.costo-etq", "Costo real de este video: "), h("strong#costo-real", N.formatoUSD(uso.costo_usd, 5)), h("span.costo-det", `${num(uso.prompt_tokens)} tokens de entrada (prompt_tokens) + ${num(uso.completion_tokens)} de salida (completion_tokens) · ${uso.llamadas} llamada${uso.llamadas > 1 ? "s" : ""} · ${uso.modelo}`)) : h("div.costo.real", h("span.costo-etq", "Ejemplo cargado sin IA · costo: "), h("strong", N.formatoUSD(0, 5)))),
+      h("table", h("thead", h("tr", h("th", "#"), h("th", "Modo"), h("th", "Tiempo"), h("th", "Fotogramas"), h("th", "Guion"))),
+        h("tbody", a.escenas.map((e) => h("tr", h("td", e.n), h("td", h(`span.chip.modo-${e.modo}`, e.modo)), h("td", `${reloj(e.inicio)}–${reloj(e.fin)}`), h("td", `${Math.round(e.dur * 60)}`), h("td.chico-t", e.texto.replace(/\s+/g, " ").slice(0, 90) + (e.texto.length > 90 ? "…" : "")))))),
+      h("div.fila", { style: "margin-top:12px" },
+        h("button.btn", { onclick: () => lanzar("anim-previa") }, "👁️ Ver capturas + control de calidad"),
+        h("button.btn.primario", { onclick: () => lanzar("anim-render") }, "🎬 Renderizar video (1080×1920 · 60 fps)"),
+        h("span.chico-t.suave", "El render de las escenas 3D tarda más que el de las SVG; el registro muestra el avance."))));
+    if (d.previas.length) {
+      const q = d.qa?.problemas;
+      hijos.push(h("div.tarjeta", h("h3", "👁️ Capturas por escena"),
+        q ? (q.length ? h("div.nota.aviso", "⚠️ El control de calidad encontró:", h("ul", q.map((x) => h("li", x)))) : h("div.nota.ok", "✅ Control de calidad: márgenes ≥ 80 px, sin escenas vacías ni congeladas.")) : null,
+        h("div.rejilla-capturas", d.previas.map((u, i) => h("figure", h("a", { href: u, target: "_blank" }, h("img", { src: u, loading: "lazy", alt: `Captura de la escena ${i + 1}` })), h("figcaption", `Escena ${a.escenas[i]?.n ?? i + 1} · ${a.escenas[i]?.modo ?? ""}`))))));
+    }
+    if (d.video) {
+      hijos.push(h("div.tarjeta", h("h3", "🎬 Video terminado"),
+        h("div.fila", { style: "align-items:flex-start;gap:18px" },
+          h("video.reel", { src: d.video.url, controls: true, preload: "metadata" }),
+          h("div", h("p", `${d.video.mb} MB · 1080×1920 · 60 fps · H.264${a.sfx ? " + AAC (efectos)" : " · sin pista de audio (SFX desactivados)"}`),
+            h("a.btn.primario", { href: "/salida/video-animacion.mp4?descargar=1" }, "⬇️ Descargar el video"),
+            h("p.chico-t.suave", "Sin subtítulos y sin voz: añade tu locución grabada en tu editor (CapCut, DaVinci, etc.)."))))); 
+    }
+  }
+  if (d?.historial?.length) {
+    hijos.push(h("details.tarjeta", h("summary", `🕘 Historial (${d.historial.length})`),
+      h("table", h("thead", h("tr", h("th", "Fecha"), h("th", "Título"), h("th", "Modelo"), h("th", "Escenas"), h("th", "Costo real"), h("th", ""))),
+        h("tbody", d.historial.map((x) => h("tr", h("td", new Date(x.creado).toLocaleString("es-CO")), h("td", x.titulo), h("td", x.modelo ?? "—"), h("td", `${x.escenas} · ${num(x.duracion, 0)} s`), h("td", x.costo != null ? N.formatoUSD(x.costo, 5) : "—"), h("td", h("button.btn.chico", { onclick: () => cargarHistorial(x.id) }, "Cargar"))))))));
+  }
+  cont.replaceChildren(...hijos);
+}
+
+async function cargarHistorial(id) {
+  if (ocupado()) return aviso("Hay un trabajo en curso: espera a que termine.", "aviso");
+  try {
+    const r = await api("/api/anim/cargar", { metodo: "POST", cuerpo: { id } });
+    EST.guion = r.guion; if (r.opciones?.modelo) EST.modelo = r.opciones.modelo; EST.sfx = r.opciones?.sfx !== false; if (r.opciones?.paleta) EST.paleta = r.opciones.paleta;
+    guardarEstado();
+    aviso("🕘 Generación cargada.", "ok");
+    await vistaEstudio($("#vista"));
+  } catch (e) { fallo(e); }
+}
+
+const guardarEstado = () => { guardarLocal("videmed-anim-guion", EST.guion); guardarLocal("videmed-anim-modelo", EST.modelo); guardarLocal("videmed-anim-sfx", EST.sfx ? "si" : "no"); guardarLocal("videmed-anim-paleta", EST.paleta); };
+
+async function vistaEstudio(cont) {
+  EST.N ??= await import("/modulos/anim-nucleo.js");
+  const N = EST.N;
+  await estudioDatos();
+  S.estudioRefrescar = async () => { await estudioDatos(); pintarResultadoEstudio(); pintarEstimacion(); };
+  const generar = async () => {
+    if (ocupado()) return aviso("Hay un trabajo en curso: espera a que termine.", "aviso");
+    if (!S.claves.openai) return aviso("Falta la clave de OpenAI: ponla en ⚙️ Ajustes. Mientras tanto puedes cargar el ejemplo y renderizarlo gratis.", "aviso", 9000);
+    guardarEstado();
+    await lanzar("anim-generar", { guion: EST.guion, modelo: EST.modelo, sfx: EST.sfx, paleta: EST.paleta });
+  };
+  cont.replaceChildren(
+    h("div.cab-vista", h("div", h("h1", "✨ Estudio de animación"), h("p.suave", "Pega tu guion en bloques, elige modelo y paleta, y la IA dibuja cada escena (SVG o 3D). Sin subtítulos y sin voz: tú grabas la locución aparte."))),
+    h("div.tarjeta.estudio",
+      h("div.fila", h("label.etq", { for: "guion" }, "1 · Guion y requerimientos visuales"), h("span.espacio"),
+        h("button.btn.chico", { type: "button", onclick: async () => aviso((await copiarTexto(N.PROMPT_FORMATEADOR)) ? "📋 Prompt copiado. Pégalo en ChatGPT/Claude junto a tu guion y vuelve a pegar aquí el resultado." : "No pude copiar automáticamente: selecciona el texto a mano.", "ok", 7000) }, "📋 Copiar Prompt Formateador"),
+        h("button.btn.chico", { type: "button", onclick: async () => { try { EST.guion = (await api("/api/anim/ejemplo")).guion; $("#guion").value = EST.guion; guardarEstado(); pintarEstimacion(); } catch (e) { fallo(e); } } }, "🧪 Cargar ejemplo")),
+      h("textarea#guion.guion", { rows: 15, spellcheck: false, placeholder: "[ESCENA 1 | 0s-4s | MODO: SVG]\nLocución: …\nVisual: …\n\n[ESCENA 2 | 4s-9s | MODO: 3D]\nLocución: …\nVisual: …", value: EST.guion, oninput: (e) => { EST.guion = e.target.value; guardarEstado(); pintarEstimacion(); } }),
+      h("div#guion-info.guion-info"),
+      h("div.ajustes-3",
+        h("div.campo", h("label.etq", { for: "modelo" }, "2 · Modelo de IA"),
+          h("select#modelo", { onchange: (e) => { EST.modelo = e.target.value; guardarEstado(); pintarEstimacion(); } }, N.MODELOS.map((m) => h("option", { value: m.id, selected: m.id === EST.modelo }, m.etiqueta)))),
+        h("div.campo", h("label.etq", { for: "sfx" }, "3 · Incluir SFX automáticos"),
+          h("label.interruptor", h("input#sfx", { type: "checkbox", checked: EST.sfx, onchange: (e) => { EST.sfx = e.target.checked; $("#sfx-txt").textContent = EST.sfx ? "Sí" : "No"; guardarEstado(); pintarEstimacion(); } }), h("span.pista"), h("strong#sfx-txt", EST.sfx ? "Sí" : "No")),
+          h("span.chico-t.suave", "No = el video sale sin pista de audio y la IA no pide efectos.")),
+        h("div.campo", h("label.etq", { for: "paleta" }, "4 · Paleta de colores"),
+          h("select#paleta", { onchange: (e) => { EST.paleta = e.target.value; guardarEstado(); pintarEstimacion(); } }, Object.values(N.PALETAS).map((p) => h("option", { value: p.id, selected: p.id === EST.paleta }, p.nombre))))),
+      h("div.fila.pie-estudio", h("div#costo-estimado.costo"), h("span.espacio"),
+        h("button#btn-generar.btn.primario.grande", { type: "button", onclick: generar }, "🎨 Generar animación"))),
+    !S.claves.openai ? h("div.nota.aviso", "🔑 Para generar con IA falta la clave de OpenAI: ", h("a", { href: "#/ajustes" }, "ponla en Ajustes"), ". El botón «Cargar ejemplo» + «Renderizar» funciona sin clave.") : null,
+    h("div#estudio-resultado"),
+  );
+  pintarEstimacion();
+  pintarResultadoEstudio();
 }
 
 // ---------------------------------------------------------------------------
@@ -373,7 +527,7 @@ function estadoPaso(id) {
 
 async function vistaProyecto(cont, v) {
   if (!S.actual || S.actual.id !== v.id) {
-    try { await cargarProyecto(v.id); } catch (e) { return cont.replaceChildren(h("div.tarjeta", h("h2", "No encuentro ese proyecto"), h("p", e.message), h("a.btn", { href: "#/" }, "← Volver"))); }
+    try { await cargarProyecto(v.id); } catch (e) { return cont.replaceChildren(h("div.tarjeta", h("h2", "No encuentro ese proyecto"), h("p", e.message), h("a.btn", { href: "#/clasico" }, "← Volver"))); }
   }
   if (!v.paso) {
     const e = S.actual.estado?.etapas ?? {};
