@@ -5,11 +5,12 @@
  * Lógica PURA: la usan el agente (Node), las pruebas y, si hace falta, Remotion.
  */
 import { getBoundingBox, parsePath, scalePath, translatePath } from "@remotion/paths";
-import { TOKENS, esRetro } from "./paletas";
+import { TOKENS, esRetro, paletaPorId, type TemaEscena } from "./paletas";
 import { iconosPermitidos } from "./iconos";
-import { AMBIENTES, ENTRADAS_2D, ENTRADAS_3D, FORMAS, GRAFICAS, REMATES, SFX_TIPOS, SUELOS, TEMAS, TIPOS_2D, TIPOS_2D_RETRO, TIPOS_3D, TIPOS_3D_RETRO, TIPOS_OVERLAY, TIPOS_OVERLAY_RETRO, FORMAS_MODELO } from "./esquema";
+import { AMBIENTES, ENTRADAS_2D, ENTRADAS_3D, FORMAS, GRAFICAS, REMATES, SFX_TIPOS, SUELOS, TEMAS, TIPOS_2D, TIPOS_2D_RETRO, TIPOS_3D, TIPOS_3D_RETRO, TIPOS_OVERLAY, TIPOS_OVERLAY_RETRO, TIPOS_2D_GEO, TIPOS_OVERLAY_GEO, FORMAS_MODELO } from "./esquema";
 import { FPS_ANIM, type EscenaBloque } from "./parser";
 import type { Animacion, EscenaGuardada, EventoSfx, Medidor } from "./tipos";
+import type { ConfigEstructurada, EscenaEstructurada } from "./guionEstructurado";
 
 // Zona segura de los elementos. En el estilo retro el escenario es la franja central (y 350–1450): arriba va el título y abajo el HUD.
 // Son variables de módulo que ensamblar() fija al empezar y restaura al terminar (todo es síncrono, no hay carreras).
@@ -350,19 +351,23 @@ function sanearObjeto3D(raw: any, c: Ctx): any | null {
   return null;
 }
 
-function sanearEscena(raw: any, b: EscenaBloque, c: Ctx, sfx: boolean): EscenaGuardada | null {
-  const comunes = { n: b.n, inicio: b.inicio, fin: b.fin, dur: b.dur, texto: b.texto, tema: en(raw.tema, TEMAS, "oscuro") };
-  const sonido = sfx ? { sfx: sanearSfx(raw.sfx, b.dur) } : {};
+/** Datos que en el formato estructurado resuelve el código local (la IA solo aporta la geometría). */
+type Local = { tema: TemaEscena; retro: Record<string, unknown>; sfx: EventoSfx[] | null; mixto: boolean };
+
+function sanearEscena(raw: any, b: EscenaBloque, c: Ctx, sfx: boolean, local?: Local): EscenaGuardada | null {
+  const comunes = { n: b.n, inicio: b.inicio, fin: b.fin, dur: b.dur, texto: b.texto, tema: local ? local.tema : en(raw.tema, TEMAS, "oscuro") };
+  const sonido = local ? (local.sfx ? { sfx: local.sfx } : {}) : sfx ? { sfx: sanearSfx(raw.sfx, b.dur) } : {};
   // estilo retro: título, subtítulo de terminal y medidores del HUD (los tres van en la escena, no como elementos)
   let retro: Record<string, unknown> = {};
-  if (retroActivo) {
+  if (local) retro = local.retro;
+  else if (retroActivo) {
     const t = ajustarTitulo(String(raw.titulo ?? ""), c);
     const sub = raw.subtitulo == null || !String(raw.subtitulo).trim() ? null : envolverMono(cadena(raw.subtitulo, 110), Math.floor((X1 - X0) / anchoMono(1, 30))).slice(0, 2).join("\n");
     retro = { titulo: t.texto, tituloTam: t.tam, subtitulo: sub, medidores: sanearMedidores(raw.medidores, c) };
     if (!t.texto.trim()) fallo(c, "el estilo retro necesita un título (H1) en cada escena");
   }
   if (b.modo === "SVG") {
-    const elementos = (Array.isArray(raw.elementos) ? raw.elementos : []).slice(0, 26).map((e: any) => sanearElemento(e, c, retroActivo ? TIPOS_2D_RETRO : TIPOS_2D)).filter(Boolean);
+    const elementos = (Array.isArray(raw.elementos) ? raw.elementos : []).slice(0, 26).map((e: any) => sanearElemento(e, c, local ? TIPOS_2D_GEO : retroActivo ? TIPOS_2D_RETRO : TIPOS_2D)).filter(Boolean);
     if (elementos.length < 2) fallo(c, `la escena SVG tiene ${elementos.length} elemento(s) válidos; necesita al menos 2`);
     return { ...comunes, modo: "SVG", ambiente: en(raw.ambiente, AMBIENTES, "cuadricula"), ...retro, elementos, ...sonido } as EscenaGuardada;
   }
@@ -370,7 +375,7 @@ function sanearEscena(raw: any, b: EscenaBloque, c: Ctx, sfx: boolean): EscenaGu
   const lu = raw.luces ?? {};
   const objetos = (Array.isArray(raw.objetos) ? raw.objetos : []).slice(0, 30).map((o: any) => sanearObjeto3D(o, c)).filter(Boolean);
   if (!objetos.length) fallo(c, "la escena 3D no tiene objetos válidos");
-  const overlay = (Array.isArray(raw.overlay) ? raw.overlay : []).slice(0, 8).map((e: any) => sanearElemento(e, c, retroActivo ? TIPOS_OVERLAY_RETRO : TIPOS_OVERLAY)).filter(Boolean);
+  const overlay = (Array.isArray(raw.overlay) ? raw.overlay : []).slice(0, local?.mixto ? 16 : 8).map((e: any) => sanearElemento(e, c, local ? (local.mixto ? TIPOS_2D_GEO : TIPOS_OVERLAY_GEO) : retroActivo ? TIPOS_OVERLAY_RETRO : TIPOS_OVERLAY)).filter(Boolean);
   return {
     ...comunes,
     ...retro,
@@ -453,3 +458,81 @@ export function validar(a: Animacion): string[] {
 }
 
 export const framesDeAnimacion = (a: Pick<Animacion, "duracion">): number => Math.max(1, Math.round(a.duracion * FPS_ANIM));
+
+/* ───────────── FORMATO ESTRUCTURADO ───────────── */
+
+/** Título H1 y subtítulo de terminal ya medidos para la zona superior (los dos vienen del guion, no de la IA). */
+export function cabeceraRetro(h1: string, sub: string | null, c: Ctx): { titulo: string; tituloTam: number; subtitulo: string | null } {
+  const t = ajustarTitulo(h1, c);
+  const subtitulo = sub && sub.trim() ? envolverMono(cadena(sub, 110), Math.floor((X1 - X0) / anchoMono(1, 30))).slice(0, 2).join("\n") : null;
+  return { titulo: t.texto, tituloTam: t.tam, subtitulo };
+}
+
+/** Medidores de la escena k: cada línea HUD es un tramo; el valor de partida es el final de la escena anterior (o el mínimo del rango). */
+export function medidoresDe(config: ConfigEstructurada, escenas: EscenaEstructurada[], k: number): Medidor[] {
+  if (!config.hud) return [];
+  return config.gauges.map((g, i) => {
+    let inicio = g.min;
+    for (let j = 0; j < k; j++) for (const h of escenas[j].hud) if (h.valores[i] != null) inicio = h.valores[i] as number;
+    const claves = escenas[k].hud
+      .filter((h) => h.valores[i] != null)
+      .map((h) => ({ t: +h.t.toFixed(2), dur: +h.dur.toFixed(2), valor: h.valores[i] as number }))
+      .sort((a, b) => a.t - b.t);
+    return { etiqueta: g.etiqueta, unidad: g.unidad, min: g.min, max: g.max, inicio, fin: claves.length ? claves[claves.length - 1].valor : inicio, t: claves[0]?.t ?? 0, dur: claves[0]?.dur ?? 1, decimales: g.decimales, claves };
+  });
+}
+
+/** El formato estructurado siempre usa el layout retro: IMNOBA → retro-imnoba, Medicina → retro. */
+export const paletaRetroDe = (id: string): string => (esRetro(id) ? id : id === "medicina" ? "retro" : "retro-imnoba");
+
+/**
+ * Une la geometría que devolvió la IA con TODO lo que se resolvió localmente (fondo, título, subtítulo, HUD, sonido).
+ * El escenario es y 350–1450 con HUD y 350–1800 con «HUD: OFF».
+ */
+export function ensamblarGeo(raw: any, escenas: EscenaEstructurada[], config: ConfigEstructurada, o: { paleta: string; sfx: boolean; usoDe?: Animacion["uso"] }): Resultado {
+  const errores: string[] = [];
+  const correcciones: string[] = [];
+  const paleta = paletaRetroDe(o.paleta);
+  if (paleta !== o.paleta) correcciones.push(`El formato estructurado usa el diseño Retro-Científico: la paleta «${paletaPorId(o.paleta).nombre}» se cambió a «${paletaPorId(paleta).nombre}».`);
+  const crudas: any[] = Array.isArray(raw?.escenas) ? raw.escenas : [];
+  const iconos = new Set(iconosPermitidos(paleta));
+  const salida: EscenaGuardada[] = [];
+  retroActivo = true;
+  Y0 = ZONA_RETRO.y0;
+  Y1 = config.hud ? ZONA_RETRO.y1 : 1800;
+  try {
+    escenas.forEach((e, k) => {
+      const c: Ctx = { dur: e.dur, n: e.n, iconos, errores, correcciones };
+      const r = crudas.find((x) => Number(x?.n) === e.n) ?? (crudas.length === escenas.length ? crudas[k] : undefined);
+      if (!r) return fallo(c, "la IA no devolvió esta escena");
+      if (r.modo !== e.modo) return fallo(c, `se pidió modo ${e.modo} y la IA devolvió ${r.modo}`);
+      const cab = cabeceraRetro(e.h1, e.sub, c);
+      const bloque: EscenaBloque = { n: e.n, inicio: e.inicio, fin: e.fin, dur: e.dur, modo: e.modo, texto: e.geo.map((g) => g.texto).join("\n") };
+      const esc = sanearEscena(r, bloque, c, o.sfx, {
+        tema: e.fondo === "paper" ? "claro" : "oscuro",
+        retro: { ...cab, medidores: medidoresDe(config, escenas, k) },
+        sfx: o.sfx ? e.sfx.map((s) => ({ t: +s.t.toFixed(2), tipo: s.tipo as EventoSfx["tipo"], vol: 0.15 })) : null,
+        mixto: e.mixto,
+      });
+      if (esc) salida.push(esc);
+    });
+  } finally {
+    retroActivo = false;
+    Y0 = ZONA_CLASICA.y0;
+    Y1 = ZONA_CLASICA.y1;
+  }
+  const fin = escenas.length ? escenas[escenas.length - 1].fin : 0;
+  const anim: Animacion = {
+    version: 1,
+    titulo: cadena(escenas[0]?.h1, 80) || "Video sin título",
+    paleta,
+    sfx: o.sfx,
+    fps: FPS_ANIM,
+    duracion: fin,
+    escenas: salida,
+    uso: o.usoDe ?? null,
+    hud: config.hud,
+    formato: "estructurado",
+  };
+  return { anim: errores.length ? null : anim, errores, correcciones };
+}

@@ -305,7 +305,8 @@ function estadoAnim() {
   }
   return {
     claveOpenAI: claveOpenAI(),
-    animacion: a ? { titulo: a.titulo, paleta: a.paleta, sfx: a.sfx, duracion: a.duracion, uso: a.uso, escenas: a.escenas.map((e) => ({ n: e.n, modo: e.modo, inicio: e.inicio, fin: e.fin, dur: e.dur, tema: e.tema, texto: e.texto })) } : null,
+    locucion: a?.formato === "estructurado" && existsSync(salida("guion-locucion.txt")) ? { url: "/salida/guion-locucion.txt?descargar=1" } : null,
+    animacion: a ? { titulo: a.titulo, paleta: a.paleta, sfx: a.sfx, formato: a.formato ?? "simple", hud: a.hud !== false, duracion: a.duracion, uso: a.uso, escenas: a.escenas.map((e) => ({ n: e.n, modo: e.modo, inicio: e.inicio, fin: e.fin, dur: e.dur, tema: e.tema, texto: e.texto })) } : null,
     previas: existsSync(dirPrevia) ? readdirSync(dirPrevia).filter((f) => /^escena-\d+\.png$/.test(f)).sort().map((f) => `/anim-previa/${f}?t=${statSync(join(dirPrevia, f)).mtimeMs | 0}`) : [],
     qa,
     video: existsSync(video) ? { url: `/salida/video-animacion.mp4?t=${statSync(video).mtimeMs | 0}`, mb: +(statSync(video).size / 1048576).toFixed(1), fecha: statSync(video).mtimeMs } : null,
@@ -320,7 +321,7 @@ async function lanzarAnim(nombre, o = {}) {
       pedir(claveOpenAI() || o.prueba, "Para generar la animación hace falta la clave de OpenAI (Ajustes). Mientras tanto puedes cargar el ejemplo y renderizarlo gratis.", 412);
       pedir(typeof o.guion === "string" && o.guion.trim(), "Escribe o pega el guion en bloques.");
       const N = await cargarNucleoAnim();
-      const r = N.parsearGuion(o.guion);
+      const r = N.detectarFormato(o.guion) === "estructurado" ? N.parsearEstructurado(o.guion) : N.parsearGuion(o.guion);
       pedir(!r.errores.length, `El guion tiene problemas:\n· ${r.errores.join("\n· ")}`);
       const modelo = N.MODELOS.some((m) => m.id === o.modelo) ? o.modelo : "gpt-4.1-mini";
       const paleta = N.PALETAS[o.paleta] ? o.paleta : "imnoba";
@@ -443,8 +444,9 @@ async function api(req, res, url) {
   if (m === "GET" && recurso === "anim" && a === "estado") return json(res, 200, estadoAnim());
   if (m === "GET" && recurso === "anim" && a === "ejemplo") {
     const N = await cargarNucleoAnim();
-    const dirEj = N.esRetro(url.searchParams.get("paleta") ?? "") ? "animacion-retro" : "animacion-imnoba";
-    return json(res, 200, { guion: readFileSync(join(RAIZ, "ejemplos", dirEj, "guion.txt"), "utf8") });
+    // paleta retro → ejemplo en formato estructurado ([CONFIG], FONDO, GEO, HUD…); el resto → formato simple
+    const retro = N.esRetro(url.searchParams.get("paleta") ?? "");
+    return json(res, 200, { guion: readFileSync(join(RAIZ, "ejemplos", retro ? "animacion-retro" : "animacion-imnoba", retro ? "guion-estructurado.txt" : "guion.txt"), "utf8") });
   }
   if (m === "POST" && recurso === "anim" && a === "cargar") {
     const o = await leerJson(req);

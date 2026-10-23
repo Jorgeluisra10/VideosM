@@ -21,6 +21,9 @@ export const TIPOS_OVERLAY = ["texto", "contador", "icono", "tarjeta", "lista", 
 /** Estilo retro: añade la línea de terminal (texto que se escribe carácter a carácter) y el modelo paramétrico central. */
 export const TIPOS_2D_RETRO = [...TIPOS_2D, "terminal"] as const;
 export const TIPOS_OVERLAY_RETRO = [...TIPOS_OVERLAY, "terminal"] as const;
+/** Formato estructurado: el escenario solo necesita estas piezas (sin iconos, tarjetas ni listas) → el esquema, que OpenAI cuenta como entrada, es mucho más corto. */
+export const TIPOS_2D_GEO = ["trazo", "linea", "forma", "texto", "plano", "grafica", "contador", "anillo", "ondas", "terminal"] as const;
+export const TIPOS_OVERLAY_GEO = ["texto", "contador", "anillo", "terminal"] as const;
 export const TIPOS_3D_RETRO = [...TIPOS_3D, "modelo"] as const;
 export const FORMAS_MODELO = ["toroide", "esfera", "columna", "superficie"] as const;
 
@@ -51,7 +54,7 @@ function elementos2D(iconos: string[], solo: readonly string[], retro = false): 
     terminal: el("terminal", { texto: s(), x: n(), y: n(), tam: n(), color: tok(), alinear: e(["centro", "izquierda"]) }),
     forma: el("forma", { forma: e(FORMAS), x: n(), y: n(), w: n(), h: n(), color: tok(), relleno: b(), borde: n() }),
     texto: el("texto", { texto: s(), x: n(), y: n(), tam: n(), color: tok(), peso: e([500, 700, 900]), alinear: e(["centro", "izquierda", "derecha"]) }),
-    icono: el("icono", { nombre: e(iconos), x: n(), y: n(), tam: n(), color: tok(), fondo: b() }),
+    icono: el("icono", { nombre: e(iconos.length ? iconos : ["estrella"]), x: n(), y: n(), tam: n(), color: tok(), fondo: b() }),
     plano: el("plano", {
       x: n(), y: n(), w: n(), h: n(), color: tok(), cotas: b(), dur: n(),
       habitaciones: arr(obj({ nombre: s(), x: n(), y: n(), w: n(), h: n(), m2: nul(n()) })),
@@ -61,7 +64,7 @@ function elementos2D(iconos: string[], solo: readonly string[], retro = false): 
     anillo: el("anillo", { x: n(), y: n(), radio: n(), valor: n(), etiqueta: s(), color: tok() }),
     ondas: el("ondas", { x: n(), y: n(), radio: n(), color: tok() }),
     lista: el("lista", { items: arr(s()), x: n(), y: n(), tam: n(), color: tok() }),
-    tarjeta: el("tarjeta", { x: n(), y: n(), w: n(), h: n(), titulo: s(), valor: s(), icono: nul(e(iconos)), color: tok() }),
+    tarjeta: el("tarjeta", { x: n(), y: n(), w: n(), h: n(), titulo: s(), valor: s(), icono: nul(e(iconos.length ? iconos : ["estrella"])), color: tok() }),
   };
   return solo.map((k) => todos[k]);
 }
@@ -124,4 +127,30 @@ export function esquemaAnimacion(o: OpcionesEsquema): { name: string; strict: tr
     strict: true,
     schema: obj({ titulo: s(), escenas: arr(variantes.length === 1 ? variantes[0] : { anyOf: variantes }) }),
   };
+}
+
+export type OpcionesGeometria = { paleta: string; svg: boolean; tres: boolean; mixto: boolean };
+
+/**
+ * Esquema del FORMATO ESTRUCTURADO: la IA solo devuelve la geometría del escenario central de cada escena.
+ * No hay título, subtítulo, medidores, tema ni sonido: todo eso lo resuelve el código local (cuesta $0 de API).
+ */
+export function esquemaGeometria(o: OpcionesGeometria): { name: string; strict: true; schema: Sch } {
+  const iconos: string[] = []; // sin iconos en el escenario estructurado
+  const variantes: Sch[] = [];
+  if (o.svg) variantes.push(obj({ modo: tipo("SVG"), n: i(), ambiente: e(AMBIENTES), elementos: arr({ anyOf: elementos2D(iconos, TIPOS_2D_GEO, true) }) }));
+  if (o.tres) {
+    variantes.push(
+      obj({
+        modo: tipo("3D"), n: i(),
+        camara: obj({ radio: n(), radioFin: n(), altura: n(), alturaFin: n(), anguloInicio: n(), anguloFin: n(), mirarX: n(), mirarY: n(), mirarZ: n(), fov: n() }),
+        luces: obj({ ambiente: n(), direccional: n(), dirX: n(), dirY: n(), dirZ: n(), puntoAcento: n() }),
+        suelo: e(SUELOS), niebla: b(),
+        objetos: arr({ anyOf: objetos3D(true) }),
+        // 3D+SVG: la capa vectorial puede llevar cualquier elemento 2D; en 3D normal, solo anotaciones
+        overlay: arr({ anyOf: elementos2D(iconos, o.mixto ? TIPOS_2D_GEO : TIPOS_OVERLAY_GEO, true) }),
+      }),
+    );
+  }
+  return { name: "geometria_central", strict: true, schema: obj({ escenas: arr(variantes.length === 1 ? variantes[0] : { anyOf: variantes }) }) };
 }

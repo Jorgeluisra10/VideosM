@@ -68,3 +68,29 @@ export function estimar(e: EntradaEstimacion): Estimacion {
   if (m.razonador && n > 0) tokensSalida += RAZONAMIENTO_BASE + RAZONAMIENTO_ESCENA * n;
   return { tokensEntrada, tokensSalida, costo: (tokensEntrada * m.entrada + tokensSalida * m.salida) / 1_000_000 };
 }
+
+export type EntradaGeo = {
+  modelo: string;
+  /** caracteres de las líneas GEO (lo único que se envía como entrada) */
+  caracteresGeo: number;
+  lineasGeo: number;
+  escenas: number;
+  /** tokens del prompt de sistema compacto (≈ 350–700) y del esquema estricto, que OpenAI también cuenta como entrada */
+  tokensSistema: number;
+  tokensEsquema: number;
+};
+
+/** Tokens de salida por cada línea GEO (3–7 elementos compactos del escenario central). */
+export const SALIDA_POR_GEO = 450;
+
+/**
+ * Estimación del FORMATO ESTRUCTURADO: entrada = caracteres GEO / 4 + prompt de sistema compacto (+ esquema estricto);
+ * salida = 450 tokens por línea GEO (+ el razonamiento oculto de los modelos «o»).
+ */
+export function estimarGeo(e: EntradaGeo): Estimacion {
+  const m = modeloPorId(e.modelo);
+  const tokensEntrada = Math.ceil(e.caracteresGeo / 4) + e.tokensSistema + e.tokensEsquema + 14 * e.escenas;
+  let tokensSalida = SALIDA_POR_GEO * e.lineasGeo;
+  if (m.razonador && e.lineasGeo > 0) tokensSalida += RAZONAMIENTO_BASE + RAZONAMIENTO_ESCENA * e.escenas;
+  return { tokensEntrada, tokensSalida, costo: (tokensEntrada * m.entrada + tokensSalida * m.salida) / 1_000_000 };
+}

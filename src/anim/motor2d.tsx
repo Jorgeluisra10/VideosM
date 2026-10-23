@@ -141,21 +141,30 @@ const HudRetro: React.FC<{ medidores: Medidor[] }> = ({ medidores }) => {
   );
 };
 
-/** Capa retro de una escena: título, subtítulo de terminal y HUD. Va encima de todo. */
-export const CapaRetro: React.FC<{ titulo?: string; tituloTam?: number; subtitulo?: string | null; medidores?: Medidor[] }> = ({ titulo, tituloTam = 80, subtitulo, medidores = [] }) => {
-  const { paleta, tema } = useTema();
+/** TerminalHeader (zona superior, y 0–350): H1 en MAYÚSCULAS + SUB de terminal con cursor. Va dentro de un <svg> 1080×1920. */
+export const TerminalHeader: React.FC<{ titulo?: string; tituloTam?: number; subtitulo?: string | null }> = ({ titulo, tituloTam = 80, subtitulo }) => {
+  const { tema } = useTema();
   const c = useColor();
-  const claro = tema === "claro";
+  // SUB: lima sobre fondo oscuro; negro mate (tinta) sobre papel. El cursor lleva el mismo color.
+  const colorSub = tema === "claro" ? c("tinta") : c("acento");
   return (
-    <svg width={W} height={H} style={{ position: "absolute", left: 0, top: 0 }}>
+    <>
       {titulo ? <TituloRetro texto={titulo} tam={tituloTam} /> : null}
-      {subtitulo ? (
-        <TerminalTexto texto={subtitulo} x={W / 2} y={300} tam={30} color={claro ? paleta.oscuro.acento : c("acento")} alinear="centro" t0={0.7} franja={claro ? paleta.oscuro.fondoBorde : null} cursor={paleta.oscuro.acento} />
-      ) : null}
-      {medidores.length ? <HudRetro medidores={medidores} /> : null}
-    </svg>
+      {subtitulo ? <TerminalTexto texto={subtitulo} x={W / 2} y={300} tam={30} color={colorSub} alinear="centro" t0={0.7} cursor={colorSub} /> : null}
+    </>
   );
 };
+
+/** TelemetryHUD (zona inferior fija, y 1450–1920): hasta 3 medidores. Va dentro de un <svg> 1080×1920. */
+export const TelemetryHUD = HudRetro;
+
+/** Capa retro de una escena: TerminalHeader + TelemetryHUD. Va encima de todo. Sin medidores («HUD: OFF») no dibuja el panel. */
+export const CapaRetro: React.FC<{ titulo?: string; tituloTam?: number; subtitulo?: string | null; medidores?: Medidor[] }> = ({ titulo, tituloTam, subtitulo, medidores = [] }) => (
+  <svg width={W} height={H} style={{ position: "absolute", left: 0, top: 0 }}>
+    <TerminalHeader titulo={titulo} tituloTam={tituloTam} subtitulo={subtitulo} />
+    {medidores.length ? <TelemetryHUD medidores={medidores} /> : null}
+  </svg>
+);
 
 /* ───────────────────────── fondo ───────────────────────── */
 
@@ -631,12 +640,10 @@ const Tarjeta: React.FC<P> = ({ el }) => {
 };
 
 const TerminalEl: React.FC<P> = ({ el }) => {
-  const { paleta, tema } = useTema();
   const c = useColor();
-  const claro = tema === "claro";
-  // sobre papel el lima no se lee: la línea de terminal lleva su propia franja oscura
-  const color = claro ? (paleta.oscuro as Record<string, string>)[el.color] ?? paleta.oscuro.acento : c(el.color);
-  return <TerminalTexto texto={el.texto} x={el.x} y={el.y} tam={el.tam} color={color} alinear={el.alinear} t0={el.t} franja={claro ? paleta.oscuro.fondoBorde : null} cursor={paleta.oscuro.acento} />;
+  const color = c(el.color);
+  // el cursor es del mismo color que el texto: lima sobre fondo oscuro, negro mate sobre papel
+  return <TerminalTexto texto={el.texto} x={el.x} y={el.y} tam={el.tam} color={color} alinear={el.alinear} t0={el.t} cursor={color} />;
 };
 
 const POR_TIPO: Record<string, React.FC<P>> = { terminal: TerminalEl, texto: Texto, forma: Forma, icono: Icono, linea: Linea, trazo: Trazo2D, plano: Plano, grafica: Grafica, contador: Contador, anillo: Anillo, ondas: Ondas, lista: Lista, tarjeta: Tarjeta };

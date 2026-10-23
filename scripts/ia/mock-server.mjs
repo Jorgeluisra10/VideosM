@@ -186,6 +186,20 @@ function marcasSimuladas(texto, conDefectos = false) {
 // ---------------------------------------------------------------------------
 // Animación (motor SVG + 3D): respuesta simulada a partir del ejemplo incluido
 // ---------------------------------------------------------------------------
+/** Formato estructurado: responde con la geometría de ejemplo (una escena por bloque, según su modo). */
+function respuestaGeometria(entradaTexto) {
+  const ej = JSON.parse(readFileSync(join(RAIZ, "ejemplos", "animacion-retro", "geometria-ia.json"), "utf8"));
+  const porModo = { SVG: ej.escenas.filter((e) => e.modo === "SVG"), "3D": ej.escenas.filter((e) => e.modo === "3D") };
+  const contador = { SVG: 0, "3D": 0 };
+  const escenas = [];
+  for (const m of entradaTexto.matchAll(/\[ESCENA (\d+) \| [\d.]+ s \| MODO: (SVG|3D)(\+SVG)?/g)) {
+    const base = JSON.parse(JSON.stringify(porModo[m[2]][contador[m[2]]++ % porModo[m[2]].length]));
+    base.n = Number(m[1]);
+    escenas.push(base);
+  }
+  return { escenas };
+}
+
 function respuestaAnimacion(entradaTexto, esquema) {
   // el estilo retro (su esquema tiene «medidores») responde con el ejemplo retro; el resto, con el de IMNOBA
   const retro = JSON.stringify(esquema ?? {}).includes('"medidores"');
@@ -220,6 +234,16 @@ export function iniciarMock(puerto = 0) {
   let esquemaPlan = null;
 
   const respuesta = (nombre, entradaTexto, hayImagenes, esquema) => {
+    if (nombre === "geometria_central") {
+      const datos = respuestaGeometria(entradaTexto);
+      // MOCK_ANIM_ERRORES=1: la PRIMERA respuesta trae un path SVG inválido (prueba la reparación acotada)
+      if (process.env.MOCK_ANIM_ERRORES && !una.anim && !/Tu respuesta anterior/.test(entradaTexto)) {
+        const t = datos.escenas.flatMap((e) => e.elementos ?? []).find((el) => el.tipo === "trazo");
+        if (t) t.d = "esto no es un path";
+      }
+      una.anim = true;
+      return datos;
+    }
     if (nombre === "animacion_imnoba") {
       const datos = respuestaAnimacion(entradaTexto, esquema);
       // MOCK_ANIM_ERRORES=1: la PRIMERA respuesta trae un path SVG inválido (prueba la reparación acotada)
@@ -387,7 +411,7 @@ export function iniciarMock(puerto = 0) {
         if (p.type === "input_image" || p.type === "image_url") imagenes++;
       }
       estado.porEsquema[nombre ?? "?"] = (estado.porEsquema[nombre ?? "?"] ?? 0) + 1;
-      if (nombre === "animacion_imnoba") estado.ultimaAnimacion = { modelo: b.model, razonamiento: b.reasoning_effort ?? null, maxTokens: b.max_completion_tokens ?? null, estricto: Boolean(estricto), ruta, sistema: (b.messages ?? []).find((m) => m.role === "system")?.content ?? "" };
+      if (nombre === "animacion_imnoba" || nombre === "geometria_central") estado.ultimaAnimacion = { nombre, usuario: entradaTexto, modelo: b.model, razonamiento: b.reasoning_effort ?? null, maxTokens: b.max_completion_tokens ?? null, estricto: Boolean(estricto), ruta, sistema: (b.messages ?? []).find((m) => m.role === "system")?.content ?? "" };
 
       const datos = respuesta(nombre, entradaTexto, imagenes, esquema);
       if (esquema && estricto && nombre !== "plan") {
@@ -395,7 +419,7 @@ export function iniciarMock(puerto = 0) {
         if (errs.length) estado.avisos.push(`Respuesta simulada de ${nombre} fuera de esquema: ${errs.slice(0, 3).join(" | ")}`);
       }
       const texto = JSON.stringify(datos);
-      const sistemaLen = nombre === "animacion_imnoba" ? (b.messages ?? []).filter((m) => m.role === "system").reduce((n, m) => n + String(m.content).length, 0) + JSON.stringify(esquema ?? {}).length : 0;
+      const sistemaLen = nombre === "animacion_imnoba" || nombre === "geometria_central" ? (b.messages ?? []).filter((m) => m.role === "system").reduce((n, m) => n + String(m.content).length, 0) + JSON.stringify(esquema ?? {}).length : 0;
       const uso = { input: Math.round((entradaTexto.length + sistemaLen) / 3.6) + imagenes * 800, output: Math.round(texto.length / 3) };
       if (esResponses) {
         return json(200, { id: "resp_mock", object: "response", status: "completed", model: b.model, output: [{ type: "message", role: "assistant", content: [{ type: "output_text", text: texto }] }], usage: { input_tokens: uso.input, output_tokens: uso.output } });

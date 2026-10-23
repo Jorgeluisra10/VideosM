@@ -1,0 +1,46 @@
+[CONFIG]
+DURACION: 00:22
+HUD: ON
+GAUGE_1: ÁREA | 30-120 | m²
+GAUGE_2: PRECIO/M² | 2-8 | M
+GAUGE_3: VALOR | 60-700 | M
+
+[ESCENA 1 | 00:00-00:05 | FONDO: dark | MODO: SVG]
+H1: EL VALOR DE UN INMUEBLE
+SUB: > MODELO: V = ÁREA × PRECIO/M²
+VOZ_OFF: El valor de un inmueble sale de una fórmula simple: área por precio por metro cuadrado.
+GEO (00:00-00:03): Ejes punteados (VALOR vertical, ÁREA horizontal) y una curva roja que sube hasta un punto lima.
+GEO (00:03-00:05): La nota de terminal «V = A × P» junto a la curva.
+HUD (00:01-00:03): G1=90 | G2=- | G3=-
+HUD (00:02-00:04): G1=- | G2=5.5 | G3=-
+HUD (00:03-00:05): G1=- | G2=- | G3=495
+SFX (00:01): tick
+SFX (00:04): ding
+
+[ESCENA 2 | 00:05-00:11 | FONDO: dark | MODO: 3D]
+H1: LA FORMA DEL VALOR
+SUB: > DEFORMANDO MODELO EN TIEMPO REAL
+VOZ_OFF: Pero el mercado deforma esa fórmula: el área, el precio y el valor cambian la forma del modelo.
+GEO (00:05-00:11): Un toroide rojo central que se deforma con G1 (radio), G2 (grosor del tubo) y G3 (ondulación), con dos edificios grises de contexto; la cámara orbita despacio.
+HUD (00:06-00:08): G1=110 | G2=- | G3=-
+HUD (00:07-00:09): G1=- | G2=7 | G3=-
+HUD (00:08-00:10): G1=- | G2=- | G3=600
+SFX (00:06): tick
+SFX (00:09): zap
+
+[ESCENA 3 | 00:11-00:16 | FONDO: paper | MODO: SVG]
+H1: ÍNDICE DE PRECIOS
+SUB: > ÍNDICE ILUSTRATIVO · BASE 100
+VOZ_OFF: Mira cómo evolucionó el índice de precios: de 100 a 158 puntos, un 58 por ciento más.
+GEO (00:11-00:16): Barras rojas 2020–2024 con los valores 100, 108, 121, 139 y 158, y una nota de terminal «Δ = +58 %».
+HUD (00:12-00:14): G1=- | G2=- | G3=300
+SFX (00:13): ding
+
+[ESCENA 4 | 00:16-00:22 | FONDO: dark | MODO: 3D+SVG]
+H1: MERCADO EN ONDAS
+SUB: > SIMULACIÓN DE VOLATILIDAD
+VOZ_OFF: Y recuerda que el mercado sube y baja en ciclos: la volatilidad también se puede medir.
+GEO (00:16-00:22): Una superficie ondulante cuya amplitud depende de G1 y su frecuencia de G2, con un eje de tiempo punteado en vector.
+HUD (00:17-00:19): G1=60 | G2=- | G3=-
+HUD (00:19-00:21): G1=- | G2=3.2 | G3=-
+SFX (00:17): whoosh

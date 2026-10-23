@@ -35,8 +35,14 @@ if (!cfg.clave) {
 
 try {
   const N = await cargarNucleoAnim();
-  const { anim, uso } = await generarAnimacion({ guion, modelo, sfx, paleta, log: (s) => console.log(s), cfg });
+  const { anim, uso, locucion } = await generarAnimacion({ guion, modelo, sfx, paleta, log: (s) => console.log(s), cfg });
   writeFileSync(join(RAIZ, "src", "data", "animacion.json"), JSON.stringify(anim, null, 1));
+  // VOZ_OFF → guion-locucion.txt (solo para que lo leas al grabar; no se dibuja ni se envía a la IA)
+  if (locucion) {
+    mkdirSync(join(RAIZ, "trabajo", "salida"), { recursive: true });
+    writeFileSync(join(RAIZ, "trabajo", "salida", "guion-locucion.txt"), locucion);
+    console.log("📝 Guion de locución guardado en trabajo/salida/guion-locucion.txt");
+  }
   const dir = join(RAIZ, "trabajo", "anim", "historial");
   mkdirSync(dir, { recursive: true });
   const id = new Date().toISOString().replace(/[:.]/g, "-").slice(0, 19);

@@ -29,7 +29,7 @@ const PASO = 64; // separación de la retícula de puntos (a 45°)
  * Halftone Wipe: círculos de semitono que crecen de radio 0 % a 100 % hasta cubrir TODA la pantalla con el color de fondo de la escena que entra.
  * El barrido avanza en diagonal (los puntos de la esquina superior izquierda arrancan antes) con la curva global retro.
  */
-const Semitono: React.FC<{ color: string; frames: number; adelanto?: string }> = ({ color, frames, adelanto }) => {
+export const Semitono: React.FC<{ color: string; frames: number; adelanto?: string }> = ({ color, frames, adelanto }) => {
   const f = useCurrentFrame();
   const p = easeRetro(Math.min(1, Math.max(0, (f - (adelanto ? 0.22 * frames : 0)) / Math.max(1, frames * (adelanto ? 0.78 : 1)))));
   const pAdelanto = easeRetro(Math.min(1, f / Math.max(1, frames)));
@@ -63,12 +63,13 @@ const Semitono: React.FC<{ color: string; frames: number; adelanto?: string }> =
   );
 };
 
-const Contenido: React.FC<{ e: EscenaGuardada }> = ({ e }) => {
+/** MasterVideoLayout (una escena): fondo + escenario central (GeometryStage) + capa retro (TerminalHeader y TelemetryHUD). */
+export const Contenido: React.FC<{ e: EscenaGuardada; hud: boolean }> = ({ e, hud }) => {
   const { paleta, tema } = useTema();
   return (
     <>
       <Fondo2D ambiente={e.modo === "SVG" ? e.ambiente : "ninguno"} id={`e${e.n}${tema}`} solido={e.modo === "3D" && e.suelo !== "ninguno"} />
-      {e.modo === "3D" && <Escena3DView escena={e} />}
+      {e.modo === "3D" && <Escena3DView escena={e} hud={hud} />}
       <Elementos2D elementos={e.modo === "SVG" ? e.elementos : e.overlay} />
       {paleta.estilo === "retro" && <CapaRetro titulo={e.titulo} tituloTam={e.tituloTam} subtitulo={e.subtitulo} medidores={e.medidores} />}
     </>
@@ -97,7 +98,7 @@ export const Animacion: React.FC<PropsAnimacion> = ({ animacion, qa }) => {
           <Sequence key={e.n} from={desde} durationInFrames={Math.max(1, largo)} layout="none">
             <ProveedorColor paleta={animacion.paleta} tema={e.tema}>
               <Fundido aparece={k > 0 && !retro}>
-                <Contenido e={e} />
+                <Contenido e={e} hud={animacion.hud !== false} />
               </Fundido>
             </ProveedorColor>
           </Sequence>

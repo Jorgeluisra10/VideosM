@@ -65,6 +65,39 @@ Qué cambia al elegirla: **título H1** en Inter Black, MAYÚSCULAS, centrado en
 
 En tu guion no cambia nada: sigues usando los bloques `[ESCENA N | inicio-fin | MODO: SVG|3D]`. Si quieres que un medidor mande en el modelo, pídelo en «Visual» (por ejemplo: «un toroide que se deforma con ÁREA, UBICACIÓN y DEMANDA»). **🧪 Cargar ejemplo** carga el ejemplo retro cuando tienes esa paleta elegida. Terminal: `npm run anim:ejemplo -- --paleta=retro`.
 
+### 🧾 Formato estructurado (`[CONFIG]` + `FONDO` + `GEO` + `HUD`) — el más barato
+
+Además del formato simple, el cuadro de texto entiende un formato estructurado pensado para el estilo Retro-Científico. **Solo las líneas `GEO` (y el modo) se envían a la IA**; título, subtítulo, HUD, fondo, sonido y tu locución se resuelven en tu equipo, sin gasto de API. Se detecta solo (por `[CONFIG]` o por `FONDO:` en la cabecera) y usa siempre el diseño retro: si tenías IMNOBA se aplica *Retro-Científica IMNOBA*, y si tenías Medicina, *Retro-Científica*.
+
+```
+[CONFIG]
+DURACION: 00:22
+HUD: ON
+GAUGE_1: ÁREA | 30-120 | m²
+GAUGE_2: PRECIO/M² | 2-8 | M
+GAUGE_3: VALOR | 60-700 | M
+
+[ESCENA 1 | 00:00-00:05 | FONDO: dark | MODO: SVG]
+H1: EL VALOR DE UN INMUEBLE
+SUB: > MODELO: V = ÁREA × PRECIO/M²
+VOZ_OFF: Lo que tú grabas (no se dibuja ni se envía a la IA).
+GEO (00:00-00:03): Ejes punteados y una curva roja que sube.
+HUD (00:01-00:03): G1=90 | G2=- | G3=-
+SFX (00:04): ding
+```
+
+| Línea | Qué hace |
+|---|---|
+| `[CONFIG]` | `DURACION`, `HUD: ON/OFF` y hasta 3 medidores `GAUGE_n: NOMBRE \| mínimo-máximo \| unidad` |
+| `[ESCENA n \| MM:SS-MM:SS \| FONDO: dark/paper \| MODO: SVG/3D/3D+SVG]` | tiempos, fondo (negro mate o papel técnico) y modo; `3D+SVG` = 3D con capa vectorial completa |
+| `H1` / `SUB` | título en MAYÚSCULAS y línea de terminal (se escribe sola con cursor) |
+| `VOZ_OFF` | tu locución: se guarda en `trabajo/salida/guion-locucion.txt` (botón de descarga en el Estudio) |
+| `GEO (MM:SS-MM:SS)` | lo que la IA dibuja en el escenario central (una o varias líneas por escena) |
+| `HUD (MM:SS-MM:SS)` | a qué valor va cada aguja en esa ventana (`G1=75 \| G2=- \| G3=40`; `-` la deja quieta) |
+| `SFX (MM:SS)` | efectos: pop, whoosh, heartbeat, cash, tick, thud, zap, ding |
+
+Con **`HUD: OFF`** desaparece el panel de medidores y el escenario crece hasta y 1800. El botón **📋 Copiar Prompt Formateador** copia esta plantilla (y **📋 Formato simple** la de siempre). **Costo estimado** de este formato: entrada = caracteres GEO ÷ 4 + prompt de sistema compacto (+ el esquema, que OpenAI también cuenta) y salida = 450 tokens por línea GEO; el costo real sale de `usage`. En el ejemplo (5 líneas GEO) ronda $0.007 con `gpt-4.1-mini`, frente a ≈ $0.014 del formato simple retro. Terminal: `npm run anim:ejemplo -- --paleta=retro`.
+
 **Costo en dólares:** mientras escribes ves **«Costo estimado de este video: $0.0000 USD»** (cuenta los bloques `[ESCENA]` y los caracteres; es una estimación). Al terminar de generar ves el **costo real** con 5 decimales, calculado con los `prompt_tokens` y `completion_tokens` que devuelve OpenAI × el precio del modelo.
 
 **Cómo se calculan los tiempos:** un parser local (sin IA, sin costo) lee `inicio-fin` de cada bloque; **fotogramas = segundos × 60**. Entiende `0s-4s`, `4-9`, `00:09-00:15`, y avisa de huecos, solapes o escenas demasiado cortas.

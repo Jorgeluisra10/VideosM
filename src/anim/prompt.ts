@@ -4,10 +4,11 @@
  *  - promptUsuario: los bloques de escena ya interpretados por el parser local.
  *  - promptFormateador: el texto que el usuario copia para ordenar su guion con cualquier chat externo.
  */
-import { esquemaAnimacion, type OpcionesEsquema } from "./esquema";
+import { esquemaAnimacion, esquemaGeometria, type OpcionesEsquema, type OpcionesGeometria } from "./esquema";
 import { esRetro, paletaPorId } from "./paletas";
 import { tokensDeTexto } from "./costos";
 import type { EscenaBloque } from "./parser";
+import type { EscenaEstructurada } from "./guionEstructurado";
 
 export const LIENZO = { w: 1080, h: 1920, margen: 90, arriba: 150, abajo: 1770 };
 
@@ -89,6 +90,76 @@ Reglas:
 4. En «Visual» describe elementos concretos (qué aparece, dónde, en qué orden) y los datos exactos (precios, metros, porcentajes, nombres). No inventes cifras que yo no haya dado.
 5. No uses subtítulos: no se mostrarán. La voz la grabo yo aparte.
 6. Máximo 30 escenas. Responde solo con los bloques, sin explicaciones.
+
+Mi guion e ideas:
+`;
+
+/* ───────────── FORMATO ESTRUCTURADO: prompt compacto, solo geometría del escenario central ───────────── */
+
+export type OpcionesPromptGeo = OpcionesGeometria & { hud: boolean };
+
+/** Alto (px) del escenario: 350→1450 con HUD, 350→1800 con «HUD: OFF». */
+export const altoEscenario = (hud: boolean): number => (hud ? 1100 : 1450);
+
+export function sistemaGeo(o: OpcionesPromptGeo): string {
+  const p = paletaPorId(o.paleta);
+  const y1 = 350 + altoEscenario(o.hud);
+  const partes = [
+    `Eres director de arte de motion graphics. Devuelve SOLO el JSON del esquema: la geometría del ESCENARIO CENTRAL de cada escena. Título, subtítulo, HUD, fondo y sonido ya están resueltos fuera: no los dibujes ni repitas textos de título. Sin código ni hexadecimales: solo tokens de color.`,
+    `Una escena por bloque, mismo «n» y mismo MODO. Todos los tiempos (t, hasta, dur) son segundos desde el inicio de la escena y deben seguir las ventanas «GEO (a-b s)»: cada línea GEO = 3–7 elementos u objetos, que entran en su ventana. Nada de rebotes; líneas de grosor 3 (punteado=true en ejes y guías).`,
+    `Tokens (${p.nombre}): ${p.uso}`,
+    `Escenario: x 90–990, y 350–${y1} (1080×${altoEscenario(o.hud)}).`,
+  ];
+  if (o.svg) partes.push(`SVG: trazo (path «d» que se dibuja), linea (puntos), forma, texto (x,y = ancla; tam 36–120, corto), icono, plano (habitaciones 0–100), grafica (3–6 datos), contador, anillo, ondas, lista (x,y = esquina sup-izq), tarjeta, terminal (texto monoespaciado que se escribe solo). Salvo trazo, linea y lista, x,y es el CENTRO.`);
+  if (o.tres) partes.push(`3D (escenario ${1080}×${altoEscenario(o.hud)}; a distancia «radio» caben ≈ 0.75×radio de ancho): objetos edificio, caja, cilindro, esfera, piramide, extrusion, barras3d, ciudad, casa, anillo y «modelo» (forma toroide|esfera|columna|superficie; v1,v2,v3 = índice 0–2 del medidor que lo deforma, null si no; b1,b2,b3 = valor base 0–1). G1,G2,G3 son los medidores 0,1,2 del HUD: si la línea GEO dice que el modelo reacciona a G1, pon v1=0. «y» = altura de la base. Cámara orbital (radio 12–24, ángulos en grados, fov 35–45); luces ambiente 0.3–0.8 y direccional 0.8–2.2.${o.mixto ? " MODO 3D+SVG: el overlay puede llevar cualquier elemento 2D." : " El overlay solo para anotaciones puntuales (2–3)."}`);
+  return partes.join("\n");
+}
+
+/** Lo ÚNICO que se manda como entrada: el modo, la duración, el fondo y las líneas GEO de cada escena (en segundos de la escena). */
+export function promptUsuarioGeo(escenas: EscenaEstructurada[]): string {
+  const f = (x: number) => x.toFixed(1);
+  return escenas
+    .map((e) => `[ESCENA ${e.n} | ${f(e.dur)} s | MODO: ${e.modo}${e.mixto ? "+SVG" : ""} | FONDO: ${e.fondo}]\n${e.geo.map((g) => `GEO (${f(g.t)}-${f(g.hasta)} s): ${g.texto}`).join("\n")}`)
+    .join("\n\n");
+}
+
+/** Tokens fijos (que NO dependen del guion) del formato estructurado: prompt de sistema compacto + esquema estricto. */
+export function tokensFijosGeo(o: OpcionesPromptGeo): { sistema: number; esquema: number } {
+  return { sistema: tokensDeTexto(sistemaGeo(o).length, 3.4), esquema: tokensDeTexto(JSON.stringify(esquemaGeometria(o).schema).length, 3.0) };
+}
+
+export const PROMPT_FORMATEADOR_ESTRUCTURADO = `Actúa como editor de guiones para videos verticales cortos (1080×1920) en estilo Retro-Científico con panel de telemetría. Voy a pegarte mi guion e ideas. Devuélvelo ESTRUCTURADO con EXACTAMENTE este formato, sin nada más:
+
+[CONFIG]
+DURACION: 00:28
+HUD: ON
+GAUGE_1: ÁREA | 30-120 | m²
+GAUGE_2: PRECIO/M² | 2-8 | M
+GAUGE_3: VALOR | 60-700 | M
+
+[ESCENA 1 | 00:00-00:05 | FONDO: dark | MODO: SVG]
+H1: TÍTULO EN MAYÚSCULAS (1–5 palabras)
+SUB: > línea técnica tipo terminal
+VOZ_OFF: lo que se dice en esta escena (solo para que yo lo grabe; no se dibuja)
+GEO (00:00-00:03): qué debe dibujarse en el escenario central y en qué orden (formas, ejes, gráficas, cifras exactas)
+GEO (00:03-00:05): otra acción visual si hace falta
+HUD (00:01-00:03): G1=90 | G2=5.5 | G3=-
+SFX (00:03): ding
+
+[ESCENA 2 | 00:05-00:11 | FONDO: paper | MODO: 3D]
+H1: …
+SUB: …
+VOZ_OFF: …
+GEO (00:05-00:11): …
+HUD (00:06-00:09): G1=- | G2=- | G3=70
+
+Reglas:
+1. Los tiempos van en MM:SS y las escenas son consecutivas (el fin de una es el inicio de la siguiente; la primera empieza en 00:00).
+2. FONDO: dark (negro mate) o paper (papel técnico, para citas, documentos o comparativas). MODO: SVG (vectores 2D), 3D (Three.js) o 3D+SVG (3D con capa vectorial completa).
+3. HUD: ON muestra hasta 3 medidores (GAUGE_1..3 con NOMBRE | mínimo-máximo | unidad). En cada línea HUD, G1=75 mueve esa aguja a 75 dentro de esa ventana y «-» la deja quieta. Si el video no necesita medidores, pon HUD: OFF (el escenario crece hasta abajo) y omite las líneas HUD.
+4. En GEO describe elementos concretos y datos exactos; en 3D puedes pedir un modelo paramétrico que se deforma con G1, G2 o G3. No inventes cifras que yo no haya dado: si es ilustrativo, dilo en SUB.
+5. SFX (opcional): pop, whoosh, heartbeat, cash, tick, thud, zap o ding.
+6. VOZ_OFF es solo mi locución: no se envía a la IA ni se dibuja. Sin subtítulos. Máximo 30 escenas.
 
 Mi guion e ideas:
 `;

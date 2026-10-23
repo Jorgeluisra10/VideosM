@@ -52,6 +52,40 @@ export function parsearRango(txt: string): [number, number] | null {
   return a === null || b === null ? null : [a, b];
 }
 
+type Tramo = { n: number; inicio: number; fin: number; dur: number };
+
+/**
+ * Orden, solapes, huecos y normalización de una lista de escenas (la comparten el formato simple y el estructurado).
+ * Las escenas tienen que ser consecutivas para que el video no tenga cortes en negro: la primera arranca en 0 y cada una termina donde empieza la siguiente.
+ */
+export function normalizarEscenas<T extends Tramo>(entrada: T[], errores: string[], avisos: string[], sinTexto: (e: T) => boolean = () => false): T[] {
+  const escenas = [...entrada];
+  escenas.sort((a, b) => a.inicio - b.inicio);
+  const vistos = new Set<number>();
+  for (const e of escenas) {
+    if (vistos.has(e.n)) errores.push(`El número de escena ${e.n} está repetido.`);
+    vistos.add(e.n);
+  }
+  for (let i = 0; i < escenas.length; i++) {
+    const e = escenas[i];
+    const prev = escenas[i - 1];
+    if (prev && e.inicio < prev.fin - 0.01) errores.push(`Escena ${e.n} (${e.inicio}s) empieza antes de que termine la escena ${prev.n} (${prev.fin}s): se solapan.`);
+    else if (prev && e.inicio > prev.fin + 0.01) avisos.push(`Hay un hueco de ${(e.inicio - prev.fin).toFixed(1)} s entre las escenas ${prev.n} y ${e.n}: la escena ${prev.n} se alarga hasta ${e.inicio}s.`);
+    if (e.dur < 1.2) avisos.push(`La escena ${e.n} dura solo ${e.dur.toFixed(1)} s: poco tiempo para animar algo legible.`);
+    if (e.dur > 14) avisos.push(`La escena ${e.n} dura ${e.dur.toFixed(0)} s: considera partirla en dos para mantener el ritmo.`);
+    if (sinTexto(e)) avisos.push(`La escena ${e.n} no tiene texto: la IA inventará el contenido visual solo con el modo y la duración.`);
+  }
+  if (escenas.length && escenas[0].inicio > 0.01) avisos.push(`La primera escena empieza en ${escenas[0].inicio}s: se adelanta a 0s.`);
+  if (escenas.length > 30) errores.push(`Hay ${escenas.length} escenas; el máximo es 30 por video.`);
+
+  // normalización: la primera arranca en 0 y cada escena termina donde empieza la siguiente
+  const norm = escenas.map((e) => ({ ...e }));
+  if (norm.length) norm[0].inicio = 0;
+  for (let i = 0; i < norm.length - 1; i++) norm[i].fin = norm[i + 1].inicio;
+  for (const e of norm) e.dur = Math.round((e.fin - e.inicio) * 1000) / 1000;
+  return norm;
+}
+
 export function parsearGuion(texto: string): ResultadoParser {
   const errores: string[] = [];
   const avisos: string[] = [];
@@ -97,30 +131,7 @@ export function parsearGuion(texto: string): ResultadoParser {
     escenas.push({ n: b.n, inicio, fin, dur: fin - inicio, modo: b.modo, texto: b.lineas.join("\n") });
   }
 
-  // orden, solapes y huecos: las escenas tienen que ser consecutivas para que el video no tenga cortes en negro
-  escenas.sort((a, b) => a.inicio - b.inicio);
-  const vistos = new Set<number>();
-  for (const e of escenas) {
-    if (vistos.has(e.n)) errores.push(`El número de escena ${e.n} está repetido.`);
-    vistos.add(e.n);
-  }
-  for (let i = 0; i < escenas.length; i++) {
-    const e = escenas[i];
-    const prev = escenas[i - 1];
-    if (prev && e.inicio < prev.fin - 0.01) errores.push(`Escena ${e.n} (${e.inicio}s) empieza antes de que termine la escena ${prev.n} (${prev.fin}s): se solapan.`);
-    else if (prev && e.inicio > prev.fin + 0.01) avisos.push(`Hay un hueco de ${(e.inicio - prev.fin).toFixed(1)} s entre las escenas ${prev.n} y ${e.n}: la escena ${prev.n} se alarga hasta ${e.inicio}s.`);
-    if (e.dur < 1.2) avisos.push(`La escena ${e.n} dura solo ${e.dur.toFixed(1)} s: poco tiempo para animar algo legible.`);
-    if (e.dur > 14) avisos.push(`La escena ${e.n} dura ${e.dur.toFixed(0)} s: considera partirla en dos para mantener el ritmo.`);
-    if (!e.texto.trim()) avisos.push(`La escena ${e.n} no tiene texto: la IA inventará el contenido visual solo con el modo y la duración.`);
-  }
-  if (escenas.length && escenas[0].inicio > 0.01) avisos.push(`La primera escena empieza en ${escenas[0].inicio}s: se adelanta a 0s.`);
-  if (escenas.length > 30) errores.push(`Hay ${escenas.length} escenas; el máximo es 30 por video.`);
-
-  // normalización: la primera arranca en 0 y cada escena termina donde empieza la siguiente
-  const norm = escenas.map((e) => ({ ...e }));
-  if (norm.length) norm[0].inicio = 0;
-  for (let i = 0; i < norm.length - 1; i++) norm[i].fin = norm[i + 1].inicio;
-  for (const e of norm) e.dur = Math.round((e.fin - e.inicio) * 1000) / 1000;
+  const norm = normalizarEscenas(escenas, errores, avisos, (e) => !e.texto.trim());
   const duracion = norm.length ? norm[norm.length - 1].fin : 0;
   if (duracion > 120) avisos.push(`El video dura ${duracion.toFixed(0)} s; los reels suelen ir de 15 a 60 s.`);
   return { escenas: norm, errores, avisos, duracion, caracteres: texto.length };

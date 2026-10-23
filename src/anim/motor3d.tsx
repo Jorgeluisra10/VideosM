@@ -12,11 +12,12 @@ import type { Escena3D, Medidor, Objeto3D } from "./tipos";
 
 const FPS = 60;
 /** Escenario 3D del estilo retro: franja central y 350–1450 (arriba el título, abajo el HUD). */
-const RETRO_Y0 = 350, RETRO_ALTO = 1100;
+const RETRO_Y0 = 350, RETRO_ALTO = 1100, RETRO_ALTO_SIN_HUD = 1450;
 
 /** Los contextos de React NO cruzan el <Canvas> de R3F (es otra raíz): se vuelven a montar dentro con estos valores. */
 const MedidoresCtx = createContext<Medidor[]>([]);
 const LuzCtx = createContext<[number, number, number]>([0.4, 0.8, 0.5]);
+const AltoCtx = createContext<number>(RETRO_ALTO);
 
 /* ───────────────────────── cámara orbital ───────────────────────── */
 
@@ -135,11 +136,11 @@ const matNPR = (base: string, luz: string, sombra: string, dir: [number, number,
   }
   return m;
 };
-const matContorno = (color: string): THREE.ShaderMaterial => {
-  const clave = `c${color}`;
+const matContorno = (color: string, alto: number): THREE.ShaderMaterial => {
+  const clave = `c${color}${alto}`;
   let m = matCache.get(clave);
   if (!m) {
-    m = new THREE.ShaderMaterial({ vertexShader: VERT_CONTORNO, fragmentShader: FRAG_CONTORNO, side: THREE.BackSide, uniforms: { uColor: { value: new THREE.Vector3(...hexARgb(color)) }, uRes: { value: new THREE.Vector2(W, RETRO_ALTO) }, uPx: { value: 2 } } });
+    m = new THREE.ShaderMaterial({ vertexShader: VERT_CONTORNO, fragmentShader: FRAG_CONTORNO, side: THREE.BackSide, uniforms: { uColor: { value: new THREE.Vector3(...hexARgb(color)) }, uRes: { value: new THREE.Vector2(W, alto) }, uPx: { value: 2 } } });
     matCache.set(clave, m);
   }
   return m;
@@ -166,6 +167,16 @@ const aristasDe = (g: THREE.BufferGeometry): THREE.BufferGeometry => {
   return a;
 };
 
+/**
+ * CelHalftoneMaterial: material NPR reutilizable (cel-shading de 3 niveles + semitono a 45° en la sombra). Los colores son hex EXACTOS.
+ * Uso: <mesh geometry={g}><CelHalftoneMaterial color={THEME.red} luz={THEME.salmon} sombra={THEME.dark} /></mesh>
+ * (el contorno negro de 2 px y las aristas los añade <Malla>, que es lo que usan todos los objetos del motor).
+ */
+export const CelHalftoneMaterial: React.FC<{ color: string; luz?: string; sombra?: string; direccion?: [number, number, number] }> = ({ color, luz, sombra = "#0B0C10", direccion }) => {
+  const dir = useContext(LuzCtx);
+  return <primitive object={matNPR(color, luz ?? mezclarHex(color, "#FFFFFF", 0.5), sombra, direccion ?? dir)} attach="material" />;
+};
+
 const Material: React.FC<{ color: string; emisivo?: boolean; opacidad?: number }> = ({ color, emisivo, opacidad = 1 }) => (
   <meshStandardMaterial color={color} roughness={0.55} metalness={0.12} emissive={emisivo ? color : "#000000"} emissiveIntensity={emisivo ? 0.7 : 0} transparent={opacidad < 1} opacity={opacidad} />
 );
@@ -178,6 +189,7 @@ const Malla: React.FC<{ g: THREE.BufferGeometry; token: string; emisivo?: boolea
   const c = useColor();
   const { paleta, tema } = useTema();
   const dir = useContext(LuzCtx);
+  const alto = useContext(AltoCtx);
   const base = c(token);
   if (paleta.estilo !== "retro") {
     return (
@@ -197,7 +209,7 @@ const Malla: React.FC<{ g: THREE.BufferGeometry; token: string; emisivo?: boolea
     <group position={pos} rotation={rot}>
       <mesh geometry={g} material={m} />
       {/* las superficies abiertas no tienen «dentro»: no llevan casco invertido; su borde sale de las aristas */}
-      {!abierto && <mesh geometry={cascoDe(g)} material={matContorno(sombra)} />}
+      {!abierto && <mesh geometry={cascoDe(g)} material={matContorno(sombra, alto)} />}
       <lineSegments geometry={aristasDe(g)}>
         <lineBasicMaterial color={sombra} />
       </lineSegments>
@@ -493,7 +505,11 @@ const Suelo: React.FC<{ tipo: Escena3D["suelo"] }> = ({ tipo }) => {
   );
 };
 
-export const Escena3DView: React.FC<{ escena: Escena3D & { dur: number } }> = ({ escena }) => {
+/**
+ * GeometryStage: el escenario 3D. Con HUD ocupa y 350–1450 (1080×1100); con «HUD: OFF» crece hasta y 1800 (1080×1450).
+ * En el estilo clásico ocupa todo el lienzo.
+ */
+export const Escena3DView: React.FC<{ escena: Escena3D & { dur: number }; hud?: boolean }> = ({ escena, hud = true }) => {
   const { paleta, tema } = useTema();
   const c = useColor();
   const col = tema === "claro" ? paleta.claro : paleta.oscuro;
@@ -503,12 +519,13 @@ export const Escena3DView: React.FC<{ escena: Escena3D & { dur: number } }> = ({
     const v = new THREE.Vector3(l.dirX, l.dirY, l.dirZ).normalize();
     return [v.x, v.y, v.z];
   }, [l.dirX, l.dirY, l.dirZ]);
-  const alto = retro ? RETRO_ALTO : H;
+  const alto = retro ? (hud ? RETRO_ALTO : RETRO_ALTO_SIN_HUD) : H;
   return (
     <ThreeCanvas width={W} height={alto} flat dpr={1} gl={{ antialias: true, alpha: true }} camera={{ fov: escena.camara.fov, position: [0, escena.camara.altura, escena.camara.radio], near: 0.1, far: 300 }} style={{ position: "absolute", left: 0, top: retro ? RETRO_Y0 : 0 }}>
       {/* el contexto de color no atraviesa el Canvas: se vuelve a montar aquí dentro */}
       <ProveedorColor paleta={paleta.id} tema={tema}>
         <MedidoresCtx.Provider value={escena.medidores ?? []}>
+          <AltoCtx.Provider value={alto}>
           <LuzCtx.Provider value={dirLuz}>
             <Camara cam={escena.camara} dur={escena.dur} retro={retro} />
             {escena.suelo !== "ninguno" && <fog attach="fog" args={[col.fondoBorde, escena.camara.radio * (escena.niebla ? 0.9 : 1.8), escena.camara.radio * (escena.niebla ? 2.6 : 5)]} />}
@@ -521,6 +538,7 @@ export const Escena3DView: React.FC<{ escena: Escena3D & { dur: number } }> = ({
               <Objeto key={i} o={o} />
             ))}
           </LuzCtx.Provider>
+          </AltoCtx.Provider>
         </MedidoresCtx.Provider>
       </ProveedorColor>
     </ThreeCanvas>

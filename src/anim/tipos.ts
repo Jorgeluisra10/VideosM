@@ -12,7 +12,11 @@ export type Base2D = { tipo: string; t: number; hasta: number | null; entrada: E
 export type Elemento2D = Base2D & Record<string, any>;
 
 /** Medidor del HUD (estilo retro): su valor va de `inicio` a `fin` a partir de `t` (s) durante `dur` (s), y mueve aguja, número, borde y modelo a la vez. */
-export type Medidor = { etiqueta: string; unidad: string; min: number; max: number; inicio: number; fin: number; t: number; dur: number; decimales: number };
+export type Medidor = {
+  etiqueta: string; unidad: string; min: number; max: number; inicio: number; fin: number; t: number; dur: number; decimales: number;
+  /** varios tramos consecutivos (formato estructurado: líneas HUD): de cada valor al siguiente. Sin claves vale el tramo único inicio→fin. */
+  claves?: { t: number; dur: number; valor: number }[];
+};
 
 /** Campos extra de una escena en estilo retro. */
 export type CamposRetro = { titulo?: string; tituloTam?: number; subtitulo?: string | null; medidores?: Medidor[] };
@@ -41,6 +45,9 @@ export type Animacion = {
   duracion: number;
   escenas: EscenaGuardada[];
   uso: Uso | null;
+  /** formato estructurado: false = «HUD: OFF» (sin medidores; el escenario llega hasta y 1800) */
+  hud?: boolean;
+  formato?: "simple" | "estructurado";
 };
 
 export type { Modo };

@@ -27,6 +27,8 @@ const MAX_REPARACIONES = 2;
  */
 export async function generarAnimacion({ guion, modelo = "gpt-4.1-mini", sfx = true, paleta = "imnoba", log = () => {}, cfg = configuracion() }) {
   const N = await cargarNucleoAnim();
+  // formato estructurado ([CONFIG], FONDO, GEO, HUD…): la IA solo dibuja el escenario central; todo lo demás se resuelve aquí
+  if (N.detectarFormato(guion) === "estructurado") return generarEstructurado({ N, guion, modelo, sfx, paleta, log, cfg });
   const parsed = N.parsearGuion(guion);
   if (parsed.errores.length) throw new ErrorGuion(parsed.errores);
   for (const a of parsed.avisos) log(`   ⚠ ${a}`);
@@ -70,4 +72,56 @@ export async function generarAnimacion({ guion, modelo = "gpt-4.1-mini", sfx = t
   r.anim.uso = uso;
   for (const c of r.correcciones) log(`   ~ ${c}`);
   return { anim: r.anim, correcciones: r.correcciones, uso };
+}
+
+
+/**
+ * Formato estructurado: a OpenAI viajan ÚNICAMENTE el MODO, la duración, el fondo y las líneas GEO de cada escena (más un prompt de sistema
+ * compacto y el esquema estricto). Título, subtítulo, HUD, sonido y locución (VOZ_OFF) nunca salen de tu equipo.
+ */
+async function generarEstructurado({ N, guion, modelo, sfx, paleta, log, cfg }) {
+  const parsed = N.parsearEstructurado(guion);
+  if (parsed.errores.length) throw new ErrorGuion(parsed.errores);
+  for (const a of parsed.avisos) log(`   ⚠ ${a}`);
+  const paletaEf = N.paletaRetroDe(paleta);
+  if (paletaEf !== paleta) log(`   ℹ El formato estructurado usa el diseño Retro-Científico: la paleta «${paleta}» pasa a «${paletaEf}».`);
+
+  const m = N.modeloPorId(modelo);
+  const opciones = { paleta: paletaEf, svg: parsed.escenas.some((e) => e.modo === "SVG"), tres: parsed.escenas.some((e) => e.modo === "3D"), mixto: parsed.escenas.some((e) => e.mixto), hud: parsed.config.hud };
+  const esquema = N.esquemaGeometria(opciones);
+  const sistema = N.sistemaGeo(opciones);
+  const cliente = new Cliente({ ...cfg, modelo, modeloPlan: "", modeloVision: "", modeloRevisor: "", esfuerzo: m.razonador ? "medium" : "" }, { log });
+  cliente.estilo = "chat";
+
+  const uso = { modelo, prompt_tokens: 0, completion_tokens: 0, costo_usd: 0, llamadas: 0 };
+  const llamar = async (entrada, etiqueta) => {
+    log(`🤖 ${etiqueta} (${modelo})…`);
+    const r = await cliente.pedir({ nombre: esquema.name, esquema: esquema.schema, instrucciones: sistema, entrada, maxSalida: m.maxSalida });
+    uso.prompt_tokens += r.entrada;
+    uso.completion_tokens += r.salida;
+    uso.llamadas++;
+    uso.costo_usd = N.costoUSD(modelo, uso.prompt_tokens, uso.completion_tokens);
+    log(`   ✔ ${r.entrada} tokens de entrada · ${r.salida} de salida · ${(r.ms / 1000).toFixed(1)} s · acumulado ${N.formatoUSD(uso.costo_usd, 5)}`);
+    return r.datos;
+  };
+
+  log(`   Se envían solo ${parsed.lineasGeo} línea(s) GEO (${parsed.caracteresGeo} caracteres); título, HUD, sonido y VOZ_OFF se quedan en tu equipo.`);
+  let raw = await llamar(N.promptUsuarioGeo(parsed.escenas), `Dibujando el escenario de ${parsed.escenas.length} escenas`);
+  let r = N.ensamblarGeo(raw, parsed.escenas, parsed.config, { paleta: paletaEf, sfx });
+  for (let ronda = 1; !r.anim && ronda <= MAX_REPARACIONES; ronda++) {
+    const malas = new Set(r.errores.map((e) => Number(e.match(/^Escena (\d+)/)?.[1])).filter(Boolean));
+    if (!malas.size) break;
+    log(`🔧 Reparación ${ronda}/${MAX_REPARACIONES}: ${r.errores.slice(0, 3).join(" | ")}`);
+    const pendientes = parsed.escenas.filter((e) => malas.has(e.n));
+    const previas = (raw.escenas ?? []).filter((e) => malas.has(Number(e?.n)));
+    const entrada = `${N.promptUsuarioGeo(pendientes)}\n\nTu respuesta anterior para estas escenas tuvo errores:\n${r.errores.map((e) => `- ${e}`).join("\n")}\n\nRespuesta anterior (corrígela):\n${JSON.stringify(previas)}\n\nDevuelve SOLO estas escenas (${[...malas].join(", ")}), completas y corregidas.`;
+    const arreglo = await llamar(entrada, `Reparando ${malas.size} escena(s)`);
+    const porN = new Map((arreglo.escenas ?? []).map((e) => [Number(e?.n), e]));
+    raw = { ...raw, escenas: (raw.escenas ?? []).map((e) => porN.get(Number(e?.n)) ?? e) };
+    r = N.ensamblarGeo(raw, parsed.escenas, parsed.config, { paleta: paletaEf, sfx });
+  }
+  if (!r.anim) throw new Error(`La IA no logró una geometría válida tras ${MAX_REPARACIONES} reparaciones:\n${r.errores.join("\n")}`);
+  r.anim.uso = uso;
+  for (const c of r.correcciones) log(`   ~ ${c}`);
+  return { anim: r.anim, correcciones: r.correcciones, uso, locucion: N.textoLocucion(parsed.escenas, r.anim.titulo), formato: "estructurado" };
 }

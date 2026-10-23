@@ -1,0 +1,338 @@
+{
+ "escenas": [
+  {
+   "modo": "SVG",
+   "n": 1,
+   "ambiente": "cuadricula",
+   "elementos": [
+    {
+     "tipo": "linea",
+     "t": 0.2,
+     "hasta": null,
+     "entrada": "aparecer",
+     "puntos": [
+      {
+       "x": 180,
+       "y": 1330
+      },
+      {
+       "x": 180,
+       "y": 480
+      }
+     ],
+     "color": "suave",
+     "grosor": 3,
+     "flecha": true,
+     "curva": false,
+     "dur": 1.0,
+     "punteado": true
+    },
+    {
+     "tipo": "linea",
+     "t": 0.4,
+     "hasta": null,
+     "entrada": "aparecer",
+     "puntos": [
+      {
+       "x": 180,
+       "y": 1330
+      },
+      {
+       "x": 960,
+       "y": 1330
+      }
+     ],
+     "color": "suave",
+     "grosor": 3,
+     "flecha": true,
+     "curva": false,
+     "dur": 1.0,
+     "punteado": true
+    },
+    {
+     "tipo": "texto",
+     "t": 0.8,
+     "hasta": null,
+     "entrada": "aparecer",
+     "texto": "VALOR",
+     "x": 130,
+     "y": 440,
+     "tam": 30,
+     "color": "suave",
+     "peso": 700,
+     "alinear": "izquierda"
+    },
+    {
+     "tipo": "texto",
+     "t": 0.9,
+     "hasta": null,
+     "entrada": "aparecer",
+     "texto": "ÁREA",
+     "x": 990,
+     "y": 1385,
+     "tam": 30,
+     "color": "suave",
+     "peso": 700,
+     "alinear": "derecha"
+    },
+    {
+     "tipo": "trazo",
+     "t": 1.0,
+     "hasta": null,
+     "entrada": "aparecer",
+     "d": "M 180 1330 C 420 1300, 640 1120, 940 560",
+     "color": "primario",
+     "grosor": 3,
+     "relleno": null,
+     "dur": 2.4,
+     "brillo": false,
+     "punteado": false
+    },
+    {
+     "tipo": "forma",
+     "t": 3.2,
+     "hasta": null,
+     "entrada": "aparecer",
+     "forma": "circulo",
+     "x": 940,
+     "y": 560,
+     "w": 34,
+     "h": 34,
+     "color": "acento",
+     "relleno": true,
+     "borde": 3
+    },
+    {
+     "tipo": "terminal",
+     "t": 2.2,
+     "hasta": null,
+     "entrada": "aparecer",
+     "texto": "V = A × P",
+     "x": 250,
+     "y": 900,
+     "tam": 34,
+     "color": "acento",
+     "alinear": "izquierda"
+    }
+   ]
+  },
+  {
+   "modo": "3D",
+   "n": 2,
+   "camara": {
+    "radio": 16,
+    "radioFin": 13,
+    "altura": 5,
+    "alturaFin": 4,
+    "anguloInicio": 20,
+    "anguloFin": 75,
+    "mirarX": 0,
+    "mirarY": 2.2,
+    "mirarZ": 0,
+    "fov": 40
+   },
+   "luces": {
+    "ambiente": 0.55,
+    "direccional": 1.5,
+    "dirX": 6,
+    "dirY": 11,
+    "dirZ": 7,
+    "puntoAcento": 0.0
+   },
+   "suelo": "plano",
+   "niebla": false,
+   "objetos": [
+    {
+     "tipo": "modelo",
+     "t": 0.0,
+     "dur": 1.0,
+     "entrada": "crecer",
+     "giro": 0,
+     "color": "primario",
+     "emisivo": false,
+     "forma": "toroide",
+     "x": 0,
+     "z": 0,
+     "escala": 1.3,
+     "v1": 0,
+     "v2": 1,
+     "v3": 2,
+     "b1": 0.5,
+     "b2": 0.5,
+     "b3": 0.3
+    },
+    {
+     "tipo": "edificio",
+     "t": 0.6,
+     "dur": 1.0,
+     "entrada": "crecer",
+     "giro": 0,
+     "color": "suave",
+     "emisivo": false,
+     "x": -3.6,
+     "z": -2.5,
+     "w": 1.3,
+     "d": 1.3,
+     "pisos": 10,
+     "remate": "plana",
+     "ventanas": true
+    },
+    {
+     "tipo": "edificio",
+     "t": 0.8,
+     "dur": 1.0,
+     "entrada": "crecer",
+     "giro": 0,
+     "color": "suave",
+     "emisivo": false,
+     "x": 3.6,
+     "z": -2.5,
+     "w": 1.3,
+     "d": 1.3,
+     "pisos": 14,
+     "remate": "plana",
+     "ventanas": true
+    }
+   ],
+   "overlay": []
+  },
+  {
+   "modo": "SVG",
+   "n": 3,
+   "ambiente": "cuadricula",
+   "elementos": [
+    {
+     "tipo": "grafica",
+     "t": 0.3,
+     "hasta": null,
+     "entrada": "aparecer",
+     "grafica": "barras",
+     "x": 540,
+     "y": 880,
+     "w": 780,
+     "h": 760,
+     "color": "primario",
+     "dur": 2.2,
+     "datos": [
+      {
+       "etiqueta": "2020",
+       "valor": 100
+      },
+      {
+       "etiqueta": "2021",
+       "valor": 108
+      },
+      {
+       "etiqueta": "2022",
+       "valor": 121
+      },
+      {
+       "etiqueta": "2023",
+       "valor": 139
+      },
+      {
+       "etiqueta": "2024",
+       "valor": 158
+      }
+     ]
+    },
+    {
+     "tipo": "terminal",
+     "t": 2.4,
+     "hasta": null,
+     "entrada": "aparecer",
+     "texto": "Δ = +58 %",
+     "x": 540,
+     "y": 1370,
+     "tam": 32,
+     "color": "acento",
+     "alinear": "centro"
+    }
+   ]
+  },
+  {
+   "modo": "3D",
+   "n": 4,
+   "camara": {
+    "radio": 18,
+    "radioFin": 14,
+    "altura": 8,
+    "alturaFin": 6,
+    "anguloInicio": -30,
+    "anguloFin": 40,
+    "mirarX": 0,
+    "mirarY": 1.0,
+    "mirarZ": 0,
+    "fov": 40
+   },
+   "luces": {
+    "ambiente": 0.55,
+    "direccional": 1.5,
+    "dirX": 6,
+    "dirY": 11,
+    "dirZ": 7,
+    "puntoAcento": 0.0
+   },
+   "suelo": "ninguno",
+   "niebla": false,
+   "objetos": [
+    {
+     "tipo": "modelo",
+     "t": 0.0,
+     "dur": 1.0,
+     "entrada": "crecer",
+     "giro": 0,
+     "color": "primario",
+     "emisivo": false,
+     "forma": "superficie",
+     "x": 0,
+     "z": 0,
+     "escala": 1.3,
+     "v1": 0,
+     "v2": 1,
+     "v3": null,
+     "b1": 0.5,
+     "b2": 0.5,
+     "b3": 0.2
+    }
+   ],
+   "overlay": [
+    {
+     "tipo": "linea",
+     "t": 0.4,
+     "hasta": null,
+     "entrada": "aparecer",
+     "puntos": [
+      {
+       "x": 120,
+       "y": 1380
+      },
+      {
+       "x": 960,
+       "y": 1380
+      }
+     ],
+     "color": "suave",
+     "grosor": 3,
+     "flecha": true,
+     "curva": false,
+     "dur": 1.0,
+     "punteado": true
+    },
+    {
+     "tipo": "texto",
+     "t": 0.8,
+     "hasta": null,
+     "entrada": "aparecer",
+     "texto": "TIEMPO",
+     "x": 990,
+     "y": 1420,
+     "tam": 28,
+     "color": "suave",
+     "peso": 700,
+     "alinear": "derecha"
+    }
+   ]
+  }
+ ]
+}
