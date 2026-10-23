@@ -1,0 +1,74 @@
+{
+ "escenas": [
+  {
+   "n": 1,
+   "codigo": "const f = useCurrentFrame();\nconst p = interpolate(f, [0, 150], [0, 1], { extrapolateRight: \"clamp\", easing: ease });\nconst q = interpolate(f, [70, 220], [0, 1], { extrapolateLeft: \"clamp\", extrapolateRight: \"clamp\", easing: ease });\nconst casa = \"M 120 1280 L 120 1040 L 320 860 L 520 1040 L 520 1280 Z M 270 1280 L 270 1140 L 370 1140 L 370 1280 M 425 965 L 425 885 L 475 885 L 475 1005\";\nconst auto = \"M 610 1280 L 610 1200 Q 610 1160 655 1150 L 720 1090 Q 745 1065 790 1065 L 880 1065 Q 925 1065 950 1100 L 985 1150 Q 1010 1160 1010 1200 L 1010 1280 Z M 735 1150 L 780 1095 L 840 1095 L 840 1150 Z M 860 1150 L 860 1095 L 905 1095 L 940 1150 Z M 658 1285 a 42 42 0 1 0 84 0 a 42 42 0 1 0 -84 0 M 878 1285 a 42 42 0 1 0 84 0 a 42 42 0 1 0 -84 0\";\nreturn (\n  <AbsoluteFill style={{ background: `radial-gradient(circle at 50% 62%, ${C.fondo2}, ${C.fondo} 70%)` }}>\n    <AmbientParticles count={46} color={C.acento} speed={0.7} size={3.2} />\n    <Camera2D zoom={1 + 0.12 * p} y={-30 * p} focusX={540} focusY={1050} shake={[{ t: 2.7, amp: 9 }]}>\n      <Svg>\n        <g transform=\"translate(0 230)\">\n        <defs>\n          <radialGradient id=\"e1halo\" cx=\"50%\" cy=\"50%\" r=\"50%\">\n            <stop offset=\"0\" stopColor={C.acento} stopOpacity=\"0.35\" />\n            <stop offset=\"1\" stopColor={C.acento} stopOpacity=\"0\" />\n          </radialGradient>\n        </defs>\n        <ellipse cx={540} cy={1120} rx={520 + float(f, 14, 150)} ry={330} fill=\"url(#e1halo)\" opacity={p} />\n        <OrganicDrawPath d=\"M 80 1280 L 1000 1280\" progress={p} stroke={C.suave} strokeWidth={3} opacity={0.5} />\n        <OrganicDrawPath d={casa} progress={p} stroke={C.acento} strokeWidth={9} glow fill={C.acento} fillOpacity={0.12} />\n        <OrganicDrawPath d={auto} progress={q} stroke={C.blanco} strokeWidth={8} glow />\n        <FloatingAnnotation targetX={320} targetY={860} label=\"Publicar en IMNOBA\" value=\"$0 COP\" color={C.acento} delay={2.2} dy={-195} dx={230} width={360} />\n        </g>\n      </Svg>\n      <KineticText texto=\"¿Y SI PUBLICAR FUERA GRATIS?\" y={430} tam={108} color={C.blanco} delay={0.3} maxAncho={800} />\n    </Camera2D>\n  </AbsoluteFill>\n);",
+   "sfx": [
+    {
+     "t": 0.1,
+     "tipo": "whoosh",
+     "vol": 0.15
+    },
+    {
+     "t": 2.4,
+     "tipo": "ding",
+     "vol": 0.18
+    }
+   ]
+  },
+  {
+   "n": 2,
+   "codigo": "const f = useCurrentFrame();\nconst t = useT();\nconst p = ease(clamp(t / DUR));\nreturn (\n  <AbsoluteFill style={{ background: `linear-gradient(180deg, ${C.fondo} 0%, ${C.fondo2} 58%, ${C.fondo} 100%)` }}>\n    <AmbientParticles count={34} color={C.azul} speed={0.5} flow=\"drift\" shape=\"cell\" size={3} opacity={0.55} />\n    <KineticText texto=\"TU INMUEBLE, A LA VISTA\" y={470} tam={134} color={C.blanco} modo=\"palabras\" delay={0.2} />\n    <Isometric3DStage cameraAngle=\"iso\" lighting=\"dramatic\" orbit={75} distance={34} dollyTo={26} lookAt={[0, 1.2, 0]} fov={36}>\n      <Ciudad3D filas={5} columnas={4} semilla={12} resaltar={9} color={C.primario} delay={0.2} />\n    </Isometric3DStage>\n    <Svg>\n      <FloatingAnnotation targetX={540} targetY={1130 - 40 * p} label=\"Tu inmueble\" value=\"Visible 24/7\" color={C.acento} delay={2.3} dx={0} dy={300} width={380} />\n    </Svg>\n  </AbsoluteFill>\n);",
+   "sfx": [
+    {
+     "t": 2.3,
+     "tipo": "pop",
+     "vol": 0.15
+    }
+   ]
+  },
+  {
+   "n": 3,
+   "codigo": "const f = useCurrentFrame();\nconst p = interpolate(f, [0, 170], [0, 1], { extrapolateRight: \"clamp\", easing: ease });\nconst zoom = 1 + 0.1 * interpolate(f, [90, 330], [0, 1], { extrapolateLeft: \"clamp\", extrapolateRight: \"clamp\", easing: ease });\nconst muros = \"M 140 560 H 940 V 1360 H 140 Z M 560 560 V 1010 M 140 1010 H 940 M 560 800 H 940 M 420 1010 V 1360 M 700 1010 V 1360\";\nconst puertas = \"M 560 930 A 70 70 0 0 1 630 1010 M 420 1290 A 70 70 0 0 0 490 1360 M 700 1290 A 70 70 0 0 1 630 1360\";\nreturn (\n  <AbsoluteFill style={{ background: `radial-gradient(circle at 50% 45%, #FFFFFF, ${C.papel})` }}>\n    <AmbientParticles count={26} color={C.azul} speed={0.4} flow=\"drift\" size={2.6} opacity={0.3} />\n    <KineticText texto=\"CADA METRO, DIBUJADO\" y={290} tam={88} color={C.fondo} delay={0.15} modo=\"palabras\" />\n    <Camera2D zoom={zoom} focusX={540} focusY={960}>\n      <Svg>\n        <rect x={140} y={560} width={800} height={800} fill={C.azul} fillOpacity={0.07 * p} />\n        <OrganicDrawPath d={muros} progress={p} stroke={C.fondo} strokeWidth={10} glow />\n        <OrganicDrawPath d={puertas} progress={interpolate(f, [100, 190], [0, 1], { extrapolateLeft: \"clamp\", extrapolateRight: \"clamp\" })} stroke={C.azul} strokeWidth={4} />\n        <FloatingAnnotation targetX={350} targetY={785} label=\"Sala\" value=\"24 m²\" color={C.acento} lineColor={C.fondo} delay={2.0} dx={0} dy={-300} width={300} />\n        <FloatingAnnotation targetX={750} targetY={680} label=\"Cocina\" value=\"9 m²\" color={C.blanco} lineColor={C.azul} delay={2.6} dx={0} dy={-215} width={290} />\n        <FloatingAnnotation targetX={750} targetY={905} label=\"Balcón\" value=\"6 m²\" color={C.esmeralda} lineColor={C.esmeralda} delay={3.2} dx={0} dy={545} width={290} />\n      </Svg>\n    </Camera2D>\n    <KineticText texto=\"74 m²\" y={1665} tam={170} color={C.fondo} delay={4.0} modo=\"escala\" />\n    <Svg>\n      <OrganicDrawPath d=\"M 340 1760 Q 540 1790 740 1760\" progress={entra(f, 4.5)} stroke={C.acento} strokeWidth={12} glow />\n    </Svg>\n  </AbsoluteFill>\n);",
+   "sfx": [
+    {
+     "t": 2.0,
+     "tipo": "tick",
+     "vol": 0.12
+    },
+    {
+     "t": 4.0,
+     "tipo": "ding",
+     "vol": 0.18
+    }
+   ]
+  },
+  {
+   "n": 4,
+   "codigo": "const f = useCurrentFrame();\nconst t = useT();\nconst pct = Math.round(58 * ease(clamp((t - 1.6) / 2.4)));\nreturn (\n  <AbsoluteFill style={{ background: `radial-gradient(circle at 50% 72%, ${C.fondo2}, ${C.fondo})` }}>\n    <AmbientParticles count={40} color={C.acento} speed={0.8} size={3} opacity={0.5} />\n    <KineticText texto=\"TU INVERSIÓN CRECE\" y={380} tam={122} color={C.blanco} delay={0.2} />\n    <Isometric3DStage cameraAngle=\"low\" lighting=\"dramatic\" orbit={-40} distance={34} dollyTo={27} lookAt={[0, 3.0, 0]} fov={40} float={0.1}>\n      <Barras3D datos={[100, 112, 127, 141, 158]} hmax={8} ancho={1.2} sep={0.5} color={C.primario} delay={0.5} />\n    </Isometric3DStage>\n    <KineticText texto={`+${pct} %`} y={1560} tam={240} color={C.acento} delay={1.2} modo=\"escala\" />\n    <Svg>\n      <text data-texto=\"Ejemplo ilustrativo\" x={540} y={1720 + float(f, 4, 140)} textAnchor=\"middle\" fontFamily={FUENTE} fontWeight={600} fontSize={40} fill={C.suave} opacity={entra(f, 2.2)}>Ejemplo ilustrativo</text>\n    </Svg>\n  </AbsoluteFill>\n);",
+   "sfx": [
+    {
+     "t": 0.5,
+     "tipo": "pop",
+     "vol": 0.15
+    },
+    {
+     "t": 3.6,
+     "tipo": "ding",
+     "vol": 0.18
+    }
+   ]
+  },
+  {
+   "n": 5,
+   "codigo": "const f = useCurrentFrame();\nconst t = useT();\nconst pulso = ((t * 0.9) % 1);\nreturn (\n  <AbsoluteFill style={{ background: `radial-gradient(circle at 50% 38%, ${C.acento}55, ${C.fondo2} 38%, ${C.fondo} 78%)` }}>\n    <AmbientParticles count={56} color={C.acento} speed={0.9} shape=\"cell\" flow=\"swirl\" size={2.8} opacity={0.6} />\n    <Camera2D zoom={1.02 + 0.03 * Math.sin(t)}>\n      <Svg>\n        {[0, 1, 2].map((i) => {\n          const k = (pulso + i / 3) % 1;\n          return <circle key={i} cx={540} cy={640} r={90 + 330 * k} fill=\"none\" stroke={C.esmeralda} strokeWidth={5} opacity={(1 - k) * 0.7 * entra(f, 0.3)} />;\n        })}\n        <circle cx={540} cy={640} r={118 * entra(f, 0.2)} fill={C.esmeralda} fillOpacity={0.2} stroke={C.esmeralda} strokeWidth={6} />\n        <OrganicDrawPath d=\"M 482 644 L 523 688 L 600 596\" progress={interpolate(f, [24, 80], [0, 1], { extrapolateLeft: \"clamp\", extrapolateRight: \"clamp\", easing: ease })} stroke={C.blanco} strokeWidth={16} glow />\n      </Svg>\n      <KineticText texto=\"IMNOBA\" y={1110} tam={210} color={C.blanco} delay={0.6} modo=\"escala\" />\n      <KineticText texto=\"Publica hoy mismo. Es gratis.\" y={1390} tam={64} color={C.acento} delay={1.4} modo=\"palabras\" peso={800} />\n    </Camera2D>\n  </AbsoluteFill>\n);",
+   "sfx": [
+    {
+     "t": 0.6,
+     "tipo": "ding",
+     "vol": 0.18
+    }
+   ]
+  }
+ ]
+}

@@ -1,0 +1,24 @@
+[ESCENA 1 | 00:00-00:05]
+VOZ_OFF: ¿Y si publicar tu casa, tu apartamento o tu vehículo fuera completamente gratis?
+DIRECCION_VISUAL: Noche azul profunda con partículas doradas que suben. La cámara se acerca despacio a la silueta de una casa que se dibuja sola con un trazo dorado brillante; a su lado se dibuja un auto. Las letras «¿Y SI PUBLICAR FUERA GRATIS?» entran una a una con física spring en la parte alta. Una anotación flotante señala el techo: «Publicar en IMNOBA · $0 COP». Sacudida suave de cámara cuando aparece el «$0».
+SFX: whoosh (00:00), ding (00:03)
+
+[ESCENA 2 | 00:05-00:10]
+VOZ_OFF: En IMNOBA tu inmueble aparece en el mapa de la ciudad, las 24 horas.
+DIRECCION_VISUAL: Escenario 3D dramático: una maqueta de ciudad flota y la cámara orbita; una manzana se ilumina en dorado. El texto «TU INMUEBLE, A LA VISTA» queda detrás de los edificios, grande. Una anotación flotante marca la manzana dorada: «Visible · 24/7».
+SFX: pop (00:07)
+
+[ESCENA 3 | 00:10-00:16]
+VOZ_OFF: Con fotos claras y un plano que explica cada metro cuadrado.
+DIRECCION_VISUAL: Fondo papel claro. El plano de un apartamento se dibuja solo con trazo azul profundo y la cámara se acerca con suavidad. Tres anotaciones flotantes aparecen una tras otra: «Sala · 24 m²», «Cocina · 9 m²», «Balcón · 6 m²». Al final, la cifra «74 m²» entra con tipografía cinética y un subrayado dorado que se dibuja.
+SFX: tick (00:12), ding (00:14)
+
+[ESCENA 4 | 00:16-00:22]
+VOZ_OFF: Y tu inversión crece con el tiempo.
+DIRECCION_VISUAL: Cámara baja y dramática sobre cinco barras 3D crecientes (100, 112, 127, 141, 158) que suben en cascada, la mayor en dorado. El título «TU INVERSIÓN CRECE» va detrás; abajo, un contador «+58 %» sube con tipografía cinética. Una nota pequeña: «Ejemplo ilustrativo».
+SFX: pop (00:17), ding (00:20)
+
+[ESCENA 5 | 00:22-00:28]
+VOZ_OFF: Publica hoy mismo en IMNOBA. Es gratis.
+DIRECCION_VISUAL: Remate cálido: resplandor dorado radial, partículas en espiral y un anillo que pulsa alrededor de un check esmeralda. «IMNOBA» cae al centro en grande y debajo «Publica hoy mismo. Es gratis.» entra palabra por palabra.
+SFX: ding (00:23)

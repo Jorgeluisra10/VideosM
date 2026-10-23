@@ -107,7 +107,7 @@ export function parsearGuion(texto: string): ResultadoParser {
     });
 
   if (!bloques.length) {
-    errores.push("No encuentro ningún bloque. Cada escena empieza con una línea como  [ESCENA 1 | 0s-4s | MODO: SVG]  (o MODO: 3D).");
+    errores.push("No encuentro ningún bloque. Cada escena empieza con una línea como  [ESCENA 1 | 00:00-00:05]  (formato libre) o  [ESCENA 1 | 0s-4s | MODO: SVG]  (formato simple).");
     return { escenas: [], errores, avisos, duracion: 0, caracteres: texto.length };
   }
   if (suelto) avisos.push(`Hay ${suelto} línea(s) de texto antes del primer bloque [ESCENA …]: se ignoran.`);

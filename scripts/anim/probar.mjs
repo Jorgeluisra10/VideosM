@@ -266,7 +266,7 @@ try {
   prueba("src/theme/retroScientific.ts: dark #0B0C10, paper #F4F1EA, red #E63926, salmon #FF9E8A, yellow #D4FF33, blue #2B44FF; las paletas retro salen de ahí", ["#0B0C10", "#F4F1EA", "#E63926", "#FF9E8A", "#D4FF33", "#2B44FF"].every((h) => tema.includes(h)) && /LAYOUT/.test(tema) && /THEME\.red/.test(readFileSync(p("src", "anim", "paletas.ts"), "utf8")));
   prueba("componentes nativos con nombre: TerminalHeader, TelemetryHUD, GeometryStage, CelHalftoneMaterial, HalftoneWipeTransition y MasterVideoLayout", ["TerminalHeader", "TelemetryHUD", "GeometryStage", "CelHalftoneMaterial", "HalftoneWipeTransition", "MasterVideoLayout"].every((n) => comp.includes(n)));
   prueba("TerminalHeader: SUB lima sobre fondo oscuro y tinta (#0B0C10) sobre papel, con el cursor del mismo color; GeometryStage crece sin HUD", /tema === "claro" \? c\("tinta"\) : c\("acento"\)/.test(m2d) && /RETRO_ALTO_SIN_HUD = 1450/.test(m3d) && /hud = true/.test(m3d));
-  prueba("el botón «Copiar Prompt Formateador» copia la plantilla con [CONFIG], GEO y HUD (y queda el formato simple aparte)", /PROMPT_FORMATEADOR_ESTRUCTURADO/.test(readFileSync(p("scripts", "panel", "web", "app.js"), "utf8")) && /\[CONFIG\]/.test(N.PROMPT_FORMATEADOR_ESTRUCTURADO) && /GEO \(00:00-00:03\)/.test(N.PROMPT_FORMATEADOR_ESTRUCTURADO) && /HUD \(00:01-00:03\): G1=90/.test(N.PROMPT_FORMATEADOR_ESTRUCTURADO) && /\[ESCENA 1 \| 0s-4s \| MODO: SVG\]/.test(N.PROMPT_FORMATEADOR));
+  prueba("los prompts del formato HUD y del formato simple siguen existiendo (en «Otros formatos»)", /PROMPT_FORMATEADOR_ESTRUCTURADO/.test(readFileSync(p("scripts", "panel", "web", "app.js"), "utf8")) && /\[CONFIG\]/.test(N.PROMPT_FORMATEADOR_ESTRUCTURADO) && /GEO \(00:00-00:03\)/.test(N.PROMPT_FORMATEADOR_ESTRUCTURADO) && /HUD \(00:01-00:03\): G1=90/.test(N.PROMPT_FORMATEADOR_ESTRUCTURADO) && /\[ESCENA 1 \| 0s-4s \| MODO: SVG\]/.test(N.PROMPT_FORMATEADOR));
 
   // agente estructurado (OpenAI simulado)
   const mockE = await iniciarMock(0);
@@ -284,6 +284,87 @@ try {
   delete process.env.MOCK_ANIM_ERRORES;
   prueba("agente estructurado: un path inválido provoca UNA reparación acotada y el costo suma ambas llamadas", resE2.uso.llamadas === 2 && resE2.anim.escenas.length === 4 && resE2.anim.paleta === "retro-imnoba", JSON.stringify(resE2.uso));
   await mockE2.cerrar();
+
+
+  // ------------------------------------------------------------ LIENZO LIBRE (Dirección de Arte)
+  console.log("\nLienzo libre (código generativo sobre todo el lienzo)");
+  const guionLibre = readFileSync(p("ejemplos", "animacion-libre", "guion-libre.txt"), "utf8");
+  const codigoLibre = JSON.parse(readFileSync(p("ejemplos", "animacion-libre", "codigo-ia.json"), "utf8"));
+  prueba("detectarFormato: «libre» cuando las cabeceras solo traen el tiempo; MODO: o FONDO: siguen siendo simple o estructurado", N.detectarFormato(guionLibre) === "libre" && N.detectarFormato("[ESCENA 1 | 00:00-00:05]\nhola") === "libre" && N.detectarFormato("[ESCENA 1 | 0s-4s | MODO: SVG]\nx") === "simple" && N.detectarFormato("[ESCENA 1 | 0-3 | FONDO: dark | MODO: SVG]\nGEO: x") === "estructurado" && N.detectarFormato(guionEst) === "estructurado");
+  const pl = N.parsearLibre(guionLibre);
+  prueba("el ejemplo libre se interpreta: 5 escenas, 28 s, SIN errores ni avisos y sin [CONFIG] ni medidores", pl.escenas.length === 5 && pl.duracion === 28 && pl.errores.length === 0 && pl.avisos.length === 0, JSON.stringify([pl.errores, pl.avisos]));
+  prueba("VOZ_OFF y DIRECCION_VISUAL se separan; la voz es contexto y la dirección es lo que se dibuja", /publicar tu casa/.test(pl.escenas[0].voz) && /Noche azul profunda/.test(pl.escenas[0].direccion) && !/publicar tu casa/.test(pl.escenas[0].direccion) && pl.escenas[0].dur === 5 && pl.escenas[2].inicio === 10);
+  prueba("SFX con tiempo relativo a la escena (whoosh@0, ding@3) y nombres desconocidos caen en silencio a pop/whoosh, sin avisos", pl.escenas[0].sfx.map((x) => `${x.tipo}@${x.t}`).join() === "whoosh@0,ding@3" && (() => { const r = N.parsearLibre("[ESCENA 1 | 0-4]\nDIRECCION_VISUAL: algo\nSFX: bum (1), swish (2), ding"); return r.avisos.length === 0 && r.errores.length === 0 && r.escenas[0].sfx.map((x) => x.tipo).join() === "pop,whoosh,ding" && N.sfxConFallback("raro") === "pop" && N.sfxConFallback("latido") === "heartbeat"; })());
+  prueba("texto libre sin claves = dirección visual; claves desconocidas (NOTA:, CAMARA:) no dan error; GEO/H1/SUB/HUD se entienden como dirección", (() => { const r = N.parsearLibre("[ESCENA 1 | 00:00-00:04]\nUna casa que se dibuja sola.\nCAMARA: zoom lento\nH1: HOLA\nHUD (00:01-00:03): G1=75\nGEO (00:01-00:02): estrellas"); const d = r.escenas[0].direccion; return r.errores.length === 0 && r.avisos.length === 0 && /Una casa que se dibuja sola/.test(d) && /camara: zoom lento/.test(d) && /«HOLA»/.test(d) && /\(1\.0–3\.0 s de la escena\)/.test(d) && /\(1\.0–2\.0 s de la escena\) estrellas/.test(d); })());
+  prueba("sin dirección: usa la voz como pista; sin nada, un aviso suave (no un error)", (() => { const a = N.parsearLibre("[ESCENA 1 | 0-4]\nVOZ_OFF: hola mundo"); const b = N.parsearLibre("[ESCENA 1 | 0-4]\nSFX: pop"); return a.errores.length === 0 && /hola mundo/.test(a.escenas[0].direccion) && b.errores.length === 0 && b.avisos.some((x) => /no tiene texto/.test(x)); })());
+  prueba("errores reales y solo esos: tiempo ilegible, fin ≤ inicio, solapes y texto sin escenas", N.parsearLibre("[ESCENA 1 | hola]\nx").errores.length === 1 && N.parsearLibre("[ESCENA 1 | 5-2]\nx").errores.length === 1 && N.parsearLibre("[ESCENA 1 | 0-5]\nx\n[ESCENA 2 | 4-9]\ny").errores.length === 1 && N.parsearLibre("hola").errores.length === 1);
+  prueba("una escena que empieza en 00:05 conserva sus tiempos relativos y la primera siempre arranca en 0", N.parsearLibre("[ESCENA 1 | 00:02-00:05]\nx").escenas[0].inicio === 0 && N.parsearLibre("[ESCENA 1 | 0-5]\nx\n[ESCENA 2 | 5-9]\nGEO (00:06-00:08): y").escenas[1].direccion.includes("(1.0–3.0 s de la escena)"));
+  const imnC = N.coloresIA("imnoba");
+  prueba("coloresIA IMNOBA: azul profundo #02224E, dorado #FFC500, blanco #F8FAFC, coral #E63926 y esmeralda #10B981", imnC.fondo === "#02224E" && imnC.acento === "#FFC500" && imnC.blanco === "#F8FAFC" && imnC.coral === "#E63926" && imnC.esmeralda === "#10B981" && N.coloresIA("medicina").fondo === "#0B0F19" && N.coloresIA("retro").acento === "#D4FF33" && Object.keys(N.coloresIA("retro-imnoba")).sort().join() === Object.keys(imnC).sort().join());
+  prueba("revisarCodigo acepta las 5 escenas del ejemplo escritas a mano", codigoLibre.escenas.every((e) => N.revisarCodigo(e.codigo).length === 0), codigoLibre.escenas.map((e) => N.revisarCodigo(e.codigo).join("|")).join(" / "));
+  const rev = (c) => N.revisarCodigo(c).join(" | ");
+  const buena = "const f = useCurrentFrame();\nreturn <AbsoluteFill />;";
+  prueba("política: rechaza Math.random, Date, fetch, window, document, eval, import, useState/useEffect, setTimeout y cualquier cosa de red", /Math\.random/.test(rev(buena + " Math.random()")) && /Date/.test(rev(buena + " new Date()")) && /red/.test(rev(buena + " fetch('x')")) && /window/.test(rev(buena + " window.x")) && /window/.test(rev(buena + " document.body")) && /eval/.test(rev(buena + " eval('1')")) && /import/.test(rev("import x from 'y'\n" + buena)) && /useState/.test(rev(buena + " const [a]=useState(1)")) && /temporizadores/.test(rev(buena + " setTimeout(()=>1)")) && /constructor/.test(rev(buena + " ({}).constructor")));
+  prueba("política: no marca falsos positivos habituales (style top:, variables location/parent/self/process, texto «window» en rótulos)", rev(buena + " const location = 1; const parent = 2; const self = 3; const process = 4; const x = <div style={{ top: 10 }} />;") === "");
+  prueba("política: exige return y uso del tiempo (escena estática = error); las palabras prohibidas dentro de textos o comentarios NO cuentan", /return/.test(rev("const f = useCurrentFrame();")) && /tiempo/.test(rev("return <AbsoluteFill />;")) && rev(buena.replace("<AbsoluteFill />", '<KineticText texto="Date y window son palabras" />') + " // fetch en un comentario") === "" && /demasiado largo/.test(rev(buena + " ".repeat(15000))) && /vacío/.test(rev("")));
+  const eL = N.esquemaLibre({ sfx: true }), eLn = N.esquemaLibre({ sfx: false });
+  prueba("esquema del lienzo libre: solo el sobre {escenas:[{n, codigo, sfx?}]}, estricto y minúsculo (sin casillas rígidas)", comprobarEstricto(eL.schema).length === 0 && comprobarEstricto(eLn.schema).length === 0 && JSON.stringify(eL.schema).length < 700 && !JSON.stringify(eLn.schema).includes("sfx") && JSON.stringify(eL.schema).includes("sfx") && Object.keys(eL.schema.properties.escenas.items.properties).join() === "n,codigo,sfx");
+  const sisL = N.sistemaLibre({ paleta: "imnoba", sfx: true });
+  prueba("prompt de sistema libre: lienzo 1080×1920 completo, sin cabecera/HUD/cajas fijas, kit con sus 5 pinceles, paleta IMNOBA con hex y reglas de movimiento", /TODO el lienzo vertical 1080×1920/.test(sisL) && /no hay cabecera, HUD ni cajas fijas/.test(sisL) && ["Camera2D", "OrganicDrawPath", "FloatingAnnotation", "Isometric3DStage", "AmbientParticles", "KineticText"].every((k) => sisL.includes(k)) && ["#02224E", "#FFC500", "#F8FAFC", "#E63926", "#10B981"].every((h) => sisL.includes(h)) && /Prohibidas las cajas rectangulares/.test(sisL) && /movimiento continuo/.test(sisL) && /useCurrentFrame/.test(sisL) && /lu-/.test(sisL) && /hi-/.test(sisL));
+  prueba("el prompt libre sin SFX no pide sonido; con SFX sí; la paleta Medicina cambia los colores", !/«sfx»/.test(N.sistemaLibre({ paleta: "imnoba", sfx: false })) && /«sfx»/.test(sisL) && /#0B0F19/.test(N.sistemaLibre({ paleta: "medicina", sfx: false })) && !/#02224E/.test(N.sistemaLibre({ paleta: "medicina", sfx: false })));
+  const usuarioL = N.promptUsuarioLibre(pl.escenas);
+  prueba("a la IA viajan la duración, la DIRECCIÓN VISUAL y la VOZ solo como contexto; nada de [CONFIG], HUD ni medidores", /\[ESCENA 1 \| 5\.0 s\]/.test(usuarioL) && /DIRECCIÓN VISUAL: Noche azul/.test(usuarioL) && /VOZ \(solo contexto/.test(usuarioL) && !/CONFIG|GAUGE|HUD:/.test(usuarioL) && !/SFX/.test(usuarioL));
+  const fijosL = N.tokensFijosLibre({ paleta: "imnoba", sfx: true });
+  const elib = N.estimarLibre({ modelo: "gpt-4.1-mini", caracteres: pl.caracteresIA, escenas: 5, sfx: true, tokensSistema: fijosL.sistema, tokensEsquema: fijosL.esquema });
+  prueba("estimarLibre: entrada = sistema + esquema + texto/3.6 + 24 por escena; salida = 1.300 por escena (+70 con SFX); el esquema ya casi no pesa", elib.tokensEntrada === fijosL.sistema + fijosL.esquema + Math.ceil(pl.caracteresIA / 3.6) + 120 && elib.tokensSalida === 5 * 1370 && fijosL.esquema < 200 && fijosL.sistema > 1200 && fijosL.sistema < 4000, JSON.stringify([fijosL, elib]));
+  prueba("estimarLibre crece con las escenas y con el modelo (o4-mini razona)", N.estimarLibre({ modelo: "gpt-4.1-mini", caracteres: 2 * pl.caracteresIA, escenas: 10, sfx: true, tokensSistema: fijosL.sistema, tokensEsquema: fijosL.esquema }).costo > elib.costo && N.estimarLibre({ modelo: "o4-mini", caracteres: pl.caracteresIA, escenas: 5, sfx: true, tokensSistema: fijosL.sistema, tokensEsquema: fijosL.esquema }).tokensSalida > elib.tokensSalida);
+  prueba("el Prompt Formateador libre: [ESCENA n | MM:SS-MM:SS], VOZ_OFF y DIRECCION_VISUAL; solo el tiempo es obligatorio; prohíbe cajas y HUD fijo", /\[ESCENA 1 \| 00:00-00:05\]/.test(N.PROMPT_FORMATEADOR_LIBRE) && /VOZ_OFF:/.test(N.PROMPT_FORMATEADOR_LIBRE) && /DIRECCION_VISUAL:/.test(N.PROMPT_FORMATEADOR_LIBRE) && /Solo es obligatorio el tiempo/.test(N.PROMPT_FORMATEADOR_LIBRE) && /Nada de cajas rectangulares/.test(N.PROMPT_FORMATEADOR_LIBRE) && /no existe cabecera ni panel fijo/.test(N.PROMPT_FORMATEADOR_LIBRE) && !/CONFIG|GAUGE/.test(N.PROMPT_FORMATEADOR_LIBRE));
+
+  // compilación y ensamblado (Node)
+  const { compilarEscena, ensamblarLibre, aplicarRescate } = await import("./libre.mjs");
+  const jsOk = await compilarEscena(codigoLibre.escenas[0].codigo);
+  prueba("compilarEscena: JSX → React.createElement y define la función Escena", /function Escena\(/.test(jsOk) && /React\.createElement\(/.test(jsOk) && !/<AbsoluteFill/.test(jsOk));
+  prueba("compilarEscena: un error de sintaxis se explica con su línea (para que la IA lo repare)", await compilarEscena("const f = ;\nreturn <div/>;").then(() => false, (e) => /sintaxis \(línea 1\)/.test(e.message)));
+  const al = await ensamblarLibre(codigoLibre, pl.escenas, { paleta: "imnoba", sfx: true });
+  prueba("ensamblarLibre: 5 escenas «LIBRE» con código, js, tiempos del guion y formato libre sin HUD", Boolean(al.anim) && al.anim.formato === "libre" && al.anim.hud === false && al.anim.escenas.length === 5 && al.anim.escenas.every((e) => e.modo === "LIBRE" && e.js.length > 50 && e.codigo.length > 50) && al.anim.escenas[2].inicio === 10 && al.anim.duracion === 28 && al.anim.paleta === "imnoba", al.errores.join(" | "));
+  prueba("SFX: lo que escribió el usuario manda (whoosh@0, ding@3); sin SFX en el guion se usan los de la IA; con SFX = No no hay ninguno", al.anim.escenas[0].sfx.map((x) => x.tipo + "@" + x.t).join() === "whoosh@0,ding@3" && al.anim.escenas[4].sfx[0].tipo === "ding" && N.eventosSfx(al.anim).length >= 8 && (await ensamblarLibre(codigoLibre, pl.escenas, { sfx: false })).anim.escenas.every((e) => e.sfx === undefined) && N.eventosSfx((await ensamblarLibre(codigoLibre, pl.escenas, { sfx: false })).anim).length === 0);
+  const rotoL = JSON.parse(JSON.stringify(codigoLibre)); rotoL.escenas[0].codigo = "const f = useCurrentFrame(); const r = Math.random();\nreturn <AbsoluteFill />;"; rotoL.escenas.splice(2, 1);
+  const alRoto = await ensamblarLibre(rotoL, pl.escenas, { sfx: true });
+  prueba("ensamblarLibre: código prohibido y escena ausente son errores por escena; con rescate=true se sustituyen por una escena segura y el video sigue", alRoto.anim === null && alRoto.errores.some((e) => /^Escena 1:.*Math\.random/.test(e)) && alRoto.errores.some((e) => /^Escena 3:.*no devolvió/.test(e)) && await (async () => { const r = await ensamblarLibre(rotoL, pl.escenas, { sfx: true, rescate: true }); return Boolean(r.anim) && r.rescatadas.join() === "1,3" && r.anim.escenas[0].fallback === true && N.revisarCodigo(r.anim.escenas[0].codigo).length === 0 && r.anim.escenas[1].fallback === undefined; })());
+  prueba("aplicarRescate sustituye por código seguro las escenas pedidas", await (async () => { const a2 = JSON.parse(JSON.stringify(al.anim)); await aplicarRescate(a2, [2], pl.escenas); return a2.escenas[1].fallback === true && /KineticText/.test(a2.escenas[1].codigo) && a2.escenas[0].fallback === undefined; })());
+  prueba("validar() acepta la animación libre y exige código compilado", N.validar(al.anim).length === 0 && N.validar({ ...al.anim, escenas: al.anim.escenas.map((e, i) => (i === 0 ? { ...e, js: "" } : e)) }).some((x) => /sin código compilado/.test(x)));
+
+  // código fuente: kit y runtime
+  const kit = readFileSync(p("src", "primitives", "MotionKit.tsx"), "utf8"), runtime = readFileSync(p("src", "anim", "EscenaLibre.tsx"), "utf8");
+  prueba("MotionKit exporta Camera2D, OrganicDrawPath (evolvePath), FloatingAnnotation, Isometric3DStage (@remotion/three, luces, sombras suaves, flotación Math.sin(frame / 20)) y AmbientParticles", ["Camera2D", "OrganicDrawPath", "FloatingAnnotation", "Isometric3DStage", "AmbientParticles", "KineticText"].every((n) => new RegExp(`export const ${n}\\b`).test(kit)) && /evolvePath/.test(kit) && /ThreeCanvas/.test(kit) && /shadows=\{shadows \? "soft"/.test(kit) && /Math\.sin\(f \/ 20\)/.test(kit) && /lighting === "dramatic"|"dramatic"/.test(kit) && /shake/.test(kit) && /glow/.test(kit));
+  prueba("el kit no usa Math.random ni Date (render determinista)", !/Math\.random|\bDate\b/.test(kit));
+  prueba("EscenaLibre: compila con new Function en modo estricto, aísla fallos con un ErrorBoundary y deja «[ESCENA-ERROR]» en consola", /new Function/.test(runtime) && /"use strict"/.test(runtime) && /getDerivedStateFromError/.test(runtime) && /\[ESCENA-ERROR\]/.test(runtime) && /Rescate/.test(runtime));
+  prueba("Animacion: la escena LIBRE ocupa el 100 % (no pasa por CapaRetro, HUD, título ni Fondo2D) y el halftone wipe solo va en los formatos con HUD", /e\.modo === "LIBRE"\) return <EscenaLibre/.test(anim) && /animacion\.formato !== "libre"/.test(anim));
+  prueba("las constantes del kit coinciden con el lienzo (W=1080, H=1920, FPS=60) y el ámbito expone useT, entra, float, rand, ease y los pinceles", /export const W = 1080/.test(kit) && /export const H = 1920/.test(kit) && /export const FPS = 60/.test(kit) && ["useT", "entra", "float", "rand", "ease", "Svg", "KineticText", "Cuerpo3D", "Barras3D", "Ciudad3D"].every((n) => new RegExp(`\\b${n}\\b`).test(kit.slice(kit.indexOf("AMBITO_KIT")))));
+  prueba("el panel: «Copiar Prompt Formateador» y «Cargar ejemplo» usan el formato libre, con «Otros formatos» aparte", /PROMPT_FORMATEADOR_LIBRE/.test(readFileSync(p("scripts", "panel", "web", "app.js"), "utf8")) && /cargarEjemplo\("libre"\)/.test(readFileSync(p("scripts", "panel", "web", "app.js"), "utf8")) && /Otros formatos/.test(readFileSync(p("scripts", "panel", "web", "app.js"), "utf8")));
+
+  // agente del lienzo libre (OpenAI simulado, sin Chrome: la verificación en navegador se prueba con --render)
+  const mockL = await iniciarMock(0);
+  const resL = await generarAnimacion({ guion: guionLibre, modelo: "gpt-4.1-mini", sfx: true, paleta: "imnoba", cfg: cfgMock(mockL), verificar: false });
+  const ulL = mockL.estado.ultimaAnimacion, uL = resL.uso;
+  prueba("agente libre: UNA llamada (esquema «escenas_libres»), animación libre de 5 escenas y locución para grabar", resL.formato === "libre" && uL.llamadas === 1 && ulL.nombre === "escenas_libres" && ulL.estricto && resL.anim.escenas.length === 5 && /\[ESCENA 1 \| 00:00-00:05\]/.test(resL.locucion) && /publicar tu casa/.test(resL.locucion), JSON.stringify(uL));
+  prueba("agente libre: el prompt de sistema es el del kit con la paleta IMNOBA y la entrada lleva dirección visual + voz como contexto", /Camera2D/.test(ulL.sistema) && /#02224E/.test(ulL.sistema) && /DIRECCIÓN VISUAL:/.test(ulL.usuario) && /VOZ \(solo contexto/.test(ulL.usuario) && !/CONFIG|GAUGE/.test(ulL.usuario));
+  prueba("agente libre: costo real = prompt_tokens × entrada + completion_tokens × salida", Math.abs(uL.costo_usd - (uL.prompt_tokens * 0.4 + uL.completion_tokens * 1.6) / 1e6) < 1e-12 && uL.prompt_tokens > 1500);
+  const estL = N.estimarLibre({ modelo: "gpt-4.1-mini", caracteres: pl.caracteresIA, escenas: 5, sfx: true, tokensSistema: fijosL.sistema, tokensEsquema: fijosL.esquema });
+  prueba("la estimación libre queda en el mismo orden de magnitud que el costo real (0,3×–3×)", estL.costo / uL.costo_usd > 0.3 && estL.costo / uL.costo_usd < 3, `${estL.costo.toFixed(5)} vs ${uL.costo_usd.toFixed(5)}`);
+  await mockL.cerrar();
+  process.env.MOCK_ANIM_ERRORES = "1";
+  const mockL2 = await iniciarMock(0);
+  const resL2 = await generarAnimacion({ guion: guionLibre, modelo: "gpt-4.1-mini", sfx: true, paleta: "imnoba", cfg: cfgMock(mockL2), verificar: false });
+  delete process.env.MOCK_ANIM_ERRORES;
+  prueba("agente libre: código con Math.random → UNA reparación acotada a esa escena; el costo suma ambas llamadas y no queda ninguna escena de rescate", resL2.uso.llamadas === 2 && resL2.rescatadas.length === 0 && resL2.anim.escenas.every((e) => !e.fallback) && /Tu código anterior/.test(mockL2.estado.ultimaAnimacion.usuario) && /Math\.random/.test(mockL2.estado.ultimaAnimacion.usuario) && (mockL2.estado.ultimaAnimacion.usuario.match(/\[ESCENA \d+ \|/g) ?? []).length === 1, JSON.stringify(resL2.uso));
+  await mockL2.cerrar();
+  process.env.MOCK_LIBRE_SIEMPRE_MAL = "1";
+  const mockL3 = await iniciarMock(0);
+  const resL3 = await generarAnimacion({ guion: guionLibre, modelo: "gpt-4.1-mini", sfx: true, paleta: "imnoba", cfg: cfgMock(mockL3), verificar: false });
+  delete process.env.MOCK_LIBRE_SIEMPRE_MAL;
+  prueba("agente libre: si una escena no se logra reparar tras 2 rondas se sustituye por una escena de rescate y el video sigue (1 + 2 llamadas)", resL3.uso.llamadas === 3 && resL3.rescatadas.join() === "1" && resL3.anim.escenas[0].fallback === true && resL3.anim.escenas.slice(1).every((e) => !e.fallback) && N.validar(resL3.anim).length === 0, JSON.stringify(resL3.uso));
+  await mockL3.cerrar();
 
   // ------------------------------------------------------------ agente con servidor simulado
   console.log("\nAgente (OpenAI simulado)");
@@ -357,8 +438,8 @@ try {
     prueba("el Estudio tiene los 4 controles: textarea, modelo, SFX y paleta, más el costo en vivo y copiar prompt", ["textarea#guion", "select#modelo", "input#sfx", "select#paleta", "costo-estimado", "Copiar Prompt Formateador", "Costo estimado de este video", "Costo real de este video"].every((t) => h.texto.includes(t)));
     h = await http("GET", "/api/anim/ejemplo");
     prueba("API: entrega el guion de ejemplo", h.codigo === 200 && /\[ESCENA 1/.test(h.json.guion));
-    h = await http("GET", "/api/anim/ejemplo?paleta=retro");
-    prueba("API: con la paleta retro entrega el ejemplo en formato estructurado", h.codigo === 200 && /\[CONFIG\]/.test(h.json.guion) && /GAUGE_1/.test(h.json.guion) && /valor de un inmueble/i.test(h.json.guion));
+    h = await http("GET", "/api/anim/ejemplo?formato=hud&paleta=retro");
+    prueba("API: formato=hud entrega el ejemplo estructurado (HUD retro)", h.codigo === 200 && /\[CONFIG\]/.test(h.json.guion) && /GAUGE_1/.test(h.json.guion) && /valor de un inmueble/i.test(h.json.guion));
     h = await http("POST", "/api/accion", { nombre: "anim-generar", opciones: { guion: "[ESCENA 1 | 5s-2s | MODO: X]\nhola", modelo: "gpt-4.1-mini" } });
     prueba("API: un guion inválido se rechaza con 400 y explica el problema", h.codigo === 400 && /problemas/.test(h.json.error), h.texto.slice(0, 200));
     h = await http("POST", "/api/accion", { nombre: "anim-generar", opciones: { guion: guionEjemplo, modelo: "gpt-4.1-mini", sfx: false, paleta: "imnoba" } });
@@ -378,6 +459,18 @@ try {
     prueba("API: generar en formato estructurado → animación con HUD, costo real y enlace al guion de locución", finE?.estado === "ok" && h.json.animacion?.formato === "estructurado" && h.json.animacion.hud === true && h.json.animacion.uso.costo_usd > 0 && h.json.locucion?.url === "/salida/guion-locucion.txt?descargar=1", JSON.stringify(finE) + h.texto.slice(0, 200));
     h = await http("GET", "/salida/guion-locucion.txt");
     prueba("el guion de locución (VOZ_OFF) se sirve y trae los textos para grabar", h.codigo === 200 && /área por precio/.test(h.texto) && !/GEO|HUD/.test(h.texto));
+    h = await http("POST", "/api/accion", { nombre: "anim-generar", opciones: { guion: guionLibre, modelo: "gpt-4.1-mini", sfx: true, paleta: "imnoba", verificar: false } });
+    const finL = await esperarTrabajo();
+    h = await http("GET", "/api/anim/estado");
+    prueba("API: generar en formato libre → animación LIBRE con costo real, enlace a la locución y sin escenas de rescate", finL?.estado === "ok" && h.json.animacion?.formato === "libre" && h.json.animacion.escenas.every((e) => e.modo === "LIBRE") && h.json.animacion.uso.costo_usd > 0 && h.json.locucion?.url === "/salida/guion-locucion.txt?descargar=1" && h.json.rescatadas.length === 0, JSON.stringify(finL) + h.texto.slice(0, 200));
+    h = await http("GET", "/salida/guion-locucion.txt");
+    prueba("la locución del formato libre se sirve con la VOZ_OFF (sin la dirección visual)", h.codigo === 200 && /publicar tu casa/.test(h.texto) && !/Noche azul profunda/.test(h.texto));
+    h = await http("POST", "/api/accion", { nombre: "anim-generar", opciones: { guion: "[ESCENA 1 | 5-2]\nx", modelo: "gpt-4.1-mini" } });
+    prueba("API: un guion libre con el tiempo al revés se rechaza con 400 y explica el problema", h.codigo === 400 && /fin/.test(h.json.error), h.texto.slice(0, 200));
+    h = await http("GET", "/api/anim/ejemplo");
+    prueba("API: el ejemplo por defecto es el del lienzo libre (sin MODO ni CONFIG)", h.codigo === 200 && /\[ESCENA 1 \| 00:00-00:05\]/.test(h.json.guion) && /DIRECCION_VISUAL/.test(h.json.guion) && !/CONFIG|MODO:/.test(h.json.guion));
+    h = await http("GET", "/api/anim/ejemplo?formato=simple");
+    prueba("API: formato=simple sigue entregando el ejemplo de siempre", h.codigo === 200 && /MODO: SVG/.test(h.json.guion));
     h = await http("POST", "/api/accion", { nombre: "anim-ejemplo", opciones: { sfx: true } });
     await esperarTrabajo();
     h = await http("GET", "/api/anim/estado");
@@ -399,6 +492,18 @@ try {
     console.log("\nCapturas reales (Chrome + WebGL)");
     spawnSync(process.execPath, [p("scripts", "anim", "ejemplo.mjs")], { cwd: RAIZ });
     const rp = spawnSync(process.execPath, [p("scripts", "anim", "previa.mjs"), "--qa"], { cwd: RAIZ, encoding: "utf8", timeout: 600000 });
+    const { verificarEscenas } = await import("./verificar.mjs");
+    const vOk = await verificarEscenas(JSON.parse(readFileSync(ANIM, "utf8")));
+    prueba("verificarEscenas (Chrome real): las 5 escenas del ejemplo libre se ejecutan bien, sin texto fuera del lienzo, vacías ni congeladas", vOk.errores.length === 0, vOk.errores.join(" | "));
+    const mala = JSON.parse(readFileSync(ANIM, "utf8"));
+    const fabrica = async (n, cuerpo) => { const e = mala.escenas[n - 1]; e.codigo = cuerpo; e.js = await compilarEscena(cuerpo); };
+    await fabrica(1, "const f = useCurrentFrame();\nreturn <AbsoluteFill>{cosaQueNoExiste(f)}</AbsoluteFill>;");
+    await fabrica(2, 'const f = useCurrentFrame();\nreturn <AbsoluteFill><KineticText texto="PALABRAINTERMINABLEQUESEDESBORDA" tam={200} maxAncho={2000} x={-300} /></AbsoluteFill>;');
+    await fabrica(3, "const f = useCurrentFrame();\nreturn <AbsoluteFill style={{ background: C.fondo }} />;");
+    await fabrica(4, "const f = useCurrentFrame();\nreturn <AbsoluteFill style={{ background: `linear-gradient(${C.fondo}, ${C.azul})` }}><Svg><circle cx={540} cy={900} r={300} fill={C.acento} /></Svg></AbsoluteFill>;");
+    const vMal = await verificarEscenas(mala);
+    prueba("verificarEscenas detecta en el navegador: error de ejecución (1), escena vacía (3) y escena congelada (4)", vMal.errores.some((e) => /^Escena 1:.*falla al ejecutarse.*cosaQueNoExiste/.test(e)) && vMal.errores.some((e) => /^Escena 3:.*vac[ií]a/.test(e)) && vMal.errores.some((e) => /^Escena 4:.*congelada/.test(e)) && !vMal.errores.some((e) => /^Escena 5:/.test(e)), vMal.errores.join(" | "));
+    prueba("la escena rota no tumba el video: se dibuja la de rescate y el error queda registrado", vMal.errores.some((e) => /^Escena 1:/.test(e)));
     prueba("previa.mjs --qa: 5 capturas (SVG y 3D con WebGL) y QA sin problemas", rp.status === 0 && readdirSync(p("trabajo", "tmp", "anim-previa")).filter((x) => /^escena-\d+\.png$/.test(x)).length === 5, (rp.stdout + rp.stderr).slice(-500));
   }
 } finally {

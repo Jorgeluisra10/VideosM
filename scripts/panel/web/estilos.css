@@ -204,3 +204,5 @@ textarea.guion:focus, .estudio select:focus { outline: 2px solid var(--azul); ou
 .rejilla-capturas figcaption { font-size: .78rem; color: var(--suave); text-align: center; margin-top: 4px; }
 video.reel { width: 270px; max-width: 100%; aspect-ratio: 9 / 16; background: #000; border-radius: 12px; }
 .ajustes-3 .campo:first-child { grid-column: 1 / -1; }
+.chip.modo-LIBRE { color: var(--acento); border-color: color-mix(in srgb, var(--acento) 50%, var(--borde)); }
+details.otros-formatos { margin-top: -4px; } details.otros-formatos summary { cursor: pointer; padding: 2px 0; } details.otros-formatos .fila { margin-top: 6px; }

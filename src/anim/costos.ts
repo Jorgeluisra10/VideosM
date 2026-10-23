@@ -94,3 +94,20 @@ export function estimarGeo(e: EntradaGeo): Estimacion {
   if (m.razonador && e.lineasGeo > 0) tokensSalida += RAZONAMIENTO_BASE + RAZONAMIENTO_ESCENA * e.escenas;
   return { tokensEntrada, tokensSalida, costo: (tokensEntrada * m.entrada + tokensSalida * m.salida) / 1_000_000 };
 }
+
+export type EntradaLibre = { modelo: string; caracteres: number; escenas: number; sfx: boolean; tokensSistema: number; tokensEsquema: number };
+
+/** Tokens de salida por escena del LIENZO LIBRE: el código de una composición (SVG/3D/tipografía, 40–80 líneas de JSX) ronda 900–1.800 tokens. */
+export const SALIDA_POR_ESCENA_LIBRE = 1300;
+
+/**
+ * Estimación del lienzo libre: entrada = prompt de sistema (describe el kit y la paleta) + esquema + texto de dirección y voz;
+ * salida = código de cada escena (+ razonamiento oculto en los modelos «o»). El código varía: es una estimación.
+ */
+export function estimarLibre(e: EntradaLibre): Estimacion {
+  const m = modeloPorId(e.modelo);
+  const tokensEntrada = e.tokensSistema + e.tokensEsquema + tokensDeTexto(e.caracteres) + 24 * e.escenas;
+  let tokensSalida = SALIDA_POR_ESCENA_LIBRE * e.escenas + (e.sfx ? SALIDA_SFX * e.escenas : 0);
+  if (m.razonador && e.escenas > 0) tokensSalida += RAZONAMIENTO_BASE + RAZONAMIENTO_ESCENA * e.escenas;
+  return { tokensEntrada, tokensSalida, costo: (tokensEntrada * m.entrada + tokensSalida * m.salida) / 1_000_000 };
+}

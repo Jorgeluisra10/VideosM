@@ -1,568 +1,118 @@
 {
  "version": 1,
- "titulo": "IMNOBA · Publica gratis",
+ "titulo": "¿Y si publicar tu casa, tu apartamento",
  "paleta": "imnoba",
  "sfx": true,
  "fps": 60,
  "duracion": 28,
  "escenas": [
   {
+   "modo": "LIBRE",
    "n": 1,
+   "tema": "oscuro",
+   "codigo": "const f = useCurrentFrame();\nconst p = interpolate(f, [0, 150], [0, 1], { extrapolateRight: \"clamp\", easing: ease });\nconst q = interpolate(f, [70, 220], [0, 1], { extrapolateLeft: \"clamp\", extrapolateRight: \"clamp\", easing: ease });\nconst casa = \"M 120 1280 L 120 1040 L 320 860 L 520 1040 L 520 1280 Z M 270 1280 L 270 1140 L 370 1140 L 370 1280 M 425 965 L 425 885 L 475 885 L 475 1005\";\nconst auto = \"M 610 1280 L 610 1200 Q 610 1160 655 1150 L 720 1090 Q 745 1065 790 1065 L 880 1065 Q 925 1065 950 1100 L 985 1150 Q 1010 1160 1010 1200 L 1010 1280 Z M 735 1150 L 780 1095 L 840 1095 L 840 1150 Z M 860 1150 L 860 1095 L 905 1095 L 940 1150 Z M 658 1285 a 42 42 0 1 0 84 0 a 42 42 0 1 0 -84 0 M 878 1285 a 42 42 0 1 0 84 0 a 42 42 0 1 0 -84 0\";\nreturn (\n  <AbsoluteFill style={{ background: `radial-gradient(circle at 50% 62%, ${C.fondo2}, ${C.fondo} 70%)` }}>\n    <AmbientParticles count={46} color={C.acento} speed={0.7} size={3.2} />\n    <Camera2D zoom={1 + 0.12 * p} y={-30 * p} focusX={540} focusY={1050} shake={[{ t: 2.7, amp: 9 }]}>\n      <Svg>\n        <g transform=\"translate(0 230)\">\n        <defs>\n          <radialGradient id=\"e1halo\" cx=\"50%\" cy=\"50%\" r=\"50%\">\n            <stop offset=\"0\" stopColor={C.acento} stopOpacity=\"0.35\" />\n            <stop offset=\"1\" stopColor={C.acento} stopOpacity=\"0\" />\n          </radialGradient>\n        </defs>\n        <ellipse cx={540} cy={1120} rx={520 + float(f, 14, 150)} ry={330} fill=\"url(#e1halo)\" opacity={p} />\n        <OrganicDrawPath d=\"M 80 1280 L 1000 1280\" progress={p} stroke={C.suave} strokeWidth={3} opacity={0.5} />\n        <OrganicDrawPath d={casa} progress={p} stroke={C.acento} strokeWidth={9} glow fill={C.acento} fillOpacity={0.12} />\n        <OrganicDrawPath d={auto} progress={q} stroke={C.blanco} strokeWidth={8} glow />\n        <FloatingAnnotation targetX={320} targetY={860} label=\"Publicar en IMNOBA\" value=\"$0 COP\" color={C.acento} delay={2.2} dy={-195} dx={230} width={360} />\n        </g>\n      </Svg>\n      <KineticText texto=\"¿Y SI PUBLICAR FUERA GRATIS?\" y={430} tam={108} color={C.blanco} delay={0.3} maxAncho={800} />\n    </Camera2D>\n  </AbsoluteFill>\n);",
+   "js": "function Escena() {\n  const f = useCurrentFrame();\n  const p = interpolate(f, [0, 150], [0, 1], { extrapolateRight: \"clamp\", easing: ease });\n  const q = interpolate(f, [70, 220], [0, 1], { extrapolateLeft: \"clamp\", extrapolateRight: \"clamp\", easing: ease });\n  const casa = \"M 120 1280 L 120 1040 L 320 860 L 520 1040 L 520 1280 Z M 270 1280 L 270 1140 L 370 1140 L 370 1280 M 425 965 L 425 885 L 475 885 L 475 1005\";\n  const auto = \"M 610 1280 L 610 1200 Q 610 1160 655 1150 L 720 1090 Q 745 1065 790 1065 L 880 1065 Q 925 1065 950 1100 L 985 1150 Q 1010 1160 1010 1200 L 1010 1280 Z M 735 1150 L 780 1095 L 840 1095 L 840 1150 Z M 860 1150 L 860 1095 L 905 1095 L 940 1150 Z M 658 1285 a 42 42 0 1 0 84 0 a 42 42 0 1 0 -84 0 M 878 1285 a 42 42 0 1 0 84 0 a 42 42 0 1 0 -84 0\";\n  return /* @__PURE__ */ React.createElement(AbsoluteFill, { style: { background: `radial-gradient(circle at 50% 62%, ${C.fondo2}, ${C.fondo} 70%)` } }, /* @__PURE__ */ React.createElement(AmbientParticles, { count: 46, color: C.acento, speed: 0.7, size: 3.2 }), /* @__PURE__ */ React.createElement(Camera2D, { zoom: 1 + 0.12 * p, y: -30 * p, focusX: 540, focusY: 1050, shake: [{ t: 2.7, amp: 9 }] }, /* @__PURE__ */ React.createElement(Svg, null, /* @__PURE__ */ React.createElement(\"g\", { transform: \"translate(0 230)\" }, /* @__PURE__ */ React.createElement(\"defs\", null, /* @__PURE__ */ React.createElement(\"radialGradient\", { id: \"e1halo\", cx: \"50%\", cy: \"50%\", r: \"50%\" }, /* @__PURE__ */ React.createElement(\"stop\", { offset: \"0\", stopColor: C.acento, stopOpacity: \"0.35\" }), /* @__PURE__ */ React.createElement(\"stop\", { offset: \"1\", stopColor: C.acento, stopOpacity: \"0\" }))), /* @__PURE__ */ React.createElement(\"ellipse\", { cx: 540, cy: 1120, rx: 520 + float(f, 14, 150), ry: 330, fill: \"url(#e1halo)\", opacity: p }), /* @__PURE__ */ React.createElement(OrganicDrawPath, { d: \"M 80 1280 L 1000 1280\", progress: p, stroke: C.suave, strokeWidth: 3, opacity: 0.5 }), /* @__PURE__ */ React.createElement(OrganicDrawPath, { d: casa, progress: p, stroke: C.acento, strokeWidth: 9, glow: true, fill: C.acento, fillOpacity: 0.12 }), /* @__PURE__ */ React.createElement(OrganicDrawPath, { d: auto, progress: q, stroke: C.blanco, strokeWidth: 8, glow: true }), /* @__PURE__ */ React.createElement(FloatingAnnotation, { targetX: 320, targetY: 860, label: \"Publicar en IMNOBA\", value: \"$0 COP\", color: C.acento, delay: 2.2, dy: -195, dx: 230, width: 360 }))), /* @__PURE__ */ React.createElement(KineticText, { texto: \"\\xBFY SI PUBLICAR FUERA GRATIS?\", y: 430, tam: 108, color: C.blanco, delay: 0.3, maxAncho: 800 })));\n}\n",
+   "sfx": [
+    {
+     "t": 0,
+     "tipo": "whoosh",
+     "vol": 0.15
+    },
+    {
+     "t": 3,
+     "tipo": "ding",
+     "vol": 0.15
+    }
+   ],
    "inicio": 0,
    "fin": 5,
    "dur": 5,
-   "texto": "Locución: ¿Y si publicar tu casa, apartamento o vehículo fuera completamente gratis?\nVisual: icono de casa y de auto con ondas amarillas, título grande «¿Y si publicar fuera GRATIS?», tarjeta con «$0 COP».",
-   "tema": "oscuro",
-   "modo": "SVG",
-   "ambiente": "particulas",
-   "elementos": [
-    {
-     "tipo": "ondas",
-     "t": 0,
-     "hasta": null,
-     "entrada": "aparecer",
-     "x": 540,
-     "y": 560,
-     "radio": 430,
-     "color": "acento"
-    },
-    {
-     "tipo": "icono",
-     "t": 0.3,
-     "hasta": null,
-     "entrada": "pop",
-     "nombre": "casa",
-     "x": 350,
-     "y": 560,
-     "tam": 210,
-     "color": "acento",
-     "fondo": true
-    },
-    {
-     "tipo": "icono",
-     "t": 0.6,
-     "hasta": null,
-     "entrada": "pop",
-     "nombre": "auto",
-     "x": 730,
-     "y": 560,
-     "tam": 210,
-     "color": "blanco",
-     "fondo": true
-    },
-    {
-     "tipo": "texto",
-     "t": 0.9,
-     "hasta": null,
-     "entrada": "deslizar-arriba",
-     "texto": "¿Y si publicar\nfuera GRATIS?",
-     "x": 540,
-     "y": 960,
-     "tam": 92,
-     "color": "tinta",
-     "peso": 900,
-     "alinear": "centro"
-    },
-    {
-     "tipo": "trazo",
-     "t": 1.6,
-     "hasta": null,
-     "entrada": "aparecer",
-     "d": "M 200 1090 Q 540 1135 880 1090",
-     "color": "acento",
-     "grosor": 9,
-     "relleno": null,
-     "dur": 0.8,
-     "brillo": true
-    },
-    {
-     "tipo": "texto",
-     "t": 2,
-     "hasta": null,
-     "entrada": "aparecer",
-     "texto": "Casas, apartamentos y vehículos",
-     "x": 540,
-     "y": 1230,
-     "tam": 52,
-     "color": "suave",
-     "peso": 700,
-     "alinear": "centro"
-    },
-    {
-     "tipo": "tarjeta",
-     "t": 2.8,
-     "hasta": null,
-     "entrada": "pop",
-     "x": 540,
-     "y": 1480,
-     "w": 740,
-     "h": 230,
-     "titulo": "Publicar en IMNOBA",
-     "valor": "$0 COP",
-     "icono": "dinero",
-     "color": "acento"
-    }
-   ],
-   "sfx": [
-    {
-     "t": 0.3,
-     "tipo": "pop",
-     "vol": 0.15
-    },
-    {
-     "t": 0.6,
-     "tipo": "pop",
-     "vol": 0.15
-    },
-    {
-     "t": 0.9,
-     "tipo": "whoosh",
-     "vol": 0.12
-    },
-    {
-     "t": 2.8,
-     "tipo": "cash",
-     "vol": 0.2
-    }
-   ]
+   "texto": "Noche azul profunda con partículas doradas que suben. La cámara se acerca despacio a la silueta de una casa que se dibuja sola con un trazo dorado brillante; a su lado se dibuja un auto. Las letras «¿Y SI PUBLICAR FUERA GRATIS?» entran una a una con física spring en la parte alta. Una anotación flotante señala el techo: «Publicar en IMNOBA · $0 COP». Sacudida suave de cámara cuando aparece el «$0»."
   },
   {
+   "modo": "LIBRE",
    "n": 2,
+   "tema": "oscuro",
+   "codigo": "const f = useCurrentFrame();\nconst t = useT();\nconst p = ease(clamp(t / DUR));\nreturn (\n  <AbsoluteFill style={{ background: `linear-gradient(180deg, ${C.fondo} 0%, ${C.fondo2} 58%, ${C.fondo} 100%)` }}>\n    <AmbientParticles count={34} color={C.azul} speed={0.5} flow=\"drift\" shape=\"cell\" size={3} opacity={0.55} />\n    <KineticText texto=\"TU INMUEBLE, A LA VISTA\" y={470} tam={134} color={C.blanco} modo=\"palabras\" delay={0.2} />\n    <Isometric3DStage cameraAngle=\"iso\" lighting=\"dramatic\" orbit={75} distance={34} dollyTo={26} lookAt={[0, 1.2, 0]} fov={36}>\n      <Ciudad3D filas={5} columnas={4} semilla={12} resaltar={9} color={C.primario} delay={0.2} />\n    </Isometric3DStage>\n    <Svg>\n      <FloatingAnnotation targetX={540} targetY={1130 - 40 * p} label=\"Tu inmueble\" value=\"Visible 24/7\" color={C.acento} delay={2.3} dx={0} dy={300} width={380} />\n    </Svg>\n  </AbsoluteFill>\n);",
+   "js": "function Escena() {\n  const f = useCurrentFrame();\n  const t = useT();\n  const p = ease(clamp(t / DUR));\n  return /* @__PURE__ */ React.createElement(AbsoluteFill, { style: { background: `linear-gradient(180deg, ${C.fondo} 0%, ${C.fondo2} 58%, ${C.fondo} 100%)` } }, /* @__PURE__ */ React.createElement(AmbientParticles, { count: 34, color: C.azul, speed: 0.5, flow: \"drift\", shape: \"cell\", size: 3, opacity: 0.55 }), /* @__PURE__ */ React.createElement(KineticText, { texto: \"TU INMUEBLE, A LA VISTA\", y: 470, tam: 134, color: C.blanco, modo: \"palabras\", delay: 0.2 }), /* @__PURE__ */ React.createElement(Isometric3DStage, { cameraAngle: \"iso\", lighting: \"dramatic\", orbit: 75, distance: 34, dollyTo: 26, lookAt: [0, 1.2, 0], fov: 36 }, /* @__PURE__ */ React.createElement(Ciudad3D, { filas: 5, columnas: 4, semilla: 12, resaltar: 9, color: C.primario, delay: 0.2 })), /* @__PURE__ */ React.createElement(Svg, null, /* @__PURE__ */ React.createElement(FloatingAnnotation, { targetX: 540, targetY: 1130 - 40 * p, label: \"Tu inmueble\", value: \"Visible 24/7\", color: C.acento, delay: 2.3, dx: 0, dy: 300, width: 380 })));\n}\n",
+   "sfx": [
+    {
+     "t": 2,
+     "tipo": "pop",
+     "vol": 0.15
+    }
+   ],
    "inicio": 5,
    "fin": 10,
    "dur": 5,
-   "texto": "Locución: En IMNOBA tu inmueble se ve en el mapa de la ciudad, las 24 horas.\nVisual: maqueta 3D de una ciudad con una manzana resaltada en amarillo y un edificio alto; la cámara orbita.",
+   "texto": "Escenario 3D dramático: una maqueta de ciudad flota y la cámara orbita; una manzana se ilumina en dorado. El texto «TU INMUEBLE, A LA VISTA» queda detrás de los edificios, grande. Una anotación flotante marca la manzana dorada: «Visible · 24/7»."
+  },
+  {
+   "modo": "LIBRE",
+   "n": 3,
    "tema": "oscuro",
-   "modo": "3D",
-   "camara": {
-    "radio": 34,
-    "radioFin": 27,
-    "altura": 20,
-    "alturaFin": 14,
-    "anguloInicio": 20,
-    "anguloFin": 90,
-    "mirarX": 0,
-    "mirarY": 1.6,
-    "mirarZ": 0,
-    "fov": 40
-   },
-   "luces": {
-    "ambiente": 0.5,
-    "direccional": 1.4,
-    "dirX": 8,
-    "dirY": 14,
-    "dirZ": 6,
-    "puntoAcento": 0.8
-   },
-   "suelo": "plano",
-   "niebla": false,
-   "objetos": [
-    {
-     "tipo": "ciudad",
-     "t": 0,
-     "dur": 1.8,
-     "entrada": "crecer",
-     "giro": 0,
-     "color": "primario",
-     "emisivo": false,
-     "semilla": 12,
-     "filas": 5,
-     "columnas": 4,
-     "resaltar": 9
-    },
-    {
-     "tipo": "edificio",
-     "t": 1.2,
-     "dur": 1.4,
-     "entrada": "crecer",
-     "giro": 0,
-     "color": "primario",
-     "emisivo": false,
-     "x": 0,
-     "z": -9,
-     "w": 1.8,
-     "d": 1.8,
-     "pisos": 26,
-     "remate": "antena",
-     "ventanas": true
-    }
-   ],
-   "overlay": [
-    {
-     "tipo": "texto",
-     "t": 0.5,
-     "hasta": null,
-     "entrada": "deslizar-abajo",
-     "texto": "Tu inmueble,\na la vista",
-     "x": 540,
-     "y": 300,
-     "tam": 80,
-     "color": "tinta",
-     "peso": 900,
-     "alinear": "centro"
-    },
-    {
-     "tipo": "tarjeta",
-     "t": 2.4,
-     "hasta": null,
-     "entrada": "pop",
-     "x": 540,
-     "y": 1580,
-     "w": 760,
-     "h": 200,
-     "titulo": "Visible en el mapa",
-     "valor": "24 / 7",
-     "icono": "pin",
-     "color": "acento"
-    }
-   ],
+   "codigo": "const f = useCurrentFrame();\nconst p = interpolate(f, [0, 170], [0, 1], { extrapolateRight: \"clamp\", easing: ease });\nconst zoom = 1 + 0.1 * interpolate(f, [90, 330], [0, 1], { extrapolateLeft: \"clamp\", extrapolateRight: \"clamp\", easing: ease });\nconst muros = \"M 140 560 H 940 V 1360 H 140 Z M 560 560 V 1010 M 140 1010 H 940 M 560 800 H 940 M 420 1010 V 1360 M 700 1010 V 1360\";\nconst puertas = \"M 560 930 A 70 70 0 0 1 630 1010 M 420 1290 A 70 70 0 0 0 490 1360 M 700 1290 A 70 70 0 0 1 630 1360\";\nreturn (\n  <AbsoluteFill style={{ background: `radial-gradient(circle at 50% 45%, #FFFFFF, ${C.papel})` }}>\n    <AmbientParticles count={26} color={C.azul} speed={0.4} flow=\"drift\" size={2.6} opacity={0.3} />\n    <KineticText texto=\"CADA METRO, DIBUJADO\" y={290} tam={88} color={C.fondo} delay={0.15} modo=\"palabras\" />\n    <Camera2D zoom={zoom} focusX={540} focusY={960}>\n      <Svg>\n        <rect x={140} y={560} width={800} height={800} fill={C.azul} fillOpacity={0.07 * p} />\n        <OrganicDrawPath d={muros} progress={p} stroke={C.fondo} strokeWidth={10} glow />\n        <OrganicDrawPath d={puertas} progress={interpolate(f, [100, 190], [0, 1], { extrapolateLeft: \"clamp\", extrapolateRight: \"clamp\" })} stroke={C.azul} strokeWidth={4} />\n        <FloatingAnnotation targetX={350} targetY={785} label=\"Sala\" value=\"24 m²\" color={C.acento} lineColor={C.fondo} delay={2.0} dx={0} dy={-300} width={300} />\n        <FloatingAnnotation targetX={750} targetY={680} label=\"Cocina\" value=\"9 m²\" color={C.blanco} lineColor={C.azul} delay={2.6} dx={0} dy={-215} width={290} />\n        <FloatingAnnotation targetX={750} targetY={905} label=\"Balcón\" value=\"6 m²\" color={C.esmeralda} lineColor={C.esmeralda} delay={3.2} dx={0} dy={545} width={290} />\n      </Svg>\n    </Camera2D>\n    <KineticText texto=\"74 m²\" y={1665} tam={170} color={C.fondo} delay={4.0} modo=\"escala\" />\n    <Svg>\n      <OrganicDrawPath d=\"M 340 1760 Q 540 1790 740 1760\" progress={entra(f, 4.5)} stroke={C.acento} strokeWidth={12} glow />\n    </Svg>\n  </AbsoluteFill>\n);",
+   "js": "function Escena() {\n  const f = useCurrentFrame();\n  const p = interpolate(f, [0, 170], [0, 1], { extrapolateRight: \"clamp\", easing: ease });\n  const zoom = 1 + 0.1 * interpolate(f, [90, 330], [0, 1], { extrapolateLeft: \"clamp\", extrapolateRight: \"clamp\", easing: ease });\n  const muros = \"M 140 560 H 940 V 1360 H 140 Z M 560 560 V 1010 M 140 1010 H 940 M 560 800 H 940 M 420 1010 V 1360 M 700 1010 V 1360\";\n  const puertas = \"M 560 930 A 70 70 0 0 1 630 1010 M 420 1290 A 70 70 0 0 0 490 1360 M 700 1290 A 70 70 0 0 1 630 1360\";\n  return /* @__PURE__ */ React.createElement(AbsoluteFill, { style: { background: `radial-gradient(circle at 50% 45%, #FFFFFF, ${C.papel})` } }, /* @__PURE__ */ React.createElement(AmbientParticles, { count: 26, color: C.azul, speed: 0.4, flow: \"drift\", size: 2.6, opacity: 0.3 }), /* @__PURE__ */ React.createElement(KineticText, { texto: \"CADA METRO, DIBUJADO\", y: 290, tam: 88, color: C.fondo, delay: 0.15, modo: \"palabras\" }), /* @__PURE__ */ React.createElement(Camera2D, { zoom, focusX: 540, focusY: 960 }, /* @__PURE__ */ React.createElement(Svg, null, /* @__PURE__ */ React.createElement(\"rect\", { x: 140, y: 560, width: 800, height: 800, fill: C.azul, fillOpacity: 0.07 * p }), /* @__PURE__ */ React.createElement(OrganicDrawPath, { d: muros, progress: p, stroke: C.fondo, strokeWidth: 10, glow: true }), /* @__PURE__ */ React.createElement(OrganicDrawPath, { d: puertas, progress: interpolate(f, [100, 190], [0, 1], { extrapolateLeft: \"clamp\", extrapolateRight: \"clamp\" }), stroke: C.azul, strokeWidth: 4 }), /* @__PURE__ */ React.createElement(FloatingAnnotation, { targetX: 350, targetY: 785, label: \"Sala\", value: \"24 m\\xB2\", color: C.acento, lineColor: C.fondo, delay: 2, dx: 0, dy: -300, width: 300 }), /* @__PURE__ */ React.createElement(FloatingAnnotation, { targetX: 750, targetY: 680, label: \"Cocina\", value: \"9 m\\xB2\", color: C.blanco, lineColor: C.azul, delay: 2.6, dx: 0, dy: -215, width: 290 }), /* @__PURE__ */ React.createElement(FloatingAnnotation, { targetX: 750, targetY: 905, label: \"Balc\\xF3n\", value: \"6 m\\xB2\", color: C.esmeralda, lineColor: C.esmeralda, delay: 3.2, dx: 0, dy: 545, width: 290 }))), /* @__PURE__ */ React.createElement(KineticText, { texto: \"74 m\\xB2\", y: 1665, tam: 170, color: C.fondo, delay: 4, modo: \"escala\" }), /* @__PURE__ */ React.createElement(Svg, null, /* @__PURE__ */ React.createElement(OrganicDrawPath, { d: \"M 340 1760 Q 540 1790 740 1760\", progress: entra(f, 4.5), stroke: C.acento, strokeWidth: 12, glow: true })));\n}\n",
    "sfx": [
     {
-     "t": 0.1,
-     "tipo": "whoosh",
+     "t": 2,
+     "tipo": "tick",
      "vol": 0.15
     },
     {
-     "t": 1.2,
-     "tipo": "thud",
-     "vol": 0.12
-    },
-    {
-     "t": 2.4,
+     "t": 4,
      "tipo": "ding",
      "vol": 0.15
     }
-   ]
-  },
-  {
-   "n": 3,
+   ],
    "inicio": 10,
    "fin": 16,
    "dur": 6,
-   "texto": "Locución: Con fotos claras y un plano que explica cada metro cuadrado.\nVisual: plano arquitectónico de un apartamento de 74 m² (sala 24, cocina 9, balcón 6, dos habitaciones de 14 y baño de 7) que se dibuja solo.",
-   "tema": "claro",
-   "modo": "SVG",
-   "ambiente": "cuadricula",
-   "elementos": [
-    {
-     "tipo": "texto",
-     "t": 0.1,
-     "hasta": null,
-     "entrada": "deslizar-abajo",
-     "texto": "Cada metro,\nbien dibujado",
-     "x": 540,
-     "y": 330,
-     "tam": 70,
-     "color": "tinta",
-     "peso": 900,
-     "alinear": "centro"
-    },
-    {
-     "tipo": "plano",
-     "t": 0.7,
-     "hasta": null,
-     "entrada": "aparecer",
-     "x": 540,
-     "y": 900,
-     "w": 820,
-     "h": 760,
-     "color": "primario",
-     "cotas": true,
-     "dur": 3.2,
-     "habitaciones": [
-      {
-       "nombre": "Sala",
-       "x": 0,
-       "y": 0,
-       "w": 58,
-       "h": 50,
-       "m2": 24
-      },
-      {
-       "nombre": "Cocina",
-       "x": 58,
-       "y": 0,
-       "w": 42,
-       "h": 32,
-       "m2": 9
-      },
-      {
-       "nombre": "Balcón",
-       "x": 58,
-       "y": 32,
-       "w": 42,
-       "h": 18,
-       "m2": 6
-      },
-      {
-       "nombre": "Hab. 1",
-       "x": 0,
-       "y": 50,
-       "w": 36,
-       "h": 50,
-       "m2": 14
-      },
-      {
-       "nombre": "Baño",
-       "x": 36,
-       "y": 50,
-       "w": 24,
-       "h": 50,
-       "m2": 7
-      },
-      {
-       "nombre": "Hab. 2",
-       "x": 60,
-       "y": 50,
-       "w": 40,
-       "h": 50,
-       "m2": 14
-      }
-     ]
-    },
-    {
-     "tipo": "tarjeta",
-     "t": 4,
-     "hasta": null,
-     "entrada": "pop",
-     "x": 540,
-     "y": 1530,
-     "w": 780,
-     "h": 210,
-     "titulo": "Área construida",
-     "valor": "74 m² · 2 hab",
-     "icono": "medida",
-     "color": "primario"
-    }
-   ],
+   "texto": "Fondo papel claro. El plano de un apartamento se dibuja solo con trazo azul profundo y la cámara se acerca con suavidad. Tres anotaciones flotantes aparecen una tras otra: «Sala · 24 m²», «Cocina · 9 m²», «Balcón · 6 m²». Al final, la cifra «74 m²» entra con tipografía cinética y un subrayado dorado que se dibuja."
+  },
+  {
+   "modo": "LIBRE",
+   "n": 4,
+   "tema": "oscuro",
+   "codigo": "const f = useCurrentFrame();\nconst t = useT();\nconst pct = Math.round(58 * ease(clamp((t - 1.6) / 2.4)));\nreturn (\n  <AbsoluteFill style={{ background: `radial-gradient(circle at 50% 72%, ${C.fondo2}, ${C.fondo})` }}>\n    <AmbientParticles count={40} color={C.acento} speed={0.8} size={3} opacity={0.5} />\n    <KineticText texto=\"TU INVERSIÓN CRECE\" y={380} tam={122} color={C.blanco} delay={0.2} />\n    <Isometric3DStage cameraAngle=\"low\" lighting=\"dramatic\" orbit={-40} distance={34} dollyTo={27} lookAt={[0, 3.0, 0]} fov={40} float={0.1}>\n      <Barras3D datos={[100, 112, 127, 141, 158]} hmax={8} ancho={1.2} sep={0.5} color={C.primario} delay={0.5} />\n    </Isometric3DStage>\n    <KineticText texto={`+${pct} %`} y={1560} tam={240} color={C.acento} delay={1.2} modo=\"escala\" />\n    <Svg>\n      <text data-texto=\"Ejemplo ilustrativo\" x={540} y={1720 + float(f, 4, 140)} textAnchor=\"middle\" fontFamily={FUENTE} fontWeight={600} fontSize={40} fill={C.suave} opacity={entra(f, 2.2)}>Ejemplo ilustrativo</text>\n    </Svg>\n  </AbsoluteFill>\n);",
+   "js": "function Escena() {\n  const f = useCurrentFrame();\n  const t = useT();\n  const pct = Math.round(58 * ease(clamp((t - 1.6) / 2.4)));\n  return /* @__PURE__ */ React.createElement(AbsoluteFill, { style: { background: `radial-gradient(circle at 50% 72%, ${C.fondo2}, ${C.fondo})` } }, /* @__PURE__ */ React.createElement(AmbientParticles, { count: 40, color: C.acento, speed: 0.8, size: 3, opacity: 0.5 }), /* @__PURE__ */ React.createElement(KineticText, { texto: \"TU INVERSI\\xD3N CRECE\", y: 380, tam: 122, color: C.blanco, delay: 0.2 }), /* @__PURE__ */ React.createElement(Isometric3DStage, { cameraAngle: \"low\", lighting: \"dramatic\", orbit: -40, distance: 34, dollyTo: 27, lookAt: [0, 3, 0], fov: 40, float: 0.1 }, /* @__PURE__ */ React.createElement(Barras3D, { datos: [100, 112, 127, 141, 158], hmax: 8, ancho: 1.2, sep: 0.5, color: C.primario, delay: 0.5 })), /* @__PURE__ */ React.createElement(KineticText, { texto: `+${pct} %`, y: 1560, tam: 240, color: C.acento, delay: 1.2, modo: \"escala\" }), /* @__PURE__ */ React.createElement(Svg, null, /* @__PURE__ */ React.createElement(\"text\", { \"data-texto\": \"Ejemplo ilustrativo\", x: 540, y: 1720 + float(f, 4, 140), textAnchor: \"middle\", fontFamily: FUENTE, fontWeight: 600, fontSize: 40, fill: C.suave, opacity: entra(f, 2.2) }, \"Ejemplo ilustrativo\")));\n}\n",
    "sfx": [
     {
-     "t": 0.1,
-     "tipo": "whoosh",
-     "vol": 0.12
-    },
-    {
-     "t": 0.7,
-     "tipo": "tick",
-     "vol": 0.1
+     "t": 1,
+     "tipo": "pop",
+     "vol": 0.15
     },
     {
      "t": 4,
      "tipo": "ding",
      "vol": 0.15
     }
-   ]
-  },
-  {
-   "n": 4,
+   ],
    "inicio": 16,
    "fin": 22,
    "dur": 6,
-   "texto": "Locución: Y tu inversión crece con el tiempo.\nVisual: cinco barras 3D crecientes (100, 112, 127, 141, 158) y un contador +58 %, aclarando que es un ejemplo ilustrativo.",
-   "tema": "oscuro",
-   "modo": "3D",
-   "camara": {
-    "radio": 32,
-    "radioFin": 26,
-    "altura": 10,
-    "alturaFin": 8,
-    "anguloInicio": -35,
-    "anguloFin": 30,
-    "mirarX": 0,
-    "mirarY": 3.6,
-    "mirarZ": 0,
-    "fov": 40
-   },
-   "luces": {
-    "ambiente": 0.5,
-    "direccional": 1.4,
-    "dirX": 8,
-    "dirY": 14,
-    "dirZ": 6,
-    "puntoAcento": 1
-   },
-   "suelo": "plano",
-   "niebla": false,
-   "objetos": [
-    {
-     "tipo": "barras3d",
-     "t": 0.2,
-     "dur": 1,
-     "entrada": "crecer",
-     "giro": 0,
-     "color": "primario",
-     "emisivo": false,
-     "x": 0,
-     "z": 0,
-     "w": 1.2,
-     "sep": 0.5,
-     "hmax": 8.5,
-     "datos": [
-      100,
-      112,
-      127,
-      141,
-      158
-     ]
-    }
-   ],
-   "overlay": [
-    {
-     "tipo": "texto",
-     "t": 0.2,
-     "hasta": null,
-     "entrada": "deslizar-abajo",
-     "texto": "Tu inversión crece",
-     "x": 540,
-     "y": 300,
-     "tam": 76,
-     "color": "tinta",
-     "peso": 900,
-     "alinear": "centro"
-    },
-    {
-     "tipo": "contador",
-     "t": 1.4,
-     "hasta": null,
-     "entrada": "aparecer",
-     "desde": 0,
-     "valor": 58,
-     "prefijo": "+",
-     "sufijo": "%",
-     "decimales": 0,
-     "x": 540,
-     "y": 1500,
-     "tam": 160,
-     "color": "acento",
-     "dur": 2.2
-    },
-    {
-     "tipo": "texto",
-     "t": 1.8,
-     "hasta": null,
-     "entrada": "aparecer",
-     "texto": "Ejemplo ilustrativo",
-     "x": 540,
-     "y": 1650,
-     "tam": 44,
-     "color": "suave",
-     "peso": 500,
-     "alinear": "centro"
-    }
-   ],
-   "sfx": [
-    {
-     "t": 0.3,
-     "tipo": "pop",
-     "vol": 0.12
-    },
-    {
-     "t": 1.4,
-     "tipo": "tick",
-     "vol": 0.1
-    },
-    {
-     "t": 3.6,
-     "tipo": "ding",
-     "vol": 0.18
-    }
-   ]
+   "texto": "Cámara baja y dramática sobre cinco barras 3D crecientes (100, 112, 127, 141, 158) que suben en cascada, la mayor en dorado. El título «TU INVERSIÓN CRECE» va detrás; abajo, un contador «+58 %» sube con tipografía cinética. Una nota pequeña: «Ejemplo ilustrativo»."
   },
   {
+   "modo": "LIBRE",
    "n": 5,
+   "tema": "oscuro",
+   "codigo": "const f = useCurrentFrame();\nconst t = useT();\nconst pulso = ((t * 0.9) % 1);\nreturn (\n  <AbsoluteFill style={{ background: `radial-gradient(circle at 50% 38%, ${C.acento}55, ${C.fondo2} 38%, ${C.fondo} 78%)` }}>\n    <AmbientParticles count={56} color={C.acento} speed={0.9} shape=\"cell\" flow=\"swirl\" size={2.8} opacity={0.6} />\n    <Camera2D zoom={1.02 + 0.03 * Math.sin(t)}>\n      <Svg>\n        {[0, 1, 2].map((i) => {\n          const k = (pulso + i / 3) % 1;\n          return <circle key={i} cx={540} cy={640} r={90 + 330 * k} fill=\"none\" stroke={C.esmeralda} strokeWidth={5} opacity={(1 - k) * 0.7 * entra(f, 0.3)} />;\n        })}\n        <circle cx={540} cy={640} r={118 * entra(f, 0.2)} fill={C.esmeralda} fillOpacity={0.2} stroke={C.esmeralda} strokeWidth={6} />\n        <OrganicDrawPath d=\"M 482 644 L 523 688 L 600 596\" progress={interpolate(f, [24, 80], [0, 1], { extrapolateLeft: \"clamp\", extrapolateRight: \"clamp\", easing: ease })} stroke={C.blanco} strokeWidth={16} glow />\n      </Svg>\n      <KineticText texto=\"IMNOBA\" y={1110} tam={210} color={C.blanco} delay={0.6} modo=\"escala\" />\n      <KineticText texto=\"Publica hoy mismo. Es gratis.\" y={1390} tam={64} color={C.acento} delay={1.4} modo=\"palabras\" peso={800} />\n    </Camera2D>\n  </AbsoluteFill>\n);",
+   "js": "function Escena() {\n  const f = useCurrentFrame();\n  const t = useT();\n  const pulso = t * 0.9 % 1;\n  return /* @__PURE__ */ React.createElement(AbsoluteFill, { style: { background: `radial-gradient(circle at 50% 38%, ${C.acento}55, ${C.fondo2} 38%, ${C.fondo} 78%)` } }, /* @__PURE__ */ React.createElement(AmbientParticles, { count: 56, color: C.acento, speed: 0.9, shape: \"cell\", flow: \"swirl\", size: 2.8, opacity: 0.6 }), /* @__PURE__ */ React.createElement(Camera2D, { zoom: 1.02 + 0.03 * Math.sin(t) }, /* @__PURE__ */ React.createElement(Svg, null, [0, 1, 2].map((i) => {\n    const k = (pulso + i / 3) % 1;\n    return /* @__PURE__ */ React.createElement(\"circle\", { key: i, cx: 540, cy: 640, r: 90 + 330 * k, fill: \"none\", stroke: C.esmeralda, strokeWidth: 5, opacity: (1 - k) * 0.7 * entra(f, 0.3) });\n  }), /* @__PURE__ */ React.createElement(\"circle\", { cx: 540, cy: 640, r: 118 * entra(f, 0.2), fill: C.esmeralda, fillOpacity: 0.2, stroke: C.esmeralda, strokeWidth: 6 }), /* @__PURE__ */ React.createElement(OrganicDrawPath, { d: \"M 482 644 L 523 688 L 600 596\", progress: interpolate(f, [24, 80], [0, 1], { extrapolateLeft: \"clamp\", extrapolateRight: \"clamp\", easing: ease }), stroke: C.blanco, strokeWidth: 16, glow: true })), /* @__PURE__ */ React.createElement(KineticText, { texto: \"IMNOBA\", y: 1110, tam: 210, color: C.blanco, delay: 0.6, modo: \"escala\" }), /* @__PURE__ */ React.createElement(KineticText, { texto: \"Publica hoy mismo. Es gratis.\", y: 1390, tam: 64, color: C.acento, delay: 1.4, modo: \"palabras\", peso: 800 })));\n}\n",
+   "sfx": [
+    {
+     "t": 1,
+     "tipo": "ding",
+     "vol": 0.15
+    }
+   ],
    "inicio": 22,
    "fin": 28,
    "dur": 6,
-   "texto": "Locución: Publica hoy mismo en IMNOBA. Es gratis.\nVisual: logo IMNOBA en texto, casa que se dibuja con trazo, lista de tres beneficios y tarjeta «Es gratis».",
-   "tema": "claro",
-   "modo": "SVG",
-   "ambiente": "aros",
-   "elementos": [
-    {
-     "tipo": "texto",
-     "t": 0.2,
-     "hasta": null,
-     "entrada": "pop",
-     "texto": "IMNOBA",
-     "x": 540,
-     "y": 300,
-     "tam": 130,
-     "color": "primario",
-     "peso": 900,
-     "alinear": "centro"
-    },
-    {
-     "tipo": "trazo",
-     "t": 0.5,
-     "hasta": null,
-     "entrada": "aparecer",
-     "d": "M 340 700 L 540 520 L 740 700 L 740 880 L 340 880 Z",
-     "color": "primario",
-     "grosor": 11,
-     "relleno": "primario",
-     "dur": 1.3,
-     "brillo": true
-    },
-    {
-     "tipo": "trazo",
-     "t": 1.7,
-     "hasta": null,
-     "entrada": "aparecer",
-     "d": "M 480 880 L 480 770 L 600 770 L 600 880",
-     "color": "acento",
-     "grosor": 11,
-     "relleno": null,
-     "dur": 0.8,
-     "brillo": false
-    },
-    {
-     "tipo": "lista",
-     "t": 2.2,
-     "hasta": null,
-     "entrada": "aparecer",
-     "items": [
-      "Publicas gratis",
-      "Fotos y mapa incluidos",
-      "Contacto directo"
-     ],
-     "x": 140,
-     "y": 990,
-     "tam": 56,
-     "color": "tinta"
-    },
-    {
-     "tipo": "tarjeta",
-     "t": 3.8,
-     "hasta": null,
-     "entrada": "pop",
-     "x": 540,
-     "y": 1560,
-     "w": 800,
-     "h": 220,
-     "titulo": "Publica hoy mismo",
-     "valor": "Es gratis",
-     "icono": "check",
-     "color": "ok"
-    }
-   ],
-   "sfx": [
-    {
-     "t": 0.2,
-     "tipo": "pop",
-     "vol": 0.15
-    },
-    {
-     "t": 0.5,
-     "tipo": "whoosh",
-     "vol": 0.1
-    },
-    {
-     "t": 3.8,
-     "tipo": "ding",
-     "vol": 0.18
-    }
-   ]
+   "texto": "Remate cálido: resplandor dorado radial, partículas en espiral y un anillo que pulsa alrededor de un check esmeralda. «IMNOBA» cae al centro en grande y debajo «Publica hoy mismo. Es gratis.» entra palabra por palabra."
   }
  ],
- "uso": null
+ "uso": null,
+ "hud": false,
+ "formato": "libre"
 }

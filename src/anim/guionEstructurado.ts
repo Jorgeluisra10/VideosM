@@ -66,9 +66,15 @@ const RANGO_NUM = new RegExp(`(${NUM})\\s*(?:–|—|→|\\.\\.|\\ba\\b|-)\\s*($
 
 const aNumero = (s: string): number => Number(s.replace(",", "."));
 
-/** ¿El texto usa el formato estructurado? (hay [CONFIG] o cabeceras con FONDO:) */
-export function detectarFormato(texto: string): "simple" | "estructurado" {
-  return /^\s*\[\s*CONFIG\s*\]/im.test(texto) || /^\s*\[\s*ESCENA[^\]]*FONDO\s*:/im.test(texto) ? "estructurado" : "simple";
+/**
+ * Qué formato usa el texto: «estructurado» (hay [CONFIG] o cabeceras con FONDO:), «simple» (cabeceras con MODO: SVG/3D)
+ * o «libre» (cabeceras solo con el tiempo: [ESCENA 1 | 00:00-00:05]).
+ */
+export function detectarFormato(texto: string): "simple" | "estructurado" | "libre" {
+  if (/^\s*\[\s*CONFIG\s*\]/im.test(texto) || /^\s*\[\s*ESCENA[^\]]*FONDO\s*:/im.test(texto)) return "estructurado";
+  const cabeceras = texto.split("\n").filter((l) => /^\s*\[\s*ESCENA\s*\d+\s*\|/i.test(l));
+  if (cabeceras.length && cabeceras.every((l) => !/MODO\s*:/i.test(l))) return "libre";
+  return "simple";
 }
 
 function parsearGauge(valor: string, i: number, avisos: string[]): ConfigGauge | null {

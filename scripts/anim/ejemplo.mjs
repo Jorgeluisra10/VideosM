@@ -12,10 +12,24 @@ const args = process.argv.slice(2);
 const N = await cargarNucleoAnim();
 const paleta = args.find((a) => a.startsWith("--paleta="))?.split("=")[1] ?? "imnoba";
 const sfx = !args.includes("--sin-sfx");
-const estructurado = N.esRetro(paleta) && args.find((a) => a.startsWith("--formato="))?.split("=")[1] !== "simple";
+const formato = args.find((a) => a.startsWith("--formato="))?.split("=")[1] ?? "libre";
+const libre = formato === "libre";
+const estructurado = formato === "hud";
 let anim, correcciones;
 
-if (estructurado) {
+if (libre) {
+  // LIENZO LIBRE (por defecto): el código de cada escena está escrito a mano en ejemplos/animacion-libre y pasa por la misma política y compilación que el de la IA
+  const dir = join(RAIZ, "ejemplos", "animacion-libre");
+  const parsed = N.parsearLibre(readFileSync(join(dir, "guion-libre.txt"), "utf8"));
+  if (parsed.errores.length) throw new Error(parsed.errores.join("\n"));
+  const { ensamblarLibre } = await import("./libre.mjs");
+  const r = await ensamblarLibre(JSON.parse(readFileSync(join(dir, "codigo-ia.json"), "utf8")), parsed.escenas, { paleta, sfx });
+  if (!r.anim) throw new Error(r.errores.join("\n"));
+  anim = r.anim;
+  correcciones = r.correcciones;
+  mkdirSync(join(RAIZ, "trabajo", "salida"), { recursive: true });
+  writeFileSync(join(RAIZ, "trabajo", "salida", "guion-locucion.txt"), N.textoLocucion(parsed.escenas.map((e) => ({ ...e, vozOff: e.voz })), anim.titulo));
+} else if (estructurado) {
   // formato estructurado ([CONFIG], FONDO, GEO, HUD…): título, HUD y sonido salen del guion; la geometría, del archivo de ejemplo
   const dir = join(RAIZ, "ejemplos", "animacion-retro");
   const parsed = N.parsearEstructurado(readFileSync(join(dir, "guion-estructurado.txt"), "utf8"));
@@ -38,4 +52,4 @@ if (estructurado) {
 }
 for (const c of correcciones) console.log("  ~", c);
 writeFileSync(join(RAIZ, "src", "data", "animacion.json"), JSON.stringify(anim, null, 1));
-console.log(`✔ src/data/animacion.json · ${anim.escenas.length} escenas · ${anim.duracion} s · SFX ${sfx ? "sí" : "no"}${estructurado ? " · formato estructurado" : ""}`);
+console.log(`✔ src/data/animacion.json · ${anim.escenas.length} escenas · ${anim.duracion} s · SFX ${sfx ? "sí" : "no"}${libre ? " · lienzo libre" : estructurado ? " · formato estructurado" : ""}`);

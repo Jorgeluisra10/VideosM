@@ -186,6 +186,21 @@ function marcasSimuladas(texto, conDefectos = false) {
 // ---------------------------------------------------------------------------
 // Animación (motor SVG + 3D): respuesta simulada a partir del ejemplo incluido
 // ---------------------------------------------------------------------------
+/** Lienzo libre: responde con el código de ejemplo (una escena por bloque, en orden cíclico). */
+function respuestaLibre(entradaTexto, esquema) {
+  const ej = JSON.parse(readFileSync(join(RAIZ, "ejemplos", "animacion-libre", "codigo-ia.json"), "utf8"));
+  const conSfx = JSON.stringify(esquema ?? {}).includes('"vol"');
+  const escenas = [];
+  let i = 0;
+  for (const m of entradaTexto.matchAll(/\[ESCENA (\d+) \| [\d.]+ s\]/g)) {
+    const base = JSON.parse(JSON.stringify(ej.escenas[i++ % ej.escenas.length]));
+    base.n = Number(m[1]);
+    if (!conSfx) delete base.sfx;
+    escenas.push(base);
+  }
+  return { escenas };
+}
+
 /** Formato estructurado: responde con la geometría de ejemplo (una escena por bloque, según su modo). */
 function respuestaGeometria(entradaTexto) {
   const ej = JSON.parse(readFileSync(join(RAIZ, "ejemplos", "animacion-retro", "geometria-ia.json"), "utf8"));
@@ -234,6 +249,16 @@ export function iniciarMock(puerto = 0) {
   let esquemaPlan = null;
 
   const respuesta = (nombre, entradaTexto, hayImagenes, esquema) => {
+    if (nombre === "escenas_libres") {
+      const datos = respuestaLibre(entradaTexto, esquema);
+      const repara = /Tu código anterior/.test(entradaTexto);
+      // MOCK_ANIM_ERRORES=1: la PRIMERA respuesta de la escena 1 usa Math.random (la política lo rechaza); la reparación llega bien.
+      // MOCK_LIBRE_SIEMPRE_MAL=1: la escena 1 llega mal SIEMPRE (prueba el rescate).
+      const mal = (process.env.MOCK_ANIM_ERRORES && !una.anim && !repara) || process.env.MOCK_LIBRE_SIEMPRE_MAL;
+      if (mal) { const e1 = datos.escenas.find((e) => e.n === 1); if (e1) e1.codigo = "const f = useCurrentFrame(); const r = Math.random();\nreturn <AbsoluteFill />;"; }
+      una.anim = true;
+      return datos;
+    }
     if (nombre === "geometria_central") {
       const datos = respuestaGeometria(entradaTexto);
       // MOCK_ANIM_ERRORES=1: la PRIMERA respuesta trae un path SVG inválido (prueba la reparación acotada)
@@ -411,7 +436,7 @@ export function iniciarMock(puerto = 0) {
         if (p.type === "input_image" || p.type === "image_url") imagenes++;
       }
       estado.porEsquema[nombre ?? "?"] = (estado.porEsquema[nombre ?? "?"] ?? 0) + 1;
-      if (nombre === "animacion_imnoba" || nombre === "geometria_central") estado.ultimaAnimacion = { nombre, usuario: entradaTexto, modelo: b.model, razonamiento: b.reasoning_effort ?? null, maxTokens: b.max_completion_tokens ?? null, estricto: Boolean(estricto), ruta, sistema: (b.messages ?? []).find((m) => m.role === "system")?.content ?? "" };
+      if (nombre === "animacion_imnoba" || nombre === "geometria_central" || nombre === "escenas_libres") estado.ultimaAnimacion = { nombre, usuario: entradaTexto, modelo: b.model, razonamiento: b.reasoning_effort ?? null, maxTokens: b.max_completion_tokens ?? null, estricto: Boolean(estricto), ruta, sistema: (b.messages ?? []).find((m) => m.role === "system")?.content ?? "" };
 
       const datos = respuesta(nombre, entradaTexto, imagenes, esquema);
       if (esquema && estricto && nombre !== "plan") {
@@ -419,7 +444,7 @@ export function iniciarMock(puerto = 0) {
         if (errs.length) estado.avisos.push(`Respuesta simulada de ${nombre} fuera de esquema: ${errs.slice(0, 3).join(" | ")}`);
       }
       const texto = JSON.stringify(datos);
-      const sistemaLen = nombre === "animacion_imnoba" || nombre === "geometria_central" ? (b.messages ?? []).filter((m) => m.role === "system").reduce((n, m) => n + String(m.content).length, 0) + JSON.stringify(esquema ?? {}).length : 0;
+      const sistemaLen = nombre === "animacion_imnoba" || nombre === "geometria_central" || nombre === "escenas_libres" ? (b.messages ?? []).filter((m) => m.role === "system").reduce((n, m) => n + String(m.content).length, 0) + JSON.stringify(esquema ?? {}).length : 0;
       const uso = { input: Math.round((entradaTexto.length + sistemaLen) / 3.6) + imagenes * 800, output: Math.round(texto.length / 3) };
       if (esResponses) {
         return json(200, { id: "resp_mock", object: "response", status: "completed", model: b.model, output: [{ type: "message", role: "assistant", content: [{ type: "output_text", text: texto }] }], usage: { input_tokens: uso.input, output_tokens: uso.output } });

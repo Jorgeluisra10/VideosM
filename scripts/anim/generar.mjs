@@ -26,6 +26,7 @@ const guion = archivo === "-" ? readFileSync(0, "utf8") : readFileSync(archivo, 
 const modelo = valor("modelo", "gpt-4.1-mini");
 const sfx = !/^(no|false|0|off)$/i.test(valor("sfx", "si"));
 const paleta = valor("paleta", "imnoba");
+const verificar = !args.includes("--sin-verificar") && !process.env.VIDEMED_SIN_VERIFICAR;
 
 const cfg = configuracion();
 if (!cfg.clave) {
@@ -35,7 +36,7 @@ if (!cfg.clave) {
 
 try {
   const N = await cargarNucleoAnim();
-  const { anim, uso, locucion } = await generarAnimacion({ guion, modelo, sfx, paleta, log: (s) => console.log(s), cfg });
+  const { anim, uso, locucion } = await generarAnimacion({ guion, modelo, sfx, paleta, log: (s) => console.log(s), cfg, verificar });
   writeFileSync(join(RAIZ, "src", "data", "animacion.json"), JSON.stringify(anim, null, 1));
   // VOZ_OFF → guion-locucion.txt (solo para que lo leas al grabar; no se dibuja ni se envía a la IA)
   if (locucion) {

@@ -52,6 +52,29 @@ Al abrir el panel entras al **Estudio**: una pantalla minimalista para producir 
 3. **Incluir SFX automáticos: Sí / No.** No = el video sale **sin pista de audio** y la IA ni siquiera pide efectos.
 4. **Paleta:** *IMNOBA (Colores oficiales de marca)* o *Medicina Clínica*.
 
+### 🎨 Lienzo libre (Dirección de Arte) — el formato por defecto
+
+Ya no hay layout fijo: **cada escena es dueña de todo el lienzo 1080×1920** y la IA actúa como director de motion graphics que **escribe el código** de la composición (React/SVG/Three.js) usando el *Kit de Pinceles Cinematográficos*. Los títulos son parte de la animación (entran con física spring, van detrás de los objetos 3D…) y un medidor solo aparece si tu guion lo pide, como elemento flotante.
+
+```
+[ESCENA 1 | 00:00-00:05]
+VOZ_OFF: Lo que tú grabas (la IA lo recibe solo como contexto de ritmo y sentido).
+DIRECCION_VISUAL: Noche azul con partículas doradas. La cámara se acerca a una casa que se dibuja sola con trazo dorado; las letras «¿Y SI PUBLICAR FUERA GRATIS?» entran con spring; una anotación flotante señala el techo: «$0 COP».
+SFX: whoosh, ding
+
+[ESCENA 2 | 00:05-00:10]
+VOZ_OFF: …
+DIRECCION_VISUAL: …
+```
+
+- **Lo único obligatorio es el tiempo** `[ESCENA n | MM:SS-MM:SS]`. No hay `[CONFIG]`, ni `GAUGE_n`, ni `FONDO`/`MODO`. Dentro de la escena escribes con libertad: lo que no lleve clave se toma como dirección visual (también valen `GEO`, `H1`, `SUB`, `HUD (00:01-00:03): …` o cualquier `CLAVE:` en mayúsculas; se entienden como dirección).
+- **SFX opcional:** si pones un nombre que no existe no pasa nada (suena `pop`, o `whoosh` si suena a movimiento). Con «SFX = No» no hay audio.
+- **Kit de Pinceles** (`src/primitives/MotionKit.tsx`): `Camera2D` (zoom, paneo, giro, sacudidas de impacto) · `OrganicDrawPath` (trazos Bézier que se dibujan solos, con brillo) · `FloatingAnnotation` (punto pulsante + línea curva + tarjeta con un dato) · `Isometric3DStage` (3D con luces volumétricas, sombras suaves, flotación orgánica y cámara orbital; con `Cuerpo3D`, `Barras3D`, `Ciudad3D`) · `AmbientParticles` · `KineticText` (tipografía cinética) · `Icono` (lucide/healthicons) · helpers `entra`, `float`, `rand`, `ease`.
+- **Paleta:** la IA recibe los colores con nombre y hex. IMNOBA: azul profundo `#02224E`, dorado `#FFC500`, blanco `#F8FAFC`, coral `#E63926`, esmeralda `#10B981` (más azul de apoyo y papel claro). También Medicina y las dos retro.
+- **Seguridad y fiabilidad:** el código generado pasa una política (sin red, sin `window`/`document`, sin `Math.random`/`Date`, debe usar `useCurrentFrame`), se compila con esbuild, se **verifica en Chrome real** (errores de ejecución, texto fuera del lienzo, escenas vacías o congeladas) y, si algo falla, la IA lo repara (máx. 2 rondas, solo esa escena). Si aún falla, esa escena se sustituye por una versión sencilla y el video sigue; el panel te lo avisa.
+- **Costo estimado:** entrada = prompt del kit + paleta + texto de dirección y voz; salida ≈ 1.300 tokens de código por escena (+70 con SFX). Se muestra antes de generar y el real (`usage`) al terminar; suma las llamadas de reparación.
+- **Botones:** «📋 Copiar Prompt Formateador» copia la plantilla de Dirección de Arte Libre y «🧪 Cargar ejemplo» carga el ejemplo IMNOBA de 5 escenas (casa y auto que se dibujan, ciudad 3D, plano con anotaciones, barras 3D, remate). Los formatos HUD retro y simple siguen en «Otros formatos». Terminal: `npm run anim:ejemplo` · `npm run anim:generar -- --guion=mi.txt`.
+
 ### 🧪 Estilo Retro-Científica (cuarto control: paleta)
 
 En **4 · Paleta** hay dos opciones extra que cambian TODO el lenguaje visual (IMNOBA y Medicina siguen igual y IMNOBA sigue siendo la predeterminada):
@@ -63,7 +86,7 @@ En **4 · Paleta** hay dos opciones extra que cambian TODO el lenguaje visual (I
 
 Qué cambia al elegirla: **título H1** en Inter Black, MAYÚSCULAS, centrado en Y = 180 · **subtítulo tipo terminal** (JetBrains Mono, se escribe carácter a carácter a 30 ms con un bloque que parpadea cada 250 ms) · **escenario central** en y 350–1450 · **HUD fijo abajo** (y 1450–1920) con hasta 3 medidores de aguja · modelos 3D en **cel-shading** (3 niveles duros: luz, base y sombra con semitono de puntos a 45°, contornos negros y divisiones visibles) · **modelo paramétrico** (toroide, esfera, columna o superficie) que se deforma con los medidores · movimiento con `cubic-bezier(0.22, 1, 0.36, 1)` y **sin rebotes** · transición **Halftone Wipe** (círculos de semitono que crecen hasta cubrir la pantalla). Cuando un medidor cambia, **en el mismo fotograma** se mueven la aguja, el número, el borde (lima 6 px; los inactivos quedan a 2 px y opacidad 0,4) y el modelo.
 
-En tu guion no cambia nada: sigues usando los bloques `[ESCENA N | inicio-fin | MODO: SVG|3D]`. Si quieres que un medidor mande en el modelo, pídelo en «Visual» (por ejemplo: «un toroide que se deforma con ÁREA, UBICACIÓN y DEMANDA»). **🧪 Cargar ejemplo** carga el ejemplo retro cuando tienes esa paleta elegida. Terminal: `npm run anim:ejemplo -- --paleta=retro`.
+En tu guion no cambia nada: sigues usando los bloques `[ESCENA N | inicio-fin | MODO: SVG|3D]`. Si quieres que un medidor mande en el modelo, pídelo en «Visual» (por ejemplo: «un toroide que se deforma con ÁREA, UBICACIÓN y DEMANDA»). **🧪 Cargar ejemplo** carga el ejemplo retro cuando tienes esa paleta elegida. Terminal: `npm run anim:ejemplo -- --formato=hud --paleta=retro`.
 
 ### 🧾 Formato estructurado (`[CONFIG]` + `FONDO` + `GEO` + `HUD`) — el más barato
 
@@ -96,7 +119,7 @@ SFX (00:04): ding
 | `HUD (MM:SS-MM:SS)` | a qué valor va cada aguja en esa ventana (`G1=75 \| G2=- \| G3=40`; `-` la deja quieta) |
 | `SFX (MM:SS)` | efectos: pop, whoosh, heartbeat, cash, tick, thud, zap, ding |
 
-Con **`HUD: OFF`** desaparece el panel de medidores y el escenario crece hasta y 1800. El botón **📋 Copiar Prompt Formateador** copia esta plantilla (y **📋 Formato simple** la de siempre). **Costo estimado** de este formato: entrada = caracteres GEO ÷ 4 + prompt de sistema compacto (+ el esquema, que OpenAI también cuenta) y salida = 450 tokens por línea GEO; el costo real sale de `usage`. En el ejemplo (5 líneas GEO) ronda $0.007 con `gpt-4.1-mini`, frente a ≈ $0.014 del formato simple retro. Terminal: `npm run anim:ejemplo -- --paleta=retro`.
+Con **`HUD: OFF`** desaparece el panel de medidores y el escenario crece hasta y 1800. El botón **📋 Copiar Prompt Formateador** copia esta plantilla (y **📋 Formato simple** la de siempre). **Costo estimado** de este formato: entrada = caracteres GEO ÷ 4 + prompt de sistema compacto (+ el esquema, que OpenAI también cuenta) y salida = 450 tokens por línea GEO; el costo real sale de `usage`. En el ejemplo (5 líneas GEO) ronda $0.007 con `gpt-4.1-mini`, frente a ≈ $0.014 del formato simple retro. Terminal: `npm run anim:ejemplo -- --formato=hud --paleta=retro`.
 
 **Costo en dólares:** mientras escribes ves **«Costo estimado de este video: $0.0000 USD»** (cuenta los bloques `[ESCENA]` y los caracteres; es una estimación). Al terminar de generar ves el **costo real** con 5 decimales, calculado con los `prompt_tokens` y `completion_tokens` que devuelve OpenAI × el precio del modelo.
 

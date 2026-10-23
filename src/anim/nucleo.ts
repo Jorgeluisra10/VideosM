@@ -1,6 +1,8 @@
 /** Punto de entrada único para el puente esbuild (Node y navegador del panel): todo lo puro del motor de animación. */
 export * from "./parser";
 export * from "./guionEstructurado";
+export * from "./guionLibre";
+export * from "./libre";
 export * from "./costos";
 export * from "./paletas";
 export * from "./esquema";

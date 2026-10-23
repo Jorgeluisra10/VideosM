@@ -305,7 +305,8 @@ function estadoAnim() {
   }
   return {
     claveOpenAI: claveOpenAI(),
-    locucion: a?.formato === "estructurado" && existsSync(salida("guion-locucion.txt")) ? { url: "/salida/guion-locucion.txt?descargar=1" } : null,
+    locucion: ["estructurado", "libre"].includes(a?.formato) && existsSync(salida("guion-locucion.txt")) ? { url: "/salida/guion-locucion.txt?descargar=1" } : null,
+    rescatadas: a ? a.escenas.filter((e) => e.fallback).map((e) => e.n) : [],
     animacion: a ? { titulo: a.titulo, paleta: a.paleta, sfx: a.sfx, formato: a.formato ?? "simple", hud: a.hud !== false, duracion: a.duracion, uso: a.uso, escenas: a.escenas.map((e) => ({ n: e.n, modo: e.modo, inicio: e.inicio, fin: e.fin, dur: e.dur, tema: e.tema, texto: e.texto })) } : null,
     previas: existsSync(dirPrevia) ? readdirSync(dirPrevia).filter((f) => /^escena-\d+\.png$/.test(f)).sort().map((f) => `/anim-previa/${f}?t=${statSync(join(dirPrevia, f)).mtimeMs | 0}`) : [],
     qa,
@@ -321,18 +322,19 @@ async function lanzarAnim(nombre, o = {}) {
       pedir(claveOpenAI() || o.prueba, "Para generar la animación hace falta la clave de OpenAI (Ajustes). Mientras tanto puedes cargar el ejemplo y renderizarlo gratis.", 412);
       pedir(typeof o.guion === "string" && o.guion.trim(), "Escribe o pega el guion en bloques.");
       const N = await cargarNucleoAnim();
-      const r = N.detectarFormato(o.guion) === "estructurado" ? N.parsearEstructurado(o.guion) : N.parsearGuion(o.guion);
+      const fmt = N.detectarFormato(o.guion);
+      const r = fmt === "estructurado" ? N.parsearEstructurado(o.guion) : fmt === "libre" ? N.parsearLibre(o.guion) : N.parsearGuion(o.guion);
       pedir(!r.errores.length, `El guion tiene problemas:\n· ${r.errores.join("\n· ")}`);
       const modelo = N.MODELOS.some((m) => m.id === o.modelo) ? o.modelo : "gpt-4.1-mini";
       const paleta = N.PALETAS[o.paleta] ? o.paleta : "imnoba";
       mkdirSync(dirAnim(), { recursive: true });
       const f = dirAnim("guion-actual.txt");
       writeFileSync(f, o.guion);
-      return lanzar({ nombre, titulo: "Generar animación (SVG + 3D)", pasos: [{ titulo: `Dibujar ${r.escenas.length} escenas con ${modelo}`, cmd: [script("anim", "generar.mjs"), `--guion=${f}`, `--modelo=${modelo}`, `--sfx=${o.sfx === false ? "no" : "si"}`, `--paleta=${paleta}`] }] });
+      return lanzar({ nombre, titulo: "Generar animación (SVG + 3D)", pasos: [{ titulo: `Dibujar ${r.escenas.length} escenas con ${modelo}`, cmd: [script("anim", "generar.mjs"), `--guion=${f}`, `--modelo=${modelo}`, `--sfx=${o.sfx === false ? "no" : "si"}`, `--paleta=${paleta}`, ...(o.verificar === false ? ["--sin-verificar"] : [])] }] });
     }
     case "anim-ejemplo": {
       const N_PALETAS = Object.keys((await cargarNucleoAnim()).PALETAS);
-      return lanzar({ nombre, titulo: "Cargar el ejemplo IMNOBA", pasos: [{ titulo: "Cargar el ejemplo (sin IA, sin coste)", cmd: [script("anim", "ejemplo.mjs"), ...(o.sfx === false ? ["--sin-sfx"] : []), ...(o.paleta ? [`--paleta=${N_PALETAS.includes(o.paleta) ? o.paleta : "imnoba"}`] : [])] }] });
+      return lanzar({ nombre, titulo: "Cargar el ejemplo IMNOBA", pasos: [{ titulo: "Cargar el ejemplo (sin IA, sin coste)", cmd: [script("anim", "ejemplo.mjs"), ...(o.sfx === false ? ["--sin-sfx"] : []), ...(o.paleta ? [`--paleta=${N_PALETAS.includes(o.paleta) ? o.paleta : "imnoba"}`] : []), ...(["libre", "hud", "simple"].includes(o.formato) ? [`--formato=${o.formato}`] : [])] }] });
     }
     case "anim-previa":
       pedir(leerAnim(), "Primero genera la animación (o carga el ejemplo).", 412);
@@ -444,9 +446,11 @@ async function api(req, res, url) {
   if (m === "GET" && recurso === "anim" && a === "estado") return json(res, 200, estadoAnim());
   if (m === "GET" && recurso === "anim" && a === "ejemplo") {
     const N = await cargarNucleoAnim();
-    // paleta retro → ejemplo en formato estructurado ([CONFIG], FONDO, GEO, HUD…); el resto → formato simple
+    // por defecto, el ejemplo del lienzo libre; formato=hud → estructurado retro ([CONFIG], FONDO, GEO, HUD…); formato=simple → el de siempre
+    const formato = url.searchParams.get("formato") ?? "libre";
     const retro = N.esRetro(url.searchParams.get("paleta") ?? "");
-    return json(res, 200, { guion: readFileSync(join(RAIZ, "ejemplos", retro ? "animacion-retro" : "animacion-imnoba", retro ? "guion-estructurado.txt" : "guion.txt"), "utf8") });
+    const archivo = formato === "hud" ? ["animacion-retro", "guion-estructurado.txt"] : formato === "simple" ? [retro ? "animacion-retro" : "animacion-imnoba", "guion.txt"] : ["animacion-libre", "guion-libre.txt"];
+    return json(res, 200, { guion: readFileSync(join(RAIZ, "ejemplos", ...archivo), "utf8") });
   }
   if (m === "POST" && recurso === "anim" && a === "cargar") {
     const o = await leerJson(req);
