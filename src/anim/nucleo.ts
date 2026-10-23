@@ -3,6 +3,7 @@ export * from "./parser";
 export * from "./guionEstructurado";
 export * from "./guionLibre";
 export * from "./libre";
+export * from "./estudio";
 export * from "./costos";
 export * from "./paletas";
 export * from "./esquema";

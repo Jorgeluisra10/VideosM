@@ -451,6 +451,7 @@ export function validar(a: Animacion): string[] {
     if (Math.abs(e.inicio - t) > 0.01) p.push(`Escena ${e.n}: empieza en ${e.inicio} s pero la anterior terminó en ${t} s`);
     t = e.fin;
     if (e.modo === "LIBRE" && !e.js) p.push(`Escena ${e.n}: sin código compilado`);
+    if (e.modo === "ESTUDIO" && !(e.layout && e.primary?.shape && e.headline?.text)) p.push(`Escena ${e.n}: le falta el layout, la figura o el titular`);
     if (e.modo === "SVG" && (e.elementos?.length ?? 0) < 1) p.push(`Escena ${e.n}: sin elementos`);
     if (e.modo === "3D" && (e.objetos?.length ?? 0) < 1) p.push(`Escena ${e.n}: sin objetos 3D`);
   }

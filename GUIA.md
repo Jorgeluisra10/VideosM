@@ -41,18 +41,37 @@ Al abrir el panel entras al **Estudio**: una pantalla minimalista para producir 
 
 1. **Caja de texto grande** con el guion y lo que quieres ver, en bloques:
    ```
-   [ESCENA 1 | 0s-4s | MODO: SVG]
-   Locución: …   Visual: …
+   [ESCENA 1 | 0s-7s | MODO: SVG]
+   VOZ_OFF: lo que tú grabas (no se dibuja).
+   DIRECCION_VISUAL: composición central: una esfera roja que late. Titular "BOGOTÁ ESTÁ ATRAPADA".
+   SFX: whoosh, pop
 
-   [ESCENA 2 | 4s-9s | MODO: 3D]
-   Locución: …   Visual: …
+   [ESCENA 2 | 7s-14s | MODO: 3D]
+   VOZ_OFF: …
+   DIRECCION_VISUAL: …
    ```
-   `MODO: SVG` = vectores 2D (planos arquitectónicos que se dibujan solos, gráficas dinámicas, iconos animados). `MODO: 3D` = Three.js (edificios 3D, barras financieras, maquetas, cámara que orbita). Si tu guion está desordenado, pulsa **📋 Copiar Prompt Formateador**, pégalo en ChatGPT/Claude con tu texto y vuelve a pegar aquí el resultado. **🧪 Cargar ejemplo** te deja probar sin escribir nada.
-2. **Modelo de IA** (con sus precios): `gpt-4.1-mini` (Recomendado calidad/precio), `o4-mini` (máxima precisión 3D y geometría), `gpt-4o-mini` (ultra económico, SVG), `gpt-4.1` (Estudio Pro).
+   `MODO: SVG` = diseño plano con volumen (halftone, brillo, reflejo). `MODO: 3D` = lo mismo con una cámara orbital suave en perspectiva. Si tu guion está desordenado, pulsa **📋 Copiar Prompt Formateador**, pégalo en ChatGPT/Claude con tu texto y vuelve a pegar aquí el resultado. **🧪 Cargar ejemplo** te deja probar sin escribir nada.
+2. **Modelo de IA** (con sus precios): `gpt-4.1-mini` (Recomendado calidad/precio), `o4-mini` (máxima precisión 3D y geometría), `gpt-4o-mini` (ultra económico), `gpt-4.1-nano` (mínimo costo: $0.10 / $0.40 por millón), `gpt-4.1` (Estudio Pro). Con el motor de estudio funcionan **todos** igual de bien, porque la IA solo elige entre opciones cerradas.
 3. **Incluir SFX automáticos: Sí / No.** No = el video sale **sin pista de audio** y la IA ni siquiera pide efectos.
 4. **Paleta:** *IMNOBA (Colores oficiales de marca)* o *Medicina Clínica*.
 
-### 🎨 Lienzo libre (Dirección de Arte) — el formato por defecto
+### 🎬 Motor de estudio (JSON ultraligero) — el formato por defecto
+
+Estilo geométrico minimalista de estudio (tipo Kurzgesagt / Vox): fondo oscuro con bokeh y ruido sutil, figuras con **sombreado halftone**, **brillo especular**, **sombra de piso en puntos**, **reflejo de suelo** y **estela de movimiento**. La IA **ya no escribe código ni coordenadas**: por escena devuelve un JSON de ~120 tokens y el motor prefabricado (`src/estudio/`) lo dibuja siempre limpio, sin figuras deformes ni elementos encimados.
+
+```json
+{"scenes":[{"id":1,"layout":"HERO_CENTER","headline":{"text":"BOGOTÁ ESTÁ ATRAPADA","highlightWord":"ATRAPADA"},
+  "primary":{"shape":"SPHERE","colorRole":"danger","detail":"glowing_core","motionTrail":false,"animation":"heartbeat_pulse"}}]}
+```
+
+- **4 layouts** (más del 60 % del lienzo queda libre; nada se pisa; texto ≥ 80 px de los bordes): `HERO_CENTER` (titular + una figura grande) · `VERSUS_50_50` (dos columnas, contadores de 3 dígitos que suben, símbolo `> < =` con rebote, etiquetas) · `DIAGONAL_SPLIT` (diagonal a −22°: estado 1 arriba y 2 abajo, con estela y reflejo) · `SURFACE_STAGE` (una cápsula se estira y avanza como oruga sobre una barra metálica con reflejo).
+- **5 figuras** (`GeometricPrimitive`): `SPHERE` (con orejas de perro o gato, rostro, abeja con rayas, células o núcleo luminoso) · `CAPSULE` · `CELLULAR_OVAL` (huevo con células de Voronoi que crecen) · `RING_GAUGE` (anillo con aguja de velocímetro o partículas) · `PILL_TOWER` (torre con ondas y destellos). Colores por **rol** (`accent`, `primary`, `danger`, `success`, `neutral`, `secondary`): salen de tu paleta (IMNOBA: fondo `#02224E`, dorado `#FFC500`).
+- **La IA traduce tu `DIRECCION_VISUAL`**: «composición central» → HERO_CENTER, «comparación 50/50» → VERSUS, «pantalla dividida diagonal» → DIAGONAL, «superficie/barra/oruga» → SURFACE; el titular y los datos salen de lo que pongas **entre comillas** o de las cifras de la `VOZ_OFF`. Hay un traductor **local** con las mismas reglas (`escenaPorReglas`) que completa lo que la IA omita o escriba mal, así que **no hay reparaciones costosas**.
+- **Parser intacto**: acepta exactamente `[ESCENA 1 | 0s-7s | MODO: SVG|3D]` (y el formato libre `[ESCENA 1 | 00:00-00:07]`) con `VOZ_OFF:`, `DIRECCION_VISUAL:` y `SFX:`. Los SFX son locales: los que escribas mandan; si no, se ponen automáticos según lo que aparece; con «SFX = No» no hay audio.
+- **Costos** (`response_format: json_object`, 1 llamada): entrada = prompt fijo ≈ 600 tokens + tu texto + 14 por escena; salida = 120 por escena. Un video de 6 escenas cuesta ≈ **$0.0016** con `gpt-4.1-mini`, ≈ **$0.0004** con `gpt-4.1-nano` y ≈ $0.0078 con `gpt-4.1` (el lienzo libre costaba ≈ $0.012 con mini). El prompt de sistema es idéntico en cada llamada (reglas y vocabulario al principio) para aprovechar el caché de OpenAI cuando el prefijo supera los 1.024 tokens.
+- **Motor clásico (opcional):** `VIDEMED_MOTOR=clasico` (o `--motor=clasico`) vuelve a los motores anteriores (la IA escribe geometría SVG/3D o código libre; cuesta unas 10× más).
+
+### 🎨 Lienzo libre (Dirección de Arte) — motor clásico opcional
 
 Ya no hay layout fijo: **cada escena es dueña de todo el lienzo 1080×1920** y la IA actúa como director de motion graphics que **escribe el código** de la composición (React/SVG/Three.js) usando el *Kit de Pinceles Cinematográficos*. Los títulos son parte de la animación (entran con física spring, van detrás de los objetos 3D…) y un medidor solo aparece si tu guion lo pide, como elemento flotante.
 

@@ -11,6 +11,7 @@ import { ProveedorColor, useTema } from "./contexto";
 import { paletaPorId } from "./paletas";
 import { eventosSfx } from "./sonido";
 import { EscenaLibre } from "./EscenaLibre";
+import { EscenaEstudio } from "../estudio/EscenaEstudio";
 import { FPS_ANIM } from "./parser";
 import type { Animacion as Anim, EscenaGuardada } from "./tipos";
 
@@ -69,6 +70,8 @@ export const Contenido: React.FC<{ e: EscenaGuardada; hud: boolean }> = ({ e, hu
   const { paleta, tema } = useTema();
   // lienzo libre: la escena es código y es dueña del 100 % del lienzo (sin cabecera, HUD ni fondo impuestos)
   if (e.modo === "LIBRE") return <EscenaLibre escena={e} paleta={paleta.id} />;
+  // motor de estudio: la escena es una decisión de diseño en JSON que dibujan los componentes prefabricados
+  if (e.modo === "ESTUDIO") return <EscenaEstudio escena={e} paleta={paleta.id} />;
   return (
     <>
       <Fondo2D ambiente={e.modo === "SVG" ? e.ambiente : "ninguno"} id={`e${e.n}${tema}`} solido={e.modo === "3D" && e.suelo !== "ninguno"} />
@@ -91,7 +94,7 @@ export const Animacion: React.FC<PropsAnimacion> = ({ animacion, qa }) => {
   const efectos = eventosSfx(animacion);
   const paleta = paletaPorId(animacion.paleta);
   // el barrido de semitono es del layout retro de los formatos con HUD; el lienzo libre usa fundido
-  const retro = paleta.estilo === "retro" && animacion.formato !== "libre";
+  const retro = paleta.estilo === "retro" && animacion.formato !== "libre" && animacion.formato !== "estudio";
   const framesSemitono = Math.round(SEG_SEMITONO * FPS_ANIM);
   return (
     <AbsoluteFill style={{ backgroundColor: "#000" }}>

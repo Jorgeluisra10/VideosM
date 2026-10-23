@@ -58,7 +58,7 @@ try {
   console.log("\nCostos");
   const exacto = (modelo, a, b, esperado) => Math.abs(N.costoUSD(modelo, a, b) - esperado) < 1e-12;
   prueba("precios exactos por 1M tokens: gpt-4.1-mini 0.40/1.60 · o4-mini 1.10/4.40 · gpt-4o-mini 0.15/0.60 · gpt-4.1 2.00/8.00", exacto("gpt-4.1-mini", 1e6, 1e6, 2.0) && exacto("o4-mini", 1e6, 1e6, 5.5) && exacto("gpt-4o-mini", 1e6, 1e6, 0.75) && exacto("gpt-4.1", 1e6, 1e6, 10.0));
-  prueba("hay exactamente 4 modelos y gpt-4.1-mini es el recomendado (primero)", N.MODELOS.length === 4 && N.MODELOS[0].id === "gpt-4.1-mini" && /Recomendado/.test(N.MODELOS[0].etiqueta));
+  prueba("hay 5 modelos (gpt-4.1-mini el recomendado, primero; gpt-4.1-nano $0.10/$0.40 añadido)", N.MODELOS.length === 5 && N.MODELOS[0].id === "gpt-4.1-mini" && /Recomendado/.test(N.MODELOS[0].etiqueta) && N.MODELOS.some((m) => m.id === "gpt-4.1-nano" && m.entrada === 0.1 && m.salida === 0.4 && !m.razonador));
   prueba("formato de dinero: 4 decimales (estimado) y 5 (real)", N.formatoUSD(0.01234, 4) === "$0.0123 USD" && N.formatoUSD(0.017624, 5) === "$0.01762 USD");
   const cfgE = (modelo, escenasSVG, escenas3D, sfx, caracteres) => N.estimar({ modelo, caracteres, escenasSVG, escenas3D, sfx, tokensFijos: N.tokensFijos({ paleta: "imnoba", sfx, svg: escenasSVG > 0, tres: escenas3D > 0 }) });
   const e1 = cfgE("gpt-4.1-mini", 3, 2, true, 1500), e2 = cfgE("gpt-4.1-mini", 6, 4, true, 3000);
@@ -184,7 +184,7 @@ try {
 
   // agente con el estilo retro (OpenAI simulado)
   const mockR = await iniciarMock(0);
-  const resR = await generarAnimacion({ guion: guionRetro, modelo: "gpt-4.1-mini", sfx: true, paleta: "retro", cfg: cfgMock(mockR) });
+  const resR = await generarAnimacion({ guion: guionRetro, modelo: "gpt-4.1-mini", sfx: true, paleta: "retro", cfg: cfgMock(mockR), motor: "clasico" });
   prueba("agente retro: una llamada, escenas con título/medidores y costo real calculado", resR.uso.llamadas === 1 && resR.anim.escenas.length === 4 && resR.anim.escenas.every((e) => e.medidores.length > 0) && resR.uso.costo_usd > 0 && /medidores/.test(mockR.estado.ultimaAnimacion.sistema), JSON.stringify(resR.uso));
   prueba("agente retro: paleta guardada y el prompt de sistema es el retro", resR.anim.paleta === "retro" && /RETRO-CIENTÍFICA/.test(mockR.estado.ultimaAnimacion.sistema));
   await mockR.cerrar();
@@ -345,7 +345,7 @@ try {
 
   // agente del lienzo libre (OpenAI simulado, sin Chrome: la verificación en navegador se prueba con --render)
   const mockL = await iniciarMock(0);
-  const resL = await generarAnimacion({ guion: guionLibre, modelo: "gpt-4.1-mini", sfx: true, paleta: "imnoba", cfg: cfgMock(mockL), verificar: false });
+  const resL = await generarAnimacion({ guion: guionLibre, modelo: "gpt-4.1-mini", sfx: true, paleta: "imnoba", cfg: cfgMock(mockL), verificar: false, motor: "clasico" });
   const ulL = mockL.estado.ultimaAnimacion, uL = resL.uso;
   prueba("agente libre: UNA llamada (esquema «escenas_libres»), animación libre de 5 escenas y locución para grabar", resL.formato === "libre" && uL.llamadas === 1 && ulL.nombre === "escenas_libres" && ulL.estricto && resL.anim.escenas.length === 5 && /\[ESCENA 1 \| 00:00-00:05\]/.test(resL.locucion) && /publicar tu casa/.test(resL.locucion), JSON.stringify(uL));
   prueba("agente libre: el prompt de sistema es el del kit con la paleta IMNOBA y la entrada lleva dirección visual + voz como contexto", /Camera2D/.test(ulL.sistema) && /#02224E/.test(ulL.sistema) && /DIRECCIÓN VISUAL:/.test(ulL.usuario) && /VOZ \(solo contexto/.test(ulL.usuario) && !/CONFIG|GAUGE/.test(ulL.usuario));
@@ -355,13 +355,13 @@ try {
   await mockL.cerrar();
   process.env.MOCK_ANIM_ERRORES = "1";
   const mockL2 = await iniciarMock(0);
-  const resL2 = await generarAnimacion({ guion: guionLibre, modelo: "gpt-4.1-mini", sfx: true, paleta: "imnoba", cfg: cfgMock(mockL2), verificar: false });
+  const resL2 = await generarAnimacion({ guion: guionLibre, modelo: "gpt-4.1-mini", sfx: true, paleta: "imnoba", cfg: cfgMock(mockL2), verificar: false, motor: "clasico" });
   delete process.env.MOCK_ANIM_ERRORES;
   prueba("agente libre: código con Math.random → UNA reparación acotada a esa escena; el costo suma ambas llamadas y no queda ninguna escena de rescate", resL2.uso.llamadas === 2 && resL2.rescatadas.length === 0 && resL2.anim.escenas.every((e) => !e.fallback) && /Tu código anterior/.test(mockL2.estado.ultimaAnimacion.usuario) && /Math\.random/.test(mockL2.estado.ultimaAnimacion.usuario) && (mockL2.estado.ultimaAnimacion.usuario.match(/\[ESCENA \d+ \|/g) ?? []).length === 1, JSON.stringify(resL2.uso));
   await mockL2.cerrar();
   process.env.MOCK_LIBRE_SIEMPRE_MAL = "1";
   const mockL3 = await iniciarMock(0);
-  const resL3 = await generarAnimacion({ guion: guionLibre, modelo: "gpt-4.1-mini", sfx: true, paleta: "imnoba", cfg: cfgMock(mockL3), verificar: false });
+  const resL3 = await generarAnimacion({ guion: guionLibre, modelo: "gpt-4.1-mini", sfx: true, paleta: "imnoba", cfg: cfgMock(mockL3), verificar: false, motor: "clasico" });
   delete process.env.MOCK_LIBRE_SIEMPRE_MAL;
   prueba("agente libre: si una escena no se logra reparar tras 2 rondas se sustituye por una escena de rescate y el video sigue (1 + 2 llamadas)", resL3.uso.llamadas === 3 && resL3.rescatadas.join() === "1" && resL3.anim.escenas[0].fallback === true && resL3.anim.escenas.slice(1).every((e) => !e.fallback) && N.validar(resL3.anim).length === 0, JSON.stringify(resL3.uso));
   await mockL3.cerrar();
@@ -369,7 +369,7 @@ try {
   // ------------------------------------------------------------ agente con servidor simulado
   console.log("\nAgente (OpenAI simulado)");
   let mock = await iniciarMock(0);
-  let res = await generarAnimacion({ guion: guionEjemplo, modelo: "gpt-4.1-mini", sfx: true, paleta: "imnoba", cfg: cfgMock(mock) });
+  let res = await generarAnimacion({ guion: guionEjemplo, modelo: "gpt-4.1-mini", sfx: true, paleta: "imnoba", cfg: cfgMock(mock), motor: "clasico" });
   const ua = mock.estado.ultimaAnimacion;
   prueba("usa Chat Completions con esquema estricto y max_completion_tokens; gpt-4.1-mini no recibe reasoning_effort", ua?.ruta === "/chat/completions" && ua.estricto && ua.maxTokens === 32000 && ua.razonamiento === null, JSON.stringify(ua && { ...ua, sistema: "…" }));
   prueba("1 sola llamada para 5 escenas y animación válida", res.uso.llamadas === 1 && res.anim.escenas.length === 5);
@@ -382,7 +382,7 @@ try {
   await mock.cerrar();
 
   mock = await iniciarMock(0);
-  res = await generarAnimacion({ guion: guionEjemplo, modelo: "o4-mini", sfx: false, paleta: "medicina", cfg: cfgMock(mock) });
+  res = await generarAnimacion({ guion: guionEjemplo, modelo: "o4-mini", sfx: false, paleta: "medicina", cfg: cfgMock(mock), motor: "clasico" });
   prueba("o4-mini recibe reasoning_effort y max_completion_tokens de 40000; SFX = No → sin eventos", mock.estado.ultimaAnimacion.razonamiento === "medium" && mock.estado.ultimaAnimacion.maxTokens === 40000 && res.anim.sfx === false && res.anim.escenas.every((e) => !e.sfx));
   prueba("paleta Medicina Clínica: se guarda y no deja iconos de inmobiliaria", res.anim.paleta === "medicina" && !JSON.stringify(res.anim).includes('"casa"'));
   prueba("costo real de o4-mini con sus precios (1.10 / 4.40)", Math.abs(res.uso.costo_usd - (res.uso.prompt_tokens * 1.1 + res.uso.completion_tokens * 4.4) / 1e6) < 1e-12);
@@ -390,7 +390,7 @@ try {
 
   process.env.MOCK_ANIM_ERRORES = "1";
   mock = await iniciarMock(0);
-  res = await generarAnimacion({ guion: guionEjemplo, modelo: "gpt-4.1-mini", sfx: true, paleta: "imnoba", cfg: cfgMock(mock) });
+  res = await generarAnimacion({ guion: guionEjemplo, modelo: "gpt-4.1-mini", sfx: true, paleta: "imnoba", cfg: cfgMock(mock), motor: "clasico" });
   delete process.env.MOCK_ANIM_ERRORES;
   prueba("respuesta con un path inválido → UNA reparación solo de esa escena y el costo suma ambas llamadas", res.uso.llamadas === 2 && res.anim.escenas.length === 5 && res.uso.completion_tokens > 0, JSON.stringify(res.uso));
   await mock.cerrar();
@@ -415,6 +415,102 @@ try {
   prueba("CLI con guion inválido: código 2 y lista los problemas (sin llamar a la IA)", rc.status === 2 && /problemas/.test(rc.stderr) && mock.estado.porEsquema.animacion_imnoba === llamadasAntes, rc.stderr.slice(-300));
   rmSync(malo, { force: true });
   await mock.cerrar();
+
+  // ------------------------------------------------------------ motor de estudio (JSON ultraligero)
+  console.log("\nMotor de estudio (JSON ultraligero + figuras prefabricadas)");
+  {
+  const guionEstudio = readFileSync(p("ejemplos", "animacion-estudio", "guion.txt"), "utf8");
+  const respEstudio = JSON.parse(readFileSync(p("ejemplos", "animacion-estudio", "respuesta-ia.json"), "utf8"));
+  const pe0 = N.parsearEstudio(guionEstudio);
+  prueba("el parser NO cambió: el formato [ESCENA 1 | 0s-6s | MODO: SVG] + VOZ_OFF + DIRECCION_VISUAL + SFX sigue siendo «simple» y lo aceptan parsearGuion y parsearEstudio sin errores", N.detectarFormato(guionEstudio) === "simple" && N.parsearGuion(guionEstudio).errores.length === 0 && pe0.errores.length === 0 && pe0.escenas.length === 6 && pe0.duracion === 37, JSON.stringify(pe0.errores));
+  prueba("parsearEstudio separa VOZ_OFF, DIRECCION_VISUAL, SFX y MODO (SVG/3D) de cada escena", pe0.escenas[0].modo === "SVG" && pe0.escenas[2].modo === "3D" && /Bogotá está atrapada/.test(pe0.escenas[0].voz) && /esfera roja/.test(pe0.escenas[0].direccion) && pe0.escenas[0].sfx.map((s) => s.tipo).join() === "whoosh,pop" && pe0.escenas[2].sfx.length === 0);
+  prueba("usaEstudio: el formato simple y el libre sí; el estructurado ([CONFIG]) conserva su motor", N.usaEstudio(guionEstudio) && N.usaEstudio(guionLibre) && !N.usaEstudio(guionEst));
+  prueba("un guion vacío da UN solo error legible (no dos iguales) y un MODO inválido sigue rechazándose", N.parsearEstudio("").errores.length === 1 && N.parsearEstudio("[ESCENA 1 | 0s-4s | MODO: XYZ]\nx").errores.length === 1);
+  prueba("también acepta el formato libre ([ESCENA 1 | 00:00-00:05]) con modo SVG por defecto", N.parsearEstudio(guionLibre).escenas.length === 5 && N.parsearEstudio(guionLibre).escenas.every((e) => e.modo === "SVG") && N.parsearEstudio(guionLibre).errores.length === 0);
+
+  // vocabulario y saneado
+  const base0 = N.escenaPorReglas({ n: 1, voz: "", direccion: "" });
+  const sanE = (raw, b = base0) => N.normalizarEscenaEstudio(raw, b);
+  const maloE = sanE({ layout: "hero center", headline: { text: "titular en minúsculas muy muy muy largo que no cabe", highlightWord: "inexistente" }, primary: { shape: "triangulo", colorRole: "fucsia", detail: "dog_ears", animation: "volar", motionTrail: "true" }, versus: { operator: "&gt;" } });
+  prueba("saneado: valores fuera del vocabulario → los de las reglas locales; layout «hero center» se entiende; titular en mayúsculas y ≤ 40 car.; palabra destacada inexistente se corrige", maloE.escena.layout === "HERO_CENTER" && N.FIGURAS.includes(maloE.escena.primary.shape) && N.ANIMACIONES.includes(maloE.escena.primary.animation) && maloE.escena.headline.text === maloE.escena.headline.text.toUpperCase() && maloE.escena.headline.text.length <= 40 && maloE.escena.headline.text.split(/\s+/).includes(maloE.escena.headline.highlightWord) && maloE.escena.primary.motionTrail === true && maloE.correcciones.length > 0, JSON.stringify(maloE));
+  prueba("saneado: un detalle imposible se descarta (speedometer_needle en SPHERE → none; dog_ears en RING_GAUGE → none)", sanE({ primary: { shape: "SPHERE", detail: "speedometer_needle" } }).escena.primary.detail === "none" && sanE({ primary: { shape: "RING_GAUGE", detail: "dog_ears" } }).escena.primary.detail === "none" && sanE({ primary: { shape: "CELLULAR_OVAL", detail: "inner_voronoi_cells" } }).escena.primary.detail === "inner_voronoi_cells");
+  const veE = sanE({ layout: "VERSUS_50_50" });
+  prueba("saneado: VERSUS_50_50 siempre trae contadores, etiquetas, operador y segunda figura; DIAGONAL_SPLIT siempre dos estados; HERO_CENTER no arrastra versus", veE.escena.versus && veE.escena.secondary.shape !== "NONE" && N.OPERADORES.includes(veE.escena.versus.operator) && sanE({ layout: "DIAGONAL_SPLIT", secondary: { shape: "NONE" } }).escena.secondary.shape !== "NONE" && sanE({ layout: "HERO_CENTER" }).escena.versus === null);
+  prueba("saneado: dos figuras nunca quedan del mismo rol de color; contadores y etiquetas se recortan", sanE({ layout: "VERSUS_50_50", primary: { colorRole: "primary" }, secondary: { shape: "SPHERE", colorRole: "primary" }, versus: { leftCounter: "1234567890", rightCounter: "9", leftLabel: "UNA ETIQUETA MUY LARGA QUE NO CABE", rightLabel: "x", operator: ">" } }).escena.secondary.colorRole === "secondary" && sanE({ layout: "VERSUS_50_50", versus: { leftCounter: "1234567890", leftLabel: "UNA ETIQUETA MUY LARGA QUE NO CABE" } }).escena.versus.leftCounter.length <= 6 && sanE({ layout: "VERSUS_50_50", versus: { leftLabel: "UNA ETIQUETA MUY LARGA QUE NO CABE" } }).escena.versus.leftLabel.length <= 14);
+
+  // traductor determinista de DIRECCION_VISUAL
+  const Rg = (direccion, voz = "") => N.escenaPorReglas({ n: 1, voz, direccion });
+  prueba("reglas locales: «composición central», «comparación 50/50», «pantalla dividida diagonal» y «superficie» → los 4 layouts", Rg("Composición central: una esfera").layout === "HERO_CENTER" && Rg("Comparación 50/50 entre A y B").layout === "VERSUS_50_50" && Rg("PANTALLA DIVIDIDA DIAGONAL: antes y después").layout === "DIAGONAL_SPLIT" && Rg("Una cápsula avanza sobre una barra, superficie metálica").layout === "SURFACE_STAGE");
+  prueba("reglas locales: el titular sale de lo que va entre comillas; «50/50» no cuenta como cifra; cifras y etiquetas van a versus; operador por comparación", (() => { const e = Rg('Comparación 50/50: "PERRO" con 000 y "GATO" con 140. Titular "EL HUEVO FUE ANTES"'); return e.headline.text === "EL HUEVO FUE ANTES" && e.versus.leftCounter === "000" && e.versus.rightCounter === "140" && e.versus.leftLabel === "PERRO" && e.versus.rightLabel === "GATO" && e.versus.operator === "<"; })());
+  prueba("reglas locales: huevo→CELLULAR_OVAL+células · velocímetro→RING_GAUGE+aguja · torre→PILL_TOWER · perro/gato→orejas · abeja→rayas · oruga→CAPSULE elástica", Rg("un huevo celular").primary.shape === "CELLULAR_OVAL" && Rg("un huevo celular").primary.detail === "inner_voronoi_cells" && Rg("el velocímetro sube").primary.shape === "RING_GAUGE" && Rg("el velocímetro sube").primary.detail === "speedometer_needle" && Rg("una torre que crece").primary.shape === "PILL_TOWER" && Rg("un perro").primary.detail === "dog_ears" && Rg("un gato").primary.detail === "cat_ears" && Rg("una abeja").primary.detail === "bee_stripes" && Rg("una oruga").primary.shape === "CAPSULE" && Rg("una oruga").primary.animation === "elastic_crawl");
+  prueba("reglas locales: sin comillas el titular sale de la primera frase de la VOZ en mayúsculas (≤ 30 car.)", (() => { const e = Rg("una esfera", "¿Sabías que Bogotá está atrapada por culpa del tráfico y de las obras? Sigue."); return e.headline.text.length <= 30 && e.headline.text === e.headline.text.toUpperCase() && /^SABÍAS QUE BOGOTÁ/.test(e.headline.text); })());
+
+  // ensamblado
+  const ens = N.ensamblarEstudio(respEstudio, pe0.escenas, { paleta: "imnoba", sfx: true });
+  prueba("ensamblarEstudio: 6 escenas modo ESTUDIO con los 4 layouts, tiempos del guion, 3D marcado y animación válida (validar)", ens.anim.escenas.length === 6 && ens.anim.escenas.every((e) => e.modo === "ESTUDIO") && new Set(ens.anim.escenas.map((e) => e.layout)).size === 4 && ens.anim.escenas[2].es3D === true && ens.anim.escenas[0].es3D === false && ens.anim.duracion === 37 && ens.anim.formato === "estudio" && N.validar(ens.anim).length === 0 && ens.sinRespuesta.length === 0 && ens.correcciones.length === 0, JSON.stringify([N.validar(ens.anim), ens.correcciones]));
+  prueba("SFX: los del guion mandan (whoosh,pop); sin ellos hay SFX automáticos locales sincronizados; con SFX = No no hay ninguno", ens.anim.escenas[0].sfx.map((s) => s.tipo).join() === "whoosh,pop" && ens.anim.escenas[2].sfx.length >= 2 && ens.anim.escenas[2].sfx.every((s) => s.t < ens.anim.escenas[2].dur) && N.ensamblarEstudio(respEstudio, pe0.escenas, { sfx: false }).anim.escenas.every((e) => !e.sfx) && N.eventosSfx(ens.anim).length > 0 && N.eventosSfx({ ...ens.anim, sfx: false }).length === 0);
+  const sinIA = N.ensamblarEstudio({ scenes: [] }, pe0.escenas, { paleta: "imnoba" });
+  prueba("si la IA no devuelve nada, las reglas locales diseñan todas las escenas y el video sigue siendo válido (sin romper)", sinIA.sinRespuesta.length === 6 && N.validar(sinIA.anim).length === 0 && sinIA.anim.escenas.every((e) => N.LAYOUTS.includes(e.layout)));
+  prueba("la respuesta con la clave antigua (primaryObject/versusData/«scenes» con n) también se entiende", N.ensamblarEstudio({ scenes: [{ n: 1, layout: "VERSUS_50_50", primaryObject: { primitive: "CAPSULE" }, versusData: { leftCounter: "5", rightCounter: "9", leftLabel: "A", rightLabel: "B", symbol: "<" } }] }, pe0.escenas.slice(0, 1), {}).anim.escenas[0].versus.operator === "<");
+
+  // paletas
+  const ce = N.coloresEstudio("imnoba");
+  prueba("paleta IMNOBA de estudio: fondo azul de marca #02224E (con borde más oscuro), acento dorado #FFC500; Medicina usa su fondo y el símbolo lima #D4FF00", ce.fondoCentro === "#02224E" && ce.roles.accent === "#FFC500" && ce.fondo !== "#02224E" && N.coloresEstudio("medicina").neon === "#D4FF00" && N.coloresEstudio("medicina").fondoCentro === "#0B0F19");
+
+  // prompt + costos
+  const sis = N.sistemaEstudio();
+  const fijos = N.tokensFijosEstudio();
+  prueba("prompt de sistema: estático (no depende de paleta ni del guion → prefijo idéntico para el caché), con la marca JSON y TODO el vocabulario cerrado", sis === N.sistemaEstudio() && sis.includes("[ESTUDIO_JSON]") && [...N.LAYOUTS, ...N.FIGURAS, ...N.ANIMACIONES, ...N.DETALLES, ...N.ROLES].every((v) => sis.includes(v)) && /comillas/.test(sis) && /VOZ/.test(sis) && /COMPOSICI|composición central/i.test(sis));
+  prueba("prompt de sistema compacto (< 750 tokens estimados) y sin esquema aparte", fijos.sistema < 750 && fijos.esquema === 0, JSON.stringify(fijos));
+  const eEst = N.estimarEstudio({ modelo: "gpt-4.1-mini", caracteres: pe0.caracteresIA, escenas: 6, tokensSistema: fijos.sistema });
+  prueba("estimarEstudio: entrada = prompt fijo + texto/3.6 + 14 por escena; salida = 120 por escena; costo = tokens × tarifa del modelo", eEst.tokensEntrada === fijos.sistema + Math.ceil(pe0.caracteresIA / 3.6) + 84 && eEst.tokensSalida === 720 && Math.abs(eEst.costo - (eEst.tokensEntrada * 0.4 + 720 * 1.6) / 1e6) < 1e-12, JSON.stringify(eEst));
+  const porModelo = (m) => N.estimarEstudio({ modelo: m, caracteres: pe0.caracteresIA, escenas: 6, tokensSistema: fijos.sistema }).costo;
+  prueba("el costo respeta el orden de tarifas: nano < 4o-mini < 4.1-mini < 4.1; o4-mini suma su razonamiento", porModelo("gpt-4.1-nano") < porModelo("gpt-4o-mini") && porModelo("gpt-4o-mini") < porModelo("gpt-4.1-mini") && porModelo("gpt-4.1-mini") < porModelo("gpt-4.1") && N.estimarEstudio({ modelo: "o4-mini", caracteres: 1000, escenas: 6, tokensSistema: fijos.sistema }).tokensSalida > 720);
+  const fl2 = N.tokensFijosLibre({ paleta: "imnoba", sfx: true });
+  const antes = N.estimarLibre({ modelo: "gpt-4.1-mini", caracteres: N.parsearLibre(guionLibre).caracteresIA, escenas: 6, sfx: true, tokensSistema: fl2.sistema, tokensEsquema: fl2.esquema });
+  prueba("ahorro frente al lienzo libre con el mismo número de escenas: ≥ 80 % menos tokens de salida y ≥ 80 % menos costo", eEst.tokensSalida <= antes.tokensSalida * 0.2 && eEst.costo <= antes.costo * 0.2, `libre ${antes.costo.toFixed(5)} · estudio ${eEst.costo.toFixed(5)} · salida ${antes.tokensSalida} → ${eEst.tokensSalida}`);
+
+  // agente con servidor simulado
+  const modelos5 = ["gpt-4.1", "gpt-4.1-mini", "gpt-4.1-nano", "gpt-4o-mini", "o4-mini"];
+  for (const mo of modelos5) {
+    const mk = await iniciarMock(0);
+    const rs = await generarAnimacion({ guion: guionEstudio, modelo: mo, sfx: true, paleta: "imnoba", cfg: cfgMock(mk) });
+    const ue = mk.estado.ultimaAnimacion;
+    const m5 = N.modeloPorId(mo);
+    prueba(`agente estudio con ${mo}: 1 llamada, response_format json_object (sin esquema), costo real con su tarifa${m5.razonador ? ", razonamiento «low»" : ", sin reasoning_effort"}`, rs.uso.llamadas === 1 && ue.nombre === "estudio_json" && ue.formato === "json_object" && ue.estricto === false && ue.ruta === "/chat/completions" && (m5.razonador ? ue.razonamiento === "low" : ue.razonamiento === null) && rs.anim.formato === "estudio" && rs.anim.escenas.length === 6 && Math.abs(rs.uso.costo_usd - (rs.uso.prompt_tokens * m5.entrada + rs.uso.completion_tokens * m5.salida) / 1e6) < 1e-12 && rs.formato === "estudio", JSON.stringify(ue && { ...ue, sistema: "…", usuario: "…" }));
+    await mk.cerrar();
+  }
+  let mkE = await iniciarMock(0);
+  const rE = await generarAnimacion({ guion: guionEstudio, modelo: "gpt-4.1-mini", sfx: true, paleta: "imnoba", cfg: cfgMock(mkE) });
+  const uE = mkE.estado.ultimaAnimacion;
+  prueba("a la IA solo viajan la dirección visual y la voz (ni SFX ni tiempos ni «SFX:»); el prompt de sistema lleva las reglas y el vocabulario", /^ESC 1 \| 6s \| SVG\nDIR: .*\nVOZ: /m.test(uE.usuario) && !/SFX|whoosh|0s-6s/.test(uE.usuario) && /ESTUDIO_JSON/.test(uE.sistema), uE.usuario.slice(0, 300));
+  prueba("1 llamada pequeña para 6 escenas y costo real < 1/5 del que cuesta el lienzo libre (0,0123)", rE.uso.llamadas === 1 && rE.uso.completion_tokens < 6 * 220 && rE.uso.costo_usd < 0.0025 && rE.locucion.includes("Bogotá está atrapada"), JSON.stringify(rE.uso));
+  const rEst = N.estimarEstudio({ modelo: "gpt-4.1-mini", caracteres: N.parsearEstudio(guionEstudio).caracteresIA, escenas: 6, tokensSistema: fijos.sistema }).costo;
+  prueba("la estimación previa del panel está en el mismo orden que el costo real (0,3×–3×)", rEst / rE.uso.costo_usd > 0.3 && rEst / rE.uso.costo_usd < 3, `estimado ${rEst.toFixed(5)} · real ${rE.uso.costo_usd.toFixed(5)}`);
+  await mkE.cerrar();
+  process.env.MOCK_ESTUDIO_FALTAN = "1";
+  mkE = await iniciarMock(0);
+  const rF = await generarAnimacion({ guion: guionEstudio, modelo: "gpt-4.1-nano", sfx: true, paleta: "imnoba", cfg: cfgMock(mkE) });
+  delete process.env.MOCK_ESTUDIO_FALTAN;
+  prueba("si la IA se deja una escena: UNA petición solo de esa escena y el costo suma ambas llamadas", rF.uso.llamadas === 2 && /^ESC 2 \|/.test(mkE.estado.ultimaAnimacion.usuario) && !/ESC 1 \|/.test(mkE.estado.ultimaAnimacion.usuario) && rF.anim.escenas.length === 6 && rF.anim.escenas[1].layout === "VERSUS_50_50", JSON.stringify(rF.uso));
+  await mkE.cerrar();
+  process.env.MOCK_ESTUDIO_MAL = "1";
+  mkE = await iniciarMock(0);
+  const rM = await generarAnimacion({ guion: guionEstudio, modelo: "gpt-4.1-nano", sfx: true, paleta: "imnoba", cfg: cfgMock(mkE) });
+  delete process.env.MOCK_ESTUDIO_MAL;
+  prueba("una respuesta basura (enums inventados, titular larguísimo) se sanea sin reparaciones ni llamadas extra y el video es válido", rM.uso.llamadas === 1 && rM.correcciones.length > 0 && N.validar(rM.anim) .length === 0 && rM.anim.escenas[0].layout === "HERO_CENTER" && rM.anim.escenas[0].headline.text.length <= 40, JSON.stringify(rM.correcciones));
+  await mkE.cerrar();
+  const rL = await generarAnimacion({ guion: guionEstudio, modelo: "gpt-4.1-mini", sfx: true, paleta: "imnoba", motor: "clasico", cfg: cfgMock((mkE = await iniciarMock(0))) });
+  prueba("el motor clásico sigue disponible (motor: «clasico»): el formato simple vuelve a pedir geometría SVG/3D completa", mkE.estado.ultimaAnimacion.nombre === "animacion_imnoba" && rL.anim.escenas.every((e) => e.modo === "SVG" || e.modo === "3D"));
+  await mkE.cerrar();
+  const rB = await generarAnimacion({ guion: guionLibre, modelo: "gpt-4.1-mini", sfx: true, paleta: "imnoba", cfg: cfgMock((mkE = await iniciarMock(0))) });
+  prueba("el formato libre ([ESCENA n | 00:00-00:05]) también usa por defecto el motor de estudio (1 llamada compacta)", rB.uso.llamadas === 1 && mkE.estado.ultimaAnimacion.nombre === "estudio_json" && rB.anim.formato === "estudio" && rB.anim.escenas.length === 5);
+  await mkE.cerrar();
+  mkE = await iniciarMock(0);
+  const rEs = await generarAnimacion({ guion: guionEst, modelo: "gpt-4.1-mini", sfx: true, paleta: "retro", cfg: cfgMock(mkE) });
+  prueba("el formato estructurado ([CONFIG], GEO, HUD) NO cambia: sigue con su motor retro", mkE.estado.ultimaAnimacion.nombre === "geometria_central" && rEs.anim.formato === "estructurado");
+  await mkE.cerrar();
+  }
 
   // ------------------------------------------------------------ panel
   console.log("\nPanel (API del Estudio)");
@@ -442,7 +538,7 @@ try {
     prueba("API: formato=hud entrega el ejemplo estructurado (HUD retro)", h.codigo === 200 && /\[CONFIG\]/.test(h.json.guion) && /GAUGE_1/.test(h.json.guion) && /valor de un inmueble/i.test(h.json.guion));
     h = await http("POST", "/api/accion", { nombre: "anim-generar", opciones: { guion: "[ESCENA 1 | 5s-2s | MODO: X]\nhola", modelo: "gpt-4.1-mini" } });
     prueba("API: un guion inválido se rechaza con 400 y explica el problema", h.codigo === 400 && /problemas/.test(h.json.error), h.texto.slice(0, 200));
-    h = await http("POST", "/api/accion", { nombre: "anim-generar", opciones: { guion: guionEjemplo, modelo: "gpt-4.1-mini", sfx: false, paleta: "imnoba" } });
+    h = await http("POST", "/api/accion", { nombre: "anim-generar", opciones: { guion: guionEjemplo, modelo: "gpt-4.1-mini", sfx: false, paleta: "imnoba", motor: "clasico" } });
     prueba("API: lanza el trabajo de generación", h.codigo === 200 && h.json.trabajo?.nombre === "anim-generar", h.texto.slice(0, 200));
     const fin = await esperarTrabajo();
     prueba("el trabajo termina bien", fin?.estado === "ok", JSON.stringify(fin));
@@ -459,7 +555,7 @@ try {
     prueba("API: generar en formato estructurado → animación con HUD, costo real y enlace al guion de locución", finE?.estado === "ok" && h.json.animacion?.formato === "estructurado" && h.json.animacion.hud === true && h.json.animacion.uso.costo_usd > 0 && h.json.locucion?.url === "/salida/guion-locucion.txt?descargar=1", JSON.stringify(finE) + h.texto.slice(0, 200));
     h = await http("GET", "/salida/guion-locucion.txt");
     prueba("el guion de locución (VOZ_OFF) se sirve y trae los textos para grabar", h.codigo === 200 && /área por precio/.test(h.texto) && !/GEO|HUD/.test(h.texto));
-    h = await http("POST", "/api/accion", { nombre: "anim-generar", opciones: { guion: guionLibre, modelo: "gpt-4.1-mini", sfx: true, paleta: "imnoba", verificar: false } });
+    h = await http("POST", "/api/accion", { nombre: "anim-generar", opciones: { guion: guionLibre, modelo: "gpt-4.1-mini", sfx: true, paleta: "imnoba", verificar: false, motor: "clasico" } });
     const finL = await esperarTrabajo();
     h = await http("GET", "/api/anim/estado");
     prueba("API: generar en formato libre → animación LIBRE con costo real, enlace a la locución y sin escenas de rescate", finL?.estado === "ok" && h.json.animacion?.formato === "libre" && h.json.animacion.escenas.every((e) => e.modo === "LIBRE") && h.json.animacion.uso.costo_usd > 0 && h.json.locucion?.url === "/salida/guion-locucion.txt?descargar=1" && h.json.rescatadas.length === 0, JSON.stringify(finL) + h.texto.slice(0, 200));
@@ -468,7 +564,9 @@ try {
     h = await http("POST", "/api/accion", { nombre: "anim-generar", opciones: { guion: "[ESCENA 1 | 5-2]\nx", modelo: "gpt-4.1-mini" } });
     prueba("API: un guion libre con el tiempo al revés se rechaza con 400 y explica el problema", h.codigo === 400 && /fin/.test(h.json.error), h.texto.slice(0, 200));
     h = await http("GET", "/api/anim/ejemplo");
-    prueba("API: el ejemplo por defecto es el del lienzo libre (sin MODO ni CONFIG)", h.codigo === 200 && /\[ESCENA 1 \| 00:00-00:05\]/.test(h.json.guion) && /DIRECCION_VISUAL/.test(h.json.guion) && !/CONFIG|MODO:/.test(h.json.guion));
+    prueba("API: el ejemplo por defecto es el del motor de estudio ([ESCENA n | 0s-6s | MODO: SVG] + VOZ_OFF + DIRECCION_VISUAL + SFX)", h.codigo === 200 && /\[ESCENA 1 \| 0s-6s \| MODO: SVG\]/.test(h.json.guion) && /VOZ_OFF:/.test(h.json.guion) && /DIRECCION_VISUAL:/.test(h.json.guion) && /SFX:/.test(h.json.guion) && !/CONFIG/.test(h.json.guion));
+    h = await http("GET", "/api/anim/ejemplo?formato=libre");
+    prueba("API: formato=libre sigue entregando el ejemplo del lienzo libre (sin MODO)", h.codigo === 200 && /\[ESCENA 1 \| 00:00-00:05\]/.test(h.json.guion) && !/CONFIG|MODO:/.test(h.json.guion));
     h = await http("GET", "/api/anim/ejemplo?formato=simple");
     prueba("API: formato=simple sigue entregando el ejemplo de siempre", h.codigo === 200 && /MODO: SVG/.test(h.json.guion));
     h = await http("POST", "/api/accion", { nombre: "anim-ejemplo", opciones: { sfx: true } });
@@ -490,7 +588,7 @@ try {
   // ------------------------------------------------------------ render real de capturas
   if (conRender) {
     console.log("\nCapturas reales (Chrome + WebGL)");
-    spawnSync(process.execPath, [p("scripts", "anim", "ejemplo.mjs")], { cwd: RAIZ });
+    spawnSync(process.execPath, [p("scripts", "anim", "ejemplo.mjs"), "--formato=libre"], { cwd: RAIZ });
     const rp = spawnSync(process.execPath, [p("scripts", "anim", "previa.mjs"), "--qa"], { cwd: RAIZ, encoding: "utf8", timeout: 600000 });
     const { verificarEscenas } = await import("./verificar.mjs");
     const vOk = await verificarEscenas(JSON.parse(readFileSync(ANIM, "utf8")));
@@ -505,6 +603,9 @@ try {
     prueba("verificarEscenas detecta en el navegador: error de ejecución (1), escena vacía (3) y escena congelada (4)", vMal.errores.some((e) => /^Escena 1:.*falla al ejecutarse.*cosaQueNoExiste/.test(e)) && vMal.errores.some((e) => /^Escena 3:.*vac[ií]a/.test(e)) && vMal.errores.some((e) => /^Escena 4:.*congelada/.test(e)) && !vMal.errores.some((e) => /^Escena 5:/.test(e)), vMal.errores.join(" | "));
     prueba("la escena rota no tumba el video: se dibuja la de rescate y el error queda registrado", vMal.errores.some((e) => /^Escena 1:/.test(e)));
     prueba("previa.mjs --qa: 5 capturas (SVG y 3D con WebGL) y QA sin problemas", rp.status === 0 && readdirSync(p("trabajo", "tmp", "anim-previa")).filter((x) => /^escena-\d+\.png$/.test(x)).length === 5, (rp.stdout + rp.stderr).slice(-500));
+    spawnSync(process.execPath, [p("scripts", "anim", "ejemplo.mjs")], { cwd: RAIZ });
+    const rq = spawnSync(process.execPath, [p("scripts", "anim", "previa.mjs"), "--qa"], { cwd: RAIZ, encoding: "utf8", timeout: 600000 });
+    prueba("previa.mjs --qa del motor de estudio: una captura por escena (los 4 layouts, MODO 3D incluido) y QA sin problemas (márgenes ≥ 80 px, sin vacíos ni congelados)", rq.status === 0 && readdirSync(p("trabajo", "tmp", "anim-previa")).filter((x) => /^escena-\d+\.png$/.test(x)).length === 6 && /sin escenas vac/.test(rq.stdout), (rq.stdout + rq.stderr).slice(-500));
   }
 } finally {
   if (envAntes.base === undefined) delete process.env.OPENAI_BASE_URL; else process.env.OPENAI_BASE_URL = envAntes.base;

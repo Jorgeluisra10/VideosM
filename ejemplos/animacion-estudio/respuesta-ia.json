@@ -1,0 +1,8 @@
+{"scenes":[
+{"id":1,"layout":"HERO_CENTER","headline":{"text":"BOGOTÁ ESTÁ ATRAPADA","highlightWord":"ATRAPADA"},"primary":{"shape":"SPHERE","colorRole":"danger","detail":"glowing_core","motionTrail":false,"animation":"heartbeat_pulse"}},
+{"id":2,"layout":"VERSUS_50_50","headline":{"text":"CUESTA CERO","highlightWord":"CERO"},"primary":{"shape":"SPHERE","colorRole":"accent","detail":"none","motionTrail":false,"animation":"spring_pop"},"secondary":{"shape":"SPHERE","colorRole":"secondary","detail":"none","motionTrail":false},"versus":{"leftCounter":"000","rightCounter":"250","leftLabel":"IMNOBA","rightLabel":"PORTALES","operator":"<"}},
+{"id":3,"layout":"DIAGONAL_SPLIT","headline":{"text":"ANTES Y DESPUÉS","highlightWord":"DESPUÉS"},"primary":{"shape":"SPHERE","colorRole":"danger","detail":"none","motionTrail":true,"animation":"high_speed_slide"},"secondary":{"shape":"SPHERE","colorRole":"primary","detail":"none","motionTrail":true}},
+{"id":4,"layout":"SURFACE_STAGE","headline":{"text":"TU ANUNCIO AVANZA","highlightWord":"AVANZA"},"primary":{"shape":"CAPSULE","colorRole":"accent","detail":"none","motionTrail":false,"animation":"elastic_crawl"}},
+{"id":5,"layout":"HERO_CENTER","headline":{"text":"VENDE MÁS RÁPIDO","highlightWord":"RÁPIDO"},"primary":{"shape":"RING_GAUGE","colorRole":"accent","detail":"speedometer_needle","motionTrail":true,"animation":"high_speed_slide"}},
+{"id":6,"layout":"HERO_CENTER","headline":{"text":"TU PATRIMONIO CRECE","highlightWord":"CRECE"},"primary":{"shape":"PILL_TOWER","colorRole":"success","detail":"glowing_core","motionTrail":false,"animation":"spring_pop"}}
+]}

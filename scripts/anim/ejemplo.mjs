@@ -2,7 +2,7 @@
 /**
  * Carga el ejemplo incluido (ejemplos/animacion-imnoba) como animación activa, SIN IA y SIN coste:
  * parsea el guion con el mismo parser, ensambla la respuesta de ejemplo y escribe src/data/animacion.json.
- *   node scripts/anim/ejemplo.mjs [--sin-sfx] [--paleta=imnoba|medicina]
+ *   node scripts/anim/ejemplo.mjs [--sin-sfx] [--paleta=imnoba|medicina] [--formato=estudio|libre|hud|simple]
  */
 import { mkdirSync, readFileSync, writeFileSync } from "node:fs";
 import { join } from "node:path";
@@ -12,13 +12,24 @@ const args = process.argv.slice(2);
 const N = await cargarNucleoAnim();
 const paleta = args.find((a) => a.startsWith("--paleta="))?.split("=")[1] ?? "imnoba";
 const sfx = !args.includes("--sin-sfx");
-const formato = args.find((a) => a.startsWith("--formato="))?.split("=")[1] ?? "libre";
+const formato = args.find((a) => a.startsWith("--formato="))?.split("=")[1] ?? "estudio";
+const estudio = formato === "estudio";
 const libre = formato === "libre";
 const estructurado = formato === "hud";
 let anim, correcciones;
 
-if (libre) {
-  // LIENZO LIBRE (por defecto): el código de cada escena está escrito a mano en ejemplos/animacion-libre y pasa por la misma política y compilación que el de la IA
+if (estudio) {
+  // MOTOR DE ESTUDIO (por defecto): el JSON compacto que devolvería la IA está en ejemplos/animacion-estudio y pasa por el mismo saneado y ensamblado
+  const dir = join(RAIZ, "ejemplos", "animacion-estudio");
+  const parsed = N.parsearEstudio(readFileSync(join(dir, "guion.txt"), "utf8"));
+  if (parsed.errores.length) throw new Error(parsed.errores.join("\n"));
+  const r = N.ensamblarEstudio(JSON.parse(readFileSync(join(dir, "respuesta-ia.json"), "utf8")), parsed.escenas, { paleta, sfx });
+  anim = r.anim;
+  correcciones = r.correcciones;
+  mkdirSync(join(RAIZ, "trabajo", "salida"), { recursive: true });
+  writeFileSync(join(RAIZ, "trabajo", "salida", "guion-locucion.txt"), N.textoLocucion(parsed.escenas.map((e) => ({ ...e, vozOff: e.voz })), anim.titulo));
+} else if (libre) {
+  // LIENZO LIBRE (código escrito por la IA): el código de cada escena está escrito a mano en ejemplos/animacion-libre y pasa por la misma política y compilación que el de la IA
   const dir = join(RAIZ, "ejemplos", "animacion-libre");
   const parsed = N.parsearLibre(readFileSync(join(dir, "guion-libre.txt"), "utf8"));
   if (parsed.errores.length) throw new Error(parsed.errores.join("\n"));
@@ -52,4 +63,4 @@ if (libre) {
 }
 for (const c of correcciones) console.log("  ~", c);
 writeFileSync(join(RAIZ, "src", "data", "animacion.json"), JSON.stringify(anim, null, 1));
-console.log(`✔ src/data/animacion.json · ${anim.escenas.length} escenas · ${anim.duracion} s · SFX ${sfx ? "sí" : "no"}${libre ? " · lienzo libre" : estructurado ? " · formato estructurado" : ""}`);
+console.log(`✔ src/data/animacion.json · ${anim.escenas.length} escenas · ${anim.duracion} s · SFX ${sfx ? "sí" : "no"}${estudio ? " · motor de estudio" : libre ? " · lienzo libre" : estructurado ? " · formato estructurado" : ""}`);

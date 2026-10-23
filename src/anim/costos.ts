@@ -18,6 +18,7 @@ export const MODELOS: ModeloIA[] = [
   { id: "gpt-4.1-mini", etiqueta: "gpt-4.1-mini — Entrada $0.40/1M · Salida $1.60/1M — Recomendado Calidad/Precio", entrada: 0.4, salida: 1.6, nota: "Recomendado Calidad/Precio", razonador: false, maxSalida: 32000 },
   { id: "o4-mini", etiqueta: "o4-mini — Entrada $1.10/1M · Salida $4.40/1M — Máxima precisión 3D y geometría", entrada: 1.1, salida: 4.4, nota: "Máxima precisión 3D y geometría", razonador: true, maxSalida: 40000 },
   { id: "gpt-4o-mini", etiqueta: "gpt-4o-mini — Entrada $0.15/1M · Salida $0.60/1M — Ultra económico SVG", entrada: 0.15, salida: 0.6, nota: "Ultra económico SVG", razonador: false, maxSalida: 16000 },
+  { id: "gpt-4.1-nano", etiqueta: "gpt-4.1-nano — Entrada $0.10/1M · Salida $0.40/1M — Mínimo costo", entrada: 0.1, salida: 0.4, nota: "Mínimo costo", razonador: false, maxSalida: 16000 },
   { id: "gpt-4.1", etiqueta: "gpt-4.1 — Entrada $2.00/1M · Salida $8.00/1M — Estudio Pro", entrada: 2.0, salida: 8.0, nota: "Estudio Pro", razonador: false, maxSalida: 32000 },
 ];
 

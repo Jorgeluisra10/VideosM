@@ -26,12 +26,14 @@ const MAX_REPARACIONES = 2;
  * @param {{guion:string, modelo?:string, sfx?:boolean, paleta?:string, log?:(s:string)=>void, cfg?:object}} o
  * @returns {Promise<{anim:object, correcciones:string[], uso:{modelo:string,prompt_tokens:number,completion_tokens:number,costo_usd:number,llamadas:number}}>}
  */
-export async function generarAnimacion({ guion, modelo = "gpt-4.1-mini", sfx = true, paleta = "imnoba", log = () => {}, cfg = configuracion(), verificar = true }) {
+export async function generarAnimacion({ guion, modelo = "gpt-4.1-mini", sfx = true, paleta = "imnoba", log = () => {}, cfg = configuracion(), verificar = true, motor = process.env.VIDEMED_MOTOR || "estudio" }) {
   const N = await cargarNucleoAnim();
-  // lienzo libre ([ESCENA n | MM:SS-MM:SS] + VOZ_OFF + DIRECCION_VISUAL): la IA escribe cada escena como código sobre todo el lienzo
-  if (N.detectarFormato(guion) === "libre") return generarLibre({ N, guion, modelo, sfx, paleta, log, cfg, verificar });
   // formato estructurado ([CONFIG], FONDO, GEO, HUD…): la IA solo dibuja el escenario central; todo lo demás se resuelve aquí
   if (N.detectarFormato(guion) === "estructurado") return generarEstructurado({ N, guion, modelo, sfx, paleta, log, cfg });
+  // MOTOR DE ESTUDIO (por defecto) para [ESCENA 1 | 0s-7s | MODO: SVG] y [ESCENA 1 | 00:00-00:07]: la IA solo devuelve un JSON ultraligero de decisiones de diseño
+  if (motor !== "clasico") return generarEstudio({ N, guion, modelo, sfx, paleta, log, cfg });
+  // motor clásico (VIDEMED_MOTOR=clasico): lienzo libre = la IA escribe cada escena como código; simple = geometría SVG/3D completa
+  if (N.detectarFormato(guion) === "libre") return generarLibre({ N, guion, modelo, sfx, paleta, log, cfg, verificar });
   const parsed = N.parsearGuion(guion);
   if (parsed.errores.length) throw new ErrorGuion(parsed.errores);
   for (const a of parsed.avisos) log(`   ⚠ ${a}`);
@@ -75,6 +77,53 @@ export async function generarAnimacion({ guion, modelo = "gpt-4.1-mini", sfx = t
   r.anim.uso = uso;
   for (const c of r.correcciones) log(`   ~ ${c}`);
   return { anim: r.anim, correcciones: r.correcciones, uso };
+}
+
+
+/**
+ * MOTOR DE ESTUDIO. Una sola llamada con `response_format: json_object` y un prompt de sistema compacto (reglas y vocabulario al principio, idénticos en cada
+ * llamada → prompt caching automático). La IA devuelve ~120 tokens por escena: layout, titular, figura principal/secundaria y datos de comparación.
+ * El motor de Remotion dibuja todo; lo que falte o esté fuera del vocabulario se completa con las reglas locales, así que no hay reparaciones costosas.
+ * Solo viajan la DIRECCION_VISUAL y la VOZ_OFF de cada escena (como contexto para el titular y los datos); tiempos, SFX y paleta se quedan en tu equipo.
+ */
+async function generarEstudio({ N, guion, modelo, sfx, paleta, log, cfg }) {
+  const parsed = N.parsearEstudio(guion);
+  if (parsed.errores.length) throw new ErrorGuion(parsed.errores);
+  for (const a of parsed.avisos) log(`   ⚠ ${a}`);
+  const m = N.modeloPorId(modelo);
+  const cliente = new Cliente({ ...cfg, modelo, modeloPlan: "", modeloVision: "", modeloRevisor: "", esfuerzo: m.razonador ? "low" : "" }, { log });
+  cliente.estilo = "chat";
+  const sistema = N.sistemaEstudio();
+
+  const uso = { modelo, prompt_tokens: 0, completion_tokens: 0, costo_usd: 0, llamadas: 0 };
+  const llamar = async (escenas, etiqueta) => {
+    log(`🤖 ${etiqueta} (${modelo})…`);
+    const maxSalida = Math.min(m.maxSalida, (m.razonador ? 6000 : 0) + 800 + 300 * escenas.length);
+    const r = await cliente.pedir({ nombre: "estudio_json", modoInicial: "objeto", esquema: null, instrucciones: sistema, entrada: N.promptUsuarioEstudio(escenas), maxSalida });
+    uso.prompt_tokens += r.entrada;
+    uso.completion_tokens += r.salida;
+    uso.llamadas++;
+    uso.costo_usd = N.costoUSD(modelo, uso.prompt_tokens, uso.completion_tokens);
+    log(`   ✔ ${r.entrada} tokens de entrada · ${r.salida} de salida · ${(r.ms / 1000).toFixed(1)} s · acumulado ${N.formatoUSD(uso.costo_usd, 5)}`);
+    return r.datos;
+  };
+
+  log(`   Motor de estudio: a la IA solo viajan la DIRECCION_VISUAL y la VOZ de ${parsed.escenas.length} escenas (${parsed.caracteresIA} caracteres); tiempos, SFX y paleta se resuelven aquí.`);
+  const raw = await llamar(parsed.escenas, `Diseñando ${parsed.escenas.length} escenas (JSON compacto)`);
+  let r = N.ensamblarEstudio(raw, parsed.escenas, { paleta, sfx });
+  // si la IA se dejó escenas sin devolver, se las pide UNA vez (solo esas); si aun así faltan, las diseñan las reglas locales
+  if (r.sinRespuesta.length) {
+    const faltan = parsed.escenas.filter((e) => r.sinRespuesta.includes(e.n));
+    log(`🔧 La IA no devolvió ${faltan.length} escena(s) (${r.sinRespuesta.join(", ")}): se piden de nuevo.`);
+    const extra = await llamar(faltan, `Completando ${faltan.length} escena(s)`);
+    const unidas = [...(raw.scenes ?? raw.escenas ?? []), ...(extra.scenes ?? extra.escenas ?? [])];
+    r = N.ensamblarEstudio({ scenes: unidas }, parsed.escenas, { paleta, sfx });
+    if (r.sinRespuesta.length) log(`   ⚠ Escenas diseñadas con las reglas locales: ${r.sinRespuesta.join(", ")}`);
+  }
+  r.anim.uso = uso;
+  for (const c of r.correcciones) log(`   ~ ${c}`);
+  log(`   🎬 ${r.anim.escenas.length} escenas de estudio listas (${[...new Set(r.anim.escenas.map((e) => e.layout))].join(", ")})`);
+  return { anim: r.anim, correcciones: r.correcciones, uso, locucion: N.textoLocucion(parsed.escenas.map((e) => ({ ...e, vozOff: e.voz })), r.anim.titulo), formato: "estudio", rescatadas: [] };
 }
 
 

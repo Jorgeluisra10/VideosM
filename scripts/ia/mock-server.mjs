@@ -201,6 +201,25 @@ function respuestaLibre(entradaTexto, esquema) {
   return { escenas };
 }
 
+/**
+ * Motor de estudio: responde con el JSON compacto de ejemplo (una escena por bloque «ESC n | …», en orden cíclico).
+ *   MOCK_ESTUDIO_FALTAN=1  la PRIMERA respuesta se deja la escena 2 sin devolver (prueba la petición de las que faltan)
+ *   MOCK_ESTUDIO_MAL=1     la escena 1 llega con valores fuera del vocabulario (prueba el saneado local)
+ */
+function respuestaEstudio(entradaTexto, primera) {
+  const ej = JSON.parse(readFileSync(join(RAIZ, "ejemplos", "animacion-estudio", "respuesta-ia.json"), "utf8"));
+  const scenes = [];
+  for (const m of entradaTexto.matchAll(/^ESC (\d+) \|/gm)) {
+    // el diseño de ejemplo sale del número de escena (así una petición solo de la escena 2 devuelve el diseño de la 2)
+    const base = JSON.parse(JSON.stringify(ej.scenes[(Number(m[1]) - 1) % ej.scenes.length]));
+    base.id = Number(m[1]);
+    if (process.env.MOCK_ESTUDIO_FALTAN && primera && base.id === 2) continue;
+    if (process.env.MOCK_ESTUDIO_MAL && base.id === 1) { base.layout = "hero center"; base.primary = { shape: "triangulo", colorRole: "fucsia", detail: "dog_ears", animation: "volar", motionTrail: "true" }; base.headline = { text: "titular en minúsculas muy muy muy largo que no cabe", highlightWord: "inexistente" }; }
+    scenes.push(base);
+  }
+  return { scenes };
+}
+
 /** Formato estructurado: responde con la geometría de ejemplo (una escena por bloque, según su modo). */
 function respuestaGeometria(entradaTexto) {
   const ej = JSON.parse(readFileSync(join(RAIZ, "ejemplos", "animacion-retro", "geometria-ia.json"), "utf8"));
@@ -249,6 +268,11 @@ export function iniciarMock(puerto = 0) {
   let esquemaPlan = null;
 
   const respuesta = (nombre, entradaTexto, hayImagenes, esquema) => {
+    if (nombre === "estudio_json") {
+      const datos = respuestaEstudio(entradaTexto, !una.anim);
+      una.anim = true;
+      return datos;
+    }
     if (nombre === "escenas_libres") {
       const datos = respuestaLibre(entradaTexto, esquema);
       const repara = /Tu código anterior/.test(entradaTexto);
@@ -417,7 +441,11 @@ export function iniciarMock(puerto = 0) {
       estado.estilos[esResponses ? "responses" : "chat"]++;
 
       const fmt = esResponses ? b.text?.format : b.response_format;
-      const nombre = esResponses ? fmt?.name : fmt?.json_schema?.name;
+      const sistemaTxt = esResponses ? String(b.instructions ?? "") : (b.messages ?? []).filter((m) => m.role === "system").map((m) => String(m.content)).join("\n");
+      // response_format json_object (sin esquema): el motor de estudio se reconoce por la marca de su prompt de sistema; la API real exige la palabra «JSON» en los mensajes
+      const esObjeto = fmt?.type === "json_object";
+      if (esObjeto && !/json/i.test(sistemaTxt + JSON.stringify(b.messages ?? b.input ?? ""))) return json(400, { error: { message: "'messages' must contain the word 'json' in some form, to use 'response_format' of type 'json_object'.", type: "invalid_request_error", param: "messages" } });
+      const nombre = esObjeto && /ESTUDIO_JSON/.test(sistemaTxt) ? "estudio_json" : esResponses ? fmt?.name : fmt?.json_schema?.name;
       const esquema = esResponses ? fmt?.schema : fmt?.json_schema?.schema;
       const estricto = esResponses ? fmt?.strict : fmt?.json_schema?.strict;
       if (esquema && estricto) {
@@ -436,7 +464,7 @@ export function iniciarMock(puerto = 0) {
         if (p.type === "input_image" || p.type === "image_url") imagenes++;
       }
       estado.porEsquema[nombre ?? "?"] = (estado.porEsquema[nombre ?? "?"] ?? 0) + 1;
-      if (nombre === "animacion_imnoba" || nombre === "geometria_central" || nombre === "escenas_libres") estado.ultimaAnimacion = { nombre, usuario: entradaTexto, modelo: b.model, razonamiento: b.reasoning_effort ?? null, maxTokens: b.max_completion_tokens ?? null, estricto: Boolean(estricto), ruta, sistema: (b.messages ?? []).find((m) => m.role === "system")?.content ?? "" };
+      if (["animacion_imnoba", "geometria_central", "escenas_libres", "estudio_json"].includes(nombre)) estado.ultimaAnimacion = { nombre, formato: fmt?.type ?? null, usuario: entradaTexto, modelo: b.model, razonamiento: b.reasoning_effort ?? null, maxTokens: b.max_completion_tokens ?? null, estricto: Boolean(estricto), ruta, sistema: (b.messages ?? []).find((m) => m.role === "system")?.content ?? "" };
 
       const datos = respuesta(nombre, entradaTexto, imagenes, esquema);
       if (esquema && estricto && nombre !== "plan") {
@@ -444,7 +472,7 @@ export function iniciarMock(puerto = 0) {
         if (errs.length) estado.avisos.push(`Respuesta simulada de ${nombre} fuera de esquema: ${errs.slice(0, 3).join(" | ")}`);
       }
       const texto = JSON.stringify(datos);
-      const sistemaLen = nombre === "animacion_imnoba" || nombre === "geometria_central" || nombre === "escenas_libres" ? (b.messages ?? []).filter((m) => m.role === "system").reduce((n, m) => n + String(m.content).length, 0) + JSON.stringify(esquema ?? {}).length : 0;
+      const sistemaLen = ["animacion_imnoba", "geometria_central", "escenas_libres", "estudio_json"].includes(nombre) ? (b.messages ?? []).filter((m) => m.role === "system").reduce((n, m) => n + String(m.content).length, 0) + JSON.stringify(esquema ?? {}).length : 0;
       const uso = { input: Math.round((entradaTexto.length + sistemaLen) / 3.6) + imagenes * 800, output: Math.round(texto.length / 3) };
       if (esResponses) {
         return json(200, { id: "resp_mock", object: "response", status: "completed", model: b.model, output: [{ type: "message", role: "assistant", content: [{ type: "output_text", text: texto }] }], usage: { input_tokens: uso.input, output_tokens: uso.output } });

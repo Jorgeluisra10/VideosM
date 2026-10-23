@@ -1,0 +1,27 @@
+[ESCENA 1 | 0s-6s | MODO: SVG]
+VOZ_OFF: ¿Sabías que Bogotá está atrapada? Cada mes miles de familias buscan vivienda y encuentran las mismas puertas cerradas.
+DIRECCION_VISUAL: Composición central: una esfera roja que late como un corazón, con el titular "BOGOTÁ ESTÁ ATRAPADA".
+SFX: whoosh, pop
+
+[ESCENA 2 | 6s-13s | MODO: SVG]
+VOZ_OFF: Publicar en IMNOBA cuesta cero. En otros portales pagas cientos de dólares por anuncio.
+DIRECCION_VISUAL: Comparación 50/50 entre "IMNOBA" con 000 y "PORTALES" con 250. Gana el que menos cuesta.
+SFX: tick, ding
+
+[ESCENA 3 | 13s-19s | MODO: 3D]
+VOZ_OFF: Antes tu inmueble esperaba semanas sin una sola visita. Después, llegan los interesados.
+DIRECCION_VISUAL: Pantalla dividida diagonal: arriba la esfera roja del antes, abajo la esfera verde del después, ambas en movimiento.
+
+[ESCENA 4 | 19s-25s | MODO: SVG]
+VOZ_OFF: Tu anuncio avanza por la plataforma y llega a más personas cada día.
+DIRECCION_VISUAL: Una cápsula dorada avanza como una oruga elástica sobre una barra metálica. Titular "TU ANUNCIO AVANZA".
+SFX: whoosh
+
+[ESCENA 5 | 25s-31s | MODO: SVG]
+VOZ_OFF: Vende más rápido: la velocidad con la que se cierra un negocio sube de verdad.
+DIRECCION_VISUAL: Un velocímetro con aguja que sube a toda velocidad, estela de movimiento. Titular "VENDE MÁS RÁPIDO".
+
+[ESCENA 6 | 31s-37s | MODO: SVG]
+VOZ_OFF: Y tu patrimonio crece. Publica gratis hoy en IMNOBA.
+DIRECCION_VISUAL: Una torre de píldora verde crece con ondas expansivas y destellos. Titular "TU PATRIMONIO CRECE".
+SFX: thud, ding

@@ -56,7 +56,7 @@ export class Cliente {
     this.estilo = "responses"; // o "chat"
     this._modelos = null;
     this._elegidos = new Map();
-    this._modo = new Map(); // nombre del esquema → "estricto" | "laxo" | "json"
+    this._modo = new Map(); // nombre del esquema → "estricto" | "laxo" | "json" (y «objeto»: json_object sin esquema en el prompt, solo por petición)
     this._sinParametro = new Set();
     this._n = 0;
   }
@@ -157,8 +157,8 @@ export class Cliente {
     for (const im of imagenes) contenido.push({ type: "input_image", image_url: im.dataUrl, detail: im.detalle ?? "high" });
     let sistema = instrucciones;
     const cuerpo = { model: modelo, instructions: sistema, input: [{ role: "user", content: contenido }], max_output_tokens: maxSalida, store: false };
-    if (modo === "json") {
-      cuerpo.instructions += `\n\nResponde ÚNICAMENTE con un objeto JSON válido que cumpla este JSON Schema:\n${JSON.stringify(esquema)}`;
+    if (modo === "json" || modo === "objeto") {
+      if (modo === "json") cuerpo.instructions += `\n\nResponde ÚNICAMENTE con un objeto JSON válido que cumpla este JSON Schema:\n${JSON.stringify(esquema)}`;
       cuerpo.text = { format: { type: "json_object" } };
     } else {
       cuerpo.text = { format: { type: "json_schema", name: nombre, strict: modo === "estricto", schema: esquema } };
@@ -172,8 +172,9 @@ export class Cliente {
     for (const im of imagenes) contenido.push({ type: "image_url", image_url: { url: im.dataUrl, detail: im.detalle ?? "high" } });
     let sistema = instrucciones;
     const cuerpo = { model: modelo, messages: [], max_completion_tokens: maxSalida, store: false };
-    if (modo === "json") {
-      sistema += `\n\nResponde ÚNICAMENTE con un objeto JSON válido que cumpla este JSON Schema:\n${JSON.stringify(esquema)}`;
+    if (modo === "json" || modo === "objeto") {
+      // «objeto» = response_format json_object con el formato ya descrito en el prompt de sistema (no se añade ningún esquema: ahorra tokens de entrada)
+      if (modo === "json") sistema += `\n\nResponde ÚNICAMENTE con un objeto JSON válido que cumpla este JSON Schema:\n${JSON.stringify(esquema)}`;
       cuerpo.response_format = { type: "json_object" };
     } else {
       cuerpo.response_format = { type: "json_schema", json_schema: { name: nombre, strict: modo === "estricto", schema: esquema } };
@@ -233,7 +234,7 @@ export class Cliente {
     const t0 = Date.now();
 
     for (const modelo of lista.slice(0, 4)) {
-      let modo = this._modo.get(p.nombre) ?? "estricto";
+      let modo = p.modoInicial ?? this._modo.get(p.nombre) ?? "estricto";
       for (let vuelta = 0; vuelta < 8; vuelta++) {
         const args = { ...p, modelo, imagenes: p.imagenes ?? [], maxSalida, esfuerzo: p.esfuerzo ?? this.cfg.esfuerzo };
         const ruta = this.estilo === "responses" ? "/responses" : "/chat/completions";
@@ -247,7 +248,7 @@ export class Cliente {
           this.uso.llamadas++;
           this.uso.entrada += entrada;
           this.uso.salida += salida;
-          this._modo.set(p.nombre, modo);
+          if (modo !== "objeto") this._modo.set(p.nombre, modo);
           return { datos, modelo, entrada, salida, ms: Date.now() - t0 };
         } catch (e) {
           if (!(e instanceof ErrorApi)) throw e;
