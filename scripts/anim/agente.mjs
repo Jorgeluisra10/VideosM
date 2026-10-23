@@ -26,12 +26,15 @@ const MAX_REPARACIONES = 2;
  * @param {{guion:string, modelo?:string, sfx?:boolean, paleta?:string, log?:(s:string)=>void, cfg?:object}} o
  * @returns {Promise<{anim:object, correcciones:string[], uso:{modelo:string,prompt_tokens:number,completion_tokens:number,costo_usd:number,llamadas:number}}>}
  */
-export async function generarAnimacion({ guion, modelo = "gpt-4.1-mini", sfx = true, paleta = "imnoba", log = () => {}, cfg = configuracion(), verificar = true, motor = process.env.VIDEMED_MOTOR || "estudio" }) {
+export async function generarAnimacion({ guion, modelo = "gpt-4.1-mini", sfx = true, paleta = "imnoba", log = () => {}, cfg = configuracion(), verificar = true, motor = process.env.VIDEMED_MOTOR || "viral" }) {
   const N = await cargarNucleoAnim();
   // formato estructurado ([CONFIG], FONDO, GEO, HUD…): la IA solo dibuja el escenario central; todo lo demás se resuelve aquí
   if (N.detectarFormato(guion) === "estructurado") return generarEstructurado({ N, guion, modelo, sfx, paleta, log, cfg });
-  // MOTOR DE ESTUDIO (por defecto) para [ESCENA 1 | 0s-7s | MODO: SVG] y [ESCENA 1 | 00:00-00:07]: la IA solo devuelve un JSON ultraligero de decisiones de diseño
-  if (motor !== "clasico") return generarEstudio({ N, guion, modelo, sfx, paleta, log, cfg });
+  // MOTOR VIRAL (por defecto): una frase de idea → reel completo (la IA escribe la locución y elige las plantillas); los guiones en bloques también pasan por aquí
+  if (motor === "viral") return generarViral({ N, guion, modelo, sfx, paleta, log, cfg });
+  if (N.esIdea(guion)) throw new ErrorGuion([`Con el motor «${motor}» el texto tiene que ir en bloques [ESCENA 1 | 0s-7s | MODO: SVG]. Para escribir solo una frase de idea usa el motor viral (el de siempre).`]);
+  // MOTOR DE ESTUDIO ([ESCENA 1 | 0s-7s | MODO: SVG]): la IA solo devuelve un JSON ultraligero de decisiones de diseño con figuras halftone
+  if (motor === "estudio") return generarEstudio({ N, guion, modelo, sfx, paleta, log, cfg });
   // motor clásico (VIDEMED_MOTOR=clasico): lienzo libre = la IA escribe cada escena como código; simple = geometría SVG/3D completa
   if (N.detectarFormato(guion) === "libre") return generarLibre({ N, guion, modelo, sfx, paleta, log, cfg, verificar });
   const parsed = N.parsearGuion(guion);
@@ -77,6 +80,67 @@ export async function generarAnimacion({ guion, modelo = "gpt-4.1-mini", sfx = t
   r.anim.uso = uso;
   for (const c of r.correcciones) log(`   ~ ${c}`);
   return { anim: r.anim, correcciones: r.correcciones, uso };
+}
+
+
+/**
+ * MOTOR VIRAL: de UNA FRASE a un reel completo. Una llamada barata con `response_format: json_object` (prompt de sistema estático y cacheable): la IA escribe la locución de cada
+ * escena, decide su duración y elige una de las 10 plantillas de reel; el motor de Remotion (src/viral/) las dibuja. No hay reparaciones costosas: lo que venga mal se sanea
+ * en local. Si la IA devuelve muy pocas escenas se vuelve a pedir UNA vez. También acepta guiones en bloques (la locución y los tiempos son los del guion).
+ */
+async function generarViral({ N, guion, modelo, sfx, paleta, log, cfg }) {
+  const idea = N.esIdea(guion);
+  const parsedIdea = idea ? N.parsearIdea(guion) : null;
+  const parsedBloques = idea ? null : N.parsearEstudio(guion);
+  const errores = idea ? parsedIdea.errores : parsedBloques.errores;
+  if (errores.length) throw new ErrorGuion(errores);
+  for (const a of idea ? parsedIdea.avisos : parsedBloques.avisos) log(`   ⚠ ${a}`);
+  const m = N.modeloPorId(modelo);
+  const cliente = new Cliente({ ...cfg, modelo, modeloPlan: "", modeloVision: "", modeloRevisor: "", esfuerzo: m.razonador ? "low" : "" }, { log });
+  cliente.estilo = "chat";
+  const sistema = N.sistemaViral();
+
+  const uso = { modelo, prompt_tokens: 0, completion_tokens: 0, costo_usd: 0, llamadas: 0 };
+  const llamar = async (entrada, escenas, etiqueta) => {
+    log(`🤖 ${etiqueta} (${modelo})…`);
+    const maxSalida = Math.min(m.maxSalida, (m.razonador ? 6000 : 0) + 900 + 280 * escenas);
+    const r = await cliente.pedir({ nombre: "viral_json", modoInicial: "objeto", esquema: null, instrucciones: sistema, entrada, maxSalida });
+    uso.prompt_tokens += r.entrada;
+    uso.completion_tokens += r.salida;
+    uso.llamadas++;
+    uso.costo_usd = N.costoUSD(modelo, uso.prompt_tokens, uso.completion_tokens);
+    log(`   ✔ ${r.entrada} tokens de entrada · ${r.salida} de salida · ${(r.ms / 1000).toFixed(1)} s · acumulado ${N.formatoUSD(uso.costo_usd, 5)}`);
+    return r.datos;
+  };
+  const lista = (d) => (Array.isArray(d?.scenes) ? d.scenes : Array.isArray(d?.escenas) ? d.escenas : []);
+
+  let r;
+  if (idea) {
+    log(`   Idea: «${parsedIdea.idea.slice(0, 110)}${parsedIdea.idea.length > 110 ? "…" : ""}» · ≈ ${parsedIdea.duracion} s · ≈ ${parsedIdea.escenasObjetivo} escenas`);
+    const pedido = N.promptUsuarioIdea({ ...parsedIdea, paleta });
+    let raw = await llamar(pedido, parsedIdea.escenasObjetivo, `Escribiendo el guion y diseñando ${parsedIdea.escenasObjetivo} escenas (JSON compacto)`);
+    if (lista(raw).length < 4) {
+      log(`🔧 La IA devolvió solo ${lista(raw).length} escena(s): se pide de nuevo.`);
+      raw = await llamar(`${pedido}\n\nTu respuesta anterior tuvo muy pocas escenas. Devuelve el video completo con ${parsedIdea.escenasObjetivo} escenas en "scenes".`, parsedIdea.escenasObjetivo, "Reintentando el guion completo");
+      if (lista(raw).length < 3) throw new Error("La IA no devolvió un guion con escenas suficientes. Prueba con otro modelo o reformula la idea.");
+    }
+    r = N.ensamblarViral(raw, { modo: "idea", paleta, sfx });
+  } else {
+    log(`   Bloques: la locución y los tiempos son los de tu guion; la IA solo elige la plantilla de cada una de las ${parsedBloques.escenas.length} escenas.`);
+    const escenas = parsedBloques.escenas;
+    const raw = await llamar(N.promptUsuarioBloques(escenas, paleta), escenas.length, `Diseñando ${escenas.length} escenas (JSON compacto)`);
+    r = N.ensamblarViral(raw, { modo: "bloques", escenas, paleta, sfx });
+    if (r.sinRespuesta.length) {
+      const faltan = escenas.filter((e) => r.sinRespuesta.includes(e.n));
+      log(`🔧 La IA no devolvió ${faltan.length} escena(s) (${r.sinRespuesta.join(", ")}): se piden de nuevo.`);
+      const extra = await llamar(N.promptUsuarioBloques(faltan, paleta), faltan.length, `Completando ${faltan.length} escena(s)`);
+      r = N.ensamblarViral({ scenes: [...lista(raw), ...lista(extra)] }, { modo: "bloques", escenas, paleta, sfx });
+    }
+  }
+  r.anim.uso = uso;
+  for (const c of r.correcciones) log(`   ~ ${c}`);
+  log(`   🎬 «${r.titulo}» · ${r.anim.escenas.length} escenas · ${r.anim.duracion} s (${[...new Set(r.anim.escenas.map((e) => e.t))].join(", ")})`);
+  return { anim: r.anim, correcciones: r.correcciones, uso, locucion: r.locucion, formato: "viral", rescatadas: [] };
 }
 
 

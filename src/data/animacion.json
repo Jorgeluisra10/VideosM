@@ -1,275 +1,557 @@
 {
  "version": 1,
- "titulo": "BOGOTÁ ESTÁ ATRAPADA",
+ "titulo": "El metro que valoriza Bogotá",
  "paleta": "imnoba",
  "sfx": true,
  "fps": 60,
- "duracion": 37,
+ "duracion": 36.9,
  "escenas": [
   {
    "n": 1,
-   "layout": "HERO_CENTER",
-   "headline": {
-    "text": "BOGOTÁ ESTÁ ATRAPADA",
-    "highlightWord": "ATRAPADA"
-   },
-   "primary": {
-    "shape": "SPHERE",
-    "colorRole": "danger",
-    "detail": "glowing_core",
-    "motionTrail": false,
-    "animation": "heartbeat_pulse"
-   },
-   "secondary": {
-    "shape": "NONE",
-    "colorRole": "secondary",
-    "detail": "none",
-    "motionTrail": false
-   },
-   "versus": null,
-   "modo": "ESTUDIO",
-   "es3D": false,
+   "t": "HOOK",
+   "voz": "¿Te imaginas cruzar Bogotá en minutos? ¡Llega el metro!",
+   "dur": 3.6,
+   "h": "BOGOTÁ NECESITA METRO",
+   "w": "METRO",
+   "sub": "y tu inmueble lo agradece",
+   "ic": "tren",
+   "num": null,
+   "vs": null,
+   "bars": [],
+   "barsU": "",
+   "hi": -1,
+   "line": null,
+   "items": [],
+   "stops": [],
+   "end": "",
+   "modo": "VIRAL",
    "tema": "oscuro",
+   "bg": "dark",
+   "ritmo": 1,
+   "total": 36.9,
+   "inicio": 0,
+   "fin": 3.6,
+   "texto": "¿Te imaginas cruzar Bogotá en minutos? ¡Llega el metro!",
    "sfx": [
     {
-     "t": 0.05,
+     "t": 0.04,
      "tipo": "whoosh",
-     "vol": 0.15
+     "vol": 0.16
     },
     {
-     "t": 0.05,
-     "tipo": "pop",
-     "vol": 0.15
+     "t": 0.32,
+     "tipo": "thud",
+     "vol": 0.2
     }
-   ],
-   "inicio": 0,
-   "fin": 6,
-   "dur": 6,
-   "texto": "Composición central: una esfera roja que late como un corazón, con el titular \"BOGOTÁ ESTÁ ATRAPADA\"."
+   ]
   },
   {
    "n": 2,
-   "layout": "VERSUS_50_50",
-   "headline": {
-    "text": "CUESTA CERO",
-    "highlightWord": "CERO"
+   "t": "NUM",
+   "voz": "Hoy se pierden horas en trancones cada día.",
+   "dur": 3.4,
+   "h": "TIEMPO PERDIDO",
+   "w": "PERDIDO",
+   "sub": "",
+   "ic": "reloj",
+   "num": {
+    "n": "2",
+    "u": "h",
+    "pre": "~",
+    "l": "AL DÍA EN TRANCONES"
    },
-   "primary": {
-    "shape": "SPHERE",
-    "colorRole": "accent",
-    "detail": "none",
-    "motionTrail": false,
-    "animation": "spring_pop"
-   },
-   "secondary": {
-    "shape": "SPHERE",
-    "colorRole": "secondary",
-    "detail": "none",
-    "motionTrail": false
-   },
-   "versus": {
-    "leftCounter": "000",
-    "rightCounter": "250",
-    "leftLabel": "IMNOBA",
-    "rightLabel": "PORTALES",
-    "operator": "<"
-   },
-   "modo": "ESTUDIO",
-   "es3D": false,
+   "vs": null,
+   "bars": [],
+   "barsU": "",
+   "hi": -1,
+   "line": null,
+   "items": [],
+   "stops": [],
+   "end": "",
+   "modo": "VIRAL",
    "tema": "oscuro",
+   "bg": "gold",
+   "ritmo": 0.9833333333333333,
+   "total": 36.9,
+   "inicio": 3.6,
+   "fin": 7,
+   "texto": "Hoy se pierden horas en trancones cada día.",
    "sfx": [
     {
-     "t": 0,
-     "tipo": "tick",
-     "vol": 0.15
-    },
-    {
-     "t": 0,
-     "tipo": "ding",
-     "vol": 0.15
-    }
-   ],
-   "inicio": 6,
-   "fin": 13,
-   "dur": 7,
-   "texto": "Comparación 50/50 entre \"IMNOBA\" con 000 y \"PORTALES\" con 250. Gana el que menos cuesta."
-  },
-  {
-   "n": 3,
-   "layout": "DIAGONAL_SPLIT",
-   "headline": {
-    "text": "ANTES Y DESPUÉS",
-    "highlightWord": "DESPUÉS"
-   },
-   "primary": {
-    "shape": "SPHERE",
-    "colorRole": "danger",
-    "detail": "none",
-    "motionTrail": true,
-    "animation": "high_speed_slide"
-   },
-   "secondary": {
-    "shape": "SPHERE",
-    "colorRole": "primary",
-    "detail": "none",
-    "motionTrail": true
-   },
-   "versus": null,
-   "modo": "ESTUDIO",
-   "es3D": true,
-   "tema": "oscuro",
-   "sfx": [
-    {
-     "t": 0.05,
+     "t": 0.04,
      "tipo": "whoosh",
-     "vol": 0.15
-    },
-    {
-     "t": 0.55,
-     "tipo": "pop",
      "vol": 0.16
     },
     {
-     "t": 0.6,
-     "tipo": "zap",
+     "t": 0.59,
+     "tipo": "tick",
      "vol": 0.12
     },
     {
-     "t": 1.4,
-     "tipo": "pop",
-     "vol": 0.14
+     "t": 2.065,
+     "tipo": "ding",
+     "vol": 0.18
     }
-   ],
-   "inicio": 13,
-   "fin": 19,
-   "dur": 6,
-   "texto": "Pantalla dividida diagonal: arriba la esfera roja del antes, abajo la esfera verde del después, ambas en movimiento."
+   ]
   },
   {
-   "n": 4,
-   "layout": "SURFACE_STAGE",
-   "headline": {
-    "text": "TU ANUNCIO AVANZA",
-    "highlightWord": "AVANZA"
-   },
-   "primary": {
-    "shape": "CAPSULE",
-    "colorRole": "accent",
-    "detail": "none",
-    "motionTrail": false,
-    "animation": "elastic_crawl"
-   },
-   "secondary": {
-    "shape": "NONE",
-    "colorRole": "secondary",
-    "detail": "none",
-    "motionTrail": false
-   },
-   "versus": null,
-   "modo": "ESTUDIO",
-   "es3D": false,
-   "tema": "oscuro",
-   "sfx": [
-    {
-     "t": 0,
-     "tipo": "whoosh",
-     "vol": 0.15
-    }
-   ],
-   "inicio": 19,
-   "fin": 25,
-   "dur": 6,
-   "texto": "Una cápsula dorada avanza como una oruga elástica sobre una barra metálica. Titular \"TU ANUNCIO AVANZA\"."
-  },
-  {
-   "n": 5,
-   "layout": "HERO_CENTER",
-   "headline": {
-    "text": "VENDE MÁS RÁPIDO",
-    "highlightWord": "RÁPIDO"
-   },
-   "primary": {
-    "shape": "RING_GAUGE",
-    "colorRole": "accent",
-    "detail": "speedometer_needle",
-    "motionTrail": true,
-    "animation": "high_speed_slide"
-   },
-   "secondary": {
-    "shape": "NONE",
-    "colorRole": "secondary",
-    "detail": "none",
-    "motionTrail": false
-   },
-   "versus": null,
-   "modo": "ESTUDIO",
-   "es3D": false,
-   "tema": "oscuro",
-   "sfx": [
-    {
-     "t": 0.05,
-     "tipo": "whoosh",
-     "vol": 0.15
+   "n": 3,
+   "t": "VS",
+   "voz": "Otras capitales ya tienen metro. Bogotá apenas empieza.",
+   "dur": 3.7,
+   "h": "LÍNEAS DE METRO",
+   "w": "METRO",
+   "sub": "",
+   "ic": "tren",
+   "num": null,
+   "vs": {
+    "a": {
+     "l": "BOGOTÁ",
+     "n": "0",
+     "ic": "tren"
     },
+    "b": {
+     "l": "SANTIAGO",
+     "n": "7",
+     "ic": "tren"
+    },
+    "op": "<"
+   },
+   "bars": [],
+   "barsU": "",
+   "hi": -1,
+   "line": null,
+   "items": [],
+   "stops": [],
+   "end": "",
+   "modo": "VIRAL",
+   "tema": "oscuro",
+   "bg": "dark",
+   "ritmo": 0.9027777777777778,
+   "total": 36.9,
+   "inicio": 7,
+   "fin": 10.7,
+   "texto": "Otras capitales ya tienen metro. Bogotá apenas empieza.",
+   "sfx": [
     {
-     "t": 0.55,
-     "tipo": "pop",
+     "t": 0.04,
+     "tipo": "whoosh",
      "vol": 0.16
     },
     {
-     "t": 0.35,
+     "t": 0.8125,
+     "tipo": "tick",
+     "vol": 0.12
+    },
+    {
+     "t": 1.8055555555555556,
+     "tipo": "ding",
+     "vol": 0.18
+    }
+   ]
+  },
+  {
+   "n": 4,
+   "t": "ROUTE",
+   "voz": "La primera línea conecta el sur con el norte.",
+   "dur": 4.4,
+   "h": "LA PRIMERA LÍNEA",
+   "w": "PRIMERA",
+   "sub": "",
+   "ic": "brillo",
+   "num": null,
+   "vs": null,
+   "bars": [],
+   "barsU": "",
+   "hi": -1,
+   "line": null,
+   "items": [],
+   "stops": [
+    "PORTAL AMÉRICAS",
+    "KENNEDY",
+    "CENTRO",
+    "CALLE 72"
+   ],
+   "end": "VALORIZACIÓN",
+   "modo": "VIRAL",
+   "tema": "oscuro",
+   "bg": "gold",
+   "ritmo": 0.9634146341463415,
+   "total": 36.9,
+   "inicio": 10.7,
+   "fin": 15.1,
+   "texto": "La primera línea conecta el sur con el norte.",
+   "sfx": [
+    {
+     "t": 0.04,
      "tipo": "whoosh",
-     "vol": 0.14
+     "vol": 0.16
+    },
+    {
+     "t": 0.9152439024390244,
+     "tipo": "tick",
+     "vol": 0.12
+    },
+    {
+     "t": 1.5896341463414634,
+     "tipo": "tick",
+     "vol": 0.12
+    },
+    {
+     "t": 2.2640243902439026,
+     "tipo": "tick",
+     "vol": 0.12
+    },
+    {
+     "t": 2.9384146341463415,
+     "tipo": "tick",
+     "vol": 0.12
+    },
+    {
+     "t": 3.275609756097561,
+     "tipo": "ding",
+     "vol": 0.18
+    }
+   ]
+  },
+  {
+   "n": 5,
+   "t": "STEPS",
+   "voz": "Más acceso, más demanda, más valor para tu propiedad.",
+   "dur": 3.6,
+   "h": "CAUSA Y EFECTO",
+   "w": "EFECTO",
+   "sub": "",
+   "ic": "casa",
+   "num": null,
+   "vs": null,
+   "bars": [],
+   "barsU": "",
+   "hi": -1,
+   "line": null,
+   "items": [
+    {
+     "l": "METRO",
+     "ic": "tren"
+    },
+    {
+     "l": "MÁS DEMANDA",
+     "ic": "tendencia-alza"
+    },
+    {
+     "l": "MÁS VALOR",
+     "ic": "dolar"
     }
    ],
-   "inicio": 25,
-   "fin": 31,
-   "dur": 6,
-   "texto": "Un velocímetro con aguja que sube a toda velocidad, estela de movimiento. Titular \"VENDE MÁS RÁPIDO\"."
+   "stops": [],
+   "end": "",
+   "modo": "VIRAL",
+   "tema": "claro",
+   "bg": "light",
+   "ritmo": 1,
+   "total": 36.9,
+   "inicio": 15.1,
+   "fin": 18.7,
+   "texto": "Más acceso, más demanda, más valor para tu propiedad.",
+   "sfx": [
+    {
+     "t": 0.04,
+     "tipo": "whoosh",
+     "vol": 0.16
+    },
+    {
+     "t": 0.75,
+     "tipo": "pop",
+     "vol": 0.14
+    },
+    {
+     "t": 1.37,
+     "tipo": "pop",
+     "vol": 0.14
+    },
+    {
+     "t": 1.99,
+     "tipo": "pop",
+     "vol": 0.14
+    }
+   ]
   },
   {
    "n": 6,
-   "layout": "HERO_CENTER",
-   "headline": {
-    "text": "TU PATRIMONIO CRECE",
-    "highlightWord": "CRECE"
+   "t": "LINE",
+   "voz": "Donde llega el transporte, el metro cuadrado sube.",
+   "dur": 3.8,
+   "h": "VALOR DEL M²",
+   "w": "M²",
+   "sub": "",
+   "ic": "tren",
+   "num": null,
+   "vs": null,
+   "bars": [],
+   "barsU": "",
+   "hi": -1,
+   "line": {
+    "pts": [
+     100,
+     104,
+     102,
+     112,
+     122,
+     128,
+     135
+    ],
+    "l0": "ANTES",
+    "l1": "DESPUÉS",
+    "end": "+35 %"
    },
-   "primary": {
-    "shape": "PILL_TOWER",
-    "colorRole": "success",
-    "detail": "glowing_core",
-    "motionTrail": false,
-    "animation": "spring_pop"
-   },
-   "secondary": {
-    "shape": "NONE",
-    "colorRole": "secondary",
-    "detail": "none",
-    "motionTrail": false
-   },
-   "versus": null,
-   "modo": "ESTUDIO",
-   "es3D": false,
+   "items": [],
+   "stops": [],
+   "end": "",
+   "modo": "VIRAL",
    "tema": "oscuro",
+   "bg": "dark",
+   "ritmo": 0.9054054054054054,
+   "total": 36.9,
+   "inicio": 18.7,
+   "fin": 22.5,
+   "texto": "Donde llega el transporte, el metro cuadrado sube.",
    "sfx": [
     {
-     "t": 0,
-     "tipo": "thud",
-     "vol": 0.15
+     "t": 0.04,
+     "tipo": "whoosh",
+     "vol": 0.16
     },
     {
-     "t": 0,
+     "t": 0.6337837837837837,
+     "tipo": "zap",
+     "vol": 0.1
+    },
+    {
+     "t": 2.535135135135135,
      "tipo": "ding",
-     "vol": 0.15
+     "vol": 0.18
+    }
+   ]
+  },
+  {
+   "n": 7,
+   "t": "BARS",
+   "voz": "Mientras más cerca de la estación, más valorización.",
+   "dur": 3.4,
+   "h": "VALORIZACIÓN POR ZONA",
+   "w": "ZONA",
+   "sub": "",
+   "ic": "tren",
+   "num": null,
+   "vs": null,
+   "bars": [
+    {
+     "l": "LEJOS",
+     "v": 8
+    },
+    {
+     "l": "A 10 MIN",
+     "v": 19
+    },
+    {
+     "l": "A 5 MIN",
+     "v": 35
     }
    ],
-   "inicio": 31,
-   "fin": 37,
-   "dur": 6,
-   "texto": "Una torre de píldora verde crece con ondas expansivas y destellos. Titular \"TU PATRIMONIO CRECE\"."
+   "barsU": "%",
+   "hi": 2,
+   "line": null,
+   "items": [],
+   "stops": [],
+   "end": "",
+   "modo": "VIRAL",
+   "tema": "claro",
+   "bg": "light",
+   "ritmo": 1,
+   "total": 36.9,
+   "inicio": 22.5,
+   "fin": 25.9,
+   "texto": "Mientras más cerca de la estación, más valorización.",
+   "sfx": [
+    {
+     "t": 0.04,
+     "tipo": "whoosh",
+     "vol": 0.16
+    },
+    {
+     "t": 0.95,
+     "tipo": "pop",
+     "vol": 0.13
+    },
+    {
+     "t": 1.15,
+     "tipo": "pop",
+     "vol": 0.13
+    },
+    {
+     "t": 1.35,
+     "tipo": "pop",
+     "vol": 0.13
+    },
+    {
+     "t": 2,
+     "tipo": "ding",
+     "vol": 0.16
+    }
+   ]
+  },
+  {
+   "n": 8,
+   "t": "SKYLINE",
+   "voz": "Tu inmueble puede ser la próxima gran oportunidad.",
+   "dur": 3.4,
+   "h": "TU INMUEBLE, MÁS VALIOSO",
+   "w": "VALIOSO",
+   "sub": "cerca de las estaciones",
+   "ic": "casa",
+   "num": null,
+   "vs": null,
+   "bars": [],
+   "barsU": "",
+   "hi": -1,
+   "line": null,
+   "items": [],
+   "stops": [],
+   "end": "+35 %",
+   "modo": "VIRAL",
+   "tema": "oscuro",
+   "bg": "gold",
+   "ritmo": 0.9833333333333333,
+   "total": 36.9,
+   "inicio": 25.9,
+   "fin": 29.3,
+   "texto": "Tu inmueble puede ser la próxima gran oportunidad.",
+   "sfx": [
+    {
+     "t": 0.04,
+     "tipo": "whoosh",
+     "vol": 0.16
+    },
+    {
+     "t": 0.6883333333333332,
+     "tipo": "thud",
+     "vol": 0.14
+    },
+    {
+     "t": 1.8683333333333332,
+     "tipo": "ding",
+     "vol": 0.18
+    }
+   ]
+  },
+  {
+   "n": 9,
+   "t": "LIST",
+   "voz": "En IMNOBA publicas gratis, sin comisión: casas, apartamentos y autos.",
+   "dur": 4,
+   "h": "PUBLICA EN IMNOBA",
+   "w": "IMNOBA",
+   "sub": "",
+   "ic": "casa",
+   "num": null,
+   "vs": null,
+   "bars": [],
+   "barsU": "",
+   "hi": -1,
+   "line": null,
+   "items": [
+    {
+     "l": "Gratis y sin comisión",
+     "ic": "check"
+    },
+    {
+     "l": "Casas, apartamentos y autos",
+     "ic": "check"
+    },
+    {
+     "l": "Llegas a más compradores",
+     "ic": "check"
+    }
+   ],
+   "stops": [],
+   "end": "",
+   "modo": "VIRAL",
+   "tema": "oscuro",
+   "bg": "dark",
+   "ritmo": 1,
+   "total": 36.9,
+   "inicio": 29.3,
+   "fin": 33.3,
+   "texto": "En IMNOBA publicas gratis, sin comisión: casas, apartamentos y autos.",
+   "sfx": [
+    {
+     "t": 0.04,
+     "tipo": "whoosh",
+     "vol": 0.16
+    },
+    {
+     "t": 0.75,
+     "tipo": "pop",
+     "vol": 0.14
+    },
+    {
+     "t": 1.37,
+     "tipo": "pop",
+     "vol": 0.14
+    },
+    {
+     "t": 1.99,
+     "tipo": "pop",
+     "vol": 0.14
+    }
+   ]
+  },
+  {
+   "n": 10,
+   "t": "CTA",
+   "voz": "No esperes al metro: publica gratis hoy en IMNOBA.",
+   "dur": 3.6,
+   "h": "PUBLICA GRATIS HOY",
+   "w": "GRATIS",
+   "sub": "imnoba.com",
+   "ic": "cohete",
+   "num": null,
+   "vs": null,
+   "bars": [],
+   "barsU": "",
+   "hi": -1,
+   "line": null,
+   "items": [],
+   "stops": [],
+   "end": "",
+   "modo": "VIRAL",
+   "tema": "oscuro",
+   "bg": "gold",
+   "ritmo": 0.9843749999999999,
+   "total": 36.9,
+   "inicio": 33.3,
+   "fin": 36.9,
+   "texto": "No esperes al metro: publica gratis hoy en IMNOBA.",
+   "sfx": [
+    {
+     "t": 0.04,
+     "tipo": "whoosh",
+     "vol": 0.16
+    },
+    {
+     "t": 0.49218749999999994,
+     "tipo": "ding",
+     "vol": 0.2
+    },
+    {
+     "t": 1.0828125,
+     "tipo": "pop",
+     "vol": 0.15
+    }
+   ]
   }
  ],
  "uso": null,
  "hud": false,
- "formato": "estudio"
+ "formato": "viral"
 }

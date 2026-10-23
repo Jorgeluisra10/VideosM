@@ -12,6 +12,7 @@ import { paletaPorId } from "./paletas";
 import { eventosSfx } from "./sonido";
 import { EscenaLibre } from "./EscenaLibre";
 import { EscenaEstudio } from "../estudio/EscenaEstudio";
+import { EscenaViral } from "../viral/EscenaViral";
 import { FPS_ANIM } from "./parser";
 import type { Animacion as Anim, EscenaGuardada } from "./tipos";
 
@@ -66,12 +67,14 @@ export const Semitono: React.FC<{ color: string; frames: number; adelanto?: stri
 };
 
 /** MasterVideoLayout (una escena): fondo + escenario central (GeometryStage) + capa retro (TerminalHeader y TelemetryHUD). */
-export const Contenido: React.FC<{ e: EscenaGuardada; hud: boolean }> = ({ e, hud }) => {
+export const Contenido: React.FC<{ e: EscenaGuardada; hud: boolean; primera?: boolean }> = ({ e, hud, primera = false }) => {
   const { paleta, tema } = useTema();
   // lienzo libre: la escena es código y es dueña del 100 % del lienzo (sin cabecera, HUD ni fondo impuestos)
   if (e.modo === "LIBRE") return <EscenaLibre escena={e} paleta={paleta.id} />;
   // motor de estudio: la escena es una decisión de diseño en JSON que dibujan los componentes prefabricados
   if (e.modo === "ESTUDIO") return <EscenaEstudio escena={e} paleta={paleta.id} />;
+  // motor viral (reel completo desde una idea): plantillas de reel con barrido de entrada y barra de progreso
+  if (e.modo === "VIRAL") return <EscenaViral escena={e} paleta={paleta.id} primera={primera} />;
   return (
     <>
       <Fondo2D ambiente={e.modo === "SVG" ? e.ambiente : "ninguno"} id={`e${e.n}${tema}`} solido={e.modo === "3D" && e.suelo !== "ninguno"} />
@@ -94,7 +97,7 @@ export const Animacion: React.FC<PropsAnimacion> = ({ animacion, qa }) => {
   const efectos = eventosSfx(animacion);
   const paleta = paletaPorId(animacion.paleta);
   // el barrido de semitono es del layout retro de los formatos con HUD; el lienzo libre usa fundido
-  const retro = paleta.estilo === "retro" && animacion.formato !== "libre" && animacion.formato !== "estudio";
+  const retro = paleta.estilo === "retro" && animacion.formato !== "libre" && animacion.formato !== "estudio" && animacion.formato !== "viral";
   const framesSemitono = Math.round(SEG_SEMITONO * FPS_ANIM);
   return (
     <AbsoluteFill style={{ backgroundColor: "#000" }}>
@@ -104,8 +107,8 @@ export const Animacion: React.FC<PropsAnimacion> = ({ animacion, qa }) => {
         return (
           <Sequence key={e.n} from={desde} durationInFrames={Math.max(1, largo)} layout="none">
             <ProveedorColor paleta={animacion.paleta} tema={e.tema}>
-              <Fundido aparece={k > 0 && !retro}>
-                <Contenido e={e} hud={animacion.hud !== false} />
+              <Fundido aparece={k > 0 && !retro && animacion.formato !== "viral"}>
+                <Contenido e={e} hud={animacion.hud !== false} primera={k === 0} />
               </Fundido>
             </ProveedorColor>
           </Sequence>

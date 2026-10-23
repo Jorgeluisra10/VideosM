@@ -1,8 +1,8 @@
 #!/usr/bin/env node
 /**
- * Genera la animación (src/data/animacion.json) a partir de un guion en bloques [ESCENA N | inicio-fin | MODO: SVG|3D].
+ * Genera la animación (src/data/animacion.json) a partir de UNA FRASE de idea (motor viral) o de un guion en bloques [ESCENA N | inicio-fin | MODO: SVG|3D].
  *
- *   node scripts/anim/generar.mjs --guion=mi-guion.txt [--modelo=gpt-4.1-mini] [--sfx=si|no] [--paleta=imnoba|medicina] [--motor=estudio|clasico]
+ *   node scripts/anim/generar.mjs --guion=mi-guion.txt [--modelo=gpt-4.1-mini] [--sfx=si|no] [--paleta=imnoba|medicina] [--motor=viral|estudio|clasico]
  *   node scripts/anim/generar.mjs --guion=-            (lee el guion de la entrada estándar)
  *
  * Necesita OPENAI_API_KEY (archivo .env). Imprime el costo REAL en USD (usage.prompt_tokens / completion_tokens).
@@ -27,8 +27,8 @@ const modelo = valor("modelo", "gpt-4.1-mini");
 const sfx = !/^(no|false|0|off)$/i.test(valor("sfx", "si"));
 const paleta = valor("paleta", "imnoba");
 const verificar = !args.includes("--sin-verificar") && !process.env.VIDEMED_SIN_VERIFICAR;
-// motor: «estudio» (JSON ultraligero + figuras prefabricadas, por defecto) o «clasico» (la IA escribe la escena completa)
-const motor = valor("motor", process.env.VIDEMED_MOTOR || "estudio");
+// motor: «viral» (una frase → reel completo con plantillas prefabricadas, por defecto), «estudio» (figuras halftone en bloques) o «clasico» (la IA escribe la escena completa)
+const motor = valor("motor", process.env.VIDEMED_MOTOR || "viral");
 
 const cfg = configuracion();
 if (!cfg.clave) {

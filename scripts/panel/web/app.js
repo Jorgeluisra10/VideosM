@@ -294,14 +294,23 @@ async function copiarTexto(texto) {
 function calcularEstimacion() {
   const N = EST.N;
   const formato = N.detectarFormato(EST.guion);
+  if (formato !== "estructurado" && N.esIdea(EST.guion)) {
+    // UNA FRASE → video: la IA escribe el guion y elige las plantillas (JSON compacto) → entrada = prompt fijo + idea; salida ≈ 165 tokens por escena
+    const r = N.parsearIdea(EST.guion);
+    if (r.errores.length) return { r: { ...r, escenas: [] }, svg: 0, tres: 0, est: null, idea: true };
+    if (!fijosCache.has("viral")) fijosCache.set("viral", N.tokensFijosViral());
+    const fijos = fijosCache.get("viral");
+    const est = N.estimarViral({ modelo: EST.modelo, caracteres: r.caracteres, escenas: r.escenasObjetivo, tokensSistema: fijos.sistema });
+    return { r: { ...r, escenas: new Array(r.escenasObjetivo).fill(0) }, svg: 0, tres: 0, est, idea: true, fijos };
+  }
   if (formato !== "estructurado") {
-    // motor de estudio: la IA devuelve un JSON ultraligero → entrada = prompt de sistema compacto + dirección/voz; salida ≈ 120 tokens por escena
+    // guion en bloques: la locución y los tiempos son los tuyos; la IA solo elige la plantilla de cada escena (≈ 120 tokens por escena)
     const r = N.parsearEstudio(EST.guion);
     const svg = r.escenas.filter((e) => e.modo === "SVG").length, tres = r.escenas.filter((e) => e.modo === "3D").length;
     if (!r.escenas.length) return { r, svg, tres, est: null, estudio: true };
-    if (!fijosCache.has("estudio")) fijosCache.set("estudio", N.tokensFijosEstudio());
-    const fijos = fijosCache.get("estudio");
-    const est = N.estimarEstudio({ modelo: EST.modelo, caracteres: r.caracteresIA, escenas: r.escenas.length, tokensSistema: fijos.sistema });
+    if (!fijosCache.has("viral")) fijosCache.set("viral", N.tokensFijosViral());
+    const fijos = fijosCache.get("viral");
+    const est = N.estimarViral({ modelo: EST.modelo, caracteres: r.caracteresIA, escenas: r.escenas.length, tokensSistema: fijos.sistema, conVoz: false });
     return { r, svg, tres, est, estudio: true, fijos };
   }
   if (formato === "estructurado") {
@@ -320,12 +329,14 @@ function calcularEstimacion() {
 }
 
 function pintarEstimacion() {
-  const { r, svg, tres, est, estructurado, estudio, fijos } = calcularEstimacion();
+  const { r, svg, tres, est, estructurado, estudio, idea, fijos } = calcularEstimacion();
   const N = EST.N;
   const badge = $("#costo-estimado");
   if (badge) {
-    const detalle = !est ? "pega el guion para calcularlo" : estudio
-      ? `≈ ${num(est.tokensEntrada)} tokens de entrada (prompt fijo ${num(fijos.sistema)} + guion + ${N.ENTRADA_POR_ESCENA_ESTUDIO} por escena) + ${num(est.tokensSalida)} de salida (JSON de ${r.escenas.length} escenas × ${num(N.SALIDA_POR_ESCENA_ESTUDIO)})`
+    const detalle = !est ? "escribe tu idea para calcularlo" : idea
+      ? `≈ ${num(est.tokensEntrada)} tokens de entrada (prompt fijo ${num(fijos.sistema)} + tu frase) + ${num(est.tokensSalida)} de salida (guion y diseño de ≈ ${r.escenasObjetivo} escenas × ${num(N.SALIDA_POR_ESCENA_VIRAL)})`
+      : estudio
+      ? `≈ ${num(est.tokensEntrada)} tokens de entrada (prompt fijo ${num(fijos.sistema)} + guion) + ${num(est.tokensSalida)} de salida (diseño de ${r.escenas.length} escenas × ${num(N.SALIDA_POR_ESCENA_VIRAL_BLOQUES)})`
       : estructurado
       ? `≈ ${num(est.tokensEntrada)} tokens de entrada (GEO ${num(Math.ceil(r.caracteresGeo / 4))} + sistema ${num(fijos.sistema)} + esquema ${num(fijos.esquema)}) + ${num(est.tokensSalida)} de salida (${r.lineasGeo} líneas GEO × 450)`
       : `≈ ${num(est.tokensEntrada)} tokens de entrada + ${num(est.tokensSalida)} de salida`;
@@ -334,14 +345,17 @@ function pintarEstimacion() {
   const info = $("#guion-info");
   if (info) {
     const partes = [];
-    if (estudio && r.escenas.length) {
-      partes.push(h("div.fila.chicos", h("span.chip.ok", "Motor de estudio"), h("span.chip", `${r.escenas.length} escena${r.escenas.length > 1 ? "s" : ""}`), h("span.chip", `${reloj(r.duracion)} min:s · ${num(r.duracion, 1)} s`), h("span.chip", `${svg} SVG`), h("span.chip", `${tres} 3D`), h("span.chip", `${num(r.caracteresIA)} caracteres → IA`)));
-      partes.push(h("p.suave.chico-t", "La IA solo devuelve un JSON mínimo por escena (composición, titular, figura y datos); las figuras con halftone, brillo y reflejo las dibuja el motor. La DIRECCION_VISUAL y la VOZ_OFF son lo único que viaja; tiempos, SFX y paleta se quedan en tu equipo."));
+    if (idea && !r.errores.length) {
+      partes.push(h("div.fila.chicos", h("span.chip.ok", "Una frase → video"), h("span.chip", `≈ ${r.duracion} s`), h("span.chip", `≈ ${r.escenasObjetivo} escenas`), h("span.chip", `${num(r.caracteres)} caracteres → IA`)));
+      partes.push(h("p.suave.chico-t", "La IA escribe el guion (locución incluida), decide la duración y elige entre 10 plantillas de reel: gancho, número gigante, versus, barras, tendencia, pasos, lista, ruta de metro, ciudad y cierre. Te deja la locución en un archivo para que la grabes. Si dices «de 45 segundos» respeta esa duración."));
+    } else if (estudio && r.escenas.length) {
+      partes.push(h("div.fila.chicos", h("span.chip.ok", "Guion en bloques"), h("span.chip", `${r.escenas.length} escena${r.escenas.length > 1 ? "s" : ""}`), h("span.chip", `${reloj(r.duracion)} min:s · ${num(r.duracion, 1)} s`), h("span.chip", `${svg} SVG`), h("span.chip", `${tres} 3D`), h("span.chip", `${num(r.caracteresIA)} caracteres → IA`)));
+      partes.push(h("p.suave.chico-t", "Tu locución y tus tiempos se respetan; la IA solo elige la plantilla de cada escena y sus datos. La DIRECCION_VISUAL y la VOZ_OFF son lo único que viaja."));
     } else if (estructurado && r.escenas.length) {
       partes.push(h("div.fila.chicos", h("span.chip.ok", "Formato estructurado"), h("span.chip", `${r.escenas.length} escena${r.escenas.length > 1 ? "s" : ""}`), h("span.chip", `${reloj(r.duracion)} min:s · ${num(r.duracion, 1)} s`), h("span.chip", `${svg} SVG`), h("span.chip", `${tres} 3D`), h("span.chip", `${r.lineasGeo} líneas GEO → IA`), h("span.chip", r.config.hud ? `HUD: ${r.config.gauges.map((g) => g.etiqueta).join(" · ") || "ON"}` : "HUD: OFF")));
       partes.push(h("p.suave.chico-t", "Solo las líneas GEO (y el modo) se envían a la IA. Título, subtítulo, HUD, fondo, sonido y VOZ_OFF se resuelven en tu equipo."));
       if (!N.esRetro(EST.paleta)) partes.push(h("div.nota", `ℹ️ El formato estructurado usa el diseño Retro-Científico: se aplicará «${N.PALETAS[N.paletaRetroDe(EST.paleta)].nombre}».`));
-    } else if (!r.errores.length && !r.escenas.length) partes.push(h("p.suave.chico-t", "Formato: ", h("code", "[ESCENA 1 | 0s-7s | MODO: SVG]"), " y debajo ", h("code", "VOZ_OFF:"), ", ", h("code", "DIRECCION_VISUAL:"), " y ", h("code", "SFX:"), ". Si prefieres ordenar tu guion con ChatGPT, copia el prompt con el botón de arriba."));
+    } else if (!r.errores.length && !r.escenas.length) partes.push(h("p.suave.chico-t", "Escribe en una frase lo que quieres del video. Ejemplo: «Un video de 30 segundos para IMNOBA sobre por qué el metro de Bogotá valoriza las propiedades»."));
     for (const e of r.errores) partes.push(h("div.nota.error", "⛔ " + e));
     for (const a of r.avisos) partes.push(h("div.nota.aviso", "⚠️ " + a));
     info.replaceChildren(...partes);
@@ -368,13 +382,13 @@ function pintarResultadoEstudio() {
   if (a) {
     const uso = a.uso;
     hijos.push(h("div.tarjeta",
-      h("div.cab-vista", h("div", h("h2", `🎞️ ${a.titulo || "Animación lista"}`), h("p.suave", `${a.escenas.length} escenas · ${num(a.duracion, 1)} s · paleta ${N.PALETAS[a.paleta]?.nombre ?? a.paleta} · SFX ${a.sfx ? "sí" : "no"}${a.formato === "estructurado" ? ` · formato estructurado · HUD ${a.hud ? "ON" : "OFF"}` : a.formato === "libre" ? " · lienzo libre" : a.formato === "estudio" ? " · motor de estudio" : ""} · sin subtítulos ni voz`),
+      h("div.cab-vista", h("div", h("h2", `🎞️ ${a.titulo || "Animación lista"}`), h("p.suave", `${a.escenas.length} escenas · ${num(a.duracion, 1)} s · paleta ${N.PALETAS[a.paleta]?.nombre ?? a.paleta} · SFX ${a.sfx ? "sí" : "no"}${a.formato === "estructurado" ? ` · formato estructurado · HUD ${a.hud ? "ON" : "OFF"}` : a.formato === "libre" ? " · lienzo libre" : a.formato === "estudio" ? " · motor de estudio" : a.formato === "viral" ? " · motor viral" : ""} · sin subtítulos ni voz`),
           d.rescatadas?.length ? h("div.nota.aviso", `⚠️ ${d.rescatadas.length === 1 ? `La escena ${d.rescatadas[0]} no se pudo reparar y quedó` : `Las escenas ${d.rescatadas.join(", ")} no se pudieron reparar y quedaron`} en versión sencilla. Puedes volver a generar o ajustar su DIRECCION_VISUAL.`) : null,
           d.locucion ? h("p", h("a.btn.chico", { href: d.locucion.url }, "📝 Descargar guion de locución (VOZ_OFF)"), h("span.chico-t.suave", " para leerlo al grabar tu audio")) : null),
         h("span.espacio"),
         uso ? h("div.costo.real", h("span.costo-etq", "Costo real de este video: "), h("strong#costo-real", N.formatoUSD(uso.costo_usd, 5)), h("span.costo-det", `${num(uso.prompt_tokens)} tokens de entrada (prompt_tokens) + ${num(uso.completion_tokens)} de salida (completion_tokens) · ${uso.llamadas} llamada${uso.llamadas > 1 ? "s" : ""} · ${uso.modelo}`)) : h("div.costo.real", h("span.costo-etq", "Ejemplo cargado sin IA · costo: "), h("strong", N.formatoUSD(0, 5)))),
-      h("table", h("thead", h("tr", h("th", "#"), h("th", "Modo"), h("th", "Tiempo"), h("th", "Fotogramas"), h("th", "Guion"))),
-        h("tbody", a.escenas.map((e) => h("tr", h("td", e.n), h("td", h(`span.chip.modo-${e.modo}`, e.modo === "ESTUDIO" ? `${e.layout}${e.es3D ? " · 3D" : ""}` : e.modo)), h("td", `${reloj(e.inicio)}–${reloj(e.fin)}`), h("td", `${Math.round(e.dur * 60)}`), h("td.chico-t", e.texto.replace(/\s+/g, " ").slice(0, 90) + (e.texto.length > 90 ? "…" : "")))))),
+      h("table", h("thead", h("tr", h("th", "#"), h("th", "Plantilla"), h("th", "Tiempo"), h("th", "Fotogramas"), h("th", "Locución / guion"))),
+        h("tbody", a.escenas.map((e) => h("tr", h("td", e.n), h("td", h(`span.chip.modo-${e.modo}`, e.modo === "VIRAL" ? e.tipo : e.modo === "ESTUDIO" ? `${e.layout}${e.es3D ? " · 3D" : ""}` : e.modo)), h("td", `${reloj(e.inicio)}–${reloj(e.fin)}`), h("td", `${Math.round(e.dur * 60)}`), h("td.chico-t", e.texto.replace(/\s+/g, " ").slice(0, 90) + (e.texto.length > 90 ? "…" : "")))))),
       h("div.fila", { style: "margin-top:12px" },
         h("button.btn", { onclick: () => lanzar("anim-previa") }, "👁️ Ver capturas + control de calidad"),
         h("button.btn.primario", { onclick: () => lanzar("anim-render") }, "🎬 Renderizar video (1080×1920 · 60 fps)"),
@@ -415,7 +429,7 @@ async function cargarHistorial(id) {
 
 const guardarEstado = () => { guardarLocal("videmed-anim-guion", EST.guion); guardarLocal("videmed-anim-modelo", EST.modelo); guardarLocal("videmed-anim-sfx", EST.sfx ? "si" : "no"); guardarLocal("videmed-anim-paleta", EST.paleta); };
 
-/** Carga un guion de ejemplo en el cuadro de texto (estudio por defecto; «libre» = lienzo libre; «hud» = formato estructurado retro; «simple» = el de siempre). */
+/** Carga un ejemplo en el cuadro de texto (viral = una frase, por defecto; estudio = guion en bloques; «libre» = lienzo libre; «hud» = formato estructurado retro; «simple» = el de siempre). */
 async function cargarEjemplo(formato) {
   try {
     EST.guion = (await api(`/api/anim/ejemplo?formato=${formato}&paleta=${encodeURIComponent(EST.paleta)}`)).guion;
@@ -437,20 +451,22 @@ async function vistaEstudio(cont) {
     await lanzar("anim-generar", { guion: EST.guion, modelo: EST.modelo, sfx: EST.sfx, paleta: EST.paleta });
   };
   cont.replaceChildren(
-    h("div.cab-vista", h("div", h("h1", "✨ Estudio de animación"), h("p.suave", "Pega tu guion en bloques, elige modelo y paleta, y la IA decide el diseño de cada escena con un JSON mínimo y el motor de estudio la dibuja. Sin subtítulos y sin voz: tú grabas la locución aparte."))),
+    h("div.cab-vista", h("div", h("h1", "✨ Estudio de video"), h("p.suave", "Escribe tu idea en UNA frase. La IA escribe el guion, decide la duración y diseña cada escena con plantillas de reel profesionales. Sin subtítulos y sin voz: tú grabas la locución con el guion que te deja listo."))),
     h("div.tarjeta.estudio",
-      h("div.fila", h("label.etq", { for: "guion" }, "1 · Guion y requerimientos visuales"), h("span.espacio"),
-        h("button.btn.chico", { type: "button", onclick: async () => aviso((await copiarTexto(N.PROMPT_FORMATEADOR_ESTUDIO)) ? "📋 Prompt copiado (formato [ESCENA | tiempo | MODO] + VOZ_OFF + DIRECCION_VISUAL + SFX). Pégalo en ChatGPT/Claude junto a tu guion y vuelve a pegar aquí el resultado." : "No pude copiar automáticamente: selecciona el texto a mano.", "ok", 7000) }, "📋 Copiar Prompt Formateador"),
-        h("button.btn.chico", { type: "button", onclick: async () => cargarEjemplo("estudio") }, "🧪 Cargar ejemplo")),
-      h("details.otros-formatos", h("summary.chico-t.suave", "Otros formatos (lienzo libre, HUD retro y simple): prompts y ejemplos"),
+      h("div.fila", h("label.etq", { for: "guion" }, "1 · Tu idea en una frase"), h("span.espacio"),
+        h("button.btn.chico", { type: "button", onclick: async () => aviso((await copiarTexto(N.PROMPT_FORMATEADOR_IDEA)) ? "📋 Prompt copiado. Pégalo en ChatGPT/Claude con tus notas y te devolverá la frase de idea lista para pegar aquí." : "No pude copiar automáticamente: selecciona el texto a mano.", "ok", 7000) }, "📋 Copiar Prompt Formateador"),
+        h("button.btn.chico", { type: "button", onclick: async () => cargarEjemplo("viral") }, "🧪 Cargar ejemplo")),
+      h("details.otros-formatos", h("summary.chico-t.suave", "Avanzado: guion en bloques, lienzo libre, HUD retro y simple"),
         h("div.fila.chicos",
+          h("button.btn.chico", { type: "button", onclick: async () => aviso((await copiarTexto(N.PROMPT_FORMATEADOR_ESTUDIO)) ? "📋 Prompt del guion en bloques copiado ([ESCENA | tiempo | MODO] + VOZ_OFF + DIRECCION_VISUAL + SFX)." : "No pude copiar automáticamente.", "ok", 5000) }, "📋 Prompt guion en bloques"),
+          h("button.btn.chico", { type: "button", onclick: async () => cargarEjemplo("estudio") }, "🧪 Ejemplo en bloques"),
           h("button.btn.chico", { type: "button", onclick: async () => aviso((await copiarTexto(N.PROMPT_FORMATEADOR_LIBRE)) ? "📋 Prompt del lienzo libre copiado (solo [ESCENA n | tiempo])." : "No pude copiar automáticamente.", "ok", 5000) }, "📋 Prompt lienzo libre"),
           h("button.btn.chico", { type: "button", onclick: async () => cargarEjemplo("libre") }, "🧪 Ejemplo lienzo libre"),
           h("button.btn.chico", { type: "button", onclick: async () => aviso((await copiarTexto(N.PROMPT_FORMATEADOR_ESTRUCTURADO)) ? "📋 Prompt del formato con HUD copiado ([CONFIG], GEO y HUD)." : "No pude copiar automáticamente.", "ok", 5000) }, "📋 Prompt formato HUD"),
           h("button.btn.chico", { type: "button", onclick: async () => aviso((await copiarTexto(N.PROMPT_FORMATEADOR)) ? "📋 Prompt del formato simple copiado." : "No pude copiar automáticamente.", "ok", 5000) }, "📋 Prompt formato simple"),
           h("button.btn.chico", { type: "button", onclick: async () => cargarEjemplo("hud") }, "🧪 Ejemplo HUD"),
           h("button.btn.chico", { type: "button", onclick: async () => cargarEjemplo("simple") }, "🧪 Ejemplo simple"))),
-      h("textarea#guion.guion", { rows: 15, spellcheck: false, placeholder: "[ESCENA 1 | 0s-7s | MODO: SVG]\nVOZ_OFF: …\nDIRECCION_VISUAL: …\nSFX: whoosh, pop\n\n[ESCENA 2 | 7s-14s | MODO: 3D]\nVOZ_OFF: …\nDIRECCION_VISUAL: …", value: EST.guion, oninput: (e) => { EST.guion = e.target.value; guardarEstado(); pintarEstimacion(); } }),
+      h("textarea#guion.guion", { rows: 5, spellcheck: false, placeholder: "Escribe aquí lo que quieres del video, en una frase. Ejemplo: Un video de 30 segundos para IMNOBA sobre por qué el metro de Bogotá valoriza las propiedades cerca de las estaciones y que publiquen gratis.", value: EST.guion, oninput: (e) => { EST.guion = e.target.value; guardarEstado(); pintarEstimacion(); } }),
       h("div#guion-info.guion-info"),
       h("div.ajustes-3",
         h("div.campo", h("label.etq", { for: "modelo" }, "2 · Modelo de IA"),

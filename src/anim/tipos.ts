@@ -1,6 +1,7 @@
 import type { Modo } from "./parser";
 import type { TemaEscena } from "./paletas";
 import type { EscenaEstudioGuardada } from "./estudio";
+import type { EscenaViralGuardada } from "./viral";
 
 export type Entrada2D = "aparecer" | "pop" | "deslizar-arriba" | "deslizar-abajo" | "deslizar-izq" | "deslizar-der" | "crecer";
 export type Entrada3D = "crecer" | "caer" | "aparecer" | "ninguna";
@@ -36,7 +37,7 @@ export type Escena3D = { modo: "3D"; n: number; tema: TemaEscena; camara: Camara
 export type EscenaLibreGuardada = { modo: "LIBRE"; n: number; tema: TemaEscena; codigo: string; js: string; sfx?: EventoSfx[]; fallback?: boolean; inicio: number; fin: number; dur: number; texto: string };
 
 /** Escena tal como se guarda en animacion.json: lo que devuelve la IA + lo que se sabe localmente (tiempos y texto). */
-export type EscenaGuardada = ((EscenaSVG | Escena3D) & { inicio: number; fin: number; dur: number; texto: string }) | EscenaLibreGuardada | EscenaEstudioGuardada;
+export type EscenaGuardada = ((EscenaSVG | Escena3D) & { inicio: number; fin: number; dur: number; texto: string }) | EscenaLibreGuardada | EscenaEstudioGuardada | EscenaViralGuardada;
 
 export type Uso = { modelo: string; prompt_tokens: number; completion_tokens: number; costo_usd: number; llamadas: number };
 
@@ -51,7 +52,7 @@ export type Animacion = {
   uso: Uso | null;
   /** formato estructurado: false = «HUD: OFF» (sin medidores; el escenario llega hasta y 1800) */
   hud?: boolean;
-  formato?: "simple" | "estructurado" | "libre" | "estudio";
+  formato?: "simple" | "estructurado" | "libre" | "estudio" | "viral";
 };
 
 export type { Modo };

@@ -1,0 +1,155 @@
+{
+"titulo": "El metro que valoriza Bogotá",
+"scenes": [
+{
+"t": "HOOK",
+"voz": "¿Te imaginas cruzar Bogotá en minutos? ¡Llega el metro!",
+"dur": 3.6,
+"h": "BOGOTÁ NECESITA METRO",
+"w": "METRO",
+"sub": "y tu inmueble lo agradece",
+"ic": "tren"
+},
+{
+"t": "NUM",
+"voz": "Hoy se pierden horas en trancones cada día.",
+"dur": 3.4,
+"h": "TIEMPO PERDIDO",
+"w": "PERDIDO",
+"ic": "reloj",
+"num": {
+"n": "2",
+"u": "h",
+"pre": "~",
+"l": "AL DÍA EN TRANCONES"
+}
+},
+{
+"t": "VS",
+"voz": "Otras capitales ya tienen metro. Bogotá apenas empieza.",
+"dur": 3.7,
+"h": "LÍNEAS DE METRO",
+"w": "METRO",
+"a": {
+"l": "BOGOTÁ",
+"n": "0",
+"ic": "tren"
+},
+"b": {
+"l": "SANTIAGO",
+"n": "7",
+"ic": "tren"
+},
+"op": "<"
+},
+{
+"t": "ROUTE",
+"voz": "La primera línea conecta el sur con el norte.",
+"dur": 4.4,
+"h": "LA PRIMERA LÍNEA",
+"w": "PRIMERA",
+"stops": [
+"PORTAL AMÉRICAS",
+"KENNEDY",
+"CENTRO",
+"CALLE 72"
+],
+"end": "VALORIZACIÓN"
+},
+{
+"t": "STEPS",
+"voz": "Más acceso, más demanda, más valor para tu propiedad.",
+"dur": 3.6,
+"h": "CAUSA Y EFECTO",
+"w": "EFECTO",
+"items": [
+{
+"l": "METRO",
+"ic": "tren"
+},
+{
+"l": "MÁS DEMANDA",
+"ic": "tendencia-alza"
+},
+{
+"l": "MÁS VALOR",
+"ic": "dolar"
+}
+]
+},
+{
+"t": "LINE",
+"voz": "Donde llega el transporte, el metro cuadrado sube.",
+"dur": 3.8,
+"h": "VALOR DEL M²",
+"w": "M²",
+"line": {
+"pts": [
+100,
+104,
+102,
+112,
+122,
+128,
+135
+],
+"l0": "ANTES",
+"l1": "DESPUÉS",
+"end": "+35 %"
+}
+},
+{
+"t": "BARS",
+"voz": "Mientras más cerca de la estación, más valorización.",
+"dur": 3.4,
+"h": "VALORIZACIÓN POR ZONA",
+"w": "ZONA",
+"bars": [
+{
+"l": "LEJOS",
+"v": 8
+},
+{
+"l": "A 10 MIN",
+"v": 19
+},
+{
+"l": "A 5 MIN",
+"v": 35
+}
+],
+"u": "%",
+"hi": 2
+},
+{
+"t": "SKYLINE",
+"voz": "Tu inmueble puede ser la próxima gran oportunidad.",
+"dur": 3.4,
+"h": "TU INMUEBLE, MÁS VALIOSO",
+"w": "VALIOSO",
+"l": "+35 %",
+"sub": "cerca de las estaciones"
+},
+{
+"t": "LIST",
+"voz": "En IMNOBA publicas gratis, sin comisión: casas, apartamentos y autos.",
+"dur": 4.0,
+"h": "PUBLICA EN IMNOBA",
+"w": "IMNOBA",
+"items": [
+"Gratis y sin comisión",
+"Casas, apartamentos y autos",
+"Llegas a más compradores"
+]
+},
+{
+"t": "CTA",
+"voz": "No esperes al metro: publica gratis hoy en IMNOBA.",
+"dur": 3.6,
+"h": "PUBLICA GRATIS HOY",
+"w": "GRATIS",
+"sub": "imnoba.com",
+"ic": "cohete"
+}
+]
+}

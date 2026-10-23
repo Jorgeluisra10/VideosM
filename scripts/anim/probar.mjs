@@ -341,7 +341,7 @@ try {
   prueba("EscenaLibre: compila con new Function en modo estricto, aísla fallos con un ErrorBoundary y deja «[ESCENA-ERROR]» en consola", /new Function/.test(runtime) && /"use strict"/.test(runtime) && /getDerivedStateFromError/.test(runtime) && /\[ESCENA-ERROR\]/.test(runtime) && /Rescate/.test(runtime));
   prueba("Animacion: la escena LIBRE ocupa el 100 % (no pasa por CapaRetro, HUD, título ni Fondo2D) y el halftone wipe solo va en los formatos con HUD", /e\.modo === "LIBRE"\) return <EscenaLibre/.test(anim) && /animacion\.formato !== "libre"/.test(anim));
   prueba("las constantes del kit coinciden con el lienzo (W=1080, H=1920, FPS=60) y el ámbito expone useT, entra, float, rand, ease y los pinceles", /export const W = 1080/.test(kit) && /export const H = 1920/.test(kit) && /export const FPS = 60/.test(kit) && ["useT", "entra", "float", "rand", "ease", "Svg", "KineticText", "Cuerpo3D", "Barras3D", "Ciudad3D"].every((n) => new RegExp(`\\b${n}\\b`).test(kit.slice(kit.indexOf("AMBITO_KIT")))));
-  prueba("el panel: «Copiar Prompt Formateador» y «Cargar ejemplo» usan el formato libre, con «Otros formatos» aparte", /PROMPT_FORMATEADOR_LIBRE/.test(readFileSync(p("scripts", "panel", "web", "app.js"), "utf8")) && /cargarEjemplo\("libre"\)/.test(readFileSync(p("scripts", "panel", "web", "app.js"), "utf8")) && /Otros formatos/.test(readFileSync(p("scripts", "panel", "web", "app.js"), "utf8")));
+  prueba("el panel: «Copiar Prompt Formateador» y «Cargar ejemplo» usan la frase de idea (viral); el lienzo libre queda en «Avanzado»", /PROMPT_FORMATEADOR_IDEA/.test(readFileSync(p("scripts", "panel", "web", "app.js"), "utf8")) && /cargarEjemplo\("viral"\)/.test(readFileSync(p("scripts", "panel", "web", "app.js"), "utf8")) && /PROMPT_FORMATEADOR_LIBRE/.test(readFileSync(p("scripts", "panel", "web", "app.js"), "utf8")) && /Avanzado/.test(readFileSync(p("scripts", "panel", "web", "app.js"), "utf8")));
 
   // agente del lienzo libre (OpenAI simulado, sin Chrome: la verificación en navegador se prueba con --render)
   const mockL = await iniciarMock(0);
@@ -416,6 +416,91 @@ try {
   rmSync(malo, { force: true });
   await mock.cerrar();
 
+  const guionEstudio = readFileSync(p("ejemplos", "animacion-estudio", "guion.txt"), "utf8");
+  // ------------------------------------------------------------ motor viral (una frase → video)
+  console.log("\nMotor viral (una frase → video con plantillas de reel)");
+  {
+    const ideaEj = readFileSync(p("ejemplos", "animacion-viral", "idea.txt"), "utf8");
+    const respViral = JSON.parse(readFileSync(p("ejemplos", "animacion-viral", "respuesta-ia.json"), "utf8"));
+    const pi = N.parsearIdea(ideaEj);
+    prueba("parsearIdea: una frase es un video; «de 35 segundos» fija la duración (≈ una escena cada 3,6 s); sin duración ≈ 32 s", pi.errores.length === 0 && pi.duracion === 35 && pi.escenasObjetivo === 10 && N.parsearIdea("Un video sobre el metro de Bogotá").duracion === 32 && N.parsearIdea("un reel de 1 minuto sobre autos").duracion === 60 && N.parsearIdea("algo de 300 segundos").duracion === 75 && N.parsearIdea("algo de 5 segundos").duracion === 15, JSON.stringify(pi));
+    prueba("parsearIdea: vacía o demasiado corta → UN error claro; los guiones en bloques ([ESCENA…], [CONFIG]) NO son ideas", N.parsearIdea("").errores.length === 1 && N.parsearIdea("hola").errores.length === 1 && !N.esIdea("[ESCENA 1 | 0s-4s | MODO: SVG]\nx") && !N.esIdea("[CONFIG]\nHUD: ON") && N.esIdea("una frase cualquiera sobre casas"));
+    // saneado
+    const sv = (raw, n = 1, voz) => N.normalizarEscenaViral(raw, n, voz);
+    const mal = sv({ t: "gif", h: "titular larguísimo que no cabe en ninguna línea de ninguna plantilla de reel posible", w: "inexistente", ic: "unicornio", dur: "mucho", voz: "x".repeat(400) });
+    prueba("saneado viral: tipo inventado → HOOK; titular en mayúsculas ≤ 40; palabra destacada dentro del titular; icono inexistente → uno válido; duración numérica acotada; voz ≤ 260", mal.escena.t === "HOOK" && mal.escena.h === mal.escena.h.toUpperCase() && mal.escena.h.length <= 40 && mal.escena.h.split(/\s+/).includes(mal.escena.w) && N.ICONOS_VIRAL.includes(mal.escena.ic) && mal.escena.dur >= 2 && mal.escena.dur <= 8 && mal.escena.voz.length <= 260 && mal.correcciones.length > 0, JSON.stringify(mal));
+    prueba("saneado viral: NUM sin número toma la cifra de la locución; VS deduce el operador por los números; BARS con pocos datos y LINE con pocos puntos se completan; STEPS/LIST/ROUTE con pocos elementos se completan", sv({ t: "NUM", voz: "Se valoriza un 35 % cada año" }).escena.num.n === "35" && sv({ t: "NUM", voz: "Se valoriza un 35 % cada año" }).escena.num.u === "%" && sv({ t: "VS", a: { l: "A", n: "9" }, b: { l: "B", n: "3" } }).escena.vs.op === ">" && sv({ t: "VS", a: { l: "A", n: "1.200" }, b: { l: "B", n: "300" } }).escena.vs.op === ">" && sv({ t: "BARS", bars: [{ l: "x", v: 3 }] }).escena.bars.length >= 2 && sv({ t: "LINE", line: { pts: [1] } }).escena.line.pts.length >= 3 && sv({ t: "STEPS", items: [] }).escena.items.length >= 2 && sv({ t: "LIST", items: ["a"] }).escena.items.length >= 2 && sv({ t: "ROUTE", stops: ["a"] }).escena.stops.length >= 3);
+    prueba("saneado viral: BARS marca la barra mayor si no se pide otra (hi) y recorta a 6; LIST siempre con check; los iconos se deducen del texto (tren, casa, dinero, reloj)", sv({ t: "BARS", bars: [{ l: "a", v: 1 }, { l: "b", v: 9 }, { l: "c", v: 5 }] }).escena.hi === 1 && sv({ t: "BARS", bars: Array.from({ length: 9 }, (_, i) => ({ l: `m${i}`, v: i + 1 })) }).escena.bars.length === 6 && sv({ t: "LIST", items: ["uno", "dos"] }).escena.items.every((i) => i.ic === "check") && N.iconoPorTexto("el metro llega") === "tren" && N.iconoPorTexto("tu casa o apartamento") === "casa" && N.iconoPorTexto("cuesta mucho dinero") === "billete" && N.iconoPorTexto("en pocos minutos") === "reloj");
+    // fondos y ritmo
+    const tipos = ["HOOK", "NUM", "NUM", "VS", "BARS", "BARS", "LIST", "LIST", "CTA"];
+    const fond = N.asignarFondos(tipos);
+    prueba("fondos alternados: la primera escena es oscura, el CTA dorado y nunca hay dos escenas seguidas con el mismo fondo", fond[0] === "dark" && fond[fond.length - 1] === "gold" && fond.every((f, i) => i === 0 || f !== fond[i - 1]), fond.join());
+    // ensamblado idea
+    const ev = N.ensamblarViral(respViral, { modo: "idea", paleta: "imnoba", sfx: true });
+    const esc = ev.anim.escenas;
+    prueba("ensamblarViral (idea): 10 escenas modo VIRAL, consecutivas desde 0, título y animación válida (validar); formato «viral»", esc.length === 10 && esc.every((e) => e.modo === "VIRAL") && esc[0].inicio === 0 && esc.every((e, i) => i === 0 || Math.abs(e.inicio - esc[i - 1].fin) < 0.011) && ev.anim.titulo === "El metro que valoriza Bogotá" && ev.anim.formato === "viral" && N.validar(ev.anim).length === 0 && ev.anim.duracion === esc[9].fin, JSON.stringify(N.validar(ev.anim)));
+    prueba("cada escena dura al menos lo que se tarda en decir su locución (palabras ÷ 2,9 + 0,5 s) y su tiempo ideal queda bajo control con el ritmo", esc.every((e) => e.dur + 0.011 >= e.voz.split(/\s+/).length / 2.9 + 0.5) && esc.every((e) => e.ritmo > 0.5 && e.ritmo <= 1) && esc.every((e) => e.total === ev.anim.duracion));
+    prueba("la locución se guarda para grabarla: una línea [ESCENA n | mm:ss-mm:ss] por escena con su voz, y el aviso de verificar cifras", /\[ESCENA 1 \| 00:00-00:0\d\]\n¿Te imaginas cruzar Bogotá/.test(ev.locucion) && (ev.locucion.match(/\[ESCENA \d+ \|/g) ?? []).length === 10 && /Verifica las cifras/.test(ev.locucion));
+    prueba("SFX automáticos sincronizados: arrancan con whoosh, todos caen dentro de la escena, ordenados; con SFX = No no hay ninguno", esc.every((e) => e.sfx && e.sfx[0].tipo === "whoosh" && e.sfx.every((s, i) => s.t >= 0 && s.t < e.dur && (i === 0 || s.t >= e.sfx[i - 1].t))) && N.ensamblarViral(respViral, { modo: "idea", sfx: false }).anim.escenas.every((e) => !e.sfx) && N.eventosSfx(ev.anim).length > 20);
+    const evB = N.ensamblarViral({ scenes: [{ id: 1, t: "HOOK", h: "HOLA" }, { id: 2, t: "CTA", h: "ADIÓS" }] }, { modo: "bloques", escenas: N.parsearEstudio("[ESCENA 1 | 0s-4s | MODO: SVG]\nVOZ_OFF: uno dos tres\nDIRECCION_VISUAL: algo\n[ESCENA 2 | 4s-9s | MODO: SVG]\nVOZ_OFF: cuatro cinco\nDIRECCION_VISUAL: otro").escenas, sfx: true });
+    prueba("ensamblarViral (bloques): los tiempos y la locución son los del guion (0–4 s y 4–9 s) y la IA solo pone la plantilla", evB.anim.escenas[0].inicio === 0 && evB.anim.escenas[0].fin === 4 && evB.anim.escenas[1].fin === 9 && evB.anim.escenas[1].voz === "cuatro cinco" && evB.anim.escenas[1].t === "CTA" && evB.sinRespuesta.length === 0);
+    const tIm = N.temaViral("imnoba", "dark"), tGo = N.temaViral("imnoba", "gold"), tLi = N.temaViral("imnoba", "light");
+    prueba("colores IMNOBA en los 3 fondos: oscuro azul de marca con acento dorado #FFC500; dorado con texto azul #02224E; claro con texto azul", tIm.acento === "#FFC500" && tIm.oscuro && tGo.texto === "#02224E" && tLi.texto === "#02224E" && !tGo.oscuro && !tLi.oscuro);
+    // prompt y costo
+    const sv1 = N.sistemaViral();
+    const fv = N.tokensFijosViral();
+    prueba("prompt de sistema viral: estático (idéntico siempre → prefijo cacheable), marca [DIRECTOR_VIRAL], los 10 tipos y todos los iconos, y compacto (< 1.000 tokens estimados)", sv1 === N.sistemaViral() && sv1.includes("[DIRECTOR_VIRAL]") && N.TIPOS_VIRAL.every((t) => sv1.includes(t)) && N.ICONOS_VIRAL.every((i) => sv1.includes(i)) && fv.sistema < 1000 && fv.esquema === 0, JSON.stringify(fv));
+    prueba("la marca va en el mensaje de usuario (no en el prompt estático): IMNOBA la incluye, Medicina no", /MARCA: IMNOBA/.test(N.promptUsuarioIdea({ ...pi, paleta: "imnoba" })) && !/MARCA/.test(N.promptUsuarioIdea({ ...pi, paleta: "medicina" })) && !/IMNOBA/.test(sv1.replace(/ICONOS[\s\S]*$/, "")) && /ESCENAS: 10/.test(N.promptUsuarioIdea(pi)));
+    const eV = N.estimarViral({ modelo: "gpt-4.1-mini", caracteres: pi.caracteres, escenas: pi.escenasObjetivo, tokensSistema: fv.sistema });
+    prueba("estimarViral: entrada = prompt fijo + frase/3,6 + 30; salida = 165 por escena + 30; costo con la tarifa del modelo", eV.tokensEntrada === fv.sistema + Math.ceil(pi.caracteres / 3.6) + 30 && eV.tokensSalida === 165 * 10 + 30 && Math.abs(eV.costo - (eV.tokensEntrada * 0.4 + eV.tokensSalida * 1.6) / 1e6) < 1e-12, JSON.stringify(eV));
+    const cV = (m) => N.estimarViral({ modelo: m, caracteres: pi.caracteres, escenas: 10, tokensSistema: fv.sistema }).costo;
+    prueba("orden de tarifas: nano < 4o-mini < 4.1-mini < 4.1 (≈ $0,001–$0,01 por video de 35 s)", cV("gpt-4.1-nano") < cV("gpt-4o-mini") && cV("gpt-4o-mini") < cV("gpt-4.1-mini") && cV("gpt-4.1-mini") < cV("gpt-4.1") && cV("gpt-4.1") < 0.02 && cV("gpt-4.1-nano") < 0.001, [cV("gpt-4.1-nano"), cV("gpt-4o-mini"), cV("gpt-4.1-mini"), cV("gpt-4.1")].join(" · "));
+    // agente con servidor simulado
+    for (const mo of ["gpt-4.1", "gpt-4.1-mini", "gpt-4.1-nano", "gpt-4o-mini", "o4-mini"]) {
+      const mk = await iniciarMock(0);
+      const rv = await generarAnimacion({ guion: ideaEj, modelo: mo, sfx: true, paleta: "imnoba", cfg: cfgMock(mk) });
+      const uv = mk.estado.ultimaAnimacion;
+      const mm = N.modeloPorId(mo);
+      prueba(`una frase con ${mo}: 1 llamada con json_object (sin esquema), guion de 10 escenas, costo real con su tarifa${mm.razonador ? ", razonamiento «low»" : ""}`, rv.uso.llamadas === 1 && uv.nombre === "viral_json" && uv.formato === "json_object" && uv.estricto === false && (mm.razonador ? uv.razonamiento === "low" : uv.razonamiento === null) && rv.formato === "viral" && rv.anim.escenas.length === 10 && rv.anim.formato === "viral" && Math.abs(rv.uso.costo_usd - (rv.uso.prompt_tokens * mm.entrada + rv.uso.completion_tokens * mm.salida) / 1e6) < 1e-12 && /\[ESCENA 1 \|/.test(rv.locucion), JSON.stringify(uv && { ...uv, sistema: "…", usuario: "…" }));
+      await mk.cerrar();
+    }
+    let mkV = await iniciarMock(0);
+    const r20 = await generarAnimacion({ guion: "Un reel de 20 segundos sobre vender tu carro sin comisión en IMNOBA", modelo: "gpt-4.1-nano", sfx: true, paleta: "imnoba", cfg: cfgMock(mkV) });
+    prueba("la duración pedida en la frase manda: «de 20 segundos» → 6 escenas, HOOK primero y CTA último; a la IA solo viajan la frase, la duración y la marca", r20.anim.escenas.length === 6 && r20.anim.escenas[0].t === "HOOK" && r20.anim.escenas[5].t === "CTA" && /DURACIÓN TOTAL: 20 s/.test(mkV.estado.ultimaAnimacion.usuario) && /ESCENAS: 6/.test(mkV.estado.ultimaAnimacion.usuario) && /MARCA: IMNOBA/.test(mkV.estado.ultimaAnimacion.usuario) && !/SFX|whoosh/.test(mkV.estado.ultimaAnimacion.usuario));
+    await mkV.cerrar();
+    process.env.MOCK_VIRAL_POCAS = "1";
+    mkV = await iniciarMock(0);
+    const rP = await generarAnimacion({ guion: ideaEj, modelo: "gpt-4.1-nano", sfx: true, paleta: "imnoba", cfg: cfgMock(mkV) });
+    delete process.env.MOCK_VIRAL_POCAS;
+    prueba("si la IA devuelve muy pocas escenas se pide de nuevo UNA vez el guion completo (2 llamadas, el costo suma ambas)", rP.uso.llamadas === 2 && rP.anim.escenas.length === 10 && /muy pocas escenas/.test(mkV.estado.ultimaAnimacion.usuario), JSON.stringify(rP.uso));
+    await mkV.cerrar();
+    process.env.MOCK_VIRAL_MAL = "1";
+    mkV = await iniciarMock(0);
+    const rM = await generarAnimacion({ guion: ideaEj, modelo: "gpt-4.1-nano", sfx: true, paleta: "imnoba", cfg: cfgMock(mkV) });
+    delete process.env.MOCK_VIRAL_MAL;
+    prueba("una respuesta basura en una escena se sanea sin llamadas extra y el video sigue siendo válido", rM.uso.llamadas === 1 && rM.correcciones.length > 0 && N.validar(rM.anim).length === 0 && rM.anim.escenas.length === 10, JSON.stringify(rM.correcciones));
+    await mkV.cerrar();
+    mkV = await iniciarMock(0);
+    const rB = await generarAnimacion({ guion: guionEstudio, modelo: "gpt-4.1-mini", sfx: true, paleta: "imnoba", cfg: cfgMock(mkV) });
+    prueba("un guion en bloques también funciona con el motor viral: sus tiempos y su locución se respetan y la IA solo elige plantilla (sin «voz» ni «dur» en la petición)", rB.uso.llamadas === 1 && rB.anim.escenas.length === 6 && rB.anim.duracion === 37 && rB.anim.escenas[0].voz.includes("Bogotá está atrapada") && /^ESC 1 \| 6s/m.test(mkV.estado.ultimaAnimacion.usuario) && /MODO: bloques/.test(mkV.estado.ultimaAnimacion.usuario), JSON.stringify(rB.uso));
+    await mkV.cerrar();
+    process.env.MOCK_VIRAL_FALTAN = "1";
+    mkV = await iniciarMock(0);
+    const rF = await generarAnimacion({ guion: guionEstudio, modelo: "gpt-4.1-nano", sfx: true, paleta: "imnoba", cfg: cfgMock(mkV) });
+    delete process.env.MOCK_VIRAL_FALTAN;
+    prueba("bloques: si la IA se deja una escena se pide de nuevo SOLO esa", rF.uso.llamadas === 2 && /^ESC 2 \|/m.test(mkV.estado.ultimaAnimacion.usuario) && !/ESC 1 \|/.test(mkV.estado.ultimaAnimacion.usuario) && rF.anim.escenas.length === 6 && rF.anim.escenas[1].t === "NUM", JSON.stringify(rF.uso));
+    await mkV.cerrar();
+    let errIdea = null;
+    try { await generarAnimacion({ guion: "una frase de idea", modelo: "gpt-4.1-mini", motor: "estudio", cfg: cfgMock((mkV = await iniciarMock(0))) }); } catch (e) { errIdea = e; }
+    await mkV.cerrar();
+    prueba("con los motores clásicos una frase suelta se rechaza con un mensaje claro (piden bloques)", errIdea?.name === "ErrorGuion" && /bloques/.test(errIdea.message));
+    const rEst2 = N.estimarViral({ modelo: "gpt-4.1-mini", caracteres: pi.caracteres, escenas: pi.escenasObjetivo, tokensSistema: fv.sistema }).costo;
+    mkV = await iniciarMock(0);
+    const rC = await generarAnimacion({ guion: ideaEj, modelo: "gpt-4.1-mini", sfx: true, paleta: "imnoba", cfg: cfgMock(mkV) });
+    prueba("la estimación previa del panel está en el mismo orden que el costo real (0,3×–3×)", rEst2 / rC.uso.costo_usd > 0.3 && rEst2 / rC.uso.costo_usd < 3, `estimado ${rEst2.toFixed(5)} · real ${rC.uso.costo_usd.toFixed(5)}`);
+    await mkV.cerrar();
+  }
+
   // ------------------------------------------------------------ motor de estudio (JSON ultraligero)
   console.log("\nMotor de estudio (JSON ultraligero + figuras prefabricadas)");
   {
@@ -474,14 +559,14 @@ try {
   const modelos5 = ["gpt-4.1", "gpt-4.1-mini", "gpt-4.1-nano", "gpt-4o-mini", "o4-mini"];
   for (const mo of modelos5) {
     const mk = await iniciarMock(0);
-    const rs = await generarAnimacion({ guion: guionEstudio, modelo: mo, sfx: true, paleta: "imnoba", cfg: cfgMock(mk) });
+    const rs = await generarAnimacion({ guion: guionEstudio, modelo: mo, sfx: true, paleta: "imnoba", motor: "estudio", cfg: cfgMock(mk) });
     const ue = mk.estado.ultimaAnimacion;
     const m5 = N.modeloPorId(mo);
     prueba(`agente estudio con ${mo}: 1 llamada, response_format json_object (sin esquema), costo real con su tarifa${m5.razonador ? ", razonamiento «low»" : ", sin reasoning_effort"}`, rs.uso.llamadas === 1 && ue.nombre === "estudio_json" && ue.formato === "json_object" && ue.estricto === false && ue.ruta === "/chat/completions" && (m5.razonador ? ue.razonamiento === "low" : ue.razonamiento === null) && rs.anim.formato === "estudio" && rs.anim.escenas.length === 6 && Math.abs(rs.uso.costo_usd - (rs.uso.prompt_tokens * m5.entrada + rs.uso.completion_tokens * m5.salida) / 1e6) < 1e-12 && rs.formato === "estudio", JSON.stringify(ue && { ...ue, sistema: "…", usuario: "…" }));
     await mk.cerrar();
   }
   let mkE = await iniciarMock(0);
-  const rE = await generarAnimacion({ guion: guionEstudio, modelo: "gpt-4.1-mini", sfx: true, paleta: "imnoba", cfg: cfgMock(mkE) });
+  const rE = await generarAnimacion({ guion: guionEstudio, modelo: "gpt-4.1-mini", sfx: true, paleta: "imnoba", motor: "estudio", cfg: cfgMock(mkE) });
   const uE = mkE.estado.ultimaAnimacion;
   prueba("a la IA solo viajan la dirección visual y la voz (ni SFX ni tiempos ni «SFX:»); el prompt de sistema lleva las reglas y el vocabulario", /^ESC 1 \| 6s \| SVG\nDIR: .*\nVOZ: /m.test(uE.usuario) && !/SFX|whoosh|0s-6s/.test(uE.usuario) && /ESTUDIO_JSON/.test(uE.sistema), uE.usuario.slice(0, 300));
   prueba("1 llamada pequeña para 6 escenas y costo real < 1/5 del que cuesta el lienzo libre (0,0123)", rE.uso.llamadas === 1 && rE.uso.completion_tokens < 6 * 220 && rE.uso.costo_usd < 0.0025 && rE.locucion.includes("Bogotá está atrapada"), JSON.stringify(rE.uso));
@@ -490,21 +575,21 @@ try {
   await mkE.cerrar();
   process.env.MOCK_ESTUDIO_FALTAN = "1";
   mkE = await iniciarMock(0);
-  const rF = await generarAnimacion({ guion: guionEstudio, modelo: "gpt-4.1-nano", sfx: true, paleta: "imnoba", cfg: cfgMock(mkE) });
+  const rF = await generarAnimacion({ guion: guionEstudio, modelo: "gpt-4.1-nano", sfx: true, paleta: "imnoba", motor: "estudio", cfg: cfgMock(mkE) });
   delete process.env.MOCK_ESTUDIO_FALTAN;
   prueba("si la IA se deja una escena: UNA petición solo de esa escena y el costo suma ambas llamadas", rF.uso.llamadas === 2 && /^ESC 2 \|/.test(mkE.estado.ultimaAnimacion.usuario) && !/ESC 1 \|/.test(mkE.estado.ultimaAnimacion.usuario) && rF.anim.escenas.length === 6 && rF.anim.escenas[1].layout === "VERSUS_50_50", JSON.stringify(rF.uso));
   await mkE.cerrar();
   process.env.MOCK_ESTUDIO_MAL = "1";
   mkE = await iniciarMock(0);
-  const rM = await generarAnimacion({ guion: guionEstudio, modelo: "gpt-4.1-nano", sfx: true, paleta: "imnoba", cfg: cfgMock(mkE) });
+  const rM = await generarAnimacion({ guion: guionEstudio, modelo: "gpt-4.1-nano", sfx: true, paleta: "imnoba", motor: "estudio", cfg: cfgMock(mkE) });
   delete process.env.MOCK_ESTUDIO_MAL;
   prueba("una respuesta basura (enums inventados, titular larguísimo) se sanea sin reparaciones ni llamadas extra y el video es válido", rM.uso.llamadas === 1 && rM.correcciones.length > 0 && N.validar(rM.anim) .length === 0 && rM.anim.escenas[0].layout === "HERO_CENTER" && rM.anim.escenas[0].headline.text.length <= 40, JSON.stringify(rM.correcciones));
   await mkE.cerrar();
   const rL = await generarAnimacion({ guion: guionEstudio, modelo: "gpt-4.1-mini", sfx: true, paleta: "imnoba", motor: "clasico", cfg: cfgMock((mkE = await iniciarMock(0))) });
   prueba("el motor clásico sigue disponible (motor: «clasico»): el formato simple vuelve a pedir geometría SVG/3D completa", mkE.estado.ultimaAnimacion.nombre === "animacion_imnoba" && rL.anim.escenas.every((e) => e.modo === "SVG" || e.modo === "3D"));
   await mkE.cerrar();
-  const rB = await generarAnimacion({ guion: guionLibre, modelo: "gpt-4.1-mini", sfx: true, paleta: "imnoba", cfg: cfgMock((mkE = await iniciarMock(0))) });
-  prueba("el formato libre ([ESCENA n | 00:00-00:05]) también usa por defecto el motor de estudio (1 llamada compacta)", rB.uso.llamadas === 1 && mkE.estado.ultimaAnimacion.nombre === "estudio_json" && rB.anim.formato === "estudio" && rB.anim.escenas.length === 5);
+  const rB = await generarAnimacion({ guion: guionLibre, modelo: "gpt-4.1-mini", sfx: true, paleta: "imnoba", cfg: cfgMock((mkE = await iniciarMock(0))), motor: "estudio" });
+  prueba("con motor «estudio» el formato libre ([ESCENA n | 00:00-00:05]) también se diseña en 1 llamada compacta", rB.uso.llamadas === 1 && mkE.estado.ultimaAnimacion.nombre === "estudio_json" && rB.anim.formato === "estudio" && rB.anim.escenas.length === 5);
   await mkE.cerrar();
   mkE = await iniciarMock(0);
   const rEs = await generarAnimacion({ guion: guionEst, modelo: "gpt-4.1-mini", sfx: true, paleta: "retro", cfg: cfgMock(mkE) });
@@ -533,7 +618,7 @@ try {
     h = await http("GET", "/app.js");
     prueba("el Estudio tiene los 4 controles: textarea, modelo, SFX y paleta, más el costo en vivo y copiar prompt", ["textarea#guion", "select#modelo", "input#sfx", "select#paleta", "costo-estimado", "Copiar Prompt Formateador", "Costo estimado de este video", "Costo real de este video"].every((t) => h.texto.includes(t)));
     h = await http("GET", "/api/anim/ejemplo");
-    prueba("API: entrega el guion de ejemplo", h.codigo === 200 && /\[ESCENA 1/.test(h.json.guion));
+    prueba("API: entrega el ejemplo (una frase)", h.codigo === 200 && h.json.guion.length > 40);
     h = await http("GET", "/api/anim/ejemplo?formato=hud&paleta=retro");
     prueba("API: formato=hud entrega el ejemplo estructurado (HUD retro)", h.codigo === 200 && /\[CONFIG\]/.test(h.json.guion) && /GAUGE_1/.test(h.json.guion) && /valor de un inmueble/i.test(h.json.guion));
     h = await http("POST", "/api/accion", { nombre: "anim-generar", opciones: { guion: "[ESCENA 1 | 5s-2s | MODO: X]\nhola", modelo: "gpt-4.1-mini" } });
@@ -561,10 +646,21 @@ try {
     prueba("API: generar en formato libre → animación LIBRE con costo real, enlace a la locución y sin escenas de rescate", finL?.estado === "ok" && h.json.animacion?.formato === "libre" && h.json.animacion.escenas.every((e) => e.modo === "LIBRE") && h.json.animacion.uso.costo_usd > 0 && h.json.locucion?.url === "/salida/guion-locucion.txt?descargar=1" && h.json.rescatadas.length === 0, JSON.stringify(finL) + h.texto.slice(0, 200));
     h = await http("GET", "/salida/guion-locucion.txt");
     prueba("la locución del formato libre se sirve con la VOZ_OFF (sin la dirección visual)", h.codigo === 200 && /publicar tu casa/.test(h.texto) && !/Noche azul profunda/.test(h.texto));
+    h = await http("POST", "/api/accion", { nombre: "anim-generar", opciones: { guion: readFileSync(p("ejemplos", "animacion-viral", "idea.txt"), "utf8"), modelo: "gpt-4.1-nano", sfx: true, paleta: "imnoba" } });
+    prueba("API: una frase de idea lanza la generación (sin errores de guion)", h.codigo === 200 && h.json.trabajo?.nombre === "anim-generar", h.texto.slice(0, 200));
+    const finI = await esperarTrabajo();
+    h = await http("GET", "/api/anim/estado");
+    prueba("API: una frase → video viral de 10 escenas con costo real, plantillas en la tabla y enlace a la locución", finI?.estado === "ok" && h.json.animacion?.formato === "viral" && h.json.animacion.escenas.length === 10 && h.json.animacion.escenas[0].tipo === "HOOK" && h.json.animacion.escenas[9].tipo === "CTA" && h.json.animacion.uso.costo_usd > 0 && h.json.animacion.uso.modelo === "gpt-4.1-nano" && h.json.locucion?.url === "/salida/guion-locucion.txt?descargar=1", JSON.stringify(finI) + h.texto.slice(0, 200));
+    h = await http("GET", "/salida/guion-locucion.txt");
+    prueba("la locución del video (guion para grabar) se sirve con la voz de cada escena", h.codigo === 200 && /Te imaginas cruzar Bogotá/.test(h.texto) && /\[ESCENA 10 \|/.test(h.texto));
+    h = await http("POST", "/api/accion", { nombre: "anim-generar", opciones: { guion: "hola", modelo: "gpt-4.1-mini" } });
+    prueba("API: una frase demasiado corta se rechaza con 400 y pide una idea", h.codigo === 400 && /idea/i.test(h.json.error), h.texto.slice(0, 200));
     h = await http("POST", "/api/accion", { nombre: "anim-generar", opciones: { guion: "[ESCENA 1 | 5-2]\nx", modelo: "gpt-4.1-mini" } });
     prueba("API: un guion libre con el tiempo al revés se rechaza con 400 y explica el problema", h.codigo === 400 && /fin/.test(h.json.error), h.texto.slice(0, 200));
     h = await http("GET", "/api/anim/ejemplo");
-    prueba("API: el ejemplo por defecto es el del motor de estudio ([ESCENA n | 0s-6s | MODO: SVG] + VOZ_OFF + DIRECCION_VISUAL + SFX)", h.codigo === 200 && /\[ESCENA 1 \| 0s-6s \| MODO: SVG\]/.test(h.json.guion) && /VOZ_OFF:/.test(h.json.guion) && /DIRECCION_VISUAL:/.test(h.json.guion) && /SFX:/.test(h.json.guion) && !/CONFIG/.test(h.json.guion));
+    prueba("API: el ejemplo por defecto es UNA frase de idea (sin bloques, sin CONFIG)", h.codigo === 200 && !/\[ESCENA|\[CONFIG/.test(h.json.guion) && /IMNOBA/.test(h.json.guion) && h.json.guion.split("\n").length === 1);
+    h = await http("GET", "/api/anim/ejemplo?formato=estudio");
+    prueba("API: formato=estudio entrega el guion en bloques ([ESCENA n | 0s-6s | MODO: SVG] + VOZ_OFF + DIRECCION_VISUAL + SFX)", h.codigo === 200 && /\[ESCENA 1 \| 0s-6s \| MODO: SVG\]/.test(h.json.guion) && /VOZ_OFF:/.test(h.json.guion) && /DIRECCION_VISUAL:/.test(h.json.guion) && /SFX:/.test(h.json.guion) && !/CONFIG/.test(h.json.guion));
     h = await http("GET", "/api/anim/ejemplo?formato=libre");
     prueba("API: formato=libre sigue entregando el ejemplo del lienzo libre (sin MODO)", h.codigo === 200 && /\[ESCENA 1 \| 00:00-00:05\]/.test(h.json.guion) && !/CONFIG|MODO:/.test(h.json.guion));
     h = await http("GET", "/api/anim/ejemplo?formato=simple");
@@ -605,7 +701,10 @@ try {
     prueba("previa.mjs --qa: 5 capturas (SVG y 3D con WebGL) y QA sin problemas", rp.status === 0 && readdirSync(p("trabajo", "tmp", "anim-previa")).filter((x) => /^escena-\d+\.png$/.test(x)).length === 5, (rp.stdout + rp.stderr).slice(-500));
     spawnSync(process.execPath, [p("scripts", "anim", "ejemplo.mjs")], { cwd: RAIZ });
     const rq = spawnSync(process.execPath, [p("scripts", "anim", "previa.mjs"), "--qa"], { cwd: RAIZ, encoding: "utf8", timeout: 600000 });
-    prueba("previa.mjs --qa del motor de estudio: una captura por escena (los 4 layouts, MODO 3D incluido) y QA sin problemas (márgenes ≥ 80 px, sin vacíos ni congelados)", rq.status === 0 && readdirSync(p("trabajo", "tmp", "anim-previa")).filter((x) => /^escena-\d+\.png$/.test(x)).length === 6 && /sin escenas vac/.test(rq.stdout), (rq.stdout + rq.stderr).slice(-500));
+    prueba("previa.mjs --qa del motor viral (10 plantillas: gancho, número, versus, ruta, pasos, tendencia, barras, ciudad, lista y cierre): una captura por escena y QA sin problemas (márgenes ≥ 80 px, sin vacíos ni congelados)", rq.status === 0 && readdirSync(p("trabajo", "tmp", "anim-previa")).filter((x) => /^escena-\d+\.png$/.test(x)).length === 10 && /sin escenas vac/.test(rq.stdout), (rq.stdout + rq.stderr).slice(-600));
+    spawnSync(process.execPath, [p("scripts", "anim", "ejemplo.mjs"), "--formato=estudio"], { cwd: RAIZ });
+    const rq2 = spawnSync(process.execPath, [p("scripts", "anim", "previa.mjs"), "--qa"], { cwd: RAIZ, encoding: "utf8", timeout: 600000 });
+    prueba("previa.mjs --qa del motor de estudio (figuras halftone, los 4 layouts): 6 capturas y QA sin problemas", rq2.status === 0 && readdirSync(p("trabajo", "tmp", "anim-previa")).filter((x) => /^escena-\d+\.png$/.test(x)).length === 6, (rq2.stdout + rq2.stderr).slice(-500));
   }
 } finally {
   if (envAntes.base === undefined) delete process.env.OPENAI_BASE_URL; else process.env.OPENAI_BASE_URL = envAntes.base;

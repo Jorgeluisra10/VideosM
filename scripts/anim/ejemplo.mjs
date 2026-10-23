@@ -2,7 +2,7 @@
 /**
  * Carga el ejemplo incluido (ejemplos/animacion-imnoba) como animación activa, SIN IA y SIN coste:
  * parsea el guion con el mismo parser, ensambla la respuesta de ejemplo y escribe src/data/animacion.json.
- *   node scripts/anim/ejemplo.mjs [--sin-sfx] [--paleta=imnoba|medicina] [--formato=estudio|libre|hud|simple]
+ *   node scripts/anim/ejemplo.mjs [--sin-sfx] [--paleta=imnoba|medicina] [--formato=viral|estudio|libre|hud|simple]
  */
 import { mkdirSync, readFileSync, writeFileSync } from "node:fs";
 import { join } from "node:path";
@@ -12,14 +12,25 @@ const args = process.argv.slice(2);
 const N = await cargarNucleoAnim();
 const paleta = args.find((a) => a.startsWith("--paleta="))?.split("=")[1] ?? "imnoba";
 const sfx = !args.includes("--sin-sfx");
-const formato = args.find((a) => a.startsWith("--formato="))?.split("=")[1] ?? "estudio";
+const formato = args.find((a) => a.startsWith("--formato="))?.split("=")[1] ?? "viral";
+const viral = formato === "viral";
 const estudio = formato === "estudio";
 const libre = formato === "libre";
 const estructurado = formato === "hud";
 let anim, correcciones;
 
-if (estudio) {
-  // MOTOR DE ESTUDIO (por defecto): el JSON compacto que devolvería la IA está en ejemplos/animacion-estudio y pasa por el mismo saneado y ensamblado
+if (viral) {
+  // MOTOR VIRAL (por defecto): una frase de idea → reel completo. El JSON que devolvería la IA está en ejemplos/animacion-viral y pasa por el mismo saneado y ensamblado.
+  const dir = join(RAIZ, "ejemplos", "animacion-viral");
+  const idea = N.parsearIdea(readFileSync(join(dir, "idea.txt"), "utf8"));
+  if (idea.errores.length) throw new Error(idea.errores.join("\n"));
+  const r = N.ensamblarViral(JSON.parse(readFileSync(join(dir, "respuesta-ia.json"), "utf8")), { modo: "idea", paleta, sfx });
+  anim = r.anim;
+  correcciones = r.correcciones;
+  mkdirSync(join(RAIZ, "trabajo", "salida"), { recursive: true });
+  writeFileSync(join(RAIZ, "trabajo", "salida", "guion-locucion.txt"), r.locucion);
+} else if (estudio) {
+  // MOTOR DE ESTUDIO (figuras con halftone): el JSON compacto que devolvería la IA está en ejemplos/animacion-estudio y pasa por el mismo saneado y ensamblado
   const dir = join(RAIZ, "ejemplos", "animacion-estudio");
   const parsed = N.parsearEstudio(readFileSync(join(dir, "guion.txt"), "utf8"));
   if (parsed.errores.length) throw new Error(parsed.errores.join("\n"));
@@ -63,4 +74,4 @@ if (estudio) {
 }
 for (const c of correcciones) console.log("  ~", c);
 writeFileSync(join(RAIZ, "src", "data", "animacion.json"), JSON.stringify(anim, null, 1));
-console.log(`✔ src/data/animacion.json · ${anim.escenas.length} escenas · ${anim.duracion} s · SFX ${sfx ? "sí" : "no"}${estudio ? " · motor de estudio" : libre ? " · lienzo libre" : estructurado ? " · formato estructurado" : ""}`);
+console.log(`✔ src/data/animacion.json · ${anim.escenas.length} escenas · ${anim.duracion} s · SFX ${sfx ? "sí" : "no"}${viral ? " · motor viral (una frase)" : estudio ? " · motor de estudio" : libre ? " · lienzo libre" : estructurado ? " · formato estructurado" : ""}`);

@@ -39,7 +39,7 @@ Al abrir el panel entras al **Estudio**: una pantalla minimalista para producir 
 
 **Lo único que haces (4 controles):**
 
-1. **Caja de texto grande** con el guion y lo que quieres ver, en bloques:
+1. **Caja de texto: tu idea en UNA frase** (ver «Una frase → video» más abajo). Si prefieres controlar cada escena, en «Avanzado» puedes pegar un guion en bloques:
    ```
    [ESCENA 1 | 0s-7s | MODO: SVG]
    VOZ_OFF: lo que tú grabas (no se dibuja).
@@ -55,7 +55,21 @@ Al abrir el panel entras al **Estudio**: una pantalla minimalista para producir 
 3. **Incluir SFX automáticos: Sí / No.** No = el video sale **sin pista de audio** y la IA ni siquiera pide efectos.
 4. **Paleta:** *IMNOBA (Colores oficiales de marca)* o *Medicina Clínica*.
 
-### 🎬 Motor de estudio (JSON ultraligero) — el formato por defecto
+### 🎥 Una frase → video (motor viral) — el formato por defecto
+
+Ya no hace falta escribir escenas: **escribes UNA frase con lo que quieres del video** y la IA hace el resto en una sola llamada barata (JSON compacto): escribe el guion con la locución de cada escena, decide la duración y elige entre **10 plantillas de reel profesional**, que el motor (`src/viral/`) dibuja siempre limpias, sin encimar nada y dentro de la zona segura de Instagram/TikTok.
+
+> *Un video de 35 segundos para IMNOBA: por qué el metro de Bogotá valoriza las propiedades cercanas a las estaciones, y que publiquen gratis su inmueble.*
+
+- **Duración:** si dices «de 30 segundos» o «de 1 minuto» se respeta (15–75 s); si no, ≈ 32 s con una escena cada ≈ 3,6 s.
+- **Plantillas:** `HOOK` (gancho cinético gigante con la palabra clave en caja de color) · `NUM` (número gigante que cuenta con anillo y chispas) · `VS` (comparación con contadores y corona al ganador) · `BARS` (barras que crecen con flecha de tendencia) · `LINE` (línea con brillo que se dibuja y burbuja de resultado) · `STEPS` (causa → efecto con iconos) · `LIST` (beneficios con check) · `ROUTE` (ruta de metro: un tren recorre las estaciones) · `SKYLINE` (ciudad que crece con flecha de valorización) · `CTA` (cierre con logo de IMNOBA y llamada a la acción).
+- **Ritmo viral:** fondos que alternan azul de marca / dorado `#FFC500` / blanco (nunca dos iguales seguidos), texto que entra con rebote, golpe de cámara en el gancho, zoom lento continuo, barrido diagonal entre escenas, barra de progreso arriba y SFX automáticos sincronizados con cada animación.
+- **La locución te la dejamos lista:** después de generar aparece **📝 Descargar guion de locución**, con una línea por escena y su tiempo, para que grabes tu voz. ⚠️ Las cifras que la IA use son ilustrativas salvo las que tú des en la frase: verifícalas antes de publicar.
+- **Costo:** entrada ≈ prompt fijo (≈ 850 tokens) + tu frase; salida ≈ 165 tokens por escena. Un video de 35 s cuesta ≈ **$0.0030** con `gpt-4.1-mini`, ≈ **$0.0008** con `gpt-4.1-nano`, ≈ $0.0012 con `gpt-4o-mini` y ≈ $0.0153 con `gpt-4.1` (el lienzo libre costaba ≈ $0.012 con mini). Funciona igual con `gpt-4.1`, `gpt-4.1-mini`, `gpt-4.1-nano`, `gpt-4o-mini` y `o4-mini`.
+- **Si ya tienes el guion en bloques** (`[ESCENA 1 | 0s-7s | MODO: SVG]` + `VOZ_OFF` + `DIRECCION_VISUAL` + `SFX`, también el formato libre) sigue funcionando: tus tiempos y tu locución se respetan y la IA solo elige la plantilla de cada escena. Está en «Avanzado».
+- **Motores anteriores:** `--motor=estudio` (figuras con halftone, solo bloques) y `--motor=clasico` (la IA escribe geometría o código) siguen disponibles; el formato `[CONFIG]` + HUD no cambió. Terminal: `npm run anim:ejemplo` · `node scripts/anim/generar.mjs --guion=idea.txt`.
+
+### 🎬 Motor de estudio (JSON ultraligero) — figuras con halftone (opcional)
 
 Estilo geométrico minimalista de estudio (tipo Kurzgesagt / Vox): fondo oscuro con bokeh y ruido sutil, figuras con **sombreado halftone**, **brillo especular**, **sombra de piso en puntos**, **reflejo de suelo** y **estela de movimiento**. La IA **ya no escribe código ni coordenadas**: por escena devuelve un JSON de ~120 tokens y el motor prefabricado (`src/estudio/`) lo dibuja siempre limpio, sin figuras deformes ni elementos encimados.
 

@@ -220,6 +220,39 @@ function respuestaEstudio(entradaTexto, primera) {
   return { scenes };
 }
 
+/**
+ * Motor viral: responde con el JSON de ejemplo (ejemplos/animacion-viral).
+ *   modo idea    → «ESCENAS: n» escenas (HOOK primero, CTA al final, el resto cíclico) con voz, dur y título
+ *   modo bloques → una por «ESC n | …» (sin voz ni dur)
+ *   MOCK_VIRAL_POCAS=1   la PRIMERA respuesta trae solo 2 escenas (prueba el reintento)
+ *   MOCK_VIRAL_MAL=1     la escena 2 llega con valores fuera del vocabulario (prueba el saneado)
+ *   MOCK_VIRAL_FALTAN=1  (bloques) la PRIMERA respuesta se deja la escena 2
+ */
+function respuestaViral(entradaTexto, primera) {
+  const ej = JSON.parse(readFileSync(join(RAIZ, "ejemplos", "animacion-viral", "respuesta-ia.json"), "utf8"));
+  const clonar = (x) => JSON.parse(JSON.stringify(x));
+  let scenes = [];
+  if (/MODO: idea/.test(entradaTexto)) {
+    const n = Number(entradaTexto.match(/ESCENAS: (\d+)/)?.[1] ?? 9);
+    const medio = ej.scenes.slice(1, -1);
+    scenes = [clonar(ej.scenes[0])];
+    for (let i = 0; i < n - 2; i++) scenes.push(clonar(medio[i % medio.length]));
+    scenes.push(clonar(ej.scenes[ej.scenes.length - 1]));
+    if (process.env.MOCK_VIRAL_POCAS && primera) scenes = scenes.slice(0, 2);
+  } else {
+    for (const m of entradaTexto.matchAll(/^ESC (\d+) \|/gm)) {
+      const id = Number(m[1]);
+      if (process.env.MOCK_VIRAL_FALTAN && primera && id === 2) continue;
+      const b = clonar(ej.scenes[(id - 1) % ej.scenes.length]);
+      delete b.voz; delete b.dur;
+      b.id = id;
+      scenes.push(b);
+    }
+  }
+  if (process.env.MOCK_VIRAL_MAL && scenes[1]) scenes[1] = { t: "gif", voz: "x".repeat(400), dur: "muchísimo", h: "titular larguísimo que no cabe en ninguna línea de ninguna plantilla de reel posible", w: "inexistente", ic: "unicornio", num: { n: "abc" } };
+  return { titulo: ej.titulo, scenes };
+}
+
 /** Formato estructurado: responde con la geometría de ejemplo (una escena por bloque, según su modo). */
 function respuestaGeometria(entradaTexto) {
   const ej = JSON.parse(readFileSync(join(RAIZ, "ejemplos", "animacion-retro", "geometria-ia.json"), "utf8"));
@@ -268,6 +301,11 @@ export function iniciarMock(puerto = 0) {
   let esquemaPlan = null;
 
   const respuesta = (nombre, entradaTexto, hayImagenes, esquema) => {
+    if (nombre === "viral_json") {
+      const datos = respuestaViral(entradaTexto, !una.anim);
+      una.anim = true;
+      return datos;
+    }
     if (nombre === "estudio_json") {
       const datos = respuestaEstudio(entradaTexto, !una.anim);
       una.anim = true;
@@ -445,7 +483,7 @@ export function iniciarMock(puerto = 0) {
       // response_format json_object (sin esquema): el motor de estudio se reconoce por la marca de su prompt de sistema; la API real exige la palabra «JSON» en los mensajes
       const esObjeto = fmt?.type === "json_object";
       if (esObjeto && !/json/i.test(sistemaTxt + JSON.stringify(b.messages ?? b.input ?? ""))) return json(400, { error: { message: "'messages' must contain the word 'json' in some form, to use 'response_format' of type 'json_object'.", type: "invalid_request_error", param: "messages" } });
-      const nombre = esObjeto && /ESTUDIO_JSON/.test(sistemaTxt) ? "estudio_json" : esResponses ? fmt?.name : fmt?.json_schema?.name;
+      const nombre = esObjeto && /DIRECTOR_VIRAL/.test(sistemaTxt) ? "viral_json" : esObjeto && /ESTUDIO_JSON/.test(sistemaTxt) ? "estudio_json" : esResponses ? fmt?.name : fmt?.json_schema?.name;
       const esquema = esResponses ? fmt?.schema : fmt?.json_schema?.schema;
       const estricto = esResponses ? fmt?.strict : fmt?.json_schema?.strict;
       if (esquema && estricto) {
@@ -464,7 +502,7 @@ export function iniciarMock(puerto = 0) {
         if (p.type === "input_image" || p.type === "image_url") imagenes++;
       }
       estado.porEsquema[nombre ?? "?"] = (estado.porEsquema[nombre ?? "?"] ?? 0) + 1;
-      if (["animacion_imnoba", "geometria_central", "escenas_libres", "estudio_json"].includes(nombre)) estado.ultimaAnimacion = { nombre, formato: fmt?.type ?? null, usuario: entradaTexto, modelo: b.model, razonamiento: b.reasoning_effort ?? null, maxTokens: b.max_completion_tokens ?? null, estricto: Boolean(estricto), ruta, sistema: (b.messages ?? []).find((m) => m.role === "system")?.content ?? "" };
+      if (["animacion_imnoba", "geometria_central", "escenas_libres", "estudio_json", "viral_json"].includes(nombre)) estado.ultimaAnimacion = { nombre, formato: fmt?.type ?? null, usuario: entradaTexto, modelo: b.model, razonamiento: b.reasoning_effort ?? null, maxTokens: b.max_completion_tokens ?? null, estricto: Boolean(estricto), ruta, sistema: (b.messages ?? []).find((m) => m.role === "system")?.content ?? "" };
 
       const datos = respuesta(nombre, entradaTexto, imagenes, esquema);
       if (esquema && estricto && nombre !== "plan") {
@@ -472,7 +510,7 @@ export function iniciarMock(puerto = 0) {
         if (errs.length) estado.avisos.push(`Respuesta simulada de ${nombre} fuera de esquema: ${errs.slice(0, 3).join(" | ")}`);
       }
       const texto = JSON.stringify(datos);
-      const sistemaLen = ["animacion_imnoba", "geometria_central", "escenas_libres", "estudio_json"].includes(nombre) ? (b.messages ?? []).filter((m) => m.role === "system").reduce((n, m) => n + String(m.content).length, 0) + JSON.stringify(esquema ?? {}).length : 0;
+      const sistemaLen = ["animacion_imnoba", "geometria_central", "escenas_libres", "estudio_json", "viral_json"].includes(nombre) ? (b.messages ?? []).filter((m) => m.role === "system").reduce((n, m) => n + String(m.content).length, 0) + JSON.stringify(esquema ?? {}).length : 0;
       const uso = { input: Math.round((entradaTexto.length + sistemaLen) / 3.6) + imagenes * 800, output: Math.round(texto.length / 3) };
       if (esResponses) {
         return json(200, { id: "resp_mock", object: "response", status: "completed", model: b.model, output: [{ type: "message", role: "assistant", content: [{ type: "output_text", text: texto }] }], usage: { input_tokens: uso.input, output_tokens: uso.output } });
