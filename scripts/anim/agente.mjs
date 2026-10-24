@@ -116,7 +116,7 @@ async function generarViral({ N, guion, modelo, sfx, paleta, log, cfg }) {
 
   let r;
   if (idea) {
-    log(`   Idea: «${parsedIdea.idea.slice(0, 110)}${parsedIdea.idea.length > 110 ? "…" : ""}» · ≈ ${parsedIdea.duracion} s · ≈ ${parsedIdea.escenasObjetivo} escenas`);
+    log(`   Idea: «${parsedIdea.idea.replace(/\s+/g, " ").slice(0, 110)}${parsedIdea.idea.length > 110 ? "…" : ""}» · ≈ ${parsedIdea.duracion} s · ≈ ${parsedIdea.escenasObjetivo} escenas`);
     const pedido = N.promptUsuarioIdea({ ...parsedIdea, paleta });
     let raw = await llamar(pedido, parsedIdea.escenasObjetivo, `Escribiendo el guion y diseñando ${parsedIdea.escenasObjetivo} escenas (JSON compacto)`);
     if (lista(raw).length < 4) {

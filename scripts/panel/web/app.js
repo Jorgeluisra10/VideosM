@@ -463,9 +463,9 @@ async function vistaEstudio(cont) {
     await lanzar("anim-generar", { guion: EST.guion, modelo: EST.modelo, sfx: EST.sfx, paleta: EST.paleta });
   };
   cont.replaceChildren(
-    h("div.cab-vista", h("div", h("h1", "✨ Estudio de video"), h("p.suave", "Escribe tu idea en UNA frase. La IA escribe el guion, decide la duración y diseña cada escena con plantillas de reel profesionales. Sin subtítulos y sin voz: tú grabas la locución con el guion que te deja listo."))),
+    h("div.cab-vista", h("div", h("h1", "✨ Estudio de video"), h("p.suave", "Escribe tu idea (una frase o con todo el detalle que quieras). La IA escribe el guion, decide la duración y diseña cada escena con plantillas de reel profesionales. Sin subtítulos y sin voz: tú grabas la locución con el guion que te deja listo."))),
     h("div.tarjeta.estudio",
-      h("div.fila", h("label.etq", { for: "guion" }, "1 · Tu idea en una frase"), h("span.espacio"),
+      h("div.fila", h("label.etq", { for: "guion" }, "1 · Tu idea (una frase o todo el detalle que quieras)"), h("span.espacio"),
         h("button.btn.chico", { type: "button", onclick: async () => aviso((await copiarTexto(N.PROMPT_FORMATEADOR_IDEA)) ? "📋 Prompt copiado. Pégalo en ChatGPT/Claude con tus notas y te devolverá la frase de idea lista para pegar aquí." : "No pude copiar automáticamente: selecciona el texto a mano.", "ok", 7000) }, "📋 Copiar Prompt Formateador"),
         h("button.btn.chico", { type: "button", onclick: async () => cargarEjemplo("viral") }, "🧪 Cargar ejemplo")),
       h("details.otros-formatos", h("summary.chico-t.suave", "Avanzado: guion en bloques, lienzo libre, HUD retro y simple"),
@@ -478,7 +478,7 @@ async function vistaEstudio(cont) {
           h("button.btn.chico", { type: "button", onclick: async () => aviso((await copiarTexto(N.PROMPT_FORMATEADOR)) ? "📋 Prompt del formato simple copiado." : "No pude copiar automáticamente.", "ok", 5000) }, "📋 Prompt formato simple"),
           h("button.btn.chico", { type: "button", onclick: async () => cargarEjemplo("hud") }, "🧪 Ejemplo HUD"),
           h("button.btn.chico", { type: "button", onclick: async () => cargarEjemplo("simple") }, "🧪 Ejemplo simple"))),
-      h("textarea#guion.guion", { rows: 5, spellcheck: false, placeholder: "Escribe aquí lo que quieres del video, en una frase. Ejemplo: Un video de 30 segundos para IMNOBA sobre por qué el metro de Bogotá valoriza las propiedades cerca de las estaciones y que publiquen gratis.", value: EST.guion, oninput: (e) => { EST.guion = e.target.value; guardarEstado(); pintarEstimacion(); } }),
+      h("textarea#guion.guion", { rows: 8, spellcheck: false, placeholder: "Escribe aquí lo que quieres del video: una frase basta, pero puedes dar todo el detalle que quieras (puntos, cifras, nombres, tono, llamada a la acción). Cuanto más detalle, más largo y completo el video. Ejemplo: Un video de 30 segundos para IMNOBA sobre por qué el metro de Bogotá valoriza las propiedades cerca de las estaciones y que publiquen gratis.", value: EST.guion, oninput: (e) => { EST.guion = e.target.value; guardarEstado(); pintarEstimacion(); } }),
       h("div#guion-info.guion-info"),
       h("div.ajustes-3",
         h("div.campo", h("label.etq", { for: "modelo" }, "2 · Modelo de IA"),

@@ -256,27 +256,44 @@ export type ResultadoIdea = { formato: "idea"; idea: string; duracion: number; e
 export const esIdea = (texto: string): boolean => !/^\s*\[\s*(ESCENA|CONFIG)\b/im.test(texto);
 
 export const DURACION_DEFECTO = 32;
+/** Duración mínima y máxima (s) que se puede pedir; sin pedirla, una idea detallada alarga el video hasta DURACION_AUTO_MAX. */
+export const DURACION_MIN = 15;
+export const DURACION_MAX = 120;
+export const DURACION_AUTO_MAX = 90;
+/** Hasta cuántos caracteres la idea cabe en el video de duración por defecto; cada ≈ 55 más suman 1 s. */
+export const IDEA_CORTA = 400;
 /** Escenas objetivo para una duración: ≈ una cada 3,6 s (ritmo de reel). */
-export const escenasParaDuracion = (s: number): number => Math.min(18, Math.max(5, Math.round(s / 3.6)));
+export const escenasParaDuracion = (s: number): number => Math.min(32, Math.max(5, Math.round(s / 3.6)));
+/** A partir de cuántos caracteres la idea se considera «detallada» y se le pide a la IA cubrir TODOS sus puntos. */
+export const IDEA_DETALLADA = 350;
 
 /**
- * Lee la idea: una frase (o un párrafo corto). Si dice «de 30 segundos» / «1 minuto» se respeta esa duración (15–75 s); si no, ≈ 32 s.
+ * Lee la idea: una frase o todo el detalle que quieras (sin límite de caracteres; se conservan los saltos de línea, viñetas y cifras).
+ * Duración: si dice «de 30 segundos» / «1 minuto» (o «el video dura 2 minutos») se respeta (15–120 s). Si no la dice, ≈ 32 s para una idea corta
+ * y más larga cuanto más detalle tenga (hasta 90 s), para que quepan todos sus puntos.
  */
 export function parsearIdea(texto: string): ResultadoIdea {
-  const idea = texto.replace(/\r/g, "").replace(/\s+/g, " ").trim();
+  const idea = texto.replace(/\r/g, "").replace(/[ \t\f\v]+/g, " ").replace(/ ?\n ?/g, "\n").replace(/\n{3,}/g, "\n\n").trim();
   const errores: string[] = [];
   const avisos: string[] = [];
-  if (idea.length < 8) errores.push("Escribe tu idea en una frase: qué quieres que cuente el video (por ejemplo «Por qué el metro de Bogotá valoriza las propiedades cerca de las estaciones»).");
-  if (idea.length > 1200) errores.push("La idea es demasiado larga: resúmela en una o dos frases (máximo 1.200 caracteres).");
-  let duracion = DURACION_DEFECTO;
-  const seg = idea.match(/(\d+(?:[.,]\d+)?)\s*(?:s\b|seg\b|segundos?)/i);
-  const min = idea.match(/(\d+(?:[.,]\d+)?)\s*(?:min\b|minutos?)/i);
-  if (min) duracion = Number(min[1].replace(",", ".")) * 60;
-  else if (seg) duracion = Number(seg[1].replace(",", "."));
-  if (duracion < 15 || duracion > 75) {
-    if (min || seg) avisos.push(`La duración pedida (${Math.round(duracion)} s) se ajusta al rango de un reel: 15–75 s.`);
-    duracion = Math.min(75, Math.max(15, duracion));
+  if (idea.length < 8) errores.push("Escribe tu idea: qué quieres que cuente el video (una frase basta, por ejemplo «Por qué el metro de Bogotá valoriza las propiedades cerca de las estaciones»; también puedes dar todo el detalle que quieras).");
+  const plano = idea.replace(/\s+/g, " ");
+  // en una idea larga, «5 minutos» suele ser un dato del tema (no la duración del video): solo cuenta si va junto a «video/reel/dura…»
+  const atado = plano.match(/(?:v[ií]deo|reel|clip|duraci[oó]n|dura|durar[aá]|de unos|de)\s*(?:de\s+|unos\s+|aprox(?:imadamente)?\s+)?(\d+(?:[.,]\d+)?)\s*(s\b|seg\b|segundos?|min\b|minutos?)/i);
+  const suelta = plano.length <= IDEA_CORTA ? plano.match(/(\d+(?:[.,]\d+)?)\s*(s\b|seg\b|segundos?|min\b|minutos?)/i) : null;
+  const m = atado ?? suelta;
+  let duracion = Math.min(DURACION_AUTO_MAX, DURACION_DEFECTO + Math.max(0, plano.length - IDEA_CORTA) / 55);
+  let pedida = false;
+  if (m) {
+    pedida = true;
+    const v = Number(m[1].replace(",", "."));
+    duracion = /^m/i.test(m[2]) ? v * 60 : v;
   }
+  if (pedida && (duracion < DURACION_MIN || duracion > DURACION_MAX)) {
+    avisos.push(`La duración pedida (${Math.round(duracion)} s) se ajusta al rango de un reel: ${DURACION_MIN}–${DURACION_MAX} s.`);
+    duracion = Math.min(DURACION_MAX, Math.max(DURACION_MIN, duracion));
+  }
+  if (!pedida && duracion > DURACION_DEFECTO + 0.5) avisos.push(`Idea detallada: el video durará ≈ ${Math.round(duracion)} s para que quepan todos sus puntos (di «de N segundos» si prefieres otra duración).`);
   return { formato: "idea", idea, duracion: Math.round(duracion), escenasObjetivo: escenasParaDuracion(duracion), errores, avisos, caracteres: idea.length };
 }
 
@@ -690,7 +707,7 @@ export function ensamblarViral(raw: any, ctx: ContextoViral): { anim: Animacion;
   const lista: (EscenaViral & { inicioFijo?: number; finFijo?: number; dirTxt: string })[] = [];
 
   if (ctx.modo === "idea") {
-    crudas.slice(0, 24).forEach((c, i) => {
+    crudas.slice(0, 40).forEach((c, i) => {
       const { escena, correcciones: cc } = normalizarEscenaViral(c, i + 1);
       correcciones.push(...cc);
       lista.push({ ...escena, dirTxt: escena.voz });
@@ -813,7 +830,8 @@ const APROX_MARCA = (paleta?: string): string => (paleta === undefined || paleta
 
 /** Mensaje de usuario en modo IDEA: la frase, la duración objetivo y el número de escenas. */
 export function promptUsuarioIdea(i: { idea: string; duracion: number; escenasObjetivo: number; paleta?: string }): string {
-  return `MODO: idea\nIDEA: ${i.idea}\nDURACIÓN TOTAL: ${i.duracion} s (suma de las "dur")\nESCENAS: ${i.escenasObjetivo} (±1)${APROX_MARCA(i.paleta) ? `\n${APROX_MARCA(i.paleta)}` : ""}`;
+  const detalle = i.idea.length > IDEA_DETALLADA ? "\nDETALLE: la idea es detallada; cubre TODOS sus puntos (una escena por punto principal, en el orden dado), usa sus cifras y nombres tal cual y no inventes datos nuevos." : "";
+  return `MODO: idea\nIDEA: ${i.idea}\nDURACIÓN TOTAL: ${i.duracion} s (suma de las "dur")\nESCENAS: ${i.escenasObjetivo} (±1)${detalle}${APROX_MARCA(i.paleta) ? `\n${APROX_MARCA(i.paleta)}` : ""}`;
 }
 
 /** Mensaje de usuario en modo BLOQUES: cada bloque con su duración, su locución y su dirección visual. */
