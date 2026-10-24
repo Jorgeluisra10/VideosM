@@ -290,6 +290,7 @@ Colores semánticos (los nombres del plan son *roles*; cada nicho les da su tono
 
 | Síntoma | Qué hacer |
 |---|---|
+| Hice `git pull` y el panel sigue igual, o muestra un error como «No encuentro ningún bloque… (o MODO: 3D)» | Estás con el código VIEJO: o el `git pull` se negó (hay cambios locales, casi siempre `src/data/animacion.json`) o el panel quedó abierto con la versión anterior en memoria. Ejecuta **`npm run actualizar`** (guarda tus cambios locales en un stash, trae lo último e instala dependencias), cierra el panel con Ctrl+C, vuelve a lanzar **`npm run panel`** y recarga con **Ctrl+F5**. El panel también te avisa con una franja roja si detecta que el código cambió con él abierto. |
 | «No se pudo generar el audio» (modo dev) | Necesita internet y Python 3. Revisa Ajustes → «Tu equipo». |
 | «Falta OPENAI_API_KEY / ELEVENLABS_API_KEY» | Ponla en ⚙️ Ajustes y pulsa «Probar conexión». |
 | El guion con IA está bloqueado 🔒 | Sin clave de OpenAI: usa la plantilla (inmobiliario) o escríbelo tú. |

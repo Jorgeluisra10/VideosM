@@ -6,6 +6,7 @@
   "type": "module",
   "main": "src/index.ts",
   "scripts": {
+    "actualizar": "node scripts/actualizar.mjs",
     "panel": "node scripts/panel/servidor.mjs",
     "panel:abrir": "node scripts/panel/servidor.mjs --abrir",
     "start": "remotion studio src/index.ts",

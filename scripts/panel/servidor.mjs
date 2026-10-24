@@ -9,7 +9,7 @@
  * y ejecuta los mismos scripts de siempre (voz, agente de IA, plantilla, QA, render…) mostrando su salida en vivo.
  * Escucha SOLO en 127.0.0.1: nadie de tu red puede usarlo. Las claves de .env no salen nunca del servidor.
  */
-import { spawn, spawnSync } from "node:child_process";
+import { execFileSync, spawn, spawnSync } from "node:child_process";
 import { createReadStream, existsSync, mkdirSync, readFileSync, readdirSync, statSync, writeFileSync } from "node:fs";
 import { createServer } from "node:http";
 import { dirname, extname, join, normalize, resolve, sep } from "node:path";
@@ -272,6 +272,20 @@ const leerAnim = () => {
 };
 
 let nucleoNavegador = null;
+/**
+ * Versión del código (commit de git). El panel guarda la del arranque y la compara con la del disco: si hiciste `git pull` con el panel abierto, el servidor sigue
+ * ejecutando el código viejo en memoria y la interfaz muestra un aviso para reiniciarlo.
+ */
+let cacheCommit = { t: 0, v: "" };
+function leerCommit() {
+  if (Date.now() - cacheCommit.t < 3000) return cacheCommit.v;
+  let v = "";
+  try { v = execFileSync("git", ["rev-parse", "--short", "HEAD"], { cwd: RAIZ, timeout: 2500, encoding: "utf8", stdio: ["ignore", "pipe", "ignore"] }).trim(); } catch { v = ""; }
+  cacheCommit = { t: Date.now(), v };
+  return v;
+}
+const commitDeArranque = leerCommit();
+
 const moduloNucleo = async () => (nucleoNavegador ??= await compilarNucleo("browser"));
 
 function historialAnim() {
@@ -361,7 +375,7 @@ async function api(req, res, url) {
   const [recurso, a, b, c] = partes;
 
   if (m === "GET" && recurso === "estado") {
-    return json(res, 200, { version: JSON.parse(readFileSync(join(RAIZ, "package.json"), "utf8")).version, activo: resumenActivo(), trabajo: instantanea(), studio: estadoServicio("studio"), claves: { openai: claveOpenAI(), elevenlabs: Boolean((process.env.ELEVENLABS_API_KEY ?? "").trim()) } });
+    return json(res, 200, { commit: commitDeArranque, reiniciar: Boolean(commitDeArranque) && leerCommit() !== commitDeArranque, version: JSON.parse(readFileSync(join(RAIZ, "package.json"), "utf8")).version, activo: resumenActivo(), trabajo: instantanea(), studio: estadoServicio("studio"), claves: { openai: claveOpenAI(), elevenlabs: Boolean((process.env.ELEVENLABS_API_KEY ?? "").trim()) } });
   }
   if (m === "GET" && recurso === "entorno") return json(res, 200, await entorno({ red: url.searchParams.get("red") !== "0" }));
   if (m === "GET" && recurso === "perfiles") {

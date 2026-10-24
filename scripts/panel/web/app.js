@@ -218,6 +218,7 @@ async function refrescarTrasTrabajo(job) {
   try {
     const [est, pr] = await Promise.all([api("/api/estado"), api("/api/proyectos")]);
     S.activo = est.activo; S.claves = est.claves; S.proyectos = pr;
+    avisoVersion(est);
     if (S.actual) await cargarProyecto(S.actual.id, { silencioso: true });
   } catch { /* sin conexión */ }
   const v = ruta();
@@ -279,6 +280,15 @@ const EST = { guion: leerLocal("videmed-anim-guion") ?? "", modelo: leerLocal("v
 const fijosCache = new Map();
 const num = (x, d = 0) => Number(x).toLocaleString("es-CO", { minimumFractionDigits: d, maximumFractionDigits: d });
 const reloj = (s) => `${Math.floor(s / 60)}:${String(Math.round(s % 60)).padStart(2, "0")}`;
+
+/** Si hiciste `git pull` con el panel abierto, el servidor sigue con el código viejo en memoria: se avisa para reiniciarlo. */
+function avisoVersion(est) {
+  S.commit = est?.commit ?? "";
+  let b = $("#aviso-version");
+  if (!est?.reiniciar) { b?.remove(); return; }
+  if (!b) { b = h("div#aviso-version.nota.error", { style: "margin:0;border-radius:0;text-align:center;position:sticky;top:0;z-index:50" }); document.body.prepend(b); }
+  b.replaceChildren("🔄 El código del proyecto se actualizó mientras el panel estaba abierto. Para ver la versión nueva: cierra la terminal del panel (Ctrl+C), vuelve a escribir ", h("code", "npm run panel"), " y recarga esta página con Ctrl+F5.");
+}
 
 /** Copia al portapapeles (con alternativa si el navegador no da permiso). */
 async function copiarTexto(texto) {
@@ -355,8 +365,10 @@ function pintarEstimacion() {
       partes.push(h("div.fila.chicos", h("span.chip.ok", "Formato estructurado"), h("span.chip", `${r.escenas.length} escena${r.escenas.length > 1 ? "s" : ""}`), h("span.chip", `${reloj(r.duracion)} min:s · ${num(r.duracion, 1)} s`), h("span.chip", `${svg} SVG`), h("span.chip", `${tres} 3D`), h("span.chip", `${r.lineasGeo} líneas GEO → IA`), h("span.chip", r.config.hud ? `HUD: ${r.config.gauges.map((g) => g.etiqueta).join(" · ") || "ON"}` : "HUD: OFF")));
       partes.push(h("p.suave.chico-t", "Solo las líneas GEO (y el modo) se envían a la IA. Título, subtítulo, HUD, fondo, sonido y VOZ_OFF se resuelven en tu equipo."));
       if (!N.esRetro(EST.paleta)) partes.push(h("div.nota", `ℹ️ El formato estructurado usa el diseño Retro-Científico: se aplicará «${N.PALETAS[N.paletaRetroDe(EST.paleta)].nombre}».`));
-    } else if (!r.errores.length && !r.escenas.length) partes.push(h("p.suave.chico-t", "Escribe en una frase lo que quieres del video. Ejemplo: «Un video de 30 segundos para IMNOBA sobre por qué el metro de Bogotá valoriza las propiedades»."));
-    for (const e of r.errores) partes.push(h("div.nota.error", "⛔ " + e));
+    }
+    const vacio = !EST.guion.trim();
+    if (vacio) partes.push(h("p.suave.chico-t", "Escribe tu idea en una frase y la IA hace el resto (guion, locución y diseño). Ejemplo: «Un video de 30 segundos para IMNOBA sobre por qué el metro de Bogotá valoriza las propiedades»."));
+    for (const e of vacio ? [] : r.errores) partes.push(h("div.nota.error", "⛔ " + e));
     for (const a of r.avisos) partes.push(h("div.nota.aviso", "⚠️ " + a));
     info.replaceChildren(...partes);
   }

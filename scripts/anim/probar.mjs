@@ -611,7 +611,9 @@ try {
   };
   const esperarTrabajo = async () => { for (let i = 0; i < 400; i++) { const e = await http("GET", "/api/estado"); if (e.json.trabajo && e.json.trabajo.estado !== "corriendo") return e.json.trabajo; await new Promise((r) => setTimeout(r, 300)); } return null; };
   try {
-    let h = await http("GET", "/modulos/anim-nucleo.js");
+    let h = await http("GET", "/api/estado");
+    prueba("el panel informa su versión (commit) y NO pide reiniciar mientras el código no cambie; el aviso para reiniciar existe en la interfaz y `npm run actualizar` está disponible", h.codigo === 200 && typeof h.json.commit === "string" && h.json.reiniciar === false && /aviso-version/.test(readFileSync(p("scripts", "panel", "web", "app.js"), "utf8")) && JSON.parse(readFileSync(p("package.json"), "utf8")).scripts.actualizar === "node scripts/actualizar.mjs" && existsSync(p("scripts", "actualizar.mjs")), h.texto.slice(0, 200));
+    h = await http("GET", "/modulos/anim-nucleo.js");
     prueba("el panel sirve el MISMO núcleo (parser, costos, esquema) compilado para el navegador", h.codigo === 200 && /javascript/.test(h.tipo) && /parsearGuion/.test(h.texto) && /costoUSD/.test(h.texto) && !/require\(/.test(h.texto));
     h = await http("GET", "/");
     prueba("la interfaz tiene el Estudio como pantalla principal", /data-nav="estudio"/.test(h.texto));
