@@ -472,6 +472,8 @@ async function vistaEstudio(cont) {
       h("div.fila", h("label.etq", { for: "guion" }, "1 · Tu idea (una frase o todo el detalle que quieras)"), h("span.espacio"),
         h("button.btn.chico", { type: "button", onclick: async () => aviso((await copiarTexto(N.PROMPT_FORMATEADOR_IDEA)) ? "📋 Prompt copiado. Pégalo en ChatGPT/Claude con tus notas y te devolverá la frase de idea lista para pegar aquí." : "No pude copiar automáticamente: selecciona el texto a mano.", "ok", 7000) }, "📋 Copiar Prompt Formateador"),
         h("button.btn.chico", { type: "button", onclick: async () => cargarEjemplo("viral") }, "🧪 Cargar ejemplo")),
+      h("div.fila.chicos",
+        h("button.btn.chico", { type: "button", title: "Ensayo visual de periodismo de datos con escenas diseñadas a mano (carril B). Se carga sin IA y sin coste; luego pulsa Renderizar.", onclick: async () => { if (ocupado()) return aviso("Hay un trabajo en curso: espera a que termine.", "aviso"); await lanzar("anim-ejemplo", { tema: "metro-bogota", paleta: "retro", sfx: EST.sfx }); } }, "🎬 Piezas a medida (piloto: Metro de Bogotá)")),
       h("details.otros-formatos", h("summary.chico-t.suave", "Avanzado: guion en bloques, lienzo libre, HUD retro y simple"),
         h("div.fila.chicos",
           h("button.btn.chico", { type: "button", onclick: async () => aviso((await copiarTexto(N.PROMPT_FORMATEADOR_ESTUDIO)) ? "📋 Prompt del guion en bloques copiado ([ESCENA | tiempo | MODO] + VOZ_OFF + DIRECCION_VISUAL + SFX)." : "No pude copiar automáticamente.", "ok", 5000) }, "📋 Prompt guion en bloques"),

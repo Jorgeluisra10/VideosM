@@ -12,6 +12,7 @@ import { Capas, FichaCita, Mira, Zoom } from "./ciencia1";
 import { Impacto, Pila, Red, Split, Termo } from "./ciencia2";
 import { Ciclo, Papel, Pilares, Punch } from "./documental1";
 import { Cubo, Diales, Duo, Oscilo } from "./documental2";
+import { Pieza } from "./piezas";
 import { Cta, Hook, Num, Vs } from "./plantillas1";
 import { Bars, Line, Lista, Steps } from "./plantillas2";
 import { Ciudad, Ruta } from "./plantillas3";
@@ -47,6 +48,7 @@ const Plantilla: React.FC<{ e: EscenaViralGuardada }> = ({ e }) => {
     case "OSCILO": return e.osc ? <Oscilo e={e} /> : <Hook e={e} />;
     case "CUBO": return e.cubo ? <Cubo e={e} /> : <Hook e={e} />;
     case "DIALES": return e.diales ? <Diales e={e} /> : <Hook e={e} />;
+    case "PIEZA": return <Pieza e={e} alternativa={<Hook e={e} />} />;
     case "CTA": return <Cta e={e} />;
     default: return <Hook e={e} />;
   }

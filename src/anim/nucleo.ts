@@ -5,6 +5,7 @@ export * from "./guionLibre";
 export * from "./libre";
 export * from "./estudio";
 export * from "./viral";
+export * from "./piezas";
 export * from "./costos";
 export * from "./paletas";
 export * from "./esquema";

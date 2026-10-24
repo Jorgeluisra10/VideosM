@@ -12,11 +12,12 @@ import { modeloPorId, tokensDeTexto } from "./costos";
 import { coloresEstudio, mezclar, oscurecer, type ColoresEstudio } from "./estudio";
 import type { EscenaEstudioGuion } from "./estudio";
 import { esRetro, paletaPorId } from "./paletas";
+import { IDS_PIEZA, piezaPorId } from "./piezas";
 import type { Animacion, EventoSfx } from "./tipos";
 
 /* ───────────── vocabulario cerrado ───────────── */
 
-export const TIPOS_VIRAL = ["HOOK", "NUM", "VS", "BARS", "LINE", "STEPS", "LIST", "ROUTE", "SKYLINE", "DONUT", "PICTO", "TOP", "MITO", "ZOOM", "CAPAS", "MIRA", "IMPACTO", "RED", "TERMO", "SPLIT", "PILA", "PAPEL", "PILARES", "CICLO", "PUNCH", "DUO", "OSCILO", "CUBO", "DIALES", "CTA"] as const;
+export const TIPOS_VIRAL = ["HOOK", "NUM", "VS", "BARS", "LINE", "STEPS", "LIST", "ROUTE", "SKYLINE", "DONUT", "PICTO", "TOP", "MITO", "ZOOM", "CAPAS", "MIRA", "IMPACTO", "RED", "TERMO", "SPLIT", "PILA", "PAPEL", "PILARES", "CICLO", "PUNCH", "DUO", "OSCILO", "CUBO", "DIALES", "PIEZA", "CTA"] as const;
 export type TipoViral = (typeof TIPOS_VIRAL)[number];
 /** Plantillas «documentales» (ciencia, naturaleza, tecnología): banda superior, tipografía mono y escenario ilustrado. */
 export const TIPOS_CIENCIA: readonly TipoViral[] = ["ZOOM", "CAPAS", "MIRA", "IMPACTO", "RED", "TERMO", "SPLIT", "PILA"];
@@ -114,6 +115,8 @@ export type DatosViral = {
   cubo: { ejes: string[]; n: number; zonas: { l: string; x: number; y: number; z: number }[] } | null;
   /** DIALES: tres diales que cambian de `a` a `b` y mueven una figura (espiral de concha u onda) */
   diales: { fig: "espiral" | "onda"; titulo: string; items: { l: string; a: number; b: number; min: number; max: number; u: string; dec: number }[] } | null;
+  /** PIEZA: escena a medida (carril B) registrada en src/anim/piezas.ts; `props` son parámetros opcionales de esa pieza */
+  pieza: { id: string; props: Record<string, string | number | boolean | (string | number)[]> } | null;
   /** Ficha de cita científica (fuente y año): opcional en cualquier escena menos el CTA */
   cita: { t: string; y: string } | null;
   /** Escenario ilustrado de fondo ("" = el fondo normal) */
@@ -281,7 +284,7 @@ export function longitudLegible(k: number): string {
 }
 
 /** Segundos que necesita cada plantilla para mostrar todo con calma (a ritmo 1). */
-export function duracionIdeal(e: Pick<EscenaViral, "t" | "items" | "bars" | "stops" | "top" | "picto"> & Partial<Pick<EscenaViral, "capas" | "red" | "ciclo" | "papel">>): number {
+export function duracionIdeal(e: Pick<EscenaViral, "t" | "items" | "bars" | "stops" | "top" | "picto"> & Partial<Pick<EscenaViral, "capas" | "red" | "ciclo" | "papel" | "pieza">>): number {
   switch (e.t) {
     case "HOOK": return 2.6;
     case "NUM": return TV.contar + TV.contarDur + 0.9;
@@ -311,6 +314,7 @@ export function duracionIdeal(e: Pick<EscenaViral, "t" | "items" | "bars" | "sto
     case "OSCILO": return TV.oscCurva + TV.oscDur + 0.9;
     case "CUBO": return TV.cuboZonas + 1.8;
     case "DIALES": return TV.dialesIni + TV.dialesDur + 1.0;
+    case "PIEZA": return piezaPorId(e.pieza?.id)?.ideal ?? 5;
     default: return 3.2;
   }
 }
@@ -436,7 +440,7 @@ function destacar(h: string, pedida: string): string {
   return (buenas.length ? buenas : ps).reduce((m, p) => (n(p).length > n(m).length ? p : m), ps[0] ?? "");
 }
 
-const VACIO: DatosViral = { h: "", w: "", sub: "", ic: "brillo", num: null, vs: null, bars: [], barsU: "", hi: -1, line: null, items: [], stops: [], end: "", donut: [], picto: null, top: [], myth: "", truth: "", zoom: null, capas: null, mira: null, impacto: null, red: null, termo: null, pila: null, cap: "", papel: null, pilares: null, ciclo: null, duo: null, osc: null, cubo: null, diales: null, cita: null, sc: "" };
+const VACIO: DatosViral = { h: "", w: "", sub: "", ic: "brillo", num: null, vs: null, bars: [], barsU: "", hi: -1, line: null, items: [], stops: [], end: "", donut: [], picto: null, top: [], myth: "", truth: "", zoom: null, capas: null, mira: null, impacto: null, red: null, termo: null, pila: null, cap: "", papel: null, pilares: null, ciclo: null, duo: null, osc: null, cubo: null, diales: null, pieza: null, cita: null, sc: "" };
 
 /** Entero (acepta «−6», «6,0»…) acotado a [min, max]; si no es un número, `def`. */
 const entero = (v: unknown, def: number, min = -12, max = 12): number => {
@@ -710,6 +714,28 @@ export function normalizarEscenaViral(raw: any, n: number, vozDada?: string): { 
       d.diales = { fig: String(m.fig ?? "").toLowerCase() === "onda" ? "onda" : "espiral", titulo: limpio(m.titulo, 18) || "3 números", items };
       break;
     }
+    case "PIEZA": {
+      const m = r.pieza && typeof r.pieza === "object" ? r.pieza : { id: r.pieza };
+      const def = piezaPorId(m.id);
+      if (!def) {
+        corr.push(`Escena ${n}: la pieza a medida «${limpio(m.id, 30)}» no existe (disponibles: ${IDS_PIEZA.join(", ")}); se usa un gancho con su titular`);
+        t = "HOOK";
+        break;
+      }
+      const props: Record<string, string | number | boolean | (string | number)[]> = {};
+      const crudo = m.props && typeof m.props === "object" ? m.props : {};
+      for (const k of Object.keys(crudo).slice(0, 12)) {
+        const v = (crudo as any)[k];
+        const clave = k.replace(/[^\w-]/g, "").slice(0, 20);
+        if (!clave) continue;
+        if (typeof v === "number" && Number.isFinite(v)) props[clave] = v;
+        else if (typeof v === "boolean") props[clave] = v;
+        else if (typeof v === "string") props[clave] = v.slice(0, 120);
+        else if (Array.isArray(v)) props[clave] = v.slice(0, 24).filter((x) => typeof x === "number" || typeof x === "string").map((x) => (typeof x === "string" ? x.slice(0, 60) : x));
+      }
+      d.pieza = { id: def.id, props };
+      break;
+    }
     case "PILA": {
       const m = r.pila && typeof r.pila === "object" ? r.pila : r;
       const nn = numero(m.n, "100");
@@ -724,7 +750,7 @@ export function normalizarEscenaViral(raw: any, n: number, vozDada?: string): { 
       break;
   }
   // extras opcionales de cualquier escena: ficha de cita (no en el CTA) y escenario ilustrado
-  d.cap = t === "HOOK" || TIPOS_DOCUMENTAL.includes(t) ? limpio(r.cap ?? r.linea, 120) : "";
+  d.cap = t === "HOOK" || t === "PIEZA" || TIPOS_DOCUMENTAL.includes(t) ? limpio(r.cap ?? r.linea, 120) : "";
   d.cita = t === "CTA" ? null : normalizarCita(r.cita ?? r.src ?? r.fuente);
   const scPedido = String(r.sc ?? r.escenario ?? "").trim().toLowerCase();
   const scPorTipo: Partial<Record<TipoViral, EscenarioViral>> = { ZOOM: "espacio", IMPACTO: "luna", RED: "celula" };
@@ -748,17 +774,18 @@ function titularDeVoz(voz: string, max: number): string {
 const FONDO_PREFERIDO: Record<TipoViral, FondoViral> = {
   HOOK: "dark", NUM: "gold", VS: "dark", BARS: "light", LINE: "dark", STEPS: "light", LIST: "dark", ROUTE: "dark", SKYLINE: "light", DONUT: "dark", PICTO: "light", TOP: "dark", MITO: "light",
   ZOOM: "dark", CAPAS: "light", MIRA: "dark", IMPACTO: "dark", RED: "dark", TERMO: "light", SPLIT: "dark", PILA: "light",
-  PAPEL: "light", PILARES: "dark", CICLO: "light", PUNCH: "dark", DUO: "dark", OSCILO: "dark", CUBO: "dark", DIALES: "dark", CTA: "gold",
+  PAPEL: "light", PILARES: "dark", CICLO: "light", PUNCH: "dark", DUO: "dark", OSCILO: "dark", CUBO: "dark", DIALES: "dark", PIEZA: "dark", CTA: "gold",
 };
 
 /**
  * Asigna un fondo a cada escena: el que prefiere su plantilla, cambiando el de las vecinas iguales para que el ritmo visual nunca se repita.
  * Las escenas con escenario ilustrado (`escenarios[i]` no vacío) van SIEMPRE sobre el tema oscuro: se mueven las vecinas, no ellas.
  */
-export function asignarFondos(tipos: TipoViral[], escenarios: string[] = [], documental = false): FondoViral[] {
-  // estilo documental: fondo oscuro siempre, y «papel» claro solo para las fichas y los ciclos (varias oscuras seguidas son normales)
-  if (documental) return tipos.map((t) => (TIPOS_PAPEL.includes(t) ? "light" : "dark"));
-  const f: FondoViral[] = tipos.map((t) => FONDO_PREFERIDO[t]);
+export function asignarFondos(tipos: TipoViral[], escenarios: string[] = [], documental = false, piezas: (string | undefined)[] = []): FondoViral[] {
+  const fondoPieza = (i: number): FondoViral => piezaPorId(piezas[i])?.fondo ?? "dark";
+  // estilo documental: fondo oscuro siempre, y «papel» claro solo para las fichas, los ciclos y las piezas a medida que lo piden (varias oscuras seguidas son normales)
+  if (documental) return tipos.map((t, i) => (TIPOS_PAPEL.includes(t) || (t === "PIEZA" && fondoPieza(i) === "light") ? "light" : "dark"));
+  const f: FondoViral[] = tipos.map((t, i) => (t === "PIEZA" ? fondoPieza(i) : FONDO_PREFERIDO[t]));
   const fijo = (i: number): boolean => !!escenarios[i];
   tipos.forEach((_, i) => { if (fijo(i)) f[i] = "dark"; });
   const ciclo: FondoViral[] = ["dark", "light", "gold"];
@@ -777,7 +804,7 @@ export function asignarFondos(tipos: TipoViral[], escenarios: string[] = [], doc
 const maximo = <T,>(xs: T[], n: number): T[] => xs.slice(0, n);
 
 /** Efectos de sonido automáticos sincronizados con lo que hace cada plantilla (tiempos escalados por el ritmo de la escena). */
-export function sfxViral(e: Pick<EscenaViral, "t" | "items" | "bars" | "stops" | "top" | "picto" | "dur"> & Partial<Pick<EscenaViral, "zoom" | "capas" | "red" | "termo" | "pila" | "cita" | "sc" | "num" | "pilares" | "ciclo" | "cubo" | "papel" | "duo">>, ritmo: number): EventoSfx[] {
+export function sfxViral(e: Pick<EscenaViral, "t" | "items" | "bars" | "stops" | "top" | "picto" | "dur"> & Partial<Pick<EscenaViral, "zoom" | "capas" | "red" | "termo" | "pila" | "cita" | "sc" | "num" | "pilares" | "ciclo" | "cubo" | "papel" | "duo" | "pieza">>, ritmo: number): EventoSfx[] {
   const s = (x: number): number => x * ritmo;
   const L: EventoSfx[] = [{ t: 0.04, tipo: "whoosh", vol: 0.16 }];
   const A = (t: number, tipo: EventoSfx["tipo"], vol = 0.15): void => { L.push({ t, tipo, vol }); };
@@ -829,6 +856,7 @@ export function sfxViral(e: Pick<EscenaViral, "t" | "items" | "bars" | "stops" |
     case "OSCILO": A(0.1, "estatica", 0.08); A(s(TV.oscCurva), "zap", 0.1); A(s(TV.oscCurva + TV.oscDur), "ding", 0.12); break;
     case "CUBO": for (let k = 0; k < 6; k++) A(s(TV.cuboPuntos + (TV.cuboPuntosDur * k) / 6), "tick", 0.06); A(s(TV.cuboFiltra), "whoosh", 0.1); A(s(TV.cuboZonas), "radar", 0.12); A(s(TV.cuboZonas) + 0.4, "ding", 0.12); break;
     case "DIALES": clics(s(TV.dialesIni), s(TV.dialesDur), 0.05); A(s(TV.dialesIni + TV.dialesDur), "ding", 0.14); break;
+    case "PIEZA": { const def = piezaPorId(e.pieza?.id); if (def) L.push(...def.sfx(e.dur, ritmo)); break; }
     case "SPLIT": A(0.2, "whoosh", 0.14); A(s(0.45), "golpe", 0.14); clics(s(TV.splitContar), s(1.2), 0.05); A(s(TV.splitGana), "ding", 0.18); break;
     case "CTA": A(s(0.5), "ding", 0.2); A(s(1.1), "pop", 0.15); break;
   }
@@ -882,7 +910,7 @@ export function ensamblarViral(raw: any, ctx: ContextoViral): { anim: Animacion;
   let t = 0;
   const salida: EscenaViralGuardada[] = [];
   const documental = esDocumental(ctx.paleta);
-  const fondos = asignarFondos(lista.map((e) => e.t), lista.map((e) => e.sc), documental);
+  const fondos = asignarFondos(lista.map((e) => e.t), lista.map((e) => e.sc), documental, lista.map((e) => e.pieza?.id));
   lista.forEach((e, i) => {
     const ideal = duracionIdeal(e);
     let dur = e.dur;
