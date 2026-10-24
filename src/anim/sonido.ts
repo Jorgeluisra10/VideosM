@@ -17,3 +17,9 @@ export function eventosSfx(anim: Pick<Animacion, "sfx" | "escenas">): SfxAbs[] {
   });
   return salida.sort((a, b) => a.frame - b.frame);
 }
+
+/** Música de fondo del motor viral: pista sintetizada en bucle (public/audios/musica.wav), volumen y rampas de entrada y salida (s). */
+export const MUSICA = { archivo: "audios/musica.wav", volumen: 0.1, entrada: 1.2, salida: 1.6 } as const;
+
+/** La música va con el interruptor de sonido: solo suena si la animación la pide Y los SFX están activados. */
+export const llevaMusica = (anim: Pick<Animacion, "sfx" | "musica">): boolean => !!anim.sfx && !!anim.musica;

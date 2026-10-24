@@ -29,6 +29,14 @@
    "top": [],
    "myth": "",
    "truth": "",
+   "zoom": null,
+   "capas": null,
+   "mira": null,
+   "impacto": null,
+   "red": null,
+   "termo": null,
+   "cita": null,
+   "sc": "",
    "modo": "VIRAL",
    "tema": "oscuro",
    "bg": "dark",
@@ -37,6 +45,8 @@
    "inicio": 0,
    "fin": 3.6,
    "texto": "¿Te imaginas cruzar Bogotá en minutos? ¡Llega el metro!",
+   "tr": "barrido",
+   "trs": "barrido",
    "sfx": [
     {
      "t": 0.04,
@@ -78,6 +88,14 @@
    "top": [],
    "myth": "",
    "truth": "",
+   "zoom": null,
+   "capas": null,
+   "mira": null,
+   "impacto": null,
+   "red": null,
+   "termo": null,
+   "cita": null,
+   "sc": "",
    "modo": "VIRAL",
    "tema": "oscuro",
    "bg": "gold",
@@ -86,6 +104,8 @@
    "inicio": 3.6,
    "fin": 7,
    "texto": "Hoy se pierden horas en trancones cada día.",
+   "tr": "barrido",
+   "trs": "barrido",
    "sfx": [
     {
      "t": 0.04,
@@ -96,6 +116,61 @@
      "t": 0.59,
      "tipo": "tick",
      "vol": 0.12
+    },
+    {
+     "t": 0.59,
+     "tipo": "clic",
+     "vol": 0.07
+    },
+    {
+     "t": 0.72,
+     "tipo": "clic",
+     "vol": 0.07
+    },
+    {
+     "t": 0.85,
+     "tipo": "clic",
+     "vol": 0.07
+    },
+    {
+     "t": 0.98,
+     "tipo": "clic",
+     "vol": 0.07
+    },
+    {
+     "t": 1.1099999999999999,
+     "tipo": "clic",
+     "vol": 0.07
+    },
+    {
+     "t": 1.24,
+     "tipo": "clic",
+     "vol": 0.07
+    },
+    {
+     "t": 1.37,
+     "tipo": "clic",
+     "vol": 0.07
+    },
+    {
+     "t": 1.5,
+     "tipo": "clic",
+     "vol": 0.07
+    },
+    {
+     "t": 1.63,
+     "tipo": "clic",
+     "vol": 0.07
+    },
+    {
+     "t": 1.7599999999999998,
+     "tipo": "clic",
+     "vol": 0.07
+    },
+    {
+     "t": 1.8900000000000001,
+     "tipo": "clic",
+     "vol": 0.07
     },
     {
      "t": 2.065,
@@ -139,6 +214,14 @@
    "top": [],
    "myth": "",
    "truth": "",
+   "zoom": null,
+   "capas": null,
+   "mira": null,
+   "impacto": null,
+   "red": null,
+   "termo": null,
+   "cita": null,
+   "sc": "",
    "modo": "VIRAL",
    "tema": "oscuro",
    "bg": "dark",
@@ -147,6 +230,8 @@
    "inicio": 7,
    "fin": 10.7,
    "texto": "Otras capitales ya tienen metro. Bogotá apenas empieza.",
+   "tr": "barrido",
+   "trs": "barrido",
    "sfx": [
     {
      "t": 0.04,
@@ -154,14 +239,69 @@
      "vol": 0.16
     },
     {
+     "t": 0.5416666666666666,
+     "tipo": "clic",
+     "vol": 0.05
+    },
+    {
+     "t": 0.6716666666666666,
+     "tipo": "clic",
+     "vol": 0.05
+    },
+    {
+     "t": 0.8016666666666666,
+     "tipo": "clic",
+     "vol": 0.05
+    },
+    {
      "t": 0.8125,
      "tipo": "tick",
      "vol": 0.12
     },
     {
+     "t": 0.9316666666666666,
+     "tipo": "clic",
+     "vol": 0.05
+    },
+    {
+     "t": 1.0616666666666665,
+     "tipo": "clic",
+     "vol": 0.05
+    },
+    {
+     "t": 1.1916666666666667,
+     "tipo": "clic",
+     "vol": 0.05
+    },
+    {
+     "t": 1.3216666666666668,
+     "tipo": "clic",
+     "vol": 0.05
+    },
+    {
+     "t": 1.4516666666666667,
+     "tipo": "clic",
+     "vol": 0.05
+    },
+    {
+     "t": 1.5816666666666666,
+     "tipo": "clic",
+     "vol": 0.05
+    },
+    {
+     "t": 1.7116666666666664,
+     "tipo": "clic",
+     "vol": 0.05
+    },
+    {
      "t": 1.8055555555555556,
      "tipo": "ding",
      "vol": 0.18
+    },
+    {
+     "t": 1.8416666666666668,
+     "tipo": "clic",
+     "vol": 0.05
     }
    ]
   },
@@ -193,6 +333,14 @@
    "top": [],
    "myth": "",
    "truth": "",
+   "zoom": null,
+   "capas": null,
+   "mira": null,
+   "impacto": null,
+   "red": null,
+   "termo": null,
+   "cita": null,
+   "sc": "",
    "modo": "VIRAL",
    "tema": "oscuro",
    "bg": "gold",
@@ -201,6 +349,8 @@
    "inicio": 10.7,
    "fin": 15.1,
    "texto": "La primera línea conecta el sur con el norte.",
+   "tr": "barrido",
+   "trs": "barrido",
    "sfx": [
     {
      "t": 0.04,
@@ -270,6 +420,14 @@
    "top": [],
    "myth": "",
    "truth": "",
+   "zoom": null,
+   "capas": null,
+   "mira": null,
+   "impacto": null,
+   "red": null,
+   "termo": null,
+   "cita": null,
+   "sc": "",
    "modo": "VIRAL",
    "tema": "claro",
    "bg": "light",
@@ -278,6 +436,8 @@
    "inicio": 15.1,
    "fin": 18.7,
    "texto": "Más acceso, más demanda, más valor para tu propiedad.",
+   "tr": "barrido",
+   "trs": "barrido",
    "sfx": [
     {
      "t": 0.04,
@@ -337,6 +497,14 @@
    "top": [],
    "myth": "",
    "truth": "",
+   "zoom": null,
+   "capas": null,
+   "mira": null,
+   "impacto": null,
+   "red": null,
+   "termo": null,
+   "cita": null,
+   "sc": "",
    "modo": "VIRAL",
    "tema": "oscuro",
    "bg": "dark",
@@ -345,6 +513,8 @@
    "inicio": 18.7,
    "fin": 22.5,
    "texto": "Donde llega el transporte, el metro cuadrado sube.",
+   "tr": "barrido",
+   "trs": "barrido",
    "sfx": [
     {
      "t": 0.04,
@@ -399,6 +569,14 @@
    "top": [],
    "myth": "",
    "truth": "",
+   "zoom": null,
+   "capas": null,
+   "mira": null,
+   "impacto": null,
+   "red": null,
+   "termo": null,
+   "cita": null,
+   "sc": "",
    "modo": "VIRAL",
    "tema": "claro",
    "bg": "light",
@@ -407,6 +585,8 @@
    "inicio": 22.5,
    "fin": 25.9,
    "texto": "Mientras más cerca de la estación, más valorización.",
+   "tr": "barrido",
+   "trs": "barrido",
    "sfx": [
     {
      "t": 0.04,
@@ -458,6 +638,14 @@
    "top": [],
    "myth": "",
    "truth": "",
+   "zoom": null,
+   "capas": null,
+   "mira": null,
+   "impacto": null,
+   "red": null,
+   "termo": null,
+   "cita": null,
+   "sc": "",
    "modo": "VIRAL",
    "tema": "oscuro",
    "bg": "gold",
@@ -466,6 +654,8 @@
    "inicio": 25.9,
    "fin": 29.3,
    "texto": "Tu inmueble puede ser la próxima gran oportunidad.",
+   "tr": "barrido",
+   "trs": "barrido",
    "sfx": [
     {
      "t": 0.04,
@@ -520,6 +710,14 @@
    "top": [],
    "myth": "",
    "truth": "",
+   "zoom": null,
+   "capas": null,
+   "mira": null,
+   "impacto": null,
+   "red": null,
+   "termo": null,
+   "cita": null,
+   "sc": "",
    "modo": "VIRAL",
    "tema": "oscuro",
    "bg": "dark",
@@ -528,6 +726,8 @@
    "inicio": 29.3,
    "fin": 33.3,
    "texto": "En IMNOBA publicas gratis, sin comisión: casas, apartamentos y autos.",
+   "tr": "barrido",
+   "trs": "barrido",
    "sfx": [
     {
      "t": 0.04,
@@ -574,6 +774,14 @@
    "top": [],
    "myth": "",
    "truth": "",
+   "zoom": null,
+   "capas": null,
+   "mira": null,
+   "impacto": null,
+   "red": null,
+   "termo": null,
+   "cita": null,
+   "sc": "",
    "modo": "VIRAL",
    "tema": "oscuro",
    "bg": "gold",
@@ -582,6 +790,8 @@
    "inicio": 33.3,
    "fin": 36.9,
    "texto": "No esperes al metro: publica gratis hoy en IMNOBA.",
+   "tr": "barrido",
+   "trs": "barrido",
    "sfx": [
     {
      "t": 0.04,
@@ -603,5 +813,6 @@
  ],
  "uso": null,
  "hud": false,
- "formato": "viral"
+ "formato": "viral",
+ "musica": true
 }

@@ -7,7 +7,7 @@ import { spring, useCurrentFrame } from "remotion";
 import { getPointAtLength } from "@remotion/paths";
 import { azar } from "../lib/anim";
 import { aclarar, oscurecer, mezclar } from "../anim/estudio";
-import { iconoReal, type TemaViral } from "../anim/viral";
+import { ICONOS_PROPIOS, iconoReal, type TemaViral } from "../anim/viral";
 import { dibujarIcono } from "../dsl/elementos/dibujo";
 import { SpecularHighlight } from "../estudio/efectos";
 import { caminoCirculo, useUid } from "../estudio/util";
@@ -190,8 +190,49 @@ export const Etiqueta: React.FC<{ texto: string; x: number; y: number; px: numbe
 
 /** Icono lucide centrado en (x, y), dentro de un <svg>. */
 export const IconoSvg: React.FC<{ nombre: string; x: number; y: number; tam: number; color: string }> = ({ nombre, x, y, tam, color }) => (
-  <g transform={`translate(${x} ${y}) scale(${tam / 100})`}>{dibujarIcono(iconoReal(nombre), color)}</g>
+  <g transform={`translate(${x} ${y}) scale(${tam / 100})`}>{ICONOS_PROPIOS.has(nombre) ? iconoPropio(nombre, color) : dibujarIcono(iconoReal(nombre), color)}</g>
 );
+
+/** Iconos propios del motor viral (caja de 100×100 centrada en el origen): luna, átomo, bicho (tipo tardígrado) y planeta con anillo. */
+function iconoPropio(nombre: string, color: string): React.ReactNode {
+  const trazo = { fill: "none", stroke: color, strokeWidth: 6, strokeLinecap: "round" as const, strokeLinejoin: "round" as const };
+  switch (nombre) {
+    case "luna":
+      return (
+        <g>
+          <path d="M 8,-42 A 42 42 0 1 0 40,20 A 34 34 0 0 1 8,-42 Z" {...trazo} fill={color} fillOpacity={0.3} />
+          <circle cx={-10} cy={10} r={5} fill={color} fillOpacity={0.6} />
+          <circle cx={6} cy={26} r={3.4} fill={color} fillOpacity={0.6} />
+          <circle cx={-22} cy={-12} r={3} fill={color} fillOpacity={0.6} />
+        </g>
+      );
+    case "atomo":
+      return (
+        <g>
+          {[0, 60, 120].map((g) => <ellipse key={g} rx={44} ry={16} transform={`rotate(${g})`} {...trazo} strokeWidth={5} />)}
+          <circle r={8} fill={color} />
+        </g>
+      );
+    case "bicho":
+      return (
+        <g>
+          {[-1, 1].map((lado) => [-24, -8, 8, 24].map((x, i) => <path key={`${lado}${i}`} d={`M ${x * 0.9} ${lado * 16} q ${(i - 1.5) * 3} ${lado * 14} ${(i - 1.5) * 6} ${lado * 22}`} {...trazo} strokeWidth={7} />))}
+          <ellipse rx={38} ry={24} {...trazo} fill={color} fillOpacity={0.3} />
+          <circle cx={30} cy={-4} r={4.4} fill={color} />
+          <path d="M 36,6 q 6,2 10,0" {...trazo} strokeWidth={4} />
+        </g>
+      );
+    case "planeta":
+      return (
+        <g>
+          <circle r={25} {...trazo} fill={color} fillOpacity={0.3} />
+          <ellipse rx={48} ry={13} transform="rotate(-22)" {...trazo} strokeWidth={5} />
+        </g>
+      );
+    default:
+      return <circle r={30} {...trazo} />;
+  }
+}
 
 /** Esfera de cristal (degradado de volumen + semitono + brillo especular) con un icono blanco dentro. Va dentro de un <svg> con <StudioSvgDefs/>. */
 export const EsferaIcono: React.FC<{ nombre: string; x: number; y: number; d: number; color: string; delay?: number; flota?: number; colorIcono?: string }> = ({ nombre, x, y, d, color, delay = 0, flota = 0, colorIcono = "#FFFFFF" }) => {

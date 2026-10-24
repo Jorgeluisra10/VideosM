@@ -415,7 +415,7 @@ function pintarResultadoEstudio() {
       hijos.push(h("div.tarjeta", h("h3", "🎬 Video terminado"),
         h("div.fila", { style: "align-items:flex-start;gap:18px" },
           h("video.reel", { src: d.video.url, controls: true, preload: "metadata" }),
-          h("div", h("p", `${d.video.mb} MB · 1080×1920 · 60 fps · H.264${a.sfx ? " + AAC (efectos)" : " · sin pista de audio (SFX desactivados)"}`),
+          h("div", h("p", `${d.video.mb} MB · 1080×1920 · 60 fps · H.264${a.sfx ? (a.musica ? " + AAC (efectos y música)" : " + AAC (efectos)") : " · sin pista de audio (SFX desactivados)"}`),
             h("a.btn.primario", { href: "/salida/video-animacion.mp4?descargar=1" }, "⬇️ Descargar el video"),
             h("p.chico-t.suave", "Sin subtítulos y sin voz: añade tu locución grabada en tu editor (CapCut, DaVinci, etc.)."))))); 
     }
@@ -483,9 +483,9 @@ async function vistaEstudio(cont) {
       h("div.ajustes-3",
         h("div.campo", h("label.etq", { for: "modelo" }, "2 · Modelo de IA"),
           h("select#modelo", { onchange: (e) => { EST.modelo = e.target.value; guardarEstado(); pintarEstimacion(); } }, N.MODELOS.map((m) => h("option", { value: m.id, selected: m.id === EST.modelo }, m.etiqueta)))),
-        h("div.campo", h("label.etq", { for: "sfx" }, "3 · Incluir SFX automáticos"),
+        h("div.campo", h("label.etq", { for: "sfx" }, "3 · Incluir sonido (efectos + música)"),
           h("label.interruptor", h("input#sfx", { type: "checkbox", checked: EST.sfx, onchange: (e) => { EST.sfx = e.target.checked; $("#sfx-txt").textContent = EST.sfx ? "Sí" : "No"; guardarEstado(); pintarEstimacion(); } }), h("span.pista"), h("strong#sfx-txt", EST.sfx ? "Sí" : "No")),
-          h("span.chico-t.suave", "No = el video sale sin pista de audio y la IA no pide efectos.")),
+          h("span.chico-t.suave", "No = el video sale sin pista de audio (sin efectos ni música). Sí = efectos sincronizados y música de fondo en el motor viral.")),
         h("div.campo", h("label.etq", { for: "paleta" }, "4 · Paleta de colores"),
           h("select#paleta", { onchange: (e) => { EST.paleta = e.target.value; guardarEstado(); pintarEstimacion(); } }, Object.values(N.PALETAS).map((p) => h("option", { value: p.id, selected: p.id === EST.paleta }, p.nombre))))),
       h("div.fila.pie-estudio", h("div#costo-estimado.costo"), h("span.espacio"),

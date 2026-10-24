@@ -175,4 +175,133 @@ escribirWav(
     SALIDA_AUDIOS,
   );
 }
-console.log("✅ Efectos listos en public/sfx/ (y ambiente en public/audios/)");
+// ───────────── foley del motor viral (agua, impactos, estática, clics, polvo, sonar) ─────────────
+
+// --- gota: «plip» de agua con una gotita secundaria
+escribirWav(
+  "gota.wav",
+  crear(0.4, (t) => {
+    const plip = (t0, amp, f0) => {
+      const dt = t - t0;
+      if (dt < 0) return 0;
+      return Math.sin(TAU * (f0 * 0.45 + f0 * 1.1 * Math.exp(-dt * 38)) * dt) * Math.exp(-dt * 16) * ataque(dt, 0.002) * amp;
+    };
+    return plip(0, 1, 900) + plip(0.13, 0.35, 1250);
+  }),
+);
+
+// --- estática: ráfaga de ruido de radio con crepitar
+{
+  let prev = 0;
+  escribirWav(
+    "estatica.wav",
+    crear(0.55, (t) => {
+      const x = rnd() * 2;
+      const alto = x - prev * 0.6; // paso alto muy simple
+      prev = x;
+      const env = Math.min(1, t / 0.02) * Math.exp(-t * 4.2);
+      const crepitar = 0.55 + 0.45 * Math.sign(Math.sin(TAU * 47 * t + Math.sin(TAU * 7 * t) * 3));
+      return alto * env * crepitar * 0.8;
+    }),
+  );
+}
+
+// --- clic: contacto mecánico seco (contadores)
+escribirWav("clic.wav", crear(0.06, (t) => rnd() * 2 * Math.exp(-t * 230) * 0.7 + Math.sin(TAU * 3200 * t) * Math.exp(-t * 170) * 0.55));
+
+// --- golpe: impacto seco con cuerpo grave y chasquido
+escribirWav(
+  "golpe.wav",
+  crear(0.45, (t) => {
+    const cuerpo = Math.sin(TAU * (48 + 70 * Math.exp(-t * 26)) * t) * Math.exp(-t * 11) * ataque(t, 0.001);
+    const madera = Math.sin(TAU * 190 * t) * Math.exp(-t * 34) * 0.45;
+    return cuerpo + madera + rnd() * 2 * Math.exp(-t * 120) * 0.6;
+  }),
+);
+
+// --- polvo: soplo grave de partículas que se asienta
+{
+  let low = 0;
+  escribirWav(
+    "polvo.wav",
+    crear(0.9, (t) => {
+      low += (rnd() * 2 - low) * 0.07;
+      return low * (1 - Math.exp(-t * 35)) * Math.exp(-t * 4.2) * 1.6;
+    }),
+  );
+}
+
+// --- radar: ping de sonar con dos ecos
+escribirWav(
+  "radar.wav",
+  crear(1.1, (t) => {
+    const ping = (t0, amp) => {
+      const dt = t - t0;
+      if (dt < 0) return 0;
+      return (Math.sin(TAU * 1180 * dt) + 0.3 * Math.sin(TAU * 2360 * dt)) * Math.exp(-dt * 6.5) * ataque(dt, 0.004) * amp;
+    };
+    return ping(0, 1) + ping(0.34, 0.38) + ping(0.68, 0.16);
+  }),
+);
+
+// ───────────── música: pista sintética en bucle (synth científico, 120 BPM, 16 s) ─────────────
+// Pad + bajo pulsante + arpegio de 16avos + bombo suave + hi-hat. Todas las notas se escriben «envueltas» (módulo N): el final enlaza con el principio sin corte.
+{
+  const LARGO = 16;
+  const N = Math.floor(LARGO * SR);
+  const out = new Float32Array(N);
+  const BAR = 2; // 120 BPM, compás de 4/4
+  const nota = (f, ini, dur, amp, env, armonicos = [1]) => {
+    const i0 = Math.floor(ini * SR);
+    const n = Math.floor(dur * SR);
+    for (let k = 0; k < n; k++) {
+      const t = k / SR;
+      let v = 0;
+      for (let h = 0; h < armonicos.length; h++) v += Math.sin(TAU * f * (h + 1) * t) * armonicos[h];
+      out[(i0 + k) % N] += v * env(t, dur) * amp;
+    }
+  };
+  const ruido = (ini, dur, amp, decaimiento) => {
+    const i0 = Math.floor(ini * SR);
+    const n = Math.floor(dur * SR);
+    let prev = 0;
+    for (let k = 0; k < n; k++) {
+      const x = rnd() * 2;
+      const alto = x - prev;
+      prev = x;
+      out[(i0 + k) % N] += alto * Math.exp(-(k / SR) * decaimiento) * amp;
+    }
+  };
+  // acordes: [bajo, tres notas del arpegio]
+  const ACORDES = [
+    [110.0, 440.0, 523.25, 659.25], // Am
+    [87.31, 349.23, 440.0, 523.25], // F
+    [130.81, 392.0, 523.25, 659.25], // C
+    [98.0, 392.0, 493.88, 587.33], // G
+    [110.0, 440.0, 523.25, 659.25], // Am
+    [87.31, 349.23, 440.0, 523.25], // F
+    [98.0, 392.0, 493.88, 587.33], // G
+    [82.41, 329.63, 392.0, 493.88], // Em
+  ];
+  const PATRON = [0, 1, 2, 3, 2, 1, 0, 1, 2, 3, 2, 1, 0, 1, 2, 1];
+  ACORDES.forEach(([bajo, a, b, c], bar) => {
+    const t0 = bar * BAR;
+    const tonos = [a, b, c, a * 2];
+    // pad: tres notas con envolvente en campana que muere en cada compás
+    for (const f of [a, b, c]) nota(f * 0.5, t0, BAR, 0.075, (t, d) => Math.pow(Math.sin((Math.PI * t) / d), 2), [1, 0.28]);
+    // bajo: corcheas pulsantes
+    for (let k = 0; k < 8; k++) nota(bajo, t0 + k * 0.25, 0.3, k % 2 === 0 ? 0.34 : 0.2, (t) => Math.exp(-t * 9) * Math.min(1, t / 0.004), [1, 0.35]);
+    // arpegio: semicorcheas tipo pluck
+    PATRON.forEach((idx, k) => nota(tonos[idx], t0 + k * 0.125, 0.4, 0.12 + (k % 4 === 0 ? 0.05 : 0), (t) => Math.exp(-t * 16) * Math.min(1, t / 0.003), [1, 0.5, 0.22]));
+    // bombo en cada pulso y hi-hat a contratiempo
+    for (let k = 0; k < 4; k++) {
+      nota(52, t0 + k * 0.5, 0.35, 0.5, (t) => Math.exp(-t * 13) * Math.min(1, t / 0.002), [1]);
+      ruido(t0 + k * 0.5 + 0.25, 0.06, 0.07, 55);
+    }
+    // el bombo baja de frecuencia al golpear: segundo componente corto
+    for (let k = 0; k < 4; k++) nota(110, t0 + k * 0.5, 0.08, 0.22, (t) => Math.exp(-t * 48), [1]);
+  });
+  escribirWav("musica.wav", out, SALIDA_AUDIOS);
+}
+
+console.log("✅ Efectos listos en public/sfx/ (y ambiente y música en public/audios/)");

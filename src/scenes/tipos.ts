@@ -17,7 +17,7 @@ export type EscenaDef = {
 };
 
 /** Tipos de efecto. "latido" es el nombre antiguo de "heartbeat" (se acepta por compatibilidad). */
-export type SfxTipo = "pop" | "tick" | "whoosh" | "thud" | "heartbeat" | "latido" | "zap" | "ding" | "cash";
+export type SfxTipo = "pop" | "tick" | "whoosh" | "thud" | "heartbeat" | "latido" | "zap" | "ding" | "cash" | "gota" | "estatica" | "clic" | "golpe" | "polvo" | "radar";
 export type SfxDef = { t: number; tipo: SfxTipo; vol?: number };
 
 /** Volumen por defecto de un efecto: discreto (15 %) para que nunca tape la voz. */
@@ -41,4 +41,4 @@ export type Tema = {
 };
 
 /** Duración (s) de cada efecto: acota su <Sequence> en el video y el recorte en la mezcla de audio. */
-export const DUR_SFX: Record<SfxTipo, number> = { pop: 0.25, tick: 0.1, whoosh: 0.65, thud: 0.75, heartbeat: 0.95, latido: 0.95, zap: 0.3, ding: 1.7, cash: 1.1 };
+export const DUR_SFX: Record<SfxTipo, number> = { pop: 0.25, tick: 0.1, whoosh: 0.65, thud: 0.75, heartbeat: 0.95, latido: 0.95, zap: 0.3, ding: 1.7, cash: 1.1, gota: 0.4, estatica: 0.55, clic: 0.06, golpe: 0.45, polvo: 0.9, radar: 1.1 };

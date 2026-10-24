@@ -1,5 +1,5 @@
 import React, { useMemo } from "react";
-import { AbsoluteFill, Sequence, useCurrentFrame } from "remotion";
+import { AbsoluteFill, Audio, Sequence, staticFile, useCurrentFrame } from "remotion";
 import { cargarFuentes } from "../lib/fuentes";
 import { easeRetro, prog, useT } from "../lib/anim";
 import { H, W } from "../lib/colores";
@@ -9,7 +9,7 @@ import { CapaRetro, Elementos2D, Fondo2D } from "./motor2d";
 import { Escena3DView } from "./motor3d";
 import { ProveedorColor, useTema } from "./contexto";
 import { paletaPorId } from "./paletas";
-import { eventosSfx } from "./sonido";
+import { MUSICA, eventosSfx, llevaMusica } from "./sonido";
 import { EscenaLibre } from "./EscenaLibre";
 import { EscenaEstudio } from "../estudio/EscenaEstudio";
 import { EscenaViral } from "../viral/EscenaViral";
@@ -126,6 +126,13 @@ export const Animacion: React.FC<PropsAnimacion> = ({ animacion, qa }) => {
             </Sequence>
           );
         })}
+      {llevaMusica(animacion) && (
+        <Audio
+          src={staticFile(MUSICA.archivo)}
+          loop
+          volume={(fr) => MUSICA.volumen * Math.min(1, fr / (MUSICA.entrada * FPS_ANIM), Math.max(0, (animacion.duracion * FPS_ANIM - fr) / (MUSICA.salida * FPS_ANIM)))}
+        />
+      )}
       {efectos.map((s, i) => (
         <SoundEffect key={i} type={s.tipo} frame={s.frame} volume={s.vol} />
       ))}

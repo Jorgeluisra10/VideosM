@@ -2,7 +2,7 @@
 /**
  * Carga el ejemplo incluido (ejemplos/animacion-imnoba) como animación activa, SIN IA y SIN coste:
  * parsea el guion con el mismo parser, ensambla la respuesta de ejemplo y escribe src/data/animacion.json.
- *   node scripts/anim/ejemplo.mjs [--sin-sfx] [--paleta=imnoba|medicina] [--formato=viral|estudio|libre|hud|simple] [--tema=carros]
+ *   node scripts/anim/ejemplo.mjs [--sin-sfx] [--paleta=imnoba|medicina] [--formato=viral|estudio|libre|hud|simple] [--tema=carros|ciencia]
  */
 import { mkdirSync, readFileSync, writeFileSync } from "node:fs";
 import { join } from "node:path";
@@ -22,7 +22,8 @@ let anim, correcciones;
 if (viral) {
   // MOTOR VIRAL (por defecto): una frase de idea → reel completo. El JSON que devolvería la IA está en ejemplos/animacion-viral y pasa por el mismo saneado y ensamblado.
   const dir = join(RAIZ, "ejemplos", "animacion-viral");
-  const tema = args.find((a) => a.startsWith("--tema="))?.split("=")[1] === "carros" ? "-carros" : "";
+  const temaArg = args.find((a) => a.startsWith("--tema="))?.split("=")[1];
+  const tema = temaArg === "carros" ? "-carros" : temaArg === "ciencia" ? "-ciencia" : "";
   const idea = N.parsearIdea(readFileSync(join(dir, `idea${tema}.txt`), "utf8"));
   if (idea.errores.length) throw new Error(idea.errores.join("\n"));
   const r = N.ensamblarViral(JSON.parse(readFileSync(join(dir, `respuesta-ia${tema}.json`), "utf8")), { modo: "idea", paleta, sfx });

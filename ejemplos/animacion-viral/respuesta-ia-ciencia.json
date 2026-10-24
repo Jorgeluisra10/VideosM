@@ -1,0 +1,12 @@
+{"titulo":"El animal que no se puede matar","scenes":[
+{"t":"HOOK","voz":"Hay un animal que sobrevivió al espacio sin traje.","dur":3.6,"h":"EL ANIMAL QUE SOBREVIVE AL ESPACIO","w":"ESPACIO","sub":"y mide medio milímetro","ic":"bicho","sc":"espacio","cita":"Jönsson et al., 2008"},
+{"t":"ZOOM","voz":"Si viajas desde la Tierra hasta un musgo, ahí lo encuentras.","dur":5.6,"h":"DE LA TIERRA A UN MUSGO","w":"MUSGO","zoom":{"a":8,"b":-4,"items":[{"l":"LA TIERRA","e":7,"ic":"globo"},{"l":"UN MUSGO","e":-1,"ic":"arboles"},{"l":"TARDÍGRADO","e":-3.3,"ic":"bicho"}]}},
+{"t":"MIRA","voz":"Es el tardígrado, y apenas mide medio milímetro.","dur":4.4,"h":"MIDE MEDIO MILÍMETRO","w":"MILÍMETRO","mira":{"ic":"bicho","l":"TARDÍGRADO","med":"0,5 MM"}},
+{"t":"SPLIT","voz":"Cuando se seca, pierde casi toda su agua y se hace un tonel.","dur":4.4,"h":"SE SECA Y SE HACE TONEL","w":"TONEL","a":{"l":"CON AGUA","n":"85","ic":"gota"},"b":{"l":"EN TONEL","n":"3","ic":"bicho"},"op":">","ic":"bicho"},
+{"t":"TERMO","voz":"En ese estado aguanta del frío extremo hasta el calor del agua hirviendo.","dur":5.2,"h":"RESISTE FRÍO Y CALOR EXTREMOS","w":"EXTREMOS","termo":{"u":"°C","lo":-200,"hi":150,"n":10,"k":3,"ic":"bicho","l":"SOBREVIVEN"}},
+{"t":"NUM","voz":"Y soporta miles de veces la presión de nuestra atmósfera.","dur":4.0,"h":"PRESIÓN EXTREMA","w":"PRESIÓN","num":{"n":"6000","u":"x","pre":"","l":"LA PRESIÓN DEL AIRE"},"cita":"Seki y Toyoshima, 1998"},
+{"t":"IMPACTO","voz":"En 2019 una sonda llevó tardígrados a la Luna y se estrelló.","dur":4.6,"h":"UNA SONDA SE ESTRELLÓ EN LA LUNA","w":"LUNA","impacto":{"ic":"cohete","l":"SONDA BERESHEET","v":"ABRIL 2019"}},
+{"t":"CAPAS","voz":"Iban dentro de un disco de níquel con una capa de resina.","dur":4.8,"h":"UN DISCO CON CAPAS","w":"CAPAS","capas":{"ic":"estrella","medida":"","items":[{"l":"NÍQUEL","m":"PÁGINAS"},{"l":"RESINA","m":"TARDÍGRADOS"},{"l":"NÍQUEL","m":"PÁGINAS"}]}},
+{"t":"RED","voz":"Su escudo es una proteína que protege el ADN de la radiación.","dur":4.6,"h":"SU ESCUDO: LA PROTEÍNA DSUP","w":"DSUP","red":{"c":"DSUP","nodes":["ADN","RAYOS X","AGUA","CÉLULA"]},"cita":"Hashimoto et al., 2016"},
+{"t":"CTA","voz":"Guárdalo y compártelo con quien crea que nada es indestructible.","dur":4.0,"h":"GUÁRDALO Y COMPÁRTELO","w":"COMPÁRTELO","sub":"Más ciencia en IMNOBA"}
+]}

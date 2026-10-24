@@ -6,7 +6,9 @@ import type { EscenaViralGuardada } from "./viral";
 export type Entrada2D = "aparecer" | "pop" | "deslizar-arriba" | "deslizar-abajo" | "deslizar-izq" | "deslizar-der" | "crecer";
 export type Entrada3D = "crecer" | "caer" | "aparecer" | "ninguna";
 export type Ambiente = "cuadricula" | "particulas" | "aros" | "lineas" | "ninguno";
-export type SfxTipoAnim = "pop" | "whoosh" | "heartbeat" | "cash" | "tick" | "thud" | "zap" | "ding";
+export type SfxTipoAnim = "pop" | "whoosh" | "heartbeat" | "cash" | "tick" | "thud" | "zap" | "ding"
+  // foley del motor viral (no se ofrecen a la IA: los pone el motor)
+  | "gota" | "estatica" | "clic" | "golpe" | "polvo" | "radar";
 
 /** Campos comunes a todo elemento 2D. Los tiempos son segundos desde el inicio de la escena. */
 export type Base2D = { tipo: string; t: number; hasta: number | null; entrada: Entrada2D };
@@ -53,6 +55,8 @@ export type Animacion = {
   /** formato estructurado: false = «HUD: OFF» (sin medidores; el escenario llega hasta y 1800) */
   hud?: boolean;
   formato?: "simple" | "estructurado" | "libre" | "estudio" | "viral";
+  /** motor viral: música de fondo (pista sintetizada en bucle). Va con el interruptor de sonido: sin SFX no hay música. */
+  musica?: boolean;
 };
 
 export type { Modo };

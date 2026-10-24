@@ -262,16 +262,18 @@ if (composition) console.log(`   ${composition.width}×${composition.height} · 
 // ---------- 1. Audio (mezcla en Node, sin Chrome) ----------
 const { ffmpeg, ffprobe } = buscarFfmpeg();
 // La animación solo lleva audio si tiene SFX activados y al menos un efecto: si no, el mp4 sale sin pista de audio.
-const eventosAnim = ES_ANIMACION ? (await cargarNucleoAnim()).eventosSfx(ANIMACION) : [];
-const CON_AUDIO = !ES_ANIMACION || eventosAnim.length > 0;
+const nucleoAnim = ES_ANIMACION ? await cargarNucleoAnim() : null;
+const eventosAnim = nucleoAnim ? nucleoAnim.eventosSfx(ANIMACION) : [];
+const musicaAnim = nucleoAnim && nucleoAnim.llevaMusica(ANIMACION) ? nucleoAnim.MUSICA : null;
+const CON_AUDIO = !ES_ANIMACION || eventosAnim.length > 0 || !!musicaAnim;
 if (!CON_AUDIO) {
   console.log(ANIMACION.sfx ? "🔇 La animación no tiene efectos de sonido: el video sale sin audio" : "🔇 SFX desactivados: el video sale sin pista de audio");
 } else if (existsSync(AUDIO) && statSync(AUDIO).size > 1000 && !args.includes("--audio-nuevo")) {
   console.log("🔊 Audio ya mezclado (se reutiliza)");
 } else if (ES_ANIMACION) {
-  console.log("🔊 Mezclando efectos de sonido (sin voz)...");
-  const m = await mezclarSfx({ raiz: RAIZ_PROYECTO, ffmpeg, segundos: total / FPS, salidaWav: AUDIO, eventos: eventosAnim });
-  console.log(`   ✔ audio listo: ${m.efectos} efectos, ${m.segundos.toFixed(1)} s, pico ${m.pico.toFixed(2)}`);
+  console.log(`🔊 Mezclando efectos de sonido${musicaAnim ? " y música" : ""} (sin voz)...`);
+  const m = await mezclarSfx({ raiz: RAIZ_PROYECTO, ffmpeg, segundos: total / FPS, salidaWav: AUDIO, eventos: eventosAnim, musica: musicaAnim });
+  console.log(`   ✔ audio listo: ${m.efectos} efectos${musicaAnim ? " + música" : ""}, ${m.segundos.toFixed(1)} s, pico ${m.pico.toFixed(2)}`);
 } else {
   console.log("🔊 Mezclando audio (voz + ambiente + efectos)...");
   const m = await mezclarAudio({ raiz: RAIZ_PROYECTO, ffmpeg, segundos: total / FPS, salidaWav: AUDIO });

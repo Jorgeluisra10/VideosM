@@ -160,14 +160,23 @@ export async function mezclarAudio({ raiz, ffmpeg, segundos, salidaWav }) {
  * Mezcla SOLO efectos de sonido (sin voz, sin ambiente, sin música) para el motor de animación.
  * `eventos` = [{ frame, tipo, vol }] con fotograma absoluto (lo da eventosSfx() de src/anim/sonido.ts).
  */
-export async function mezclarSfx({ raiz, ffmpeg, segundos, salidaWav, eventos }) {
+export async function mezclarSfx({ raiz, ffmpeg, segundos, salidaWav, eventos, musica }) {
   const { DUR_SFX, VOL_SFX, archivoSfx } = await cargarSonido(raiz);
-  const faltan = [...new Set(eventos.map((s) => archivoSfx(s.tipo)))].some((f) => !existsSync(join(raiz, "public", f)));
+  const faltan = [...new Set(eventos.map((s) => archivoSfx(s.tipo)))].some((f) => !existsSync(join(raiz, "public", f))) || (musica && !existsSync(join(raiz, "public", musica.archivo)));
   if (faltan) spawnSync(process.execPath, [join(raiz, "scripts", "generar-sfx.mjs"), "--solo-faltantes"], { cwd: raiz, stdio: "ignore" });
   const N = Math.ceil(segundos * SR);
   const mezcla = new Float32Array(N);
   const tmpDir = join(dirname(salidaWav), "dec");
   const cache = new Map();
+  // música de fondo en bucle (motor viral): rampa de entrada y de salida, igual que <Audio volume> en src/anim/Animacion.tsx
+  if (musica) {
+    const mus = decodificar(ffmpeg, join(raiz, "public", musica.archivo), tmpDir);
+    for (let i = 0; i < N; i++) {
+      const seg = i / SR;
+      const rampa = Math.min(1, seg / musica.entrada, Math.max(0, (segundos - seg) / musica.salida));
+      mezcla[i] += mus[i % mus.length] * musica.volumen * rampa;
+    }
+  }
   for (const s of eventos) {
     if (!cache.has(s.tipo)) cache.set(s.tipo, decodificar(ffmpeg, join(raiz, "public", archivoSfx(s.tipo)), tmpDir));
     const buf = cache.get(s.tipo);
