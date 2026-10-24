@@ -55,7 +55,7 @@ export const PALETAS: Record<string, Paleta> = {
 PALETAS.retro = {
   id: "retro",
   estilo: "retro",
-  nombre: "Retro-Científica (hex del brief: #0B0C10 · #E63926 · #D4FF33)",
+  nombre: "Retro-Científica · estilo documental (hex del brief: #0B0C10 · #E63926 · #D4FF33)",
   uso: "primario = rojo bermellón #E63926, el OBJETO DE ESTUDIO (el modelo central, la barra o forma protagonista); acento = lima neón #D4FF33, TELEMETRÍA (datos, cifras, cursor, bordes activos; sobre papel pasa a ser el rojo de énfasis); blanco = títulos sobre oscuro; tinta = texto que se lee sobre el fondo (blanco en oscuro, negro mate en papel); suave = ejes, cuadrículas y texto secundario; ok = valor correcto/positivo; alerta = azul cobalto #2B44FF, ANOMALÍAS y destacados de contraste.",
   oscuro: { primario: THEME.red, acento: THEME.yellow, blanco: THEME.white, tinta: THEME.white, suave: "#8B8F98", ok: THEME.yellow, alerta: THEME.blue, fondoCentro: THEME.dark, fondoBorde: THEME.dark, luz: THEME.salmon, sombra: THEME.dark },
   claro: { primario: THEME.red, acento: THEME.red, blanco: THEME.white, tinta: THEME.dark, suave: "#6B6A66", ok: THEME.dark, alerta: THEME.blue, fondoCentro: THEME.paper, fondoBorde: THEME.paper, luz: THEME.salmon, sombra: THEME.dark },
@@ -68,7 +68,7 @@ PALETAS.retro = {
 PALETAS["retro-imnoba"] = {
   id: "retro-imnoba",
   estilo: "retro",
-  nombre: "Retro-Científica IMNOBA (esencia de marca: #02224E · #FFC500)",
+  nombre: "Retro-Científica IMNOBA · estilo documental (esencia de marca: #02224E · #FFC500)",
   uso: "primario = amarillo IMNOBA #FFC500, el OBJETO DE ESTUDIO (modelo central, barra o forma protagonista; sobre papel es el navy #02224E); acento = azul claro de telemetría (datos, cifras, cursor, bordes activos; sobre papel pasa a ser el navy); blanco = títulos sobre oscuro; tinta = texto que se lee sobre el fondo (blanco en el navy de marca, navy en papel); suave = ejes, cuadrículas y texto secundario; ok = valorización o rentabilidad; alerta = rojo de riesgo, anomalías y destacados de contraste.",
   oscuro: { primario: "#FFC500", acento: "#8EB8FF", blanco: "#FFFFFF", tinta: "#FFFFFF", suave: "#8EA6CC", ok: "#2BD48D", alerta: "#FF5A5F", fondoCentro: IMNOBA.navy, fondoBorde: IMNOBA.navy, luz: "#FFE27A", sombra: "#011433" },
   claro: { primario: IMNOBA.navy, acento: IMNOBA.navy, blanco: "#FFFFFF", tinta: IMNOBA.navy, suave: "#6A7FA6", ok: "#12A56B", alerta: "#E5383B", fondoCentro: THEME.paper, fondoBorde: THEME.paper, luz: "#4F7DC9", sombra: "#011433" },

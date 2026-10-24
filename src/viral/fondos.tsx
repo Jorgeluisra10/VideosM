@@ -19,10 +19,32 @@ const Luz: React.FC<{ cx: number; cy: number; r: number; color: string; op: numb
   </>
 );
 
-export const FondoViral: React.FC<{ bg: "dark" | "gold" | "light" }> = ({ bg }) => {
-  const f = useCurrentFrame();
+/** Fondo del estilo documental: color plano (negro mate o papel) con un grano casi imperceptible y, en el papel, una trama de puntos finísima. */
+const FondoDocumental: React.FC = () => {
   const { T } = useViral();
   const uid = useUid();
+  return (
+    <AbsoluteFill style={{ backgroundColor: T.bg0 }}>
+      <svg width={W} height={H} viewBox={`0 0 ${W} ${H}`} style={{ display: "block" }}>
+        <StudioSvgDefs />
+        <defs>
+          <pattern id={`${uid}pp`} width="9" height="9" patternUnits="userSpaceOnUse"><circle cx="4.5" cy="4.5" r="0.9" fill={T.oscuro ? "#FFFFFF" : "#0B0C10"} /></pattern>
+          <radialGradient id={`${uid}vg`} cx="50%" cy="46%" r="75%"><stop offset="0.55" stopColor="#000" stopOpacity="0" /><stop offset="1" stopColor="#000" stopOpacity={T.oscuro ? 0.28 : 0.06} /></radialGradient>
+        </defs>
+        <rect width={W} height={H} fill={T.bg0} />
+        <rect width={W} height={H} fill={`url(#${uid}pp)`} opacity={T.oscuro ? 0.035 : 0.05} />
+        <rect width={W} height={H} fill="url(#studio-noise-tile)" opacity={T.oscuro ? 0.035 : 0.05} style={{ mixBlendMode: "overlay" }} />
+        <rect width={W} height={H} fill={`url(#${uid}vg)`} />
+      </svg>
+    </AbsoluteFill>
+  );
+};
+
+export const FondoViral: React.FC<{ bg: "dark" | "gold" | "light" }> = ({ bg }) => {
+  const f = useCurrentFrame();
+  const { T, doc } = useViral();
+  const uid = useUid();
+  if (doc) return <FondoDocumental />;
   return (
     <AbsoluteFill>
       <svg width={W} height={H} viewBox={`0 0 ${W} ${H}`} style={{ display: "block" }}>

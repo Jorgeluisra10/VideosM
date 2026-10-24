@@ -346,7 +346,7 @@ async function lanzarAnim(nombre, o = {}) {
       // motor viral (por defecto): una frase de idea o un guion en bloques; «estudio» y «clasico» conservan los motores anteriores (solo bloques)
       const motor = ["estudio", "clasico"].includes(o.motor) ? o.motor : "viral";
       const esIdea = fmt !== "estructurado" && motor === "viral" && N.esIdea(o.guion);
-      const r = fmt === "estructurado" ? N.parsearEstructurado(o.guion) : esIdea ? N.parsearIdea(o.guion) : motor !== "clasico" ? N.parsearEstudio(o.guion) : fmt === "libre" ? N.parsearLibre(o.guion) : N.parsearGuion(o.guion);
+      const r = fmt === "estructurado" ? N.parsearEstructurado(o.guion) : esIdea ? N.parsearIdea(o.guion, { paleta: o.paleta }) : motor !== "clasico" ? N.parsearEstudio(o.guion) : fmt === "libre" ? N.parsearLibre(o.guion) : N.parsearGuion(o.guion);
       if (esIdea) r.escenas = new Array(r.escenasObjetivo).fill(0);
       pedir(!r.errores.length, `El guion tiene problemas:\n· ${r.errores.join("\n· ")}`);
       const modelo = N.MODELOS.some((m) => m.id === o.modelo) ? o.modelo : "gpt-4.1-mini";

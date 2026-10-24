@@ -11,19 +11,29 @@
 import { modeloPorId, tokensDeTexto } from "./costos";
 import { coloresEstudio, mezclar, oscurecer, type ColoresEstudio } from "./estudio";
 import type { EscenaEstudioGuion } from "./estudio";
+import { esRetro, paletaPorId } from "./paletas";
 import type { Animacion, EventoSfx } from "./tipos";
 
 /* ───────────── vocabulario cerrado ───────────── */
 
-export const TIPOS_VIRAL = ["HOOK", "NUM", "VS", "BARS", "LINE", "STEPS", "LIST", "ROUTE", "SKYLINE", "DONUT", "PICTO", "TOP", "MITO", "ZOOM", "CAPAS", "MIRA", "IMPACTO", "RED", "TERMO", "SPLIT", "PILA", "CTA"] as const;
+export const TIPOS_VIRAL = ["HOOK", "NUM", "VS", "BARS", "LINE", "STEPS", "LIST", "ROUTE", "SKYLINE", "DONUT", "PICTO", "TOP", "MITO", "ZOOM", "CAPAS", "MIRA", "IMPACTO", "RED", "TERMO", "SPLIT", "PILA", "PAPEL", "PILARES", "CICLO", "PUNCH", "DUO", "OSCILO", "CUBO", "DIALES", "CTA"] as const;
 export type TipoViral = (typeof TIPOS_VIRAL)[number];
 /** Plantillas «documentales» (ciencia, naturaleza, tecnología): banda superior, tipografía mono y escenario ilustrado. */
 export const TIPOS_CIENCIA: readonly TipoViral[] = ["ZOOM", "CAPAS", "MIRA", "IMPACTO", "RED", "TERMO", "SPLIT", "PILA"];
+/**
+ * Plantillas del estilo DOCUMENTAL (videos explicativos de ciencia/curiosidades con estudios citados: ficha de papel, pilares isométricos, ciclo, golpe de palabra,
+ * paneles comparados, osciloscopio, cubo de posibilidades y diales). Se pueden usar con cualquier paleta; la paleta Retro-Científica les da su look completo.
+ */
+export const TIPOS_DOCUMENTAL: readonly TipoViral[] = ["PAPEL", "PILARES", "CICLO", "PUNCH", "DUO", "OSCILO", "CUBO", "DIALES"];
+/** Sobre «papel» (fondo claro) en el estilo documental; todo lo demás va sobre el fondo oscuro. */
+export const TIPOS_PAPEL: readonly TipoViral[] = ["PAPEL", "CICLO"];
+/** ¿La paleta activa pide el estilo documental? (las dos Retro-Científica: fondo plano, tipografía de titulares pesada + mono, cortes secos, papel) */
+export const esDocumental = (paleta: string | undefined): boolean => esRetro(paleta);
 /** Escenarios ilustrados de fondo (siempre sobre el tema oscuro). */
 export const ESCENARIOS_VIRAL = ["espacio", "luna", "bio", "celula"] as const;
 export type EscenarioViral = (typeof ESCENARIOS_VIRAL)[number];
 /** Cómo entra una escena: barrido diagonal (por defecto) o zoom continuo (la cámara «viaja» hacia dentro). */
-export type TransicionViral = "barrido" | "zoom";
+export type TransicionViral = "barrido" | "zoom" | "corte" | "papel";
 export const FONDOS_VIRAL = ["dark", "gold", "light"] as const;
 export type FondoViral = (typeof FONDOS_VIRAL)[number];
 
@@ -33,11 +43,11 @@ export const ICONOS_VIRAL = [
   "porcentaje", "banco", "acuerdo", "contrato", "reloj", "telefono", "chat", "globo", "estrella", "premio", "verificado", "brillo", "corona", "tren", "bus", "cohete",
   "diana", "idea", "candado", "seguridad", "llave", "dolar", "colegio", "compras", "arboles", "calendario-ok", "etiqueta", "dinero-mano", "wifi", "sol", "tienda", "firma", "check", "alerta", "rayo",
   // ciencia y naturaleza
-  "adn", "microscopio", "celula", "termometro", "oxigeno", "tubos-ensayo", "ojo", "gota", "bacteria", "virus", "luna", "atomo", "bicho", "planeta",
+  "adn", "microscopio", "celula", "termometro", "oxigeno", "tubos-ensayo", "ojo", "gota", "bacteria", "virus", "luna", "atomo", "bicho", "planeta", "concha",
 ] as const;
 const ICONOS_BASICOS = new Set(["check", "alerta", "rayo", "cruz", "gota", "bacteria", "virus"]);
 /** Iconos propios del motor viral (se dibujan en src/viral/comun.tsx). */
-export const ICONOS_PROPIOS = new Set(["luna", "atomo", "bicho", "planeta"]);
+export const ICONOS_PROPIOS = new Set(["luna", "atomo", "bicho", "planeta", "concha"]);
 const ICONOS_HI = new Set(["adn", "microscopio", "celula", "termometro", "oxigeno", "tubos-ensayo", "ojo"]);
 /** Nombre real que entiende dibujarIcono(): «lu-casa» para lucide, «hi-adn» para healthicons y el básico para check/alerta/rayo/gota. */
 export const iconoReal = (n: string): string => (ICONOS_BASICOS.has(n) || ICONOS_PROPIOS.has(n) ? n : ICONOS_HI.has(n) ? `hi-${n}` : `lu-${n}`);
@@ -88,6 +98,22 @@ export type DatosViral = {
   termo: { u: string; lo: number; hi: number; n: number; k: number; ic: string; l: string } | null;
   /** PILA: un solo punto frente a una columna de puntos que crece hasta `n` y aplasta al sujeto */
   pila: { ic: string; l1: string; l2: string; n: string } | null;
+  /** Línea de texto mono que se escribe sola (estilo máquina de escribir); las palabras entre *asteriscos* van en color de acento */
+  cap: string;
+  /** PAPEL: ficha de estudio sobre papel (autor · año, rol, cifra que cuenta, descripción, campo de puntos y sello) */
+  papel: { autor: string; anio: string; rol: string; n: string; u: string; desc: string; nota: string; puntos: boolean } | null;
+  /** PILARES: columnas isométricas con una fracción rayada («k de n»); `cabeza` es la fracción gigante; `hi` = columna destacada */
+  pilares: { cabeza: string; cols: { l: string; k: number; n: number; u: string }[]; hi: number } | null;
+  /** CICLO: pasos que se encadenan en círculo con flechas (el último vuelve al primero) */
+  ciclo: { ic: string; pasos: string[] } | null;
+  /** DUO: dos paneles comparados (uno «se queda», otro «se mueve») y una palabra grande que se llena según `v` (0–1) de cada uno */
+  duo: { a: { l: string; v: number }; b: { l: string; v: number }; palabra: string } | null;
+  /** OSCILO: pantalla de osciloscopio con una curva que se dibuja (lissajous, onda o espiral) */
+  osc: { curva: "lissajous" | "onda" | "espiral"; l: string; a: string } | null;
+  /** CUBO: cubo isométrico de posibilidades; `zonas` son los rincones donde hay algo (x,y,z de 0 a 1); el resto «está vacío» */
+  cubo: { ejes: string[]; n: number; zonas: { l: string; x: number; y: number; z: number }[] } | null;
+  /** DIALES: tres diales que cambian de `a` a `b` y mueven una figura (espiral de concha u onda) */
+  diales: { fig: "espiral" | "onda"; titulo: string; items: { l: string; a: number; b: number; min: number; max: number; u: string; dec: number }[] } | null;
   /** Ficha de cita científica (fuente y año): opcional en cualquier escena menos el CTA */
   cita: { t: string; y: string } | null;
   /** Escenario ilustrado de fondo ("" = el fondo normal) */
@@ -166,6 +192,39 @@ export const TV = {
   splitGana: 2.1,
   /** ficha de cita */
   cita: 1.0,
+  /** DOCUMENTAL: PAPEL (cifra que cuenta, campo de puntos, sello) */
+  papelContar: 0.8,
+  papelContarDur: 1.6,
+  papelCampo: 2.6,
+  papelCampoDur: 1.7,
+  papelSello: 4.5,
+  /** PILARES */
+  pilaresSuben: 0.35,
+  pilaresSubenDur: 0.9,
+  pilaresCabeza: 1.4,
+  pilaresRayas: 1.8,
+  pilaresRayasDur: 1.3,
+  /** CICLO: n-ésimo paso/flecha */
+  cicloPaso: (i: number): number => 0.7 + 0.75 * i,
+  /** PUNCH: instante del golpe */
+  punchGolpe: 0.4,
+  /** DUO */
+  duoA: 0.3,
+  duoB: 0.9,
+  duoPalabra: 1.7,
+  duoPalabraDur: 1.2,
+  /** OSCILO */
+  oscCurva: 0.4,
+  oscDur: 3.2,
+  /** CUBO */
+  cuboPuntos: 0.4,
+  cuboPuntosDur: 1.5,
+  cuboFiltra: 2.4,
+  cuboFiltraDur: 0.9,
+  cuboZonas: 3.3,
+  /** DIALES */
+  dialesIni: 0.5,
+  dialesDur: 3.0,
 } as const;
 
 /* ───────────── ZOOM: la cámara de «lienzo infinito» (compartida por el dibujo y los SFX) ───────────── */
@@ -222,7 +281,7 @@ export function longitudLegible(k: number): string {
 }
 
 /** Segundos que necesita cada plantilla para mostrar todo con calma (a ritmo 1). */
-export function duracionIdeal(e: Pick<EscenaViral, "t" | "items" | "bars" | "stops" | "top" | "picto"> & Partial<Pick<EscenaViral, "capas" | "red">>): number {
+export function duracionIdeal(e: Pick<EscenaViral, "t" | "items" | "bars" | "stops" | "top" | "picto"> & Partial<Pick<EscenaViral, "capas" | "red" | "ciclo" | "papel">>): number {
   switch (e.t) {
     case "HOOK": return 2.6;
     case "NUM": return TV.contar + TV.contarDur + 0.9;
@@ -244,6 +303,14 @@ export function duracionIdeal(e: Pick<EscenaViral, "t" | "items" | "bars" | "sto
     case "TERMO": return TV.termo + TV.termoDur + 1.1;
     case "SPLIT": return 3.6;
     case "PILA": return TV.pila + TV.pilaDur + 1.2;
+    case "PAPEL": return e.papel?.puntos === false ? TV.papelContar + TV.papelContarDur + 1.8 : TV.papelCampo + TV.papelCampoDur + 1.3;
+    case "PILARES": return TV.pilaresRayas + TV.pilaresRayasDur + 1.2;
+    case "CICLO": return TV.cicloPaso(e.ciclo?.pasos.length ?? 4) + 1.2;
+    case "PUNCH": return 3.0;
+    case "DUO": return TV.duoPalabra + TV.duoPalabraDur + 1.2;
+    case "OSCILO": return TV.oscCurva + TV.oscDur + 0.9;
+    case "CUBO": return TV.cuboZonas + 1.8;
+    case "DIALES": return TV.dialesIni + TV.dialesDur + 1.0;
     default: return 3.2;
   }
 }
@@ -258,21 +325,25 @@ export const esIdea = (texto: string): boolean => !/^\s*\[\s*(ESCENA|CONFIG)\b/i
 export const DURACION_DEFECTO = 32;
 /** Duración mínima y máxima (s) que se puede pedir; sin pedirla, una idea detallada alarga el video hasta DURACION_AUTO_MAX. */
 export const DURACION_MIN = 15;
-export const DURACION_MAX = 120;
+export const DURACION_MAX = 180;
 export const DURACION_AUTO_MAX = 90;
+/** Estilo documental: sin pedir duración un video explicativo dura ≈ 60 s y, con mucho detalle, hasta 120 s (los de referencia duran ≈ 2 min). */
+export const DURACION_DOCUMENTAL = 60;
+export const DURACION_DOCUMENTAL_MAX = 120;
 /** Hasta cuántos caracteres la idea cabe en el video de duración por defecto; cada ≈ 55 más suman 1 s. */
 export const IDEA_CORTA = 400;
 /** Escenas objetivo para una duración: ≈ una cada 3,6 s (ritmo de reel). */
-export const escenasParaDuracion = (s: number): number => Math.min(32, Math.max(5, Math.round(s / 3.6)));
+export const escenasParaDuracion = (s: number, documental = false): number => (documental ? Math.min(44, Math.max(6, Math.round(s / 4.4))) : Math.min(48, Math.max(5, Math.round(s / 3.6))));
 /** A partir de cuántos caracteres la idea se considera «detallada» y se le pide a la IA cubrir TODOS sus puntos. */
 export const IDEA_DETALLADA = 350;
 
 /**
  * Lee la idea: una frase o todo el detalle que quieras (sin límite de caracteres; se conservan los saltos de línea, viñetas y cifras).
  * Duración: si dice «de 30 segundos» / «1 minuto» (o «el video dura 2 minutos») se respeta (15–120 s). Si no la dice, ≈ 32 s para una idea corta
- * y más larga cuanto más detalle tenga (hasta 90 s), para que quepan todos sus puntos.
+ * y más larga cuanto más detalle tenga (hasta 90 s), para que quepan todos sus puntos. Con una paleta Retro-Científica (estilo documental): ≈ 60 s y hasta 120 s, con una escena cada ≈ 4,4 s.
  */
-export function parsearIdea(texto: string): ResultadoIdea {
+export function parsearIdea(texto: string, opciones: { paleta?: string } = {}): ResultadoIdea {
+  const doc = esDocumental(opciones.paleta);
   const idea = texto.replace(/\r/g, "").replace(/[ \t\f\v]+/g, " ").replace(/ ?\n ?/g, "\n").replace(/\n{3,}/g, "\n\n").trim();
   const errores: string[] = [];
   const avisos: string[] = [];
@@ -282,7 +353,8 @@ export function parsearIdea(texto: string): ResultadoIdea {
   const atado = plano.match(/(?:v[ií]deo|reel|clip|duraci[oó]n|dura|durar[aá]|de unos|de)\s*(?:de\s+|unos\s+|aprox(?:imadamente)?\s+)?(\d+(?:[.,]\d+)?)\s*(s\b|seg\b|segundos?|min\b|minutos?)/i);
   const suelta = plano.length <= IDEA_CORTA ? plano.match(/(\d+(?:[.,]\d+)?)\s*(s\b|seg\b|segundos?|min\b|minutos?)/i) : null;
   const m = atado ?? suelta;
-  let duracion = Math.min(DURACION_AUTO_MAX, DURACION_DEFECTO + Math.max(0, plano.length - IDEA_CORTA) / 55);
+  const base = doc ? DURACION_DOCUMENTAL : DURACION_DEFECTO;
+  let duracion = Math.min(doc ? DURACION_DOCUMENTAL_MAX : DURACION_AUTO_MAX, base + Math.max(0, plano.length - IDEA_CORTA) / 55);
   let pedida = false;
   if (m) {
     pedida = true;
@@ -293,8 +365,8 @@ export function parsearIdea(texto: string): ResultadoIdea {
     avisos.push(`La duración pedida (${Math.round(duracion)} s) se ajusta al rango de un reel: ${DURACION_MIN}–${DURACION_MAX} s.`);
     duracion = Math.min(DURACION_MAX, Math.max(DURACION_MIN, duracion));
   }
-  if (!pedida && duracion > DURACION_DEFECTO + 0.5) avisos.push(`Idea detallada: el video durará ≈ ${Math.round(duracion)} s para que quepan todos sus puntos (di «de N segundos» si prefieres otra duración).`);
-  return { formato: "idea", idea, duracion: Math.round(duracion), escenasObjetivo: escenasParaDuracion(duracion), errores, avisos, caracteres: idea.length };
+  if (!pedida && duracion > base + 0.5) avisos.push(`Idea detallada: el video durará ≈ ${Math.round(duracion)} s para que quepan todos sus puntos (di «de N segundos» si prefieres otra duración).`);
+  return { formato: "idea", idea, duracion: Math.round(duracion), escenasObjetivo: escenasParaDuracion(duracion, doc), errores, avisos, caracteres: idea.length };
 }
 
 /* ───────────── saneado ───────────── */
@@ -364,7 +436,7 @@ function destacar(h: string, pedida: string): string {
   return (buenas.length ? buenas : ps).reduce((m, p) => (n(p).length > n(m).length ? p : m), ps[0] ?? "");
 }
 
-const VACIO: DatosViral = { h: "", w: "", sub: "", ic: "brillo", num: null, vs: null, bars: [], barsU: "", hi: -1, line: null, items: [], stops: [], end: "", donut: [], picto: null, top: [], myth: "", truth: "", zoom: null, capas: null, mira: null, impacto: null, red: null, termo: null, pila: null, cita: null, sc: "" };
+const VACIO: DatosViral = { h: "", w: "", sub: "", ic: "brillo", num: null, vs: null, bars: [], barsU: "", hi: -1, line: null, items: [], stops: [], end: "", donut: [], picto: null, top: [], myth: "", truth: "", zoom: null, capas: null, mira: null, impacto: null, red: null, termo: null, pila: null, cap: "", papel: null, pilares: null, ciclo: null, duo: null, osc: null, cubo: null, diales: null, cita: null, sc: "" };
 
 /** Entero (acepta «−6», «6,0»…) acotado a [min, max]; si no es un número, `def`. */
 const entero = (v: unknown, def: number, min = -12, max = 12): number => {
@@ -571,6 +643,73 @@ export function normalizarEscenaViral(raw: any, n: number, vozDada?: string): { 
     }
     case "SPLIT":
       break;
+    case "PAPEL": {
+      const m = r.papel && typeof r.papel === "object" ? r.papel : r;
+      d.papel = { autor: limpio(m.autor ?? m.fuente, 26) || "Estudio", anio: String(m.anio ?? m.año ?? m.y ?? "").replace(/[^\d]/g, "").slice(0, 4), rol: limpio(m.rol, 38), n: numero(m.n, "100"), u: limpio(m.u, 20) || "casos", desc: limpio(m.desc, 52), nota: limpio(m.nota, 64), puntos: !(m.puntos === false || String(m.puntos).toLowerCase() === "false" || String(m.puntos) === "0") };
+      break;
+    }
+    case "PILARES": {
+      const m = r.pilares && typeof r.pilares === "object" ? r.pilares : r;
+      const lista: any[] = Array.isArray(m.cols) ? m.cols : [];
+      let cols = lista.slice(0, 4).map((c, i) => {
+        const nn = Math.max(1, aNumero(numero(c?.n, "10")) || 10);
+        return { l: limpio(c?.l, 12), k: Math.min(nn, Math.max(0, Math.round(aNumero(numero(c?.k, "0"))))), n: nn, u: limpio(c?.u, 16) };
+      });
+      if (cols.length < 2) { cols = [{ l: "", k: 3, n: 10, u: "" }, { l: "", k: 6, n: 10, u: "" }, { l: "", k: 2, n: 10, u: "" }]; corr.push(`Escena ${n}: PILARES sin columnas suficientes; se usan tres de ejemplo`); }
+      const minimo = cols.reduce((mi, c, i, a) => (c.n < a[mi].n ? i : mi), 0);
+      const hi = Number.isInteger(Number(m.hi)) && Number(m.hi) >= 0 && Number(m.hi) < cols.length ? Number(m.hi) : minimo;
+      d.pilares = { cabeza: limpio(m.cabeza ?? m.head, 14), cols, hi };
+      break;
+    }
+    case "CICLO": {
+      const m = r.ciclo && typeof r.ciclo === "object" ? r.ciclo : r;
+      const lista: any[] = Array.isArray(m.pasos) ? m.pasos : Array.isArray(m.items) ? m.items : [];
+      let pasos = lista.slice(0, 4).map((x) => limpio(typeof x === "string" ? x : x?.l, 30)).filter(Boolean);
+      if (pasos.length < 3) { pasos = ["paso uno", "paso dos", "vuelta al inicio"]; corr.push(`Escena ${n}: CICLO sin pasos suficientes; se usan tres de ejemplo`); }
+      d.ciclo = { ic: icono(m.ic ?? r.ic, ctx, "brillo"), pasos };
+      break;
+    }
+    case "PUNCH":
+      break;
+    case "DUO": {
+      const m = r.duo && typeof r.duo === "object" ? r.duo : r;
+      const lado = (o: any, defL: string, defV: number): { l: string; v: number } => {
+        let v = Number(String(o?.v ?? defV).replace(",", "."));
+        if (!Number.isFinite(v)) v = defV;
+        if (v > 1) v /= 100;
+        return { l: limpio(o?.l, 28) || defL, v: Math.min(1, Math.max(0, v)) };
+      };
+      d.duo = { a: lado(m.a, "se queda", 1), b: lado(m.b, "se mueve", 0.15), palabra: mayus(m.palabra ?? m.w, 14) || (d.w ? d.w.toUpperCase().slice(0, 14) : "CLAVE") };
+      break;
+    }
+    case "OSCILO": {
+      const m = r.osc && typeof r.osc === "object" ? r.osc : r;
+      const c = String(m.curva ?? "").toLowerCase();
+      d.osc = { curva: c === "onda" || c === "espiral" ? c : "lissajous", l: limpio(m.l, 30) || "CH1 · X-Y", a: String(m.a ?? m.anio ?? "").replace(/[^\d]/g, "").slice(0, 4) };
+      break;
+    }
+    case "CUBO": {
+      const m = r.cubo && typeof r.cubo === "object" ? r.cubo : r;
+      const ejes = (Array.isArray(m.ejes) ? m.ejes : []).slice(0, 3).map((x: unknown) => limpio(x, 24));
+      while (ejes.length < 3) ejes.push(`eje ${ejes.length + 1}`);
+      const c01 = (v: unknown, def: number): number => { const x = Number(String(v ?? def).replace(",", ".")); return Number.isFinite(x) ? Math.min(1, Math.max(0, x)) : def; };
+      let zonas = (Array.isArray(m.zonas) ? m.zonas : []).slice(0, 3).map((z: any, i: number) => ({ l: limpio(z?.l, 16), x: c01(z?.x, [0.2, 0.75, 0.5][i]), y: c01(z?.y, [0.8, 0.7, 0.3][i]), z: c01(z?.z, [0.3, 0.8, 0.5][i]) }));
+      if (!zonas.length) { zonas = [{ l: "", x: 0.2, y: 0.8, z: 0.3 }, { l: "", x: 0.75, y: 0.7, z: 0.8 }]; corr.push(`Escena ${n}: CUBO sin zonas; se usan dos de ejemplo`); }
+      d.cubo = { ejes, n: entero(m.n, 220, 60, 400), zonas };
+      break;
+    }
+    case "DIALES": {
+      const m = r.diales && typeof r.diales === "object" ? r.diales : r;
+      const lista: any[] = Array.isArray(m.items) ? m.items : [];
+      let items = lista.slice(0, 3).map((it, i) => {
+        const a = decimal(it?.a, 1), b = decimal(it?.b, a);
+        const max = decimal(it?.max, Math.max(Math.abs(a), Math.abs(b), 1) * 1.3), min = decimal(it?.min, 0);
+        return { l: limpio(it?.l, 24) || `número ${i + 1}`, a, b, min: Math.min(min, max - 1e-6), max, u: limpio(it?.u, 3), dec: entero(it?.dec, Number.isInteger(a) && Number.isInteger(b) ? 0 : 1, 0, 2) };
+      });
+      if (items.length < 3) { items = [{ l: "número 1", a: 1, b: 3, min: 0, max: 4, u: "×", dec: 1 }, { l: "número 2", a: 0.1, b: 0.4, min: 0, max: 0.6, u: "", dec: 2 }, { l: "número 3", a: 0, b: 1, min: 0, max: 1.5, u: "", dec: 1 }].map((x, i) => items[i] ?? x); corr.push(`Escena ${n}: DIALES completa los diales que faltaban con valores de ejemplo`); }
+      d.diales = { fig: String(m.fig ?? "").toLowerCase() === "onda" ? "onda" : "espiral", titulo: limpio(m.titulo, 18) || "3 números", items };
+      break;
+    }
     case "PILA": {
       const m = r.pila && typeof r.pila === "object" ? r.pila : r;
       const nn = numero(m.n, "100");
@@ -585,12 +724,13 @@ export function normalizarEscenaViral(raw: any, n: number, vozDada?: string): { 
       break;
   }
   // extras opcionales de cualquier escena: ficha de cita (no en el CTA) y escenario ilustrado
+  d.cap = t === "HOOK" || TIPOS_DOCUMENTAL.includes(t) ? limpio(r.cap ?? r.linea, 120) : "";
   d.cita = t === "CTA" ? null : normalizarCita(r.cita ?? r.src ?? r.fuente);
   const scPedido = String(r.sc ?? r.escenario ?? "").trim().toLowerCase();
   const scPorTipo: Partial<Record<TipoViral, EscenarioViral>> = { ZOOM: "espacio", IMPACTO: "luna", RED: "celula" };
   d.sc = (ESCENARIOS_VIRAL as readonly string[]).includes(scPedido) ? (scPedido as EscenarioViral) : (scPorTipo[t] ?? "");
   if (t === "IMPACTO") d.sc = "luna"; // el suelo de la plantilla es el de la superficie lunar
-  const dur = Math.min(8, Math.max(2, Number(String(r.dur ?? "").replace(",", ".")) || 3.5));
+  const dur = Math.min(12, Math.max(2, Number(String(r.dur ?? "").replace(",", ".")) || 3.5));
   return { escena: { n, t, voz, dur, ...d }, correcciones: corr };
 }
 
@@ -607,14 +747,17 @@ function titularDeVoz(voz: string, max: number): string {
 
 const FONDO_PREFERIDO: Record<TipoViral, FondoViral> = {
   HOOK: "dark", NUM: "gold", VS: "dark", BARS: "light", LINE: "dark", STEPS: "light", LIST: "dark", ROUTE: "dark", SKYLINE: "light", DONUT: "dark", PICTO: "light", TOP: "dark", MITO: "light",
-  ZOOM: "dark", CAPAS: "light", MIRA: "dark", IMPACTO: "dark", RED: "dark", TERMO: "light", SPLIT: "dark", PILA: "light", CTA: "gold",
+  ZOOM: "dark", CAPAS: "light", MIRA: "dark", IMPACTO: "dark", RED: "dark", TERMO: "light", SPLIT: "dark", PILA: "light",
+  PAPEL: "light", PILARES: "dark", CICLO: "light", PUNCH: "dark", DUO: "dark", OSCILO: "dark", CUBO: "dark", DIALES: "dark", CTA: "gold",
 };
 
 /**
  * Asigna un fondo a cada escena: el que prefiere su plantilla, cambiando el de las vecinas iguales para que el ritmo visual nunca se repita.
  * Las escenas con escenario ilustrado (`escenarios[i]` no vacío) van SIEMPRE sobre el tema oscuro: se mueven las vecinas, no ellas.
  */
-export function asignarFondos(tipos: TipoViral[], escenarios: string[] = []): FondoViral[] {
+export function asignarFondos(tipos: TipoViral[], escenarios: string[] = [], documental = false): FondoViral[] {
+  // estilo documental: fondo oscuro siempre, y «papel» claro solo para las fichas y los ciclos (varias oscuras seguidas son normales)
+  if (documental) return tipos.map((t) => (TIPOS_PAPEL.includes(t) ? "light" : "dark"));
   const f: FondoViral[] = tipos.map((t) => FONDO_PREFERIDO[t]);
   const fijo = (i: number): boolean => !!escenarios[i];
   tipos.forEach((_, i) => { if (fijo(i)) f[i] = "dark"; });
@@ -634,7 +777,7 @@ export function asignarFondos(tipos: TipoViral[], escenarios: string[] = []): Fo
 const maximo = <T,>(xs: T[], n: number): T[] => xs.slice(0, n);
 
 /** Efectos de sonido automáticos sincronizados con lo que hace cada plantilla (tiempos escalados por el ritmo de la escena). */
-export function sfxViral(e: Pick<EscenaViral, "t" | "items" | "bars" | "stops" | "top" | "picto" | "dur"> & Partial<Pick<EscenaViral, "zoom" | "capas" | "red" | "termo" | "pila" | "cita" | "sc" | "num">>, ritmo: number): EventoSfx[] {
+export function sfxViral(e: Pick<EscenaViral, "t" | "items" | "bars" | "stops" | "top" | "picto" | "dur"> & Partial<Pick<EscenaViral, "zoom" | "capas" | "red" | "termo" | "pila" | "cita" | "sc" | "num" | "pilares" | "ciclo" | "cubo" | "papel" | "duo">>, ritmo: number): EventoSfx[] {
   const s = (x: number): number => x * ritmo;
   const L: EventoSfx[] = [{ t: 0.04, tipo: "whoosh", vol: 0.16 }];
   const A = (t: number, tipo: EventoSfx["tipo"], vol = 0.15): void => { L.push({ t, tipo, vol }); };
@@ -673,6 +816,19 @@ export function sfxViral(e: Pick<EscenaViral, "t" | "items" | "bars" | "stops" |
     case "RED": (e.red?.nodes ?? []).forEach((_, i) => A(s(TV.redNodo(i)), "pop", 0.12)); A(s(TV.redNodo(e.red?.nodes.length ?? 4)), "zap", 0.1); A(s(TV.redNodo(e.red?.nodes.length ?? 4)) + 0.5, "ding", 0.16); break;
     case "TERMO": clics(s(TV.termo), s(TV.termoDur), 0.06); A(s(TV.termo + TV.termoDur), "ding", 0.17); break;
     case "PILA": clics(s(TV.pila), s(TV.pilaDur), 0.06); A(s(TV.pila + TV.pilaDur), "golpe", 0.2); A(s(TV.pila + TV.pilaDur), "thud", 0.14); A(s(TV.pila + TV.pilaDur) + 0.4, "ding", 0.14); break;
+    case "PAPEL": {
+      clics(s(TV.papelContar), s(TV.papelContarDur), 0.07);
+      if (e.papel?.puntos !== false) { for (let k = 0; k < 8; k++) A(s(TV.papelCampo + (TV.papelCampoDur * k) / 8), "tick", 0.07); A(s(TV.papelSello), "golpe", 0.2); }
+      else A(s(TV.papelContar + TV.papelContarDur), "ding", 0.14);
+      break;
+    }
+    case "PILARES": (e.pilares?.cols ?? []).forEach((_, i) => A(s(TV.pilaresSuben + 0.12 * i), "pop", 0.12)); A(s(TV.pilaresCabeza), "golpe", 0.18); clics(s(TV.pilaresRayas), s(TV.pilaresRayasDur), 0.05); A(s(TV.pilaresRayas + TV.pilaresRayasDur), "ding", 0.15); break;
+    case "CICLO": for (let i = 0; i < (e.ciclo?.pasos.length ?? 4); i++) { A(s(TV.cicloPaso(i)), "pop", 0.12); A(s(TV.cicloPaso(i)) + 0.25, "whoosh", 0.07); } break;
+    case "PUNCH": A(s(TV.punchGolpe), "golpe", 0.26); A(s(TV.punchGolpe), "thud", 0.18); A(s(TV.punchGolpe) + 0.05, "polvo", 0.1); break;
+    case "DUO": A(s(TV.duoA), "pop", 0.12); A(s(TV.duoB), "pop", 0.12); A(s(TV.duoPalabra), "whoosh", 0.1); A(s(TV.duoPalabra + TV.duoPalabraDur), "golpe", 0.16); break;
+    case "OSCILO": A(0.1, "estatica", 0.08); A(s(TV.oscCurva), "zap", 0.1); A(s(TV.oscCurva + TV.oscDur), "ding", 0.12); break;
+    case "CUBO": for (let k = 0; k < 6; k++) A(s(TV.cuboPuntos + (TV.cuboPuntosDur * k) / 6), "tick", 0.06); A(s(TV.cuboFiltra), "whoosh", 0.1); A(s(TV.cuboZonas), "radar", 0.12); A(s(TV.cuboZonas) + 0.4, "ding", 0.12); break;
+    case "DIALES": clics(s(TV.dialesIni), s(TV.dialesDur), 0.05); A(s(TV.dialesIni + TV.dialesDur), "ding", 0.14); break;
     case "SPLIT": A(0.2, "whoosh", 0.14); A(s(0.45), "golpe", 0.14); clics(s(TV.splitContar), s(1.2), 0.05); A(s(TV.splitGana), "ding", 0.18); break;
     case "CTA": A(s(0.5), "ding", 0.2); A(s(1.1), "pop", 0.15); break;
   }
@@ -725,13 +881,14 @@ export function ensamblarViral(raw: any, ctx: ContextoViral): { anim: Animacion;
   // duraciones (idea): lo que dice la IA, pero nunca menos de lo que se tarda en decir la locución ni de lo mínimo de la plantilla
   let t = 0;
   const salida: EscenaViralGuardada[] = [];
-  const fondos = asignarFondos(lista.map((e) => e.t), lista.map((e) => e.sc));
+  const documental = esDocumental(ctx.paleta);
+  const fondos = asignarFondos(lista.map((e) => e.t), lista.map((e) => e.sc), documental);
   lista.forEach((e, i) => {
     const ideal = duracionIdeal(e);
     let dur = e.dur;
     if (ctx.modo === "idea") {
       const habla = palabras(e.voz) / 2.9 + 0.5;
-      dur = Math.round(Math.min(9, Math.max(dur, habla, Math.min(ideal, 5.2), 2.2)) * 10) / 10;
+      dur = Math.round(Math.min(documental ? 12 : 9, Math.max(dur, habla, Math.min(ideal, documental ? 7 : 5.2), 2.2)) * 10) / 10;
     }
     const inicio = e.inicioFijo ?? Math.round(t * 100) / 100;
     const fin = e.finFijo ?? Math.round((inicio + dur) * 100) / 100;
@@ -744,7 +901,9 @@ export function ensamblarViral(raw: any, ctx: ContextoViral): { anim: Animacion;
   // transición: zoom continuo al entrar o salir de un viaje de escala (o tras una mira que se acerca); el resto, barrido diagonal
   salida.forEach((e, i) => {
     const prev = salida[i - 1];
-    e.tr = i > 0 && (e.t === "ZOOM" || prev.t === "ZOOM" || prev.t === "MIRA") ? "zoom" : "barrido";
+    const zoom = i > 0 && (e.t === "ZOOM" || prev.t === "ZOOM" || prev.t === "MIRA");
+    // documental: corte seco (la ficha de papel entra deslizándose); resto: barrido diagonal
+    e.tr = zoom ? "zoom" : i === 0 ? "barrido" : documental ? (e.tema === "claro" && prev.tema !== "claro" ? "papel" : "corte") : "barrido";
   });
   salida.forEach((e, i) => { e.trs = salida[i + 1]?.tr ?? "barrido"; });
   const duracion = salida.length ? salida[salida.length - 1].fin : 0;
@@ -761,6 +920,8 @@ export function ensamblarViral(raw: any, ctx: ContextoViral): { anim: Animacion;
 /* ───────────── colores y fondos por plantilla ───────────── */
 
 export type TemaViral = {
+  /** color de los datos/ejes/telemetría en mono (por defecto, el acento); en el estilo documental es el lima neón */
+  neon?: string;
   bg0: string; bg1: string;
   texto: string; suave: string; acento: string; acento2: string; peligro: string; exito: string;
   /** relleno de tarjetas y paneles */
@@ -772,6 +933,7 @@ export type TemaViral = {
 
 /** Colores de cada fondo (dark / gold / light) derivados de la paleta elegida. IMNOBA: azul #02224E, dorado #FFC500, blanco. */
 export function temaViral(paleta: string | undefined, bg: FondoViral): TemaViral {
+  if (esDocumental(paleta)) return temaDocumental(paleta, bg);
   const C: ColoresEstudio = coloresEstudio(paleta);
   const navy = C.fondoCentro;
   const acento = C.roles.accent;
@@ -784,6 +946,20 @@ export function temaViral(paleta: string | undefined, bg: FondoViral): TemaViral
   return { bg0: mezclar(navy, "#FFFFFF", 0.06), bg1: oscurecer(navy, 0.6), texto: "#FFFFFF", suave: mezclar("#FFFFFF", navy, 0.4), acento, acento2: C.roles.secondary, peligro: C.roles.danger, exito: C.roles.success, panel: "rgba(255,255,255,0.07)", borde: "rgba(255,255,255,0.16)", sobreAcento: navy, oscuro: true };
 }
 
+/**
+ * Estilo DOCUMENTAL (paletas Retro-Científica): fondo plano negro mate o papel, el objeto de estudio en el color primario (rojo bermellón / amarillo IMNOBA),
+ * lo que cambia en el de contraste (cobalto) y los datos en mono en el lima neón. El fondo «gold» no existe aquí (se trata como oscuro).
+ */
+function temaDocumental(paleta: string | undefined, bg: FondoViral): TemaViral {
+  const P = paletaPorId(paleta);
+  if (bg === "light") {
+    const k = P.claro;
+    return { neon: k.alerta, bg0: k.fondoCentro, bg1: k.fondoBorde, texto: k.tinta, suave: k.suave, acento: k.primario, acento2: k.alerta, peligro: k.primario, exito: k.tinta, panel: "rgba(11,12,16,0.05)", borde: "rgba(11,12,16,0.22)", sobreAcento: "#FFFFFF", oscuro: false };
+  }
+  const k = P.oscuro;
+  return { neon: k.acento, bg0: k.fondoCentro, bg1: k.fondoBorde, texto: "#FFFFFF", suave: k.suave, acento: k.primario, acento2: k.alerta === k.primario ? "#2B44FF" : k.alerta, peligro: k.primario, exito: k.acento, panel: "rgba(255,255,255,0.06)", borde: "rgba(255,255,255,0.16)", sobreAcento: k.fondoCentro, oscuro: true };
+}
+
 /* ───────────── prompt de sistema (estático y cacheable) y mensaje de usuario ───────────── */
 
 export const MARCA_VIRAL = "DIRECTOR_VIRAL";
@@ -791,7 +967,8 @@ export const MARCA_VIRAL = "DIRECTOR_VIRAL";
 /**
  * Reglas, vocabulario y formato idénticos en cada llamada (van PRIMERO: prefijo cacheable). Lo variable (idea, duración, marca) va en el mensaje de usuario.
  */
-export function sistemaViral(): string {
+export function sistemaViral(estilo: "general" | "documental" = "general"): string {
+  if (estilo === "documental") return sistemaDocumental();
   return `Eres guionista y director de arte de reels virales de 9:16 en español de Colombia (tuteo, frases cortas, directo, sin relleno). Conviertes una idea en un video completo: escribes la locución y eliges, escena por escena, una plantilla; un motor prefabricado la dibuja (tú no dibujas). [${MARCA_VIRAL}]
 Responde SOLO un objeto JSON: {"titulo":"…","scenes":[…]} (sin texto extra). Ritmo de reel: "dur" = palabras de la voz ÷ 2,9 + 0,5 s (mín. 2,8; HOOK y CTA ≈ 3,5). En modo bloques cada escena lleva "id" y NO "voz" ni "dur"; en modo idea lleva "voz" y "dur".
 Cada escena: {"t":TIPO,"voz":"narración exacta a grabar (6–12 palabras)","dur":3.5,"h":"TITULAR EN MAYÚSCULAS ≤ 30 car.","w":"palabra del titular a resaltar","ic":"icono", …campos del tipo}
@@ -826,6 +1003,39 @@ CIENCIA Y NATURALEZA (animales, espacio, cuerpo, materiales, tecnología): usa Z
 DATOS: usa solo las cifras que da la idea; si necesitas una, usa un número redondo ilustrativo (nunca un dato oficial inventado). Nada de comillas ni emojis dentro de los textos.`;
 }
 
+/**
+ * Variante DOCUMENTAL del prompt (paletas Retro-Científica): el estilo y la estructura de los explicativos de referencia — afirmación que choca con la intuición,
+ * prueba visual, ficha del estudio con su muestra exacta, el patrón y su giro, el concepto con nombre, la causa, segunda fuente o postura, analogías y pregunta final.
+ */
+function sistemaDocumental(): string {
+  return `Eres guionista y director de arte de videos explicativos 9:16 de ciencia y curiosidades, en español neutro (tuteo, frases cortas, tono de documental: curioso, riguroso, sin exagerar). Conviertes una idea en un video completo: escribes la locución y eliges, escena por escena, una plantilla; un motor prefabricado la dibuja con un estilo editorial fijo (negro mate, papel crema para las fichas de estudio, ROJO = el sujeto o lo que se queda, AZUL = lo que cambia o se mueve, lima = datos y ejes en monoespaciada, titulares en tipografía pesada). Tú no dibujas. [${MARCA_VIRAL}] [DOCUMENTAL]
+Responde SOLO un objeto JSON: {"titulo":"…","scenes":[…]} (sin texto extra). Ritmo calmado: "dur" = palabras de la voz ÷ 2,7 + 0,8 s (mín. 3,5; las fichas de estudio y los gráficos 6–9 s). En modo bloques cada escena lleva "id" y NO "voz" ni "dur"; en modo idea lleva "voz" y "dur".
+Cada escena: {"t":TIPO,"voz":"narración exacta a grabar (10–22 palabras, enlaza con la escena anterior)","dur":5,"h":"TITULAR ≤ 28 car.","w":"palabra del titular a resaltar","cap":"línea mono que se escribe sola, con *énfasis*","ic":"icono", …campos del tipo}. "cap" es opcional (≤ 70 car.): úsala para el dato o la fuente («según Bar-Eli y su equipo · 2007»).
+PLANTILLAS DOCUMENTALES:
+PAPEL ficha de estudio sobre papel crema: "papel":{"autor":"Bar-Eli","anio":"2007","rol":"psicólogo","n":"286","u":"penales","desc":"de ligas de primer nivel","nota":"cada punto = un penal","puntos":true} (n solo dígitos: la cifra cuenta y se llena un campo de puntos).
+PILARES columnas isométricas con una parte rayada: "pilares":{"cabeza":"1 de 3","cols":[{"l":"1 de 7","k":15,"n":127,"u":"se lanzó"},{"l":"","k":6,"n":18,"u":"se quedó"},{"l":"1 de 7","k":15,"n":141,"u":"se lanzó"}],"hi":1} (2–4 columnas de n elementos de los que k van rayados; hi = la columna destacada).
+CICLO pasos que se encadenan en círculo y el último vuelve al primero: "ciclo":{"ic":"brillo","pasos":["se queda","patean a las esquinas","el centro deja de atajar","vuelve a lanzarse"]} (3–4 pasos ≤ 28 car.).
+PUNCH una palabra o una pregunta gigante que golpea la pantalla: h ≤ 40 car. (una palabra = golpe con partículas; una frase = letras que caen); "w" = palabra en rojo. Úsala para el concepto con nombre y para la pregunta final.
+DUO dos paneles comparados y una palabra grande que se llena según cada caso: "duo":{"a":{"l":"se queda","v":1},"b":{"l":"se lanza","v":0.15},"palabra":"CULPA"} (v 0–1).
+OSCILO pantalla de osciloscopio con una curva que se dibuja: "osc":{"curva":"lissajous","l":"CH1 0,5 V/div · X-Y","a":"1962"} (curva: lissajous, onda o espiral).
+CUBO cubo isométrico de posibilidades donde cada punto es una opción y casi todo está vacío: "cubo":{"ejes":["se ensancha","se aleja del centro","baja"],"n":220,"zonas":[{"l":"caracoles","x":0.2,"y":0.8,"z":0.3},{"l":"","x":0.75,"y":0.7,"z":0.8}]} (zonas = dónde existe algo, x,y,z de 0 a 1).
+DIALES tres diales que cambian y mueven una figura: "diales":{"fig":"espiral","titulo":"3 números","items":[{"l":"se ensancha","a":3,"b":3,"min":0,"max":6,"u":"×"},{"l":"se aleja del centro","a":0.04,"b":0.4,"min":0,"max":0.6},{"l":"baja","a":0,"b":1,"min":0,"max":1.5}]} (fig: espiral de concha u onda; si encadenas escenas con los mismos diales, la figura cambia de forma sin cortes).
+OTRAS (mismos campos que siempre): HOOK ("sub" opcional) · NUM "num":{"n":"33","u":"%","pre":"","l":"SE LANZA A UN LADO"} · VS "a":{"l":"…","n":"1","ic":"…"},"b":{…},"op":">" · BARS "bars":[{"l":"…","v":30}],"u":"%","hi":0 · LINE "line":{"pts":[…],"l0":"…","l1":"…","end":"…"} · DONUT "donut":[{"l":"…","v":62}] · PICTO "picto":{"n":10,"k":3,"ic":"…","l":"…"} · TOP "top":[{"l":"…","v":"…"}] · MITO "myth","truth" · STEPS/LIST "items" · ZOOM "zoom":{"a":6,"b":-6,"items":[{"l":"…","e":7,"ic":"…"}]} · CAPAS "capas":{"ic":"…","medida":"…","items":[{"l":"…","m":"…"}]} · MIRA "mira":{"ic":"…","l":"…","med":"…"} · IMPACTO "impacto":{"ic":"…","l":"…","v":"…"} · RED "red":{"c":"…","nodes":[…]} · TERMO "termo":{"u":"°C","lo":-200,"hi":150,"n":10,"k":2,"ic":"…","l":"…"} · SPLIT (como VS) · PILA "pila":{"ic":"…","l1":"…","l2":"…","n":"6000"} · CTA h ≤ 26 car. (última escena, solo si la idea pide llamada a la acción; si no, cierra con una PUNCH con la pregunta final).
+ICONOS: ${ICONOS_VIRAL.join(", ")}.
+EXTRAS en cualquier escena menos CTA: "cita":"Bar-Eli, 2007" (ficha de fuente abajo a la izquierda; solo fuentes REALES) y "sc":"espacio|luna|bio|celula" (escenario ilustrado).
+ARCO NARRATIVO (sigue este orden; no hace falta usar todos los pasos, sí un solo asunto por escena y plantillas distintas seguidas):
+1 AFIRMACIÓN que choca con la intuición (HOOK o PUNCH) y, en "cap", la fuente («según X y su equipo · año»).
+2 PRUEBA VISUAL simple con un porcentaje o una comparación (NUM, DONUT, PICTO, DUO, SPLIT, DIALES).
+3 EL ESTUDIO: ficha PAPEL con autor, año, rol y la muestra exacta que cuenta.
+4 EL PATRÓN: cómo se reparten los datos (CUBO, PILARES, BARS, LINE, OSCILO) y el GIRO («pero…»: lo que nadie elige, lo que falta).
+5 EL CONCEPTO con nombre propio (PUNCH o HOOK con el nombre) y un caso concreto con cifras («24 de 32»).
+6 POR QUÉ ocurre: causa emocional o mecanismo (DUO, CICLO, STEPS, RED).
+7 SEGUNDA FUENTE o segunda postura, cada una con su autor y año (PAPEL, SPLIT).
+8 ANALOGÍAS de la vida diaria («y no solo pasa en…») (LIST, STEPS, HOOK con icono).
+9 CIERRE: una pregunta abierta que invite a comentar (PUNCH con la pregunta).
+DATOS: autores, años y cifras solo si vienen de la idea o son estudios reales y muy conocidos; nunca inventes un autor, un año o una cifra: si no la conoces, habla en general y no uses PAPEL ni "cita". Nada de comillas ni emojis dentro de los textos.`;
+}
+
 const APROX_MARCA = (paleta?: string): string => (paleta === undefined || paleta === "imnoba" || paleta === "retro-imnoba" ? "MARCA: IMNOBA (plataforma colombiana para publicar y encontrar inmuebles y vehículos; web imnoba.com). El CTA es de IMNOBA." : "");
 
 /** Mensaje de usuario en modo IDEA: la frase, la duración objetivo y el número de escenas. */
@@ -840,8 +1050,8 @@ export function promptUsuarioBloques(escenas: { n: number; dur: number; voz: str
   return `MODO: bloques (devuelve cada "id"; sin "voz" ni "dur")${m ? `\n${m}` : ""}\n` + escenas.map((e) => `ESC ${e.n} | ${Math.round(e.dur * 10) / 10}s\nDIR: ${e.direccion || "(libre)"}${e.voz ? `\nVOZ: ${e.voz}` : ""}`).join("\n\n");
 }
 
-export function tokensFijosViral(): { sistema: number; esquema: number } {
-  return { sistema: tokensDeTexto(sistemaViral().length, 3.4), esquema: 0 };
+export function tokensFijosViral(estilo: "general" | "documental" = "general"): { sistema: number; esquema: number } {
+  return { sistema: tokensDeTexto(sistemaViral(estilo).length, 3.4), esquema: 0 };
 }
 
 /* ───────────── costo ───────────── */

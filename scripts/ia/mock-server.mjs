@@ -228,8 +228,8 @@ function respuestaEstudio(entradaTexto, primera) {
  *   MOCK_VIRAL_MAL=1     la escena 2 llega con valores fuera del vocabulario (prueba el saneado)
  *   MOCK_VIRAL_FALTAN=1  (bloques) la PRIMERA respuesta se deja la escena 2
  */
-function respuestaViral(entradaTexto, primera) {
-  const ej = JSON.parse(readFileSync(join(RAIZ, "ejemplos", "animacion-viral", "respuesta-ia.json"), "utf8"));
+function respuestaViral(entradaTexto, primera, documental = false) {
+  const ej = JSON.parse(readFileSync(join(RAIZ, "ejemplos", "animacion-viral", documental ? "respuesta-ia-documental.json" : "respuesta-ia.json"), "utf8"));
   const clonar = (x) => JSON.parse(JSON.stringify(x));
   let scenes = [];
   if (/MODO: idea/.test(entradaTexto)) {
@@ -302,7 +302,7 @@ export function iniciarMock(puerto = 0) {
 
   const respuesta = (nombre, entradaTexto, hayImagenes, esquema) => {
     if (nombre === "viral_json") {
-      const datos = respuestaViral(entradaTexto, !una.anim);
+      const datos = respuestaViral(entradaTexto, !una.anim, estado.sistemaDocumental === true);
       una.anim = true;
       return datos;
     }
@@ -483,6 +483,7 @@ export function iniciarMock(puerto = 0) {
       // response_format json_object (sin esquema): el motor de estudio se reconoce por la marca de su prompt de sistema; la API real exige la palabra «JSON» en los mensajes
       const esObjeto = fmt?.type === "json_object";
       if (esObjeto && !/json/i.test(sistemaTxt + JSON.stringify(b.messages ?? b.input ?? ""))) return json(400, { error: { message: "'messages' must contain the word 'json' in some form, to use 'response_format' of type 'json_object'.", type: "invalid_request_error", param: "messages" } });
+      estado.sistemaDocumental = /\[DOCUMENTAL\]/.test(sistemaTxt);
       const nombre = esObjeto && /DIRECTOR_VIRAL/.test(sistemaTxt) ? "viral_json" : esObjeto && /ESTUDIO_JSON/.test(sistemaTxt) ? "estudio_json" : esResponses ? fmt?.name : fmt?.json_schema?.name;
       const esquema = esResponses ? fmt?.schema : fmt?.json_schema?.schema;
       const estricto = esResponses ? fmt?.strict : fmt?.json_schema?.strict;

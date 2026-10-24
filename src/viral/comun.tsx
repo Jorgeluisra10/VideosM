@@ -15,12 +15,17 @@ import { caminoCirculo, useUid } from "../estudio/util";
 export const W = 1080;
 export const H = 1920;
 export const FPS = 60;
-export const FUENTE = "Inter, 'Segoe UI', 'Helvetica Neue', Arial, sans-serif";
-export const MONO = "'JetBrains Mono', ui-monospace, Menlo, Consolas, monospace";
+/** Titulares y mono vía variables CSS: el estilo documental las redefine (Archivo Black); sin ellas valen Inter y JetBrains Mono. */
+export const FUENTE = "var(--f-titulo, Inter, 'Segoe UI', 'Helvetica Neue', Arial, sans-serif)";
+export const MONO = "var(--f-mono, 'JetBrains Mono', ui-monospace, Menlo, Consolas, monospace)";
+/** Variables CSS del estilo documental (titulares en Archivo Black, ≈ 10 % más ancho que Inter 900). */
+export const VARS_DOCUMENTAL = { ["--f-titulo" as string]: "'Archivo Black', Inter, 'Segoe UI', Arial, sans-serif", ["--f-mono" as string]: "'JetBrains Mono', ui-monospace, Menlo, Consolas, monospace" } as React.CSSProperties;
+/** Cuánto más ancha es la tipografía de titulares del estilo documental respecto a Inter. */
+export const ANCHO_DOC = 1.1;
 /** ancho máximo de los bloques de texto (queda ≥ 99 px de cada borde aun con el zoom de cámara) */
 export const ANCHO_TEXTO = 840;
 
-export type CtxViral = { T: TemaViral; ritmo: number; dur: number; paleta: string; marca: boolean };
+export type CtxViral = { T: TemaViral; ritmo: number; dur: number; paleta: string; marca: boolean; doc?: boolean };
 export const ViralCtx = createContext<CtxViral | null>(null);
 export const useViral = (): CtxViral => {
   const c = useContext(ViralCtx);
@@ -55,6 +60,8 @@ export function fmtNum(n: number, dec = 0): string {
   const miles = e.replace(/\B(?=(\d{3})+(?!\d))/g, ".");
   return (n < 0 ? "-" : "") + miles + (d ? "," + d : "");
 }
+/** ¿El texto es un año (1900–2099)? Se muestra tal cual, sin separador de miles ni cuenta. */
+export const esAnio = (s: string): boolean => /^(19|20)\d{2}$/.test(s.trim());
 /** «1.200» / «3,5» → número y cantidad de decimales. */
 export function leerNumero(s: string): { v: number; dec: number } {
   let t = s;
@@ -104,15 +111,15 @@ function equilibrar(ps: string[], n: number, maxCar: number): string[][] | null 
  * Busca el MAYOR tamaño de letra (de `maxPx` a `minPx`) con el que el texto cabe en `ancho` px y en `maxLineas` líneas (Inter 900 en mayúsculas ≈ 0,68 em por carácter).
  * Las líneas salen equilibradas. Si ni al tamaño mínimo cabe, se usa el mínimo con las líneas necesarias (nunca se recorta ni se sale del margen).
  */
-export function ajustarTexto(texto: string, ancho: number, maxPx: number, minPx: number, maxLineas: number): { lineas: string[][]; px: number } {
+export function ajustarTexto(texto: string, ancho: number, maxPx: number, minPx: number, maxLineas: number, k = 0.68): { lineas: string[][]; px: number } {
   const ps = texto.split(/\s+/).filter(Boolean);
   if (!ps.length) return { lineas: [[]], px: minPx };
   for (let px = maxPx; px >= minPx; px -= 2) {
-    const maxCar = Math.floor(ancho / (px * 0.68));
+    const maxCar = Math.floor(ancho / (px * k));
     const v = envolver(ps, maxCar);
     if (v && v.length <= maxLineas) return { lineas: equilibrar(ps, v.length, maxCar) ?? v, px };
   }
-  const maxCar = Math.max(6, Math.floor(ancho / (minPx * 0.68)));
+  const maxCar = Math.max(6, Math.floor(ancho / (minPx * k)));
   const v = envolver(ps, maxCar) ?? ps.map((p) => [p]);
   return { lineas: v, px: minPx };
 }
@@ -146,8 +153,8 @@ type PropsTexto = {
  */
 export const TextoCinetico: React.FC<PropsTexto> = ({ texto, destacada = "", y, maxPx, minPx = 40, maxLineas = 3, delay = 0.15, ancho = ANCHO_TEXTO, color, caja = true, alinear = "center", x = W / 2, peso = 900, golpe = false, id = "titular", colorDestacada }) => {
   const { f, a } = useReloj();
-  const { T } = useViral();
-  const { lineas, px } = ajustarTexto(texto, ancho, maxPx, minPx, maxLineas);
+  const { T, doc } = useViral();
+  const { lineas, px } = ajustarTexto(texto, ancho, maxPx, minPx, maxLineas, 0.68 * (doc ? ANCHO_DOC : 1));
   let k = 0;
   const txt = color ?? T.texto;
   return (
@@ -175,15 +182,38 @@ export const TextoCinetico: React.FC<PropsTexto> = ({ texto, destacada = "", y, 
 /** Texto suelto (etiquetas, subtítulos) con entrada suave. Mide para no pasarse de `ancho`. */
 export const Etiqueta: React.FC<{ texto: string; x: number; y: number; px: number; ancho?: number; color?: string; delay?: number; peso?: number; alinear?: "center" | "left" | "right"; mayus?: boolean; mono?: boolean; id?: string; opacidad?: number; fondo?: string; relleno?: number }> = ({ texto, x, y, px, ancho = ANCHO_TEXTO, color, delay = 0, peso = 800, alinear = "center", mayus = true, mono = false, id = "etiqueta", opacidad = 1, fondo, relleno = 0 }) => {
   const { f, a } = useReloj();
-  const { T } = useViral();
+  const { T, doc } = useViral();
   const s = spr(f, a(delay), { damping: 14, stiffness: 130, mass: 0.7 });
-  const tam = Math.min(px, Math.max(24, Math.floor(ancho / (Math.max(1, texto.length) * (mayus ? 0.7 : 0.58)))));
+  const kLetra = (mayus ? 0.7 : 0.58) * (doc && !mono ? ANCHO_DOC : 1);
+  const tam = Math.min(px, Math.max(24, Math.floor(ancho / (Math.max(1, texto.length) * kLetra))));
   const dy = (1 - s) * 26;
   // el contenedor mide lo que mide el texto (así los márgenes se cumplen de verdad y el QA mide texto real)
   const pos: React.CSSProperties = alinear === "center" ? { left: x, transform: `translate(-50%, calc(-50% + ${dy}px))` } : alinear === "left" ? { left: x, transform: `translateY(calc(-50% + ${dy}px))` } : { left: x, transform: `translate(-100%, calc(-50% + ${dy}px))` };
   return (
     <div data-texto={id} style={{ position: "absolute", top: y, width: "max-content", maxWidth: ancho, ...pos, textAlign: alinear, opacity: clamp(s * 1.8) * opacidad, pointerEvents: "none" }}>
       <span style={{ display: "inline-block", fontFamily: mono ? MONO : FUENTE, fontWeight: peso, fontSize: tam, letterSpacing: mayus ? "0.02em" : "-0.01em", textTransform: mayus ? "uppercase" : "none", color: color ?? T.texto, whiteSpace: "nowrap", lineHeight: 1.1, background: fondo, padding: fondo ? `${relleno * 0.45}px ${relleno}px` : 0, borderRadius: 999 }}>{texto}</span>
+    </div>
+  );
+};
+
+/** Línea mono que se escribe sola (máquina de escribir); las palabras entre *asteriscos* van en el color de datos. El texto completo ocupa su sitio desde el inicio (sin saltos de línea). */
+export const LineaCap: React.FC<{ texto: string; y: number; x?: number; ancho?: number; px?: number; alinear?: "center" | "left"; delay?: number; cps?: number; id?: string; color?: string }> = ({ texto, y, x = W / 2, ancho = ANCHO_TEXTO, px = 34, alinear = "center", delay = 0.2, cps = 34, id = "cap", color }) => {
+  const { t, a } = useReloj();
+  const { T } = useViral();
+  const partes = texto.split("*").map((s, i) => ({ s, res: i % 2 === 1 })).filter((p) => p.s);
+  const total = partes.reduce((n, p) => n + p.s.length, 0);
+  const visibles = Math.max(0, Math.floor((t - a(delay)) * cps));
+  const resalte = T.neon ?? T.acento;
+  let idx = 0;
+  const left = alinear === "center" ? x - ancho / 2 : x;
+  return (
+    <div data-texto={id} style={{ position: "absolute", left, top: y, width: ancho, transform: "translateY(-50%)", fontFamily: MONO, fontWeight: 400, fontSize: px, lineHeight: 1.42, textAlign: alinear, color: color ?? T.texto, whiteSpace: "pre-wrap", pointerEvents: "none" }}>
+      {partes.map((p, i) => (
+        <span key={i} style={{ color: p.res ? resalte : undefined, fontWeight: p.res ? 700 : 400 }}>
+          {p.s.split("").map((ch) => { const k = idx++; return <span key={k} style={{ opacity: k < visibles ? 1 : 0 }}>{ch}</span>; })}
+        </span>
+      ))}
+      {visibles < total && visibles > 0 && <span style={{ position: "absolute", marginLeft: 2, opacity: Math.floor(t * 4) % 2 ? 1 : 0.2, color: resalte }}>▍</span>}
     </div>
   );
 };
@@ -226,6 +256,16 @@ function iconoPropio(nombre: string, color: string, f = 0): React.ReactNode {
           <path d="M 36,6 q 6,2 10,0" {...trazo} strokeWidth={4} />
         </g>
       );
+    case "concha": {
+      // espiral logarítmica (concha de caracol) con su abertura
+      const pts = Array.from({ length: 90 }, (_, i) => { const th = (i / 89) * Math.PI * 5.2; const r = 3 + 40 * Math.exp((th - Math.PI * 5.2) * 0.34); return `${(r * Math.cos(th - 1.2) + 6).toFixed(1)},${(r * Math.sin(th - 1.2) * 0.92).toFixed(1)}`; }).join(" ");
+      return (
+        <g>
+          <polyline points={pts} {...trazo} strokeWidth={9} />
+          <polyline points={pts} fill="none" stroke={color} strokeOpacity={0.35} strokeWidth={22} strokeLinecap="round" strokeLinejoin="round" />
+        </g>
+      );
+    }
     case "planeta":
       return (
         <g>

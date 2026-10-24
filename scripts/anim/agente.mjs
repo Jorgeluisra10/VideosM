@@ -90,7 +90,7 @@ export async function generarAnimacion({ guion, modelo = "gpt-4.1-mini", sfx = t
  */
 async function generarViral({ N, guion, modelo, sfx, paleta, log, cfg }) {
   const idea = N.esIdea(guion);
-  const parsedIdea = idea ? N.parsearIdea(guion) : null;
+  const parsedIdea = idea ? N.parsearIdea(guion, { paleta }) : null;
   const parsedBloques = idea ? null : N.parsearEstudio(guion);
   const errores = idea ? parsedIdea.errores : parsedBloques.errores;
   if (errores.length) throw new ErrorGuion(errores);
@@ -98,7 +98,7 @@ async function generarViral({ N, guion, modelo, sfx, paleta, log, cfg }) {
   const m = N.modeloPorId(modelo);
   const cliente = new Cliente({ ...cfg, modelo, modeloPlan: "", modeloVision: "", modeloRevisor: "", esfuerzo: m.razonador ? "low" : "" }, { log });
   cliente.estilo = "chat";
-  const sistema = N.sistemaViral();
+  const sistema = N.sistemaViral(N.esDocumental(paleta) ? "documental" : "general");
 
   const uso = { modelo, prompt_tokens: 0, completion_tokens: 0, costo_usd: 0, llamadas: 0 };
   const llamar = async (entrada, escenas, etiqueta) => {

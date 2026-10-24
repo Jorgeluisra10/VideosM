@@ -3,7 +3,7 @@ import React from "react";
 import { AbsoluteFill, Img, staticFile } from "remotion";
 import { TV, type EscenaViralGuardada } from "../anim/viral";
 import { StudioSvgDefs } from "../estudio/efectos";
-import { ANCHO_TEXTO, Confeti, Etiqueta, EsferaIcono, FUENTE, H, IconoSvg, MONO, Panel, TextoCinetico, W, aclarar, clamp, easeOut, fmtNum, leerNumero, lerp, prog, spr, useReloj, useViral } from "./comun";
+import { ANCHO_TEXTO, Confeti, Etiqueta, EsferaIcono, FUENTE, H, IconoSvg, MONO, Panel, TextoCinetico, W, aclarar, clamp, easeOut, esAnio, fmtNum, leerNumero, lerp, prog, spr, useReloj, useViral } from "./comun";
 
 type P = { e: EscenaViralGuardada };
 
@@ -108,7 +108,7 @@ export const Vs: React.FC<P> = ({ e }) => {
       {lados.map(({ k, d, cx, color }, i) => {
         const { v, dec } = leerNumero(d.n);
         const kk = easeOut((t - a(TV.contar + i * 0.12)) / a(TV.contarDur));
-        const txt = fmtNum(v * kk, dec);
+        const txt = esAnio(d.n) ? d.n : fmtNum(v * kk, dec);
         const largo = Math.max(txt.length, fmtNum(v, dec).length);
         const px = Math.min(170, Math.floor(310 / (largo * 0.62)));
         return (

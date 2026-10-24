@@ -278,6 +278,8 @@ async function pintarVista() {
 // ---------------------------------------------------------------------------
 const EST = { guion: leerLocal("videmed-anim-guion") ?? "", modelo: leerLocal("videmed-anim-modelo") ?? "gpt-4.1-mini", sfx: (leerLocal("videmed-anim-sfx") ?? "si") === "si", paleta: leerLocal("videmed-anim-paleta") ?? "imnoba", datos: null, N: null };
 const fijosCache = new Map();
+/** Aviso bajo la paleta: las Retro-Científica activan el estilo documental (otro prompt, otras plantillas, duración ≈ 60 s). */
+const notaPaleta = () => (EST.N && EST.N.esDocumental(EST.paleta) ? "🎞️ Estilo documental: fondo negro/papel, titulares pesados + mono, cortes secos y la estructura de los explicativos con estudios citados (≈ 60 s)." : "");
 const num = (x, d = 0) => Number(x).toLocaleString("es-CO", { minimumFractionDigits: d, maximumFractionDigits: d });
 const reloj = (s) => `${Math.floor(s / 60)}:${String(Math.round(s % 60)).padStart(2, "0")}`;
 
@@ -306,10 +308,11 @@ function calcularEstimacion() {
   const formato = N.detectarFormato(EST.guion);
   if (formato !== "estructurado" && N.esIdea(EST.guion)) {
     // UNA FRASE → video: la IA escribe el guion y elige las plantillas (JSON compacto) → entrada = prompt fijo + idea; salida ≈ 165 tokens por escena
-    const r = N.parsearIdea(EST.guion);
+    const r = N.parsearIdea(EST.guion, { paleta: EST.paleta });
     if (r.errores.length) return { r: { ...r, escenas: [] }, svg: 0, tres: 0, est: null, idea: true };
-    if (!fijosCache.has("viral")) fijosCache.set("viral", N.tokensFijosViral());
-    const fijos = fijosCache.get("viral");
+    const claveV = N.esDocumental(EST.paleta) ? "viral-doc" : "viral";
+    if (!fijosCache.has(claveV)) fijosCache.set(claveV, N.tokensFijosViral(N.esDocumental(EST.paleta) ? "documental" : "general"));
+    const fijos = fijosCache.get(claveV);
     const est = N.estimarViral({ modelo: EST.modelo, caracteres: r.caracteres, escenas: r.escenasObjetivo, tokensSistema: fijos.sistema });
     return { r: { ...r, escenas: new Array(r.escenasObjetivo).fill(0) }, svg: 0, tres: 0, est, idea: true, fijos };
   }
@@ -318,8 +321,9 @@ function calcularEstimacion() {
     const r = N.parsearEstudio(EST.guion);
     const svg = r.escenas.filter((e) => e.modo === "SVG").length, tres = r.escenas.filter((e) => e.modo === "3D").length;
     if (!r.escenas.length) return { r, svg, tres, est: null, estudio: true };
-    if (!fijosCache.has("viral")) fijosCache.set("viral", N.tokensFijosViral());
-    const fijos = fijosCache.get("viral");
+    const claveB = N.esDocumental(EST.paleta) ? "viral-doc" : "viral";
+    if (!fijosCache.has(claveB)) fijosCache.set(claveB, N.tokensFijosViral(N.esDocumental(EST.paleta) ? "documental" : "general"));
+    const fijos = fijosCache.get(claveB);
     const est = N.estimarViral({ modelo: EST.modelo, caracteres: r.caracteresIA, escenas: r.escenas.length, tokensSistema: fijos.sistema, conVoz: false });
     return { r, svg, tres, est, estudio: true, fijos };
   }
@@ -487,7 +491,8 @@ async function vistaEstudio(cont) {
           h("label.interruptor", h("input#sfx", { type: "checkbox", checked: EST.sfx, onchange: (e) => { EST.sfx = e.target.checked; $("#sfx-txt").textContent = EST.sfx ? "Sí" : "No"; guardarEstado(); pintarEstimacion(); } }), h("span.pista"), h("strong#sfx-txt", EST.sfx ? "Sí" : "No")),
           h("span.chico-t.suave", "No = el video sale sin pista de audio (sin efectos ni música). Sí = efectos sincronizados y música de fondo en el motor viral.")),
         h("div.campo", h("label.etq", { for: "paleta" }, "4 · Paleta de colores"),
-          h("select#paleta", { onchange: (e) => { EST.paleta = e.target.value; guardarEstado(); pintarEstimacion(); } }, Object.values(N.PALETAS).map((p) => h("option", { value: p.id, selected: p.id === EST.paleta }, p.nombre))))),
+          h("select#paleta", { onchange: (e) => { EST.paleta = e.target.value; $("#paleta-nota").textContent = notaPaleta(); guardarEstado(); pintarEstimacion(); } }, Object.values(N.PALETAS).map((p) => h("option", { value: p.id, selected: p.id === EST.paleta }, p.nombre))),
+          h("span#paleta-nota.chico-t.suave", notaPaleta()))),
       h("div.fila.pie-estudio", h("div#costo-estimado.costo"), h("span.espacio"),
         h("button#btn-generar.btn.primario.grande", { type: "button", onclick: generar }, "🎨 Generar animación"))),
     !S.claves.openai ? h("div.nota.aviso", "🔑 Para generar con IA falta la clave de OpenAI: ", h("a", { href: "#/ajustes" }, "ponla en Ajustes"), ". El botón «Cargar ejemplo» + «Renderizar» funciona sin clave.") : null,

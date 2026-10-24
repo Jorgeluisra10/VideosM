@@ -2,7 +2,7 @@
 /**
  * Carga el ejemplo incluido (ejemplos/animacion-imnoba) como animación activa, SIN IA y SIN coste:
  * parsea el guion con el mismo parser, ensambla la respuesta de ejemplo y escribe src/data/animacion.json.
- *   node scripts/anim/ejemplo.mjs [--sin-sfx] [--paleta=imnoba|medicina] [--formato=viral|estudio|libre|hud|simple] [--tema=carros|ciencia]
+ *   node scripts/anim/ejemplo.mjs [--sin-sfx] [--paleta=imnoba|medicina] [--formato=viral|estudio|libre|hud|simple] [--tema=carros|ciencia|conchas|documental]
  */
 import { mkdirSync, readFileSync, writeFileSync } from "node:fs";
 import { join } from "node:path";
@@ -10,7 +10,9 @@ import { cargarNucleoAnim, RAIZ } from "./nucleo.mjs";
 
 const args = process.argv.slice(2);
 const N = await cargarNucleoAnim();
-const paleta = args.find((a) => a.startsWith("--paleta="))?.split("=")[1] ?? "imnoba";
+const temaCli = args.find((a) => a.startsWith("--tema="))?.split("=")[1];
+// los ejemplos documentales (conchas, jueces) están pensados para la paleta Retro-Científica; el resto, IMNOBA
+const paleta = args.find((a) => a.startsWith("--paleta="))?.split("=")[1] ?? (temaCli === "conchas" || temaCli === "documental" ? "retro" : "imnoba");
 const sfx = !args.includes("--sin-sfx");
 const formato = args.find((a) => a.startsWith("--formato="))?.split("=")[1] ?? "viral";
 const viral = formato === "viral";
@@ -23,8 +25,8 @@ if (viral) {
   // MOTOR VIRAL (por defecto): una frase de idea → reel completo. El JSON que devolvería la IA está en ejemplos/animacion-viral y pasa por el mismo saneado y ensamblado.
   const dir = join(RAIZ, "ejemplos", "animacion-viral");
   const temaArg = args.find((a) => a.startsWith("--tema="))?.split("=")[1];
-  const tema = temaArg === "carros" ? "-carros" : temaArg === "ciencia" ? "-ciencia" : "";
-  const idea = N.parsearIdea(readFileSync(join(dir, `idea${tema}.txt`), "utf8"));
+  const tema = temaArg === "carros" ? "-carros" : temaArg === "ciencia" ? "-ciencia" : temaArg === "conchas" ? "-conchas" : temaArg === "documental" ? "-documental" : "";
+  const idea = N.parsearIdea(readFileSync(join(dir, `idea${tema}.txt`), "utf8"), { paleta });
   if (idea.errores.length) throw new Error(idea.errores.join("\n"));
   const r = N.ensamblarViral(JSON.parse(readFileSync(join(dir, `respuesta-ia${tema}.json`), "utf8")), { modo: "idea", paleta, sfx });
   anim = r.anim;

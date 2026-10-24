@@ -13,7 +13,7 @@ import { StudioSvgDefs } from "../estudio/efectos";
 import { useUid } from "../estudio/util";
 import { Banda } from "./ciencia1";
 import { HORIZONTE_LUNA, Puntos } from "./escenarios";
-import { Etiqueta, EsferaIcono, FUENTE, H, IconoSvg, MONO, TextoCinetico, W, clamp, easeInOut, easeOut, fmtNum, leerNumero, lerp, mezclar, oscurecer, polarXY, spr, useReloj, useViral } from "./comun";
+import { Etiqueta, EsferaIcono, FUENTE, H, IconoSvg, MONO, TextoCinetico, W, clamp, easeInOut, easeOut, esAnio, fmtNum, leerNumero, lerp, mezclar, oscurecer, polarXY, spr, useReloj, useViral } from "./comun";
 
 type P = { e: EscenaViralGuardada };
 
@@ -352,7 +352,7 @@ export const Split: React.FC<P> = ({ e }) => {
       {lados.map(({ k, d, cx }, i) => {
         const { v, dec } = leerNumero(d.n);
         const kk = easeOut((t - a(TV.splitContar + i * 0.12)) / a(1.2));
-        const txt = fmtNum(v * kk, dec);
+        const txt = esAnio(d.n) ? d.n : fmtNum(v * kk, dec);
         const largo = Math.max(txt.length, fmtNum(v, dec).length);
         const px = Math.min(130, Math.floor(330 / (largo * 0.62)));
         return (
