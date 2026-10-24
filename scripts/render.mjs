@@ -15,7 +15,9 @@
  *   2. Imagen: los fotogramas se renderizan en TANDAS pequeñas, cada una con un Chrome nuevo.
  *      Si una tanda falla (memoria virtual agotada, Chrome caído...) se reintenta sola, y los
  *      fotogramas ya hechos no se repiten, ni siquiera si cierras y vuelves a lanzar el comando.
- *   3. Se ensambla con el ffmpeg incluido en Remotion → trabajo/salida/video-terminado.mp4 (H.264 + AAC).
+ *   3. Cada trozo de 5 s (300 fotogramas) se codifica a H.264 EN CUANTO está listo y sus fotogramas se BORRAN: el disco nunca guarda más de ~300 JPEG
+ *      a la vez (< 1 GB). Al final se unen los trozos con el audio → trabajo/salida/video-terminado.mp4 (H.264 + AAC).
+ *      Antes de empezar se mide el espacio libre y, si falta, se borran los temporales viejos (npm run limpiar los borra a mano).
  *   El paquete (bundle) se cachea por huella de src/ y public/: solo se vuelve a empaquetar si cambias algo.
  *   Antes de cada tanda espera a que haya memoria libre suficiente (Windows mata procesos si no).
  *   Los temporales van dentro del proyecto (si C: está lleno, el render normal de Remotion falla).
@@ -31,6 +33,7 @@ import { renderFrames, selectComposition } from "@remotion/renderer";
 import { abrirNavegador } from "./navegador.mjs";
 import { mezclarAudio, mezclarSfx } from "./audio.mjs";
 import { cargarNucleoAnim } from "./anim/nucleo.mjs";
+import { esSinEspacio, espacioLibreGB, limpiarTemporales, mensajeSinEspacio } from "./_disco.mjs";
 
 const args = process.argv.slice(2);
 const valor = (nombre) => args.find((a) => a.startsWith(`--${nombre}=`))?.split("=")[1];
@@ -62,7 +65,45 @@ mkdirSync(join(RAIZ_PROYECTO, "trabajo", "salida"), { recursive: true });
 
 const dormir = (ms) => new Promise((r) => setTimeout(r, ms));
 const nombre = (f) => `f-${String(f).padStart(5, "0")}.jpg`;
-const hecho = (f) => existsSync(join(FOTOGRAMAS, nombre(f)));
+/** Cada trozo de 5 s se codifica a un mp4 en cuanto está completo y sus fotogramas se borran para no llenar el disco. */
+const SEG_FOTOGRAMAS = 300;
+const SEGMENTOS_DIR = join(TRABAJO, "segmentos");
+mkdirSync(SEGMENTOS_DIR, { recursive: true });
+const archivoSegmento = (k) => join(SEGMENTOS_DIR, `seg-${String(k).padStart(2, "0")}.mp4`);
+const segmentoListo = (k) => existsSync(archivoSegmento(k)) && statSync(archivoSegmento(k)).size > 20000;
+const hecho = (f) => segmentoListo(Math.floor(f / SEG_FOTOGRAMAS)) || existsSync(join(FOTOGRAMAS, nombre(f)));
+
+// ---------- espacio en disco (antes de empezar) ----------
+/** Medido: el pico real es ≈ 0,2 GB (≈ 300 JPEG + empaquetado + trozos codificados). Se avisa por debajo de 1,2 GB y se para por debajo de 0,35 GB. */
+const NECESARIO_GB = 1.2;
+const MINIMO_GB = 0.35;
+function fatalDisco(libre) {
+  console.error(`\n❌ ${mensajeSinEspacio(libre ?? espacioLibreGB(RAIZ_PROYECTO))}`);
+  console.error("\n   Lo ya renderizado queda guardado: cuando liberes espacio vuelve a lanzar el mismo comando y sigue donde quedó.");
+  process.exit(3);
+}
+// Remotion escribe los fotogramas de forma asíncrona: un ENOSPC puede llegar como promesa rechazada sin dueño. Se captura aquí con un mensaje claro.
+process.on("unhandledRejection", (e) => {
+  if (esSinEspacio(e)) fatalDisco();
+  console.error(`\n❌ Error inesperado: ${String(e?.stack ?? e).split("\n").slice(0, 4).join("\n")}`);
+  process.exit(1);
+});
+process.on("uncaughtException", (e) => {
+  if (esSinEspacio(e)) fatalDisco();
+  console.error(`\n❌ Error inesperado: ${String(e?.stack ?? e).split("\n").slice(0, 4).join("\n")}`);
+  process.exit(1);
+});
+{
+  let libre = espacioLibreGB(RAIZ_PROYECTO);
+  if (libre !== null && libre < NECESARIO_GB) {
+    console.warn(`   💾 Poco espacio en disco (${libre.toFixed(2)} GB libres): borro temporales viejos de este proyecto...`);
+    const r = limpiarTemporales({ conservar: [join(TRABAJO).split(/[\\/]/).pop(), "sistema"] });
+    libre = espacioLibreGB(RAIZ_PROYECTO);
+    if (r.liberadoGB > 0.01) console.log(`   🗑️  Liberados ${r.liberadoGB.toFixed(2)} GB (${r.borradas.map((b) => b.nombre).join(", ")}). Libre ahora: ${libre?.toFixed(2)} GB`);
+    if (libre !== null && libre < MINIMO_GB) fatalDisco(libre);
+    if (libre !== null && libre < NECESARIO_GB) console.warn(`   ⚠️  Queda poco espacio (${libre.toFixed(2)} GB); intento el render igualmente porque ahora usa muy poco disco.`);
+  } else if (libre !== null) console.log(`   💾 Espacio libre en disco: ${libre.toFixed(1)} GB (el render usa unos 0,2–0,3 GB a la vez)`);
+}
 
 function buscarFfmpeg() {
   const base = join(RAIZ_PROYECTO, "node_modules", "@remotion");
@@ -208,11 +249,13 @@ async function obtenerComposition() {
 // --ensamblar: ya están todos los fotogramas, solo falta unir con el audio (no necesita Chrome)
 const soloEnsamblar = args.includes("--ensamblar");
 let total;
+const ESTADO = join(TRABAJO, "estado.json");
 if (soloEnsamblar) {
-  total = readdirSync(FOTOGRAMAS).filter((x) => /^f-\d+\.jpg$/.test(x)).length;
-  console.log(`   modo ensamblar: ${total} fotogramas en disco`);
+  total = existsSync(ESTADO) ? JSON.parse(readFileSync(ESTADO, "utf8")).total : readdirSync(FOTOGRAMAS).filter((x) => /^f-\d+\.jpg$/.test(x)).length;
+  console.log(`   modo ensamblar: ${total} fotogramas`);
 } else {
   total = (await obtenerComposition()).durationInFrames;
+  writeFileSync(ESTADO, JSON.stringify({ total }));
 }
 if (composition) console.log(`   ${composition.width}×${composition.height} · ${total} fotogramas · ${(total / FPS).toFixed(1)} s`);
 
@@ -306,7 +349,7 @@ async function renderizarRango(desde, hasta) {
         outputDir: TANDA_DIR,
         inputProps,
         imageFormat: "jpeg",
-        jpegQuality: 95,
+        jpegQuality: 92,
         frameRange: [desde, hasta],
         concurrency: CONCURRENCIA,
         muted: true,
@@ -325,52 +368,15 @@ async function renderizarRango(desde, hasta) {
   }
 }
 
-for (let a = 0; !soloEnsamblar && a < total; a += TANDA) {
-  const b = Math.min(total - 1, a + TANDA - 1);
-  let sinProgreso = 0;
-  while (primerFaltante(a, b) !== null) {
-    const desde = primerFaltante(a, b);
-    if (!navegador) await esperarMemoria(`fotogramas ${desde}-${b}`);
-    try {
-      await renderizarRango(desde, b);
-    } catch (e) {
-      const msg = String(e?.message ?? e).split("\n")[0].slice(0, 110);
-      const siguiente = primerFaltante(a, b);
-      sinProgreso = siguiente !== null && siguiente > desde ? 0 : sinProgreso + 1;
-      if (sinProgreso >= MAX_INTENTOS) throw new Error(`fotogramas ${desde}-${b}: ${msg}`);
-      console.warn(`   ↻ fotogramas ${desde}-${b} falló (${msg}). Conservo lo hecho y reintento desde el ${siguiente ?? b}...`);
-      await dormir(4000);
-    }
-  }
-  hechos = contarHechos();
-  fotogramasEnNavegador += b - a + 1;
-  if (fotogramasEnNavegador >= RECICLAR_CADA) await cerrarNavegador();
-  console.log(`   ✔ ${hechos}/${total} (${((hechos / total) * 100).toFixed(0)} %) · ${((Date.now() - t0) / 60000).toFixed(1)} min`);
-}
-rmSync(TANDA_DIR, { recursive: true, force: true });
-await cerrarNavegador();
-
-// ---------- 3. Ensamblado por segmentos ----------
-// Se codifica en trozos de SEG_FOTOGRAMAS (5 s) guardados por separado y se unen al final con -c copy.
-// Si falta memoria a mitad de un trozo solo se repite ese trozo, no el video entero.
-console.log("🎞️  Ensamblando video + audio (H.264 + AAC) por segmentos...");
-const faltan = primerFaltante(0, total - 1);
-if (faltan !== null) throw new Error(`Faltan fotogramas (primero: ${faltan}). Ejecuta de nuevo npm run build.`);
-
-const SEG_FOTOGRAMAS = 300;
-const SEGMENTOS_DIR = join(TRABAJO, "segmentos");
-mkdirSync(SEGMENTOS_DIR, { recursive: true });
-const archivosSegmento = [];
-
-for (let a = 0, k = 0; a < total; a += SEG_FOTOGRAMAS, k++) {
+/** Codifica el trozo `k` (fotogramas a…a+n-1) a H.264 y, si sale bien, BORRA sus JPEG: así el disco nunca guarda más de ~300 a la vez. */
+async function codificarSegmento(k) {
+  const a = k * SEG_FOTOGRAMAS;
   const n = Math.min(SEG_FOTOGRAMAS, total - a);
-  const archivo = join(SEGMENTOS_DIR, `seg-${String(k).padStart(2, "0")}.mp4`);
-  archivosSegmento.push(archivo);
-  if (existsSync(archivo) && statSync(archivo).size > 20000) continue; // ya codificado en una ejecución anterior
-
-  let listo = false;
-  for (let intento = 1; intento <= MAX_INTENTOS * 2 && !listo; intento++) {
-    await esperarMemoria(`ensamblar segmento ${k + 1}`);
+  const archivo = archivoSegmento(k);
+  if (segmentoListo(k)) return true;
+  for (let f = a; f < a + n; f++) if (!existsSync(join(FOTOGRAMAS, nombre(f)))) throw new Error(`Falta el fotograma ${f} para codificar el trozo ${k + 1}.`);
+  for (let intento = 1; intento <= MAX_INTENTOS * 2; intento++) {
+    await esperarMemoria(`codificar el trozo ${k + 1}`);
     rmSync(archivo, { force: true });
     const r = spawnSync(
       ffmpeg,
@@ -388,22 +394,80 @@ for (let a = 0, k = 0; a < total; a += SEG_FOTOGRAMAS, k++) {
       ],
       { stdio: ["ignore", "ignore", "pipe"], encoding: "utf8" },
     );
-    listo = r.status === 0 && existsSync(archivo) && statSync(archivo).size > 20000;
-    if (!listo) {
-      console.warn(`   ↻ segmento ${k + 1} falló (código ${r.status}; suele ser falta de memoria). Reintento ${intento}...`);
-      rmSync(archivo, { force: true });
-      await dormir(3000);
+    if (r.status === 0 && existsSync(archivo) && statSync(archivo).size > 20000) {
+      for (let f = a; f < a + n; f++) rmSync(join(FOTOGRAMAS, nombre(f)), { force: true });
+      return true;
     }
+    rmSync(archivo, { force: true });
+    if (esSinEspacio(r.stderr)) fatalDisco();
+    console.warn(`   ↻ trozo ${k + 1} falló al codificar (código ${r.status}; suele ser falta de memoria). Reintento ${intento}...`);
+    if (intento >= 2) await cerrarNavegador(); // libera la memoria de Chrome para que ffmpeg pueda crecer
+    await dormir(3000);
   }
-  if (!listo) {
-    console.error("\n❌ No pude codificar un segmento. Lo ya codificado queda guardado: ejecuta  npm run build -- --ensamblar");
-    process.exit(1);
-  }
-  console.log(`   ✔ segmento ${k + 1}/${Math.ceil(total / SEG_FOTOGRAMAS)}`);
+  return false;
 }
 
+const NUM_SEGMENTOS = Math.ceil(total / SEG_FOTOGRAMAS);
+for (let k = 0; !soloEnsamblar && k < NUM_SEGMENTOS; k++) {
+  const s0 = k * SEG_FOTOGRAMAS;
+  const sFin = Math.min(total - 1, s0 + SEG_FOTOGRAMAS - 1);
+  if (!segmentoListo(k)) {
+    for (let a = s0; a <= sFin; a += TANDA) {
+      const b = Math.min(sFin, a + TANDA - 1);
+      let sinProgreso = 0;
+      while (primerFaltante(a, b) !== null) {
+        const desde = primerFaltante(a, b);
+        if (!navegador) await esperarMemoria(`fotogramas ${desde}-${b}`);
+        try {
+          await renderizarRango(desde, b);
+        } catch (e) {
+          if (esSinEspacio(e)) {
+            // sin espacio: se borra lo que sobre (renders viejos) y se comprueba antes de reintentar
+            limpiarTemporales({ conservar: [TRABAJO.split(/[\\/]/).pop(), "sistema", "bundle-cache"] });
+            const libre = espacioLibreGB(RAIZ_PROYECTO);
+            if (libre !== null && libre < 0.15) fatalDisco(libre);
+          }
+          const msg = String(e?.message ?? e).split("\n")[0].slice(0, 110);
+          const siguiente = primerFaltante(a, b);
+          sinProgreso = siguiente !== null && siguiente > desde ? 0 : sinProgreso + 1;
+          if (sinProgreso >= MAX_INTENTOS) throw new Error(`fotogramas ${desde}-${b}: ${msg}`);
+          console.warn(`   ↻ fotogramas ${desde}-${b} falló (${msg}). Conservo lo hecho y reintento desde el ${siguiente ?? b}...`);
+          await dormir(4000);
+        }
+      }
+      fotogramasEnNavegador += b - a + 1;
+      if (fotogramasEnNavegador >= RECICLAR_CADA) await cerrarNavegador();
+    }
+    if (!(await codificarSegmento(k))) {
+      console.error("\n❌ No pude codificar un trozo. Lo ya codificado queda guardado: vuelve a lanzar el mismo comando.");
+      process.exit(1);
+    }
+  }
+  const listos = Math.min(total, (k + 1) * SEG_FOTOGRAMAS);
+  console.log(`   ✔ ${listos}/${total} (${((listos / total) * 100).toFixed(0)} %) · ${((Date.now() - t0) / 60000).toFixed(1)} min`);
+}
+rmSync(TANDA_DIR, { recursive: true, force: true });
+await cerrarNavegador();
+
+// ---------- 3. Unión de los trozos con el audio ----------
+// Los trozos de 5 s ya están codificados (arriba). Si alguno falta y aún quedan sus fotogramas (modo --ensamblar), se codifica ahora.
+console.log("🎞️  Uniendo los trozos de video + audio (H.264 + AAC)...");
+const archivosSegmento = [];
+for (let k = 0; k < NUM_SEGMENTOS; k++) {
+  if (!segmentoListo(k)) {
+    try {
+      if (!(await codificarSegmento(k))) throw new Error("ffmpeg falló");
+    } catch (e) {
+      console.error(`\n❌ Falta el trozo ${k + 1} (${String(e?.message ?? e).split("\n")[0]}). Vuelve a lanzar el render (sin --ensamblar).`);
+      process.exit(1);
+    }
+  }
+  archivosSegmento.push(archivoSegmento(k));
+}
+const SEGMENTOS_LISTA = SEGMENTOS_DIR;
+
 // Unión final: copia el video tal cual y codifica el audio (ligero)
-const lista = join(SEGMENTOS_DIR, "lista.txt");
+const lista = join(SEGMENTOS_LISTA, "lista.txt");
 writeFileSync(lista, archivosSegmento.map((f) => `file '${f.replace(/\\/g, "/")}'`).join("\n") + "\n");
 let unido = false;
 for (let intento = 1; intento <= MAX_INTENTOS && !unido; intento++) {

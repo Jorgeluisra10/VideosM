@@ -48,7 +48,7 @@ try {
   }
   const dir = join(RAIZ, "trabajo", "anim", "historial");
   mkdirSync(dir, { recursive: true });
-  const id = new Date().toISOString().replace(/[:.]/g, "-").slice(0, 19);
+  const id = new Date().toISOString().replace(/[:.]/g, "-").slice(0, 23); // con milisegundos: dos generaciones en el mismo segundo no se pisan
   writeFileSync(join(dir, `${id}.json`), JSON.stringify({ id, creado: new Date().toISOString(), opciones: { modelo, sfx, paleta }, guion, animacion: anim }, null, 1));
   console.log(`\n✅ ${anim.escenas.length} escenas · ${anim.duracion} s · guardada en src/data/animacion.json`);
   console.log(`💲 Costo real de este video: ${N.formatoUSD(uso.costo_usd, 5)}  (${uso.prompt_tokens} tokens de entrada + ${uso.completion_tokens} de salida, ${uso.llamadas} llamada${uso.llamadas > 1 ? "s" : ""})`);

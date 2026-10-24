@@ -18,6 +18,7 @@ import { cargarEnv } from "../ia/entorno.mjs";
 import { PERFIL_BASE, cargarPerfil, listarPerfiles, paletas, slug } from "../ia/perfil.mjs";
 import { RAIZ } from "../ia/puente.mjs";
 import { cargarNucleoAnim, compilarNucleo } from "../anim/nucleo.mjs";
+import { espacioLibreGB, limpiarTemporales, mensajeSinEspacio } from "../_disco.mjs";
 import { archivosDoc, entorno, guardarAjustes, leerAjustes, probar } from "./ajustes.mjs";
 import { activarBorrador, borrarMedio, borrarProyecto, dirArchivo, dirProyecto, dirTrabajoIa, estadoProyecto, existeProyecto, guardarBriefProyecto, guardarMedio, guionDe, importarEjemplo, leerBriefProyecto, listarArchivo, listarEjemplos, listarMediosProyecto, listarProyectos, marcarEtapa, nombreSeguro, resumenActivo, temaActivoJson } from "./proyectos.mjs";
 import { bus, cancelar, detenerServicio, detenerTodo, estadoServicio, hayTrabajo, instantanea, iniciarServicio, lanzar, lineasDe } from "./trabajos.mjs";
@@ -329,6 +330,11 @@ function estadoAnim() {
   };
 }
 
+/** Lanza el render de la animación activa (1080×1920 a 60 fps). */
+function lanzarRender(o = {}) {
+  return lanzar({ nombre: "anim-render", titulo: "Renderizar video (1080×1920 a 60 fps)", pasos: [{ titulo: "Renderizar la animación", cmd: [script("render.mjs"), "--composicion=Animacion", ...(o.hilos ? [`--concurrency=${Number(o.hilos) || 1}`] : []), ...(o.desdeCero ? ["--desde-cero"] : [])] }] });
+}
+
 /** Acciones del estudio (siempre «un trabajo a la vez», como el resto del panel). */
 async function lanzarAnim(nombre, o = {}) {
   switch (nombre) {
@@ -357,9 +363,14 @@ async function lanzarAnim(nombre, o = {}) {
     case "anim-previa":
       pedir(leerAnim(), "Primero genera la animación (o carga el ejemplo).", 412);
       return lanzar({ nombre, titulo: "Capturas y control de calidad", pasos: [{ titulo: "Una captura por escena + QA (márgenes, vacíos, movimiento)", cmd: [script("anim", "previa.mjs"), "--qa"] }] });
-    case "anim-render":
+    case "anim-render": {
       pedir(leerAnim(), "Primero genera la animación (o carga el ejemplo).", 412);
-      return lanzar({ nombre, titulo: "Renderizar video (1080×1920 a 60 fps)", pasos: [{ titulo: "Renderizar la animación (SVG + 3D)", cmd: [script("render.mjs"), "--composicion=Animacion", ...(o.hilos ? [`--concurrency=${Number(o.hilos) || 1}`] : []), ...(o.desdeCero ? ["--desde-cero"] : [])] }] });
+      // disco casi lleno: se borran temporales viejos y, si aun así no cabe (el render necesita ≈ 0,3 GB), se explica qué hacer en vez de fallar a mitad
+      let libre = espacioLibreGB();
+      if (libre !== null && libre < 1.2) { limpiarTemporales({ conservar: ["bundle-cache", "sistema"] }); libre = espacioLibreGB(); }
+      pedir(libre === null || libre >= 0.35, mensajeSinEspacio(libre ?? 0), 507);
+      return lanzarRender(o);
+    }
     default:
       throw Object.assign(new Error(`Acción desconocida: ${nombre}`), { codigo: 404 });
   }

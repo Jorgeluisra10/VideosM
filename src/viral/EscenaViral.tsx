@@ -10,6 +10,7 @@ import { FondoViral } from "./fondos";
 import { Cta, Hook, Num, Vs } from "./plantillas1";
 import { Bars, Line, Lista, Steps } from "./plantillas2";
 import { Ciudad, Ruta } from "./plantillas3";
+import { Donut, Mito, Picto, Top } from "./plantillas4";
 
 const Plantilla: React.FC<{ e: EscenaViralGuardada }> = ({ e }) => {
   switch (e.t) {
@@ -21,6 +22,10 @@ const Plantilla: React.FC<{ e: EscenaViralGuardada }> = ({ e }) => {
     case "LIST": return <Lista e={e} />;
     case "ROUTE": return <Ruta e={e} />;
     case "SKYLINE": return <Ciudad e={e} />;
+    case "DONUT": return <Donut e={e} />;
+    case "PICTO": return e.picto ? <Picto e={e} /> : <Hook e={e} />;
+    case "TOP": return <Top e={e} />;
+    case "MITO": return <Mito e={e} />;
     case "CTA": return <Cta e={e} />;
     default: return <Hook e={e} />;
   }

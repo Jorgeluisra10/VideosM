@@ -14,7 +14,7 @@ import type { Animacion, EventoSfx } from "./tipos";
 
 /* ───────────── vocabulario cerrado ───────────── */
 
-export const TIPOS_VIRAL = ["HOOK", "NUM", "VS", "BARS", "LINE", "STEPS", "LIST", "ROUTE", "SKYLINE", "CTA"] as const;
+export const TIPOS_VIRAL = ["HOOK", "NUM", "VS", "BARS", "LINE", "STEPS", "LIST", "ROUTE", "SKYLINE", "DONUT", "PICTO", "TOP", "MITO", "CTA"] as const;
 export type TipoViral = (typeof TIPOS_VIRAL)[number];
 export const FONDOS_VIRAL = ["dark", "gold", "light"] as const;
 export type FondoViral = (typeof FONDOS_VIRAL)[number];
@@ -52,6 +52,15 @@ export type DatosViral = {
   /** ROUTE */
   stops: string[];
   end: string;
+  /** DONUT: reparto de un total (2–4 partes) */
+  donut: { l: string; v: number }[];
+  /** PICTO: «k de cada n» con iconos */
+  picto: { n: number; k: number; ic: string; l: string } | null;
+  /** TOP: ranking (se revela de abajo hacia arriba) */
+  top: { l: string; v: string }[];
+  /** MITO: lo que se cree vs. la realidad */
+  myth: string;
+  truth: string;
 };
 
 export type EscenaViral = { n: number; t: TipoViral; voz: string; dur: number } & DatosViral;
@@ -88,10 +97,16 @@ export const TV = {
   rutaDur: 2.8,
   ciudad: 0.5,
   etiqueta: 1.9,
+  donut: 0.6,
+  donutDur: 1.5,
+  picto: (i: number): number => 0.55 + 0.085 * i,
+  mito: 0.35,
+  tacha: 1.35,
+  verdad: 2.05,
 } as const;
 
 /** Segundos que necesita cada plantilla para mostrar todo con calma (a ritmo 1). */
-export function duracionIdeal(e: Pick<EscenaViral, "t" | "items" | "bars" | "stops">): number {
+export function duracionIdeal(e: Pick<EscenaViral, "t" | "items" | "bars" | "stops" | "top" | "picto">): number {
   switch (e.t) {
     case "HOOK": return 2.6;
     case "NUM": return TV.contar + TV.contarDur + 0.9;
@@ -101,6 +116,10 @@ export function duracionIdeal(e: Pick<EscenaViral, "t" | "items" | "bars" | "sto
     case "STEPS": case "LIST": return TV.item(Math.max(0, e.items.length - 1)) + 1.1;
     case "ROUTE": return TV.ruta + TV.rutaDur + 0.7;
     case "SKYLINE": return TV.etiqueta + 1.1;
+    case "DONUT": return TV.donut + TV.donutDur + 1.0;
+    case "PICTO": return TV.picto(Math.max(0, (e.picto?.n ?? 10) - 1)) + 2.0;
+    case "TOP": return TV.item(Math.max(0, e.top.length - 1)) + 1.2;
+    case "MITO": return TV.verdad + 1.5;
     default: return 3.2;
   }
 }
@@ -204,7 +223,7 @@ function destacar(h: string, pedida: string): string {
   return (buenas.length ? buenas : ps).reduce((m, p) => (n(p).length > n(m).length ? p : m), ps[0] ?? "");
 }
 
-const VACIO: DatosViral = { h: "", w: "", sub: "", ic: "brillo", num: null, vs: null, bars: [], barsU: "", hi: -1, line: null, items: [], stops: [], end: "" };
+const VACIO: DatosViral = { h: "", w: "", sub: "", ic: "brillo", num: null, vs: null, bars: [], barsU: "", hi: -1, line: null, items: [], stops: [], end: "", donut: [], picto: null, top: [], myth: "", truth: "" };
 
 /** Cifra más llamativa que aparece en un texto (para completar un NUM al que la IA no puso número). */
 function primeraCifra(s: string): { n: string; u: string } | null {
@@ -297,6 +316,39 @@ export function normalizarEscenaViral(raw: any, n: number, vozDada?: string): { 
       if (!d.end) { const c = primeraCifra(ctx); d.end = c ? `+${c.n}${c.u}` : "+"; }
       break;
     }
+    case "DONUT": {
+      const lista: any[] = Array.isArray(r.donut) ? r.donut : Array.isArray(r.parts) ? r.parts : [];
+      d.donut = lista.slice(0, 4).map((p, i) => ({ l: mayus(p?.l ?? p?.label ?? `PARTE ${i + 1}`, 16), v: Math.max(0, Number(String(p?.v ?? p?.value ?? 0).replace(",", ".")) || 0) })).filter((p) => p.l);
+      if (d.donut.length < 2 || d.donut.every((p) => p.v === 0)) {
+        const c = primeraCifra(ctx);
+        const v = c ? Math.min(99, Math.max(1, aNumero(c.n))) : 60;
+        d.donut = [{ l: "SÍ", v }, { l: "NO", v: 100 - v }];
+        corr.push(`Escena ${n}: DONUT sin partes suficientes; se usa ${v} % / ${100 - v} %`);
+      }
+      break;
+    }
+    case "PICTO": {
+      const p = r.picto && typeof r.picto === "object" ? r.picto : r;
+      let total = Math.round(Number(p.n ?? p.total ?? 10));
+      if (!Number.isFinite(total) || total < 4 || total > 20) total = 10;
+      let k = Math.round(Number(p.k ?? p.de ?? 3));
+      if (!Number.isFinite(k) || k < 1) k = Math.max(1, Math.round(total * 0.3));
+      k = Math.min(total - 1, k);
+      d.picto = { n: total, k, ic: icono(p.ic ?? r.ic, ctx, "casa"), l: limpio(p.l ?? r.l ?? r.sub, 44) };
+      break;
+    }
+    case "TOP": {
+      const lista: any[] = Array.isArray(r.top) ? r.top : Array.isArray(r.items) ? r.items : [];
+      d.top = lista.slice(0, 5).map((it) => ({ l: mayus(typeof it === "string" ? it : it?.l, 22), v: limpio(typeof it === "string" ? "" : it?.v, 10) })).filter((it) => it.l);
+      if (d.top.length < 3) { d.top = [{ l: "OPCIÓN A", v: "" }, { l: "OPCIÓN B", v: "" }, { l: "OPCIÓN C", v: "" }]; corr.push(`Escena ${n}: TOP con menos de 3 elementos; se usan elementos de ejemplo`); }
+      break;
+    }
+    case "MITO": {
+      d.myth = limpio(r.myth ?? r.mito, 70) || limpio(r.sub, 70) || "Eso es lo que todos creen";
+      d.truth = limpio(r.truth ?? r.verdad ?? r.realidad, 80) || (d.h ? d.h.charAt(0) + d.h.slice(1).toLowerCase() : "La realidad es otra");
+      if (!r.myth && !r.mito) corr.push(`Escena ${n}: MITO sin «myth»; se completa con el texto disponible`);
+      break;
+    }
     case "CTA": {
       if (!d.sub) d.sub = "";
       break;
@@ -319,7 +371,7 @@ function titularDeVoz(voz: string, max: number): string {
 
 /* ───────────── fondos alternados, ritmo y SFX ───────────── */
 
-const FONDO_PREFERIDO: Record<TipoViral, FondoViral> = { HOOK: "dark", NUM: "gold", VS: "dark", BARS: "light", LINE: "dark", STEPS: "light", LIST: "dark", ROUTE: "dark", SKYLINE: "light", CTA: "gold" };
+const FONDO_PREFERIDO: Record<TipoViral, FondoViral> = { HOOK: "dark", NUM: "gold", VS: "dark", BARS: "light", LINE: "dark", STEPS: "light", LIST: "dark", ROUTE: "dark", SKYLINE: "light", DONUT: "dark", PICTO: "light", TOP: "dark", MITO: "light", CTA: "gold" };
 
 /** Asigna un fondo a cada escena: el que prefiere su plantilla, cambiando el de las vecinas iguales para que el ritmo visual nunca se repita. */
 export function asignarFondos(tipos: TipoViral[]): FondoViral[] {
@@ -336,7 +388,7 @@ export function asignarFondos(tipos: TipoViral[]): FondoViral[] {
 }
 
 /** Efectos de sonido automáticos sincronizados con lo que hace cada plantilla (tiempos escalados por el ritmo de la escena). */
-export function sfxViral(e: Pick<EscenaViral, "t" | "items" | "bars" | "stops" | "dur">, ritmo: number): EventoSfx[] {
+export function sfxViral(e: Pick<EscenaViral, "t" | "items" | "bars" | "stops" | "top" | "picto" | "dur">, ritmo: number): EventoSfx[] {
   const s = (x: number): number => x * ritmo;
   const L: EventoSfx[] = [{ t: 0.04, tipo: "whoosh", vol: 0.16 }];
   const A = (t: number, tipo: EventoSfx["tipo"], vol = 0.15): void => { L.push({ t, tipo, vol }); };
@@ -349,6 +401,10 @@ export function sfxViral(e: Pick<EscenaViral, "t" | "items" | "bars" | "stops" |
     case "STEPS": case "LIST": e.items.forEach((_, i) => A(s(TV.item(i)), "pop", 0.14)); break;
     case "ROUTE": e.stops.forEach((_, i) => A(s(TV.ruta + (TV.rutaDur * (i + 0.5)) / e.stops.length), "tick", 0.12)); A(s(TV.ruta + TV.rutaDur), "ding", 0.18); break;
     case "SKYLINE": A(s(TV.ciudad + 0.2), "thud", 0.14); A(s(TV.etiqueta), "ding", 0.18); break;
+    case "DONUT": A(s(TV.donut), "zap", 0.1); A(s(TV.donut + TV.donutDur), "ding", 0.18); break;
+    case "PICTO": for (let i = 0; i < (e.picto?.k ?? 3); i++) A(s(TV.picto(i)), "pop", 0.11); A(s(TV.picto(e.picto?.n ?? 10) + 0.4), "ding", 0.17); break;
+    case "TOP": e.top.forEach((_, i) => A(s(TV.item(i)), i === e.top.length - 1 ? "ding" : "pop", 0.14)); break;
+    case "MITO": A(s(TV.mito), "thud", 0.14); A(s(TV.tacha), "zap", 0.12); A(s(TV.verdad), "ding", 0.18); break;
     case "CTA": A(s(0.5), "ding", 0.2); A(s(1.1), "pop", 0.15); break;
   }
   return L.filter((x) => x.t < e.dur - 0.08).sort((a, b) => a.t - b.t);
@@ -462,18 +518,23 @@ export function sistemaViral(): string {
 Responde SOLO un objeto JSON: {"titulo":"…","scenes":[…]} (sin texto extra). Ritmo de reel: "dur" = palabras de la voz ÷ 2,9 + 0,5 s (mín. 2,8; HOOK y CTA ≈ 3,5). En modo bloques cada escena lleva "id" y NO "voz" ni "dur"; en modo idea lleva "voz" y "dur".
 Cada escena: {"t":TIPO,"voz":"narración exacta a grabar (6–12 palabras)","dur":3.5,"h":"TITULAR EN MAYÚSCULAS ≤ 30 car.","w":"palabra del titular a resaltar","ic":"icono", …campos del tipo}
 TIPOS y sus campos:
-HOOK gancho cinético gigante (h ≤ 34 car., 2–3 líneas; "sub" opcional ≤ 40 car.). SIEMPRE la escena 1: pregunta o dato que frena el scroll.
+HOOK gancho cinético gigante (h ≤ 34 car., 2–3 líneas; "sub" opcional ≤ 40 car.). SIEMPRE la escena 1.
 NUM número gigante que cuenta: "num":{"n":"35","u":"%","pre":"+","l":"VALORIZACIÓN ANUAL"} (n solo dígitos).
 VS comparación: "a":{"l":"BOGOTÁ","n":"1","ic":"tren"},"b":{"l":"SANTIAGO","n":"7","ic":"tren"},"op":"<" (n números; op > < =).
 BARS barras que crecen: "bars":[{"l":"2020","v":30},…] (3–6), "u":"%","hi":índice destacado.
 LINE tendencia: "line":{"pts":[10,14,13,25,40,70],"l0":"2020","l1":"2030","end":"+180 %"} (5–10 puntos).
+DONUT reparto de un total: "donut":[{"l":"PROPIETARIOS","v":62},{"l":"ARRIENDAN","v":38}] (2–4 partes).
+PICTO «k de cada n» con iconos: "picto":{"n":10,"k":3,"ic":"casa","l":"no logra comprar vivienda"} (n 4–20).
+TOP ranking que se revela del último al primero: "top":[{"l":"CHAPINERO","v":"+12 %"},…] (3–5, v opcional).
+MITO mito vs realidad: "myth":"Lo que todos creen","truth":"Lo que realmente pasa" (≤ 60 car. cada uno).
 STEPS causa→efecto/pasos: "items":[{"l":"METRO","ic":"tren"},{"l":"OBRAS","ic":"edificio"},{"l":"VALOR","ic":"tendencia-alza"}] (3–4).
 LIST beneficios con check: "items":["Sin comisión","Más alcance","Gratis"] (3–4, ≤ 30 car.).
-ROUTE ruta/recorrido de metro: "stops":["PORTAL","CENTRO","CALLE 72"] (3–5), "end":"VALORIZACIÓN".
+ROUTE recorrido/etapas en secuencia: "stops":["PORTAL","CENTRO","CALLE 72"] (3–5), "end":"VALORIZACIÓN".
 SKYLINE ciudad que crece (inmuebles, plusvalía): "l":"+35 %","sub":"caption ≤ 28 car.".
-CTA cierre con llamada a la acción: h ≤ 26 car., "sub" (web o marca). SIEMPRE la última escena.
+CTA cierre con llamada a la acción: h ≤ 26 car. imperativo, "sub" (web, marca o «Guárdalo y compártelo»). SIEMPRE la última escena.
 ICONOS: ${ICONOS_VIRAL.join(", ")}.
-ESTRUCTURA: HOOK → problema/contexto (NUM, VS, LINE) → mecanismo (STEPS, ROUTE) → prueba (BARS, SKYLINE) → beneficios (LIST) → CTA. No repitas el mismo tipo dos veces seguidas. ROUTE solo para recorridos o etapas en secuencia y SKYLINE solo para ciudad, inmuebles o crecimiento; si el tema es otro usa STEPS, BARS, LINE o NUM. Cada escena aporta una idea nueva. Titulares cortos y con fuerza; la locución completa la idea, no la repite.
+VIRALIDAD: el gancho (escena 1) debe frenar el scroll en 2 s con una pregunta que duele, un dato que sorprende o un error común («Nadie te cuenta…»), y abrir una promesa que el final cumple. Cambia de plantilla en cada escena (nunca la misma dos veces seguidas), una idea por escena, 2,8–4 s cada una. Titulares cortos y contundentes; la voz completa el titular, no lo repite. Termina con una acción concreta (guardar, compartir, publicar, escribir).
+ESTRUCTURA: HOOK → problema/contexto (NUM, VS, LINE, PICTO, DONUT, MITO) → mecanismo (STEPS, ROUTE) → prueba (BARS, TOP, SKYLINE) → beneficios (LIST) → CTA. ROUTE solo para recorridos o etapas en secuencia y SKYLINE solo para ciudad, inmuebles o crecimiento; si el tema es otro usa STEPS, BARS, LINE, TOP o NUM.
 DATOS: usa solo las cifras que da la idea; si necesitas una, usa un número redondo ilustrativo (nunca un dato oficial inventado). Nada de comillas ni emojis dentro de los textos.`;
 }
 

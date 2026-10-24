@@ -449,12 +449,22 @@ try {
     // prompt y costo
     const sv1 = N.sistemaViral();
     const fv = N.tokensFijosViral();
-    prueba("prompt de sistema viral: estático (idéntico siempre → prefijo cacheable), marca [DIRECTOR_VIRAL], los 10 tipos y todos los iconos, y compacto (< 1.000 tokens estimados)", sv1 === N.sistemaViral() && sv1.includes("[DIRECTOR_VIRAL]") && N.TIPOS_VIRAL.every((t) => sv1.includes(t)) && N.ICONOS_VIRAL.every((i) => sv1.includes(i)) && fv.sistema < 1000 && fv.esquema === 0, JSON.stringify(fv));
+    prueba("prompt de sistema viral: estático (idéntico siempre → prefijo cacheable), marca [DIRECTOR_VIRAL], los 10 tipos y todos los iconos, y compacto (900–1.400 tokens estimados; pasa de los 1.024 que activan el caché de OpenAI)", sv1 === N.sistemaViral() && sv1.includes("[DIRECTOR_VIRAL]") && N.TIPOS_VIRAL.every((t) => sv1.includes(t)) && N.ICONOS_VIRAL.every((i) => sv1.includes(i)) && fv.sistema > 900 && fv.sistema < 1400 && fv.esquema === 0, JSON.stringify(fv));
     prueba("la marca va en el mensaje de usuario (no en el prompt estático): IMNOBA la incluye, Medicina no", /MARCA: IMNOBA/.test(N.promptUsuarioIdea({ ...pi, paleta: "imnoba" })) && !/MARCA/.test(N.promptUsuarioIdea({ ...pi, paleta: "medicina" })) && !/IMNOBA/.test(sv1.replace(/ICONOS[\s\S]*$/, "")) && /ESCENAS: 10/.test(N.promptUsuarioIdea(pi)));
     const eV = N.estimarViral({ modelo: "gpt-4.1-mini", caracteres: pi.caracteres, escenas: pi.escenasObjetivo, tokensSistema: fv.sistema });
     prueba("estimarViral: entrada = prompt fijo + frase/3,6 + 30; salida = 165 por escena + 30; costo con la tarifa del modelo", eV.tokensEntrada === fv.sistema + Math.ceil(pi.caracteres / 3.6) + 30 && eV.tokensSalida === 165 * 10 + 30 && Math.abs(eV.costo - (eV.tokensEntrada * 0.4 + eV.tokensSalida * 1.6) / 1e6) < 1e-12, JSON.stringify(eV));
     const cV = (m) => N.estimarViral({ modelo: m, caracteres: pi.caracteres, escenas: 10, tokensSistema: fv.sistema }).costo;
     prueba("orden de tarifas: nano < 4o-mini < 4.1-mini < 4.1 (≈ $0,001–$0,01 por video de 35 s)", cV("gpt-4.1-nano") < cV("gpt-4o-mini") && cV("gpt-4o-mini") < cV("gpt-4.1-mini") && cV("gpt-4.1-mini") < cV("gpt-4.1") && cV("gpt-4.1") < 0.02 && cV("gpt-4.1-nano") < 0.001, [cV("gpt-4.1-nano"), cV("gpt-4o-mini"), cV("gpt-4.1-mini"), cV("gpt-4.1")].join(" · "));
+    // plantillas nuevas: DONUT, PICTO, TOP, MITO
+    prueba("hay 14 plantillas (las 10 de siempre + DONUT, PICTO, TOP y MITO) y el prompt explica la viralidad (gancho que frena el scroll, cambio de plantilla, acción final)", N.TIPOS_VIRAL.length === 14 && ["DONUT", "PICTO", "TOP", "MITO"].every((t) => N.TIPOS_VIRAL.includes(t) && sv1.includes(t)) && /frenar el scroll/.test(sv1) && /Guárdalo y compártelo/.test(sv1) && /nunca la misma dos veces seguidas/.test(sv1));
+    prueba("saneado DONUT: 2–4 partes con valores ≥ 0; sin datos usa la cifra de la voz (sí/no suman 100)", sv({ t: "DONUT", donut: [{ l: "a", v: 60 }, { l: "b", v: 40 }, { l: "c", v: 5 }, { l: "d", v: 1 }, { l: "e", v: 9 }] }).escena.donut.length === 4 && (() => { const d = sv({ t: "DONUT", voz: "el 62 % son propietarios" }).escena.donut; return d.length === 2 && d[0].v + d[1].v === 100 && d[0].v === 62; })());
+    prueba("saneado PICTO: n entre 4 y 20 (si no, 10), k entre 1 y n−1, icono por texto; TOP con 3–5 puestos; MITO sin «myth» se completa y marca la corrección", (() => { const a = sv({ t: "PICTO", picto: { n: 99, k: 50, ic: "casa", l: "x" } }).escena.picto; const b = sv({ t: "PICTO", picto: { n: 10, k: 0 } }).escena.picto; return a.n === 10 && a.k === 9 && b.k >= 1 && b.k < b.n; })() && sv({ t: "TOP", top: [{ l: "a" }] }).escena.top.length === 3 && sv({ t: "TOP", top: Array.from({ length: 9 }, (_, i) => ({ l: `p${i}`, v: "1" })) }).escena.top.length === 5 && (() => { const m = sv({ t: "MITO", h: "LA REALIDAD" }); return m.escena.myth.length > 0 && m.escena.truth.length > 0 && m.correcciones.length > 0; })());
+    const pcr = N.parsearIdea(readFileSync(p("ejemplos", "animacion-viral", "idea-carros.txt"), "utf8"));
+    const evc = N.ensamblarViral(JSON.parse(readFileSync(p("ejemplos", "animacion-viral", "respuesta-ia-carros.json"), "utf8")), { modo: "idea", paleta: "imnoba", sfx: true });
+    prueba("ejemplo de carros (otro tema): idea de 30 s, 8 escenas válidas con PICTO, MITO, DONUT y TOP; el TOP sfx suena por puesto y el MITO tiene golpe, tachado y revelación", pcr.errores.length === 0 && pcr.duracion === 30 && evc.anim.escenas.length === 8 && N.validar(evc.anim).length === 0 && ["PICTO", "MITO", "DONUT", "TOP"].every((t) => evc.anim.escenas.some((e) => e.t === t)) && evc.anim.escenas.find((e) => e.t === "TOP").sfx.filter((x) => x.tipo === "pop" || x.tipo === "ding").length === 3 && evc.anim.escenas.find((e) => e.t === "MITO").sfx.map((x) => x.tipo).join().includes("thud,zap,ding"), JSON.stringify(N.validar(evc.anim)));
+    const fc = N.asignarFondos(evc.anim.escenas.map((e) => e.t));
+    prueba("en el ejemplo de carros los fondos también alternan sin repetirse y el CTA es dorado", fc.every((x, i) => i === 0 || x !== fc[i - 1]) && fc[0] === "dark" && fc[fc.length - 1] === "gold");
+
     // agente con servidor simulado
     for (const mo of ["gpt-4.1", "gpt-4.1-mini", "gpt-4.1-nano", "gpt-4o-mini", "o4-mini"]) {
       const mk = await iniciarMock(0);
@@ -597,6 +607,36 @@ try {
   await mkE.cerrar();
   }
 
+  // ------------------------------------------------------------ disco y render sin ENOSPC
+  console.log("\nDisco y render (sin quedarse sin espacio)");
+  {
+    const { espacioLibreGB, esSinEspacio, limpiarTemporales, mensajeSinEspacio, tamanoCarpeta } = await import("../_disco.mjs");
+    const { mkdirSync: mk, writeFileSync: wf, existsSync: ex, rmSync: rm2 } = await import("node:fs");
+    prueba("espacioLibreGB mide el disco (número > 0) y funciona aunque la ruta aún no exista", typeof espacioLibreGB() === "number" && espacioLibreGB() > 0 && espacioLibreGB(join(RAIZ, "carpeta", "que", "no", "existe")) > 0);
+    prueba("esSinEspacio reconoce ENOSPC (código y mensaje de Node, Chrome y ffmpeg) y no confunde otros errores", esSinEspacio(Object.assign(new Error("x"), { code: "ENOSPC" })) && esSinEspacio(new Error("ENOSPC: no space left on device, write")) && esSinEspacio("av_interleaved_write_frame(): No space left on device") && !esSinEspacio(new Error("Target closed")));
+    const t = join(p("trabajo", "tmp"), "prueba-limpieza");
+    rm2(t, { recursive: true, force: true });
+    for (const d of ["render-anim-viejo", "anim-previa", "conservame"]) { mk(join(t, d), { recursive: true }); wf(join(t, d, "a.bin"), Buffer.alloc(200000)); }
+    const lr = limpiarTemporales({ conservar: ["conservame"], tmp: t });
+    prueba("limpiarTemporales borra renders viejos y capturas pero respeta lo que se pide conservar, y cuenta lo liberado", !ex(join(t, "render-anim-viejo")) && !ex(join(t, "anim-previa")) && ex(join(t, "conservame")) && lr.borradas.length === 2 && lr.liberadoGB > 0 && tamanoCarpeta(join(t, "conservame")) === 200000, JSON.stringify(lr));
+    rm2(t, { recursive: true, force: true });
+    prueba("el mensaje de falta de espacio explica qué hacer (npm run limpiar, temporales de Windows, mover el proyecto) y npm run limpiar existe", /npm run limpiar/.test(mensajeSinEspacio(0.1)) && /Papelera|temporales/.test(mensajeSinEspacio(0.1)) && /otro disco/.test(mensajeSinEspacio(0.1)) && JSON.parse(readFileSync(p("package.json"), "utf8")).scripts.limpiar === "node scripts/limpiar.mjs");
+    const fuenteRender = readFileSync(p("scripts", "render.mjs"), "utf8");
+    prueba("render.mjs codifica cada trozo de 5 s y BORRA sus fotogramas (pico ≈ 0,2 GB), mide el disco antes de empezar, limpia temporales viejos y atrapa ENOSPC con un mensaje claro", /async function codificarSegmento/.test(fuenteRender) && /rmSync\(join\(FOTOGRAMAS, nombre\(f\)\)/.test(fuenteRender) && /espacioLibreGB\(RAIZ_PROYECTO\)/.test(fuenteRender) && /limpiarTemporales/.test(fuenteRender) && /unhandledRejection/.test(fuenteRender) && /fatalDisco/.test(fuenteRender) && /process\.exit\(3\)/.test(fuenteRender));
+  }
+
+  {
+    // disco casi lleno simulado: el render debe parar ANTES de empezar, con código 3 y el mensaje de qué hacer (y sin tocar nada)
+    const rr = await new Promise((ok) => {
+      const proc = spawn(process.execPath, [p("scripts", "render.mjs"), "--composicion=Animacion"], { cwd: RAIZ, env: { ...process.env, VIDEMED_DISCO_GB: "0.1" } });
+      let out = "", err = "";
+      proc.stdout.on("data", (d) => (out += d));
+      proc.stderr.on("data", (d) => (err += d));
+      proc.on("close", (status) => ok({ status, out, err }));
+    });
+    prueba("render con el disco casi lleno (simulado, 0,1 GB libres): para antes de empezar con código 3, explica qué hacer y avisa que lo hecho se conserva", rr.status === 3 && /se quedó sin espacio/.test(rr.err) && /npm run limpiar/.test(rr.err) && /sigue donde quedó/.test(rr.err), (rr.out + rr.err).slice(-500));
+  }
+
   // ------------------------------------------------------------ panel
   console.log("\nPanel (API del Estudio)");
   mock = await iniciarMock(0);
@@ -655,6 +695,10 @@ try {
     prueba("API: una frase → video viral de 10 escenas con costo real, plantillas en la tabla y enlace a la locución", finI?.estado === "ok" && h.json.animacion?.formato === "viral" && h.json.animacion.escenas.length === 10 && h.json.animacion.escenas[0].tipo === "HOOK" && h.json.animacion.escenas[9].tipo === "CTA" && h.json.animacion.uso.costo_usd > 0 && h.json.animacion.uso.modelo === "gpt-4.1-nano" && h.json.locucion?.url === "/salida/guion-locucion.txt?descargar=1", JSON.stringify(finI) + h.texto.slice(0, 200));
     h = await http("GET", "/salida/guion-locucion.txt");
     prueba("la locución del video (guion para grabar) se sirve con la voz de cada escena", h.codigo === 200 && /Te imaginas cruzar Bogotá/.test(h.texto) && /\[ESCENA 10 \|/.test(h.texto));
+    process.env.VIDEMED_DISCO_GB = "0.1";
+    h = await http("POST", "/api/accion", { nombre: "anim-render", opciones: {} });
+    delete process.env.VIDEMED_DISCO_GB;
+    prueba("panel: con el disco casi lleno (simulado) el render no arranca y explica cómo liberar espacio (507) en vez de fallar a mitad", h.codigo === 507 && /npm run limpiar/.test(h.json.error), h.texto.slice(0, 250));
     h = await http("POST", "/api/accion", { nombre: "anim-generar", opciones: { guion: "hola", modelo: "gpt-4.1-mini" } });
     prueba("API: una frase demasiado corta se rechaza con 400 y pide una idea", h.codigo === 400 && /idea/i.test(h.json.error), h.texto.slice(0, 200));
     h = await http("POST", "/api/accion", { nombre: "anim-generar", opciones: { guion: "[ESCENA 1 | 5-2]\nx", modelo: "gpt-4.1-mini" } });
@@ -704,6 +748,9 @@ try {
     spawnSync(process.execPath, [p("scripts", "anim", "ejemplo.mjs")], { cwd: RAIZ });
     const rq = spawnSync(process.execPath, [p("scripts", "anim", "previa.mjs"), "--qa"], { cwd: RAIZ, encoding: "utf8", timeout: 600000 });
     prueba("previa.mjs --qa del motor viral (10 plantillas: gancho, número, versus, ruta, pasos, tendencia, barras, ciudad, lista y cierre): una captura por escena y QA sin problemas (márgenes ≥ 80 px, sin vacíos ni congelados)", rq.status === 0 && readdirSync(p("trabajo", "tmp", "anim-previa")).filter((x) => /^escena-\d+\.png$/.test(x)).length === 10 && /sin escenas vac/.test(rq.stdout), (rq.stdout + rq.stderr).slice(-600));
+    spawnSync(process.execPath, [p("scripts", "anim", "ejemplo.mjs"), "--tema=carros"], { cwd: RAIZ });
+    const rq3 = spawnSync(process.execPath, [p("scripts", "anim", "previa.mjs"), "--qa"], { cwd: RAIZ, encoding: "utf8", timeout: 600000 });
+    prueba("previa.mjs --qa del ejemplo de carros (PICTO, MITO, DONUT, TOP + las de siempre): una captura por escena y QA sin problemas", rq3.status === 0 && readdirSync(p("trabajo", "tmp", "anim-previa")).filter((x) => /^escena-\d+\.png$/.test(x)).length === 8, (rq3.stdout + rq3.stderr).slice(-600));
     spawnSync(process.execPath, [p("scripts", "anim", "ejemplo.mjs"), "--formato=estudio"], { cwd: RAIZ });
     const rq2 = spawnSync(process.execPath, [p("scripts", "anim", "previa.mjs"), "--qa"], { cwd: RAIZ, encoding: "utf8", timeout: 600000 });
     prueba("previa.mjs --qa del motor de estudio (figuras halftone, los 4 layouts): 6 capturas y QA sin problemas", rq2.status === 0 && readdirSync(p("trabajo", "tmp", "anim-previa")).filter((x) => /^escena-\d+\.png$/.test(x)).length === 6, (rq2.stdout + rq2.stderr).slice(-500));

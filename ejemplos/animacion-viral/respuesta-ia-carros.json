@@ -1,0 +1,10 @@
+{"titulo":"3 errores al vender tu carro","scenes":[
+{"t":"HOOK","voz":"Estás perdiendo plata al vender tu carro y no lo sabes.","dur":3.4,"h":"3 ERRORES AL VENDER TU CARRO","w":"ERRORES","sub":"el segundo cuesta millones","ic":"auto"},
+{"t":"PICTO","voz":"Siete de cada diez vendedores lo venden por debajo de su valor.","dur":3.8,"h":"EL PROBLEMA","w":"PROBLEMA","picto":{"n":10,"k":7,"ic":"auto","l":"venden por debajo de su valor"}},
+{"t":"MITO","voz":"Barato no siempre vende más rápido.","dur":4,"h":"CUIDADO CON EL PRECIO","w":"PRECIO","myth":"Mientras más barato, más rápido se vende","truth":"Un precio justo y buenas fotos venden primero"},
+{"t":"DONUT","voz":"Esto es lo que decide la compra.","dur":3.6,"h":"QUÉ DECIDE LA COMPRA","w":"DECIDE","donut":[{"l":"PRECIO","v":45},{"l":"FOTOS","v":30},{"l":"CONFIANZA","v":25}]},
+{"t":"TOP","voz":"Estos son los tres errores más comunes.","dur":4.2,"h":"LOS 3 ERRORES","w":"ERRORES","top":[{"l":"PRECIO AL AZAR","v":"el peor"},{"l":"FOTOS OSCURAS","v":""},{"l":"NO RESPONDER","v":""}]},
+{"t":"STEPS","voz":"Publica, recibe ofertas y cierra el negocio.","dur":4,"h":"ASÍ DE FÁCIL","w":"FÁCIL","items":[{"l":"PUBLICA","ic":"telefono"},{"l":"OFERTAS","ic":"chat"},{"l":"CIERRA","ic":"acuerdo"}]},
+{"t":"LIST","voz":"En IMNOBA publicas gratis y sin comisión.","dur":4.2,"h":"EN IMNOBA","w":"IMNOBA","items":["Publicas gratis","Cero comisiones","Compradores reales"]},
+{"t":"CTA","voz":"Publica tu carro gratis hoy. Guárdalo y compártelo.","dur":3.8,"h":"PUBLICA TU CARRO GRATIS","w":"GRATIS","sub":"imnoba.com","ic":"cohete"}
+]}

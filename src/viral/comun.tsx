@@ -272,3 +272,6 @@ export { aclarar, oscurecer, mezclar };
 
 /** Punto de un camino SVG a `largo` px de su inicio (nunca nulo). */
 export const puntoEn = (d: string, largo: number): { x: number; y: number } => getPointAtLength(d, Math.max(0, largo)) ?? { x: 0, y: 0 };
+
+/** Punto de una circunferencia: centro (cx, cy), radio r, ángulo en grados (0° = derecha, sentido horario en pantalla). */
+export const polarXY = (cx: number, cy: number, r: number, grados: number): [number, number] => [cx + r * Math.cos((grados * Math.PI) / 180), cy + r * Math.sin((grados * Math.PI) / 180)];
