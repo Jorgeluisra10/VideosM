@@ -254,6 +254,50 @@ export const Termo: React.FC<P> = ({ e }) => {
   );
 };
 
+/* ───────────── PILA (presión: un píxel frente a una columna altísima de puntos, con el sujeto aplastado debajo) ───────────── */
+
+export const Pila: React.FC<P> = ({ e }) => {
+  const { f, t, a } = useReloj();
+  const { T } = useViral();
+  const pl = e.pila!;
+  const COLS = 6, FILAS = 26, PASO = 26, BASE = 1360;
+  const p = easeInOut((t - a(TV.pila)) / a(TV.pilaDur));
+  const filasVisibles = Math.floor(FILAS * p);
+  const aplasta = easeInOut((t - a(TV.pila + 0.2)) / a(TV.pilaDur));
+  const { v, dec } = leerNumero(pl.n);
+  const valor = v * p;
+  const sUno = spr(f, a(0.25), { damping: 12, stiffness: 150, mass: 0.7 });
+  const px = Math.min(110, Math.floor(380 / (Math.max(fmtNum(v, dec).length + 1, 3) * 0.62)));
+  const xCol = 720 - (COLS * PASO) / 2;
+  return (
+    <AbsoluteFill>
+      <svg width={W} height={H} viewBox={`0 0 ${W} ${H}`} style={{ position: "absolute", inset: 0 }}>
+        <StudioSvgDefs />
+        <line x1={150} x2={930} y1={BASE + 12} y2={BASE + 12} stroke={T.texto} strokeOpacity={0.5} strokeWidth={4} strokeLinecap="round" />
+        {/* un solo punto: la referencia */}
+        <g transform={`translate(260 ${BASE - 14}) scale(${Math.max(0.0001, sUno)})`}>
+          <rect x={-14} y={-14} width={28} height={28} fill={T.acento} stroke={T.oscuro ? "#02081C" : "#02224E"} strokeWidth={3} />
+        </g>
+        {/* columna de puntos que crece */}
+        {Array.from({ length: filasVisibles * COLS }, (_, i) => {
+          const fila = Math.floor(i / COLS), col = i % COLS;
+          return <circle key={i} cx={xCol + col * PASO + PASO / 2} cy={BASE - 40 - fila * PASO} r={9} fill={mezclar(T.acento2, T.peligro, fila / FILAS)} opacity={0.95} />;
+        })}
+        {/* el sujeto, cada vez más aplastado */}
+        <g transform={`translate(720 ${BASE + 62}) scale(${1 + 0.18 * aplasta} ${1 - 0.5 * aplasta})`}>
+          <EsferaIcono nombre={pl.ic} x={0} y={0} d={190} color={T.exito} colorIcono="#FFFFFF" delay={0.1} />
+        </g>
+      </svg>
+      <div data-texto="pila-valor" style={{ position: "absolute", left: 720 - 210, top: 520, width: 420, transform: "translateY(-50%)", textAlign: "center", fontFamily: MONO, fontWeight: 800, fontSize: px, lineHeight: 1, color: T.texto, whiteSpace: "nowrap" }}>
+        {`× ${fmtNum(valor, dec)}`}
+      </div>
+      <Etiqueta texto={pl.l1} x={260} y={BASE + 80} px={32} ancho={300} mono color={T.texto} peso={800} delay={0.4} id="pila-uno" />
+      <Etiqueta texto={pl.l2} x={720} y={625} px={36} ancho={500} mono color={T.sobreAcento} peso={800} fondo={T.acento} relleno={30} delay={TV.pila + 0.6} id="pila-columna" />
+      <Banda texto={e.h} destacada={e.w} tag="PRESIÓN" />
+    </AbsoluteFill>
+  );
+};
+
 /* ───────────── SPLIT ───────────── */
 
 export const Split: React.FC<P> = ({ e }) => {

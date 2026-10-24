@@ -1,8 +1,8 @@
 /**
  * DIRECTOR VIRAL: de UNA FRASE de idea a un reel completo. La IA actúa de guionista y director de arte en una sola llamada barata (JSON compacto):
- * escribe la locución (VOZ_OFF) de cada escena, decide su duración y elige una de 21 plantillas profesionales de reel (gancho cinético, número gigante,
+ * escribe la locución (VOZ_OFF) de cada escena, decide su duración y elige una de 22 plantillas profesionales de reel (gancho cinético, número gigante,
  * versus, barras, línea de tendencia, pasos, lista, ruta de metro, ciudad que crece, cierre con llamada a la acción y, para ciencia y naturaleza,
- * zoom de escala, vista explotada, mira telescópica, impacto, red, termómetro y pantalla dividida). Un motor prefabricado
+ * zoom de escala, vista explotada, mira telescópica, impacto, red, termómetro, pantalla dividida y columna de presión). Un motor prefabricado
  * (src/viral/) dibuja cada plantilla con texto cinético, contadores, gráficas e iconos: la IA nunca escribe código ni coordenadas.
  *
  * Aquí vive todo lo PURO (sin Node ni navegador): leer la idea, vocabulario, prompt cacheable, saneado de lo que devuelve la IA,
@@ -15,10 +15,10 @@ import type { Animacion, EventoSfx } from "./tipos";
 
 /* ───────────── vocabulario cerrado ───────────── */
 
-export const TIPOS_VIRAL = ["HOOK", "NUM", "VS", "BARS", "LINE", "STEPS", "LIST", "ROUTE", "SKYLINE", "DONUT", "PICTO", "TOP", "MITO", "ZOOM", "CAPAS", "MIRA", "IMPACTO", "RED", "TERMO", "SPLIT", "CTA"] as const;
+export const TIPOS_VIRAL = ["HOOK", "NUM", "VS", "BARS", "LINE", "STEPS", "LIST", "ROUTE", "SKYLINE", "DONUT", "PICTO", "TOP", "MITO", "ZOOM", "CAPAS", "MIRA", "IMPACTO", "RED", "TERMO", "SPLIT", "PILA", "CTA"] as const;
 export type TipoViral = (typeof TIPOS_VIRAL)[number];
 /** Plantillas «documentales» (ciencia, naturaleza, tecnología): banda superior, tipografía mono y escenario ilustrado. */
-export const TIPOS_CIENCIA: readonly TipoViral[] = ["ZOOM", "CAPAS", "MIRA", "IMPACTO", "RED", "TERMO", "SPLIT"];
+export const TIPOS_CIENCIA: readonly TipoViral[] = ["ZOOM", "CAPAS", "MIRA", "IMPACTO", "RED", "TERMO", "SPLIT", "PILA"];
 /** Escenarios ilustrados de fondo (siempre sobre el tema oscuro). */
 export const ESCENARIOS_VIRAL = ["espacio", "luna", "bio", "celula"] as const;
 export type EscenarioViral = (typeof ESCENARIOS_VIRAL)[number];
@@ -86,6 +86,8 @@ export type DatosViral = {
   red: { c: string; nodes: string[] } | null;
   /** TERMO: termómetro que barre de `lo` a `hi` y cuadrícula de `n` seres de los que sobreviven `k` */
   termo: { u: string; lo: number; hi: number; n: number; k: number; ic: string; l: string } | null;
+  /** PILA: un solo punto frente a una columna de puntos que crece hasta `n` y aplasta al sujeto */
+  pila: { ic: string; l1: string; l2: string; n: string } | null;
   /** Ficha de cita científica (fuente y año): opcional en cualquier escena menos el CTA */
   cita: { t: string; y: string } | null;
   /** Escenario ilustrado de fondo ("" = el fondo normal) */
@@ -156,6 +158,9 @@ export const TV = {
   /** TERMO: barrido del termómetro */
   termo: 0.75,
   termoDur: 2.7,
+  /** PILA: la columna crece */
+  pila: 0.7,
+  pilaDur: 2.4,
   /** SPLIT */
   splitContar: 0.8,
   splitGana: 2.1,
@@ -238,6 +243,7 @@ export function duracionIdeal(e: Pick<EscenaViral, "t" | "items" | "bars" | "sto
     case "RED": return TV.redNodo(e.red?.nodes.length ?? 4) + 1.7;
     case "TERMO": return TV.termo + TV.termoDur + 1.1;
     case "SPLIT": return 3.6;
+    case "PILA": return TV.pila + TV.pilaDur + 1.2;
     default: return 3.2;
   }
 }
@@ -341,7 +347,7 @@ function destacar(h: string, pedida: string): string {
   return (buenas.length ? buenas : ps).reduce((m, p) => (n(p).length > n(m).length ? p : m), ps[0] ?? "");
 }
 
-const VACIO: DatosViral = { h: "", w: "", sub: "", ic: "brillo", num: null, vs: null, bars: [], barsU: "", hi: -1, line: null, items: [], stops: [], end: "", donut: [], picto: null, top: [], myth: "", truth: "", zoom: null, capas: null, mira: null, impacto: null, red: null, termo: null, cita: null, sc: "" };
+const VACIO: DatosViral = { h: "", w: "", sub: "", ic: "brillo", num: null, vs: null, bars: [], barsU: "", hi: -1, line: null, items: [], stops: [], end: "", donut: [], picto: null, top: [], myth: "", truth: "", zoom: null, capas: null, mira: null, impacto: null, red: null, termo: null, pila: null, cita: null, sc: "" };
 
 /** Entero (acepta «−6», «6,0»…) acotado a [min, max]; si no es un número, `def`. */
 const entero = (v: unknown, def: number, min = -12, max = 12): number => {
@@ -548,6 +554,12 @@ export function normalizarEscenaViral(raw: any, n: number, vozDada?: string): { 
     }
     case "SPLIT":
       break;
+    case "PILA": {
+      const m = r.pila && typeof r.pila === "object" ? r.pila : r;
+      const nn = numero(m.n, "100");
+      d.pila = { ic: icono(m.ic ?? r.ic, ctx, "bicho"), l1: mayus(m.l1, 18) || "REFERENCIA", l2: mayus(m.l2, 24) || `× ${nn}`, n: nn };
+      break;
+    }
     case "CTA": {
       if (!d.sub) d.sub = "";
       break;
@@ -578,7 +590,7 @@ function titularDeVoz(voz: string, max: number): string {
 
 const FONDO_PREFERIDO: Record<TipoViral, FondoViral> = {
   HOOK: "dark", NUM: "gold", VS: "dark", BARS: "light", LINE: "dark", STEPS: "light", LIST: "dark", ROUTE: "dark", SKYLINE: "light", DONUT: "dark", PICTO: "light", TOP: "dark", MITO: "light",
-  ZOOM: "dark", CAPAS: "light", MIRA: "dark", IMPACTO: "dark", RED: "dark", TERMO: "light", SPLIT: "dark", CTA: "gold",
+  ZOOM: "dark", CAPAS: "light", MIRA: "dark", IMPACTO: "dark", RED: "dark", TERMO: "light", SPLIT: "dark", PILA: "light", CTA: "gold",
 };
 
 /**
@@ -605,7 +617,7 @@ export function asignarFondos(tipos: TipoViral[], escenarios: string[] = []): Fo
 const maximo = <T,>(xs: T[], n: number): T[] => xs.slice(0, n);
 
 /** Efectos de sonido automáticos sincronizados con lo que hace cada plantilla (tiempos escalados por el ritmo de la escena). */
-export function sfxViral(e: Pick<EscenaViral, "t" | "items" | "bars" | "stops" | "top" | "picto" | "dur"> & Partial<Pick<EscenaViral, "zoom" | "capas" | "red" | "termo" | "cita" | "sc" | "num">>, ritmo: number): EventoSfx[] {
+export function sfxViral(e: Pick<EscenaViral, "t" | "items" | "bars" | "stops" | "top" | "picto" | "dur"> & Partial<Pick<EscenaViral, "zoom" | "capas" | "red" | "termo" | "pila" | "cita" | "sc" | "num">>, ritmo: number): EventoSfx[] {
   const s = (x: number): number => x * ritmo;
   const L: EventoSfx[] = [{ t: 0.04, tipo: "whoosh", vol: 0.16 }];
   const A = (t: number, tipo: EventoSfx["tipo"], vol = 0.15): void => { L.push({ t, tipo, vol }); };
@@ -643,6 +655,7 @@ export function sfxViral(e: Pick<EscenaViral, "t" | "items" | "bars" | "stops" |
     case "IMPACTO": A(0.1, "whoosh", 0.13); A(s(TV.impacto), "golpe", 0.24); A(s(TV.impacto), "thud", 0.16); A(s(TV.impacto) + 0.06, "polvo", 0.14); A(s(TV.impacto) + 0.5, "ding", 0.1); break;
     case "RED": (e.red?.nodes ?? []).forEach((_, i) => A(s(TV.redNodo(i)), "pop", 0.12)); A(s(TV.redNodo(e.red?.nodes.length ?? 4)), "zap", 0.1); A(s(TV.redNodo(e.red?.nodes.length ?? 4)) + 0.5, "ding", 0.16); break;
     case "TERMO": clics(s(TV.termo), s(TV.termoDur), 0.06); A(s(TV.termo + TV.termoDur), "ding", 0.17); break;
+    case "PILA": clics(s(TV.pila), s(TV.pilaDur), 0.06); A(s(TV.pila + TV.pilaDur), "golpe", 0.2); A(s(TV.pila + TV.pilaDur), "thud", 0.14); A(s(TV.pila + TV.pilaDur) + 0.4, "ding", 0.14); break;
     case "SPLIT": A(0.2, "whoosh", 0.14); A(s(0.45), "golpe", 0.14); clics(s(TV.splitContar), s(1.2), 0.05); A(s(TV.splitGana), "ding", 0.18); break;
     case "CTA": A(s(0.5), "ding", 0.2); A(s(1.1), "pop", 0.15); break;
   }
@@ -782,6 +795,7 @@ IMPACTO objeto que cae y se estrella con polvo y fragmentos: "impacto":{"ic":"co
 RED red de nodos que se conecta (moléculas, ecosistemas, conexiones): "red":{"c":"PROTEÍNA","nodes":["ADN","AGUA","AZÚCAR"]} (3–6 nodos).
 TERMO termómetro que barre un rango mientras seres u objetos de una cuadrícula caen y otros sobreviven: "termo":{"u":"°C","lo":-200,"hi":150,"n":10,"k":2,"ic":"bicho","l":"SOBREVIVEN"} (de n sobreviven k).
 SPLIT pantalla dividida rojo vs azul, dos posturas con el sujeto al centro: mismos campos que VS ("a","b","op","ic").
+PILA presión o cantidad enorme: un punto frente a una columna altísima de puntos que aplasta al sujeto: "pila":{"ic":"bicho","l1":"1 ATMÓSFERA","l2":"6.000 ATMÓSFERAS","n":"6000"} (n solo dígitos).
 STEPS causa→efecto/pasos: "items":[{"l":"METRO","ic":"tren"},{"l":"OBRAS","ic":"edificio"},{"l":"VALOR","ic":"tendencia-alza"}] (3–4).
 LIST beneficios con check: "items":["Sin comisión","Más alcance","Gratis"] (3–4, ≤ 30 car.).
 ROUTE recorrido/etapas en secuencia: "stops":["PORTAL","CENTRO","CALLE 72"] (3–5), "end":"VALORIZACIÓN".

@@ -9,7 +9,7 @@ import { ViralCtx, FPS, H, W, clamp, easeInOut, lerp } from "./comun";
 import { FondoViral } from "./fondos";
 import { FondoEscenario } from "./escenarios";
 import { Capas, FichaCita, Mira, Zoom } from "./ciencia1";
-import { Impacto, Red, Split, Termo } from "./ciencia2";
+import { Impacto, Pila, Red, Split, Termo } from "./ciencia2";
 import { Cta, Hook, Num, Vs } from "./plantillas1";
 import { Bars, Line, Lista, Steps } from "./plantillas2";
 import { Ciudad, Ruta } from "./plantillas3";
@@ -36,6 +36,7 @@ const Plantilla: React.FC<{ e: EscenaViralGuardada }> = ({ e }) => {
     case "RED": return e.red ? <Red e={e} /> : <Hook e={e} />;
     case "TERMO": return e.termo ? <Termo e={e} /> : <Hook e={e} />;
     case "SPLIT": return e.vs ? <Split e={e} /> : <Hook e={e} />;
+    case "PILA": return e.pila ? <Pila e={e} /> : <Hook e={e} />;
     case "CTA": return <Cta e={e} />;
     default: return <Hook e={e} />;
   }

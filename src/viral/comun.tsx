@@ -136,13 +136,15 @@ type PropsTexto = {
   /** entrada con golpe: la palabra llega grande y se asienta */
   golpe?: boolean;
   id?: string;
+  /** color de la palabra destacada cuando `caja` es false (por defecto, el acento del tema) */
+  colorDestacada?: string;
 };
 
 /**
  * Texto cinético: cada palabra entra con spring (y escala / rebote) escalonada; la palabra destacada va en una caja de color ligeramente girada
  * (el recurso típico de los reels) o en color de acento. Se mide el ancho para que nunca toque los márgenes.
  */
-export const TextoCinetico: React.FC<PropsTexto> = ({ texto, destacada = "", y, maxPx, minPx = 40, maxLineas = 3, delay = 0.15, ancho = ANCHO_TEXTO, color, caja = true, alinear = "center", x = W / 2, peso = 900, golpe = false, id = "titular" }) => {
+export const TextoCinetico: React.FC<PropsTexto> = ({ texto, destacada = "", y, maxPx, minPx = 40, maxLineas = 3, delay = 0.15, ancho = ANCHO_TEXTO, color, caja = true, alinear = "center", x = W / 2, peso = 900, golpe = false, id = "titular", colorDestacada }) => {
   const { f, a } = useReloj();
   const { T } = useViral();
   const { lineas, px } = ajustarTexto(texto, ancho, maxPx, minPx, maxLineas);
@@ -158,7 +160,7 @@ export const TextoCinetico: React.FC<PropsTexto> = ({ texto, destacada = "", y, 
             const s = spr(f, a(delay + n * (golpe ? 0.1 : 0.08)), golpe ? { damping: 10, stiffness: 190, mass: 0.6 } : { damping: 13, stiffness: 150, mass: 0.7 });
             const escala = golpe ? 1.7 - 0.7 * s : 0.84 + 0.16 * s;
             return (
-              <span key={j} style={{ position: "relative", display: "inline-block", padding: dest && caja ? `${px * 0.02}px ${px * 0.2}px` : 0, margin: dest && caja ? `0 ${-px * 0.04}px` : 0, color: dest ? (caja ? T.sobreAcento : T.acento) : txt, opacity: clamp(s * 2), transform: `translateY(${(1 - s) * px * 0.55}px) scale(${escala}) rotate(${dest && caja ? -2.2 * s : 0}deg)`, textShadow: T.oscuro && !(dest && caja) ? "0 8px 30px rgba(0,0,0,0.45)" : "none", transformOrigin: "50% 60%" }}>
+              <span key={j} style={{ position: "relative", display: "inline-block", padding: dest && caja ? `${px * 0.02}px ${px * 0.2}px` : 0, margin: dest && caja ? `0 ${-px * 0.04}px` : 0, color: dest ? (caja ? T.sobreAcento : (colorDestacada ?? T.acento)) : txt, opacity: clamp(s * 2), transform: `translateY(${(1 - s) * px * 0.55}px) scale(${escala}) rotate(${dest && caja ? -2.2 * s : 0}deg)`, textShadow: T.oscuro && !(dest && caja) ? "0 8px 30px rgba(0,0,0,0.45)" : "none", transformOrigin: "50% 60%" }}>
                 {dest && caja && <span style={{ position: "absolute", inset: 0, background: T.oscuro ? T.acento : T.texto, borderRadius: px * 0.2, zIndex: -1, boxShadow: `0 ${px * 0.12}px ${px * 0.4}px rgba(0,0,0,0.3)` }} />}
                 <span style={{ position: "relative", color: dest && caja ? (T.oscuro ? T.sobreAcento : T.bg0) : undefined }}>{p}</span>
               </span>
@@ -189,12 +191,13 @@ export const Etiqueta: React.FC<{ texto: string; x: number; y: number; px: numbe
 /* ───────────── iconos y esferas ───────────── */
 
 /** Icono lucide centrado en (x, y), dentro de un <svg>. */
-export const IconoSvg: React.FC<{ nombre: string; x: number; y: number; tam: number; color: string }> = ({ nombre, x, y, tam, color }) => (
-  <g transform={`translate(${x} ${y}) scale(${tam / 100})`}>{ICONOS_PROPIOS.has(nombre) ? iconoPropio(nombre, color) : dibujarIcono(iconoReal(nombre), color)}</g>
-);
+export const IconoSvg: React.FC<{ nombre: string; x: number; y: number; tam: number; color: string }> = ({ nombre, x, y, tam, color }) => {
+  const f = useCurrentFrame();
+  return <g transform={`translate(${x} ${y}) scale(${tam / 100})`}>{ICONOS_PROPIOS.has(nombre) ? iconoPropio(nombre, color, f) : dibujarIcono(iconoReal(nombre), color)}</g>;
+};
 
 /** Iconos propios del motor viral (caja de 100×100 centrada en el origen): luna, átomo, bicho (tipo tardígrado) y planeta con anillo. */
-function iconoPropio(nombre: string, color: string): React.ReactNode {
+function iconoPropio(nombre: string, color: string, f = 0): React.ReactNode {
   const trazo = { fill: "none", stroke: color, strokeWidth: 6, strokeLinecap: "round" as const, strokeLinejoin: "round" as const };
   switch (nombre) {
     case "luna":
@@ -216,7 +219,8 @@ function iconoPropio(nombre: string, color: string): React.ReactNode {
     case "bicho":
       return (
         <g>
-          {[-1, 1].map((lado) => [-24, -8, 8, 24].map((x, i) => <path key={`${lado}${i}`} d={`M ${x * 0.9} ${lado * 16} q ${(i - 1.5) * 3} ${lado * 14} ${(i - 1.5) * 6} ${lado * 22}`} {...trazo} strokeWidth={7} />))}
+          {/* las ocho patas caminan: cada una oscila con su propia fase */}
+          {[-1, 1].map((lado) => [-24, -8, 8, 24].map((x, i) => { const w = Math.sin(f / 5 + i * 1.6 + (lado > 0 ? Math.PI : 0)) * 7; return <path key={`${lado}${i}`} d={`M ${x * 0.9} ${lado * 16} q ${(i - 1.5) * 3 + w * 0.5} ${lado * 14} ${(i - 1.5) * 6 + w} ${lado * 22}`} {...trazo} strokeWidth={7} />; }))}
           <ellipse rx={38} ry={24} {...trazo} fill={color} fillOpacity={0.3} />
           <circle cx={30} cy={-4} r={4.4} fill={color} />
           <path d="M 36,6 q 6,2 10,0" {...trazo} strokeWidth={4} />

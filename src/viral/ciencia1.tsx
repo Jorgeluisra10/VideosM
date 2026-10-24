@@ -20,6 +20,14 @@ type P = { e: EscenaViralGuardada };
 const FONDO_BANDA = "rgba(1,10,31,0.74)";
 const frac = (x: number): number => x - Math.floor(x);
 
+const luminancia = (hex: string): number => {
+  const h = hex.replace("#", "");
+  const v = h.length === 3 ? h.split("").map((c) => parseInt(c + c, 16)) : [0, 2, 4].map((i) => parseInt(h.slice(i, i + 2), 16));
+  return 0.2126 * v[0] + 0.7152 * v[1] + 0.0722 * v[2];
+};
+/** Color de acento que se ve sobre la banda oscura en cualquier fondo (en el dorado, el acento del tema es azul marino: se usa el dorado de marca). */
+export const acentoBanda = (T: { acento: string; sobreAcento: string }): string => (luminancia(T.acento) >= luminancia(T.sobreAcento) ? T.acento : T.sobreAcento);
+
 /* ───────────── banda superior, ficha de cita, indicador de escala ───────────── */
 
 /** Franja oscura semitransparente arriba: etiqueta mono + titular (palabra clave en color de acento). Se abre de izquierda a derecha. */
@@ -27,12 +35,13 @@ export const Banda: React.FC<{ texto: string; destacada: string; tag: string }> 
   const { f, a } = useReloj();
   const { T } = useViral();
   const k = easeOut(spr(f, a(0.02), { damping: 18, stiffness: 120, mass: 0.7 }));
+  const brillo = acentoBanda(T);
   return (
     <>
-      <div style={{ position: "absolute", left: 0, top: 205, width: W, height: 190, background: FONDO_BANDA, borderBottom: `4px solid ${T.acento}`, transformOrigin: "0 50%", transform: `scaleX(${clamp(k)})` }} />
-      <div style={{ position: "absolute", left: 0, top: 205, width: 18, height: 190, background: T.acento, transform: `scaleY(${clamp(k)})`, transformOrigin: "50% 0" }} />
-      <Etiqueta texto={`// ${tag}`} x={120} y={243} px={26} ancho={600} alinear="left" mono color={T.acento} delay={0.12} peso={700} id="banda-tag" />
-      <TextoCinetico texto={texto} destacada={destacada} y={322} maxPx={68} minPx={40} maxLineas={2} caja={false} alinear="left" x={120} ancho={840} color="#FFFFFF" delay={0.14} id="banda" />
+      <div style={{ position: "absolute", left: 0, top: 205, width: W, height: 190, background: FONDO_BANDA, borderBottom: `4px solid ${brillo}`, transformOrigin: "0 50%", transform: `scaleX(${clamp(k)})` }} />
+      <div style={{ position: "absolute", left: 0, top: 205, width: 18, height: 190, background: brillo, transform: `scaleY(${clamp(k)})`, transformOrigin: "50% 0" }} />
+      <Etiqueta texto={`// ${tag}`} x={120} y={243} px={26} ancho={600} alinear="left" mono color={brillo} delay={0.12} peso={700} id="banda-tag" />
+      <TextoCinetico texto={texto} destacada={destacada} y={322} maxPx={68} minPx={40} maxLineas={2} caja={false} alinear="left" x={120} ancho={840} color="#FFFFFF" colorDestacada={brillo} delay={0.14} id="banda" />
     </>
   );
 };
