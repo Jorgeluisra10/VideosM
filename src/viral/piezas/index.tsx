@@ -13,6 +13,9 @@ import { AnomContinente, AnomFriccion } from "./anom2";
 import { AnomCarrera, AnomVertical } from "./anom3";
 import { AnomEscala, AnomSuelo } from "./anom4";
 import { AnomCompresion, AnomLaboratorio } from "./anom5";
+import { RealHistoria, RealTrancon, RealBus } from "./real1";
+import { RealRedes, RealTiempo, RealViaducto, RealUnTren } from "./real2";
+import { RealResultado, RealPlusvalia, RealCaminata, RealCierre } from "./real3";
 
 export const COMPONENTES_PIEZA: Record<string, React.FC<{ e: EscenaViralGuardada }>> = {
   "metro-plano": MetroPlano,
@@ -34,6 +37,17 @@ export const COMPONENTES_PIEZA: Record<string, React.FC<{ e: EscenaViralGuardada
   "anom-laboratorio": AnomLaboratorio,
   "anom-compresion": AnomCompresion,
   "anom-cierre": AnomCierre,
+  "real-historia": RealHistoria,
+  "real-trancon": RealTrancon,
+  "real-bus": RealBus,
+  "real-redes": RealRedes,
+  "real-tiempo": RealTiempo,
+  "real-viaducto": RealViaducto,
+  "real-untren": RealUnTren,
+  "real-resultado": RealResultado,
+  "real-plusvalia": RealPlusvalia,
+  "real-caminata": RealCaminata,
+  "real-cierre": RealCierre,
 };
 
 export const Pieza: React.FC<{ e: EscenaViralGuardada; alternativa: React.ReactNode }> = ({ e, alternativa }) => {

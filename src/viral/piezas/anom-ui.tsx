@@ -167,8 +167,8 @@ export const Odometro: React.FC<{ valor: number; x: number; y: number; px: numbe
   for (let i = n - 1; i >= 0; i--) {
     const p = v / Math.pow(10, i);
     const base = Math.floor(p);
-    const frac = p - base;
-    const rueda = i === 0 ? p : base + clamp((frac - 0.86) / 0.14);
+    // como un odómetro mecánico: las unidades ruedan continuas; cada dígito superior solo avanza en la última unidad antes de que se complete su vuelta
+    const rueda = i === 0 ? p : base + clamp((v % Math.pow(10, i)) - (Math.pow(10, i) - 1));
     const m = ((rueda % 10) + 10) % 10;
     const apagado = i > 0 && p < 1 && i >= Math.max(1, String(Math.floor(v)).length);
     cols.push(
@@ -180,7 +180,7 @@ export const Odometro: React.FC<{ valor: number; x: number; y: number; px: numbe
     );
     const pos = i - decimales;
     if (i > 0 && decimales > 0 && pos === 0) cols.push(<span key={`c${i}`} style={{ display: "inline-block", width: wDig * 0.45, textAlign: "center", lineHeight: `${hDig}px` }}>,</span>);
-    else if (i > 0 && pos > 0 && pos % 3 === 0) cols.push(<span key={`s${i}`} style={{ display: "inline-block", width: wDig * 0.45, textAlign: "center", lineHeight: `${hDig}px`, opacity: v >= Math.pow(10, i) ? 1 : 0.18 }}>{separador}</span>);
+    else if (separador && i > 0 && pos > 0 && pos % 3 === 0) cols.push(<span key={`s${i}`} style={{ display: "inline-block", width: wDig * 0.45, textAlign: "center", lineHeight: `${hDig}px`, opacity: v >= Math.pow(10, i) ? 1 : 0.18 }}>{separador}</span>);
   }
   const pos: React.CSSProperties = alinear === "center" ? { left: x, transform: "translate(-50%, -50%)" } : alinear === "left" ? { left: x, transform: "translateY(-50%)" } : { left: x, transform: "translate(-100%, -50%)" };
   return (

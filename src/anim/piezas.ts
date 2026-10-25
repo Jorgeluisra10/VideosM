@@ -97,6 +97,62 @@ const tCruceZoom = (lw: number): number => {
   return TA.escala.zoomIni + ((lo + hi) / 2) * TA.escala.zoomDur;
 };
 
+/** Km de metro en operación (video «Bogotá, la ciudad sin metro»): cifras redondeadas de las operadoras y de la lista de sistemas de transporte ferroviario de América Latina (2023–2025); Quito 22,5 km. */
+export const REDES_KM: { ciudad: string; km: number }[] = [
+  { ciudad: "Santiago", km: 149 },
+  { ciudad: "São Paulo", km: 110 },
+  { ciudad: "Buenos Aires", km: 57 },
+  { ciudad: "Lima", km: 40 },
+  { ciudad: "Medellín", km: 31 },
+  { ciudad: "Quito", km: 23 },
+  { ciudad: "Bogotá", km: 0 },
+];
+
+/** Datos verificados con fuente (búsqueda web; ver ejemplos/animacion-viral/guion-tecnico-bogota-real.md). */
+export const BOG = {
+  habitantes1942: 400_000,
+  habitantes2025: 7_942_867,
+  anioEstudio: 1942,
+  anioAdjudicacion: 2019,
+  horasInrix2019: 191,
+  pasHoraTM: 43_000,
+  pasBusTM: 150,
+  velTM: "22–24",
+  km: 24,
+  estaciones: 16,
+  alturaM: 14,
+  pasTren: 1800,
+  intervaloS: 90,
+  pasHoraMetro: 72_000,
+  velMetro: 43,
+  minMetro: 27,
+  horasHoy: 2,
+  plusvalia800: 11.7,
+  plusvalia2023: 8.8,
+  rentaMin: 6.8,
+  rentaMax: 9.3,
+  avance: 83.7,
+  anioMedellin: 1995,
+  anioApertura: 2028,
+} as const;
+
+/**
+ * Tiempos del video «Bogotá, la ciudad sin metro» (v3, figuras realistas): compartidos entre el dibujo y el sonido (s a ritmo normal).
+ */
+export const TR = {
+  historia: { ini: 0.9, dur: 6.6, num: [0.9, 7.2] as readonly number[] },
+  trancon: { ini: 1.2, dur: 6.4, cuatro: 8.2 },
+  bus: { llega: 0.3, llegaDur: 3.2, cifra: 3.4, cifraDur: 3.2 },
+  redes: { fila: (i: number): number => 0.8 + 0.55 * i, filaDur: 1.2, cero: 5.6 },
+  tiempo: { ini: 1.0, dur: 4.6, cota: 5.6 },
+  viaducto: { pasa: 1.6, cota: 3.0, cifras: 4.6 },
+  untren: { ini: 1.6, paso: 0.34, cifra: 1.0, ciclo: 6.0 },
+  resultado: { ini: 1.2, dur: 5.0, barras: 6.6, barrasDur: 2.8 },
+  plusvalia: { onda: 1.2, ondaDur: 4.2, cifra: 3.0, cifraDur: 3.6 },
+  caminata: { ini: 1.4, dur: 4.2, tag: 5.8 },
+  cierre: { tren: 1.2, pregunta: 6.4 },
+} as const;
+
 export const PIEZAS: Record<string, DefPieza> = {
   "metro-plano": {
     id: "metro-plano", nombre: "8 millones en un solo plano", ideal: 7.6, fondo: "dark",
@@ -175,6 +231,52 @@ export const PIEZAS: Record<string, DefPieza> = {
   "anom-cierre": {
     id: "anom-cierre", nombre: "Anomalía · cierre en bucle (la pregunta)", ideal: 6.8, fondo: "dark", entra: "corte",
     sfx: (_d, r) => [ev(TA.cierre.abre * r, "whoosh", 0.16), ev((TA.cierre.abre + 1.2) * r, "radar", 0.1), ev(TA.cierre.pregunta * r, "ding", 0.16), ev((TA.cierre.pregunta + 0.4) * r, "golpe", 0.12)],
+  },
+
+  /* ───────────── «Bogotá, la ciudad sin metro» (v3 · figuras realistas) ───────────── */
+  "real-historia": {
+    id: "real-historia", nombre: "Realista · 77 años esperando (la ciudad crece)", ideal: 8.6, fondo: "dark",
+    sfx: (_d, r) => [ev(0.05, "whoosh", 0.12), ...clics(TR.historia.num[0] * r, (TR.historia.num[1] - TR.historia.num[0]) * r, 0.05), ev(TR.historia.num[1] * r + 0.1, "ding", 0.16)],
+  },
+  "real-trancon": {
+    id: "real-trancon", nombre: "Realista · 191 horas en el trancón (cronómetro)", ideal: 10.8, fondo: "dark", entra: "corte",
+    sfx: (_d, r) => [ev(0.05, "whoosh", 0.1), ...clics(TR.trancon.ini * r, TR.trancon.dur * r, 0.05), ev((TR.trancon.ini + TR.trancon.dur) * r, "golpe", 0.2), ev(TR.trancon.cuatro * r, "thud", 0.14)],
+  },
+  "real-bus": {
+    id: "real-bus", nombre: "Realista · TransMilenio llega al semáforo", ideal: 9.8, fondo: "dark", entra: "corte",
+    sfx: (_d, r) => [ev(TR.bus.llega * r, "whoosh", 0.16), ev((TR.bus.llega + TR.bus.llegaDur) * r, "thud", 0.18), ...clics(TR.bus.cifra * r, TR.bus.cifraDur * r, 0.05), ev((TR.bus.cifra + TR.bus.cifraDur) * r, "ding", 0.14), ev(6.6 * r, "zap", 0.1)],
+  },
+  "real-redes": {
+    id: "real-redes", nombre: "Realista · km de metro (rieles con su tren)", ideal: 10.0, fondo: "dark", entra: "corte",
+    sfx: (_d, r) => [...REDES_KM.slice(0, 6).map((_, i) => ev(TR.redes.fila(i) * r, "pop", 0.1)), ev(TR.redes.cero * r, "estatica", 0.1), ev(TR.redes.cero * r + 0.3, "radar", 0.12), ev((TR.redes.cero + 0.9) * r, "golpe", 0.2)],
+  },
+  "real-tiempo": {
+    id: "real-tiempo", nombre: "Realista · 33 años de diferencia (línea de tiempo)", ideal: 8.0, fondo: "dark", entra: "corte",
+    sfx: (_d, r) => [ev(0.05, "whoosh", 0.1), ...clics(TR.tiempo.ini * r, TR.tiempo.dur * r, 0.05), ev((TR.tiempo.ini + TR.tiempo.dur) * r, "golpe", 0.2), ev(TR.tiempo.cota * r, "ding", 0.14)],
+  },
+  "real-viaducto": {
+    id: "real-viaducto", nombre: "Realista · el viaducto a 14 m sobre el trancón", ideal: 8.0, fondo: "dark", entra: "corte",
+    sfx: (_d, r) => [ev(TR.viaducto.pasa * r, "whoosh", 0.18), ev((TR.viaducto.pasa + 3.1) * r, "whoosh", 0.14), ev(TR.viaducto.cota * r, "ding", 0.14), ...[0, 1, 2].map((i) => ev((TR.viaducto.cifras + i * 0.5) * r, "pop", 0.1))],
+  },
+  "real-untren": {
+    id: "real-untren", nombre: "Realista · un tren = 12 buses articulados", ideal: 8.2, fondo: "dark", entra: "corte",
+    sfx: (_d, r) => [ev(0.05, "whoosh", 0.12), ...Array.from({ length: 12 }, (_, i) => ev((TR.untren.ini + i * TR.untren.paso) * r, "pop", 0.08)), ev(TR.untren.ciclo * r, "ding", 0.15)],
+  },
+  "real-resultado": {
+    id: "real-resultado", nombre: "Realista · cronómetros y barras (2 h → 27 min; 43.000 vs 72.000)", ideal: 10.4, fondo: "dark", entra: "corte",
+    sfx: (_d, r) => [ev(0.05, "whoosh", 0.1), ...clics(TR.resultado.ini * r, TR.resultado.dur * r, 0.045), ev((TR.resultado.ini + TR.resultado.dur * 0.28) * r, "ding", 0.16), ev(TR.resultado.barras * r, "whoosh", 0.14), ev((TR.resultado.barras + TR.resultado.barrasDur) * r, "golpe", 0.2)],
+  },
+  "real-plusvalia": {
+    id: "real-plusvalia", nombre: "Realista · las torres suben alrededor de la estación", ideal: 9.6, fondo: "dark", entra: "corte",
+    sfx: (_d, r) => [ev(TR.plusvalia.onda * r, "radar", 0.14), ev((TR.plusvalia.onda + 0.2) * r, "whoosh", 0.1), ...clics(TR.plusvalia.cifra * r, TR.plusvalia.cifraDur * r, 0.05), ev((TR.plusvalia.cifra + TR.plusvalia.cifraDur) * r, "ding", 0.16)],
+  },
+  "real-caminata": {
+    id: "real-caminata", nombre: "Realista · 5 minutos a pie = −6,8 a −9,3 % de arriendo", ideal: 10.0, fondo: "dark", entra: "corte",
+    sfx: (_d, r) => [...Array.from({ length: Math.floor((TR.caminata.dur * r) / 0.4) }, (_, k) => ev(TR.caminata.ini * r + k * 0.4, "tick", 0.06)), ev(TR.caminata.tag * r, "pop", 0.14), ev(TR.caminata.tag * r + 0.05, "golpe", 0.14), ev(6.8 * r, "ding", 0.14)],
+  },
+  "real-cierre": {
+    id: "real-cierre", nombre: "Realista · marzo de 2028 (cierre con la pregunta)", ideal: 10.4, fondo: "dark", entra: "corte",
+    sfx: (_d, r) => [ev(0.05, "whoosh", 0.12), ev(TR.cierre.tren * r, "whoosh", 0.12), ev(1.0 * r, "clic", 0.1), ev(TR.cierre.pregunta * r, "golpe", 0.2), ev(TR.cierre.pregunta * r + 0.3, "ding", 0.16)],
   },
 };
 
