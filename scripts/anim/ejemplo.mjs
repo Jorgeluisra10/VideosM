@@ -2,7 +2,7 @@
 /**
  * Carga el ejemplo incluido (ejemplos/animacion-imnoba) como animación activa, SIN IA y SIN coste:
  * parsea el guion con el mismo parser, ensambla la respuesta de ejemplo y escribe src/data/animacion.json.
- *   node scripts/anim/ejemplo.mjs [--sin-sfx] [--paleta=imnoba|medicina] [--formato=viral|estudio|libre|hud|simple] [--tema=carros|ciencia|conchas|documental|metro-bogota]
+ *   node scripts/anim/ejemplo.mjs [--sin-sfx] [--paleta=imnoba|medicina] [--formato=viral|estudio|libre|hud|simple] [--tema=carros|ciencia|conchas|documental|metro-bogota|anomalia]
  */
 import { mkdirSync, readFileSync, writeFileSync } from "node:fs";
 import { join } from "node:path";
@@ -12,7 +12,7 @@ const args = process.argv.slice(2);
 const N = await cargarNucleoAnim();
 const temaCli = args.find((a) => a.startsWith("--tema="))?.split("=")[1];
 // los ejemplos documentales (conchas, jueces) están pensados para la paleta Retro-Científica; el resto, IMNOBA
-const paleta = args.find((a) => a.startsWith("--paleta="))?.split("=")[1] ?? (temaCli === "conchas" || temaCli === "documental" || temaCli === "metro-bogota" ? "retro" : "imnoba");
+const paleta = args.find((a) => a.startsWith("--paleta="))?.split("=")[1] ?? (temaCli === "conchas" || temaCli === "documental" || temaCli === "metro-bogota" || temaCli === "anomalia" ? "retro" : "imnoba");
 const sfx = !args.includes("--sin-sfx");
 const formato = args.find((a) => a.startsWith("--formato="))?.split("=")[1] ?? "viral";
 const viral = formato === "viral";
@@ -25,7 +25,7 @@ if (viral) {
   // MOTOR VIRAL (por defecto): una frase de idea → reel completo. El JSON que devolvería la IA está en ejemplos/animacion-viral y pasa por el mismo saneado y ensamblado.
   const dir = join(RAIZ, "ejemplos", "animacion-viral");
   const temaArg = args.find((a) => a.startsWith("--tema="))?.split("=")[1];
-  const tema = temaArg === "carros" ? "-carros" : temaArg === "ciencia" ? "-ciencia" : temaArg === "conchas" ? "-conchas" : temaArg === "documental" ? "-documental" : temaArg === "metro-bogota" ? "-metro-bogota" : "";
+  const tema = temaArg === "carros" ? "-carros" : temaArg === "ciencia" ? "-ciencia" : temaArg === "conchas" ? "-conchas" : temaArg === "documental" ? "-documental" : temaArg === "metro-bogota" ? "-metro-bogota" : temaArg === "anomalia" ? "-anomalia" : "";
   const idea = N.parsearIdea(readFileSync(join(dir, `idea${tema}.txt`), "utf8"), { paleta });
   if (idea.errores.length) throw new Error(idea.errores.join("\n"));
   const r = N.ensamblarViral(JSON.parse(readFileSync(join(dir, `respuesta-ia${tema}.json`), "utf8")), { modo: "idea", paleta, sfx });

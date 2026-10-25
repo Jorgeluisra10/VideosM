@@ -17,6 +17,8 @@ export type DefPieza = {
   fondo: "dark" | "light";
   /** efectos de sonido (tiempos escalados por `ritmo`) */
   sfx: (dur: number, ritmo: number) => EventoSfx[];
+  /** cómo entra esta pieza: «semitono» (cortinilla de puntos), «zoom» (la cámara viaja en Z) o «corte» (match-cut seco). Sin valor, lo que decida el estilo. */
+  entra?: "semitono" | "zoom" | "corte";
 };
 
 /* ───────────── datos del piloto «Metro de Bogotá» (los que dio el brief; los marcados «≈» son aproximados y hay que verificarlos antes de publicar) ───────────── */
@@ -68,6 +70,33 @@ const ev = (t: number, tipo: EventoSfx["tipo"], vol = 0.14): EventoSfx => ({ t, 
 /** clics mecánicos (cada ≈ 0,13 s) mientras un contador cuenta */
 const clics = (t0: number, dur: number, vol = 0.06): EventoSfx[] => Array.from({ length: Math.max(0, Math.floor(dur / 0.13)) }, (_, k) => ev(t0 + k * 0.13, "clic", vol));
 
+/**
+ * Tiempos del ensayo «Anomalía» (v2 abstracto), compartidos entre el dibujo y el sonido (s a ritmo normal).
+ */
+export const TA = {
+  disco: { tacha: 1.3, cuenta: 0.4, cuentaDur: 2.4, dim: 5.2 },
+  friccion: { ini: 0.8, dial: 6.0, knob: [0.8, 2.8, 4.8] as readonly number[], horas: 1.5, horasDur: 7.0 },
+  continente: { fila: (i: number): number => 0.6 + 0.5 * i, filaDur: 1.6, vacio: 4.6 },
+  vertical: { tacha: 1.1, alza: 2.8, alzaDur: 2.2 },
+  carrera: { ini: 0.9, dur: 7.4, minTotal: 68, tacha: 3.6, flujo: 5.8, flujoDur: 3.6 },
+  escala: { zoomIni: 0.3, zoomDur: 6.3 },
+  suelo: { onda: 1.0, ondaDur: 4.4, cifra: 1.6, cifraDur: 4.2 },
+  lab: { knob: 0.9, knobDur: 6.4 },
+  compresion: { ini: 0.8, dur: 3.8, fusion: 4.8, fusionDur: 1.8 },
+  cierre: { abre: 0.25, abreDur: 3.4, pregunta: 3.5 },
+} as const;
+
+/** Instante (s, ritmo normal) en que la línea elevada llega al final de la carrera de «Anomalía» (27 de los 68 min simulados). */
+export const tLlegaCarrera = (): number => TA.carrera.ini + (TA.carrera.dur * METRO_DATOS.minMetro) / TA.carrera.minTotal;
+
+/** instante (s) en que el zoom logarítmico de «anom-escala» cruza la potencia de diez `lw` (búsqueda numérica sobre easeInOut) */
+const tCruceZoom = (lw: number): number => {
+  const ease = (k: number): number => (k < 0.5 ? 4 * k * k * k : 1 - Math.pow(-2 * k + 2, 3) / 2);
+  let lo = 0, hi = 1;
+  for (let i = 0; i < 30; i++) { const m = (lo + hi) / 2; (4.5 + (-0.3 - 4.5) * ease(m) > lw ? (lo = m) : (hi = m)); }
+  return TA.escala.zoomIni + ((lo + hi) / 2) * TA.escala.zoomDur;
+};
+
 export const PIEZAS: Record<string, DefPieza> = {
   "metro-plano": {
     id: "metro-plano", nombre: "8 millones en un solo plano", ideal: 7.6, fondo: "dark",
@@ -104,6 +133,48 @@ export const PIEZAS: Record<string, DefPieza> = {
   "metro-balanza": {
     id: "metro-balanza", nombre: "Se comprime el tiempo, se multiplica el valor", ideal: 7.4, fondo: "dark",
     sfx: (_d, r) => [ev(0.05, "whoosh", 0.1), ev(TP.balanza.ini * r, "zap", 0.12), ...clics(TP.balanza.ini * r, TP.balanza.dur * r, 0.05), ev((TP.balanza.ini + TP.balanza.dur) * r, "golpe", 0.2), ev((TP.balanza.ini + TP.balanza.dur) * r + 0.3, "ding", 0.14)],
+  },
+
+  /* ───────────── ensayo «Anomalía» (v2 abstracto) ───────────── */
+  "anom-disco": {
+    id: "anom-disco", nombre: "Anomalía · el disco (gancho)", ideal: 7.4, fondo: "dark",
+    sfx: (_d, r) => [ev(0.05, "whoosh", 0.12), ...clics(TA.disco.cuenta * r, TA.disco.cuentaDur * r, 0.05), ev(TA.disco.tacha * r, "golpe", 0.24), ev(TA.disco.tacha * r, "thud", 0.16), ev((TA.disco.tacha + 0.25) * r, "polvo", 0.1), ev(TA.disco.dim * r, "ding", 0.15)],
+  },
+  "anom-friccion": {
+    id: "anom-friccion", nombre: "Anomalía · fricción (multiagente)", ideal: 10.4, fondo: "dark", entra: "semitono",
+    sfx: (_d, r) => [ev(TA.friccion.ini * r, "zap", 0.1), ...TA.friccion.knob.map((k) => ev(k * r, "tick", 0.1)), ...clics(TA.friccion.horas * r, TA.friccion.horasDur * r, 0.045), ev((TA.friccion.horas + TA.friccion.horasDur) * r, "golpe", 0.2), ev((TA.friccion.horas + TA.friccion.horasDur) * r + 0.35, "ding", 0.12)],
+  },
+  "anom-continente": {
+    id: "anom-continente", nombre: "Anomalía · seis redes y un vacío", ideal: 9.4, fondo: "dark", entra: "corte",
+    sfx: (_d, r) => [...METRO_KM.slice(0, 6).map((_, i) => ev(TA.continente.fila(i) * r, "pop", 0.1)), ev(TA.continente.vacio * r, "estatica", 0.1), ev(TA.continente.vacio * r + 0.2, "radar", 0.12), ev((TA.continente.vacio + 1) * r, "golpe", 0.2)],
+  },
+  "anom-vertical": {
+    id: "anom-vertical", nombre: "Anomalía · el eje Z (isométrico)", ideal: 9.2, fondo: "dark", entra: "corte",
+    sfx: (_d, r) => [ev(0.05, "whoosh", 0.1), ev(TA.vertical.tacha * r, "golpe", 0.22), ev(TA.vertical.alza * r, "whoosh", 0.16), ev((TA.vertical.alza + TA.vertical.alzaDur) * r, "thud", 0.16), ev((TA.vertical.alza + TA.vertical.alzaDur) * r + 0.1, "ding", 0.16)],
+  },
+  "anom-carrera": {
+    id: "anom-carrera", nombre: "Anomalía · duelo estroboscópico y flujo", ideal: 10.6, fondo: "dark", entra: "corte",
+    sfx: (_d, r) => [ev(0.05, "whoosh", 0.1), ev(TA.carrera.ini * r, "whoosh", 0.15), ...clics(TA.carrera.ini * r, 2.4, 0.04), ev(TA.carrera.tacha * r, "golpe", 0.2), ev(tLlegaCarrera() * r, "ding", 0.2), ...clics(TA.carrera.flujo * r, TA.carrera.flujoDur * r, 0.05), ev((TA.carrera.flujo + TA.carrera.flujoDur) * r, "ding", 0.15)],
+  },
+  "anom-escala": {
+    id: "anom-escala", nombre: "Anomalía · ANCHO DEL CUADRO (zoom en Z)", ideal: 6.9, fondo: "dark", entra: "zoom",
+    sfx: (_d, r) => [ev(0.05, "whoosh", 0.12), ...[4, 3, 2, 1, 0].map((k) => ev(tCruceZoom(k) * r, "clic", 0.12)), ev((TA.escala.zoomIni + TA.escala.zoomDur - 0.3) * r, "whoosh", 0.18)],
+  },
+  "anom-suelo": {
+    id: "anom-suelo", nombre: "Anomalía · parcelas extruidas (papel)", ideal: 10.4, fondo: "light", entra: "corte",
+    sfx: (_d, r) => [ev(TA.suelo.onda * r, "radar", 0.14), ev((TA.suelo.onda + 0.3) * r, "whoosh", 0.1), ...clics(TA.suelo.cifra * r, TA.suelo.cifraDur * r, 0.05), ev((TA.suelo.cifra + TA.suelo.cifraDur) * r, "ding", 0.16)],
+  },
+  "anom-laboratorio": {
+    id: "anom-laboratorio", nombre: "Anomalía · laboratorio de valorización (papel)", ideal: 8.8, fondo: "light", entra: "corte",
+    sfx: (_d, r) => [...Array.from({ length: 12 }, (_, k) => ev((TA.lab.knob + (TA.lab.knobDur * k) / 12) * r, "tick", 0.07)), ev((TA.lab.knob + TA.lab.knobDur * 0.34) * r, "zap", 0.1), ev((TA.lab.knob + TA.lab.knobDur) * r, "ding", 0.15)],
+  },
+  "anom-compresion": {
+    id: "anom-compresion", nombre: "Anomalía · metaballs: tiempo y suelo", ideal: 7.4, fondo: "dark", entra: "semitono",
+    sfx: (_d, r) => [ev(0.05, "whoosh", 0.1), ev(TA.compresion.ini * r, "zap", 0.12), ...clics(TA.compresion.ini * r, TA.compresion.dur * r, 0.05), ev(TA.compresion.fusion * r, "whoosh", 0.14), ev((TA.compresion.fusion + TA.compresion.fusionDur) * r, "golpe", 0.2), ev((TA.compresion.fusion + TA.compresion.fusionDur) * r + 0.25, "ding", 0.14)],
+  },
+  "anom-cierre": {
+    id: "anom-cierre", nombre: "Anomalía · cierre en bucle (la pregunta)", ideal: 6.8, fondo: "dark", entra: "corte",
+    sfx: (_d, r) => [ev(TA.cierre.abre * r, "whoosh", 0.16), ev((TA.cierre.abre + 1.2) * r, "radar", 0.1), ev(TA.cierre.pregunta * r, "ding", 0.16), ev((TA.cierre.pregunta + 0.4) * r, "golpe", 0.12)],
   },
 };
 

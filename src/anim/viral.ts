@@ -34,7 +34,7 @@ export const esDocumental = (paleta: string | undefined): boolean => esRetro(pal
 export const ESCENARIOS_VIRAL = ["espacio", "luna", "bio", "celula"] as const;
 export type EscenarioViral = (typeof ESCENARIOS_VIRAL)[number];
 /** Cómo entra una escena: barrido diagonal (por defecto) o zoom continuo (la cámara «viaja» hacia dentro). */
-export type TransicionViral = "barrido" | "zoom" | "corte" | "papel";
+export type TransicionViral = "barrido" | "zoom" | "corte" | "papel" | "semitono";
 export const FONDOS_VIRAL = ["dark", "gold", "light"] as const;
 export type FondoViral = (typeof FONDOS_VIRAL)[number];
 
@@ -931,7 +931,9 @@ export function ensamblarViral(raw: any, ctx: ContextoViral): { anim: Animacion;
     const prev = salida[i - 1];
     const zoom = i > 0 && (e.t === "ZOOM" || prev.t === "ZOOM" || prev.t === "MIRA");
     // documental: corte seco (la ficha de papel entra deslizándose); resto: barrido diagonal
-    e.tr = zoom ? "zoom" : i === 0 ? "barrido" : documental ? (e.tema === "claro" && prev.tema !== "claro" ? "papel" : "corte") : "barrido";
+    // una pieza a medida puede pedir su propia entrada (cortinilla de semitono, zoom en Z o match-cut seco)
+    const pedida = e.t === "PIEZA" ? piezaPorId(e.pieza?.id)?.entra : undefined;
+    e.tr = i === 0 ? "barrido" : pedida ?? (zoom ? "zoom" : documental ? (e.tema === "claro" && prev.tema !== "claro" ? "papel" : "corte") : "barrido");
   });
   salida.forEach((e, i) => { e.trs = salida[i + 1]?.tr ?? "barrido"; });
   const duracion = salida.length ? salida[salida.length - 1].fin : 0;

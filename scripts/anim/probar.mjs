@@ -532,7 +532,7 @@ try {
     // ── Carril B: escenas a medida (PIEZA) y el piloto «Metro de Bogotá» ──
     {
       const srcIdx = readFileSync(p("src", "viral", "piezas", "index.tsx"), "utf8");
-      prueba("registro de piezas: cada id de src/anim/piezas.ts tiene su componente en src/viral/piezas/index.tsx, y hay 9 (las del piloto)", N.IDS_PIEZA.length === 9 && N.IDS_PIEZA.every((id) => srcIdx.includes(`"${id}":`)) && N.IDS_PIEZA.every((id) => N.PIEZAS[id].ideal > 5 && ["dark", "light"].includes(N.PIEZAS[id].fondo) && N.PIEZAS[id].sfx(N.PIEZAS[id].ideal, 1).length > 2));
+      prueba("registro de piezas: cada id de src/anim/piezas.ts tiene su componente en src/viral/piezas/index.tsx, y hay 19 (9 del piloto «Metro de Bogotá» + 10 del ensayo «Anomalía»)", N.IDS_PIEZA.length === 19 && N.IDS_PIEZA.filter((id) => id.startsWith("anom-")).length === 10 && N.IDS_PIEZA.every((id) => srcIdx.includes(`"${id}":`)) && N.IDS_PIEZA.every((id) => N.PIEZAS[id].ideal > 5 && ["dark", "light"].includes(N.PIEZAS[id].fondo) && N.PIEZAS[id].sfx(N.PIEZAS[id].ideal, 1).length > 2));
       const pz = N.normalizarEscenaViral({ t: "PIEZA", voz: "ocho millones en un solo plano", h: "UN SOLO PLANO", dur: 8, cap: "Bogotá", pieza: { id: "metro-plano", props: { a: 1, b: "x", c: [1, 2], malo: { x: 1 }, f: () => 1 } } }, 1);
       prueba("PIEZA: conserva el id y limpia las props (solo números, textos, booleanos y listas); acepta la línea `cap`", pz.escena.t === "PIEZA" && pz.escena.pieza?.id === "metro-plano" && pz.escena.pieza.props.a === 1 && pz.escena.pieza.props.b === "x" && Array.isArray(pz.escena.pieza.props.c) && !("malo" in pz.escena.pieza.props) && pz.escena.cap === "Bogotá");
       const pzx = N.normalizarEscenaViral({ t: "PIEZA", voz: "una frase cualquiera sobre algo", h: "ALGO", pieza: { id: "no-existe" } }, 1);
@@ -547,7 +547,25 @@ try {
       prueba("piloto: SFX y música sincronizados (cada pieza trae efectos dentro de su duración) y la locución lista para grabar con las 12 escenas", eM.anim.escenas.every((e) => (e.sfx ?? []).length > 0 && e.sfx.every((x) => x.t >= 0 && x.t < e.dur)) && eM.locucion.includes("ocho millones de habitantes") && eM.locucion.includes("veintisiete minutos"));
       const eMg = N.ensamblarViral(rawM, { modo: "idea", paleta: "imnoba", sfx: true });
       prueba("PIEZA también funciona con la paleta IMNOBA (se dibuja igual; solo cambian los colores del tema) y sin SFX no trae efectos", eMg.anim.escenas.filter((e) => e.t === "PIEZA").length === 9 && N.validar(eMg.anim).length === 0 && N.ensamblarViral(rawM, { modo: "idea", paleta: "retro", sfx: false }).anim.escenas.every((e) => !e.sfx || e.sfx.length === 0));
-      prueba("panel: el botón del piloto existe y el servidor deja pasar --tema=metro-bogota (lista blanca) al cargar el ejemplo", /Piezas a medida \(piloto: Metro de Bogotá\)/.test(readFileSync(p("scripts", "panel", "web", "app.js"), "utf8")) && /"metro-bogota"\]\.includes\(o\.tema\)/.test(readFileSync(p("scripts", "panel", "servidor.mjs"), "utf8")));
+      prueba("panel: el botón del piloto existe y el servidor deja pasar --tema=metro-bogota (lista blanca) al cargar el ejemplo", /Piezas a medida \(piloto: Metro de Bogotá\)/.test(readFileSync(p("scripts", "panel", "web", "app.js"), "utf8")) && /"metro-bogota"/.test(readFileSync(p("scripts", "panel", "servidor.mjs"), "utf8")));
+    }
+
+    // ── Ensayo «Anomalía» (v2 abstracto): 10 piezas, cortinilla de semitono, zoom en Z, bucle al primer fotograma ──
+    {
+      const kitSrc = readFileSync(p("src", "viral", "piezas", "anom-ui.tsx"), "utf8");
+      const fuentesAn = ["anom1", "anom2", "anom3", "anom4", "anom5"].map((f) => readFileSync(p("src", "viral", "piezas", `${f}.tsx`), "utf8")).join("\n");
+      prueba("Anomalía · paleta del brief: #0D0E12, #F4F1EA, #F04124 (rojo bermellón), #2B38F0 (azul eléctrico) y #D4FF33 (lima ácido) en el kit, y las escenas usan la paleta AN (sin colores sueltos)", ["#0D0E12", "#F4F1EA", "#F04124", "#2B38F0", "#D4FF33"].every((h) => kitSrc.includes(h)) && !/#[0-9a-fA-F]{6}/.test(fuentesAn.replace(/\/\*[\s\S]*?\*\//g, "")));
+      prueba("Anomalía · cero ilustración literal: ninguna escena usa iconos, esferas, escenarios ni plantillas de ciudad (solo cápsulas, nodos, vectores, mallas y partículas)", !/IconoSvg|EsferaIcono|FondoEscenario|Ciudad|Skyline|dibujarIcono/.test(fuentesAn) && /export const Capsula/.test(kitSrc) && /export function voronoi/.test(kitSrc) && /export const Odometro/.test(kitSrc) && /export const Knob/.test(kitSrc) && /export const Visor/.test(kitSrc) && /export const Blancos/.test(kitSrc) && /tachado/.test(kitSrc));
+      const rawA = JSON.parse(readFileSync(p("ejemplos", "animacion-viral", "respuesta-ia-anomalia.json"), "utf8"));
+      const ideaA = N.parsearIdea(readFileSync(p("ejemplos", "animacion-viral", "idea-anomalia.txt"), "utf8"), { paleta: "retro" });
+      const eA = N.ensamblarViral(rawA, { modo: "idea", paleta: "retro", sfx: true });
+      const ids = eA.anim.escenas.map((e) => e.pieza?.id);
+      prueba("Anomalía: la idea es válida, el JSON se ensambla sin correcciones, 10 escenas a medida (disco → … → cierre), válido, 90–100 s y cada voz cabe en su escena", ideaA.errores.length === 0 && eA.correcciones.length === 0 && eA.anim.escenas.length === 10 && ids[0] === "anom-disco" && ids[9] === "anom-cierre" && ids.every((id) => id?.startsWith("anom-")) && N.validar(eA.anim).length === 0 && eA.anim.duracion > 90 && eA.anim.duracion < 100 && eA.anim.escenas.every((e) => e.dur >= e.voz.trim().split(/\s+/).length / 2.95), JSON.stringify(eA.correcciones));
+      prueba("Anomalía: alternancia cromática (oscuro para sistemas físicos; papel solo en el suelo y el laboratorio), gancho en los primeros 3 s (la raya tacha «TRÁFICO» antes del 3.er segundo) y ritmo normal en todas", eA.anim.escenas.map((e) => e.bg).join() === "dark,dark,dark,dark,dark,dark,light,light,dark,dark" && N.TA.disco.tacha < 3 && eA.anim.escenas.every((e) => e.ritmo > 0.95));
+      prueba("Anomalía: transiciones — cortinilla de semitono (fricción y compresión), zoom continuo en Z hacia la escala, y match-cuts secos en el resto; la primera entra con barrido", eA.anim.escenas[0].tr === "barrido" && eA.anim.escenas[1].tr === "semitono" && eA.anim.escenas[8].tr === "semitono" && eA.anim.escenas[5].tr === "zoom" && [2, 3, 4, 6, 7, 9].every((i) => eA.anim.escenas[i].tr === "corte") && /Semitono/.test(readFileSync(p("src", "anim", "Animacion.tsx"), "utf8")) && /semitono/.test(readFileSync(p("src", "viral", "EscenaViral.tsx"), "utf8")));
+      prueba("Anomalía: SFX dentro de cada escena (con golpe al tachar el gancho y ding al resolverse cada «_ _ _ _»), sin SFX si se desactivan", eA.anim.escenas.every((e) => e.sfx.length > 2 && e.sfx.every((x) => x.t >= 0 && x.t < e.dur)) && eA.anim.escenas[0].sfx.some((x) => x.tipo === "golpe" && Math.abs(x.t - N.TA.disco.tacha) < 0.01) && N.ensamblarViral(rawA, { modo: "idea", paleta: "retro", sfx: false }).anim.escenas.every((e) => !e.sfx || e.sfx.length === 0));
+      prueba("Anomalía: la locución (guion para grabar) trae el gancho, la tríada y la pregunta final; la fuente de la tarjeta académica es editable por props (no se inventa autor ni año)", eA.locucion.includes("Bogotá no tiene un problema de tráfico") && eA.locucion.includes("Densidad, cruces, semáforos") && eA.locucion.includes("¿qué ciudad va a aparecer?") && eA.anim.escenas[6].pieza.props.fuente === "BID y estudios de desarrollo urbano" && !/anio/.test(JSON.stringify(rawA)) && /props\?\.fuente/.test(readFileSync(p("src", "viral", "piezas", "anom4.tsx"), "utf8")));
+      prueba("Anomalía: el panel tiene su botón y el servidor deja pasar --tema=anomalia", /Ensayo abstracto «Anomalía»/.test(readFileSync(p("scripts", "panel", "web", "app.js"), "utf8")) && /"anomalia"\]\.includes\(o\.tema\)/.test(readFileSync(p("scripts", "panel", "servidor.mjs"), "utf8")));
     }
 
     // ── Viral v3: plantillas documentales (ZOOM, CAPAS, MIRA, IMPACTO, RED, TERMO, SPLIT), cita, escenarios, zoom continuo, música y foley ──
@@ -882,6 +900,22 @@ try {
     spawnSync(process.execPath, [p("scripts", "anim", "ejemplo.mjs"), "--tema=ciencia"], { cwd: RAIZ });
     const rq4 = spawnSync(process.execPath, [p("scripts", "anim", "previa.mjs"), "--qa"], { cwd: RAIZ, encoding: "utf8", timeout: 600000 });
     prueba("previa.mjs --qa del ejemplo de ciencia (ZOOM, MIRA, SPLIT, TERMO, IMPACTO, CAPAS, RED con banda, fichas de cita y escenarios): una captura por escena y QA sin problemas", rq4.status === 0 && readdirSync(p("trabajo", "tmp", "anim-previa")).filter((x) => /^escena-\d+\.png$/.test(x)).length === 10, (rq4.stdout + rq4.stderr).slice(-700));
+    {
+      spawnSync(process.execPath, [p("scripts", "anim", "ejemplo.mjs"), "--tema=anomalia"], { cwd: RAIZ });
+      const animA = JSON.parse(readFileSync(p("src", "data", "animacion.json"), "utf8"));
+      const ultimo = Math.round(animA.duracion * 60) - 1;
+      const rqa = spawnSync(process.execPath, [p("scripts", "anim", "previa.mjs"), "--qa"], { cwd: RAIZ, encoding: "utf8", timeout: 900000 });
+      prueba("previa.mjs --qa del ensayo «Anomalía» (10 piezas a medida): una captura por escena y QA sin problemas (márgenes, vacíos, congelados)", rqa.status === 0 && readdirSync(p("trabajo", "tmp", "anim-previa")).filter((x) => /^escena-\d+\.png$/.test(x)).length === 10, (rqa.stdout + rqa.stderr).slice(-800));
+      // bucle sin costuras: el último fotograma tiene EXACTAMENTE la geometría del primero (el disco de filotaxis)
+      const dirB = p("trabajo", "tmp", "anim-bucle");
+      const rqb = spawnSync(process.execPath, [p("scripts", "anim", "previa.mjs"), `--frames=0,${ultimo}`, `--salida=${dirB}`], { cwd: RAIZ, encoding: "utf8", timeout: 600000 });
+      const { createRequire: cr } = await import("node:module");
+      const { PNG } = cr(import.meta.url)("pngjs");
+      const A = PNG.sync.read(readFileSync(join(dirB, "escena-00000.png"))), B = PNG.sync.read(readFileSync(join(dirB, `escena-${String(ultimo).padStart(5, "0")}.png`)));
+      let difieren = 0, total = 0;
+      for (let y = 800; y < 1500; y++) for (let x = 140; x < 940; x++) { const i = (y * A.width + x) * 4; total++; if (Math.abs(A.data[i] - B.data[i]) + Math.abs(A.data[i + 1] - B.data[i + 1]) + Math.abs(A.data[i + 2] - B.data[i + 2]) > 24) difieren++; }
+      prueba("Anomalía · cierre en bucle: el último fotograma repite la geometría del primero (disco de 2.400 puntos; ≤ 0,5 % de píxeles distintos en la zona del disco)", rqb.status === 0 && difieren / total < 0.005, `${difieren}/${total} ${(rqb.stdout + rqb.stderr).slice(-300)}`);
+    }
     for (const [tema, esperadas, texto] of [["conchas", 9, "las conchas (DIALES, PAPEL, OSCILO, CUBO, SPLIT, PUNCH)"], ["documental", 8, "los jueces (DUO, PAPEL, PILARES, CICLO, PUNCH, MITO)"], ["metro-bogota", 12, "el piloto Metro de Bogotá (9 piezas a medida: plano, fricción, rieles, carrera, capacidad, suelo 3D, curva, silueta y balanza + PUNCH)"]]) {
       spawnSync(process.execPath, [p("scripts", "anim", "ejemplo.mjs"), `--tema=${tema}`], { cwd: RAIZ });
       const rqd = spawnSync(process.execPath, [p("scripts", "anim", "previa.mjs"), "--qa"], { cwd: RAIZ, encoding: "utf8", timeout: 600000 });

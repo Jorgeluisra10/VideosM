@@ -126,6 +126,19 @@ export const Animacion: React.FC<PropsAnimacion> = ({ animacion, qa }) => {
             </Sequence>
           );
         })}
+      {/* motor viral: las piezas a medida pueden entrar con una cortinilla de semitono (rojo primero si el fondo no cambia, y detrás el fondo de la escena que entra) */}
+      {animacion.formato === "viral" &&
+        animacion.escenas.slice(1).map((e, i) => {
+          if (e.modo !== "VIRAL" || e.tr !== "semitono") return null;
+          const hasta = Math.round(e.inicio * FPS_ANIM);
+          const frames = Math.round(0.6 * FPS_ANIM);
+          const mismoTema = animacion.escenas[i].tema === e.tema;
+          return (
+            <Sequence key={`sv${e.n}`} from={Math.max(0, hasta - frames)} durationInFrames={frames + 1} layout="none">
+              <Semitono color={e.tema === "claro" ? "#F4F1EA" : "#0D0E12"} frames={frames} adelanto={mismoTema ? "#F04124" : undefined} />
+            </Sequence>
+          );
+        })}
       {llevaMusica(animacion) && (
         <Audio
           src={staticFile(MUSICA.archivo)}

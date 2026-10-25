@@ -65,11 +65,13 @@ export const EscenaViral: React.FC<{ escena: EscenaViralGuardada; paleta: string
   // estilo documental (paletas Retro-Científica): fondo plano, titulares en Archivo Black, cortes secos y la ficha de papel que entra deslizándose
   const doc = esDocumental(paleta);
   const entraZoom = !primera && escena.tr === "zoom";
-  const entraCorte = !primera && escena.tr === "corte";
+  const entraCorte = !primera && (escena.tr === "corte" || escena.tr === "semitono");
   const entraPapel = !primera && escena.tr === "papel";
   const saleZoom = escena.trs === "zoom" && t > escena.dur;
   // la cámara del viaje de escala ya hace su propio zoom: la deriva lenta solo se aplica al resto de plantillas
-  const zoomLento = escena.t === "ZOOM" ? 1 : 1 + (doc ? 0.02 : 0.045) * clamp(t / escena.dur);
+  // las piezas «anom-*» son composiciones exactas (el cierre repite el primer fotograma): sin deriva de cámara
+  const sinDeriva = escena.t === "ZOOM" || (escena.t === "PIEZA" && Boolean(escena.pieza?.id.startsWith("anom-")));
+  const zoomLento = sinDeriva ? 1 : 1 + (doc ? 0.02 : 0.045) * clamp(t / escena.dur);
   const k = primera ? 1 : easeInOut(t / SEG_BARRIDO);
   const X = k * 122;
   const clip = primera || k >= 1 || entraCorte || entraPapel ? undefined : entraZoom ? `circle(${k * 1300}px at 50% 50%)` : `polygon(0 0, ${X}% 0, ${X - 16}% 100%, 0 100%)`;
