@@ -307,10 +307,11 @@ export const Torre: React.FC<{ x: number; y: number; w: number; h: number; semil
       <polygon points={`${w / 2},0 ${w / 2 + off},${-off * 0.55} ${w / 2 + off},${-h - off * 0.55} ${w / 2},${-h}`} fill={`url(#${uid}l)`} />
       <rect x={-w / 2} y={-h} width={w} height={h} fill={`url(#${uid}f)`} />
       <rect x={-w / 2} y={-h} width={w} height={h} fill={`url(#${uid}s)`} />
-      {ventanas && Array.from({ length: fil }, (_, r) => Array.from({ length: col }, (_, c) => {
+      {ventanas && h >= 34 && Array.from({ length: fil }, (_, r) => Array.from({ length: col }, (_, c) => {
         const q = azar(r * 13.1 + c * 7.7 + semilla * 3.3);
         const enc = q < luz;
-        return <rect key={`${r}-${c}`} x={-w / 2 + 5 + c * ((w - 10) / col)} y={-h + 7 + r * ((h - 14) / fil)} width={(w - 10) / col - 3} height={(h - 14) / fil - 5} fill={enc ? "#FFD98A" : "#0B1B2C"} opacity={enc ? 0.55 + 0.4 * azar(q * 91) : 0.5} />;
+        const ancho = Math.max(1, (w - 10) / col - 3), alto = Math.max(1, (h - 14) / fil - 5); // nunca negativos (torres muy bajas)
+        return <rect key={`${r}-${c}`} x={-w / 2 + 5 + c * ((w - 10) / col)} y={-h + 7 + r * ((h - 14) / fil)} width={ancho} height={alto} fill={enc ? "#FFD98A" : "#0B1B2C"} opacity={enc ? 0.55 + 0.4 * azar(q * 91) : 0.5} />;
       }))}
       <rect x={-w / 2} y={-h} width={w} height={4} fill="#fff" opacity={0.35} />
       <polygon points={`${-w / 2},${-h} ${w / 2},${-h} ${w / 2 + off},${-h - off * 0.55} ${-w / 2 + off},${-h - off * 0.55}`} fill={aclarar(tono, 0.35)} opacity={0.8} />

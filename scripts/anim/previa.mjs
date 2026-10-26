@@ -35,8 +35,11 @@ const serveUrl = await obtenerPaquete({ bundleDado: valor("bundle") });
 await esperarMemoria("abrir el navegador", { min: 0.5 });
 let navegador = await abrirNavegador();
 const logs = [];
+const erroresConsola = new Set();
 const onBrowserLog = (l) => {
   if (typeof l.text === "string" && l.text.startsWith("[QA] ")) logs.push(l.text.slice(5));
+  // errores de la página (p. ej. «<rect> attribute height: A negative value is not valid»): salen en el registro del render, así que el QA los atrapa
+  else if (l.type === "error" && typeof l.text === "string" && !/^\s*$/.test(l.text) && !/Failed to load resource|favicon/i.test(l.text)) erroresConsola.add(l.text.slice(0, 220));
 };
 const inputProps = { animacion: anim, qa: hacerQA };
 const comp = await selectComposition({ serveUrl, id: "Animacion", inputProps, puppeteerInstance: navegador });
@@ -73,6 +76,7 @@ if (hacerQA) {
   const leer = (ruta) => PNG.sync.read(readFileSync(ruta));
   const tmpA = join(SALIDA, "_a.png"), tmpB = join(SALIDA, "_b.png");
   for (const e of anim.escenas) {
+    await foto(Math.round((e.inicio + 0.1) * FPS), tmpA); // el arranque de cada escena (aquí salen los errores de formas que empiezan en tamaño cero)
     const a = Math.round((e.inicio + Math.min(e.dur * 0.55, e.dur - 0.7)) * FPS), b = a + 30;
     await foto(a, tmpA);
     await foto(b, tmpB);
@@ -91,6 +95,7 @@ if (hacerQA) {
   }
   rmSync(tmpA, { force: true });
   rmSync(tmpB, { force: true });
+  for (const t of erroresConsola) problemas.push(`consola · error del navegador: ${t}`);
   writeFileSync(join(SALIDA, "qa.json"), JSON.stringify({ problemas }, null, 1));
   console.log(problemas.length ? `\n⚠️  QA: ${problemas.length} problema(s)\n${problemas.map((p) => "   · " + p).join("\n")}` : "\n✅ QA: márgenes ≥ 80 px, sin escenas vacías ni congeladas");
 }
