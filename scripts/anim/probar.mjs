@@ -117,7 +117,10 @@ try {
   const srcAnim = fuente(["src", "anim"]);
   prueba("el motor de animación no usa subtítulos ni encabezado", !/Subtitulos|Encabezado|timestamps\.json|tiempoDe/.test(srcAnim));
   prueba("el motor de animación solo monta <Audio> para la música del motor viral (y solo si llevaMusica(); los efectos van por SoundEffect y eventosSfx)", (readFileSync(p("src", "anim", "Animacion.tsx"), "utf8").match(/<Audio/g) ?? []).length === 1 && /llevaMusica\(animacion\) && \(\s*<Audio/.test(readFileSync(p("src", "anim", "Animacion.tsx"), "utf8")) && /eventosSfx/.test(readFileSync(p("src", "anim", "Animacion.tsx"), "utf8")));
-  prueba("los scripts de animación no llaman a ninguna API de voz (TTS/whisper/elevenlabs)", !/audio\/speech|audio\/transcriptions|elevenlabs|edge-tts|generar-voz/i.test(fuente(["scripts", "anim"])));
+  // la voz en off con IA es opcional y vive SOLO en scripts/anim/voz.mjs (OpenAI audio/speech; nada de whisper, elevenlabs ni edge-tts); el resto de los scripts y el motor no tocan ninguna API de voz
+  const fuenteSinVoz = readdirSync(p("scripts", "anim")).filter((x) => /\.(tsx?|mjs)$/.test(x) && !["probar.mjs", "voz.mjs", "poner-voz.mjs"].includes(x)).map((x) => readFileSync(p("scripts", "anim", x), "utf8")).join("\n");
+  const vozSrc = readFileSync(p("scripts", "anim", "voz.mjs"), "utf8");
+  prueba("los scripts de animación no llaman a ninguna API de voz (TTS/whisper/elevenlabs), salvo voz.mjs: la voz en off opcional con OpenAI audio/speech (sin whisper, elevenlabs ni edge-tts)", !/audio\/speech|audio\/transcriptions|elevenlabs|edge-tts|generar-voz/i.test(fuenteSinVoz) && !/audio\/speech/.test(srcAnim) && /audio\/speech/.test(vozSrc) && !/audio\/transcriptions|elevenlabs|edge-tts/i.test(vozSrc));
   const pkg = JSON.parse(readFileSync(p("package.json"), "utf8"));
   prueba("dependencias 3D instaladas: three, @types/three, @react-three/fiber y @remotion/three", ["three", "@react-three/fiber", "@remotion/three"].every((d) => pkg.dependencies[d]) && pkg.devDependencies["@types/three"]);
   prueba("@remotion/three va a la misma versión exacta que remotion", pkg.dependencies["@remotion/three"] === pkg.dependencies.remotion, `${pkg.dependencies["@remotion/three"]} vs ${pkg.dependencies.remotion}`);
@@ -585,6 +588,51 @@ try {
       prueba("Bogotá realista: el panel tiene su botón y el servidor deja pasar --tema=bogota-real", /Video realista «Bogotá, la ciudad sin metro»/.test(readFileSync(p("scripts", "panel", "web", "app.js"), "utf8")) && /"bogota-real"\]\.includes\(o\.tema\)/.test(readFileSync(p("scripts", "panel", "servidor.mjs"), "utf8")));
     }
 
+    // ── Voz en off con IA: catálogo, instrucciones, estimación y firma (puro) ──
+    {
+      const est = N.ESTILOS_VOZ;
+      prueba("voces: 11 voces de OpenAI y estilos colombianos (rola/o, paisa, costeña/o, caleña, locutor/a viral) con una voz base válida cada uno", N.VOCES_OPENAI.length === 11 && est.length >= 8 && est.every((e) => N.vozPorId(e.voz) && e.etiqueta && e.acento) && ["rolo", "paisa", "costen", "valluna", "viral"].every((k) => est.some((e) => e.id.startsWith(k))) && N.estiloPorId(N.ESTILO_POR_DEFECTO) !== null);
+      const ins = N.construirInstrucciones({ estilo: "costena-f", ritmo: "muy-agil", extra: "dilo con picardía" });
+      prueba("voces: las instrucciones piden español de Colombia, el acento del estilo, tono alegre, ritmo, cifras claras y la indicación propia al final con prioridad; nada de acento de España/México/Argentina", /español de Colombia/.test(ins) && /costeño/.test(ins) && /alegre/.test(ins) && /rápido y enérgico/.test(ins) && /cifras/.test(ins) && /No uses acento de España/.test(ins) && /prioridad\): dilo con picardía$/.test(ins) && !/Indicación extra/.test(N.construirInstrucciones({})) && N.construirInstrucciones({}) === N.construirInstrucciones({ estilo: "no-existe", ritmo: "no-existe" }));
+      prueba("voces: la voz efectiva es la elegida a mano, o la recomendada del estilo; la instrucción extra se acota a 600 caracteres", N.vozEfectiva({ estilo: "paisa-m" }) === "ash" && N.vozEfectiva({ estilo: "paisa-m", voz: "onyx" }) === "onyx" && N.vozEfectiva({ voz: "inventada" }) === N.estiloPorId(N.ESTILO_POR_DEFECTO).voz && N.construirInstrucciones({ extra: "x".repeat(2000) }).length < 1400);
+      const animT = { escenas: [{ n: 1, inicio: 0, dur: 5, voz: "Hola *mundo*  feliz" }, { n: 2, inicio: 5, dur: 4, voz: "" }, { n: 3, inicio: 9, dur: 6, voz: "Chao" }] };
+      const tv = N.textosVoz(animT);
+      prueba("voces: los textos por escena se limpian (sin asteriscos ni espacios dobles) y las escenas sin voz se omiten; la firma cambia si cambia un texto o un tiempo y no si no", tv.length === 2 && tv[0].texto === "Hola mundo feliz" && N.firmaVoz(animT) === N.firmaVoz(JSON.parse(JSON.stringify(animT))) && N.firmaVoz(animT) !== N.firmaVoz({ escenas: [{ ...animT.escenas[0], voz: "Hola mundo" }, animT.escenas[1], animT.escenas[2]] }) && N.firmaVoz(animT) !== N.firmaVoz({ escenas: [animT.escenas[0], animT.escenas[1], { ...animT.escenas[2], inicio: 10 }] }));
+      const e1 = N.estimarVoz(animT);
+      prueba("voces: la estimación cuenta caracteres, segundos (≈ 15 caracteres por segundo) y costo (≈ US$ 0,015 por minuto)", e1.escenas === 2 && e1.caracteres === 20 && Math.abs(e1.segundos - 20 / 15) < 1e-9 && Math.abs(e1.usd - Math.round((20 / 15 / 60) * 0.015 * 10000) / 10000) < 1e-9 && N.MODELO_TTS === "gpt-4o-mini-tts");
+      const a1 = N.ajusteTempo(5, 10), a2 = N.ajusteTempo(10, 10), a3 = N.ajusteTempo(30, 10);
+      prueba("voces: ajuste al tiempo de la escena — si cabe no se toca; si no, se acelera lo justo (máx. ×1,35); si ni así cabe, se marca y se corta", a1.tempo === 1 && a1.cabe && a2.tempo > 1 && a2.tempo <= 1.35 && a2.cabe && a3.tempo === 1.35 && !a3.cabe && a3.sobra > 0);
+      prueba("voces: la caché distingue voz, instrucciones, modelo y texto (misma entrada = misma clave)", N.claveCacheVoz("m", "coral", "i", "t") === N.claveCacheVoz("m", "coral", "i", "t") && new Set([N.claveCacheVoz("m", "coral", "i", "t"), N.claveCacheVoz("m", "nova", "i", "t"), N.claveCacheVoz("m", "coral", "j", "t"), N.claveCacheVoz("n", "coral", "i", "t"), N.claveCacheVoz("m", "coral", "i", "u")]).size === 5);
+      const app = readFileSync(p("scripts", "panel", "web", "app.js"), "utf8");
+      prueba("voces: el Estudio tiene la tarjeta «🎙️ Voz en off» con select de estilo colombiano, voz base y ritmo, probar voz, generar, renderizar con voz, ponerla al video ya renderizado y renderizar sin voz", ["select#voz-estilo", "select#voz-voz", "select#voz-ritmo", "Probar esta voz", "Generar la voz de este video", "Renderizar con voz", "Ponerla al video ya renderizado", "Renderizar sin voz", "anim-voz", "anim-poner-voz"].every((t) => app.includes(t)));
+      const rnd = readFileSync(p("scripts", "render.mjs"), "utf8");
+      // mezcla real: con la voz, el audio de salida trae mucha más energía donde habla que solo con efectos y música (y la pista queda colocada en el tiempo de cada escena)
+      {
+        const mockV = await iniciarMock(0);
+        const dirT = p("trabajo", "tmp", "prueba-voz");
+        try {
+          const { generarVozAnimacion } = await import("./voz.mjs");
+          const { mezclarSfx, decodificar, SR } = await import("../audio.mjs");
+          const { buscarFfmpeg } = await import("../medios.mjs");
+          const { ffmpeg } = buscarFfmpeg();
+          const animV = N.ensamblarViral(JSON.parse(readFileSync(p("ejemplos", "animacion-viral", "respuesta-ia-bogota-real.json"), "utf8")), { modo: "idea", paleta: "retro", sfx: true }).anim;
+          const man = await generarVozAnimacion({ anim: animV, opciones: { estilo: "viral-m", ritmo: "agil" }, clave: "k", url: mockV.url, log: () => {} });
+          const args = { raiz: RAIZ, ffmpeg, segundos: 20, eventos: N.eventosSfx(animV).filter((x) => x.frame < 20 * 60), musica: N.llevaMusica(animV) ? N.MUSICA : null };
+          await mezclarSfx({ ...args, salidaWav: join(dirT, "sin-voz.wav") });
+          await mezclarSfx({ ...args, salidaWav: join(dirT, "con-voz.wav"), vozWav: p("trabajo", "anim", "voz", "voz-mezcla.wav") });
+          const rms = (x, a, b) => { let acc = 0, n = 0; for (let i = Math.floor(a * SR); i < Math.min(x.length, Math.floor(b * SR)); i++) { acc += x[i] * x[i]; n++; } return Math.sqrt(acc / Math.max(1, n)); };
+          const A = decodificar(ffmpeg, join(dirT, "sin-voz.wav"), dirT), B = decodificar(ffmpeg, join(dirT, "con-voz.wav"), dirT);
+          prueba("voces: al mezclar con mezclarSfx({vozWav}) el audio trae la voz (≥ 2× la energía de solo efectos y música), el manifiesto marca la firma de este video y ninguna frase invade la escena siguiente", rms(B, 0.5, 8) > 2 * rms(A, 0.5, 8) && man.firma === N.firmaVoz(animV) && man.escenas.length === 11 && man.escenas.every((e) => e.inicio >= 0 && e.dur > 0), `${rms(A, 0.5, 8).toFixed(3)} vs ${rms(B, 0.5, 8).toFixed(3)}`);
+        } finally {
+          await mockV.cerrar();
+          rmSync(dirT, { recursive: true, force: true });
+          rmSync(p("trabajo", "anim", "voz"), { recursive: true, force: true });
+          rmSync(p("trabajo", "salida", "voz"), { recursive: true, force: true });
+        }
+      }
+      prueba("voces: el render mezcla la voz sola cuando es vigente (y avisa si es de otra versión), con --sin-voz la omite, y la música baja bajo la voz", /vozVigente/.test(rnd) && /--sin-voz/.test(rnd) && /vozWav: VOZ_PISTA/.test(rnd) && /vozWav \? 0\.6/.test(readFileSync(p("scripts", "audio.mjs"), "utf8")));
+    }
+
     // ── Viral v3: plantillas documentales (ZOOM, CAPAS, MIRA, IMPACTO, RED, TERMO, SPLIT), cita, escenarios, zoom continuo, música y foley ──
     {
       const z = sv({ t: "ZOOM", h: "de la tierra a un musgo", zoom: { a: 8, b: -4, items: [{ l: "tierra", e: 7, ic: "globo" }, { l: "casi igual", e: 7.3, ic: "casa" }, { l: "musgo", e: -1, ic: "arboles" }, { l: "bicho", e: -3.3, ic: "bicho" }] } }).escena.zoom;
@@ -878,6 +926,60 @@ try {
     await esperarTrabajo();
     h = await http("GET", "/api/anim/estado");
     prueba("«Cargar ejemplo» funciona sin IA ni coste (uso = null)", h.json.animacion.uso === null && h.json.animacion.sfx === true);
+    // ── Voz en off con IA (OpenAI gpt-4o-mini-tts simulado): estilos colombianos, probar, generar por escena, caché, vigencia y poner la voz a un MP4 ──
+    {
+      const dirVoz = p("trabajo", "anim", "voz");
+      rmSync(dirVoz, { recursive: true, force: true });
+      rmSync(p("trabajo", "salida", "voz"), { recursive: true, force: true });
+      h = await http("GET", "/api/anim/voz");
+      prueba("voz: el estado informa que hay texto de voz, la estimación de costo y que todavía no hay voz generada", h.codigo === 200 && h.json.hayTexto === true && h.json.estimado.escenas >= 5 && h.json.estimado.usd > 0 && h.json.voz === null && h.json.claveOpenAI === true, h.texto.slice(0, 300));
+      h = await http("POST", "/api/anim/voz/probar", { estilo: "paisa-f", ritmo: "agil", extra: "más sonriente" });
+      const uv = mock.estado.ultimaVoz;
+      prueba("voz: «Probar voz» pide gpt-4o-mini-tts con la voz del estilo (paisa → coral) y las instrucciones colombianas y alegres (+ las propias), y sirve el mp3", h.codigo === 200 && /^\/salida\/voz\/prueba-.+\.mp3$/.test(h.json.url) && h.json.voz === "coral" && uv.modelo === "gpt-4o-mini-tts" && uv.voz === "coral" && /Colombia/.test(uv.instrucciones) && /paisa/.test(uv.instrucciones) && /alegre/.test(uv.instrucciones) && /más sonriente/.test(uv.instrucciones) && uv.formato === "mp3", JSON.stringify(uv).slice(0, 300));
+      const rmp3 = await fetch(panel.url + h.json.url);
+      prueba("voz: el mp3 de prueba se descarga del panel (audio/mpeg, con contenido)", rmp3.status === 200 && /audio/.test(rmp3.headers.get("content-type") ?? "") && (await rmp3.arrayBuffer()).byteLength > 1000);
+      h = await http("POST", "/api/anim/voz/probar", { estilo: 'x"; rm -rf /', voz: "../../x", ritmo: "zz", extra: "línea 1\nlínea 2" });
+      const uv2 = mock.estado.ultimaVoz;
+      prueba("voz: un estilo/voz/ritmo desconocido cae al valor por defecto (rolo → nova), nunca se pasa tal cual, y los saltos de línea se limpian", h.codigo === 200 && uv2.voz === "nova" && !/rm -rf/.test(uv2.instrucciones) && /línea 1 línea 2/.test(uv2.instrucciones));
+      const antes = mock.estado.voz.speech;
+      h = await http("POST", "/api/accion", { nombre: "anim-voz", opciones: { estilo: "costena-f", ritmo: "agil", extra: "" } });
+      const finV = await esperarTrabajo();
+      const man = existsSync(join(dirVoz, "actual.json")) ? JSON.parse(readFileSync(join(dirVoz, "actual.json"), "utf8")) : null;
+      prueba("voz: «Generar la voz» termina bien, pide una frase por escena y deja el manifiesto, la pista colocada en el tiempo (wav) y el mp3 completo", finV?.estado === "ok" && man && man.voz === "shimmer" && man.estilo === "costena-f" && man.escenas.length >= 5 && mock.estado.voz.speech - antes === man.escenas.length && existsSync(join(dirVoz, "voz-mezcla.wav")) && existsSync(p("trabajo", "salida", "voz", "voz-completa.mp3")), JSON.stringify(finV).slice(0, 300));
+      h = await http("GET", "/api/anim/voz");
+      prueba("voz: el estado la reconoce como vigente para este video, con una fila por escena y el audio completo", h.json.voz?.vigente === true && h.json.voz.voz === "shimmer" && h.json.voz.escenas.length === h.json.estimado.escenas && /voz-completa\.mp3/.test(h.json.voz.audio));
+      const antes2 = mock.estado.voz.speech;
+      await http("POST", "/api/accion", { nombre: "anim-voz", opciones: { estilo: "costena-f", ritmo: "agil", extra: "" } });
+      await esperarTrabajo();
+      prueba("voz: repetir con los mismos ajustes sale de la caché (0 llamadas nuevas a OpenAI = sin costo)", mock.estado.voz.speech === antes2);
+      // si cambia el texto de una escena, la voz generada ya no sirve
+      const animV = JSON.parse(readFileSync(ANIM, "utf8"));
+      animV.escenas[0].voz = animV.escenas[0].voz + " Y un dato más.";
+      writeFileSync(ANIM, JSON.stringify(animV, null, 1));
+      h = await http("GET", "/api/anim/voz");
+      prueba("voz: si cambia el texto de una escena, la voz deja de ser «vigente» (el render la omite y avisa)", h.json.voz?.vigente === false);
+      writeFileSync(ANIM, JSON.stringify(JSON.parse(readFileSync(ANIM, "utf8")), null, 1));
+      // ajuste de tiempos del mock (un mp3 largo): cada frase se acelera a ×1,35 como máximo y se corta con fundido si no cabe, sin salirse de su escena
+      prueba("voz: las frases que no caben en su escena se aceleran (máx. ×1,35) y se marcan; la voz nunca invade la escena siguiente", man.escenas.every((e) => e.tempo <= 1.35 + 1e-6 && (e.cabe || e.cortada || e.tempo > 1)) && man.escenas.every((e) => e.durVoz > 0));
+      // poner la voz a un MP4 ya renderizado (sin volver a renderizar): se fabrica uno mínimo con el ffmpeg de Remotion
+      const { buscarFfmpeg } = await import("../medios.mjs");
+      const { ffmpeg } = buscarFfmpeg();
+      const mp4 = p("trabajo", "salida", "video-animacion.mp4");
+      const hecho = spawnSync(ffmpeg, ["-v", "error", "-y", "-f", "lavfi", "-i", "nullsrc=s=160x120:d=3:r=30", "-f", "lavfi", "-i", "sine=f=330:d=3", "-c:v", "libx264", "-pix_fmt", "yuv420p", "-c:a", "aac", "-shortest", mp4], { encoding: "utf8" });
+      if (hecho.status === 0 && existsSync(mp4)) {
+        const conVoz = p("trabajo", "salida", "video-animacion-con-voz.mp4");
+        rmSync(conVoz, { force: true });
+        await http("POST", "/api/accion", { nombre: "anim-poner-voz", opciones: {} });
+        const finP = await esperarTrabajo();
+        prueba("voz: «Ponerla al video ya renderizado» mezcla la voz con el audio del MP4 sin tocar el video y deja video-animacion-con-voz.mp4 con video H.264 y audio AAC", finP?.estado === "ok" && existsSync(conVoz) && /h264/.test(spawnSync(buscarFfmpeg().ffprobe, ["-v", "error", "-select_streams", "v:0", "-show_entries", "stream=codec_name", "-of", "csv=p=0", conVoz], { encoding: "utf8" }).stdout) && /aac/.test(spawnSync(buscarFfmpeg().ffprobe, ["-v", "error", "-select_streams", "a:0", "-show_entries", "stream=codec_name", "-of", "csv=p=0", conVoz], { encoding: "utf8" }).stdout), JSON.stringify(finP).slice(0, 300));
+        rmSync(mp4, { force: true });
+        rmSync(conVoz, { force: true });
+      } else prueba("voz: «Ponerla al video ya renderizado» (se omite: este ffmpeg no puede fabricar un MP4 de prueba)", true);
+      rmSync(dirVoz, { recursive: true, force: true });
+      rmSync(p("trabajo", "salida", "voz"), { recursive: true, force: true });
+      h = await http("POST", "/api/accion", { nombre: "anim-poner-voz", opciones: {} });
+      prueba("voz: sin video renderizado o sin voz generada se explica qué hacer (412), no se lanza nada", h.codigo === 412);
+    }
     h = await http("POST", "/api/anim/cargar", { id });
     prueba("cargar del historial devuelve el guion y las opciones", h.codigo === 200 && /\[ESCENA 1/.test(h.json.guion) && h.json.opciones.modelo === "gpt-4.1-mini");
     h = await http("POST", "/api/accion", { nombre: "anim-generar", opciones: { guion: guionEjemplo } });

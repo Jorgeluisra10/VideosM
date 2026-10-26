@@ -455,11 +455,87 @@ async function cargarEjemplo(formato) {
   } catch (e) { fallo(e); }
 }
 
+/* ───────────── Voz en off con IA (OpenAI gpt-4o-mini-tts): estilos colombianos y alegres ───────────── */
+const VOZ = { estilo: leerLocal("videmed-voz-estilo") ?? "", voz: leerLocal("videmed-voz-voz") ?? "", ritmo: leerLocal("videmed-voz-ritmo") ?? "", extra: leerLocal("videmed-voz-extra") ?? "", info: null, probando: false, prueba: null };
+const guardarVoz = () => { guardarLocal("videmed-voz-estilo", VOZ.estilo); guardarLocal("videmed-voz-voz", VOZ.voz); guardarLocal("videmed-voz-ritmo", VOZ.ritmo); guardarLocal("videmed-voz-extra", VOZ.extra); };
+const opcionesDeVoz = () => ({ estilo: VOZ.estilo, voz: VOZ.voz, ritmo: VOZ.ritmo, extra: VOZ.extra });
+
+async function probarVozPanel() {
+  if (VOZ.probando) return;
+  VOZ.probando = true;
+  await pintarVoz(false);
+  try {
+    const frase = EST.datos?.animacion?.escenas?.[0]?.texto;
+    VOZ.prueba = await api("/api/anim/voz/probar", { metodo: "POST", cuerpo: { ...opcionesDeVoz(), texto: frase ? String(frase).slice(0, 260) : "" } });
+    aviso(`🔊 Voz «${VOZ.prueba.voz}» lista${VOZ.prueba.costoUsd ? ` (≈ US$ ${VOZ.prueba.costoUsd})` : " (de la caché)"}.`, "ok", 3500);
+  } catch (e) { fallo(e); }
+  VOZ.probando = false;
+  await pintarVoz(false);
+  document.querySelector("#voz-prueba-audio")?.play?.().catch(() => {});
+}
+
+async function pintarVoz(recargar = true) {
+  const cont = $("#estudio-voz");
+  if (!cont) return;
+  const N = EST.N;
+  if (recargar || !VOZ.info) { try { VOZ.info = await api("/api/anim/voz"); } catch { VOZ.info = null; } }
+  const d = VOZ.info;
+  const estilo = N.estiloPorId(VOZ.estilo) ?? N.estiloPorId(N.ESTILO_POR_DEFECTO);
+  VOZ.estilo = estilo.id;
+  VOZ.ritmo = N.RITMOS_VOZ.find((r) => r.id === VOZ.ritmo)?.id ?? N.RITMO_POR_DEFECTO;
+  if (VOZ.voz && !N.vozPorId(VOZ.voz)) VOZ.voz = "";
+  const hayAnim = Boolean(EST.datos?.animacion);
+  const sinClave = !S.claves.openai;
+  const bloqueado = !hayAnim || !d?.hayTexto || sinClave || ocupado();
+  const razon = !hayAnim ? "Carga un ejemplo o genera un video primero" : !d?.hayTexto ? "Este video no trae texto de voz" : sinClave ? "Falta la clave de OpenAI (Ajustes)" : ocupado() ? "Hay un trabajo en curso" : "";
+  const v = d?.voz;
+  const est = d?.estimado;
+  cont.replaceChildren(h("div.tarjeta.voz",
+    h("h2", "🎙️ Voz en off con IA · colombiana y alegre"),
+    h("p.suave", "Elige un estilo (bogotano, paisa, costeño, caleño…), pruébalo y genera la voz de TODAS las escenas de este video. Cada frase se ajusta al tiempo de su escena y se mezcla sola con los efectos y la música al renderizar."),
+    h("div.ajustes-3",
+      h("div.campo", h("label.etq", { for: "voz-estilo" }, "Estilo colombiano"),
+        h("select#voz-estilo", { onchange: (e) => { VOZ.estilo = e.target.value; guardarVoz(); pintarVoz(false); } }, N.ESTILOS_VOZ.map((x) => h("option", { value: x.id, selected: x.id === VOZ.estilo }, x.etiqueta)))),
+      h("div.campo", h("label.etq", { for: "voz-voz" }, "Voz base"),
+        h("select#voz-voz", { onchange: (e) => { VOZ.voz = e.target.value; guardarVoz(); pintarVoz(false); } },
+          h("option", { value: "", selected: !VOZ.voz }, `✨ Recomendada del estilo (${estilo.voz})`),
+          N.VOCES_OPENAI.map((x) => h("option", { value: x.id, selected: x.id === VOZ.voz }, `${x.nombre} · ${x.suena} · ${x.nota}`)))),
+      h("div.campo", h("label.etq", { for: "voz-ritmo" }, "Ritmo"),
+        h("select#voz-ritmo", { onchange: (e) => { VOZ.ritmo = e.target.value; guardarVoz(); pintarVoz(false); } }, N.RITMOS_VOZ.map((x) => h("option", { value: x.id, selected: x.id === VOZ.ritmo }, x.etiqueta))))),
+    h("details", { open: Boolean(VOZ.extra) }, h("summary.chico-t.suave", "Instrucciones propias (opcional) y lo que se le pide al modelo"),
+      h("textarea#voz-extra", { rows: 2, spellcheck: false, placeholder: "Ej.: habla como si le contaras un chisme a una amiga; más emoción en las cifras; di «parce» al final…", value: VOZ.extra, oninput: (e) => { VOZ.extra = e.target.value; guardarVoz(); } }),
+      h("p.chico-t.suave", { style: "white-space:pre-wrap" }, N.construirInstrucciones(opcionesDeVoz()))),
+    est && est.escenas ? h("div.fila.chicos", h("span.chip", `${est.escenas} escenas`), h("span.chip", `${est.caracteres} caracteres ≈ ${Math.round(est.segundos)} s de voz`), h("span.chip.ok", `≈ US$ ${est.usd.toFixed(3)} (gpt-4o-mini-tts)`)) : null,
+    h("div.fila", { style: "margin-top:10px;align-items:center" },
+      h("button.btn", { type: "button", disabled: sinClave || VOZ.probando || ocupado(), title: sinClave ? "Falta la clave de OpenAI (Ajustes)" : "", onclick: probarVozPanel }, VOZ.probando ? "⏳ Generando prueba…" : "🔊 Probar esta voz"),
+      VOZ.prueba ? h("audio#voz-prueba-audio", { controls: true, src: VOZ.prueba.url, style: "height:36px" }) : null,
+      h("span.espacio"),
+      h("button.btn.primario", { type: "button", disabled: bloqueado, title: razon, onclick: async () => { if (ocupado()) return aviso("Hay un trabajo en curso: espera a que termine.", "aviso"); await lanzar("anim-voz", opcionesDeVoz()); } }, v ? "🎙️ Volver a generar la voz" : "🎙️ Generar la voz de este video")),
+    sinClave ? h("div.nota.aviso", "🔑 Para generar la voz con IA falta la clave de OpenAI: ", h("a", { href: "#/ajustes" }, "ponla en Ajustes"), ".") : null,
+    v ? h("div", { style: "margin-top:12px" },
+      v.vigente ? h("div.nota.ok", `✅ Voz lista: «${v.voz}» · ${N.estiloPorId(v.estilo)?.etiqueta ?? v.estilo} · ritmo ${v.ritmo}. Se mezcla sola al renderizar.`) : h("div.nota.aviso", "⚠️ La voz generada es de otra versión de este video (cambió el texto o los tiempos). Vuelve a generarla."),
+      v.audio ? h("div.fila.chicos", h("span.chico-t.suave", "Escucha la voz completa:"), h("audio", { controls: true, src: v.audio, style: "height:36px" })) : null,
+      v.escenas?.some((x) => !x.cabe) ? h("div.nota.aviso", `⚠️ En la(s) escena(s) ${v.escenas.filter((x) => !x.cabe).map((x) => x.n).join(", ")} la voz es más larga que la escena (se aceleró al máximo y se cortó el final). Acorta ese texto o alarga la escena.`) : null,
+      h("details", h("summary.chico-t.suave", "Detalle por escena"),
+        h("table", h("thead", h("tr", h("th", "#"), h("th", "Escena"), h("th", "Voz"), h("th", "Ajuste"))),
+          h("tbody", v.escenas.map((x) => h("tr", h("td", x.n), h("td", `${num(x.dur, 1)} s`), h("td", `${num(x.durVoz, 1)} s`), h("td", x.cortada ? "✂️ cortada" : x.tempo > 1.001 ? `⏩ ×${num(x.tempo, 2)}` : "✅")))))),
+      h("div.fila", { style: "margin-top:10px" },
+        h("button.btn.primario", { type: "button", disabled: ocupado() || !v.vigente, title: v.vigente ? "" : "La voz es de otra versión del video: vuelve a generarla", onclick: async () => { if (ocupado()) return aviso("Hay un trabajo en curso: espera a que termine.", "aviso"); await lanzar("anim-render"); } }, "🎬 Renderizar con voz"),
+        h("button.btn", { type: "button", disabled: ocupado() || !d?.video || !v.vigente, title: !v.vigente ? "La voz es de otra versión del video: vuelve a generarla" : d?.video ? "Mezcla la voz con el audio del MP4 ya renderizado, sin volver a renderizar" : "Primero renderiza el video", onclick: async () => { if (ocupado()) return aviso("Hay un trabajo en curso: espera a que termine.", "aviso"); await lanzar("anim-poner-voz"); } }, "➕ Ponerla al video ya renderizado"),
+        h("button.btn.chico", { type: "button", disabled: ocupado(), onclick: async () => { if (ocupado()) return aviso("Hay un trabajo en curso: espera a que termine.", "aviso"); await lanzar("anim-render", { sinVoz: true }); } }, "🔇 Renderizar sin voz"))) : null,
+    d?.videoConVoz ? h("div", { style: "margin-top:12px" }, h("h3", "🎞️ Video con voz"),
+      h("div.fila", { style: "align-items:flex-start;gap:18px" },
+        h("video.reel", { src: d.videoConVoz.url, controls: true, preload: "metadata" }),
+        h("div", h("p", `${d.videoConVoz.mb} MB · con la voz mezclada`), h("a.btn.primario", { href: "/salida/video-animacion-con-voz.mp4?descargar=1" }, "⬇️ Descargar el video con voz")))) : null,
+    h("p.chico-t.suave", "⚠️ Las voces de OpenAI no son «de un país»: el acento colombiano se logra pidiéndoselo al modelo y puede variar de una prueba a otra. Prueba varias y quédate con la que mejor suene. Es una voz sintética."),
+  ));
+}
+
 async function vistaEstudio(cont) {
   EST.N ??= await import("/modulos/anim-nucleo.js");
   const N = EST.N;
   await estudioDatos();
-  S.estudioRefrescar = async () => { await estudioDatos(); pintarResultadoEstudio(); pintarEstimacion(); };
+  S.estudioRefrescar = async () => { await estudioDatos(); pintarResultadoEstudio(); pintarEstimacion(); await pintarVoz(); };
   const generar = async () => {
     if (ocupado()) return aviso("Hay un trabajo en curso: espera a que termine.", "aviso");
     if (!S.claves.openai) return aviso("Falta la clave de OpenAI: ponla en ⚙️ Ajustes. Mientras tanto puedes cargar el ejemplo y renderizarlo gratis.", "aviso", 9000);
@@ -467,7 +543,7 @@ async function vistaEstudio(cont) {
     await lanzar("anim-generar", { guion: EST.guion, modelo: EST.modelo, sfx: EST.sfx, paleta: EST.paleta });
   };
   cont.replaceChildren(
-    h("div.cab-vista", h("div", h("h1", "✨ Estudio de video"), h("p.suave", "Escribe tu idea (una frase o con todo el detalle que quieras). La IA escribe el guion, decide la duración y diseña cada escena con plantillas de reel profesionales. Sin subtítulos y sin voz: tú grabas la locución con el guion que te deja listo."))),
+    h("div.cab-vista", h("div", h("h1", "✨ Estudio de video"), h("p.suave", "Escribe tu idea (una frase o con todo el detalle que quieras). La IA escribe el guion, decide la duración y diseña cada escena con plantillas de reel profesionales. Sin subtítulos: la voz la grabas tú con el guion que te deja listo, o se la pones con IA (voces colombianas) en la tarjeta «🎙️ Voz en off»."))),
     h("div.tarjeta.estudio",
       h("div.fila", h("label.etq", { for: "guion" }, "1 · Tu idea (una frase o todo el detalle que quieras)"), h("span.espacio"),
         h("button.btn.chico", { type: "button", onclick: async () => aviso((await copiarTexto(N.PROMPT_FORMATEADOR_IDEA)) ? "📋 Prompt copiado. Pégalo en ChatGPT/Claude con tus notas y te devolverá la frase de idea lista para pegar aquí." : "No pude copiar automáticamente: selecciona el texto a mano.", "ok", 7000) }, "📋 Copiar Prompt Formateador"),
@@ -500,10 +576,12 @@ async function vistaEstudio(cont) {
       h("div.fila.pie-estudio", h("div#costo-estimado.costo"), h("span.espacio"),
         h("button#btn-generar.btn.primario.grande", { type: "button", onclick: generar }, "🎨 Generar animación"))),
     !S.claves.openai ? h("div.nota.aviso", "🔑 Para generar con IA falta la clave de OpenAI: ", h("a", { href: "#/ajustes" }, "ponla en Ajustes"), ". El botón «Cargar ejemplo» + «Renderizar» funciona sin clave.") : null,
+    h("div#estudio-voz"),
     h("div#estudio-resultado"),
   );
   pintarEstimacion();
   pintarResultadoEstudio();
+  pintarVoz();
 }
 
 // ---------------------------------------------------------------------------

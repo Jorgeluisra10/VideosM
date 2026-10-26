@@ -14,7 +14,7 @@ import { existsSync, mkdirSync, readFileSync, rmSync, writeFileSync } from "node
 import { basename, dirname, join } from "node:path";
 import { build } from "esbuild";
 
-const SR = 48000;
+export const SR = 48000;
 const FPS = 60;
 
 /** Lee la lista de efectos del tema activo (src/sonido.ts) empaquetándola con esbuild, sin cargar React. */
@@ -36,7 +36,7 @@ async function cargarSonido(raiz) {
  * Decodifica cualquier audio a PCM float mono a 48 kHz con el ffmpeg incluido en Remotion.
  * Esa build es mínima (sin muxers "crudos"): se decodifica a un WAV temporal y se lee en Node.
  */
-function decodificar(ffmpeg, ruta, tmpDir) {
+export function decodificar(ffmpeg, ruta, tmpDir) {
   mkdirSync(tmpDir, { recursive: true });
   const tmp = join(tmpDir, `dec-${basename(ruta)}.wav`);
   const r = spawnSync(ffmpeg, ["-v", "error", "-y", "-i", ruta, "-ac", "1", "-ar", String(SR), "-c:a", "pcm_s16le", tmp], { encoding: "utf8" });
@@ -66,7 +66,7 @@ const interpolar = (x, xs, ys) => {
   return ys[ys.length - 1];
 };
 
-function escribirWavEstereo(ruta, mono) {
+export function escribirWavEstereo(ruta, mono) {
   const n = mono.length;
   const datos = Buffer.alloc(44 + n * 4);
   datos.write("RIFF", 0);
@@ -160,7 +160,7 @@ export async function mezclarAudio({ raiz, ffmpeg, segundos, salidaWav }) {
  * Mezcla SOLO efectos de sonido (sin voz, sin ambiente, sin música) para el motor de animación.
  * `eventos` = [{ frame, tipo, vol }] con fotograma absoluto (lo da eventosSfx() de src/anim/sonido.ts).
  */
-export async function mezclarSfx({ raiz, ffmpeg, segundos, salidaWav, eventos, musica }) {
+export async function mezclarSfx({ raiz, ffmpeg, segundos, salidaWav, eventos, musica, vozWav }) {
   const { DUR_SFX, VOL_SFX, archivoSfx } = await cargarSonido(raiz);
   const faltan = [...new Set(eventos.map((s) => archivoSfx(s.tipo)))].some((f) => !existsSync(join(raiz, "public", f))) || (musica && !existsSync(join(raiz, "public", musica.archivo)));
   if (faltan) spawnSync(process.execPath, [join(raiz, "scripts", "generar-sfx.mjs"), "--solo-faltantes"], { cwd: raiz, stdio: "ignore" });
@@ -174,15 +174,20 @@ export async function mezclarSfx({ raiz, ffmpeg, segundos, salidaWav, eventos, m
     for (let i = 0; i < N; i++) {
       const seg = i / SR;
       const rampa = Math.min(1, seg / musica.entrada, Math.max(0, (segundos - seg) / musica.salida));
-      mezcla[i] += mus[i % mus.length] * musica.volumen * rampa;
+      mezcla[i] += mus[i % mus.length] * musica.volumen * rampa * (vozWav ? 0.6 : 1); // con voz, la música baja para que la locución mande
     }
+  }
+  // voz en off (pista ya colocada por escena en scripts/anim/voz.mjs): volumen 1
+  if (vozWav) {
+    const voz = decodificar(ffmpeg, vozWav, tmpDir);
+    for (let i = 0; i < Math.min(N, voz.length); i++) mezcla[i] += voz[i];
   }
   for (const s of eventos) {
     if (!cache.has(s.tipo)) cache.set(s.tipo, decodificar(ffmpeg, join(raiz, "public", archivoSfx(s.tipo)), tmpDir));
     const buf = cache.get(s.tipo);
     const inicio = Math.round(s.frame * (SR / FPS));
     const largo = Math.min(buf.length, Math.ceil(DUR_SFX[s.tipo] * FPS) * (SR / FPS));
-    const vol = s.vol ?? VOL_SFX;
+    const vol = (s.vol ?? VOL_SFX) * (vozWav ? 0.8 : 1);
     for (let k = 0; k < largo; k++) {
       const i = inicio + k;
       if (i >= 0 && i < N) mezcla[i] += buf[k] * vol;

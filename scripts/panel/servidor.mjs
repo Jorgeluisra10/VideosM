@@ -18,6 +18,8 @@ import { cargarEnv } from "../ia/entorno.mjs";
 import { PERFIL_BASE, cargarPerfil, listarPerfiles, paletas, slug } from "../ia/perfil.mjs";
 import { RAIZ } from "../ia/puente.mjs";
 import { cargarNucleoAnim, compilarNucleo } from "../anim/nucleo.mjs";
+import { probarVoz, vozVigente } from "../anim/voz.mjs";
+import { configuracion } from "../ia/entorno.mjs";
 import { espacioLibreGB, limpiarTemporales, mensajeSinEspacio } from "../_disco.mjs";
 import { archivosDoc, entorno, guardarAjustes, leerAjustes, probar } from "./ajustes.mjs";
 import { activarBorrador, borrarMedio, borrarProyecto, dirArchivo, dirProyecto, dirTrabajoIa, estadoProyecto, existeProyecto, guardarBriefProyecto, guardarMedio, guionDe, importarEjemplo, leerBriefProyecto, listarArchivo, listarEjemplos, listarMediosProyecto, listarProyectos, marcarEtapa, nombreSeguro, resumenActivo, temaActivoJson } from "./proyectos.mjs";
@@ -332,7 +334,16 @@ function estadoAnim() {
 
 /** Lanza el render de la animación activa (1080×1920 a 60 fps). */
 function lanzarRender(o = {}) {
-  return lanzar({ nombre: "anim-render", titulo: "Renderizar video (1080×1920 a 60 fps)", pasos: [{ titulo: "Renderizar la animación", cmd: [script("render.mjs"), "--composicion=Animacion", ...(o.hilos ? [`--concurrency=${Number(o.hilos) || 1}`] : []), ...(o.desdeCero ? ["--desde-cero"] : [])] }] });
+  return lanzar({ nombre: "anim-render", titulo: "Renderizar video (1080×1920 a 60 fps)", pasos: [{ titulo: "Renderizar la animación", cmd: [script("render.mjs"), "--composicion=Animacion", ...(o.hilos ? [`--concurrency=${Number(o.hilos) || 1}`] : []), ...(o.desdeCero ? ["--desde-cero"] : []), ...(o.sinVoz ? ["--sin-voz"] : [])] }] });
+}
+
+/** Valida lo que llega del panel (estilo, voz, ritmo, instrucciones extra) contra el catálogo: nunca se pasa texto libre a un comando salvo `extra` (acotado). */
+function opcionesVoz(N, o = {}) {
+  const estilo = N.estiloPorId(o.estilo)?.id ?? N.ESTILO_POR_DEFECTO;
+  const ritmo = N.RITMOS_VOZ.find((r) => r.id === o.ritmo)?.id ?? N.RITMO_POR_DEFECTO;
+  const voz = N.vozPorId(o.voz)?.id ?? N.vozEfectiva({ estilo });
+  const extra = String(o.extra ?? "").replace(/[\r\n]+/g, " ").trim().slice(0, 600);
+  return { estilo, ritmo, voz, extra };
 }
 
 /** Acciones del estudio (siempre «un trabajo a la vez», como el resto del panel). */
@@ -359,6 +370,24 @@ async function lanzarAnim(nombre, o = {}) {
     case "anim-ejemplo": {
       const N_PALETAS = Object.keys((await cargarNucleoAnim()).PALETAS);
       return lanzar({ nombre, titulo: o.tema === "metro-bogota" ? "Cargar el piloto «Metro de Bogotá»" : "Cargar el ejemplo IMNOBA", pasos: [{ titulo: o.tema === "metro-bogota" ? "Cargar el piloto con escenas a medida (sin IA, sin coste)" : "Cargar el ejemplo (sin IA, sin coste)", cmd: [script("anim", "ejemplo.mjs"), ...(o.sfx === false ? ["--sin-sfx"] : []), ...(o.paleta ? [`--paleta=${N_PALETAS.includes(o.paleta) ? o.paleta : "imnoba"}`] : []), ...(["viral", "estudio", "libre", "hud", "simple"].includes(o.formato) ? [`--formato=${o.formato}`] : []), ...(["carros", "ciencia", "conchas", "documental", "metro-bogota", "anomalia", "bogota-real"].includes(o.tema) ? [`--tema=${o.tema}`] : [])] }] });
+    }
+    case "anim-voz": {
+      pedir(claveOpenAI() || o.prueba, "Para ponerle voz hace falta la clave de OpenAI (pestaña Ajustes).", 412);
+      const a = leerAnim();
+      pedir(a, "Primero genera la animación (o carga el ejemplo).", 412);
+      const N = await cargarNucleoAnim();
+      pedir(N.textosVoz(a).length > 0, "Este video no trae texto de voz (locución). Usa el motor viral (una idea) o carga un ejemplo del motor viral.", 412);
+      const op = opcionesVoz(N, o);
+      return lanzar({ nombre, titulo: "Generar la voz en off", pasos: [{ titulo: `Voz «${op.voz}» · ${op.estilo} (una frase por escena, ajustada a su tiempo)`, cmd: [script("anim", "voz.mjs"), `--estilo=${op.estilo}`, `--voz=${op.voz}`, `--ritmo=${op.ritmo}`, ...(op.extra ? [`--instrucciones=${op.extra}`] : []), ...(o.sinCache ? ["--sin-cache"] : [])] }] });
+    }
+    case "anim-poner-voz": {
+      pedir(leerAnim(), "Primero genera la animación (o carga el ejemplo).", 412);
+      const video = salida("video-animacion.mp4");
+      pedir(existsSync(video), "Todavía no hay video renderizado: pulsa «Renderizar» (o usa «Renderizar con voz»).", 412);
+      const a = leerAnim();
+      const { manifiesto } = await vozVigente(a);
+      pedir(manifiesto, "Todavía no hay voz generada: pulsa «Generar voz» primero.", 412);
+      return lanzar({ nombre, titulo: "Poner la voz al video ya renderizado", pasos: [{ titulo: "Mezclar la voz con el audio del video (sin volver a renderizar)", cmd: [script("anim", "poner-voz.mjs")] }] });
     }
     case "anim-previa":
       pedir(leerAnim(), "Primero genera la animación (o carga el ejemplo).", 412);
@@ -473,6 +502,35 @@ async function api(req, res, url) {
     return json(res, 200, { ok: true });
   }
   if (m === "GET" && recurso === "anim" && a === "estado") return json(res, 200, estadoAnim());
+  if (m === "GET" && recurso === "anim" && a === "voz" && !b) {
+    // estado de la voz en off: ¿hay voz generada?, ¿sirve para este video?, costo estimado y los MP4 renderizados
+    const N = await cargarNucleoAnim();
+    const an = leerAnim();
+    const { manifiesto, vigente } = await vozVigente(an ?? { escenas: [] });
+    const video = salida("video-animacion.mp4"), conVoz = salida("video-animacion-con-voz.mp4");
+    const arch = (f) => (existsSync(f) ? { url: `/salida/${f.split(/[\\/]/).pop()}?t=${statSync(f).mtimeMs | 0}`, mb: +(statSync(f).size / 1048576).toFixed(1) } : null);
+    return json(res, 200, {
+      claveOpenAI: claveOpenAI(),
+      hayTexto: N.textosVoz(an).length > 0,
+      estimado: N.estimarVoz(an),
+      voz: manifiesto ? { vigente, creado: manifiesto.creado, estilo: manifiesto.estilo, voz: manifiesto.voz, ritmo: manifiesto.ritmo, modelo: manifiesto.modelo, extra: manifiesto.extra, audio: manifiesto.audio ? `${manifiesto.audio}?t=${Date.parse(manifiesto.creado) | 0}` : null, escenas: manifiesto.escenas, costoUsd: manifiesto.costoUsd } : null,
+      video: arch(video),
+      videoConVoz: arch(conVoz),
+    });
+  }
+  if (m === "POST" && recurso === "anim" && a === "voz" && b === "probar") {
+    const o = await leerJson(req);
+    const N = await cargarNucleoAnim();
+    const cfg = configuracion();
+    pedir(cfg.clave, "Para probar una voz hace falta la clave de OpenAI (pestaña Ajustes).", 412);
+    const op = opcionesVoz(N, o);
+    try {
+      const r = await probarVoz({ opciones: { estilo: op.estilo, voz: op.voz, ritmo: op.ritmo, extra: op.extra }, texto: typeof o.texto === "string" ? o.texto.slice(0, 400) : "", clave: cfg.clave, url: cfg.url });
+      return json(res, 200, r);
+    } catch (e) {
+      return error(res, 502, String(e.message ?? e));
+    }
+  }
   if (m === "GET" && recurso === "anim" && a === "ejemplo") {
     const N = await cargarNucleoAnim();
     // por defecto, el ejemplo del motor de estudio ([ESCENA 1 | 0s-6s | MODO: SVG] + VOZ_OFF + DIRECCION_VISUAL + SFX); formato=libre → lienzo libre; formato=hud → estructurado retro; formato=simple → el de siempre

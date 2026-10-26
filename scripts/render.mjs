@@ -32,6 +32,7 @@ import { bundle } from "@remotion/bundler";
 import { renderFrames, selectComposition } from "@remotion/renderer";
 import { abrirNavegador } from "./navegador.mjs";
 import { mezclarAudio, mezclarSfx } from "./audio.mjs";
+import { PISTA_VOZ, vozVigente } from "./anim/voz.mjs";
 import { cargarNucleoAnim } from "./anim/nucleo.mjs";
 import { esSinEspacio, espacioLibreGB, limpiarTemporales, mensajeSinEspacio } from "./_disco.mjs";
 
@@ -55,7 +56,10 @@ const HUELLA_ANIM = ES_ANIMACION ? createHash("sha1").update(JSON.stringify(ANIM
 const TRABAJO = join(RAIZ_PROYECTO, "trabajo", "tmp", ES_ANIMACION ? `render-anim-${HUELLA_ANIM}` : "render");
 const FOTOGRAMAS = join(TRABAJO, "fotogramas");
 const TANDA_DIR = join(TRABAJO, "tanda");
-const AUDIO = join(TRABAJO, "mezcla.wav");
+// voz en off con IA (scripts/anim/voz.mjs): se mezcla sola si está generada para ESTA versión del video; --sin-voz la omite
+const VOZ = ES_ANIMACION && !args.includes("--sin-voz") ? await vozVigente(ANIMACION) : { manifiesto: null, vigente: false };
+const VOZ_PISTA = VOZ.vigente ? PISTA_VOZ() : null;
+const AUDIO = join(TRABAJO, VOZ_PISTA ? `mezcla-voz-${statSync(VOZ_PISTA).mtimeMs | 0}.wav` : "mezcla.wav");
 const SALIDA = join(RAIZ_PROYECTO, "trabajo", "salida", ES_ANIMACION ? "video-animacion.mp4" : "video-terminado.mp4");
 const FPS = 60;
 
@@ -265,14 +269,16 @@ const { ffmpeg, ffprobe } = buscarFfmpeg();
 const nucleoAnim = ES_ANIMACION ? await cargarNucleoAnim() : null;
 const eventosAnim = nucleoAnim ? nucleoAnim.eventosSfx(ANIMACION) : [];
 const musicaAnim = nucleoAnim && nucleoAnim.llevaMusica(ANIMACION) ? nucleoAnim.MUSICA : null;
-const CON_AUDIO = !ES_ANIMACION || eventosAnim.length > 0 || !!musicaAnim;
+const CON_AUDIO = !ES_ANIMACION || eventosAnim.length > 0 || !!musicaAnim || !!VOZ_PISTA;
+if (ES_ANIMACION && VOZ.manifiesto && !VOZ.vigente && !args.includes("--sin-voz")) console.log("⚠️ La voz generada es de otra versión de este video (cambió el texto o los tiempos): se renderiza SIN voz. Vuelve a generarla en el Estudio (🎙️ Voz en off).");
+if (VOZ_PISTA) console.log(`🎙️ Con voz en off «${VOZ.manifiesto.voz}» (${VOZ.manifiesto.estilo})`);
 if (!CON_AUDIO) {
   console.log(ANIMACION.sfx ? "🔇 La animación no tiene efectos de sonido: el video sale sin audio" : "🔇 SFX desactivados: el video sale sin pista de audio");
 } else if (existsSync(AUDIO) && statSync(AUDIO).size > 1000 && !args.includes("--audio-nuevo")) {
   console.log("🔊 Audio ya mezclado (se reutiliza)");
 } else if (ES_ANIMACION) {
-  console.log(`🔊 Mezclando efectos de sonido${musicaAnim ? " y música" : ""} (sin voz)...`);
-  const m = await mezclarSfx({ raiz: RAIZ_PROYECTO, ffmpeg, segundos: total / FPS, salidaWav: AUDIO, eventos: eventosAnim, musica: musicaAnim });
+  console.log(`🔊 Mezclando efectos de sonido${musicaAnim ? " y música" : ""}${VOZ_PISTA ? " con la voz en off" : " (sin voz)"}...`);
+  const m = await mezclarSfx({ raiz: RAIZ_PROYECTO, ffmpeg, segundos: total / FPS, salidaWav: AUDIO, eventos: eventosAnim, musica: musicaAnim, vozWav: VOZ_PISTA });
   console.log(`   ✔ audio listo: ${m.efectos} efectos${musicaAnim ? " + música" : ""}, ${m.segundos.toFixed(1)} s, pico ${m.pico.toFixed(2)}`);
 } else {
   console.log("🔊 Mezclando audio (voz + ambiente + efectos)...");
