@@ -181,6 +181,119 @@ export const TM = {
   cierre: { tarjetas: 0.5, noImites: 4.4, pregunta: 7.4 },
 } as const;
 
+/* ───────────── «La regla del 37 %» (problema de la parada óptima, ensayo abstracto para IMNOBA) ───────────── */
+
+/** Generador pseudoaleatorio determinista (mulberry32): mismos números en el render, en las pruebas y en cada fotograma. */
+export function mulberry32(semilla: number): () => number {
+  let s = semilla | 0;
+  return () => {
+    s = (s + 0x6d2b79f5) | 0;
+    let t = Math.imul(s ^ (s >>> 15), 1 | s);
+    t = (t + Math.imul(t ^ (t >>> 7), 61 | t)) ^ t;
+    return ((t ^ (t >>> 14)) >>> 0) / 4294967296;
+  };
+}
+
+/**
+ * Probabilidad EXACTA de quedarte con la mejor de `n` opciones si rechazas las primeras `k` y eliges la primera que supere a todas las anteriores:
+ * P(k) = (k/n) · Σ_{j=k}^{n-1} 1/j  (k ≥ 1). Con k = 0 eliges la primera: 1/n. Es el problema de la secretaria (Gilbert y Mosteller, JASA 1966).
+ */
+export function probParada(n: number, k: number): number {
+  if (k <= 0) return 1 / n;
+  if (k >= n) return 0;
+  let s = 0;
+  for (let j = k; j <= n - 1; j++) s += 1 / j;
+  return (k / n) * s;
+}
+
+/** Cuántas opciones rechazar al principio para maximizar la probabilidad (n = 10 → 3, 20 → 7, 100 → 37). */
+export function kOptimo(n: number): number {
+  let mejor = 0, pm = probParada(n, 0);
+  for (let k = 1; k < n; k++) { const p = probParada(n, k); if (p > pm + 1e-15) { pm = p; mejor = k; } }
+  return mejor;
+}
+
+/** Aplica la regla a una fila de valores (el mayor es el mejor): rechaza `k`, y elige la primera que supere al mejor visto; si ninguna, la última. Devuelve el índice elegido. */
+export function aplicarRegla(vals: number[], k: number): number {
+  let ref = 0;
+  for (let i = 0; i < Math.min(k, vals.length); i++) ref = Math.max(ref, vals[i]);
+  for (let i = k; i < vals.length; i++) if (vals[i] > ref) return i;
+  return vals.length - 1;
+}
+
+/** Simulación Monte Carlo de la regla (semilla fija): `aciertos` = veces que se eligió a la mejor; `acum[j]` = aciertos tras `100·j` intentos; `primeros` = resultado de los primeros 100 intentos. */
+export function simularParada(n: number, k: number, intentos: number, semilla: number): { aciertos: number; acum: number[]; primeros: boolean[] } {
+  const rnd = mulberry32(semilla);
+  const a = Array.from({ length: n }, (_, i) => i + 1);
+  let aciertos = 0;
+  const acum = [0], primeros: boolean[] = [];
+  for (let t = 0; t < intentos; t++) {
+    for (let i = n - 1; i > 0; i--) { const j = Math.floor(rnd() * (i + 1)); const x = a[i]; a[i] = a[j]; a[j] = x; }
+    const ok = a[aplicarRegla(a, k)] === n;
+    if (ok) aciertos++;
+    if (t < 100) primeros.push(ok);
+    if ((t + 1) % 100 === 0) acum.push(aciertos);
+  }
+  return { aciertos, acum, primeros };
+}
+
+/**
+ * Fila de `n` valores (1…n, el mayor es el mejor) con la mejor en la posición `mejorEn` (0-based). Con `previo`, ese valor va en su posición y las posiciones anteriores a `limite`
+ * (por defecto `mejorEn`) solo llevan valores menores: así «previo» es el mejor de todo lo visto hasta `limite` y la regla se puede mostrar paso a paso.
+ */
+export function construirSecuencia(o: { n: number; mejorEn: number; semilla: number; previo?: { pos: number; valor: number }; limite?: number }): number[] {
+  const { n } = o;
+  const rnd = mulberry32(o.semilla);
+  const mezcla = (x: number[]): number[] => { for (let i = x.length - 1; i > 0; i--) { const j = Math.floor(rnd() * (i + 1)); const t = x[i]; x[i] = x[j]; x[j] = t; } return x; };
+  const out = new Array<number>(n).fill(0);
+  out[o.mejorEn] = n;
+  const resto = mezcla(Array.from({ length: n - 1 }, (_, i) => i + 1).filter((v) => v !== o.previo?.valor));
+  if (!o.previo) {
+    for (let i = 0; i < n; i++) if (i !== o.mejorEn) out[i] = resto.pop() as number;
+    return out;
+  }
+  out[o.previo.pos] = o.previo.valor;
+  const limite = o.limite ?? o.mejorEn;
+  const bajos = resto.filter((v) => v < o.previo!.valor), otros = resto.filter((v) => v > o.previo!.valor);
+  const antes: number[] = [];
+  for (let i = 0; i < limite; i++) if (i !== o.previo.pos) antes.push(i);
+  for (const i of antes) out[i] = bajos.pop() as number;
+  const libres = mezcla([...bajos, ...otros]);
+  for (let i = 0; i < n; i++) if (out[i] === 0) out[i] = libres.pop() as number;
+  return out;
+}
+
+/** Datos del ensayo «La regla del 37 %». */
+export const PAR = {
+  n: 100,
+  k: 37,
+  /** simulación de la escena de comprobación */
+  sim: { intentos: 10000, semilla: 2024 },
+  /** la mejor opción (100) llega en la posición 71 y la regla del impulso frena en la 6 con un 55 (mediocre) */
+  impulso: { mejorEn: 70, previo: { pos: 5, valor: 55 }, limite: 5, semilla: 11 },
+  /** quien espera al final deja pasar a la mejor (posición 22) */
+  espera: { mejorEn: 21, semilla: 5 },
+  /** la regla: el mejor de los primeros 37 vale 88 (posición 29); la primera que lo supera es la mejor, en la 61 */
+  regla: { mejorEn: 60, previo: { pos: 28, valor: 88 }, semilla: 23 },
+  fuente: "Gilbert y Mosteller, «Recognizing the Maximum of a Sequence», JASA 61 (1966)",
+} as const;
+
+export const secImpulso = (): number[] => construirSecuencia({ n: PAR.n, mejorEn: PAR.impulso.mejorEn, previo: PAR.impulso.previo, limite: PAR.impulso.limite, semilla: PAR.impulso.semilla });
+export const secEspera = (): number[] => construirSecuencia({ n: PAR.n, mejorEn: PAR.espera.mejorEn, semilla: PAR.espera.semilla });
+export const secRegla = (): number[] => construirSecuencia({ n: PAR.n, mejorEn: PAR.regla.mejorEn, previo: PAR.regla.previo, semilla: PAR.regla.semilla });
+
+/** Tiempos de «La regla del 37 %» (s a ritmo normal), compartidos entre el dibujo y el sonido. */
+export const TPA = {
+  gancho: { a0: 2.6, a1: 4.0, b0: 5.0, b1: 7.6 },
+  fila: { aparece: 0.4, scan: 3.2, scanDur: 4.8 },
+  impulso: { scan: 0.5, scanDur: 1.4, lock: 2.0, resto: 4.0, restoDur: 2.0, mejor: 5.4 },
+  espera: { scan: 1.2, scanDur: 5.0, mejor: 2.3, vacio: 6.3 },
+  regla: { zonas: 0.4, obs: 1.2, obsDur: 4.2, sigue: 7.4, sigueDur: 3.0, elige: 10.5 },
+  curva: { ini: 0.6, dur: 5.4, vuelve: 6.6, vuelveDur: 1.0, pico: 7.7 },
+  simula: { puntos: 0.6, cuenta: 2.0, cuentaDur: 3.6, final: 8.2 },
+  aplica: { fila: (i: number): number => 0.4 + 2.6 * i, filaDur: 1.6, decide: 7.8 },
+} as const;
+
 export const PIEZAS: Record<string, DefPieza> = {
   "metro-plano": {
     id: "metro-plano", nombre: "8 millones en un solo plano", ideal: 7.6, fondo: "dark",
@@ -354,6 +467,39 @@ export const PIEZAS: Record<string, DefPieza> = {
   "med-cierre": {
     id: "med-cierre", nombre: "Médico · tres tarjetas, «no lo imites» y la pregunta", ideal: 10.4, fondo: "dark", entra: "corte",
     sfx: (_d, r) => [ev(0.05, "whoosh", 0.12), ...[0, 1, 2].map((i) => ev((TM.cierre.tarjetas + i * 0.5) * r, "pop", 0.12)), ev(TM.cierre.noImites * r, "golpe", 0.22), ev(TM.cierre.pregunta * r, "ding", 0.16), ev((TM.cierre.pregunta + 0.4) * r, "radar", 0.1)],
+  },
+  /* ───────────── «La regla del 37 %» (parada óptima · IMNOBA) ───────────── */
+  "par-gancho": {
+    id: "par-gancho", nombre: "Parada óptima · impulso vs. parálisis (dos filas)", ideal: 7.5, fondo: "dark",
+    sfx: (_d, r) => [ev(0.05, "whoosh", 0.12), ...clics(TPA.gancho.a0 * r, (TPA.gancho.a1 - TPA.gancho.a0) * r, 0.05), ev(TPA.gancho.a1 * r, "golpe", 0.2), ...clics(TPA.gancho.b0 * r, 2.4 * r, 0.04), ev((TPA.gancho.b0 + 2.6) * r, "estatica", 0.1)],
+  },
+  "par-fila": {
+    id: "par-fila", nombre: "Parada óptima · 100 cápsulas con valor oculto", ideal: 8.6, fondo: "dark", entra: "corte",
+    sfx: (_d, r) => [ev(0.05, "whoosh", 0.1), ...Array.from({ length: 8 }, (_, i) => ev((TPA.fila.aparece + i * 0.18) * r, "pop", 0.07)), ...clics(TPA.fila.scan * r, TPA.fila.scanDur * r, 0.05), ev((TPA.fila.scan + TPA.fila.scanDur) * r, "ding", 0.12)],
+  },
+  "par-impulso": {
+    id: "par-impulso", nombre: "Parada óptima · frenar pronto atrapa una mediocre (azul)", ideal: 7.2, fondo: "dark", entra: "corte",
+    sfx: (_d, r) => [ev(0.05, "whoosh", 0.1), ...clics(TPA.impulso.scan * r, TPA.impulso.scanDur * r, 0.05), ev(TPA.impulso.lock * r, "golpe", 0.2), ...clics(TPA.impulso.resto * r, TPA.impulso.restoDur * r, 0.035), ev(TPA.impulso.mejor * r, "ding", 0.18)],
+  },
+  "par-espera": {
+    id: "par-espera", nombre: "Parada óptima · esperar al final deja el visor vacío", ideal: 7.2, fondo: "dark", entra: "corte",
+    sfx: (_d, r) => [ev(0.05, "whoosh", 0.1), ...clics(TPA.espera.scan * r, TPA.espera.scanDur * r, 0.04), ev(TPA.espera.mejor * r, "ding", 0.14), ev(TPA.espera.vacio * r, "estatica", 0.12), ev((TPA.espera.vacio + 0.2) * r, "golpe", 0.16)],
+  },
+  "par-regla": {
+    id: "par-regla", nombre: "Parada óptima · observa el 37 % y elige la primera mejor", ideal: 11.3, fondo: "dark", entra: "corte",
+    sfx: (_d, r) => [ev(0.05, "whoosh", 0.1), ev(TPA.regla.zonas * r, "radar", 0.1), ...clics(TPA.regla.obs * r, TPA.regla.obsDur * r, 0.05), ev((TPA.regla.obs + TPA.regla.obsDur) * r, "thud", 0.16), ...clics(TPA.regla.sigue * r, TPA.regla.sigueDur * r, 0.045), ev(TPA.regla.elige * r, "zap", 0.16), ev(TPA.regla.elige * r + 0.15, "ding", 0.2)],
+  },
+  "par-curva": {
+    id: "par-curva", nombre: "Parada óptima · curva de probabilidad (pico en 37 %)", ideal: 11.1, fondo: "dark", entra: "corte",
+    sfx: (_d, r) => [ev(0.05, "whoosh", 0.1), ...clics(TPA.curva.ini * r, TPA.curva.dur * r, 0.045), ev(TPA.curva.vuelve * r, "whoosh", 0.12), ev(TPA.curva.pico * r, "ding", 0.2), ev(TPA.curva.pico * r + 0.2, "golpe", 0.14)],
+  },
+  "par-simula": {
+    id: "par-simula", nombre: "Parada óptima · 10.000 búsquedas simuladas", ideal: 10.0, fondo: "dark", entra: "corte",
+    sfx: (_d, r) => [ev(0.05, "whoosh", 0.1), ...Array.from({ length: 10 }, (_, i) => ev((TPA.simula.puntos + i * 0.22) * r, "pop", 0.06)), ...clics(TPA.simula.cuenta * r, TPA.simula.cuentaDur * r, 0.05), ev(TPA.simula.final * r, "ding", 0.18)],
+  },
+  "par-aplica": {
+    id: "par-aplica", nombre: "Parada óptima · 10, 20 y 100 opciones (cuántas observar)", ideal: 9.5, fondo: "dark", entra: "corte",
+    sfx: (_d, r) => [ev(0.05, "whoosh", 0.1), ...[0, 1, 2].map((i) => ev(TPA.aplica.fila(i) * r, "pop", 0.12)), ...[0, 1, 2].map((i) => ev((TPA.aplica.fila(i) + 1.1) * r, "tick", 0.1)), ev(TPA.aplica.decide * r, "ding", 0.18)],
   },
 };
 

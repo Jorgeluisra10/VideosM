@@ -1,0 +1,102 @@
+{
+  "titulo": "La regla del 37 %",
+  "scenes": [
+    {
+      "t": "PIEZA",
+      "voz": "Cuando buscas casa, hay dos formas de equivocarte: decidir por impulso, o esperar tanto la perfecta que otro se la lleve.",
+      "dur": 8.0,
+      "h": "¿IMPULSO O PARÁLISIS?",
+      "w": "IMPULSO",
+      "cap": "dos formas de equivocarte",
+      "pieza": {
+        "id": "par-gancho"
+      }
+    },
+    {
+      "t": "PIEZA",
+      "voz": "Las matemáticas lo llaman parada óptima. Imagina cien opciones que ves una por una, sin conocer su valor hasta que pasan frente a ti.",
+      "dur": 9.1,
+      "h": "100 OPCIONES, VALOR OCULTO",
+      "w": "OCULTO",
+      "cap": "parada óptima",
+      "pieza": {
+        "id": "par-fila"
+      }
+    },
+    {
+      "t": "PIEZA",
+      "voz": "Si frenas muy pronto, te quedas con una opción mediocre: no tenías con qué compararla. Y la mejor llegaba después.",
+      "dur": 7.7,
+      "h": "FRENAR PRONTO = MEDIOCRE",
+      "w": "MEDIOCRE",
+      "cap": "55 de 100",
+      "pieza": {
+        "id": "par-impulso"
+      }
+    },
+    {
+      "t": "PIEZA",
+      "voz": "Si esperas hasta el final, pasa lo contrario: la mejor ya se fue, y te quedas con el visor vacío.",
+      "dur": 7.7,
+      "h": "ESPERAR SIEMPRE = VISOR VACÍO",
+      "w": "VACÍO",
+      "cap": "0 elegidas",
+      "pieza": {
+        "id": "par-espera"
+      }
+    },
+    {
+      "t": "PIEZA",
+      "voz": "La regla del treinta y siete por ciento: rechaza por completo el primer treinta y siete. Sirve para calibrar el mercado. Después, elige la primera opción que supere a todas las anteriores.",
+      "dur": 11.8,
+      "h": "PRIMERO CALIBRA, LUEGO ELIGE",
+      "w": "CALIBRA",
+      "cap": "regla del 37 %",
+      "pieza": {
+        "id": "par-regla"
+      }
+    },
+    {
+      "t": "PIEZA",
+      "voz": "La curva sube, llega a su máximo justo en el treinta y siete, y vuelve a caer. Ahí tienes cerca de treinta y siete por ciento de acertar con la mejor.",
+      "dur": 11.6,
+      "h": "LA CURVA TIENE UN PICO",
+      "w": "PICO",
+      "cap": "37,1 %",
+      "pieza": {
+        "id": "par-curva"
+      }
+    },
+    {
+      "t": "PIEZA",
+      "voz": "Lo comprobamos con diez mil búsquedas simuladas de cien opciones: la regla acertó cerca del treinta y siete por ciento. Elegir a ciegas acierta una de cada cien.",
+      "dur": 10.5,
+      "h": "10.000 BÚSQUEDAS",
+      "w": "10.000",
+      "cap": "simulación",
+      "pieza": {
+        "id": "par-simula"
+      }
+    },
+    {
+      "t": "PIEZA",
+      "voz": "Con diez opciones, mira las primeras tres. Con veinte, las primeras siete. Con cien, las primeras treinta y siete. Y luego decide, sin mirar atrás.",
+      "dur": 10.0,
+      "h": "¿CUÁNTAS MIRAR ANTES?",
+      "w": "MIRAR",
+      "cap": "3 · 7 · 37",
+      "pieza": {
+        "id": "par-aplica"
+      }
+    },
+    {
+      "t": "CTA",
+      "voz": "Tu decisión más grande no se resuelve con corazonadas ni con parálisis: se resuelve con método. Empieza a buscar en IMNOBA.",
+      "dur": 8.0,
+      "h": "BUSCA CON MÉTODO",
+      "w": "MÉTODO",
+      "sub": "imnoba.com",
+      "ic": "casa"
+    }
+  ]
+}

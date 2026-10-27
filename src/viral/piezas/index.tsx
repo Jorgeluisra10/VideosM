@@ -19,6 +19,8 @@ import { RealResultado, RealPlusvalia, RealCaminata, RealCierre } from "./real3"
 import { MedGancho, MedSonda1, MedSonda2, MedNobel1 } from "./med1";
 import { MedPylori1, MedVaso, MedGastritis, MedNobel2 } from "./med2";
 import { MedPolar1, MedCirugia, MedPolar2, MedCierre } from "./med3";
+import { ParEspera, ParFila, ParGancho, ParImpulso } from "./par1";
+import { ParAplica, ParCurva, ParRegla, ParSimula } from "./par2";
 
 export const COMPONENTES_PIEZA: Record<string, React.FC<{ e: EscenaViralGuardada }>> = {
   "metro-plano": MetroPlano,
@@ -63,6 +65,14 @@ export const COMPONENTES_PIEZA: Record<string, React.FC<{ e: EscenaViralGuardada
   "med-cirugia": MedCirugia,
   "med-polar2": MedPolar2,
   "med-cierre": MedCierre,
+  "par-gancho": ParGancho,
+  "par-fila": ParFila,
+  "par-impulso": ParImpulso,
+  "par-espera": ParEspera,
+  "par-regla": ParRegla,
+  "par-curva": ParCurva,
+  "par-simula": ParSimula,
+  "par-aplica": ParAplica,
 };
 
 export const Pieza: React.FC<{ e: EscenaViralGuardada; alternativa: React.ReactNode }> = ({ e, alternativa }) => {
