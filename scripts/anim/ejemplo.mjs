@@ -2,7 +2,7 @@
 /**
  * Carga el ejemplo incluido (ejemplos/animacion-imnoba) como animación activa, SIN IA y SIN coste:
  * parsea el guion con el mismo parser, ensambla la respuesta de ejemplo y escribe src/data/animacion.json.
- *   node scripts/anim/ejemplo.mjs [--sin-sfx] [--paleta=imnoba|medicina] [--formato=viral|estudio|libre|hud|simple] [--tema=carros|ciencia|conchas|documental|metro-bogota|anomalia|bogota-real|medicos-experimento]
+ *   node scripts/anim/ejemplo.mjs [--sin-sfx] [--paleta=imnoba|medicina] [--formato=viral|estudio|libre|hud|simple] [--tema=carros|ciencia|conchas|documental|metro-bogota|anomalia|bogota-real|medicos-experimento] (cada tema trae la paleta de SU marca: IMNOBA o SINAPSIS)
  */
 import { mkdirSync, readFileSync, writeFileSync } from "node:fs";
 import { join } from "node:path";
@@ -11,8 +11,8 @@ import { cargarNucleoAnim, RAIZ } from "./nucleo.mjs";
 const args = process.argv.slice(2);
 const N = await cargarNucleoAnim();
 const temaCli = args.find((a) => a.startsWith("--tema="))?.split("=")[1];
-// los ejemplos documentales (conchas, jueces) están pensados para la paleta Retro-Científica; el resto, IMNOBA
-const paleta = args.find((a) => a.startsWith("--paleta="))?.split("=")[1] ?? (temaCli === "conchas" || temaCli === "documental" || temaCli === "metro-bogota" || temaCli === "anomalia" || temaCli === "bogota-real" || temaCli === "medicos-experimento" ? "retro" : "imnoba");
+// cada tema de ejemplo pertenece a una marca (IMNOBA o SINAPSIS) y se carga con SU paleta (src/anim/marcas.ts); sin tema, el ejemplo base de IMNOBA
+const paleta = args.find((a) => a.startsWith("--paleta="))?.split("=")[1] ?? N.paletaDeTema(temaCli);
 const sfx = !args.includes("--sin-sfx");
 const formato = args.find((a) => a.startsWith("--formato="))?.split("=")[1] ?? "viral";
 const viral = formato === "viral";

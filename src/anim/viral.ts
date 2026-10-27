@@ -13,6 +13,7 @@ import { coloresEstudio, mezclar, oscurecer, type ColoresEstudio } from "./estud
 import type { EscenaEstudioGuion } from "./estudio";
 import { esRetro, paletaPorId } from "./paletas";
 import { IDS_PIEZA, piezaPorId } from "./piezas";
+import { lineaMarcaPrompt, marcaDePaleta } from "./marcas";
 import type { Animacion, EventoSfx } from "./tipos";
 
 /* ───────────── vocabulario cerrado ───────────── */
@@ -968,7 +969,9 @@ export function temaViral(paleta: string | undefined, bg: FondoViral): TemaViral
   const navy = C.fondoCentro;
   const acento = C.roles.accent;
   if (bg === "gold") {
-    return { bg0: mezclar(acento, "#FFFFFF", 0.12), bg1: mezclar(acento, "#000000", 0.1), texto: navy, suave: mezclar(navy, acento, 0.45), acento: navy, acento2: "#FFFFFF", peligro: C.roles.danger, exito: C.roles.success, panel: "rgba(2,34,78,0.10)", borde: "rgba(2,34,78,0.28)", sobreAcento: acento, oscuro: false };
+    // el fondo «dorado» es el color de marca: el amarillo de IMNOBA; en SINAPSIS el azul clínico (su amarillo de nervios queda de detalle, para no parecerse a IMNOBA)
+    const marcaFondo = marcaDePaleta(paleta).id === "sinapsis" ? C.roles.primary : acento;
+    return { bg0: mezclar(marcaFondo, "#FFFFFF", 0.12), bg1: mezclar(marcaFondo, "#000000", 0.1), texto: navy, suave: mezclar(navy, marcaFondo, 0.45), acento: navy, acento2: "#FFFFFF", peligro: C.roles.danger, exito: C.roles.success, panel: "rgba(2,34,78,0.10)", borde: "rgba(2,34,78,0.28)", sobreAcento: marcaFondo, oscuro: false };
   }
   if (bg === "light") {
     return { bg0: "#FFFFFF", bg1: "#E6ECF7", texto: navy, suave: mezclar(navy, "#FFFFFF", 0.55), acento: mezclar(acento, "#000000", 0.04), acento2: C.roles.secondary, peligro: C.roles.danger, exito: C.roles.success, panel: "#FFFFFF", borde: "rgba(2,34,78,0.14)", sobreAcento: navy, oscuro: false };
@@ -1066,7 +1069,8 @@ ARCO NARRATIVO (sigue este orden; no hace falta usar todos los pasos, sí un sol
 DATOS: autores, años y cifras solo si vienen de la idea o son estudios reales y muy conocidos; nunca inventes un autor, un año o una cifra: si no la conoces, habla en general y no uses PAPEL ni "cita". Nada de comillas ni emojis dentro de los textos.`;
 }
 
-const APROX_MARCA = (paleta?: string): string => (paleta === undefined || paleta === "imnoba" || paleta === "retro-imnoba" ? "MARCA: IMNOBA (plataforma colombiana para publicar y encontrar inmuebles y vehículos; web imnoba.com). El CTA es de IMNOBA." : "");
+/** Línea de marca (IMNOBA o SINAPSIS, según la paleta) para el mensaje de usuario de la IA. */
+const APROX_MARCA = (paleta?: string): string => lineaMarcaPrompt(paleta);
 
 /** Mensaje de usuario en modo IDEA: la frase, la duración objetivo y el número de escenas. */
 export function promptUsuarioIdea(i: { idea: string; duracion: number; escenasObjetivo: number; paleta?: string }): string {

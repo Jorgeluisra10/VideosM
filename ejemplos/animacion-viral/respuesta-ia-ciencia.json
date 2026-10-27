@@ -8,5 +8,5 @@
 {"t":"IMPACTO","voz":"En 2019 una sonda llevó tardígrados a la Luna y se estrelló.","dur":4.6,"h":"UNA SONDA SE ESTRELLÓ EN LA LUNA","w":"LUNA","impacto":{"ic":"cohete","l":"SONDA BERESHEET","v":"ABRIL 2019"}},
 {"t":"CAPAS","voz":"Iban dentro de un disco de níquel con una capa de resina.","dur":4.8,"h":"UN DISCO CON CAPAS","w":"CAPAS","capas":{"ic":"estrella","medida":"","items":[{"l":"NÍQUEL","m":"PÁGINAS"},{"l":"RESINA","m":"TARDÍGRADOS"},{"l":"NÍQUEL","m":"PÁGINAS"}]}},
 {"t":"RED","voz":"Su escudo es una proteína que protege el ADN de la radiación.","dur":4.6,"h":"SU ESCUDO: LA PROTEÍNA DSUP","w":"DSUP","red":{"c":"DSUP","nodes":["ADN","RAYOS X","AGUA","CÉLULA"]},"cita":"Hashimoto et al., 2016"},
-{"t":"CTA","voz":"Guárdalo y compártelo con quien crea que nada es indestructible.","dur":4.0,"h":"GUÁRDALO Y COMPÁRTELO","w":"COMPÁRTELO","sub":"Más ciencia en IMNOBA"}
+{"t":"CTA","voz":"Guárdalo y compártelo con quien crea que nada es indestructible.","dur":4.0,"h":"GUÁRDALO Y COMPÁRTELO","w":"COMPÁRTELO","sub":"Más ciencia en SINAPSIS"}
 ]}

@@ -261,6 +261,8 @@ async function pintarVista() {
   $$(".menu a").forEach((a) => a.classList.toggle("activo", (a.dataset.nav === "clasico" && ["inicio", "nuevo", "proyecto"].includes(v.vista)) || a.dataset.nav === v.vista));
   const cont = $("#vista");
   try {
+    EST.N ??= await import("/modulos/anim-nucleo.js");
+    if (v.vista !== "estudio" && v.vista !== "proyecto") pintarMarca(null);
     if (v.vista === "estudio") await vistaEstudio(cont);
     else if (v.vista === "inicio") await vistaInicio(cont);
     else if (v.vista === "nuevo") vistaNuevo(cont);
@@ -276,7 +278,37 @@ async function pintarVista() {
 // ---------------------------------------------------------------------------
 // Vista: ESTUDIO (guion en bloques → animación SVG + 3D). Una sola caja de texto y 3 ajustes.
 // ---------------------------------------------------------------------------
-const EST = { guion: leerLocal("videmed-anim-guion") ?? "", modelo: leerLocal("videmed-anim-modelo") ?? "gpt-4.1-mini", sfx: (leerLocal("videmed-anim-sfx") ?? "si") === "si", paleta: leerLocal("videmed-anim-paleta") ?? "imnoba", datos: null, N: null };
+// Dos marcas, dos espacios de trabajo: IMNOBA (inmobiliario y vehículos) y SINAPSIS (medicina y ciencia). Cada una guarda SU borrador de idea y SU paleta.
+const CLAVE_MARCA = "videmed-marca";
+const claveGuion = (m) => (m === "sinapsis" ? "videmed-anim-guion-sinapsis" : "videmed-anim-guion");
+const clavePaleta = (m) => (m === "sinapsis" ? "videmed-anim-paleta-sinapsis" : "videmed-anim-paleta");
+const EST = { marca: null, guion: "", modelo: leerLocal("videmed-anim-modelo") ?? "gpt-4.1-mini", sfx: (leerLocal("videmed-anim-sfx") ?? "si") === "si", paleta: "", verTodo: false, datos: null, N: null };
+/** Carga el borrador (idea + paleta) de la marca activa; la paleta guardada solo vale si es de esa marca. */
+function cargarBorradorMarca() {
+  EST.guion = leerLocal(claveGuion(EST.marca)) ?? "";
+  EST.paleta = EST.N.paletaValidaParaMarca(EST.marca, leerLocal(clavePaleta(EST.marca)));
+}
+/** Marca activa: la guardada; la primera vez, la de la animación que ya estaba cargada; si no, IMNOBA. */
+function iniciarMarca() {
+  if (EST.marca) return;
+  const N = EST.N;
+  const guardada = N.marcaPorId(leerLocal(CLAVE_MARCA));
+  EST.marca = guardada ? guardada.id : EST.datos?.animacion ? N.marcaDePaleta(EST.datos.animacion.paleta).id : N.MARCA_POR_DEFECTO;
+  cargarBorradorMarca();
+}
+const marcaActiva = () => EST.N.MARCAS[EST.marca];
+/** Etiqueta de color de una marca (la misma en el Estudio, el historial y los proyectos). */
+const chipMarca = (m, extra = "") => h(`span.chip.marca-${m.id}`, { title: `${m.nombre} · ${m.rubro}` }, `${m.icono} ${m.nombre}${extra}`);
+/** La animación cargada en el servidor, solo si es de la marca que se está viendo (la otra marca no se mezcla). */
+const animActiva = () => { const a = EST.datos?.animacion; return a && EST.N && EST.N.marcaDePaleta(a.paleta).id === EST.marca ? a : null; };
+/** Pinta la marca en toda la interfaz: color de acento (body[data-marca]) y la etiqueta de la barra superior. */
+function pintarMarca(m) {
+  if (m) document.body.dataset.marca = m.id; else delete document.body.dataset.marca;
+  const el = $("#marca-activa");
+  if (!el) return;
+  el.hidden = !m;
+  if (m) { el.className = `pill-marca marca-${m.id}`; el.textContent = `${m.icono} ${m.nombre}`; el.title = `Estás trabajando en ${m.nombre} · ${m.rubro}`; }
+}
 const fijosCache = new Map();
 /** Aviso bajo la paleta: las Retro-Científica activan el estilo documental (otro prompt, otras plantillas, duración ≈ 60 s). */
 const notaPaleta = () => (EST.N && EST.N.esDocumental(EST.paleta) ? "🎞️ Estilo documental: fondo negro/papel, titulares pesados + mono, cortes secos y la estructura de los explicativos con estudios citados (≈ 60 s)." : "");
@@ -371,7 +403,7 @@ function pintarEstimacion() {
       if (!N.esRetro(EST.paleta)) partes.push(h("div.nota", `ℹ️ El formato estructurado usa el diseño Retro-Científico: se aplicará «${N.PALETAS[N.paletaRetroDe(EST.paleta)].nombre}».`));
     }
     const vacio = !EST.guion.trim();
-    if (vacio) partes.push(h("p.suave.chico-t", "Escribe tu idea en una frase y la IA hace el resto (guion, locución y diseño). Ejemplo: «Un video de 30 segundos para IMNOBA sobre por qué el metro de Bogotá valoriza las propiedades»."));
+    if (vacio) partes.push(h("p.suave.chico-t", `Escribe tu idea de ${marcaActiva().nombre} en una frase y la IA hace el resto (guion, locución y diseño). Ejemplo: «${marcaActiva().ideaCorta}».`));
     for (const e of vacio ? [] : r.errores) partes.push(h("div.nota.error", "⛔ " + e));
     for (const a of r.avisos) partes.push(h("div.nota.aviso", "⚠️ " + a));
     info.replaceChildren(...partes);
@@ -393,12 +425,20 @@ function pintarResultadoEstudio() {
   const cont = $("#estudio-resultado");
   if (!cont) return;
   const d = EST.datos, N = EST.N;
-  const a = d?.animacion;
+  const a = animActiva();
   const hijos = [];
+  const otra = d?.animacion && !a ? N.marcaDePaleta(d.animacion.paleta) : null;
+  if (otra) {
+    // la animación cargada es de la OTRA marca: no se muestra ni se puede renderizar desde aquí (así no se mezclan los videos de IMNOBA y SINAPSIS)
+    hijos.push(h(`div.tarjeta.otra-marca.marca-${otra.id}`,
+      h("div.fila", chipMarca(otra), h("strong", d.animacion.titulo || "Animación cargada"), h("span.espacio"),
+        h("button.btn.primario", { type: "button", onclick: () => cambiarMarca(otra.id) }, `Ir a ${otra.nombre} para verla`)),
+      h("p.suave.chico-t", `Esta animación (${d.animacion.escenas.length} escenas · ${num(d.animacion.duracion, 0)} s) es de ${otra.nombre} y ahora estás en ${marcaActiva().nombre}. Cada marca tiene su propio espacio: genera o carga un ejemplo de ${marcaActiva().nombre} para trabajar aquí.`)));
+  }
   if (a) {
     const uso = a.uso;
     hijos.push(h("div.tarjeta",
-      h("div.cab-vista", h("div", h("h2", `🎞️ ${a.titulo || "Animación lista"}`), h("p.suave", `${a.escenas.length} escenas · ${num(a.duracion, 1)} s · paleta ${N.PALETAS[a.paleta]?.nombre ?? a.paleta} · SFX ${a.sfx ? "sí" : "no"}${a.formato === "estructurado" ? ` · formato estructurado · HUD ${a.hud ? "ON" : "OFF"}` : a.formato === "libre" ? " · lienzo libre" : a.formato === "estudio" ? " · motor de estudio" : a.formato === "viral" ? " · motor viral" : ""} · sin subtítulos ni voz`),
+      h("div.cab-vista", h("div", h("h2", `🎞️ ${a.titulo || "Animación lista"} `, chipMarca(marcaActiva())), h("p.suave", `${a.escenas.length} escenas · ${num(a.duracion, 1)} s · paleta ${N.PALETAS[a.paleta]?.nombre ?? a.paleta} · SFX ${a.sfx ? "sí" : "no"}${a.formato === "estructurado" ? ` · formato estructurado · HUD ${a.hud ? "ON" : "OFF"}` : a.formato === "libre" ? " · lienzo libre" : a.formato === "estudio" ? " · motor de estudio" : a.formato === "viral" ? " · motor viral" : ""} · sin subtítulos ni voz`),
           d.rescatadas?.length ? h("div.nota.aviso", `⚠️ ${d.rescatadas.length === 1 ? `La escena ${d.rescatadas[0]} no se pudo reparar y quedó` : `Las escenas ${d.rescatadas.join(", ")} no se pudieron reparar y quedaron`} en versión sencilla. Puedes volver a generar o ajustar su DIRECCION_VISUAL.`) : null,
           d.locucion ? h("p", h("a.btn.chico", { href: d.locucion.url }, "📝 Descargar guion de locución (VOZ_OFF)"), h("span.chico-t.suave", " para leerlo al grabar tu audio")) : null),
         h("span.espacio"),
@@ -425,9 +465,16 @@ function pintarResultadoEstudio() {
     }
   }
   if (d?.historial?.length) {
-    hijos.push(h("details.tarjeta", h("summary", `🕘 Historial (${d.historial.length})`),
-      h("table", h("thead", h("tr", h("th", "Fecha"), h("th", "Título"), h("th", "Modelo"), h("th", "Escenas"), h("th", "Costo real"), h("th", ""))),
-        h("tbody", d.historial.map((x) => h("tr", h("td", new Date(x.creado).toLocaleString("es-CO")), h("td", x.titulo), h("td", x.modelo ?? "—"), h("td", `${x.escenas} · ${num(x.duracion, 0)} s`), h("td", x.costo != null ? N.formatoUSD(x.costo, 5) : "—"), h("td", h("button.btn.chico", { onclick: () => cargarHistorial(x.id) }, "Cargar"))))))));
+    // el historial se ve por marca: por defecto solo las generaciones de la marca activa; «ver todas» muestra también las de la otra
+    const deMarca = (x) => N.marcaDePaleta(x.paleta);
+    const propias = d.historial.filter((x) => deMarca(x).id === EST.marca);
+    const filas = EST.verTodo ? d.historial : propias;
+    const ocultas = d.historial.length - propias.length;
+    hijos.push(h("details.tarjeta", { open: EST.verTodo }, h("summary", `🕘 Historial de ${marcaActiva().nombre} (${propias.length})`),
+      ocultas > 0 ? h("div.fila.chicos", { style: "margin:8px 0" }, h("span.chico-t.suave", `${ocultas} de la otra marca ${EST.verTodo ? "se muestran" : "están ocultas"}.`),
+        h("button.btn.chico", { type: "button", onclick: () => { EST.verTodo = !EST.verTodo; pintarResultadoEstudio(); } }, EST.verTodo ? "Ver solo las de esta marca" : "Ver también las de la otra marca")) : null,
+      filas.length ? h("table", h("thead", h("tr", h("th", "Marca"), h("th", "Fecha"), h("th", "Título"), h("th", "Modelo"), h("th", "Escenas"), h("th", "Costo real"), h("th", ""))),
+        h("tbody", filas.map((x) => h("tr", h("td", chipMarca(deMarca(x))), h("td", new Date(x.creado).toLocaleString("es-CO")), h("td", x.titulo), h("td", x.modelo ?? "—"), h("td", `${x.escenas} · ${num(x.duracion, 0)} s`), h("td", x.costo != null ? N.formatoUSD(x.costo, 5) : "—"), h("td", h("button.btn.chico", { onclick: () => cargarHistorial(x.id) }, "Cargar")))))) : h("p.chico-t.suave", `Todavía no hay generaciones de ${marcaActiva().nombre}.`)));
   }
   cont.replaceChildren(...hijos);
 }
@@ -436,19 +483,20 @@ async function cargarHistorial(id) {
   if (ocupado()) return aviso("Hay un trabajo en curso: espera a que termine.", "aviso");
   try {
     const r = await api("/api/anim/cargar", { metodo: "POST", cuerpo: { id } });
-    EST.guion = r.guion; if (r.opciones?.modelo) EST.modelo = r.opciones.modelo; EST.sfx = r.opciones?.sfx !== false; if (r.opciones?.paleta) EST.paleta = r.opciones.paleta;
+    if (r.opciones?.paleta) EST.marca = EST.N.marcaDePaleta(r.opciones.paleta).id;
+    EST.guion = r.guion; if (r.opciones?.modelo) EST.modelo = r.opciones.modelo; EST.sfx = r.opciones?.sfx !== false; EST.paleta = EST.N.paletaValidaParaMarca(EST.marca, r.opciones?.paleta);
     guardarEstado();
     aviso("🕘 Generación cargada.", "ok");
     await vistaEstudio($("#vista"));
   } catch (e) { fallo(e); }
 }
 
-const guardarEstado = () => { guardarLocal("videmed-anim-guion", EST.guion); guardarLocal("videmed-anim-modelo", EST.modelo); guardarLocal("videmed-anim-sfx", EST.sfx ? "si" : "no"); guardarLocal("videmed-anim-paleta", EST.paleta); };
+const guardarEstado = () => { guardarLocal(CLAVE_MARCA, EST.marca); guardarLocal(claveGuion(EST.marca), EST.guion); guardarLocal("videmed-anim-modelo", EST.modelo); guardarLocal("videmed-anim-sfx", EST.sfx ? "si" : "no"); guardarLocal(clavePaleta(EST.marca), EST.paleta); };
 
 /** Carga un ejemplo en el cuadro de texto (viral = una frase, por defecto; estudio = guion en bloques; «libre» = lienzo libre; «hud» = formato estructurado retro; «simple» = el de siempre). */
 async function cargarEjemplo(formato) {
   try {
-    EST.guion = (await api(`/api/anim/ejemplo?formato=${formato}&paleta=${encodeURIComponent(EST.paleta)}`)).guion;
+    EST.guion = (await api(`/api/anim/ejemplo?formato=${formato}&marca=${EST.marca}&paleta=${encodeURIComponent(EST.paleta)}`)).guion;
     $("#guion").value = EST.guion;
     guardarEstado();
     pintarEstimacion();
@@ -465,7 +513,7 @@ async function probarVozPanel() {
   VOZ.probando = true;
   await pintarVoz(false);
   try {
-    const frase = EST.datos?.animacion?.escenas?.[0]?.texto;
+    const frase = animActiva()?.escenas?.[0]?.texto;
     VOZ.prueba = await api("/api/anim/voz/probar", { metodo: "POST", cuerpo: { ...opcionesDeVoz(), texto: frase ? String(frase).slice(0, 260) : "" } });
     aviso(`🔊 Voz «${VOZ.prueba.voz}» lista${VOZ.prueba.costoUsd ? ` (≈ US$ ${VOZ.prueba.costoUsd})` : " (de la caché)"}.`, "ok", 3500);
   } catch (e) { fallo(e); }
@@ -484,12 +532,13 @@ async function pintarVoz(recargar = true) {
   VOZ.estilo = estilo.id;
   VOZ.ritmo = N.RITMOS_VOZ.find((r) => r.id === VOZ.ritmo)?.id ?? N.RITMO_POR_DEFECTO;
   if (VOZ.voz && !N.vozPorId(VOZ.voz)) VOZ.voz = "";
-  const hayAnim = Boolean(EST.datos?.animacion);
+  const hayAnim = Boolean(animActiva());
   const sinClave = !S.claves.openai;
   const bloqueado = !hayAnim || !d?.hayTexto || sinClave || ocupado();
   const razon = !hayAnim ? "Carga un ejemplo o genera un video primero" : !d?.hayTexto ? "Este video no trae texto de voz" : sinClave ? "Falta la clave de OpenAI (Ajustes)" : ocupado() ? "Hay un trabajo en curso" : "";
   const v = d?.voz;
   const est = d?.estimado;
+  if (!hayAnim) { cont.replaceChildren(); return; }
   cont.replaceChildren(h("div.tarjeta.voz",
     h("h2", "🎙️ Voz en off con IA · colombiana y alegre"),
     h("p.suave", "Elige un estilo (bogotano, paisa, costeño, caleño…), pruébalo y genera la voz de TODAS las escenas de este video. Cada frase se ajusta al tiempo de su escena y se mezcla sola con los efectos y la música al renderizar."),
@@ -531,39 +580,58 @@ async function pintarVoz(recargar = true) {
   ));
 }
 
+/** Cambia de marca: guarda el borrador de la actual, carga el de la otra y repinta todo el Estudio (ejemplos, paletas, historial, colores). */
+async function cambiarMarca(id) {
+  if (!EST.N.marcaPorId(id) || id === EST.marca) return;
+  guardarEstado();
+  EST.marca = id;
+  EST.verTodo = false;
+  cargarBorradorMarca();
+  guardarEstado();
+  await vistaEstudio($("#vista"));
+}
+
 async function vistaEstudio(cont) {
   EST.N ??= await import("/modulos/anim-nucleo.js");
   const N = EST.N;
   await estudioDatos();
+  iniciarMarca();
+  const M = marcaActiva();
+  pintarMarca(M);
   S.estudioRefrescar = async () => { await estudioDatos(); pintarResultadoEstudio(); pintarEstimacion(); await pintarVoz(); };
   const generar = async () => {
     if (ocupado()) return aviso("Hay un trabajo en curso: espera a que termine.", "aviso");
     if (!S.claves.openai) return aviso("Falta la clave de OpenAI: ponla en ⚙️ Ajustes. Mientras tanto puedes cargar el ejemplo y renderizarlo gratis.", "aviso", 9000);
     guardarEstado();
-    await lanzar("anim-generar", { guion: EST.guion, modelo: EST.modelo, sfx: EST.sfx, paleta: EST.paleta });
+    await lanzar("anim-generar", { guion: EST.guion, modelo: EST.modelo, sfx: EST.sfx, paleta: EST.paleta, marca: EST.marca });
   };
   cont.replaceChildren(
-    h("div.cab-vista", h("div", h("h1", "✨ Estudio de video"), h("p.suave", "Escribe tu idea (una frase o con todo el detalle que quieras). La IA escribe el guion, decide la duración y diseña cada escena con plantillas de reel profesionales. Sin subtítulos: la voz la grabas tú con el guion que te deja listo, o se la pones con IA (voces colombianas) en la tarjeta «🎙️ Voz en off»."))),
-    h("div.tarjeta.estudio",
-      h("div.fila", h("label.etq", { for: "guion" }, "1 · Tu idea (una frase o todo el detalle que quieras)"), h("span.espacio"),
-        h("button.btn.chico", { type: "button", onclick: async () => aviso((await copiarTexto(N.PROMPT_FORMATEADOR_IDEA)) ? "📋 Prompt copiado. Pégalo en ChatGPT/Claude con tus notas y te devolverá la frase de idea lista para pegar aquí." : "No pude copiar automáticamente: selecciona el texto a mano.", "ok", 7000) }, "📋 Copiar Prompt Formateador"),
-        h("button.btn.chico", { type: "button", onclick: async () => cargarEjemplo("viral") }, "🧪 Cargar ejemplo")),
-      h("div.fila.chicos",
-        h("button.btn.chico", { type: "button", title: "Ensayo visual de periodismo de datos con escenas diseñadas a mano (carril B). Se carga sin IA y sin coste; luego pulsa Renderizar.", onclick: async () => { if (ocupado()) return aviso("Hay un trabajo en curso: espera a que termine.", "aviso"); await lanzar("anim-ejemplo", { tema: "metro-bogota", paleta: "retro", sfx: EST.sfx }); } }, "🎬 Piezas a medida (piloto: Metro de Bogotá)"),
-        h("button.btn.chico", { type: "button", title: "Ensayo visual abstracto (sin trenes, buses ni edificios): disco de filotaxis, simulación multiagente, Voronoi isométrico, metaballs, potenciómetros, odómetros y zoom en el eje Z, con cierre en bucle. Se carga sin IA y sin coste; luego pulsa Renderizar.", onclick: async () => { if (ocupado()) return aviso("Hay un trabajo en curso: espera a que termine.", "aviso"); await lanzar("anim-ejemplo", { tema: "anomalia", paleta: "retro", sfx: EST.sfx }); } }, "🎬 Ensayo abstracto «Anomalía» (Bogotá)"),
-        h("button.btn.chico.primario", { type: "button", title: "Video «¿sabías que?» con figuras realistas (bus articulado, metro, autos, torres, cronómetros) sobre un estudio azul marino con piso y reflejo, y datos verificados con fuente. Se carga sin IA y sin coste; luego pulsa Renderizar.", onclick: async () => { if (ocupado()) return aviso("Hay un trabajo en curso: espera a que termine.", "aviso"); await lanzar("anim-ejemplo", { tema: "bogota-real", paleta: "retro", sfx: EST.sfx }); } }, "🎬 Video realista «Bogotá, la ciudad sin metro»"),
-        h("button.btn.chico.primario", { type: "button", title: "Video médico «¿sabías que?»: tres médicos que se probaron a sí mismos (sonda al corazón, bacteria, apendicectomía en la Antártida) con radiografía, estómago, endoscopia, medalla Nobel e instrumental dibujados como renders, y la fuente de cada dato en pantalla. Se carga sin IA y sin coste; luego pulsa Renderizar (y, si quieres, ponle voz con IA).", onclick: async () => { if (ocupado()) return aviso("Hay un trabajo en curso: espera a que termine.", "aviso"); await lanzar("anim-ejemplo", { tema: "medicos-experimento", paleta: "retro", sfx: EST.sfx }); } }, "🩺 Video médico «Médicos que se probaron a sí mismos»")),
+    h("div.cab-vista", h("div", h("h1", "✨ Estudio de video"), h("p.suave", "Primero elige la marca: cada una tiene sus propios ejemplos, su paleta, su historial y su identidad. Después escribe tu idea (una frase o todo el detalle que quieras): la IA escribe el guion, decide la duración y diseña cada escena. Sin subtítulos: la voz la grabas tú con el guion que te deja listo, o se la pones con IA (voces colombianas) en la tarjeta «🎙️ Voz en off»."))),
+    h("div.selector-marca", { role: "tablist", "aria-label": "Marca del video" }, N.IDS_MARCA.map((id) => {
+      const m = N.MARCAS[id], sel = id === EST.marca;
+      return h(`button.marca-opcion.marca-${id}${sel ? ".activa" : ""}`, { type: "button", role: "tab", "aria-selected": String(sel), title: m.descripcion, onclick: () => cambiarMarca(id) },
+        h("span.ico", m.icono), h("span.cuerpo", h("strong", m.nombre), h("span", m.rubro)), h("span.estado", sel ? "✓ activa" : "cambiar"));
+    })),
+    h(`div.banda-marca.marca-${M.id}`, h("div", h("strong", `${M.icono} ${M.nombre}`), h("span", ` · ${M.rubro}`)), h("p", M.descripcion),
+      h("div.fila.chicos", h("span.chico-t", "Paletas de esta marca:"), M.paletas.map((id) => h("span.chip.paleta", N.PALETAS[id]?.nombre ?? id)))),
+    h(`div.tarjeta.estudio.marca-${M.id}`,
+      h("div.fila", h("label.etq", { for: "guion" }, `1 · Tu idea para ${M.nombre} (una frase o todo el detalle que quieras)`), h("span.espacio"),
+        h("button.btn.chico", { type: "button", onclick: async () => aviso((await copiarTexto(N.promptFormateadorIdea(EST.marca))) ? `📋 Prompt de ${M.nombre} copiado. Pégalo en ChatGPT/Claude con tus notas y te devolverá la frase de idea lista para pegar aquí.` : "No pude copiar automáticamente: selecciona el texto a mano.", "ok", 7000) }, "📋 Copiar Prompt Formateador"),
+        h("button.btn.chico", { type: "button", onclick: async () => cargarEjemplo("viral") }, `🧪 Cargar idea de ejemplo de ${M.nombre}`)),
+      h("div.fila.chicos", h("span.chico-t.suave", `Ejemplos de ${M.nombre} (sin IA y sin coste):`),
+        M.ejemplos.map((ej) => h(`button.btn.chico${ej.principal ? ".primario" : ""}`, { type: "button", "data-ejemplo": ej.id, title: ej.ayuda, onclick: async () => { if (ocupado()) return aviso("Hay un trabajo en curso: espera a que termine.", "aviso"); await lanzar("anim-ejemplo", { tema: ej.tema, paleta: ej.paleta, sfx: EST.sfx }); } }, ej.etiqueta))),
       h("details.otros-formatos", h("summary.chico-t.suave", "Avanzado: guion en bloques, lienzo libre, HUD retro y simple"),
         h("div.fila.chicos",
           h("button.btn.chico", { type: "button", onclick: async () => aviso((await copiarTexto(N.PROMPT_FORMATEADOR_ESTUDIO)) ? "📋 Prompt del guion en bloques copiado ([ESCENA | tiempo | MODO] + VOZ_OFF + DIRECCION_VISUAL + SFX)." : "No pude copiar automáticamente.", "ok", 5000) }, "📋 Prompt guion en bloques"),
-          h("button.btn.chico", { type: "button", onclick: async () => cargarEjemplo("estudio") }, "🧪 Ejemplo en bloques"),
+          M.id === "imnoba" ? h("button.btn.chico", { type: "button", onclick: async () => cargarEjemplo("estudio") }, "🧪 Ejemplo en bloques") : null,
           h("button.btn.chico", { type: "button", onclick: async () => aviso((await copiarTexto(N.PROMPT_FORMATEADOR_LIBRE)) ? "📋 Prompt del lienzo libre copiado (solo [ESCENA n | tiempo])." : "No pude copiar automáticamente.", "ok", 5000) }, "📋 Prompt lienzo libre"),
-          h("button.btn.chico", { type: "button", onclick: async () => cargarEjemplo("libre") }, "🧪 Ejemplo lienzo libre"),
+          M.id === "imnoba" ? h("button.btn.chico", { type: "button", onclick: async () => cargarEjemplo("libre") }, "🧪 Ejemplo lienzo libre") : null,
           h("button.btn.chico", { type: "button", onclick: async () => aviso((await copiarTexto(N.PROMPT_FORMATEADOR_ESTRUCTURADO)) ? "📋 Prompt del formato con HUD copiado ([CONFIG], GEO y HUD)." : "No pude copiar automáticamente.", "ok", 5000) }, "📋 Prompt formato HUD"),
           h("button.btn.chico", { type: "button", onclick: async () => aviso((await copiarTexto(N.PROMPT_FORMATEADOR)) ? "📋 Prompt del formato simple copiado." : "No pude copiar automáticamente.", "ok", 5000) }, "📋 Prompt formato simple"),
-          h("button.btn.chico", { type: "button", onclick: async () => cargarEjemplo("hud") }, "🧪 Ejemplo HUD"),
-          h("button.btn.chico", { type: "button", onclick: async () => cargarEjemplo("simple") }, "🧪 Ejemplo simple"))),
-      h("textarea#guion.guion", { rows: 8, spellcheck: false, placeholder: "Escribe aquí lo que quieres del video: una frase basta, pero puedes dar todo el detalle que quieras (puntos, cifras, nombres, tono, llamada a la acción). Cuanto más detalle, más largo y completo el video. Ejemplo: Un video de 30 segundos para IMNOBA sobre por qué el metro de Bogotá valoriza las propiedades cerca de las estaciones y que publiquen gratis.", value: EST.guion, oninput: (e) => { EST.guion = e.target.value; guardarEstado(); pintarEstimacion(); } }),
+          M.id === "imnoba" ? h("button.btn.chico", { type: "button", onclick: async () => cargarEjemplo("hud") }, "🧪 Ejemplo HUD") : null,
+          M.id === "imnoba" ? h("button.btn.chico", { type: "button", onclick: async () => cargarEjemplo("simple") }, "🧪 Ejemplo simple") : null,
+          M.id !== "imnoba" ? h("span.chico-t.suave", `Los ejemplos de estos formatos son de IMNOBA; para ${M.nombre} usa los de arriba o escribe tu idea.`) : null)),
+      h("textarea#guion.guion", { rows: 8, spellcheck: false, placeholder: M.placeholder, value: EST.guion, oninput: (e) => { EST.guion = e.target.value; guardarEstado(); pintarEstimacion(); } }),
       h("div#guion-info.guion-info"),
       h("div.ajustes-3",
         h("div.campo", h("label.etq", { for: "modelo" }, "2 · Modelo de IA"),
@@ -571,11 +639,11 @@ async function vistaEstudio(cont) {
         h("div.campo", h("label.etq", { for: "sfx" }, "3 · Incluir sonido (efectos + música)"),
           h("label.interruptor", h("input#sfx", { type: "checkbox", checked: EST.sfx, onchange: (e) => { EST.sfx = e.target.checked; $("#sfx-txt").textContent = EST.sfx ? "Sí" : "No"; guardarEstado(); pintarEstimacion(); } }), h("span.pista"), h("strong#sfx-txt", EST.sfx ? "Sí" : "No")),
           h("span.chico-t.suave", "No = el video sale sin pista de audio (sin efectos ni música). Sí = efectos sincronizados y música de fondo en el motor viral.")),
-        h("div.campo", h("label.etq", { for: "paleta" }, "4 · Paleta de colores"),
-          h("select#paleta", { onchange: (e) => { EST.paleta = e.target.value; $("#paleta-nota").textContent = notaPaleta(); guardarEstado(); pintarEstimacion(); } }, Object.values(N.PALETAS).map((p) => h("option", { value: p.id, selected: p.id === EST.paleta }, p.nombre))),
+        h("div.campo", h("label.etq", { for: "paleta" }, `4 · Paleta de ${M.nombre}`),
+          h("select#paleta", { onchange: (e) => { EST.paleta = e.target.value; $("#paleta-nota").textContent = notaPaleta(); guardarEstado(); pintarEstimacion(); } }, M.paletas.map((id) => N.PALETAS[id]).filter(Boolean).map((p) => h("option", { value: p.id, selected: p.id === EST.paleta }, p.nombre))),
           h("span#paleta-nota.chico-t.suave", notaPaleta()))),
       h("div.fila.pie-estudio", h("div#costo-estimado.costo"), h("span.espacio"),
-        h("button#btn-generar.btn.primario.grande", { type: "button", onclick: generar }, "🎨 Generar animación"))),
+        h("button#btn-generar.btn.primario.grande", { type: "button", onclick: generar }, `🎨 Generar animación de ${M.nombre}`))),
     !S.claves.openai ? h("div.nota.aviso", "🔑 Para generar con IA falta la clave de OpenAI: ", h("a", { href: "#/ajustes" }, "ponla en Ajustes"), ". El botón «Cargar ejemplo» + «Renderizar» funciona sin clave.") : null,
     h("div#estudio-voz"),
     h("div#estudio-resultado"),
@@ -595,22 +663,34 @@ function miniProgreso(est) {
   return h("div.miniprogreso", { title: "Guion · Voz · Escenas · Calidad · Video · Entrega" }, ["guion", "voz", "escenas", "qa", "render", "entrega"].map((k) => h(`i${e[k]?.ok ? ".on" : ""}`)));
 }
 
+/** Marca de un perfil del modo clásico (null = genérico). */
+const marcaDePerfilPanel = (perfil) => EST.N.marcaDePerfil(perfil);
+/** Chip de la marca de un perfil; los perfiles genéricos muestran su nombre corto. */
+const chipPerfil = (perfil) => { const m = marcaDePerfilPanel(perfil); return m ? chipMarca(m) : h("span.chip", perfilDe(perfil)?.nombre?.split("·")[0] ?? perfil); };
+
 async function vistaInicio(cont) {
   S.proyectos = await api("/api/proyectos");
-  const { usuario, archivo, ejemplos } = S.proyectos;
+  const N = EST.N;
+  const filtro = N.marcaPorId(S.filtroMarca)?.id ?? "todas";
+  const dentro = (perfil) => filtro === "todas" || marcaDePerfilPanel(perfil)?.id === filtro;
+  const usuario = S.proyectos.usuario.filter((p) => dentro(p.perfil)), archivo = S.proyectos.archivo.filter((a) => dentro(a.perfil)), marcaEj = (e) => (e.conBrief ? marcaDePerfilPanel(e.perfil) : e.id.startsWith("animacion-") ? N.MARCAS.imnoba : N.MARCAS.sinapsis), ejemplos = S.proyectos.ejemplos.filter((e) => filtro === "todas" || marcaEj(e)?.id === filtro);
+  const filtros = h("div.selector-marca.chico", { role: "tablist", "aria-label": "Filtrar por marca" },
+    h(`button.marca-opcion.todas${filtro === "todas" ? ".activa" : ""}`, { type: "button", onclick: () => { S.filtroMarca = "todas"; pintarVista(); } }, h("span.ico", "🎬"), h("span.cuerpo", h("strong", "Todas"), h("span", `${S.proyectos.usuario.length} proyectos`))),
+    N.IDS_MARCA.map((id) => { const m = N.MARCAS[id]; return h(`button.marca-opcion.marca-${id}${filtro === id ? ".activa" : ""}`, { type: "button", onclick: () => { S.filtroMarca = id; pintarVista(); } }, h("span.ico", m.icono), h("span.cuerpo", h("strong", m.nombre), h("span", `${S.proyectos.usuario.filter((p) => marcaDePerfilPanel(p.perfil)?.id === id).length} proyectos · ${m.rubro}`))); }));
   cont.replaceChildren(
-    h("div.cab-vista", h("div", h("h1", "🎬 Mis proyectos"), h("p.suave", "Cada proyecto es un video: eliges el nicho, cargas tus datos y fotos, y el panel te lleva paso a paso hasta el .mp4.")), h("span.espacio"), h("a.btn.primario.grande", { href: "#/nuevo" }, "➕ Nuevo video")),
+    h("div.cab-vista", h("div", h("h1", "🎬 Mis proyectos"), h("p.suave", "Cada proyecto es un video: eliges el nicho (cada uno es de IMNOBA o de SINAPSIS), cargas tus datos y fotos, y el panel te lleva paso a paso hasta el .mp4.")), h("span.espacio"), h("a.btn.primario.grande", { href: "#/nuevo" }, "➕ Nuevo video")),
+    filtros,
     usuario.length
       ? h("div.rejilla", usuario.map((p) => tarjetaProyecto(p)))
       : h("div.tarjeta.vacio", h("p", "Todavía no tienes proyectos."), h("a.btn.primario", { href: "#/nuevo" }, "Crear el primero ✨"), h("p.chico-t", "…o parte de un ejemplo listo aquí abajo.")),
     h("details.tarjeta", { open: !usuario.length }, h("summary", "📚 Ejemplos para copiar y adaptar"),
       h("p.suave.chico-t", "Datos y fotos ficticios (las imágenes son ilustraciones). «Usar como base» crea una copia editable en tus proyectos."),
-      h("div.rejilla", ejemplos.filter((e) => e.conBrief).map((e) => h("div.tarjeta.proy", h("strong", e.titulo), h("div.meta", h("span.chip", perfilDe(e.perfil)?.nombre?.split("·")[0] ?? e.perfil)), h("button.btn.chico", { onclick: () => usarEjemplo(e) }, "Usar como base")))),
-      ejemplos.some((e) => !e.conBrief) ? h("p.chico-t.suave", "Ejemplos de medicina (ya con guion, voz y escenas): ", ejemplos.filter((e) => !e.conBrief).map((e) => h("button.btn.chico", { style: "margin:2px", onclick: () => restaurar(e.id) }, `Abrir «${e.id}» en el Studio`))) : null),
+      h("div.rejilla", ejemplos.filter((e) => e.conBrief).map((e) => h("div.tarjeta.proy", h("strong", e.titulo), h("div.meta", chipPerfil(e.perfil)), h("button.btn.chico", { onclick: () => usarEjemplo(e) }, "Usar como base")))),
+      N.IDS_MARCA.map((id) => { const lista = ejemplos.filter((e) => !e.conBrief && marcaEj(e)?.id === id); return lista.length ? h("p.chico-t.suave", chipMarca(N.MARCAS[id]), id === "imnoba" ? " Ejemplos del Estudio (ya con escenas): " : " Ejemplos de medicina (ya con guion, voz y escenas): ", lista.map((e) => h("button.btn.chico", { style: "margin:2px", onclick: () => restaurar(e.id) }, `Abrir «${e.id}» en el Studio`))) : null; })),
     archivo.length ? h("details.tarjeta", h("summary", `🗄️ Videos anteriores (${archivo.length})`),
       h("p.suave.chico-t", "Trabajos ya producidos. «Restaurar» los deja como proyecto activo (guion, voz, escenas y fotos) para volver a renderizarlos o abrirlos en el Studio."),
       h("table", h("thead", h("tr", h("th", "Proyecto"), h("th", "Nicho"), h("th", "Video"), h("th", ""))),
-        h("tbody", archivo.map((a) => h("tr", h("td", a.titulo), h("td", h("span.chip", perfilDe(a.perfil)?.nombre?.split("·")[0] ?? a.perfil)), h("td", a.video ? h("a", { href: `/archivo/${a.id}/video-terminado.mp4`, target: "_blank" }, "▶ ver") : "—"), h("td", a.restaurable ? h("button.btn.chico", { onclick: () => restaurar(a.id) }, "Restaurar") : "")))))) : null,
+        h("tbody", archivo.map((a) => h("tr", h("td", a.titulo), h("td", chipPerfil(a.perfil)), h("td", a.video ? h("a", { href: `/archivo/${a.id}/video-terminado.mp4`, target: "_blank" }, "▶ ver") : "—"), h("td", a.restaurable ? h("button.btn.chico", { onclick: () => restaurar(a.id) }, "Restaurar") : "")))))) : null,
   );
 }
 
@@ -618,9 +698,10 @@ function tarjetaProyecto(p) {
   const pf = perfilDe(p.perfil);
   const e = p.estado;
   const sig = e ? (["guion", "voz", "escenas", "qa", "render", "entrega"].find((k) => !e.etapas[k]?.ok) ?? null) : null;
-  return h("div.tarjeta.proy",
+  const mc = marcaDePerfilPanel(p.perfil);
+  return h(`div.tarjeta.proy${mc ? `.marca-${mc.id}` : ""}`,
     h("div.fila", h("span", { style: "font-size:1.6rem" }, pf?.icono ?? "🎬"), h("div", h("strong", p.tema || p.id), h("div.chico-t.suave", p.id))),
-    h("div.meta", h("span.chip", pf?.nombre?.split("·")[0] ?? p.perfil ?? "?"), p.fotos ? h("span.chip", `🖼 ${p.fotos}`) : null, e?.activo ? h("span.chip.ok", "● activo") : null, e?.video ? h("span.chip.ok", "🎬 con video") : null),
+    h("div.meta", chipPerfil(p.perfil), p.fotos ? h("span.chip", `🖼 ${p.fotos}`) : null, e?.activo ? h("span.chip.ok", "● activo") : null, e?.video ? h("span.chip.ok", "🎬 con video") : null),
     miniProgreso(e),
     h("div.chico-t.suave", sig ? `Siguiente: ${NOMBRE_ETAPA[sig]}` : "✅ Todo listo"),
     h("div.fila", h("a.btn.primario.chico", { href: `#/p/${p.id}/${sig ? { guion: "guion", voz: "voz", escenas: "escenas", qa: "calidad", render: "video", entrega: "entrega" }[sig] : "entrega"}` }, "Abrir"), h("button.btn.chico.peligro", { onclick: () => borrarProyecto(p) }, "Borrar")),
@@ -652,6 +733,7 @@ async function borrarProyecto(p) {
 // Vista: nuevo proyecto
 // ---------------------------------------------------------------------------
 function vistaNuevo(cont) {
+  const N = EST.N;
   const principales = S.perfiles.filter((p) => p.principal);
   const otros = S.perfiles.filter((p) => !p.principal);
   const crear = async (pf) => {
@@ -660,10 +742,16 @@ function vistaNuevo(cont) {
     brief.id = `video-${new Date().toISOString().slice(5, 16).replace(/[-:T]/g, "")}`;
     try { const r = await api("/api/proyectos", { metodo: "POST", cuerpo: brief }); ir(`#/p/${r.id}/datos`); } catch (e) { fallo(e); }
   };
+  const tarjeta = (pf) => { const m = N.marcaDePerfil(pf.id); return h(`button.nicho${m ? `.marca-${m.id}` : ""}`, { type: "button", onclick: () => crear(pf) }, h("span.ico", pf.icono), h("div.fila.chicos", m ? chipMarca(m) : h("span.chip", "Sin marca")), h("strong", pf.nombre), h("span.suave", pf.descripcion), h("span.chip", `~${pf.duracion} s · voz ${pf.voz}`)); };
   cont.replaceChildren(
-    h("div.cab-vista", h("div", h("h1", "➕ Nuevo video"), h("p.suave", "Elige el tipo de video. Cada nicho trae su voz, su paleta, su estilo de guion y sus datos."))),
-    h("div.rejilla.dos", principales.map((pf) => h("button.nicho", { type: "button", onclick: () => crear(pf) }, h("span.ico", pf.icono), h("strong", pf.nombre), h("span.suave", pf.descripcion), h("span.chip", `~${pf.duracion} s · voz ${pf.voz} · ${pf.plantilla ? "con plantilla gratis" : "con IA o a mano"}`)))),
-    otros.length ? h("details.tarjeta", h("summary", "Otros tipos de video"), h("div.rejilla", otros.map((pf) => h("button.nicho", { type: "button", onclick: () => crear(pf) }, h("span.ico", pf.icono), h("strong", pf.nombre), h("span.suave", pf.descripcion))))) : null,
+    h("div.cab-vista", h("div", h("h1", "➕ Nuevo video"), h("p.suave", "Elige la marca y el tipo de video. Cada nicho trae su voz, su paleta, su estilo de guion y sus datos."))),
+    N.IDS_MARCA.map((id) => {
+      const m = N.MARCAS[id];
+      const lista = principales.filter((p) => N.marcaDePerfil(p.id)?.id === id);
+      return lista.length ? h(`section.grupo-marca.marca-${id}`, h("div.fila", chipMarca(m), h("span.suave.chico-t", m.rubro)), h("div.rejilla.dos", lista.map(tarjeta))) : null;
+    }),
+    principales.some((p) => !N.marcaDePerfil(p.id)) ? h("section.grupo-marca", h("div.fila", h("span.chip", "Sin marca")), h("div.rejilla.dos", principales.filter((p) => !N.marcaDePerfil(p.id)).map(tarjeta))) : null,
+    otros.length ? h("details.tarjeta", h("summary", "Otros tipos de video"), h("div.rejilla", otros.map(tarjeta))) : null,
   );
 }
 
@@ -698,10 +786,11 @@ async function vistaProyecto(cont, v) {
     return ir(`#/p/${v.id}/${primero}`);
   }
   const pf = perfilDe(S.actual.brief.perfil);
+  pintarMarca(marcaDePerfilPanel(S.actual.brief.perfil));
   const cuerpo = h("div#paso");
   cont.replaceChildren(
     h("div.cab-vista",
-      h("div", h("h1", `${pf?.icono ?? "🎬"} ${S.actual.brief.tema || S.actual.id}`), h("div.fila", h("span.chip", pf?.nombre ?? S.actual.brief.perfil), S.actual.estado?.activo ? h("span.chip.ok", "● proyecto activo") : h("span.chip", "se activa al ejecutar un paso"))),
+      h("div", h("h1", `${pf?.icono ?? "🎬"} ${S.actual.brief.tema || S.actual.id}`), h("div.fila", chipPerfil(S.actual.brief.perfil), h("span.chip", pf?.nombre ?? S.actual.brief.perfil), S.actual.estado?.activo ? h("span.chip.ok", "● proyecto activo") : h("span.chip", "se activa al ejecutar un paso"))),
       h("span.espacio"),
       h("button.btn.ambar.grande", { type: "button", onclick: modalProducir, disabled: ocupado() }, "🚀 Producir todo"),
     ),

@@ -206,3 +206,42 @@ video.reel { width: 270px; max-width: 100%; aspect-ratio: 9 / 16; background: #0
 .ajustes-3 .campo:first-child { grid-column: 1 / -1; }
 .chip.modo-LIBRE, .chip.modo-ESTUDIO { color: var(--acento); border-color: color-mix(in srgb, var(--acento) 50%, var(--borde)); }
 details.otros-formatos { margin-top: -4px; } details.otros-formatos summary { cursor: pointer; padding: 2px 0; } details.otros-formatos .fila { margin-top: 6px; }
+
+/* ───────── MARCAS: IMNOBA (inmobiliario y vehículos) y SINAPSIS (medicina y ciencia) ─────────
+   Cada marca tiene SU color en toda la interfaz (selector, banda, tarjeta del Estudio, chips y barra superior) para distinguirlas de un vistazo.
+   IMNOBA = azul navy #02224E + amarillo #FFC500 · SINAPSIS = negro clínico #0B0F19 + azul #3B82F6 (y amarillo nervio como detalle). */
+body[data-marca="imnoba"] { --marca: #ffc500; --marca-fondo: #02224e; --marca-texto: #ffffff; --marca-acento: #8eb8ff; --acento: #ffc500; --acento-t: #02224e; }
+body[data-marca="sinapsis"] { --marca: #3b82f6; --marca-fondo: #0b0f19; --marca-texto: #f8fafc; --marca-acento: #facc15; --acento: #3b82f6; --acento-t: #ffffff; }
+.marca-imnoba { --m: #ffc500; --mf: #02224e; --mt: #ffffff; --ma: #8eb8ff; }
+.marca-sinapsis { --m: #3b82f6; --mf: #0b0f19; --mt: #f8fafc; --ma: #facc15; }
+.chip.marca-imnoba, .pill-marca.marca-imnoba { background: #02224e; color: #ffc500; border-color: #ffc50077; }
+.chip.marca-sinapsis, .pill-marca.marca-sinapsis { background: #0b0f19; color: #6aa3ff; border-color: #3b82f688; }
+.pill-marca { display: inline-flex; align-items: center; gap: 6px; padding: 5px 14px; border-radius: 999px; font-weight: 800; letter-spacing: .06em; font-size: .85rem; border: 1px solid; white-space: nowrap; }
+.pill-marca[hidden] { display: none; }
+body[data-marca] .barra { border-bottom: 3px solid var(--marca); }
+.selector-marca { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 12px; margin: 0 0 14px; }
+.selector-marca.chico { grid-template-columns: repeat(auto-fit, minmax(190px, 1fr)); gap: 8px; }
+.marca-opcion { display: flex; align-items: center; gap: 14px; text-align: left; cursor: pointer; font: inherit; color: var(--texto); background: var(--capa); border: 2px solid var(--borde); border-radius: var(--radio); padding: 14px 18px; transition: transform .12s, border-color .12s, background .12s; }
+.marca-opcion:hover { transform: translateY(-2px); border-color: var(--m, var(--suave)); }
+.marca-opcion .ico { font-size: 2rem; line-height: 1; }
+.selector-marca.chico .marca-opcion { padding: 8px 12px; } .selector-marca.chico .marca-opcion .ico { font-size: 1.4rem; }
+.marca-opcion .cuerpo { display: flex; flex-direction: column; flex: 1; min-width: 0; }
+.marca-opcion .cuerpo strong { font-size: 1.15rem; letter-spacing: .06em; }
+.marca-opcion .cuerpo span { color: var(--suave); font-size: .85rem; }
+.marca-opcion .estado { font-size: .78rem; font-weight: 800; color: var(--suave); text-transform: uppercase; letter-spacing: .06em; }
+.marca-opcion.activa { background: var(--mf, var(--capa2)); color: var(--mt, var(--texto)); border-color: var(--m, var(--acento)); box-shadow: 0 0 0 3px color-mix(in srgb, var(--m, var(--acento)) 30%, transparent); }
+.marca-opcion.activa .cuerpo span { color: color-mix(in srgb, var(--mt, #fff) 75%, transparent); }
+.marca-opcion.activa .estado { color: var(--m, var(--acento)); }
+.banda-marca { background: var(--mf); color: var(--mt); border-radius: var(--radio) var(--radio) 0 0; border: 2px solid var(--m); border-bottom: 0; padding: 14px 18px 12px; }
+.banda-marca strong { color: var(--m); font-size: 1.2rem; letter-spacing: .08em; }
+.banda-marca p { margin: 6px 0 8px; color: color-mix(in srgb, var(--mt) 85%, transparent); font-size: .9rem; }
+.banda-marca .chip.paleta { background: transparent; color: var(--mt); border-color: color-mix(in srgb, var(--mt) 35%, transparent); font-weight: 600; }
+.banda-marca + .tarjeta.estudio { border: 2px solid var(--m); border-top: 0; border-radius: 0 0 var(--radio) var(--radio); margin-top: 0; }
+.tarjeta.estudio.marca-imnoba .btn.primario, .tarjeta.estudio.marca-sinapsis .btn.primario { background: var(--m); color: var(--mf); border-color: var(--m); }
+.tarjeta.otra-marca { border: 2px dashed var(--m); }
+.tarjeta.proy.marca-imnoba { border-left: 5px solid #ffc500; } .tarjeta.proy.marca-sinapsis { border-left: 5px solid #3b82f6; }
+.nicho.marca-imnoba { border-left: 5px solid #ffc500; } .nicho.marca-sinapsis { border-left: 5px solid #3b82f6; }
+.nicho.marca-imnoba:hover { border-color: #ffc500; } .nicho.marca-sinapsis:hover { border-color: #3b82f6; }
+.grupo-marca { margin: 0 0 18px; } .grupo-marca > .fila { margin-bottom: 10px; }
+.marca-opcion.todas { --m: var(--acento); --mf: var(--capa2); --mt: var(--texto); }
+.tarjeta.estudio.marca-sinapsis .btn.primario { color: #fff; }

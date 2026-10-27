@@ -4,6 +4,7 @@
  */
 import React, { useMemo } from "react";
 import { AbsoluteFill, useCurrentFrame } from "remotion";
+import { marcaDePaleta } from "../anim/marcas";
 import { esDocumental, temaViral, type EscenaViralGuardada } from "../anim/viral";
 import { ViralCtx, FPS, H, LineaCap, VARS_DOCUMENTAL, W, clamp, easeInOut, easeOut, lerp } from "./comun";
 import { FondoViral } from "./fondos";
@@ -61,7 +62,8 @@ export const EscenaViral: React.FC<{ escena: EscenaViralGuardada; paleta: string
   const f = useCurrentFrame();
   const t = f / FPS;
   const T = useMemo(() => temaViral(paleta, escena.bg), [paleta, escena.bg]);
-  const marca = paleta === "imnoba" || paleta === "retro-imnoba";
+  const marcaId = marcaDePaleta(paleta).id;
+  const marca = marcaId === "imnoba";
   // estilo documental (paletas Retro-Científica): fondo plano, titulares en Archivo Black, cortes secos y la ficha de papel que entra deslizándose
   const doc = esDocumental(paleta);
   const entraZoom = !primera && escena.tr === "zoom";
@@ -80,7 +82,7 @@ export const EscenaViral: React.FC<{ escena: EscenaViralGuardada; paleta: string
   const desliza = entraPapel && k < 1 ? (1 - easeOut(t / SEG_BARRIDO)) * W : 0;
   const progreso = clamp((escena.inicio + t) / Math.max(1, escena.total));
   return (
-    <ViralCtx.Provider value={{ T, ritmo: escena.ritmo, dur: escena.dur, paleta, marca, doc }}>
+    <ViralCtx.Provider value={{ T, ritmo: escena.ritmo, dur: escena.dur, paleta, marca, marcaId, doc }}>
       <AbsoluteFill style={{ clipPath: clip, backgroundColor: T.bg1, transform: desliza ? `translateX(${desliza}px)` : undefined, ...(doc ? VARS_DOCUMENTAL : {}) }}>
         <AbsoluteFill style={{ transform: escalaTransicion !== 1 ? `scale(${escalaTransicion})` : undefined, transformOrigin: "50% 50%" }}>
           {escena.sc ? <FondoEscenario sc={escena.sc} /> : <FondoViral bg={escena.bg} />}

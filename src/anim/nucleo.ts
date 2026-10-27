@@ -13,5 +13,6 @@ export * from "./prompt";
 export * from "./validar";
 export * from "./sonido";
 export * from "./voces";
+export * from "./marcas";
 export { iconosPermitidos, todosLosIconos } from "./iconos";
 export type * from "./tipos";

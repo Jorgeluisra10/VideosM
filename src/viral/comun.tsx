@@ -25,7 +25,7 @@ export const ANCHO_DOC = 1.1;
 /** ancho máximo de los bloques de texto (queda ≥ 99 px de cada borde aun con el zoom de cámara) */
 export const ANCHO_TEXTO = 840;
 
-export type CtxViral = { T: TemaViral; ritmo: number; dur: number; paleta: string; marca: boolean; doc?: boolean };
+export type CtxViral = { T: TemaViral; ritmo: number; dur: number; paleta: string; /** true = la marca es IMNOBA (lleva su logo en el cierre) */ marca: boolean; /** marca a la que pertenece la paleta (IMNOBA o SINAPSIS) */ marcaId?: "imnoba" | "sinapsis"; doc?: boolean };
 export const ViralCtx = createContext<CtxViral | null>(null);
 export const useViral = (): CtxViral => {
   const c = useContext(ViralCtx);

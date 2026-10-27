@@ -125,9 +125,23 @@ export const Vs: React.FC<P> = ({ e }) => {
 
 /* ───────────── CTA ───────────── */
 
+/** Insignia tipográfica de SINAPSIS para el cierre (neurona + nombre): tarjeta oscura con el azul clínico y el amarillo de los nervios. No es un logo oficial: si hay uno, se cambia aquí. */
+const InsigniaSinapsis: React.FC<{ y: number; k: number }> = ({ y, k }) => (
+  <div data-texto="insignia-sinapsis" style={{ position: "absolute", left: 540 - 205, top: y - 205, width: 410, height: 410, borderRadius: 74, background: "#0B0F19", border: "5px solid #3B82F6", boxShadow: "0 40px 90px rgba(59,130,246,0.38)", display: "flex", flexDirection: "column", alignItems: "center", justifyContent: "center", gap: 14, transform: `scale(${0.7 + 0.3 * Math.max(0, k)})`, opacity: clamp(k * 2) }}>
+    <svg width={190} height={150} viewBox="0 0 190 150" aria-hidden="true">
+      <g stroke="#3B82F6" strokeWidth={6} strokeLinecap="round" fill="none"><path d="M95 75 L40 30" /><path d="M95 75 L150 28" /><path d="M95 75 L38 118" /><path d="M95 75 L152 120" /><path d="M40 30 L14 52" /><path d="M150 28 L178 50" /></g>
+      <circle cx={95} cy={75} r={22} fill="#3B82F6" /><circle cx={95} cy={75} r={9} fill="#0B0F19" />
+      {[[40, 30], [150, 28], [38, 118], [152, 120]].map(([cx, cy], i) => <circle key={i} cx={cx} cy={cy} r={10} fill="#FACC15" />)}
+    </svg>
+    <div style={{ fontFamily: FUENTE, fontWeight: 900, fontSize: 58, letterSpacing: "0.1em", color: "#F8FAFC", lineHeight: 1 }}>SINAPSIS</div>
+    <div style={{ fontFamily: MONO, fontWeight: 700, fontSize: 22, letterSpacing: "0.14em", color: "#FACC15" }}>MEDICINA Y CIENCIA</div>
+  </div>
+);
+
 export const Cta: React.FC<P> = ({ e }) => {
   const { f, t, a } = useReloj();
-  const { T, marca } = useViral();
+  const { T, marca, marcaId } = useViral();
+  const sinapsis = marcaId === "sinapsis";
   const sLogo = spr(f, a(0.45), { damping: 10, stiffness: 140, mass: 0.8 });
   const pulso = 1 + 0.05 * Math.sin(f / 9);
   const sBtn = spr(f, a(1.1), { damping: 9, stiffness: 160, mass: 0.7 });
@@ -135,7 +149,7 @@ export const Cta: React.FC<P> = ({ e }) => {
     <AbsoluteFill>
       <svg width={W} height={H} viewBox={`0 0 ${W} ${H}`} style={{ position: "absolute", inset: 0 }}>
         <StudioSvgDefs />
-        {!marca && <EsferaIcono nombre={e.ic} x={540} y={1130} d={330} color={T.acento} delay={0.45} flota={12} colorIcono={T.sobreAcento} />}
+        {!marca && !sinapsis && <EsferaIcono nombre={e.ic} x={540} y={1130} d={330} color={T.acento} delay={0.45} flota={12} colorIcono={T.sobreAcento} />}
         <Confeti x={540} y={1100} t0={0.45} n={34} radio={520} colores={[T.texto, "#FFFFFF", T.peligro]} />
       </svg>
       <TextoCinetico texto={e.h} destacada={e.w} y={620} maxPx={142} minPx={84} maxLineas={3} golpe delay={0.1} />
@@ -144,6 +158,7 @@ export const Cta: React.FC<P> = ({ e }) => {
           <Img src={staticFile("marca/imnoba-logo.png")} style={{ width: 372, height: 372, objectFit: "contain" }} />
         </div>
       )}
+      {sinapsis && <InsigniaSinapsis y={1130 + Math.sin(f / 40) * 9} k={sLogo} />}
       {e.sub && (
         <div style={{ position: "absolute", left: 0, width: W, top: 1500, display: "flex", justifyContent: "center", transform: `translateY(-50%) scale(${Math.max(0.0001, sBtn) * pulso})`, opacity: clamp(sBtn * 2) }}>
           <div data-texto="cta" style={{ fontFamily: FUENTE, fontWeight: 900, fontSize: Math.min(60, Math.floor(700 / (Math.max(6, e.sub.length) * 0.62))), color: T.bg0, background: T.texto, padding: "26px 60px", borderRadius: 999, boxShadow: "0 22px 60px rgba(2,34,78,0.4)", whiteSpace: "nowrap", letterSpacing: "-0.01em" }}>{e.sub} →</div>

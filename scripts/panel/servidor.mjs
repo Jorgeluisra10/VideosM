@@ -302,7 +302,7 @@ function historialAnim() {
     .map((f) => {
       try {
         const h = JSON.parse(readFileSync(join(dir, f), "utf8"));
-        return { id: h.id, creado: h.creado, titulo: h.animacion?.titulo ?? "", modelo: h.opciones?.modelo, escenas: h.animacion?.escenas?.length ?? 0, duracion: h.animacion?.duracion ?? 0, costo: h.animacion?.uso?.costo_usd ?? null };
+        return { id: h.id, creado: h.creado, titulo: h.animacion?.titulo ?? "", modelo: h.opciones?.modelo, paleta: h.animacion?.paleta ?? h.opciones?.paleta ?? "imnoba", escenas: h.animacion?.escenas?.length ?? 0, duracion: h.animacion?.duracion ?? 0, costo: h.animacion?.uso?.costo_usd ?? null };
       } catch {
         return null;
       }
@@ -361,15 +361,23 @@ async function lanzarAnim(nombre, o = {}) {
       if (esIdea) r.escenas = new Array(r.escenasObjetivo).fill(0);
       pedir(!r.errores.length, `El guion tiene problemas:\n· ${r.errores.join("\n· ")}`);
       const modelo = N.MODELOS.some((m) => m.id === o.modelo) ? o.modelo : "gpt-4.1-mini";
-      const paleta = N.PALETAS[o.paleta] ? o.paleta : "imnoba";
+      // la paleta tiene que ser de la marca elegida (IMNOBA o SINAPSIS): nunca se mezcla la identidad de una con la otra
+      const marcaId = N.marcaPorId(o.marca)?.id ?? N.marcaDePaleta(o.paleta).id;
+      const paleta = N.paletaValidaParaMarca(marcaId, N.PALETAS[o.paleta] ? o.paleta : "");
       mkdirSync(dirAnim(), { recursive: true });
       const f = dirAnim("guion-actual.txt");
       writeFileSync(f, o.guion);
       return lanzar({ nombre, titulo: "Generar video", pasos: [{ titulo: `Dibujar ${r.escenas.length} escenas con ${modelo}`, cmd: [script("anim", "generar.mjs"), `--guion=${f}`, `--modelo=${modelo}`, `--sfx=${o.sfx === false ? "no" : "si"}`, `--paleta=${paleta}`, ...(o.verificar === false ? ["--sin-verificar"] : []), `--motor=${motor}`] }] });
     }
     case "anim-ejemplo": {
-      const N_PALETAS = Object.keys((await cargarNucleoAnim()).PALETAS);
-      return lanzar({ nombre, titulo: o.tema === "metro-bogota" ? "Cargar el piloto «Metro de Bogotá»" : "Cargar el ejemplo IMNOBA", pasos: [{ titulo: o.tema === "metro-bogota" ? "Cargar el piloto con escenas a medida (sin IA, sin coste)" : "Cargar el ejemplo (sin IA, sin coste)", cmd: [script("anim", "ejemplo.mjs"), ...(o.sfx === false ? ["--sin-sfx"] : []), ...(o.paleta ? [`--paleta=${N_PALETAS.includes(o.paleta) ? o.paleta : "imnoba"}`] : []), ...(["viral", "estudio", "libre", "hud", "simple"].includes(o.formato) ? [`--formato=${o.formato}`] : []), ...(["carros", "ciencia", "conchas", "documental", "metro-bogota", "anomalia", "bogota-real", "medicos-experimento"].includes(o.tema) ? [`--tema=${o.tema}`] : [])] }] });
+      const N = await cargarNucleoAnim();
+      const tema = typeof o.tema === "string" ? o.tema : "";
+      const marca = N.marcaDeTema(tema) ?? N.MARCAS[N.MARCA_POR_DEFECTO];
+      const ej = marca.ejemplos.find((e) => e.tema === tema) ?? marca.ejemplos[0];
+      // cada ejemplo se carga con la paleta de SU marca (si el cliente pide otra de la otra marca, se ignora)
+      const paleta = o.paleta && N.PALETAS[o.paleta] && marca.paletas.includes(o.paleta) ? o.paleta : ej.paleta;
+      const temas = N.IDS_MARCA.flatMap((i) => N.MARCAS[i].ejemplos.map((e) => e.tema)).filter(Boolean);
+      return lanzar({ nombre, titulo: `Cargar el ejemplo ${marca.nombre}`, pasos: [{ titulo: `Cargar «${ej.etiqueta.replace(/^\S+\s/, "")}» (${marca.nombre}; sin IA, sin coste)`, cmd: [script("anim", "ejemplo.mjs"), ...(o.sfx === false ? ["--sin-sfx"] : []), `--paleta=${paleta}`, ...(["viral", "estudio", "libre", "hud", "simple"].includes(o.formato) ? [`--formato=${o.formato}`] : []), ...(temas.includes(tema) ? [`--tema=${tema}`] : [])] }] });
     }
     case "anim-voz": {
       pedir(claveOpenAI() || o.prueba, "Para ponerle voz hace falta la clave de OpenAI (pestaña Ajustes).", 412);
@@ -536,7 +544,7 @@ async function api(req, res, url) {
     // por defecto, el ejemplo del motor de estudio ([ESCENA 1 | 0s-6s | MODO: SVG] + VOZ_OFF + DIRECCION_VISUAL + SFX); formato=libre → lienzo libre; formato=hud → estructurado retro; formato=simple → el de siempre
     const formato = url.searchParams.get("formato") ?? "viral";
     const retro = N.esRetro(url.searchParams.get("paleta") ?? "");
-    if (formato === "viral") return json(res, 200, { guion: readFileSync(join(RAIZ, "ejemplos", "animacion-viral", "idea.txt"), "utf8").trim() });
+    if (formato === "viral") return json(res, 200, { guion: readFileSync(join(RAIZ, "ejemplos", "animacion-viral", (N.marcaPorId(url.searchParams.get("marca")) ?? N.marcaDePaleta(url.searchParams.get("paleta") ?? "")).ideaEjemplo), "utf8").trim() });
     const archivo = formato === "hud" ? ["animacion-retro", "guion-estructurado.txt"] : formato === "simple" ? [retro ? "animacion-retro" : "animacion-imnoba", "guion.txt"] : formato === "libre" ? ["animacion-libre", "guion-libre.txt"] : ["animacion-estudio", "guion.txt"];
     return json(res, 200, { guion: readFileSync(join(RAIZ, "ejemplos", ...archivo), "utf8") });
   }
