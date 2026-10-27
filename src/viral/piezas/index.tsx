@@ -16,6 +16,9 @@ import { AnomCompresion, AnomLaboratorio } from "./anom5";
 import { RealHistoria, RealTrancon, RealBus } from "./real1";
 import { RealRedes, RealTiempo, RealViaducto, RealUnTren } from "./real2";
 import { RealResultado, RealPlusvalia, RealCaminata, RealCierre } from "./real3";
+import { MedGancho, MedSonda1, MedSonda2, MedNobel1 } from "./med1";
+import { MedPylori1, MedVaso, MedGastritis, MedNobel2 } from "./med2";
+import { MedPolar1, MedCirugia, MedPolar2, MedCierre } from "./med3";
 
 export const COMPONENTES_PIEZA: Record<string, React.FC<{ e: EscenaViralGuardada }>> = {
   "metro-plano": MetroPlano,
@@ -48,6 +51,18 @@ export const COMPONENTES_PIEZA: Record<string, React.FC<{ e: EscenaViralGuardada
   "real-plusvalia": RealPlusvalia,
   "real-caminata": RealCaminata,
   "real-cierre": RealCierre,
+  "med-gancho": MedGancho,
+  "med-sonda1": MedSonda1,
+  "med-sonda2": MedSonda2,
+  "med-nobel1": MedNobel1,
+  "med-pylori1": MedPylori1,
+  "med-vaso": MedVaso,
+  "med-gastritis": MedGastritis,
+  "med-nobel2": MedNobel2,
+  "med-polar1": MedPolar1,
+  "med-cirugia": MedCirugia,
+  "med-polar2": MedPolar2,
+  "med-cierre": MedCierre,
 };
 
 export const Pieza: React.FC<{ e: EscenaViralGuardada; alternativa: React.ReactNode }> = ({ e, alternativa }) => {

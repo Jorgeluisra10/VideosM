@@ -369,7 +369,7 @@ async function lanzarAnim(nombre, o = {}) {
     }
     case "anim-ejemplo": {
       const N_PALETAS = Object.keys((await cargarNucleoAnim()).PALETAS);
-      return lanzar({ nombre, titulo: o.tema === "metro-bogota" ? "Cargar el piloto «Metro de Bogotá»" : "Cargar el ejemplo IMNOBA", pasos: [{ titulo: o.tema === "metro-bogota" ? "Cargar el piloto con escenas a medida (sin IA, sin coste)" : "Cargar el ejemplo (sin IA, sin coste)", cmd: [script("anim", "ejemplo.mjs"), ...(o.sfx === false ? ["--sin-sfx"] : []), ...(o.paleta ? [`--paleta=${N_PALETAS.includes(o.paleta) ? o.paleta : "imnoba"}`] : []), ...(["viral", "estudio", "libre", "hud", "simple"].includes(o.formato) ? [`--formato=${o.formato}`] : []), ...(["carros", "ciencia", "conchas", "documental", "metro-bogota", "anomalia", "bogota-real"].includes(o.tema) ? [`--tema=${o.tema}`] : [])] }] });
+      return lanzar({ nombre, titulo: o.tema === "metro-bogota" ? "Cargar el piloto «Metro de Bogotá»" : "Cargar el ejemplo IMNOBA", pasos: [{ titulo: o.tema === "metro-bogota" ? "Cargar el piloto con escenas a medida (sin IA, sin coste)" : "Cargar el ejemplo (sin IA, sin coste)", cmd: [script("anim", "ejemplo.mjs"), ...(o.sfx === false ? ["--sin-sfx"] : []), ...(o.paleta ? [`--paleta=${N_PALETAS.includes(o.paleta) ? o.paleta : "imnoba"}`] : []), ...(["viral", "estudio", "libre", "hud", "simple"].includes(o.formato) ? [`--formato=${o.formato}`] : []), ...(["carros", "ciencia", "conchas", "documental", "metro-bogota", "anomalia", "bogota-real", "medicos-experimento"].includes(o.tema) ? [`--tema=${o.tema}`] : [])] }] });
     }
     case "anim-voz": {
       pedir(claveOpenAI() || o.prueba, "Para ponerle voz hace falta la clave de OpenAI (pestaña Ajustes).", 412);

@@ -69,8 +69,8 @@ export const EscenaViral: React.FC<{ escena: EscenaViralGuardada; paleta: string
   const entraPapel = !primera && escena.tr === "papel";
   const saleZoom = escena.trs === "zoom" && t > escena.dur;
   // la cámara del viaje de escala ya hace su propio zoom: la deriva lenta solo se aplica al resto de plantillas
-  // las piezas «anom-*» y «real-*» son composiciones exactas (el cierre repite el primer fotograma): sin deriva de cámara
-  const sinDeriva = escena.t === "ZOOM" || (escena.t === "PIEZA" && Boolean(escena.pieza?.id.startsWith("anom-") || escena.pieza?.id.startsWith("real-")));
+  // las piezas «anom-*», «real-*» y «med-*» son composiciones exactas (el cierre repite el primer fotograma): sin deriva de cámara
+  const sinDeriva = escena.t === "ZOOM" || (escena.t === "PIEZA" && Boolean(escena.pieza?.id.startsWith("anom-") || escena.pieza?.id.startsWith("real-") || escena.pieza?.id.startsWith("med-")));
   const zoomLento = sinDeriva ? 1 : 1 + (doc ? 0.02 : 0.045) * clamp(t / escena.dur);
   const k = primera ? 1 : easeInOut(t / SEG_BARRIDO);
   const X = k * 122;

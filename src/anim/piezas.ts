@@ -153,6 +153,34 @@ export const TR = {
   cierre: { tren: 1.2, pregunta: 6.4 },
 } as const;
 
+/**
+ * Datos del video «Médicos que se probaron a sí mismos» (v4). Cada cifra tiene su fuente en pantalla y en ejemplos/animacion-viral/guion-tecnico-medicos-experimento.md.
+ * Lo que NO se afirma porque no está confirmado: longitud del catéter de Forssmann, mililitros/UFC exactos del caldo de Marshall, día exacto de sus síntomas, fecha exacta de la cirugía de Rogozov y quién sostenía qué.
+ */
+export const MED = {
+  forssmann: { anio: 1929, nobel: 1956 },
+  marshall: { anio: 1984, nobel: 2005 },
+  rogozov: { anio: 1961, minutos: 105 },
+  /** prevalencia mundial de H. pylori (%): meta-análisis de 73 países (Zamani et al., Aliment Pharmacol Ther 2018; IC 95 % 40,9–47,7). Otros estudios dan cifras más altas (Hooi 2017: ≈ 4.400 millones de personas en 2015) */
+  pylori: { prevalencia: 44.3 },
+} as const;
+
+/** Tiempos del video médico, compartidos entre el dibujo y el sonido (segundos a ritmo normal). */
+export const TM = {
+  gancho: { sonda: 3.0, vaso: 5.6, bisturi: 7.3 },
+  sonda1: { ruta: 2.6, rutaDur: 3.6 },
+  sonda2: { ini: 3.3, dur: 2.9, flash: 8.7 },
+  nobel1: { medalla: 3.3, anio: 6.8 },
+  pylori1: { lupa: 5.2 },
+  vaso: { beber: 6.6, beberDur: 3.0, anio: 5.8 },
+  gastritis: { endo: 3.1, rojo: 3.6, rojoDur: 3.4, caps: 8.4 },
+  nobel2: { picto: 3.7, pictoDur: 3.0, medalla: 7.1 },
+  polar1: { viento: 6.8, dolor: 5.5 },
+  cirugia: { reloj: 4.7, relojDur: 4.4 },
+  polar2: { sol: 0.6, solDur: 6.6, dias: 2.6, diasDur: 3.2 },
+  cierre: { tarjetas: 0.5, noImites: 4.4, pregunta: 7.4 },
+} as const;
+
 export const PIEZAS: Record<string, DefPieza> = {
   "metro-plano": {
     id: "metro-plano", nombre: "8 millones en un solo plano", ideal: 7.6, fondo: "dark",
@@ -277,6 +305,55 @@ export const PIEZAS: Record<string, DefPieza> = {
   "real-cierre": {
     id: "real-cierre", nombre: "Realista · marzo de 2028 (cierre con la pregunta)", ideal: 10.4, fondo: "dark", entra: "corte",
     sfx: (_d, r) => [ev(0.05, "whoosh", 0.12), ev(TR.cierre.tren * r, "whoosh", 0.12), ev(1.0 * r, "clic", 0.1), ev(TR.cierre.pregunta * r, "golpe", 0.2), ev(TR.cierre.pregunta * r + 0.3, "ding", 0.16)],
+  },
+  /* ───────────── «Médicos que se probaron a sí mismos» (v4 · figuras médicas realistas) ───────────── */
+  "med-gancho": {
+    id: "med-gancho", nombre: "Médico · tres experimentos sobre la mesa (gancho)", ideal: 10.4, fondo: "dark",
+    sfx: (_d, r) => [ev(0.05, "whoosh", 0.12), ev(TM.gancho.sonda * r, "pop", 0.12), ev(TM.gancho.vaso * r, "pop", 0.12), ev(TM.gancho.bisturi * r, "pop", 0.12), ev(8.9 * r, "ding", 0.16)],
+  },
+  "med-sonda1": {
+    id: "med-sonda1", nombre: "Médico · 1929 la ruta imaginada hasta el corazón", ideal: 10.1, fondo: "dark", entra: "corte",
+    sfx: (_d, r) => [ev(0.05, "whoosh", 0.1), ...clics(0.4 * r, 1.8 * r, 0.05), ev(TM.sonda1.ruta * r, "zap", 0.1), ev(6.9 * r, "golpe", 0.2), ev(8.3 * r, "thud", 0.14)],
+  },
+  "med-sonda2": {
+    id: "med-sonda2", nombre: "Médico · la sonda llega a la aurícula (radiografía)", ideal: 10.8, fondo: "dark", entra: "corte",
+    sfx: (_d, r) => [ev(0.05, "heartbeat", 0.14), ev(1.9 * r, "pop", 0.1), ...clics(TM.sonda2.ini * r, TM.sonda2.dur * r, 0.04), ev(TM.sonda2.flash * r, "zap", 0.16), ev(TM.sonda2.flash * r + 0.12, "ding", 0.18)],
+  },
+  "med-nobel1": {
+    id: "med-nobel1", nombre: "Médico · medalla Nobel 1956", ideal: 10.1, fondo: "dark", entra: "corte",
+    sfx: (_d, r) => [ev(0.05, "golpe", 0.14), ev(TM.nobel1.medalla * r, "whoosh", 0.16), ev((TM.nobel1.medalla + 0.3) * r, "thud", 0.18), ...clics(TM.nobel1.anio * r, 1.6 * r, 0.05), ev((TM.nobel1.anio + 1.7) * r, "ding", 0.2)],
+  },
+  "med-pylori1": {
+    id: "med-pylori1", nombre: "Médico · estómago con úlcera y bacteria en espiral", ideal: 9.4, fondo: "dark", entra: "corte",
+    sfx: (_d, r) => [ev(0.05, "heartbeat", 0.1), ev(TM.pylori1.lupa * r, "whoosh", 0.14), ev((TM.pylori1.lupa + 0.4) * r, "pop", 0.12), ev(7.4 * r, "radar", 0.1)],
+  },
+  "med-vaso": {
+    id: "med-vaso", nombre: "Médico · 1984 el caldo con bacterias (vaso que se inclina)", ideal: 10.4, fondo: "dark", entra: "corte",
+    sfx: (_d, r) => [ev(0.05, "whoosh", 0.1), ev(2.2 * r, "tick", 0.1), ev(5.7 * r, "golpe", 0.2), ...clics(TM.vaso.anio * r, 1.6 * r, 0.05), ev(TM.vaso.beber * r, "whoosh", 0.12), ev((TM.vaso.beber + 1.8) * r, "thud", 0.14)],
+  },
+  "med-gastritis": {
+    id: "med-gastritis", nombre: "Médico · endoscopia: la mucosa se inflama", ideal: 10.1, fondo: "dark", entra: "corte",
+    sfx: (_d, r) => [ev(0.05, "whoosh", 0.1), ev(TM.gastritis.endo * r, "zap", 0.12), ev(TM.gastritis.rojo * r, "heartbeat", 0.14), ev(7.0 * r, "ding", 0.16), ...[0, 1, 2].map((i) => ev((TM.gastritis.caps + i * 0.35) * r, "pop", 0.1))],
+  },
+  "med-nobel2": {
+    id: "med-nobel2", nombre: "Médico · pictograma 44 % y medalla Nobel 2005", ideal: 11.1, fondo: "dark", entra: "corte",
+    sfx: (_d, r) => [ev(0.05, "whoosh", 0.1), ...clics(TM.nobel2.picto * r, TM.nobel2.pictoDur * r, 0.05), ev((TM.nobel2.picto + TM.nobel2.pictoDur) * r, "ding", 0.14), ev(TM.nobel2.medalla * r, "thud", 0.18), ev((TM.nobel2.medalla + 0.2) * r, "ding", 0.2)],
+  },
+  "med-polar1": {
+    id: "med-polar1", nombre: "Médico · Antártida 1961, ventisca y apendicitis", ideal: 10.8, fondo: "dark", entra: "corte",
+    sfx: (_d, r) => [ev(0.05, "estatica", 0.1), ev(0.2 * r, "whoosh", 0.14), ev(TM.polar1.dolor * r, "heartbeat", 0.18), ev(5.5 * r, "golpe", 0.2), ev(TM.polar1.viento * r, "whoosh", 0.16)],
+  },
+  "med-cirugia": {
+    id: "med-cirugia", nombre: "Médico · instrumental y cronómetro hasta casi dos horas", ideal: 10.4, fondo: "dark", entra: "corte",
+    sfx: (_d, r) => [ev(0.05, "whoosh", 0.1), ...[0, 1, 2, 3].map((i) => ev((0.3 + i * 0.35) * r, "clic", 0.12)), ...clics(TM.cirugia.reloj * r, TM.cirugia.relojDur * r, 0.04), ev((TM.cirugia.reloj + TM.cirugia.relojDur) * r, "golpe", 0.2), ev(8.7 * r, "ding", 0.14)],
+  },
+  "med-polar2": {
+    id: "med-polar2", nombre: "Médico · amanece: 14 días y de vuelta al trabajo", ideal: 8.0, fondo: "dark", entra: "corte",
+    sfx: (_d, r) => [ev(0.05, "whoosh", 0.12), ev(0.5 * r, "ding", 0.1), ...clics(TM.polar2.dias * r, TM.polar2.diasDur * r, 0.05), ev((TM.polar2.dias + TM.polar2.diasDur) * r, "ding", 0.16), ev(6.2 * r, "pop", 0.12)],
+  },
+  "med-cierre": {
+    id: "med-cierre", nombre: "Médico · tres tarjetas, «no lo imites» y la pregunta", ideal: 10.4, fondo: "dark", entra: "corte",
+    sfx: (_d, r) => [ev(0.05, "whoosh", 0.12), ...[0, 1, 2].map((i) => ev((TM.cierre.tarjetas + i * 0.5) * r, "pop", 0.12)), ev(TM.cierre.noImites * r, "golpe", 0.22), ev(TM.cierre.pregunta * r, "ding", 0.16), ev((TM.cierre.pregunta + 0.4) * r, "radar", 0.1)],
   },
 };
 

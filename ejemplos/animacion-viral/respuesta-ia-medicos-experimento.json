@@ -1,0 +1,137 @@
+{
+  "titulo": "Médicos que se probaron a sí mismos",
+  "scenes": [
+    {
+      "t": "PIEZA",
+      "voz": "Tres médicos usaron su propio cuerpo como laboratorio. Uno se metió un tubo hasta el corazón, otro se bebió una bacteria y otro se operó a sí mismo.",
+      "dur": 10.4,
+      "h": "TRES MÉDICOS, SU PROPIO CUERPO",
+      "w": "MÉDICOS",
+      "cap": "dos ganaron un Nobel",
+      "pieza": {
+        "id": "med-gancho"
+      }
+    },
+    {
+      "t": "PIEZA",
+      "voz": "Alemania, mil novecientos veintinueve. El joven médico Werner Forssmann cree que se puede llegar al corazón por una vena. Su jefe dice que no. Lo hace igual.",
+      "dur": 10.1,
+      "h": "1929: UN TUBO HASTA EL CORAZÓN",
+      "w": "1929",
+      "cap": "Werner Forssmann",
+      "pieza": {
+        "id": "med-sonda1"
+      }
+    },
+    {
+      "t": "PIEZA",
+      "voz": "Se anestesió el brazo, se abrió una vena y empujó una sonda hasta su corazón. Luego caminó hasta la sala de rayos X. La radiografía lo confirmó: había llegado.",
+      "dur": 10.8,
+      "h": "LA RADIOGRAFÍA LO CONFIRMÓ",
+      "w": "SONDA",
+      "cap": "aurícula derecha",
+      "pieza": {
+        "id": "med-sonda2"
+      }
+    },
+    {
+      "t": "PIEZA",
+      "voz": "Lo criticaron tanto que terminó de urólogo. Pero su idea dio origen al cateterismo cardíaco. En mil novecientos cincuenta y seis, Forssmann ganó el Nobel de Medicina.",
+      "dur": 10.1,
+      "h": "NOBEL DE MEDICINA 1956",
+      "w": "1956",
+      "cap": "cateterismo cardíaco",
+      "pieza": {
+        "id": "med-nobel1"
+      }
+    },
+    {
+      "t": "PIEZA",
+      "voz": "En Australia, los médicos creían que las úlceras eran por estrés y comida picante. Robin Warren y Barry Marshall sospechaban de una bacteria en espiral.",
+      "dur": 9.4,
+      "h": "¿ESTRÉS? NO: UNA BACTERIA",
+      "w": "BACTERIA",
+      "cap": "Helicobacter pylori",
+      "pieza": {
+        "id": "med-pylori1"
+      }
+    },
+    {
+      "t": "PIEZA",
+      "voz": "Nadie les creía: decían que ninguna bacteria sobrevive en el ácido del estómago. En mil novecientos ochenta y cuatro, Marshall se bebió un caldo lleno de esas bacterias.",
+      "dur": 10.4,
+      "h": "1984: SE LO BEBIÓ",
+      "w": "1984",
+      "cap": "Barry Marshall",
+      "pieza": {
+        "id": "med-vaso"
+      }
+    },
+    {
+      "t": "PIEZA",
+      "voz": "A los pocos días, náuseas, vómitos y mal aliento. La endoscopia mostró su estómago inflamado, con la bacteria. Funcionó: esa bacteria enferma. Y se curó con antibióticos.",
+      "dur": 10.1,
+      "h": "GASTRITIS COMPROBADA",
+      "w": "GASTRITIS",
+      "cap": "endoscopia",
+      "pieza": {
+        "id": "med-gastritis"
+      }
+    },
+    {
+      "t": "PIEZA",
+      "voz": "Hoy se sabe que causa la mayoría de las úlceras y que infecta a cerca de la mitad del mundo. En dos mil cinco, Marshall y Warren ganaron el Nobel.",
+      "dur": 11.1,
+      "h": "NOBEL DE MEDICINA 2005",
+      "w": "2005",
+      "cap": "≈ 44 % de la humanidad (meta-análisis)",
+      "pieza": {
+        "id": "med-nobel2"
+      }
+    },
+    {
+      "t": "PIEZA",
+      "voz": "Abril de mil novecientos sesenta y uno, Antártida. Leonid Rogozov, el único médico de la base, tiene apendicitis. Nadie más puede operarlo, y con la ventisca no llega ayuda.",
+      "dur": 10.8,
+      "h": "ANTÁRTIDA, 1961",
+      "w": "1961",
+      "cap": "Leonid Rogozov",
+      "pieza": {
+        "id": "med-polar1"
+      }
+    },
+    {
+      "t": "PIEZA",
+      "voz": "Medio sentado, con un espejo y anestesia local, se abrió el abdomen. Un meteorólogo y un mecánico le sostenían la lámpara y los instrumentos. Tardó casi dos horas.",
+      "dur": 10.4,
+      "h": "SE OPERÓ A SÍ MISMO",
+      "w": "2 HORAS",
+      "cap": "1 h 45 min",
+      "pieza": {
+        "id": "med-cirugia"
+      }
+    },
+    {
+      "t": "PIEZA",
+      "voz": "Terminó agotado, pero había funcionado. En dos semanas ya estaba trabajando otra vez. Fue su propio cirujano y su propio paciente.",
+      "dur": 8.0,
+      "h": "DOS SEMANAS DESPUÉS",
+      "w": "14 DÍAS",
+      "cap": "de vuelta al trabajo",
+      "pieza": {
+        "id": "med-polar2"
+      }
+    },
+    {
+      "t": "PIEZA",
+      "voz": "Tres médicos, tres apuestas: dos Nobel y una cirugía imposible. No lo imites: hoy existen los ensayos clínicos. Pero la pregunta queda: ¿hasta dónde llegarías por una idea?",
+      "dur": 10.4,
+      "h": "¿HASTA DÓNDE LLEGARÍAS?",
+      "w": "NO LO IMITES",
+      "cap": "relato histórico",
+      "pieza": {
+        "id": "med-cierre"
+      }
+    }
+  ]
+}
