@@ -1,32 +1,32 @@
-LOCUCIÓN · «La regla del 37 %» · IMNOBA (≈ 1 min 24 s)
+LOCUCIÓN · «La regla del 37 %» · IMNOBA (≈ 1 min 37 s)
 Ritmo: ≈ 2,6–2,9 palabras por segundo, tono cercano y seguro, con un toque de curiosidad. Cada bloque debe CABER en su tiempo (deja una pausa corta al final).
 Las cifras están escritas con letra para que las leas tal cual. Voz con IA: tarjeta «🎙️ Voz en off» del Estudio.
 
-[ESCENA 1 · 0:00.0 → 0:08.0 · 8.0 s · 21 palabras]
-Cuando buscas casa, hay dos formas de equivocarte: decidir por impulso, o esperar tanto la perfecta que otro se la lleve.
+[ESCENA 1 · 0:00.0 → 0:11.8 · 11.8 s · 32 palabras]
+¿Cuándo dejas de buscar casa y decides? Muy pronto: te quedas con la primera. Muy tarde: otro se lleva la mejor. La matemática responde: la regla del treinta y siete por ciento.
 
-[ESCENA 2 · 0:08.0 → 0:17.1 · 9.1 s · 24 palabras]
-Las matemáticas lo llaman parada óptima. Imagina cien opciones que ves una por una, sin conocer su valor hasta que pasan frente a ti.
+[ESCENA 2 · 0:11.8 → 0:23.2 · 11.4 s · 31 palabras]
+Hasta Kepler vivió este dilema. En mil seiscientos once enviudó y conoció a once candidatas. Se cuenta que se casó con la quinta: justo después del treinta y siete por ciento.
 
-[ESCENA 3 · 0:17.1 → 0:24.8 · 7.7 s · 20 palabras]
-Si frenas muy pronto, te quedas con una opción mediocre: no tenías con qué compararla. Y la mejor llegaba después.
+[ESCENA 3 · 0:23.2 → 0:34.4 · 11.2 s · 30 palabras]
+Mira un caso pequeño: tres casas, seis órdenes posibles. Rechaza la primera y elige la siguiente que la supere. Aciertas en tres de los seis órdenes: el cincuenta por ciento.
 
-[ESCENA 4 · 0:24.8 → 0:32.5 · 7.7 s · 20 palabras]
-Si esperas hasta el final, pasa lo contrario: la mejor ya se fue, y te quedas con el visor vacío.
+[ESCENA 4 · 0:34.4 → 0:46.4 · 12.0 s · 31 palabras]
+Con cien casas, igual. Rechaza las primeras treinta y siete: solo sirven para calibrar el mercado y fijar tu estándar. Después, elige la primera que supere a todas las que viste.
 
-[ESCENA 5 · 0:32.5 → 0:44.3 · 11.8 s · 32 palabras]
-La regla del treinta y siete por ciento: rechaza por completo el primer treinta y siete. Sirve para calibrar el mercado. Después, elige la primera opción que supere a todas las anteriores.
+[ESCENA 5 · 0:46.4 → 0:57.6 · 11.2 s · 30 palabras]
+¿Por qué treinta y siete? La probabilidad de acertar sube, llega a su máximo justo ahí y vuelve a bajar: cerca del treinta y siete por ciento de las veces.
 
-[ESCENA 6 · 0:44.3 → 0:55.9 · 11.6 s · 31 palabras]
-La curva sube, llega a su máximo justo en el treinta y siete, y vuelve a caer. Ahí tienes cerca de treinta y siete por ciento de acertar con la mejor.
+[ESCENA 6 · 0:57.6 → 1:09.0 · 11.4 s · 31 palabras]
+Lo comprobamos simulando diez mil búsquedas de cien casas. La regla eligió la mejor cerca del treinta y siete por ciento de las veces. Elegir a ciegas: una de cada cien.
 
-[ESCENA 7 · 0:55.9 → 1:06.4 · 10.5 s · 28 palabras]
-Lo comprobamos con diez mil búsquedas simuladas de cien opciones: la regla acertó cerca del treinta y siete por ciento. Elegir a ciegas acierta una de cada cien.
+[ESCENA 7 · 1:09.0 → 1:20.5 · 11.5 s · 30 palabras]
+Con diez casas, mira las primeras tres. Con veinte, siete. Y si tienes un plazo, usa el tiempo: en noventa días, observa los primeros treinta y tres y decide después.
 
-[ESCENA 8 · 1:06.4 → 1:16.4 · 10.0 s · 25 palabras]
-Con diez opciones, mira las primeras tres. Con veinte, las primeras siete. Con cien, las primeras treinta y siete. Y luego decide, sin mirar atrás.
+[ESCENA 8 · 1:20.5 → 1:31.1 · 10.6 s · 29 palabras]
+Ojo: es un modelo. Supone que las opciones llegan en orden al azar, que no puedes volver atrás y que buscas la mejor. Úsalo como método, no como garantía.
 
-[ESCENA 9 · 1:16.4 → 1:24.4 · 8.0 s · 21 palabras]
-Tu decisión más grande no se resuelve con corazonadas ni con parálisis: se resuelve con método. Empieza a buscar en IMNOBA.
+[ESCENA 9 · 1:31.1 → 1:37.1 · 6.0 s · 13 palabras]
+Decidir bien es cuestión de método. Empieza a buscar tu casa en IMNOBA.
 
 NOTA (no se dice en el video): es un modelo matemático con supuestos —orden al azar, sin volver atrás, buscas LA mejor—; en una compra real puedes volver y comparar. Úsalo como método para no decidir por impulso ni quedarte en la parálisis, no como garantía. No es asesoría financiera.

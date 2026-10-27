@@ -3,65 +3,54 @@
   "scenes": [
     {
       "t": "PIEZA",
-      "voz": "Cuando buscas casa, hay dos formas de equivocarte: decidir por impulso, o esperar tanto la perfecta que otro se la lleve.",
-      "dur": 8.0,
-      "h": "¿IMPULSO O PARÁLISIS?",
-      "w": "IMPULSO",
-      "cap": "dos formas de equivocarte",
+      "voz": "¿Cuándo dejas de buscar casa y decides? Muy pronto: te quedas con la primera. Muy tarde: otro se lleva la mejor. La matemática responde: la regla del treinta y siete por ciento.",
+      "dur": 11.8,
+      "h": "¿CUÁNDO DEJAS DE BUSCAR?",
+      "w": "BUSCAR",
+      "cap": "casa o pareja",
       "pieza": {
         "id": "par-gancho"
       }
     },
     {
       "t": "PIEZA",
-      "voz": "Las matemáticas lo llaman parada óptima. Imagina cien opciones que ves una por una, sin conocer su valor hasta que pasan frente a ti.",
-      "dur": 9.1,
-      "h": "100 OPCIONES, VALOR OCULTO",
-      "w": "OCULTO",
-      "cap": "parada óptima",
+      "voz": "Hasta Kepler vivió este dilema. En mil seiscientos once enviudó y conoció a once candidatas. Se cuenta que se casó con la quinta: justo después del treinta y siete por ciento.",
+      "dur": 11.4,
+      "h": "KEPLER Y 11 CANDIDATAS",
+      "w": "KEPLER",
+      "cap": "1611",
       "pieza": {
-        "id": "par-fila"
+        "id": "par-kepler"
       }
     },
     {
       "t": "PIEZA",
-      "voz": "Si frenas muy pronto, te quedas con una opción mediocre: no tenías con qué compararla. Y la mejor llegaba después.",
-      "dur": 7.7,
-      "h": "FRENAR PRONTO = MEDIOCRE",
-      "w": "MEDIOCRE",
-      "cap": "55 de 100",
+      "voz": "Mira un caso pequeño: tres casas, seis órdenes posibles. Rechaza la primera y elige la siguiente que la supere. Aciertas en tres de los seis órdenes: el cincuenta por ciento.",
+      "dur": 11.2,
+      "h": "3 CASAS, 6 ÓRDENES",
+      "w": "TRES",
+      "cap": "3 de 6 = 50 %",
       "pieza": {
-        "id": "par-impulso"
+        "id": "par-n3"
       }
     },
     {
       "t": "PIEZA",
-      "voz": "Si esperas hasta el final, pasa lo contrario: la mejor ya se fue, y te quedas con el visor vacío.",
-      "dur": 7.7,
-      "h": "ESPERAR SIEMPRE = VISOR VACÍO",
-      "w": "VACÍO",
-      "cap": "0 elegidas",
-      "pieza": {
-        "id": "par-espera"
-      }
-    },
-    {
-      "t": "PIEZA",
-      "voz": "La regla del treinta y siete por ciento: rechaza por completo el primer treinta y siete. Sirve para calibrar el mercado. Después, elige la primera opción que supere a todas las anteriores.",
-      "dur": 11.8,
-      "h": "PRIMERO CALIBRA, LUEGO ELIGE",
+      "voz": "Con cien casas, igual. Rechaza las primeras treinta y siete: solo sirven para calibrar el mercado y fijar tu estándar. Después, elige la primera que supere a todas las que viste.",
+      "dur": 12.0,
+      "h": "CALIBRA Y LUEGO ELIGE",
       "w": "CALIBRA",
-      "cap": "regla del 37 %",
+      "cap": "100 casas",
       "pieza": {
         "id": "par-regla"
       }
     },
     {
       "t": "PIEZA",
-      "voz": "La curva sube, llega a su máximo justo en el treinta y siete, y vuelve a caer. Ahí tienes cerca de treinta y siete por ciento de acertar con la mejor.",
-      "dur": 11.6,
-      "h": "LA CURVA TIENE UN PICO",
-      "w": "PICO",
+      "voz": "¿Por qué treinta y siete? La probabilidad de acertar sube, llega a su máximo justo ahí y vuelve a bajar: cerca del treinta y siete por ciento de las veces.",
+      "dur": 11.2,
+      "h": "¿POR QUÉ 37?",
+      "w": "37",
       "cap": "37,1 %",
       "pieza": {
         "id": "par-curva"
@@ -69,8 +58,8 @@
     },
     {
       "t": "PIEZA",
-      "voz": "Lo comprobamos con diez mil búsquedas simuladas de cien opciones: la regla acertó cerca del treinta y siete por ciento. Elegir a ciegas acierta una de cada cien.",
-      "dur": 10.5,
+      "voz": "Lo comprobamos simulando diez mil búsquedas de cien casas. La regla eligió la mejor cerca del treinta y siete por ciento de las veces. Elegir a ciegas: una de cada cien.",
+      "dur": 11.4,
       "h": "10.000 BÚSQUEDAS",
       "w": "10.000",
       "cap": "simulación",
@@ -80,20 +69,31 @@
     },
     {
       "t": "PIEZA",
-      "voz": "Con diez opciones, mira las primeras tres. Con veinte, las primeras siete. Con cien, las primeras treinta y siete. Y luego decide, sin mirar atrás.",
-      "dur": 10.0,
-      "h": "¿CUÁNTAS MIRAR ANTES?",
+      "voz": "Con diez casas, mira las primeras tres. Con veinte, siete. Y si tienes un plazo, usa el tiempo: en noventa días, observa los primeros treinta y tres y decide después.",
+      "dur": 11.5,
+      "h": "¿CUÁNTAS MIRAR?",
       "w": "MIRAR",
-      "cap": "3 · 7 · 37",
+      "cap": "3 · 7 · 33 días",
       "pieza": {
         "id": "par-aplica"
       }
     },
     {
+      "t": "PIEZA",
+      "voz": "Ojo: es un modelo. Supone que las opciones llegan en orden al azar, que no puedes volver atrás y que buscas la mejor. Úsalo como método, no como garantía.",
+      "dur": 10.6,
+      "h": "ES UN MODELO",
+      "w": "MODELO",
+      "cap": "método, no garantía",
+      "pieza": {
+        "id": "par-supuestos"
+      }
+    },
+    {
       "t": "CTA",
-      "voz": "Tu decisión más grande no se resuelve con corazonadas ni con parálisis: se resuelve con método. Empieza a buscar en IMNOBA.",
-      "dur": 8.0,
-      "h": "BUSCA CON MÉTODO",
+      "voz": "Decidir bien es cuestión de método. Empieza a buscar tu casa en IMNOBA.",
+      "dur": 6.0,
+      "h": "DECIDE CON MÉTODO",
       "w": "MÉTODO",
       "sub": "imnoba.com",
       "ic": "casa"

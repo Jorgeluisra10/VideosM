@@ -263,35 +263,44 @@ export function construirSecuencia(o: { n: number; mejorEn: number; semilla: num
   return out;
 }
 
-/** Datos del ensayo «La regla del 37 %». */
+/** Todas las órdenes posibles de `n` opciones (1 = la peor … n = la mejor) y qué pasa con la regla «rechaza `k` y elige la primera mejor que las vistas»: índice elegido y si fue la mejor. */
+export function enumerarOrdenes(n: number, k: number): { orden: number[]; eligio: number; acierta: boolean }[] {
+  const out: { orden: number[]; eligio: number; acierta: boolean }[] = [];
+  const rec = (pref: number[], libres: number[]): void => {
+    if (!libres.length) { const e = aplicarRegla(pref, k); out.push({ orden: pref, eligio: e, acierta: pref[e] === n }); return; }
+    libres.forEach((v, q) => rec([...pref, v], libres.filter((_, z) => z !== q)));
+  };
+  rec([], Array.from({ length: n }, (_, a) => a + 1));
+  return out;
+}
+
+/** Datos del video «La regla del 37 %». */
 export const PAR = {
   n: 100,
   k: 37,
   /** simulación de la escena de comprobación */
   sim: { intentos: 10000, semilla: 2024 },
-  /** la mejor opción (100) llega en la posición 71 y la regla del impulso frena en la 6 con un 55 (mediocre) */
-  impulso: { mejorEn: 70, previo: { pos: 5, valor: 55 }, limite: 5, semilla: 11 },
-  /** quien espera al final deja pasar a la mejor (posición 22) */
-  espera: { mejorEn: 21, semilla: 5 },
-  /** la regla: el mejor de los primeros 37 vale 88 (posición 29); la primera que lo supera es la mejor, en la 61 */
+  /** la regla en acción: el mejor de los primeros 37 vale 88 (posición 29); la primera que lo supera es la mejor, en la 61 */
   regla: { mejorEn: 60, previo: { pos: 28, valor: 88 }, semilla: 23 },
+  /** Kepler (relato de Ferguson, 1989): 11 candidatas y se casó con la quinta; 11/e ≈ 4 */
+  kepler: { anio: 1611, candidatas: 11, elegida: 5 },
+  /** plazo de ejemplo para la versión «por tiempo» (si las opciones llegan a ritmo parejo): 37 % de 90 días */
+  plazo: 90,
   fuente: "Gilbert y Mosteller, «Recognizing the Maximum of a Sequence», JASA 61 (1966)",
 } as const;
 
-export const secImpulso = (): number[] => construirSecuencia({ n: PAR.n, mejorEn: PAR.impulso.mejorEn, previo: PAR.impulso.previo, limite: PAR.impulso.limite, semilla: PAR.impulso.semilla });
-export const secEspera = (): number[] => construirSecuencia({ n: PAR.n, mejorEn: PAR.espera.mejorEn, semilla: PAR.espera.semilla });
 export const secRegla = (): number[] => construirSecuencia({ n: PAR.n, mejorEn: PAR.regla.mejorEn, previo: PAR.regla.previo, semilla: PAR.regla.semilla });
 
 /** Tiempos de «La regla del 37 %» (s a ritmo normal), compartidos entre el dibujo y el sonido. */
 export const TPA = {
-  gancho: { a0: 2.6, a1: 4.0, b0: 5.0, b1: 7.6 },
-  fila: { aparece: 0.4, scan: 3.2, scanDur: 4.8 },
-  impulso: { scan: 0.5, scanDur: 1.4, lock: 2.0, resto: 4.0, restoDur: 2.0, mejor: 5.4 },
-  espera: { scan: 1.2, scanDur: 5.0, mejor: 2.3, vacio: 6.3 },
-  regla: { zonas: 0.4, obs: 1.2, obsDur: 4.2, sigue: 7.4, sigueDur: 3.0, elige: 10.5 },
-  curva: { ini: 0.6, dur: 5.4, vuelve: 6.6, vuelveDur: 1.0, pico: 7.7 },
-  simula: { puntos: 0.6, cuenta: 2.0, cuentaDur: 3.6, final: 8.2 },
-  aplica: { fila: (i: number): number => 0.4 + 2.6 * i, filaDur: 1.6, decide: 7.8 },
+  gancho: { camina: 0.6, caminaDur: 3.2, pronto: 4.0, tarde: 6.6, vendida: 7.4, regla: 9.4 },
+  kepler: { fila: 1.2, paso: 0.26, rechaza: 4.8, elige: 7.0 },
+  n3: { fila: (i: number): number => 1.4 + 1.3 * i, filaDur: 1.1, total: 9.8 },
+  regla: { obs: 1.0, obsDur: 3.6, fija: 4.8, sigue: 6.6, sigueDur: 2.8, elige: 9.6 },
+  curva: { ini: 0.8, dur: 4.4, vuelve: 6.0, vuelveDur: 1.0, pico: 7.2 },
+  simula: { puntos: 0.8, cuenta: 2.6, cuentaDur: 3.6, final: 8.2 },
+  aplica: { f1: 0.8, f2: 2.6, cal: 6.0, calDur: 2.8, nota: 9.6 },
+  supuestos: { c: (i: number): number => 1.2 + 2.3 * i, final: 8.4 },
 } as const;
 
 export const PIEZAS: Record<string, DefPieza> = {
@@ -468,38 +477,38 @@ export const PIEZAS: Record<string, DefPieza> = {
     id: "med-cierre", nombre: "Médico · tres tarjetas, «no lo imites» y la pregunta", ideal: 10.4, fondo: "dark", entra: "corte",
     sfx: (_d, r) => [ev(0.05, "whoosh", 0.12), ...[0, 1, 2].map((i) => ev((TM.cierre.tarjetas + i * 0.5) * r, "pop", 0.12)), ev(TM.cierre.noImites * r, "golpe", 0.22), ev(TM.cierre.pregunta * r, "ding", 0.16), ev((TM.cierre.pregunta + 0.4) * r, "radar", 0.1)],
   },
-  /* ───────────── «La regla del 37 %» (parada óptima · IMNOBA) ───────────── */
+  /* ───────────── «La regla del 37 %» (parada óptima · IMNOBA · figuras realistas) ───────────── */
   "par-gancho": {
-    id: "par-gancho", nombre: "Parada óptima · impulso vs. parálisis (dos filas)", ideal: 7.5, fondo: "dark",
-    sfx: (_d, r) => [ev(0.05, "whoosh", 0.12), ...clics(TPA.gancho.a0 * r, (TPA.gancho.a1 - TPA.gancho.a0) * r, 0.05), ev(TPA.gancho.a1 * r, "golpe", 0.2), ...clics(TPA.gancho.b0 * r, 2.4 * r, 0.04), ev((TPA.gancho.b0 + 2.6) * r, "estatica", 0.1)],
+    id: "par-gancho", nombre: "Regla del 37 % · ¿cuándo dejas de buscar casa? (muy pronto / muy tarde)", ideal: 11.35, fondo: "dark",
+    sfx: (_d, r) => [ev(0.05, "whoosh", 0.12), ...clics(TPA.gancho.camina * r, TPA.gancho.caminaDur * r, 0.04), ev(TPA.gancho.pronto * r, "golpe", 0.18), ev(TPA.gancho.vendida * r, "thud", 0.2), ev(TPA.gancho.regla * r, "ding", 0.18)],
   },
-  "par-fila": {
-    id: "par-fila", nombre: "Parada óptima · 100 cápsulas con valor oculto", ideal: 8.6, fondo: "dark", entra: "corte",
-    sfx: (_d, r) => [ev(0.05, "whoosh", 0.1), ...Array.from({ length: 8 }, (_, i) => ev((TPA.fila.aparece + i * 0.18) * r, "pop", 0.07)), ...clics(TPA.fila.scan * r, TPA.fila.scanDur * r, 0.05), ev((TPA.fila.scan + TPA.fila.scanDur) * r, "ding", 0.12)],
+  "par-kepler": {
+    id: "par-kepler", nombre: "Regla del 37 % · Kepler y las once candidatas (1611)", ideal: 10.95, fondo: "dark", entra: "corte",
+    sfx: (_d, r) => [ev(0.05, "whoosh", 0.1), ...Array.from({ length: 11 }, (_, i) => ev((TPA.kepler.fila + i * TPA.kepler.paso) * r, "pop", 0.07)), ev(TPA.kepler.rechaza * r, "thud", 0.14), ev(TPA.kepler.elige * r, "ding", 0.2)],
   },
-  "par-impulso": {
-    id: "par-impulso", nombre: "Parada óptima · frenar pronto atrapa una mediocre (azul)", ideal: 7.2, fondo: "dark", entra: "corte",
-    sfx: (_d, r) => [ev(0.05, "whoosh", 0.1), ...clics(TPA.impulso.scan * r, TPA.impulso.scanDur * r, 0.05), ev(TPA.impulso.lock * r, "golpe", 0.2), ...clics(TPA.impulso.resto * r, TPA.impulso.restoDur * r, 0.035), ev(TPA.impulso.mejor * r, "ding", 0.18)],
-  },
-  "par-espera": {
-    id: "par-espera", nombre: "Parada óptima · esperar al final deja el visor vacío", ideal: 7.2, fondo: "dark", entra: "corte",
-    sfx: (_d, r) => [ev(0.05, "whoosh", 0.1), ...clics(TPA.espera.scan * r, TPA.espera.scanDur * r, 0.04), ev(TPA.espera.mejor * r, "ding", 0.14), ev(TPA.espera.vacio * r, "estatica", 0.12), ev((TPA.espera.vacio + 0.2) * r, "golpe", 0.16)],
+  "par-n3": {
+    id: "par-n3", nombre: "Regla del 37 % · demostración con 3 casas (6 órdenes, 3 aciertos)", ideal: 10.75, fondo: "dark", entra: "corte",
+    sfx: (_d, r) => [ev(0.05, "whoosh", 0.1), ...Array.from({ length: 6 }, (_, i) => ev(TPA.n3.fila(i) * r, "pop", 0.09)), ...Array.from({ length: 6 }, (_, i) => ev((TPA.n3.fila(i) + 0.8) * r, "tick", 0.1)), ev(TPA.n3.total * r, "ding", 0.18)],
   },
   "par-regla": {
-    id: "par-regla", nombre: "Parada óptima · observa el 37 % y elige la primera mejor", ideal: 11.3, fondo: "dark", entra: "corte",
-    sfx: (_d, r) => [ev(0.05, "whoosh", 0.1), ev(TPA.regla.zonas * r, "radar", 0.1), ...clics(TPA.regla.obs * r, TPA.regla.obsDur * r, 0.05), ev((TPA.regla.obs + TPA.regla.obsDur) * r, "thud", 0.16), ...clics(TPA.regla.sigue * r, TPA.regla.sigueDur * r, 0.045), ev(TPA.regla.elige * r, "zap", 0.16), ev(TPA.regla.elige * r + 0.15, "ding", 0.2)],
+    id: "par-regla", nombre: "Regla del 37 % · 100 casas: observa 37 y elige la primera mejor", ideal: 11.55, fondo: "dark", entra: "corte",
+    sfx: (_d, r) => [ev(0.05, "whoosh", 0.1), ...clics(TPA.regla.obs * r, TPA.regla.obsDur * r, 0.05), ev(TPA.regla.fija * r, "thud", 0.16), ...clics(TPA.regla.sigue * r, TPA.regla.sigueDur * r, 0.045), ev(TPA.regla.elige * r, "zap", 0.16), ev(TPA.regla.elige * r + 0.15, "ding", 0.2)],
   },
   "par-curva": {
-    id: "par-curva", nombre: "Parada óptima · curva de probabilidad (pico en 37 %)", ideal: 11.1, fondo: "dark", entra: "corte",
+    id: "par-curva", nombre: "Regla del 37 % · curva exacta de probabilidad (pico 37,1 %)", ideal: 10.75, fondo: "dark", entra: "corte",
     sfx: (_d, r) => [ev(0.05, "whoosh", 0.1), ...clics(TPA.curva.ini * r, TPA.curva.dur * r, 0.045), ev(TPA.curva.vuelve * r, "whoosh", 0.12), ev(TPA.curva.pico * r, "ding", 0.2), ev(TPA.curva.pico * r + 0.2, "golpe", 0.14)],
   },
   "par-simula": {
-    id: "par-simula", nombre: "Parada óptima · 10.000 búsquedas simuladas", ideal: 10.0, fondo: "dark", entra: "corte",
-    sfx: (_d, r) => [ev(0.05, "whoosh", 0.1), ...Array.from({ length: 10 }, (_, i) => ev((TPA.simula.puntos + i * 0.22) * r, "pop", 0.06)), ...clics(TPA.simula.cuenta * r, TPA.simula.cuentaDur * r, 0.05), ev(TPA.simula.final * r, "ding", 0.18)],
+    id: "par-simula", nombre: "Regla del 37 % · 10.000 búsquedas simuladas (casas)", ideal: 10.95, fondo: "dark", entra: "corte",
+    sfx: (_d, r) => [ev(0.05, "whoosh", 0.1), ...Array.from({ length: 10 }, (_, i) => ev((TPA.simula.puntos + i * 0.2) * r, "pop", 0.06)), ...clics(TPA.simula.cuenta * r, TPA.simula.cuentaDur * r, 0.05), ev(TPA.simula.final * r, "ding", 0.18)],
   },
   "par-aplica": {
-    id: "par-aplica", nombre: "Parada óptima · 10, 20 y 100 opciones (cuántas observar)", ideal: 9.5, fondo: "dark", entra: "corte",
-    sfx: (_d, r) => [ev(0.05, "whoosh", 0.1), ...[0, 1, 2].map((i) => ev(TPA.aplica.fila(i) * r, "pop", 0.12)), ...[0, 1, 2].map((i) => ev((TPA.aplica.fila(i) + 1.1) * r, "tick", 0.1)), ev(TPA.aplica.decide * r, "ding", 0.18)],
+    id: "par-aplica", nombre: "Regla del 37 % · cuántas casas mirar (10, 20) y por tiempo (90 días)", ideal: 11.05, fondo: "dark", entra: "corte",
+    sfx: (_d, r) => [ev(0.05, "whoosh", 0.1), ev(TPA.aplica.f1 * r, "pop", 0.12), ev(TPA.aplica.f2 * r, "pop", 0.12), ...clics(TPA.aplica.cal * r, TPA.aplica.calDur * r, 0.04), ev(TPA.aplica.nota * r, "ding", 0.16)],
+  },
+  "par-supuestos": {
+    id: "par-supuestos", nombre: "Regla del 37 % · los tres supuestos (dado, sentido único, copa)", ideal: 10.15, fondo: "dark", entra: "corte",
+    sfx: (_d, r) => [ev(0.05, "whoosh", 0.1), ...[0, 1, 2].map((i) => ev(TPA.supuestos.c(i) * r, "pop", 0.12)), ...[0, 1, 2].map((i) => ev((TPA.supuestos.c(i) + 0.15) * r, "tick", 0.1)), ev(TPA.supuestos.final * r, "ding", 0.16)],
   },
 };
 
