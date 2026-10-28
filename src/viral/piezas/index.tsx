@@ -23,6 +23,7 @@ import { ParGancho, ParKepler, ParN3, ParRegla } from "./par1";
 import { ParAplica, ParCurva, ParSimula, ParSupuestos } from "./par2";
 import { AstroGancho, AstroGlia, AstroMitad } from "./astro1";
 import { AstroDialogo, AstroEstrella, AstroMemoria } from "./astro2";
+import { DscCatalogo, DscDocs, DscGancho, DscHack, DscSplit } from "./dscr1";
 
 export const COMPONENTES_PIEZA: Record<string, React.FC<{ e: EscenaViralGuardada }>> = {
   "metro-plano": MetroPlano,
@@ -81,6 +82,11 @@ export const COMPONENTES_PIEZA: Record<string, React.FC<{ e: EscenaViralGuardada
   "astro-estrella": AstroEstrella,
   "astro-dialogo": AstroDialogo,
   "astro-memoria": AstroMemoria,
+  "dscr-gancho": DscGancho,
+  "dscr-hack": DscHack,
+  "dscr-docs": DscDocs,
+  "dscr-split": DscSplit,
+  "dscr-catalogo": DscCatalogo,
 };
 
 export const Pieza: React.FC<{ e: EscenaViralGuardada; alternativa: React.ReactNode }> = ({ e, alternativa }) => {

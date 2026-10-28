@@ -206,6 +206,28 @@ export const TAS = {
   memoria: { activa: 1.2, enlaces: 2.2, recuerdo: 3.1 },
 } as const;
 
+/**
+ * Datos del video «El truco de los préstamos DSCR» (IMNOBA · serie «secretos de inversión en USA»). Cada dato tiene su fuente en pantalla y en
+ * ejemplos/animacion-viral/guion-tecnico-dscr.md. Lo que NO se afirma: rentabilidades, que el préstamo esté garantizado ni que no pidan NINGÚN documento
+ * (piden pasaporte, prueba de fondos y reservas). 70/30 es la estructura que el pedido fija; los prestamistas varían (≈ 25–30 % de pago inicial).
+ */
+export const DSC = {
+  /** el mito: «medio millón en efectivo» (dólares) */
+  mito: 500_000,
+  /** el banco financia hasta este % del valor; el comprador aporta el resto (≈ 30 %) */
+  banco: 70,
+  inicial: 30,
+} as const;
+
+/** Tiempos del video DSCR, compartidos entre el dibujo y el sonido (segundos a ritmo normal). */
+export const TDS = {
+  gancho: { casa: 0.2, cifra: 0.7, cifraDur: 1.7, mito: 2.7 },
+  hack: { casa: 0.2, flujo: 1.3, cuota: 3.2, nombre: 3.7 },
+  docs: { c: (i: number) => 0.6 + i * 1.0, tacha: 0.45, balanza: 3.9 },
+  split: { barra: 0.4, banco: 1.0, tu: 2.5, notas: 3.5 },
+  catalogo: { tel: 0.2, tarjetas: 0.9, url: 2.2 },
+} as const;
+
 /* ───────────── «La regla del 37 %» (problema de la parada óptima, ensayo abstracto para IMNOBA) ───────────── */
 
 /** Generador pseudoaleatorio determinista (mulberry32): mismos números en el render, en las pruebas y en cada fotograma. */
@@ -555,6 +577,27 @@ export const PIEZAS: Record<string, DefPieza> = {
   "astro-dialogo": {
     id: "astro-dialogo", nombre: "Astrocitos · la sinapsis tripartita: escucha y ayuda a fortalecer", ideal: 4.55, fondo: "dark", entra: "corte",
     sfx: (_d, r) => [ev(0.05, "whoosh", 0.1), ...[0, 1, 2].map((i) => ev((TAS.dialogo.vesiculas + i * 0.45) * r, "tick", 0.1)), ev(TAS.dialogo.calcio * r, "radar", 0.1), ev(TAS.dialogo.fortalece * r, "pop", 0.14), ev((TAS.dialogo.fortalece + 0.15) * r, "ding", 0.16)],
+  },
+  /* ───────────── «El truco de los préstamos DSCR» (IMNOBA) ───────────── */
+  "dscr-gancho": {
+    id: "dscr-gancho", nombre: "DSCR · el mito de los 500.000 dólares en efectivo (gancho)", ideal: 3.95, fondo: "dark",
+    sfx: (_d, r) => [ev(0.05, "whoosh", 0.12), ev(TDS.gancho.casa * r + 0.2, "pop", 0.1), ...clics(TDS.gancho.cifra * r, TDS.gancho.cifraDur * r, 0.05), ev(TDS.gancho.mito * r, "golpe", 0.2)],
+  },
+  "dscr-hack": {
+    id: "dscr-hack", nombre: "DSCR · el alquiler paga la cuota: la propiedad se paga sola", ideal: 4.55, fondo: "dark", entra: "corte",
+    sfx: (_d, r) => [ev(0.05, "whoosh", 0.1), ev(TDS.hack.casa * r + 0.2, "pop", 0.1), ...[0, 1, 2, 3].map((i) => ev((TDS.hack.flujo + i * 0.5) * r, "cash", 0.08)), ev(TDS.hack.cuota * r, "ding", 0.18)],
+  },
+  "dscr-docs": {
+    id: "dscr-docs", nombre: "DSCR · sin recibo de sueldo, historial ni visa: solo importa el alquiler", ideal: 4.95, fondo: "dark", entra: "corte",
+    sfx: (_d, r) => [ev(0.05, "whoosh", 0.1), ...[0, 1, 2].map((i) => ev((TDS.docs.c(i) + TDS.docs.tacha) * r, "thud", 0.14)), ev(TDS.docs.balanza * r, "ding", 0.18)],
+  },
+  "dscr-split": {
+    id: "dscr-split", nombre: "DSCR · el banco financia hasta 70 % y tú pones ≈ 30 %", ideal: 4.95, fondo: "dark", entra: "corte",
+    sfx: (_d, r) => [ev(0.05, "whoosh", 0.1), ev(TDS.split.banco * r, "zap", 0.12), ev(TDS.split.tu * r, "pop", 0.14), ev((TDS.split.tu + 0.2) * r, "ding", 0.16), ...[0, 1, 2].map((i) => ev((TDS.split.notas + i * 0.3) * r, "tick", 0.08))],
+  },
+  "dscr-catalogo": {
+    id: "dscr-catalogo", nombre: "DSCR · el catálogo de imnoba.com/usa (proyectos y propiedades)", ideal: 3.75, fondo: "dark", entra: "corte",
+    sfx: (_d, r) => [ev(0.05, "whoosh", 0.1), ev(TDS.catalogo.tel * r + 0.2, "pop", 0.1), ...[0, 1, 2].map((i) => ev((TDS.catalogo.tarjetas + i * 0.3) * r, "tick", 0.08)), ev(TDS.catalogo.url * r, "ding", 0.16)],
   },
   "astro-memoria": {
     id: "astro-memoria", nombre: "Astrocitos · en ratones, reactivarlos estimuló el recuerdo", ideal: 4.15, fondo: "dark", entra: "corte",
