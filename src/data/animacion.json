@@ -1,20 +1,20 @@
 {
  "version": 1,
- "titulo": "El truco de los préstamos DSCR",
- "paleta": "imnoba",
+ "titulo": "Bogotá, la ciudad sin metro",
+ "paleta": "retro-imnoba",
  "sfx": true,
  "fps": 60,
- "duracion": 33.9,
+ "duracion": 111.5,
  "escenas": [
   {
    "n": 1,
    "t": "PIEZA",
-   "voz": "Invertir en Estados Unidos no exige medio millón en efectivo.",
-   "dur": 4.4,
-   "h": "NO NECESITAS $500.000 EN EFECTIVO",
-   "w": "EFECTIVO",
+   "voz": "¿Sabías que Bogotá lleva setenta y siete años esperando un metro? En mil novecientos cuarenta y dos tenía cuatrocientos mil habitantes. Hoy, casi ocho millones.",
+   "dur": 9.2,
+   "h": "77 AÑOS ESPERANDO UN METRO",
+   "w": "METRO",
    "sub": "",
-   "ic": "brillo",
+   "ic": "tren",
    "num": null,
    "vs": null,
    "bars": [],
@@ -36,7 +36,7 @@
    "red": null,
    "termo": null,
    "pila": null,
-   "cap": "ese es el gran mito",
+   "cap": "el primer estudio fue en 1942",
    "papel": null,
    "pilares": null,
    "ciclo": null,
@@ -45,7 +45,7 @@
    "cubo": null,
    "diales": null,
    "pieza": {
-    "id": "dscr-gancho",
+    "id": "real-historia",
     "props": {}
    },
    "cita": null,
@@ -54,10 +54,10 @@
    "tema": "oscuro",
    "bg": "dark",
    "ritmo": 1,
-   "total": 33.9,
+   "total": 111.5,
    "inicio": 0,
-   "fin": 4.4,
-   "texto": "Invertir en Estados Unidos no exige medio millón en efectivo.",
+   "fin": 9.2,
+   "texto": "¿Sabías que Bogotá lleva setenta y siete años esperando un metro? En mil novecientos cuarenta y dos tenía cuatrocientos mil habitantes. Hoy, casi ocho millones.",
    "tr": "barrido",
    "trs": "corte",
    "sfx": [
@@ -72,91 +72,261 @@
      "vol": 0.12
     },
     {
-     "t": 0.4,
-     "tipo": "pop",
-     "vol": 0.1
-    },
-    {
-     "t": 0.7,
+     "t": 0.9,
      "tipo": "clic",
      "vol": 0.05
     },
     {
-     "t": 0.83,
+     "t": 1.03,
      "tipo": "clic",
      "vol": 0.05
     },
     {
-     "t": 0.96,
+     "t": 1.1600000000000001,
      "tipo": "clic",
      "vol": 0.05
     },
     {
-     "t": 1.0899999999999999,
+     "t": 1.29,
      "tipo": "clic",
      "vol": 0.05
     },
     {
-     "t": 1.22,
+     "t": 1.42,
      "tipo": "clic",
      "vol": 0.05
     },
     {
-     "t": 1.35,
+     "t": 1.55,
      "tipo": "clic",
      "vol": 0.05
     },
     {
-     "t": 1.48,
+     "t": 1.6800000000000002,
      "tipo": "clic",
      "vol": 0.05
     },
     {
-     "t": 1.6099999999999999,
+     "t": 1.81,
      "tipo": "clic",
      "vol": 0.05
     },
     {
-     "t": 1.74,
+     "t": 1.94,
      "tipo": "clic",
      "vol": 0.05
     },
     {
-     "t": 1.8699999999999999,
+     "t": 2.07,
      "tipo": "clic",
      "vol": 0.05
     },
     {
-     "t": 2,
+     "t": 2.2,
      "tipo": "clic",
      "vol": 0.05
     },
     {
-     "t": 2.13,
+     "t": 2.33,
      "tipo": "clic",
      "vol": 0.05
     },
     {
-     "t": 2.26,
+     "t": 2.46,
      "tipo": "clic",
      "vol": 0.05
     },
     {
-     "t": 2.7,
-     "tipo": "golpe",
-     "vol": 0.2
+     "t": 2.59,
+     "tipo": "clic",
+     "vol": 0.05
+    },
+    {
+     "t": 2.72,
+     "tipo": "clic",
+     "vol": 0.05
+    },
+    {
+     "t": 2.85,
+     "tipo": "clic",
+     "vol": 0.05
+    },
+    {
+     "t": 2.98,
+     "tipo": "clic",
+     "vol": 0.05
+    },
+    {
+     "t": 3.11,
+     "tipo": "clic",
+     "vol": 0.05
+    },
+    {
+     "t": 3.2399999999999998,
+     "tipo": "clic",
+     "vol": 0.05
+    },
+    {
+     "t": 3.37,
+     "tipo": "clic",
+     "vol": 0.05
+    },
+    {
+     "t": 3.5,
+     "tipo": "clic",
+     "vol": 0.05
+    },
+    {
+     "t": 3.63,
+     "tipo": "clic",
+     "vol": 0.05
+    },
+    {
+     "t": 3.7600000000000002,
+     "tipo": "clic",
+     "vol": 0.05
+    },
+    {
+     "t": 3.89,
+     "tipo": "clic",
+     "vol": 0.05
+    },
+    {
+     "t": 4.0200000000000005,
+     "tipo": "clic",
+     "vol": 0.05
+    },
+    {
+     "t": 4.15,
+     "tipo": "clic",
+     "vol": 0.05
+    },
+    {
+     "t": 4.28,
+     "tipo": "clic",
+     "vol": 0.05
+    },
+    {
+     "t": 4.41,
+     "tipo": "clic",
+     "vol": 0.05
+    },
+    {
+     "t": 4.54,
+     "tipo": "clic",
+     "vol": 0.05
+    },
+    {
+     "t": 4.67,
+     "tipo": "clic",
+     "vol": 0.05
+    },
+    {
+     "t": 4.800000000000001,
+     "tipo": "clic",
+     "vol": 0.05
+    },
+    {
+     "t": 4.930000000000001,
+     "tipo": "clic",
+     "vol": 0.05
+    },
+    {
+     "t": 5.0600000000000005,
+     "tipo": "clic",
+     "vol": 0.05
+    },
+    {
+     "t": 5.19,
+     "tipo": "clic",
+     "vol": 0.05
+    },
+    {
+     "t": 5.32,
+     "tipo": "clic",
+     "vol": 0.05
+    },
+    {
+     "t": 5.45,
+     "tipo": "clic",
+     "vol": 0.05
+    },
+    {
+     "t": 5.58,
+     "tipo": "clic",
+     "vol": 0.05
+    },
+    {
+     "t": 5.710000000000001,
+     "tipo": "clic",
+     "vol": 0.05
+    },
+    {
+     "t": 5.840000000000001,
+     "tipo": "clic",
+     "vol": 0.05
+    },
+    {
+     "t": 5.970000000000001,
+     "tipo": "clic",
+     "vol": 0.05
+    },
+    {
+     "t": 6.1000000000000005,
+     "tipo": "clic",
+     "vol": 0.05
+    },
+    {
+     "t": 6.23,
+     "tipo": "clic",
+     "vol": 0.05
+    },
+    {
+     "t": 6.36,
+     "tipo": "clic",
+     "vol": 0.05
+    },
+    {
+     "t": 6.49,
+     "tipo": "clic",
+     "vol": 0.05
+    },
+    {
+     "t": 6.620000000000001,
+     "tipo": "clic",
+     "vol": 0.05
+    },
+    {
+     "t": 6.750000000000001,
+     "tipo": "clic",
+     "vol": 0.05
+    },
+    {
+     "t": 6.880000000000001,
+     "tipo": "clic",
+     "vol": 0.05
+    },
+    {
+     "t": 7.010000000000001,
+     "tipo": "clic",
+     "vol": 0.05
+    },
+    {
+     "t": 7.3,
+     "tipo": "ding",
+     "vol": 0.16
     }
    ]
   },
   {
    "n": 2,
    "t": "PIEZA",
-   "voz": "Existen préstamos que miran la propiedad, no tu sueldo: la propiedad se paga sola.",
-   "dur": 5.3,
-   "h": "LA PROPIEDAD SE PAGA SOLA",
-   "w": "SOLA",
+   "voz": "Mientras tanto, el trancón se volvió un impuesto. En dos mil diecinueve, cada conductor perdió ciento noventa y un horas en el tráfico: casi ocho días. El peor del mundo, según INRIX.",
+   "dur": 11.5,
+   "h": "191 HORAS EN EL TRANCÓN",
+   "w": "191",
    "sub": "",
-   "ic": "casa",
+   "ic": "velocimetro",
    "num": null,
    "vs": null,
    "bars": [],
@@ -178,7 +348,7 @@
    "red": null,
    "termo": null,
    "pila": null,
-   "cap": "así funciona un préstamo DSCR",
+   "cap": "INRIX · 2019",
    "papel": null,
    "pilares": null,
    "ciclo": null,
@@ -187,104 +357,7 @@
    "cubo": null,
    "diales": null,
    "pieza": {
-    "id": "dscr-hack",
-    "props": {}
-   },
-   "cita": null,
-   "sc": "",
-   "modo": "VIRAL",
-   "tema": "claro",
-   "bg": "light",
-   "ritmo": 1,
-   "total": 33.9,
-   "inicio": 4.4,
-   "fin": 9.7,
-   "texto": "Existen préstamos que miran la propiedad, no tu sueldo: la propiedad se paga sola.",
-   "tr": "corte",
-   "trs": "corte",
-   "sfx": [
-    {
-     "t": 0.04,
-     "tipo": "whoosh",
-     "vol": 0.16
-    },
-    {
-     "t": 0.05,
-     "tipo": "whoosh",
-     "vol": 0.1
-    },
-    {
-     "t": 0.4,
-     "tipo": "pop",
-     "vol": 0.1
-    },
-    {
-     "t": 1.3,
-     "tipo": "cash",
-     "vol": 0.08
-    },
-    {
-     "t": 1.8,
-     "tipo": "cash",
-     "vol": 0.08
-    },
-    {
-     "t": 2.3,
-     "tipo": "cash",
-     "vol": 0.08
-    },
-    {
-     "t": 2.8,
-     "tipo": "cash",
-     "vol": 0.08
-    },
-    {
-     "t": 3.2,
-     "tipo": "ding",
-     "vol": 0.18
-    }
-   ]
-  },
-  {
-   "n": 3,
-   "t": "PIEZA",
-   "voz": "Si el alquiler cubre la cuota, no piden recibo de sueldo, historial ni visa.",
-   "dur": 5.4,
-   "h": "SOLO IMPORTA EL ALQUILER",
-   "w": "ALQUILER",
-   "sub": "",
-   "ic": "brillo",
-   "num": null,
-   "vs": null,
-   "bars": [],
-   "barsU": "",
-   "hi": -1,
-   "line": null,
-   "items": [],
-   "stops": [],
-   "end": "",
-   "donut": [],
-   "picto": null,
-   "top": [],
-   "myth": "",
-   "truth": "",
-   "zoom": null,
-   "capas": null,
-   "mira": null,
-   "impacto": null,
-   "red": null,
-   "termo": null,
-   "pila": null,
-   "cap": "lo que no te piden",
-   "papel": null,
-   "pilares": null,
-   "ciclo": null,
-   "duo": null,
-   "osc": null,
-   "cubo": null,
-   "diales": null,
-   "pieza": {
-    "id": "dscr-docs",
+    "id": "real-trancon",
     "props": {}
    },
    "cita": null,
@@ -293,10 +366,10 @@
    "tema": "oscuro",
    "bg": "dark",
    "ritmo": 1,
-   "total": 33.9,
-   "inicio": 9.7,
-   "fin": 15.1,
-   "texto": "Si el alquiler cubre la cuota, no piden recibo de sueldo, historial ni visa.",
+   "total": 111.5,
+   "inicio": 9.2,
+   "fin": 20.7,
+   "texto": "Mientras tanto, el trancón se volvió un impuesto. En dos mil diecinueve, cada conductor perdió ciento noventa y un horas en el tráfico: casi ocho días. El peor del mundo, según INRIX.",
    "tr": "corte",
    "trs": "corte",
    "sfx": [
@@ -311,36 +384,271 @@
      "vol": 0.1
     },
     {
-     "t": 1.05,
-     "tipo": "thud",
-     "vol": 0.14
+     "t": 1.2,
+     "tipo": "clic",
+     "vol": 0.05
     },
     {
-     "t": 2.0500000000000003,
-     "tipo": "thud",
-     "vol": 0.14
+     "t": 1.33,
+     "tipo": "clic",
+     "vol": 0.05
     },
     {
-     "t": 3.0500000000000003,
-     "tipo": "thud",
-     "vol": 0.14
+     "t": 1.46,
+     "tipo": "clic",
+     "vol": 0.05
     },
     {
-     "t": 3.9,
-     "tipo": "ding",
-     "vol": 0.18
+     "t": 1.5899999999999999,
+     "tipo": "clic",
+     "vol": 0.05
+    },
+    {
+     "t": 1.72,
+     "tipo": "clic",
+     "vol": 0.05
+    },
+    {
+     "t": 1.85,
+     "tipo": "clic",
+     "vol": 0.05
+    },
+    {
+     "t": 1.98,
+     "tipo": "clic",
+     "vol": 0.05
+    },
+    {
+     "t": 2.11,
+     "tipo": "clic",
+     "vol": 0.05
+    },
+    {
+     "t": 2.24,
+     "tipo": "clic",
+     "vol": 0.05
+    },
+    {
+     "t": 2.37,
+     "tipo": "clic",
+     "vol": 0.05
+    },
+    {
+     "t": 2.5,
+     "tipo": "clic",
+     "vol": 0.05
+    },
+    {
+     "t": 2.63,
+     "tipo": "clic",
+     "vol": 0.05
+    },
+    {
+     "t": 2.76,
+     "tipo": "clic",
+     "vol": 0.05
+    },
+    {
+     "t": 2.8899999999999997,
+     "tipo": "clic",
+     "vol": 0.05
+    },
+    {
+     "t": 3.02,
+     "tipo": "clic",
+     "vol": 0.05
+    },
+    {
+     "t": 3.1500000000000004,
+     "tipo": "clic",
+     "vol": 0.05
+    },
+    {
+     "t": 3.2800000000000002,
+     "tipo": "clic",
+     "vol": 0.05
+    },
+    {
+     "t": 3.41,
+     "tipo": "clic",
+     "vol": 0.05
+    },
+    {
+     "t": 3.54,
+     "tipo": "clic",
+     "vol": 0.05
+    },
+    {
+     "t": 3.67,
+     "tipo": "clic",
+     "vol": 0.05
+    },
+    {
+     "t": 3.8,
+     "tipo": "clic",
+     "vol": 0.05
+    },
+    {
+     "t": 3.9299999999999997,
+     "tipo": "clic",
+     "vol": 0.05
+    },
+    {
+     "t": 4.0600000000000005,
+     "tipo": "clic",
+     "vol": 0.05
+    },
+    {
+     "t": 4.19,
+     "tipo": "clic",
+     "vol": 0.05
+    },
+    {
+     "t": 4.32,
+     "tipo": "clic",
+     "vol": 0.05
+    },
+    {
+     "t": 4.45,
+     "tipo": "clic",
+     "vol": 0.05
+    },
+    {
+     "t": 4.58,
+     "tipo": "clic",
+     "vol": 0.05
+    },
+    {
+     "t": 4.71,
+     "tipo": "clic",
+     "vol": 0.05
+    },
+    {
+     "t": 4.84,
+     "tipo": "clic",
+     "vol": 0.05
+    },
+    {
+     "t": 4.97,
+     "tipo": "clic",
+     "vol": 0.05
+    },
+    {
+     "t": 5.1000000000000005,
+     "tipo": "clic",
+     "vol": 0.05
+    },
+    {
+     "t": 5.23,
+     "tipo": "clic",
+     "vol": 0.05
+    },
+    {
+     "t": 5.36,
+     "tipo": "clic",
+     "vol": 0.05
+    },
+    {
+     "t": 5.49,
+     "tipo": "clic",
+     "vol": 0.05
+    },
+    {
+     "t": 5.62,
+     "tipo": "clic",
+     "vol": 0.05
+    },
+    {
+     "t": 5.75,
+     "tipo": "clic",
+     "vol": 0.05
+    },
+    {
+     "t": 5.88,
+     "tipo": "clic",
+     "vol": 0.05
+    },
+    {
+     "t": 6.010000000000001,
+     "tipo": "clic",
+     "vol": 0.05
+    },
+    {
+     "t": 6.140000000000001,
+     "tipo": "clic",
+     "vol": 0.05
+    },
+    {
+     "t": 6.2700000000000005,
+     "tipo": "clic",
+     "vol": 0.05
+    },
+    {
+     "t": 6.4,
+     "tipo": "clic",
+     "vol": 0.05
+    },
+    {
+     "t": 6.53,
+     "tipo": "clic",
+     "vol": 0.05
+    },
+    {
+     "t": 6.66,
+     "tipo": "clic",
+     "vol": 0.05
+    },
+    {
+     "t": 6.79,
+     "tipo": "clic",
+     "vol": 0.05
+    },
+    {
+     "t": 6.920000000000001,
+     "tipo": "clic",
+     "vol": 0.05
+    },
+    {
+     "t": 7.050000000000001,
+     "tipo": "clic",
+     "vol": 0.05
+    },
+    {
+     "t": 7.180000000000001,
+     "tipo": "clic",
+     "vol": 0.05
+    },
+    {
+     "t": 7.3100000000000005,
+     "tipo": "clic",
+     "vol": 0.05
+    },
+    {
+     "t": 7.44,
+     "tipo": "clic",
+     "vol": 0.05
+    },
+    {
+     "t": 7.6000000000000005,
+     "tipo": "golpe",
+     "vol": 0.2
+    },
+    {
+     "t": 8.2,
+     "tipo": "thud",
+     "vol": 0.14
     }
    ]
   },
   {
-   "n": 4,
+   "n": 3,
    "t": "PIEZA",
-   "voz": "Eso sí: financian hasta el setenta por ciento y tú pones cerca del treinta.",
-   "dur": 5.4,
-   "h": "TÚ PONES CERCA DEL 30 %",
-   "w": "30",
+   "voz": "TransMilenio mueve cuarenta y tres mil personas por hora y por sentido, con ciento cincuenta por bus. Pero comparte la calle y apenas pasa de veinte kilómetros por hora.",
+   "dur": 10.5,
+   "h": "43.000 POR HORA",
+   "w": "43.000",
    "sub": "",
-   "ic": "pin",
+   "ic": "tren",
    "num": null,
    "vs": null,
    "bars": [],
@@ -362,7 +670,7 @@
    "red": null,
    "termo": null,
    "pila": null,
-   "cap": "pago inicial realista",
+   "cap": "TransMilenio",
    "papel": null,
    "pilares": null,
    "ciclo": null,
@@ -371,19 +679,328 @@
    "cubo": null,
    "diales": null,
    "pieza": {
-    "id": "dscr-split",
+    "id": "real-bus",
     "props": {}
    },
    "cita": null,
    "sc": "",
    "modo": "VIRAL",
-   "tema": "claro",
-   "bg": "light",
+   "tema": "oscuro",
+   "bg": "dark",
    "ritmo": 1,
-   "total": 33.9,
-   "inicio": 15.1,
-   "fin": 20.5,
-   "texto": "Eso sí: financian hasta el setenta por ciento y tú pones cerca del treinta.",
+   "total": 111.5,
+   "inicio": 20.7,
+   "fin": 31.2,
+   "texto": "TransMilenio mueve cuarenta y tres mil personas por hora y por sentido, con ciento cincuenta por bus. Pero comparte la calle y apenas pasa de veinte kilómetros por hora.",
+   "tr": "corte",
+   "trs": "corte",
+   "sfx": [
+    {
+     "t": 0.04,
+     "tipo": "whoosh",
+     "vol": 0.16
+    },
+    {
+     "t": 0.3,
+     "tipo": "whoosh",
+     "vol": 0.16
+    },
+    {
+     "t": 3.4,
+     "tipo": "clic",
+     "vol": 0.05
+    },
+    {
+     "t": 3.5,
+     "tipo": "thud",
+     "vol": 0.18
+    },
+    {
+     "t": 3.53,
+     "tipo": "clic",
+     "vol": 0.05
+    },
+    {
+     "t": 3.66,
+     "tipo": "clic",
+     "vol": 0.05
+    },
+    {
+     "t": 3.79,
+     "tipo": "clic",
+     "vol": 0.05
+    },
+    {
+     "t": 3.92,
+     "tipo": "clic",
+     "vol": 0.05
+    },
+    {
+     "t": 4.05,
+     "tipo": "clic",
+     "vol": 0.05
+    },
+    {
+     "t": 4.18,
+     "tipo": "clic",
+     "vol": 0.05
+    },
+    {
+     "t": 4.31,
+     "tipo": "clic",
+     "vol": 0.05
+    },
+    {
+     "t": 4.4399999999999995,
+     "tipo": "clic",
+     "vol": 0.05
+    },
+    {
+     "t": 4.57,
+     "tipo": "clic",
+     "vol": 0.05
+    },
+    {
+     "t": 4.7,
+     "tipo": "clic",
+     "vol": 0.05
+    },
+    {
+     "t": 4.83,
+     "tipo": "clic",
+     "vol": 0.05
+    },
+    {
+     "t": 4.96,
+     "tipo": "clic",
+     "vol": 0.05
+    },
+    {
+     "t": 5.09,
+     "tipo": "clic",
+     "vol": 0.05
+    },
+    {
+     "t": 5.22,
+     "tipo": "clic",
+     "vol": 0.05
+    },
+    {
+     "t": 5.35,
+     "tipo": "clic",
+     "vol": 0.05
+    },
+    {
+     "t": 5.48,
+     "tipo": "clic",
+     "vol": 0.05
+    },
+    {
+     "t": 5.609999999999999,
+     "tipo": "clic",
+     "vol": 0.05
+    },
+    {
+     "t": 5.74,
+     "tipo": "clic",
+     "vol": 0.05
+    },
+    {
+     "t": 5.87,
+     "tipo": "clic",
+     "vol": 0.05
+    },
+    {
+     "t": 6,
+     "tipo": "clic",
+     "vol": 0.05
+    },
+    {
+     "t": 6.13,
+     "tipo": "clic",
+     "vol": 0.05
+    },
+    {
+     "t": 6.26,
+     "tipo": "clic",
+     "vol": 0.05
+    },
+    {
+     "t": 6.390000000000001,
+     "tipo": "clic",
+     "vol": 0.05
+    },
+    {
+     "t": 6.6,
+     "tipo": "ding",
+     "vol": 0.14
+    },
+    {
+     "t": 6.6,
+     "tipo": "zap",
+     "vol": 0.1
+    }
+   ]
+  },
+  {
+   "n": 4,
+   "t": "PIEZA",
+   "voz": "Mira el continente. Santiago: ciento cuarenta y nueve kilómetros de metro. São Paulo, ciento diez. Buenos Aires, cincuenta y siete. Lima, cuarenta. Medellín, treinta y uno. Quito, veintitrés. Bogotá, cero.",
+   "dur": 10.8,
+   "h": "BOGOTÁ: CERO",
+   "w": "CERO",
+   "sub": "",
+   "ic": "tren",
+   "num": null,
+   "vs": null,
+   "bars": [],
+   "barsU": "",
+   "hi": -1,
+   "line": null,
+   "items": [],
+   "stops": [],
+   "end": "",
+   "donut": [],
+   "picto": null,
+   "top": [],
+   "myth": "",
+   "truth": "",
+   "zoom": null,
+   "capas": null,
+   "mira": null,
+   "impacto": null,
+   "red": null,
+   "termo": null,
+   "pila": null,
+   "cap": "km de metro en Sudamérica",
+   "papel": null,
+   "pilares": null,
+   "ciclo": null,
+   "duo": null,
+   "osc": null,
+   "cubo": null,
+   "diales": null,
+   "pieza": {
+    "id": "real-redes",
+    "props": {}
+   },
+   "cita": null,
+   "sc": "",
+   "modo": "VIRAL",
+   "tema": "oscuro",
+   "bg": "dark",
+   "ritmo": 1,
+   "total": 111.5,
+   "inicio": 31.2,
+   "fin": 42,
+   "texto": "Mira el continente. Santiago: ciento cuarenta y nueve kilómetros de metro. São Paulo, ciento diez. Buenos Aires, cincuenta y siete. Lima, cuarenta. Medellín, treinta y uno. Quito, veintitrés. Bogotá, cero.",
+   "tr": "corte",
+   "trs": "corte",
+   "sfx": [
+    {
+     "t": 0.04,
+     "tipo": "whoosh",
+     "vol": 0.16
+    },
+    {
+     "t": 0.8,
+     "tipo": "pop",
+     "vol": 0.1
+    },
+    {
+     "t": 1.35,
+     "tipo": "pop",
+     "vol": 0.1
+    },
+    {
+     "t": 1.9000000000000001,
+     "tipo": "pop",
+     "vol": 0.1
+    },
+    {
+     "t": 2.45,
+     "tipo": "pop",
+     "vol": 0.1
+    },
+    {
+     "t": 3,
+     "tipo": "pop",
+     "vol": 0.1
+    },
+    {
+     "t": 3.55,
+     "tipo": "pop",
+     "vol": 0.1
+    },
+    {
+     "t": 5.6,
+     "tipo": "estatica",
+     "vol": 0.1
+    },
+    {
+     "t": 5.8999999999999995,
+     "tipo": "radar",
+     "vol": 0.12
+    },
+    {
+     "t": 6.5,
+     "tipo": "golpe",
+     "vol": 0.2
+    }
+   ]
+  },
+  {
+   "n": 5,
+   "t": "PIEZA",
+   "voz": "Y Medellín abrió su metro en mil novecientos noventa y cinco. Bogotá lo abrirá en dos mil veintiocho: treinta y tres años después.",
+   "dur": 8.6,
+   "h": "33 AÑOS DESPUÉS",
+   "w": "33",
+   "sub": "",
+   "ic": "tren",
+   "num": null,
+   "vs": null,
+   "bars": [],
+   "barsU": "",
+   "hi": -1,
+   "line": null,
+   "items": [],
+   "stops": [],
+   "end": "",
+   "donut": [],
+   "picto": null,
+   "top": [],
+   "myth": "",
+   "truth": "",
+   "zoom": null,
+   "capas": null,
+   "mira": null,
+   "impacto": null,
+   "red": null,
+   "termo": null,
+   "pila": null,
+   "cap": "1995 → 2028",
+   "papel": null,
+   "pilares": null,
+   "ciclo": null,
+   "duo": null,
+   "osc": null,
+   "cubo": null,
+   "diales": null,
+   "pieza": {
+    "id": "real-tiempo",
+    "props": {}
+   },
+   "cita": null,
+   "sc": "",
+   "modo": "VIRAL",
+   "tema": "oscuro",
+   "bg": "dark",
+   "ritmo": 1,
+   "total": 111.5,
+   "inicio": 42,
+   "fin": 50.6,
+   "texto": "Y Medellín abrió su metro en mil novecientos noventa y cinco. Bogotá lo abrirá en dos mil veintiocho: treinta y tres años después.",
    "tr": "corte",
    "trs": "corte",
    "sfx": [
@@ -399,45 +1016,200 @@
     },
     {
      "t": 1,
-     "tipo": "zap",
-     "vol": 0.12
+     "tipo": "clic",
+     "vol": 0.05
     },
     {
-     "t": 2.5,
-     "tipo": "pop",
-     "vol": 0.14
+     "t": 1.13,
+     "tipo": "clic",
+     "vol": 0.05
     },
     {
-     "t": 2.7,
+     "t": 1.26,
+     "tipo": "clic",
+     "vol": 0.05
+    },
+    {
+     "t": 1.3900000000000001,
+     "tipo": "clic",
+     "vol": 0.05
+    },
+    {
+     "t": 1.52,
+     "tipo": "clic",
+     "vol": 0.05
+    },
+    {
+     "t": 1.65,
+     "tipo": "clic",
+     "vol": 0.05
+    },
+    {
+     "t": 1.78,
+     "tipo": "clic",
+     "vol": 0.05
+    },
+    {
+     "t": 1.9100000000000001,
+     "tipo": "clic",
+     "vol": 0.05
+    },
+    {
+     "t": 2.04,
+     "tipo": "clic",
+     "vol": 0.05
+    },
+    {
+     "t": 2.17,
+     "tipo": "clic",
+     "vol": 0.05
+    },
+    {
+     "t": 2.3,
+     "tipo": "clic",
+     "vol": 0.05
+    },
+    {
+     "t": 2.43,
+     "tipo": "clic",
+     "vol": 0.05
+    },
+    {
+     "t": 2.56,
+     "tipo": "clic",
+     "vol": 0.05
+    },
+    {
+     "t": 2.69,
+     "tipo": "clic",
+     "vol": 0.05
+    },
+    {
+     "t": 2.8200000000000003,
+     "tipo": "clic",
+     "vol": 0.05
+    },
+    {
+     "t": 2.95,
+     "tipo": "clic",
+     "vol": 0.05
+    },
+    {
+     "t": 3.08,
+     "tipo": "clic",
+     "vol": 0.05
+    },
+    {
+     "t": 3.21,
+     "tipo": "clic",
+     "vol": 0.05
+    },
+    {
+     "t": 3.34,
+     "tipo": "clic",
+     "vol": 0.05
+    },
+    {
+     "t": 3.47,
+     "tipo": "clic",
+     "vol": 0.05
+    },
+    {
+     "t": 3.6,
+     "tipo": "clic",
+     "vol": 0.05
+    },
+    {
+     "t": 3.73,
+     "tipo": "clic",
+     "vol": 0.05
+    },
+    {
+     "t": 3.8600000000000003,
+     "tipo": "clic",
+     "vol": 0.05
+    },
+    {
+     "t": 3.99,
+     "tipo": "clic",
+     "vol": 0.05
+    },
+    {
+     "t": 4.12,
+     "tipo": "clic",
+     "vol": 0.05
+    },
+    {
+     "t": 4.25,
+     "tipo": "clic",
+     "vol": 0.05
+    },
+    {
+     "t": 4.38,
+     "tipo": "clic",
+     "vol": 0.05
+    },
+    {
+     "t": 4.51,
+     "tipo": "clic",
+     "vol": 0.05
+    },
+    {
+     "t": 4.640000000000001,
+     "tipo": "clic",
+     "vol": 0.05
+    },
+    {
+     "t": 4.77,
+     "tipo": "clic",
+     "vol": 0.05
+    },
+    {
+     "t": 4.9,
+     "tipo": "clic",
+     "vol": 0.05
+    },
+    {
+     "t": 5.03,
+     "tipo": "clic",
+     "vol": 0.05
+    },
+    {
+     "t": 5.16,
+     "tipo": "clic",
+     "vol": 0.05
+    },
+    {
+     "t": 5.29,
+     "tipo": "clic",
+     "vol": 0.05
+    },
+    {
+     "t": 5.42,
+     "tipo": "clic",
+     "vol": 0.05
+    },
+    {
+     "t": 5.6,
+     "tipo": "golpe",
+     "vol": 0.2
+    },
+    {
+     "t": 5.6,
      "tipo": "ding",
-     "vol": 0.16
-    },
-    {
-     "t": 3.5,
-     "tipo": "tick",
-     "vol": 0.08
-    },
-    {
-     "t": 3.8,
-     "tipo": "tick",
-     "vol": 0.08
-    },
-    {
-     "t": 4.1,
-     "tipo": "tick",
-     "vol": 0.08
+     "vol": 0.14
     }
    ]
   },
   {
-   "n": 5,
+   "n": 6,
    "t": "PIEZA",
-   "voz": "Mira proyectos y propiedades en imnoba punto com barra usa.",
-   "dur": 4.2,
-   "h": "MIRA EL CATÁLOGO EN IMNOBA.COM/USA",
-   "w": "CATÁLOGO",
+   "voz": "La Línea 1 es otra cosa: veinticuatro kilómetros, dieciséis estaciones, elevada a catorce metros. Pasa por encima de cada semáforo.",
+   "dur": 8.6,
+   "h": "A 14 METROS",
+   "w": "14",
    "sub": "",
-   "ic": "casa",
+   "ic": "tren",
    "num": null,
    "vs": null,
    "bars": [],
@@ -459,7 +1231,7 @@
    "red": null,
    "termo": null,
    "pila": null,
-   "cap": "proyectos y propiedades",
+   "cap": "Línea 1",
    "papel": null,
    "pilares": null,
    "ciclo": null,
@@ -468,7 +1240,7 @@
    "cubo": null,
    "diales": null,
    "pieza": {
-    "id": "dscr-catalogo",
+    "id": "real-viaducto",
     "props": {}
    },
    "cita": null,
@@ -477,12 +1249,236 @@
    "tema": "oscuro",
    "bg": "dark",
    "ritmo": 1,
-   "total": 33.9,
-   "inicio": 20.5,
-   "fin": 24.7,
-   "texto": "Mira proyectos y propiedades en imnoba punto com barra usa.",
+   "total": 111.5,
+   "inicio": 50.6,
+   "fin": 59.2,
+   "texto": "La Línea 1 es otra cosa: veinticuatro kilómetros, dieciséis estaciones, elevada a catorce metros. Pasa por encima de cada semáforo.",
    "tr": "corte",
-   "trs": "barrido",
+   "trs": "corte",
+   "sfx": [
+    {
+     "t": 0.04,
+     "tipo": "whoosh",
+     "vol": 0.16
+    },
+    {
+     "t": 1.6,
+     "tipo": "whoosh",
+     "vol": 0.18
+    },
+    {
+     "t": 3,
+     "tipo": "ding",
+     "vol": 0.14
+    },
+    {
+     "t": 4.6,
+     "tipo": "pop",
+     "vol": 0.1
+    },
+    {
+     "t": 4.7,
+     "tipo": "whoosh",
+     "vol": 0.14
+    },
+    {
+     "t": 5.1,
+     "tipo": "pop",
+     "vol": 0.1
+    },
+    {
+     "t": 5.6,
+     "tipo": "pop",
+     "vol": 0.1
+    }
+   ]
+  },
+  {
+   "n": 7,
+   "t": "PIEZA",
+   "voz": "Un solo tren lleva mil ochocientos pasajeros: lo mismo que doce buses articulados llenos. Y pasa uno cada noventa segundos.",
+   "dur": 8.8,
+   "h": "1 TREN = 12 BUSES",
+   "w": "12",
+   "sub": "",
+   "ic": "tren",
+   "num": null,
+   "vs": null,
+   "bars": [],
+   "barsU": "",
+   "hi": -1,
+   "line": null,
+   "items": [],
+   "stops": [],
+   "end": "",
+   "donut": [],
+   "picto": null,
+   "top": [],
+   "myth": "",
+   "truth": "",
+   "zoom": null,
+   "capas": null,
+   "mira": null,
+   "impacto": null,
+   "red": null,
+   "termo": null,
+   "pila": null,
+   "cap": "1.800 pasajeros",
+   "papel": null,
+   "pilares": null,
+   "ciclo": null,
+   "duo": null,
+   "osc": null,
+   "cubo": null,
+   "diales": null,
+   "pieza": {
+    "id": "real-untren",
+    "props": {}
+   },
+   "cita": null,
+   "sc": "",
+   "modo": "VIRAL",
+   "tema": "oscuro",
+   "bg": "dark",
+   "ritmo": 1,
+   "total": 111.5,
+   "inicio": 59.2,
+   "fin": 68,
+   "texto": "Un solo tren lleva mil ochocientos pasajeros: lo mismo que doce buses articulados llenos. Y pasa uno cada noventa segundos.",
+   "tr": "corte",
+   "trs": "corte",
+   "sfx": [
+    {
+     "t": 0.04,
+     "tipo": "whoosh",
+     "vol": 0.16
+    },
+    {
+     "t": 0.05,
+     "tipo": "whoosh",
+     "vol": 0.12
+    },
+    {
+     "t": 1.6,
+     "tipo": "pop",
+     "vol": 0.08
+    },
+    {
+     "t": 1.9400000000000002,
+     "tipo": "pop",
+     "vol": 0.08
+    },
+    {
+     "t": 2.2800000000000002,
+     "tipo": "pop",
+     "vol": 0.08
+    },
+    {
+     "t": 2.62,
+     "tipo": "pop",
+     "vol": 0.08
+    },
+    {
+     "t": 2.96,
+     "tipo": "pop",
+     "vol": 0.08
+    },
+    {
+     "t": 3.3000000000000003,
+     "tipo": "pop",
+     "vol": 0.08
+    },
+    {
+     "t": 3.64,
+     "tipo": "pop",
+     "vol": 0.08
+    },
+    {
+     "t": 3.9800000000000004,
+     "tipo": "pop",
+     "vol": 0.08
+    },
+    {
+     "t": 4.32,
+     "tipo": "pop",
+     "vol": 0.08
+    },
+    {
+     "t": 4.66,
+     "tipo": "pop",
+     "vol": 0.08
+    },
+    {
+     "t": 5,
+     "tipo": "pop",
+     "vol": 0.08
+    },
+    {
+     "t": 5.34,
+     "tipo": "pop",
+     "vol": 0.08
+    },
+    {
+     "t": 6,
+     "tipo": "ding",
+     "vol": 0.15
+    }
+   ]
+  },
+  {
+   "n": 8,
+   "t": "PIEZA",
+   "voz": "Resultado: la velocidad pasa a cuarenta y tres kilómetros por hora. Hasta dos horas de viaje se vuelven veintisiete minutos. Y la capacidad sube a setenta y dos mil personas por hora.",
+   "dur": 11.5,
+   "h": "2 H → 27 MIN",
+   "w": "27",
+   "sub": "",
+   "ic": "tren",
+   "num": null,
+   "vs": null,
+   "bars": [],
+   "barsU": "",
+   "hi": -1,
+   "line": null,
+   "items": [],
+   "stops": [],
+   "end": "",
+   "donut": [],
+   "picto": null,
+   "top": [],
+   "myth": "",
+   "truth": "",
+   "zoom": null,
+   "capas": null,
+   "mira": null,
+   "impacto": null,
+   "red": null,
+   "termo": null,
+   "pila": null,
+   "cap": "el resultado",
+   "papel": null,
+   "pilares": null,
+   "ciclo": null,
+   "duo": null,
+   "osc": null,
+   "cubo": null,
+   "diales": null,
+   "pieza": {
+    "id": "real-resultado",
+    "props": {}
+   },
+   "cita": null,
+   "sc": "",
+   "modo": "VIRAL",
+   "tema": "oscuro",
+   "bg": "dark",
+   "ritmo": 1,
+   "total": 111.5,
+   "inicio": 68,
+   "fin": 79.5,
+   "texto": "Resultado: la velocidad pasa a cuarenta y tres kilómetros por hora. Hasta dos horas de viaje se vuelven veintisiete minutos. Y la capacidad sube a setenta y dos mil personas por hora.",
+   "tr": "corte",
+   "trs": "corte",
    "sfx": [
     {
      "t": 0.04,
@@ -495,105 +1491,221 @@
      "vol": 0.1
     },
     {
-     "t": 0.4,
-     "tipo": "pop",
-     "vol": 0.1
-    },
-    {
-     "t": 0.9,
-     "tipo": "tick",
-     "vol": 0.08
-    },
-    {
      "t": 1.2,
-     "tipo": "tick",
-     "vol": 0.08
+     "tipo": "clic",
+     "vol": 0.045
     },
     {
-     "t": 1.5,
-     "tipo": "tick",
-     "vol": 0.08
+     "t": 1.33,
+     "tipo": "clic",
+     "vol": 0.045
     },
     {
-     "t": 2.2,
+     "t": 1.46,
+     "tipo": "clic",
+     "vol": 0.045
+    },
+    {
+     "t": 1.5899999999999999,
+     "tipo": "clic",
+     "vol": 0.045
+    },
+    {
+     "t": 1.72,
+     "tipo": "clic",
+     "vol": 0.045
+    },
+    {
+     "t": 1.85,
+     "tipo": "clic",
+     "vol": 0.045
+    },
+    {
+     "t": 1.98,
+     "tipo": "clic",
+     "vol": 0.045
+    },
+    {
+     "t": 2.11,
+     "tipo": "clic",
+     "vol": 0.045
+    },
+    {
+     "t": 2.24,
+     "tipo": "clic",
+     "vol": 0.045
+    },
+    {
+     "t": 2.37,
+     "tipo": "clic",
+     "vol": 0.045
+    },
+    {
+     "t": 2.5,
+     "tipo": "clic",
+     "vol": 0.045
+    },
+    {
+     "t": 2.6,
      "tipo": "ding",
      "vol": 0.16
-    }
-   ]
-  },
-  {
-   "n": 6,
-   "t": "HOOK",
-   "voz": "Empezar con menos capital es posible, si la cuenta cuadra.",
-   "dur": 4.2,
-   "h": "MENOS CAPITAL, SÍ ES POSIBLE",
-   "w": "POSIBLE",
-   "sub": "",
-   "ic": "brillo",
-   "num": null,
-   "vs": null,
-   "bars": [],
-   "barsU": "",
-   "hi": -1,
-   "line": null,
-   "items": [],
-   "stops": [],
-   "end": "",
-   "donut": [],
-   "picto": null,
-   "top": [],
-   "myth": "",
-   "truth": "",
-   "zoom": null,
-   "capas": null,
-   "mira": null,
-   "impacto": null,
-   "red": null,
-   "termo": null,
-   "pila": null,
-   "cap": "si la cuenta cuadra",
-   "papel": null,
-   "pilares": null,
-   "ciclo": null,
-   "duo": null,
-   "osc": null,
-   "cubo": null,
-   "diales": null,
-   "pieza": null,
-   "cita": null,
-   "sc": "",
-   "modo": "VIRAL",
-   "tema": "claro",
-   "bg": "light",
-   "ritmo": 1,
-   "total": 33.9,
-   "inicio": 24.7,
-   "fin": 28.9,
-   "texto": "Empezar con menos capital es posible, si la cuenta cuadra.",
-   "tr": "barrido",
-   "trs": "barrido",
-   "sfx": [
-    {
-     "t": 0.04,
-     "tipo": "whoosh",
-     "vol": 0.16
     },
     {
-     "t": 0.32,
-     "tipo": "thud",
+     "t": 2.63,
+     "tipo": "clic",
+     "vol": 0.045
+    },
+    {
+     "t": 2.76,
+     "tipo": "clic",
+     "vol": 0.045
+    },
+    {
+     "t": 2.8899999999999997,
+     "tipo": "clic",
+     "vol": 0.045
+    },
+    {
+     "t": 3.02,
+     "tipo": "clic",
+     "vol": 0.045
+    },
+    {
+     "t": 3.1500000000000004,
+     "tipo": "clic",
+     "vol": 0.045
+    },
+    {
+     "t": 3.2800000000000002,
+     "tipo": "clic",
+     "vol": 0.045
+    },
+    {
+     "t": 3.41,
+     "tipo": "clic",
+     "vol": 0.045
+    },
+    {
+     "t": 3.54,
+     "tipo": "clic",
+     "vol": 0.045
+    },
+    {
+     "t": 3.67,
+     "tipo": "clic",
+     "vol": 0.045
+    },
+    {
+     "t": 3.8,
+     "tipo": "clic",
+     "vol": 0.045
+    },
+    {
+     "t": 3.9299999999999997,
+     "tipo": "clic",
+     "vol": 0.045
+    },
+    {
+     "t": 4.0600000000000005,
+     "tipo": "clic",
+     "vol": 0.045
+    },
+    {
+     "t": 4.19,
+     "tipo": "clic",
+     "vol": 0.045
+    },
+    {
+     "t": 4.32,
+     "tipo": "clic",
+     "vol": 0.045
+    },
+    {
+     "t": 4.45,
+     "tipo": "clic",
+     "vol": 0.045
+    },
+    {
+     "t": 4.58,
+     "tipo": "clic",
+     "vol": 0.045
+    },
+    {
+     "t": 4.71,
+     "tipo": "clic",
+     "vol": 0.045
+    },
+    {
+     "t": 4.84,
+     "tipo": "clic",
+     "vol": 0.045
+    },
+    {
+     "t": 4.97,
+     "tipo": "clic",
+     "vol": 0.045
+    },
+    {
+     "t": 5.1000000000000005,
+     "tipo": "clic",
+     "vol": 0.045
+    },
+    {
+     "t": 5.23,
+     "tipo": "clic",
+     "vol": 0.045
+    },
+    {
+     "t": 5.36,
+     "tipo": "clic",
+     "vol": 0.045
+    },
+    {
+     "t": 5.49,
+     "tipo": "clic",
+     "vol": 0.045
+    },
+    {
+     "t": 5.62,
+     "tipo": "clic",
+     "vol": 0.045
+    },
+    {
+     "t": 5.75,
+     "tipo": "clic",
+     "vol": 0.045
+    },
+    {
+     "t": 5.88,
+     "tipo": "clic",
+     "vol": 0.045
+    },
+    {
+     "t": 6.010000000000001,
+     "tipo": "clic",
+     "vol": 0.045
+    },
+    {
+     "t": 6.6,
+     "tipo": "whoosh",
+     "vol": 0.14
+    },
+    {
+     "t": 9.399999999999999,
+     "tipo": "golpe",
      "vol": 0.2
     }
    ]
   },
   {
-   "n": 7,
-   "t": "CTA",
-   "voz": "Escríbenos y un equipo en Florida te acompaña en todo el proceso.",
-   "dur": 5,
-   "h": "ESCRÍBENOS",
-   "w": "ESCRÍBENOS",
-   "sub": "imnoba.com/usa · equipo en Florida",
-   "ic": "chat",
+   "n": 9,
+   "t": "PIEZA",
+   "voz": "El efecto oculto: antes de que ruede el primer tren, los predios a menos de ochocientos metros de las estaciones ya subieron once coma siete por ciento.",
+   "dur": 10.2,
+   "h": "+11,7 % ANTES DEL TREN",
+   "w": "+11,7",
+   "sub": "",
+   "ic": "tren",
    "num": null,
    "vs": null,
    "bars": [],
@@ -615,7 +1727,7 @@
    "red": null,
    "termo": null,
    "pila": null,
-   "cap": "",
+   "cap": "el efecto oculto",
    "papel": null,
    "pilares": null,
    "ciclo": null,
@@ -623,18 +1735,360 @@
    "osc": null,
    "cubo": null,
    "diales": null,
-   "pieza": null,
+   "pieza": {
+    "id": "real-plusvalia",
+    "props": {}
+   },
    "cita": null,
    "sc": "",
    "modo": "VIRAL",
    "tema": "oscuro",
-   "bg": "gold",
+   "bg": "dark",
    "ritmo": 1,
-   "total": 33.9,
-   "inicio": 28.9,
-   "fin": 33.9,
-   "texto": "Escríbenos y un equipo en Florida te acompaña en todo el proceso.",
-   "tr": "barrido",
+   "total": 111.5,
+   "inicio": 79.5,
+   "fin": 89.7,
+   "texto": "El efecto oculto: antes de que ruede el primer tren, los predios a menos de ochocientos metros de las estaciones ya subieron once coma siete por ciento.",
+   "tr": "corte",
+   "trs": "corte",
+   "sfx": [
+    {
+     "t": 0.04,
+     "tipo": "whoosh",
+     "vol": 0.16
+    },
+    {
+     "t": 1.2,
+     "tipo": "radar",
+     "vol": 0.14
+    },
+    {
+     "t": 1.4,
+     "tipo": "whoosh",
+     "vol": 0.1
+    },
+    {
+     "t": 3,
+     "tipo": "clic",
+     "vol": 0.05
+    },
+    {
+     "t": 3.13,
+     "tipo": "clic",
+     "vol": 0.05
+    },
+    {
+     "t": 3.26,
+     "tipo": "clic",
+     "vol": 0.05
+    },
+    {
+     "t": 3.39,
+     "tipo": "clic",
+     "vol": 0.05
+    },
+    {
+     "t": 3.52,
+     "tipo": "clic",
+     "vol": 0.05
+    },
+    {
+     "t": 3.65,
+     "tipo": "clic",
+     "vol": 0.05
+    },
+    {
+     "t": 3.7800000000000002,
+     "tipo": "clic",
+     "vol": 0.05
+    },
+    {
+     "t": 3.91,
+     "tipo": "clic",
+     "vol": 0.05
+    },
+    {
+     "t": 4.04,
+     "tipo": "clic",
+     "vol": 0.05
+    },
+    {
+     "t": 4.17,
+     "tipo": "clic",
+     "vol": 0.05
+    },
+    {
+     "t": 4.3,
+     "tipo": "clic",
+     "vol": 0.05
+    },
+    {
+     "t": 4.43,
+     "tipo": "clic",
+     "vol": 0.05
+    },
+    {
+     "t": 4.5600000000000005,
+     "tipo": "clic",
+     "vol": 0.05
+    },
+    {
+     "t": 4.6899999999999995,
+     "tipo": "clic",
+     "vol": 0.05
+    },
+    {
+     "t": 4.82,
+     "tipo": "clic",
+     "vol": 0.05
+    },
+    {
+     "t": 4.95,
+     "tipo": "clic",
+     "vol": 0.05
+    },
+    {
+     "t": 5.08,
+     "tipo": "clic",
+     "vol": 0.05
+    },
+    {
+     "t": 5.21,
+     "tipo": "clic",
+     "vol": 0.05
+    },
+    {
+     "t": 5.34,
+     "tipo": "clic",
+     "vol": 0.05
+    },
+    {
+     "t": 5.470000000000001,
+     "tipo": "clic",
+     "vol": 0.05
+    },
+    {
+     "t": 5.6,
+     "tipo": "clic",
+     "vol": 0.05
+    },
+    {
+     "t": 5.73,
+     "tipo": "clic",
+     "vol": 0.05
+    },
+    {
+     "t": 5.86,
+     "tipo": "clic",
+     "vol": 0.05
+    },
+    {
+     "t": 5.99,
+     "tipo": "clic",
+     "vol": 0.05
+    },
+    {
+     "t": 6.12,
+     "tipo": "clic",
+     "vol": 0.05
+    },
+    {
+     "t": 6.25,
+     "tipo": "clic",
+     "vol": 0.05
+    },
+    {
+     "t": 6.38,
+     "tipo": "clic",
+     "vol": 0.05
+    },
+    {
+     "t": 6.6,
+     "tipo": "ding",
+     "vol": 0.16
+    }
+   ]
+  },
+  {
+   "n": 10,
+   "t": "PIEZA",
+   "voz": "Cada cinco minutos caminando de más hasta una estación de TransMilenio, el arriendo cae entre seis coma ocho y nueve coma tres por ciento. Rodríguez y Targa, dos mil cuatro.",
+   "dur": 10.8,
+   "h": "5 MINUTOS A PIE",
+   "w": "5",
+   "sub": "",
+   "ic": "tren",
+   "num": null,
+   "vs": null,
+   "bars": [],
+   "barsU": "",
+   "hi": -1,
+   "line": null,
+   "items": [],
+   "stops": [],
+   "end": "",
+   "donut": [],
+   "picto": null,
+   "top": [],
+   "myth": "",
+   "truth": "",
+   "zoom": null,
+   "capas": null,
+   "mira": null,
+   "impacto": null,
+   "red": null,
+   "termo": null,
+   "pila": null,
+   "cap": "Rodríguez y Targa · 2004",
+   "papel": null,
+   "pilares": null,
+   "ciclo": null,
+   "duo": null,
+   "osc": null,
+   "cubo": null,
+   "diales": null,
+   "pieza": {
+    "id": "real-caminata",
+    "props": {}
+   },
+   "cita": null,
+   "sc": "",
+   "modo": "VIRAL",
+   "tema": "oscuro",
+   "bg": "dark",
+   "ritmo": 1,
+   "total": 111.5,
+   "inicio": 89.7,
+   "fin": 100.5,
+   "texto": "Cada cinco minutos caminando de más hasta una estación de TransMilenio, el arriendo cae entre seis coma ocho y nueve coma tres por ciento. Rodríguez y Targa, dos mil cuatro.",
+   "tr": "corte",
+   "trs": "corte",
+   "sfx": [
+    {
+     "t": 0.04,
+     "tipo": "whoosh",
+     "vol": 0.16
+    },
+    {
+     "t": 1.4,
+     "tipo": "tick",
+     "vol": 0.06
+    },
+    {
+     "t": 1.7999999999999998,
+     "tipo": "tick",
+     "vol": 0.06
+    },
+    {
+     "t": 2.2,
+     "tipo": "tick",
+     "vol": 0.06
+    },
+    {
+     "t": 2.6,
+     "tipo": "tick",
+     "vol": 0.06
+    },
+    {
+     "t": 3,
+     "tipo": "tick",
+     "vol": 0.06
+    },
+    {
+     "t": 3.4,
+     "tipo": "tick",
+     "vol": 0.06
+    },
+    {
+     "t": 3.8000000000000003,
+     "tipo": "tick",
+     "vol": 0.06
+    },
+    {
+     "t": 4.2,
+     "tipo": "tick",
+     "vol": 0.06
+    },
+    {
+     "t": 4.6,
+     "tipo": "tick",
+     "vol": 0.06
+    },
+    {
+     "t": 5,
+     "tipo": "tick",
+     "vol": 0.06
+    },
+    {
+     "t": 5.8,
+     "tipo": "pop",
+     "vol": 0.14
+    },
+    {
+     "t": 5.85,
+     "tipo": "golpe",
+     "vol": 0.14
+    },
+    {
+     "t": 6.8,
+     "tipo": "ding",
+     "vol": 0.14
+    }
+   ]
+  },
+  {
+   "n": 11,
+   "t": "PIEZA",
+   "voz": "Un metro no solo mueve gente: comprime el tiempo y multiplica el valor del suelo. Marzo de dos mil veintiocho. ¿Cuánto vale una hora de tu vida en esta ciudad?",
+   "dur": 11,
+   "h": "¿CUÁNTO VALE UNA HORA DE TU VIDA?",
+   "w": "HORA",
+   "sub": "",
+   "ic": "tren",
+   "num": null,
+   "vs": null,
+   "bars": [],
+   "barsU": "",
+   "hi": -1,
+   "line": null,
+   "items": [],
+   "stops": [],
+   "end": "",
+   "donut": [],
+   "picto": null,
+   "top": [],
+   "myth": "",
+   "truth": "",
+   "zoom": null,
+   "capas": null,
+   "mira": null,
+   "impacto": null,
+   "red": null,
+   "termo": null,
+   "pila": null,
+   "cap": "marzo de 2028",
+   "papel": null,
+   "pilares": null,
+   "ciclo": null,
+   "duo": null,
+   "osc": null,
+   "cubo": null,
+   "diales": null,
+   "pieza": {
+    "id": "real-cierre",
+    "props": {}
+   },
+   "cita": null,
+   "sc": "",
+   "modo": "VIRAL",
+   "tema": "oscuro",
+   "bg": "dark",
+   "ritmo": 1,
+   "total": 111.5,
+   "inicio": 100.5,
+   "fin": 111.5,
+   "texto": "Un metro no solo mueve gente: comprime el tiempo y multiplica el valor del suelo. Marzo de dos mil veintiocho. ¿Cuánto vale una hora de tu vida en esta ciudad?",
+   "tr": "corte",
    "trs": "barrido",
    "sfx": [
     {
@@ -643,14 +2097,29 @@
      "vol": 0.16
     },
     {
-     "t": 0.5,
-     "tipo": "ding",
+     "t": 0.05,
+     "tipo": "whoosh",
+     "vol": 0.12
+    },
+    {
+     "t": 1,
+     "tipo": "clic",
+     "vol": 0.1
+    },
+    {
+     "t": 1.2,
+     "tipo": "whoosh",
+     "vol": 0.12
+    },
+    {
+     "t": 6.4,
+     "tipo": "golpe",
      "vol": 0.2
     },
     {
-     "t": 1.1,
-     "tipo": "pop",
-     "vol": 0.15
+     "t": 6.7,
+     "tipo": "ding",
+     "vol": 0.16
     }
    ]
   }

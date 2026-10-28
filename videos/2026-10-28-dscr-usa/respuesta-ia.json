@@ -2,7 +2,7 @@
   "titulo": "El truco de los préstamos DSCR",
   "scenes": [
     {"t": "PIEZA", "voz": "Invertir en Estados Unidos no exige medio millón en efectivo.", "dur": 4.4, "h": "NO NECESITAS $500.000 EN EFECTIVO", "w": "EFECTIVO", "cap": "ese es el gran mito", "pieza": {"id": "dscr-gancho"}},
-    {"t": "PIEZA", "voz": "Existen préstamos que miran la propiedad, no tu sueldo: la propiedad se paga sola.", "dur": 5.0, "h": "LA PROPIEDAD SE PAGA SOLA", "w": "SOLA", "cap": "así funciona un préstamo DSCR", "pieza": {"id": "dscr-hack"}},
+    {"t": "PIEZA", "voz": "Hay préstamos que miran la propiedad, no tu sueldo: ella se paga sola.", "dur": 5.3, "h": "LA PROPIEDAD SE PAGA SOLA", "w": "SOLA", "cap": "así funciona un préstamo DSCR", "pieza": {"id": "dscr-hack"}},
     {"t": "PIEZA", "voz": "Si el alquiler cubre la cuota, no piden recibo de sueldo, historial ni visa.", "dur": 5.4, "h": "SOLO IMPORTA EL ALQUILER", "w": "ALQUILER", "cap": "lo que no te piden", "pieza": {"id": "dscr-docs"}},
     {"t": "PIEZA", "voz": "Eso sí: financian hasta el setenta por ciento y tú pones cerca del treinta.", "dur": 5.4, "h": "TÚ PONES CERCA DEL 30 %", "w": "30 %", "cap": "pago inicial realista", "pieza": {"id": "dscr-split"}},
     {"t": "PIEZA", "voz": "Mira proyectos y propiedades en imnoba punto com barra usa.", "dur": 4.2, "h": "MIRA EL CATÁLOGO EN IMNOBA.COM/USA", "w": "CATÁLOGO", "cap": "proyectos y propiedades", "pieza": {"id": "dscr-catalogo"}},
