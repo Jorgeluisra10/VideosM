@@ -24,6 +24,8 @@ import { ParAplica, ParCurva, ParSimula, ParSupuestos } from "./par2";
 import { AstroGancho, AstroGlia, AstroMitad } from "./astro1";
 import { AstroDialogo, AstroEstrella, AstroMemoria } from "./astro2";
 import { DscCatalogo, DscDocs, DscGancho, DscHack, DscSplit } from "./dscr1";
+import { TejEpitelial, TejGancho, TejSangre } from "./tej1";
+import { TejHueso, TejMuscular, TejNervioso } from "./tej2";
 
 export const COMPONENTES_PIEZA: Record<string, React.FC<{ e: EscenaViralGuardada }>> = {
   "metro-plano": MetroPlano,
@@ -87,6 +89,12 @@ export const COMPONENTES_PIEZA: Record<string, React.FC<{ e: EscenaViralGuardada
   "dscr-docs": DscDocs,
   "dscr-split": DscSplit,
   "dscr-catalogo": DscCatalogo,
+  "tej-gancho": TejGancho,
+  "tej-epitelial": TejEpitelial,
+  "tej-sangre": TejSangre,
+  "tej-hueso": TejHueso,
+  "tej-muscular": TejMuscular,
+  "tej-nervioso": TejNervioso,
 };
 
 export const Pieza: React.FC<{ e: EscenaViralGuardada; alternativa: React.ReactNode }> = ({ e, alternativa }) => {

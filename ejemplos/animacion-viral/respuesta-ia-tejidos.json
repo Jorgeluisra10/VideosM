@@ -1,0 +1,12 @@
+{
+  "titulo": "Los 4 tejidos que te construyen",
+  "scenes": [
+    {"t": "PIEZA", "voz": "Todo tu cuerpo son solo cuatro tejidos. Uno es líquido.", "dur": 4.2, "h": "SOLO 4 TEJIDOS. UNO ES LÍQUIDO", "w": "LÍQUIDO", "cap": "epitelial, conectivo, muscular y nervioso", "pieza": {"id": "tej-gancho"}},
+    {"t": "PIEZA", "voz": "Epitelial: tu estómago produce ácido que corroe metales, pero su revestimiento se renueva en días.", "dur": 5.7, "h": "EPITELIAL: SE RENUEVA EN DÍAS", "w": "DÍAS", "cap": "ácido que ataca metales", "pieza": {"id": "tej-epitelial"}},
+    {"t": "PIEZA", "voz": "Conectivo: la sangre, tejido líquido, pasa de dos kilómetros por hora en la aorta.", "dur": 5.4, "h": "CONECTIVO: LA SANGRE ES UN TEJIDO", "w": "LÍQUIDO", "cap": "más de 2 km/h en la aorta", "pieza": {"id": "tej-sangre"}},
+    {"t": "PIEZA", "voz": "Tus huesos también son conectivo: se renuevan casi por completo cada diez años.", "dur": 5.0, "h": "TUS HUESOS TAMBIÉN SON CONECTIVO", "w": "CONECTIVO", "cap": "esqueleto casi nuevo cada 10 años", "pieza": {"id": "tej-hueso"}},
+    {"t": "PIEZA", "voz": "Muscular: fuera del cuerpo, con oxígeno, tu corazón sigue latiendo con su propio marcapasos.", "dur": 5.4, "h": "MUSCULAR: EL CORAZÓN LATE SOLO", "w": "SOLO", "cap": "su propio marcapasos", "pieza": {"id": "tej-muscular"}},
+    {"t": "PIEZA", "voz": "Nervioso: la mayoría de tus neuronas no se renueva; tienen tu misma edad.", "dur": 5.0, "h": "NERVIOSO: TU MISMA EDAD", "w": "EDAD", "cap": "neuronas de la corteza", "pieza": {"id": "tej-nervioso"}},
+    {"t": "CTA", "voz": "El cuerpo es una máquina perfecta. Guarda esto y síguenos en Sinapsis.", "dur": 4.7, "h": "GUÁRDALO Y SÍGUENOS", "w": "SÍGUENOS", "sub": "Más ciencia en SINAPSIS"}
+  ]
+}

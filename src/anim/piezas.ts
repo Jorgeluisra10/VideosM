@@ -228,6 +228,36 @@ export const TDS = {
   catalogo: { tel: 0.2, tarjetas: 0.9, url: 2.2 },
 } as const;
 
+/**
+ * Datos del video «Los 4 tejidos» (SINAPSIS · serie anatomía humana / curiosidades médicas). Cada cifra tiene su fuente en pantalla y en
+ * ejemplos/animacion-viral/guion-tecnico-tejidos.md. Matices que se respetan: el ácido gástrico solo ataca ALGUNOS metales y muy despacio; «más de 2 km/h»
+ * es la velocidad PICO de la sangre en la aorta (no la media); los huesos se renuevan «casi por completo» en ≈ 10 años (aproximación); las neuronas de la
+ * corteza tienen la edad de la persona (la neurogénesis del hipocampo adulto sigue en debate).
+ */
+export const TEJ = {
+  /** renovación del epitelio digestivo (Sender y Milo, Nat Med 2021: 3–5 d en el intestino; cifras populares dan 3–4 d para el estómago) */
+  epitelioDias: [3, 5],
+  /** pH del jugo gástrico en ayunas (fuentes: 1,5–3,5) */
+  phGastrico: [1.5, 3.5],
+  /** velocidad pico de la sangre en la aorta ≈ 0,5–1,7 m/s según el punto de medida: el video dice «más de 2 km/h» (0,56 m/s) */
+  sangreKmhMin: 2,
+  /** renovación esquelética aproximada del adulto */
+  huesoAnios: 10,
+  /** vida media de células: glóbulo rojo ≈ 120 días; epidermis ≈ 2–4 semanas; epitelio intestinal 3–5 días; neurona corticales: toda la vida */
+  globuloRojoDias: 120,
+  epidermisSemanas: [2, 4],
+} as const;
+
+/** Tiempos del video de los 4 tejidos, compartidos entre el dibujo y el sonido (segundos a ritmo normal). */
+export const TTJ = {
+  gancho: { tile: (i: number) => 0.35 + i * 0.42, liquido: 2.5 },
+  epitelial: { acido: 0.25, metal: 0.7, dia: (i: number) => 1.9 + i * 0.7, cifra: 4.2 },
+  sangre: { tubo: 0.25, flujo: 0.6, aguja: 1.3, marca: 3.2 },
+  hueso: { hueso: 0.25, barrido: 1.1, barridoDur: 2.7, chip: 3.9 },
+  muscular: { corazon: 0.25, corte: 1.9, nodo: 2.7, chip: 3.6 },
+  nervioso: { fila: (i: number) => 0.45 + i * 0.5, neurona: 2.7, chip: 3.7 },
+} as const;
+
 /* ───────────── «La regla del 37 %» (problema de la parada óptima, ensayo abstracto para IMNOBA) ───────────── */
 
 /** Generador pseudoaleatorio determinista (mulberry32): mismos números en el render, en las pruebas y en cada fotograma. */
@@ -598,6 +628,31 @@ export const PIEZAS: Record<string, DefPieza> = {
   "dscr-catalogo": {
     id: "dscr-catalogo", nombre: "DSCR · el catálogo de imnoba.com/usa (proyectos y propiedades)", ideal: 3.75, fondo: "dark", entra: "corte",
     sfx: (_d, r) => [ev(0.05, "whoosh", 0.1), ev(TDS.catalogo.tel * r + 0.2, "pop", 0.1), ...[0, 1, 2].map((i) => ev((TDS.catalogo.tarjetas + i * 0.3) * r, "tick", 0.08)), ev(TDS.catalogo.url * r, "ding", 0.16)],
+  },
+  /* ───────────── «Los 4 tejidos» (SINAPSIS) ───────────── */
+  "tej-gancho": {
+    id: "tej-gancho", nombre: "4 tejidos · las cuatro piezas del cuerpo, una es líquida (gancho)", ideal: 3.75, fondo: "dark",
+    sfx: (_d, r) => [ev(0.05, "whoosh", 0.12), ...[0, 1, 2, 3].map((i) => ev(TTJ.gancho.tile(i) * r + 0.1, "pop", 0.1)), ev(TTJ.gancho.liquido * r, "ding", 0.16)],
+  },
+  "tej-epitelial": {
+    id: "tej-epitelial", nombre: "4 tejidos · epitelial: el ácido ataca y el revestimiento se renueva", ideal: 5.25, fondo: "dark", entra: "zoom",
+    sfx: (_d, r) => [ev(0.05, "whoosh", 0.1), ev(TTJ.epitelial.acido * r, "pop", 0.1), ...[0, 1, 2, 3].map((i) => ev(TTJ.epitelial.dia(i) * r, "tick", 0.12)), ev(TTJ.epitelial.cifra * r, "ding", 0.16)],
+  },
+  "tej-sangre": {
+    id: "tej-sangre", nombre: "4 tejidos · conectivo: la sangre, tejido líquido que pasa de 2 km/h", ideal: 4.95, fondo: "dark", entra: "semitono",
+    sfx: (_d, r) => [ev(0.05, "whoosh", 0.1), ev(TTJ.sangre.tubo * r, "pop", 0.1), ...[0, 1, 2].map((i) => ev((TTJ.sangre.aguja + i * 0.9) * r, "heartbeat", 0.14)), ev(TTJ.sangre.marca * r, "ding", 0.16)],
+  },
+  "tej-hueso": {
+    id: "tej-hueso", nombre: "4 tejidos · conectivo: el hueso se renueva casi por completo en ≈ 10 años", ideal: 4.55, fondo: "dark", entra: "corte",
+    sfx: (_d, r) => [ev(0.05, "whoosh", 0.1), ev(TTJ.hueso.hueso * r, "pop", 0.1), ...clics(TTJ.hueso.barrido * r, TTJ.hueso.barridoDur * r, 0.05), ev((TTJ.hueso.barrido + TTJ.hueso.barridoDur) * r, "ding", 0.18)],
+  },
+  "tej-muscular": {
+    id: "tej-muscular", nombre: "4 tejidos · muscular: el corazón sigue latiendo solo, con su marcapasos", ideal: 4.95, fondo: "dark", entra: "zoom",
+    sfx: (_d, r) => [ev(0.05, "whoosh", 0.1), ...[0, 1].map((i) => ev((TTJ.muscular.corazon + 0.5 + i * 0.8) * r, "heartbeat", 0.14)), ev(TTJ.muscular.corte * r, "zap", 0.16), ...[0, 1, 2].map((i) => ev((TTJ.muscular.nodo + i * 0.8) * r, "heartbeat", 0.14)), ev(TTJ.muscular.chip * r, "ding", 0.16)],
+  },
+  "tej-nervioso": {
+    id: "tej-nervioso", nombre: "4 tejidos · nervioso: tus neuronas corticales tienen tu misma edad", ideal: 4.55, fondo: "dark", entra: "semitono",
+    sfx: (_d, r) => [ev(0.05, "whoosh", 0.1), ...[0, 1, 2].map((i) => ev(TTJ.nervioso.fila(i) * r, "tick", 0.1)), ev(TTJ.nervioso.neurona * r, "zap", 0.14), ev(TTJ.nervioso.chip * r, "ding", 0.18)],
   },
   "astro-memoria": {
     id: "astro-memoria", nombre: "Astrocitos · en ratones, reactivarlos estimuló el recuerdo", ideal: 4.15, fondo: "dark", entra: "corte",
