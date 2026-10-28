@@ -140,8 +140,8 @@ export const DscDocs: React.FC<P> = () => {
               <rect x={120} y={y} width={840} height={150} rx={26} fill={PANEL} stroke={tacha > 0 ? RE.rojo : RE.hielo} strokeOpacity={tacha > 0 ? 0.95 : 0.6} strokeWidth={3} />
               <g transform={`translate(205 ${y + 75})`}><Glifo tipo={d.glifo} color={RE.hielo} /></g>
               <text x={280} y={y + 90} fontFamily={FONT} fontWeight={800} fontSize={40} fill={RE.blanco}>{d.titulo}</text>
-              <line x1={270} y1={y + 78} x2={270 + 650 * bruto} y2={y + 78} stroke={RE.rojo} strokeWidth={8} strokeLinecap="round" />
-              {tacha > 0 && <g transform={`translate(910 ${y + 40}) scale(${0.5 + 0.5 * tacha})`}><circle r={0} /><g stroke={RE.rojo} strokeWidth={9} strokeLinecap="round"><line x1={-14} y1={-14} x2={14} y2={14} /><line x1={14} y1={-14} x2={-14} y2={14} /></g></g>}
+              {bruto > 0.02 && <line x1={270} y1={y + 78} x2={270 + 650 * bruto} y2={y + 78} stroke={RE.rojo} strokeWidth={8} strokeLinecap="round" />}
+              {tacha > 0 && <g transform={`translate(910 ${y + 40}) scale(${0.5 + 0.5 * tacha})`}><g stroke={RE.rojo} strokeWidth={9} strokeLinecap="round"><line x1={-14} y1={-14} x2={14} y2={14} /><line x1={14} y1={-14} x2={-14} y2={14} /></g></g>}
             </g>
           );
         })}
@@ -189,7 +189,7 @@ export const DscSplit: React.FC<P> = () => {
         {w1 > 1 && <path d={`M ${BX + 30} ${BY} H ${BX + w1} V ${BY + BH} H ${BX + 30} A 30 30 0 0 1 ${BX} ${BY + BH - 30} V ${BY + 30} A 30 30 0 0 1 ${BX + 30} ${BY} Z`} fill={`url(#${uid}b)`} />}
         {w2 > 1 && <path d={`M ${BX + BW * 0.7} ${BY} H ${BX + BW - 30} A 30 30 0 0 1 ${BX + BW} ${BY + 30} V ${BY + BH - 30} A 30 30 0 0 1 ${BX + BW - 30} ${BY + BH} H ${BX + BW * 0.7} Z`} fill={`url(#${uid}o)`} opacity={k2} />}
         {w1 > 40 && <text x={BX + (BW * 0.7) / 2} y={BY + 98} textAnchor="middle" fontFamily={FONT} fontWeight={900} fontSize={84} fill="#fff" opacity={k1}>{Math.round(DSC.banco * k1)} %</text>}
-        {w2 > 40 && <text x={BX + BW * 0.85} y={BY + 98} textAnchor="middle" fontFamily={FONT} fontWeight={900} fontSize={84} fill="#2A1C00" opacity={k2}>≈ {DSC.inicial} %</text>}
+        {w2 > 40 && <text x={BX + BW * 0.85} y={BY + 98} textAnchor="middle" fontFamily={FONT} fontWeight={900} fontSize={62} fill="#2A1C00" opacity={k2}>≈ {DSC.inicial} %</text>}
       </svg>
       <Chip texto="el banco" x={BX + (BW * 0.7) / 2} y={BY + BH + 50} color="#9EC7F2" ancho={260} id="split-banco" opacidad={k1} />
       <Chip texto="tu pago inicial" x={BX + BW * 0.85} y={BY + BH + 50} color={RE.oro} ancho={300} id="split-tu" opacidad={k2} />
@@ -223,8 +223,8 @@ export const DscCatalogo: React.FC<P> = () => {
         <MiniCasa x={X0 + 109} y={934} s={0.95} color={i % 2 ? "#5A7DB8" : "#C9A24A"} />
         <rect x={X0 + 192} y={846} width={190} height={16} rx={8} fill="#6C87A5" opacity={0.8} />
         <rect x={X0 + 192} y={878} width={140} height={13} rx={6.5} fill="#6C87A5" opacity={0.5} />
-        <rect x={X0 + 192} y={930} width={i % 2 ? 108 : 132} height={30} rx={15} fill={RE.oro} opacity={0.92} />
-        <text x={X0 + 192 + (i % 2 ? 54 : 66)} y={952} textAnchor="middle" fontFamily={FONT} fontWeight={800} fontSize={20} fill="#2A1C00">{i % 2 ? "Propiedad" : "Proyecto"}</text>
+        <rect x={X0 + 192} y={930} width={i % 2 ? 122 : 132} height={30} rx={15} fill={RE.oro} opacity={0.92} />
+        <text x={X0 + 192 + (i % 2 ? 61 : 66)} y={952} textAnchor="middle" fontFamily={FONT} fontWeight={800} fontSize={20} fill="#2A1C00">{i % 2 ? "Propiedad" : "Proyecto"}</text>
       </g>
     );
   };
@@ -232,7 +232,7 @@ export const DscCatalogo: React.FC<P> = () => {
   return (
     <Estudio piso={1600} resplandor={0.4}>
       <svg width={W} height={H} viewBox={`0 0 ${W} ${H}`} style={{ position: "absolute", inset: 0 }}>
-        <defs><clipPath id={`${uid}c`}><rect x={X0 + 14} y={Y0 + 130} width={PW - 28} height={PH - 190} rx={14} /></clipPath></defs>
+        <defs><clipPath id={`${uid}c`}><rect x={X0 + 14} y={Y0 + 190} width={PW - 28} height={PH - 250} rx={14} /></clipPath></defs>
         <g transform={`translate(0 ${(1 - tel) * 120})`} opacity={clamp(tel * 1.6)}>
           <rect x={X0 - 6} y={Y0 - 6} width={PW + 12} height={PH + 12} rx={64} fill="#8FA3B8" opacity={0.35} />
           <rect x={X0} y={Y0} width={PW} height={PH} rx={58} fill="#0A1522" stroke={RE.hielo} strokeOpacity={0.7} strokeWidth={4} />
@@ -244,7 +244,7 @@ export const DscCatalogo: React.FC<P> = () => {
           <rect x={X0 + 50 + (PW - 90) / 2} y={Y0 + 120} width={(PW - 90) / 2} height={52} rx={26} fill="#1B3550" />
           <text x={X0 + 50 + (PW - 90) * 0.75} y={Y0 + 155} textAnchor="middle" fontFamily={FONT} fontWeight={800} fontSize={24} fill={RE.hielo}>Propiedades</text>
           <g clipPath={`url(#${uid}c)`}>
-            <g transform={`translate(0 ${-130 - desfase})`} opacity={clamp((t - a(C.tarjetas)) / 0.4)}>
+            <g transform={`translate(0 ${-70 - desfase})`} opacity={clamp((t - a(C.tarjetas)) / 0.4)}>
               {[0, 1, 2, 3, 4, 5, 6].map((i) => tarjeta(i))}
             </g>
           </g>

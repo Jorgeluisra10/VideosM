@@ -1,18 +1,18 @@
 {
  "version": 1,
- "titulo": "El pegamento que no era pegamento",
- "paleta": "medicina",
+ "titulo": "El truco de los préstamos DSCR",
+ "paleta": "imnoba",
  "sfx": true,
  "fps": 60,
- "duracion": 35.2,
+ "duracion": 33.9,
  "escenas": [
   {
    "n": 1,
    "t": "PIEZA",
-   "voz": "Te mintieron: la mitad de tu cerebro no es pegamento.",
-   "dur": 4,
-   "h": "TE MINTIERON",
-   "w": "MINTIERON",
+   "voz": "Invertir en Estados Unidos no exige medio millón en efectivo.",
+   "dur": 4.4,
+   "h": "NO NECESITAS $500.000 EN EFECTIVO",
+   "w": "EFECTIVO",
    "sub": "",
    "ic": "brillo",
    "num": null,
@@ -36,7 +36,7 @@
    "red": null,
    "termo": null,
    "pila": null,
-   "cap": "la mitad de tu cerebro no es relleno",
+   "cap": "ese es el gran mito",
    "papel": null,
    "pilares": null,
    "ciclo": null,
@@ -45,7 +45,7 @@
    "cubo": null,
    "diales": null,
    "pieza": {
-    "id": "astro-gancho",
+    "id": "dscr-gancho",
     "props": {}
    },
    "cita": null,
@@ -53,11 +53,11 @@
    "modo": "VIRAL",
    "tema": "oscuro",
    "bg": "dark",
-   "ritmo": 0.9726027397260274,
-   "total": 35.2,
+   "ritmo": 1,
+   "total": 33.9,
    "inicio": 0,
-   "fin": 4,
-   "texto": "Te mintieron: la mitad de tu cerebro no es pegamento.",
+   "fin": 4.4,
+   "texto": "Invertir en Estados Unidos no exige medio millón en efectivo.",
    "tr": "barrido",
    "trs": "corte",
    "sfx": [
@@ -72,36 +72,91 @@
      "vol": 0.12
     },
     {
-     "t": 0.3945205479452055,
+     "t": 0.4,
      "tipo": "pop",
      "vol": 0.1
     },
     {
-     "t": 2.2369863013698628,
-     "tipo": "tick",
-     "vol": 0.12
+     "t": 0.7,
+     "tipo": "clic",
+     "vol": 0.05
     },
     {
-     "t": 2.869178082191781,
+     "t": 0.83,
+     "tipo": "clic",
+     "vol": 0.05
+    },
+    {
+     "t": 0.96,
+     "tipo": "clic",
+     "vol": 0.05
+    },
+    {
+     "t": 1.0899999999999999,
+     "tipo": "clic",
+     "vol": 0.05
+    },
+    {
+     "t": 1.22,
+     "tipo": "clic",
+     "vol": 0.05
+    },
+    {
+     "t": 1.35,
+     "tipo": "clic",
+     "vol": 0.05
+    },
+    {
+     "t": 1.48,
+     "tipo": "clic",
+     "vol": 0.05
+    },
+    {
+     "t": 1.6099999999999999,
+     "tipo": "clic",
+     "vol": 0.05
+    },
+    {
+     "t": 1.74,
+     "tipo": "clic",
+     "vol": 0.05
+    },
+    {
+     "t": 1.8699999999999999,
+     "tipo": "clic",
+     "vol": 0.05
+    },
+    {
+     "t": 2,
+     "tipo": "clic",
+     "vol": 0.05
+    },
+    {
+     "t": 2.13,
+     "tipo": "clic",
+     "vol": 0.05
+    },
+    {
+     "t": 2.26,
+     "tipo": "clic",
+     "vol": 0.05
+    },
+    {
+     "t": 2.7,
      "tipo": "golpe",
      "vol": 0.2
-    },
-    {
-     "t": 3.015068493150685,
-     "tipo": "ding",
-     "vol": 0.16
     }
    ]
   },
   {
    "n": 2,
    "t": "PIEZA",
-   "voz": "Hace siglo y medio las llamaron glía, que significa pegamento.",
-   "dur": 4.2,
-   "h": "GLÍA = PEGAMENTO",
-   "w": "PEGAMENTO",
+   "voz": "Existen préstamos que miran la propiedad, no tu sueldo: la propiedad se paga sola.",
+   "dur": 5.3,
+   "h": "LA PROPIEDAD SE PAGA SOLA",
+   "w": "SOLA",
    "sub": "",
-   "ic": "telefono",
+   "ic": "casa",
    "num": null,
    "vs": null,
    "bars": [],
@@ -123,7 +178,7 @@
    "red": null,
    "termo": null,
    "pila": null,
-   "cap": "el nombre viene de 1856",
+   "cap": "así funciona un préstamo DSCR",
    "papel": null,
    "pilares": null,
    "ciclo": null,
@@ -132,7 +187,7 @@
    "cubo": null,
    "diales": null,
    "pieza": {
-    "id": "astro-glia",
+    "id": "dscr-hack",
     "props": {}
    },
    "cita": null,
@@ -140,11 +195,11 @@
    "modo": "VIRAL",
    "tema": "claro",
    "bg": "light",
-   "ritmo": 0.9493670886075949,
-   "total": 35.2,
-   "inicio": 4,
-   "fin": 8.2,
-   "texto": "Hace siglo y medio las llamaron glía, que significa pegamento.",
+   "ritmo": 1,
+   "total": 33.9,
+   "inicio": 4.4,
+   "fin": 9.7,
+   "texto": "Existen préstamos que miran la propiedad, no tu sueldo: la propiedad se paga sola.",
    "tr": "corte",
    "trs": "corte",
    "sfx": [
@@ -159,463 +214,44 @@
      "vol": 0.1
     },
     {
-     "t": 0.28481012658227844,
-     "tipo": "clic",
-     "vol": 0.05
-    },
-    {
-     "t": 0.41481012658227845,
-     "tipo": "clic",
-     "vol": 0.05
-    },
-    {
-     "t": 0.5448101265822785,
-     "tipo": "clic",
-     "vol": 0.05
-    },
-    {
-     "t": 0.6748101265822785,
-     "tipo": "clic",
-     "vol": 0.05
-    },
-    {
-     "t": 0.8048101265822785,
-     "tipo": "clic",
-     "vol": 0.05
-    },
-    {
-     "t": 0.9348101265822785,
-     "tipo": "clic",
-     "vol": 0.05
-    },
-    {
-     "t": 1.0648101265822785,
-     "tipo": "clic",
-     "vol": 0.05
-    },
-    {
-     "t": 1.1948101265822784,
-     "tipo": "clic",
-     "vol": 0.05
-    },
-    {
-     "t": 1.3248101265822785,
-     "tipo": "clic",
-     "vol": 0.05
-    },
-    {
-     "t": 1.4548101265822784,
-     "tipo": "clic",
-     "vol": 0.05
-    },
-    {
-     "t": 1.518987341772152,
+     "t": 0.4,
      "tipo": "pop",
-     "vol": 0.08
-    },
-    {
-     "t": 1.5848101265822785,
-     "tipo": "clic",
-     "vol": 0.05
-    },
-    {
-     "t": 1.680379746835443,
-     "tipo": "pop",
-     "vol": 0.08
-    },
-    {
-     "t": 1.7148101265822786,
-     "tipo": "clic",
-     "vol": 0.05
-    },
-    {
-     "t": 1.8417721518987342,
-     "tipo": "pop",
-     "vol": 0.08
-    },
-    {
-     "t": 1.8448101265822785,
-     "tipo": "clic",
-     "vol": 0.05
-    },
-    {
-     "t": 1.9748101265822784,
-     "tipo": "clic",
-     "vol": 0.05
-    },
-    {
-     "t": 2.0031645569620253,
-     "tipo": "pop",
-     "vol": 0.08
-    },
-    {
-     "t": 2.1048101265822785,
-     "tipo": "clic",
-     "vol": 0.05
-    },
-    {
-     "t": 2.1645569620253164,
-     "tipo": "pop",
-     "vol": 0.08
-    },
-    {
-     "t": 2.3259493670886076,
-     "tipo": "pop",
-     "vol": 0.08
-    },
-    {
-     "t": 3.132911392405063,
-     "tipo": "golpe",
-     "vol": 0.16
-    }
-   ]
-  },
-  {
-   "n": 3,
-   "t": "PIEZA",
-   "voz": "Hoy sabemos que casi la mitad de tus células cerebrales no son neuronas.",
-   "dur": 5,
-   "h": "CASI LA MITAD",
-   "w": "MITAD",
-   "sub": "",
-   "ic": "brillo",
-   "num": null,
-   "vs": null,
-   "bars": [],
-   "barsU": "",
-   "hi": -1,
-   "line": null,
-   "items": [],
-   "stops": [],
-   "end": "",
-   "donut": [],
-   "picto": null,
-   "top": [],
-   "myth": "",
-   "truth": "",
-   "zoom": null,
-   "capas": null,
-   "mira": null,
-   "impacto": null,
-   "red": null,
-   "termo": null,
-   "pila": null,
-   "cap": "no son neuronas",
-   "papel": null,
-   "pilares": null,
-   "ciclo": null,
-   "duo": null,
-   "osc": null,
-   "cubo": null,
-   "diales": null,
-   "pieza": {
-    "id": "astro-mitad",
-    "props": {}
-   },
-   "cita": null,
-   "sc": "",
-   "modo": "VIRAL",
-   "tema": "oscuro",
-   "bg": "dark",
-   "ritmo": 0.9191919191919191,
-   "total": 35.2,
-   "inicio": 8.2,
-   "fin": 13.2,
-   "texto": "Hoy sabemos que casi la mitad de tus células cerebrales no son neuronas.",
-   "tr": "corte",
-   "trs": "corte",
-   "sfx": [
-    {
-     "t": 0.04,
-     "tipo": "whoosh",
-     "vol": 0.16
-    },
-    {
-     "t": 0.05,
-     "tipo": "whoosh",
      "vol": 0.1
     },
     {
-     "t": 0.2757575757575757,
-     "tipo": "clic",
-     "vol": 0.04
+     "t": 1.3,
+     "tipo": "cash",
+     "vol": 0.08
     },
     {
-     "t": 0.4057575757575757,
-     "tipo": "clic",
-     "vol": 0.04
+     "t": 1.8,
+     "tipo": "cash",
+     "vol": 0.08
     },
     {
-     "t": 0.5357575757575757,
-     "tipo": "clic",
-     "vol": 0.04
+     "t": 2.3,
+     "tipo": "cash",
+     "vol": 0.08
     },
     {
-     "t": 0.6657575757575758,
-     "tipo": "clic",
-     "vol": 0.04
+     "t": 2.8,
+     "tipo": "cash",
+     "vol": 0.08
     },
     {
-     "t": 0.7957575757575757,
-     "tipo": "clic",
-     "vol": 0.04
-    },
-    {
-     "t": 0.9257575757575758,
-     "tipo": "clic",
-     "vol": 0.04
-    },
-    {
-     "t": 1.0557575757575757,
-     "tipo": "clic",
-     "vol": 0.04
-    },
-    {
-     "t": 1.1857575757575758,
-     "tipo": "clic",
-     "vol": 0.04
-    },
-    {
-     "t": 1.3157575757575757,
-     "tipo": "clic",
-     "vol": 0.04
-    },
-    {
-     "t": 1.7464646464646463,
-     "tipo": "zap",
-     "vol": 0.12
-    },
-    {
-     "t": 3.401010101010101,
-     "tipo": "thud",
-     "vol": 0.16
-    },
-    {
-     "t": 3.5388888888888888,
-     "tipo": "ding",
-     "vol": 0.14
-    }
-   ]
-  },
-  {
-   "n": 4,
-   "t": "PIEZA",
-   "voz": "Un astrocito, con forma de estrella, puede rodear hasta dos millones de sinapsis.",
-   "dur": 5,
-   "h": "UNA ESTRELLA, 2 MILLONES DE",
-   "w": "ESTRELLA,",
-   "sub": "",
-   "ic": "billete",
-   "num": null,
-   "vs": null,
-   "bars": [],
-   "barsU": "",
-   "hi": -1,
-   "line": null,
-   "items": [],
-   "stops": [],
-   "end": "",
-   "donut": [],
-   "picto": null,
-   "top": [],
-   "myth": "",
-   "truth": "",
-   "zoom": null,
-   "capas": null,
-   "mira": null,
-   "impacto": null,
-   "red": null,
-   "termo": null,
-   "pila": null,
-   "cap": "estimación en humanos",
-   "papel": null,
-   "pilares": null,
-   "ciclo": null,
-   "duo": null,
-   "osc": null,
-   "cubo": null,
-   "diales": null,
-   "pieza": {
-    "id": "astro-estrella",
-    "props": {}
-   },
-   "cita": null,
-   "sc": "",
-   "modo": "VIRAL",
-   "tema": "claro",
-   "bg": "light",
-   "ritmo": 0.9191919191919191,
-   "total": 35.2,
-   "inicio": 13.2,
-   "fin": 18.2,
-   "texto": "Un astrocito, con forma de estrella, puede rodear hasta dos millones de sinapsis.",
-   "tr": "corte",
-   "trs": "corte",
-   "sfx": [
-    {
-     "t": 0.04,
-     "tipo": "whoosh",
-     "vol": 0.16
-    },
-    {
-     "t": 0.05,
-     "tipo": "whoosh",
-     "vol": 0.1
-    },
-    {
-     "t": 0.36767676767676766,
-     "tipo": "clic",
-     "vol": 0.04
-    },
-    {
-     "t": 0.49767676767676766,
-     "tipo": "clic",
-     "vol": 0.04
-    },
-    {
-     "t": 0.6276767676767676,
-     "tipo": "clic",
-     "vol": 0.04
-    },
-    {
-     "t": 0.7576767676767677,
-     "tipo": "clic",
-     "vol": 0.04
-    },
-    {
-     "t": 0.8876767676767676,
-     "tipo": "clic",
-     "vol": 0.04
-    },
-    {
-     "t": 1.0176767676767677,
-     "tipo": "clic",
-     "vol": 0.04
-    },
-    {
-     "t": 1.1476767676767676,
-     "tipo": "clic",
-     "vol": 0.04
-    },
-    {
-     "t": 1.2776767676767677,
-     "tipo": "clic",
-     "vol": 0.04
-    },
-    {
-     "t": 1.4076767676767676,
-     "tipo": "clic",
-     "vol": 0.04
-    },
-    {
-     "t": 1.5376767676767675,
-     "tipo": "clic",
-     "vol": 0.04
-    },
-    {
-     "t": 1.6676767676767676,
-     "tipo": "clic",
-     "vol": 0.04
-    },
-    {
-     "t": 1.7976767676767678,
-     "tipo": "clic",
-     "vol": 0.04
-    },
-    {
-     "t": 1.9276767676767677,
-     "tipo": "clic",
-     "vol": 0.04
-    },
-    {
-     "t": 2.0576767676767678,
-     "tipo": "clic",
-     "vol": 0.04
-    },
-    {
-     "t": 2.1876767676767677,
-     "tipo": "clic",
-     "vol": 0.04
-    },
-    {
-     "t": 2.8494949494949493,
-     "tipo": "zap",
-     "vol": 0.12
-    },
-    {
-     "t": 2.9414141414141413,
-     "tipo": "clic",
-     "vol": 0.05
-    },
-    {
-     "t": 3.071414141414141,
-     "tipo": "clic",
-     "vol": 0.05
-    },
-    {
-     "t": 3.2014141414141415,
-     "tipo": "clic",
-     "vol": 0.05
-    },
-    {
-     "t": 3.3314141414141414,
-     "tipo": "clic",
-     "vol": 0.05
-    },
-    {
-     "t": 3.4614141414141413,
-     "tipo": "clic",
-     "vol": 0.05
-    },
-    {
-     "t": 3.591414141414141,
-     "tipo": "clic",
-     "vol": 0.05
-    },
-    {
-     "t": 3.721414141414141,
-     "tipo": "clic",
-     "vol": 0.05
-    },
-    {
-     "t": 3.8514141414141414,
-     "tipo": "clic",
-     "vol": 0.05
-    },
-    {
-     "t": 3.9814141414141413,
-     "tipo": "clic",
-     "vol": 0.05
-    },
-    {
-     "t": 4.111414141414141,
-     "tipo": "clic",
-     "vol": 0.05
-    },
-    {
-     "t": 4.2414141414141415,
-     "tipo": "clic",
-     "vol": 0.05
-    },
-    {
-     "t": 4.371414141414141,
-     "tipo": "clic",
-     "vol": 0.05
-    },
-    {
-     "t": 4.504040404040404,
+     "t": 3.2,
      "tipo": "ding",
      "vol": 0.18
     }
    ]
   },
   {
-   "n": 5,
+   "n": 3,
    "t": "PIEZA",
-   "voz": "No son espectadoras: escuchan a las neuronas y ayudan a regular sus conexiones.",
-   "dur": 5,
-   "h": "NO SON ESPECTADORAS",
-   "w": "ESPECTADORAS",
+   "voz": "Si el alquiler cubre la cuota, no piden recibo de sueldo, historial ni visa.",
+   "dur": 5.4,
+   "h": "SOLO IMPORTA EL ALQUILER",
+   "w": "ALQUILER",
    "sub": "",
    "ic": "brillo",
    "num": null,
@@ -639,7 +275,7 @@
    "red": null,
    "termo": null,
    "pila": null,
-   "cap": "la sinapsis tripartita",
+   "cap": "lo que no te piden",
    "papel": null,
    "pilares": null,
    "ciclo": null,
@@ -648,7 +284,7 @@
    "cubo": null,
    "diales": null,
    "pieza": {
-    "id": "astro-dialogo",
+    "id": "dscr-docs",
     "props": {}
    },
    "cita": null,
@@ -657,10 +293,10 @@
    "tema": "oscuro",
    "bg": "dark",
    "ritmo": 1,
-   "total": 35.2,
-   "inicio": 18.2,
-   "fin": 23.2,
-   "texto": "No son espectadoras: escuchan a las neuronas y ayudan a regular sus conexiones.",
+   "total": 33.9,
+   "inicio": 9.7,
+   "fin": 15.1,
+   "texto": "Si el alquiler cubre la cuota, no piden recibo de sueldo, historial ni visa.",
    "tr": "corte",
    "trs": "corte",
    "sfx": [
@@ -675,46 +311,36 @@
      "vol": 0.1
     },
     {
-     "t": 0.7,
-     "tipo": "tick",
-     "vol": 0.1
-    },
-    {
-     "t": 1.15,
-     "tipo": "tick",
-     "vol": 0.1
-    },
-    {
-     "t": 1.6,
-     "tipo": "tick",
-     "vol": 0.1
-    },
-    {
-     "t": 1.8,
-     "tipo": "radar",
-     "vol": 0.1
-    },
-    {
-     "t": 3,
-     "tipo": "pop",
+     "t": 1.05,
+     "tipo": "thud",
      "vol": 0.14
     },
     {
-     "t": 3.15,
+     "t": 2.0500000000000003,
+     "tipo": "thud",
+     "vol": 0.14
+    },
+    {
+     "t": 3.0500000000000003,
+     "tipo": "thud",
+     "vol": 0.14
+    },
+    {
+     "t": 3.9,
      "tipo": "ding",
-     "vol": 0.16
+     "vol": 0.18
     }
    ]
   },
   {
-   "n": 6,
+   "n": 4,
    "t": "PIEZA",
-   "voz": "En ratones, reactivar los astrocitos activos al aprender estimuló el recuerdo.",
-   "dur": 4.4,
-   "h": "EN RATONES, EL RECUERDO SE",
-   "w": "RECUERDO",
+   "voz": "Eso sí: financian hasta el setenta por ciento y tú pones cerca del treinta.",
+   "dur": 5.4,
+   "h": "TÚ PONES CERCA DEL 30 %",
+   "w": "30",
    "sub": "",
-   "ic": "brillo",
+   "ic": "pin",
    "num": null,
    "vs": null,
    "bars": [],
@@ -736,7 +362,7 @@
    "red": null,
    "termo": null,
    "pila": null,
-   "cap": "estudio en ratones",
+   "cap": "pago inicial realista",
    "papel": null,
    "pilares": null,
    "ciclo": null,
@@ -745,7 +371,7 @@
    "cubo": null,
    "diales": null,
    "pieza": {
-    "id": "astro-memoria",
+    "id": "dscr-split",
     "props": {}
    },
    "cita": null,
@@ -753,11 +379,108 @@
    "modo": "VIRAL",
    "tema": "claro",
    "bg": "light",
-   "ritmo": 0.9518072289156626,
-   "total": 35.2,
-   "inicio": 23.2,
-   "fin": 27.6,
-   "texto": "En ratones, reactivar los astrocitos activos al aprender estimuló el recuerdo.",
+   "ritmo": 1,
+   "total": 33.9,
+   "inicio": 15.1,
+   "fin": 20.5,
+   "texto": "Eso sí: financian hasta el setenta por ciento y tú pones cerca del treinta.",
+   "tr": "corte",
+   "trs": "corte",
+   "sfx": [
+    {
+     "t": 0.04,
+     "tipo": "whoosh",
+     "vol": 0.16
+    },
+    {
+     "t": 0.05,
+     "tipo": "whoosh",
+     "vol": 0.1
+    },
+    {
+     "t": 1,
+     "tipo": "zap",
+     "vol": 0.12
+    },
+    {
+     "t": 2.5,
+     "tipo": "pop",
+     "vol": 0.14
+    },
+    {
+     "t": 2.7,
+     "tipo": "ding",
+     "vol": 0.16
+    },
+    {
+     "t": 3.5,
+     "tipo": "tick",
+     "vol": 0.08
+    },
+    {
+     "t": 3.8,
+     "tipo": "tick",
+     "vol": 0.08
+    },
+    {
+     "t": 4.1,
+     "tipo": "tick",
+     "vol": 0.08
+    }
+   ]
+  },
+  {
+   "n": 5,
+   "t": "PIEZA",
+   "voz": "Mira proyectos y propiedades en imnoba punto com barra usa.",
+   "dur": 4.2,
+   "h": "MIRA EL CATÁLOGO EN IMNOBA.COM/USA",
+   "w": "CATÁLOGO",
+   "sub": "",
+   "ic": "casa",
+   "num": null,
+   "vs": null,
+   "bars": [],
+   "barsU": "",
+   "hi": -1,
+   "line": null,
+   "items": [],
+   "stops": [],
+   "end": "",
+   "donut": [],
+   "picto": null,
+   "top": [],
+   "myth": "",
+   "truth": "",
+   "zoom": null,
+   "capas": null,
+   "mira": null,
+   "impacto": null,
+   "red": null,
+   "termo": null,
+   "pila": null,
+   "cap": "proyectos y propiedades",
+   "papel": null,
+   "pilares": null,
+   "ciclo": null,
+   "duo": null,
+   "osc": null,
+   "cubo": null,
+   "diales": null,
+   "pieza": {
+    "id": "dscr-catalogo",
+    "props": {}
+   },
+   "cita": null,
+   "sc": "",
+   "modo": "VIRAL",
+   "tema": "oscuro",
+   "bg": "dark",
+   "ritmo": 1,
+   "total": 33.9,
+   "inicio": 20.5,
+   "fin": 24.7,
+   "texto": "Mira proyectos y propiedades en imnoba punto com barra usa.",
    "tr": "corte",
    "trs": "barrido",
    "sfx": [
@@ -772,34 +495,39 @@
      "vol": 0.1
     },
     {
-     "t": 1.1421686746987951,
-     "tipo": "zap",
-     "vol": 0.12
-    },
-    {
-     "t": 2.093975903614458,
-     "tipo": "radar",
+     "t": 0.4,
+     "tipo": "pop",
      "vol": 0.1
     },
     {
-     "t": 2.950602409638554,
-     "tipo": "golpe",
-     "vol": 0.18
+     "t": 0.9,
+     "tipo": "tick",
+     "vol": 0.08
     },
     {
-     "t": 3.0933734939759034,
+     "t": 1.2,
+     "tipo": "tick",
+     "vol": 0.08
+    },
+    {
+     "t": 1.5,
+     "tipo": "tick",
+     "vol": 0.08
+    },
+    {
+     "t": 2.2,
      "tipo": "ding",
-     "vol": 0.18
+     "vol": 0.16
     }
    ]
   },
   {
-   "n": 7,
+   "n": 6,
    "t": "HOOK",
-   "voz": "Tu cerebro no tiene un jefe: la genialidad es un equipo.",
-   "dur": 4.4,
-   "h": "NO HAY JEFE: HAY EQUIPO",
-   "w": "EQUIPO",
+   "voz": "Empezar con menos capital es posible, si la cuenta cuadra.",
+   "dur": 4.2,
+   "h": "MENOS CAPITAL, SÍ ES POSIBLE",
+   "w": "POSIBLE",
    "sub": "",
    "ic": "brillo",
    "num": null,
@@ -823,7 +551,7 @@
    "red": null,
    "termo": null,
    "pila": null,
-   "cap": "así funciona la genialidad",
+   "cap": "si la cuenta cuadra",
    "papel": null,
    "pilares": null,
    "ciclo": null,
@@ -835,13 +563,13 @@
    "cita": null,
    "sc": "",
    "modo": "VIRAL",
-   "tema": "oscuro",
-   "bg": "dark",
+   "tema": "claro",
+   "bg": "light",
    "ritmo": 1,
-   "total": 35.2,
-   "inicio": 27.6,
-   "fin": 32,
-   "texto": "Tu cerebro no tiene un jefe: la genialidad es un equipo.",
+   "total": 33.9,
+   "inicio": 24.7,
+   "fin": 28.9,
+   "texto": "Empezar con menos capital es posible, si la cuenta cuadra.",
    "tr": "barrido",
    "trs": "barrido",
    "sfx": [
@@ -858,14 +586,14 @@
    ]
   },
   {
-   "n": 8,
+   "n": 7,
    "t": "CTA",
-   "voz": "Guárdalo y compártelo.",
-   "dur": 3.2,
-   "h": "GUÁRDALO Y COMPÁRTELO",
-   "w": "COMPÁRTELO",
-   "sub": "Más ciencia en SINAPSIS",
-   "ic": "cohete",
+   "voz": "Escríbenos y un equipo en Florida te acompaña en todo el proceso.",
+   "dur": 5,
+   "h": "ESCRÍBENOS",
+   "w": "ESCRÍBENOS",
+   "sub": "imnoba.com/usa · equipo en Florida",
+   "ic": "chat",
    "num": null,
    "vs": null,
    "bars": [],
@@ -901,11 +629,11 @@
    "modo": "VIRAL",
    "tema": "oscuro",
    "bg": "gold",
-   "ritmo": 0.859375,
-   "total": 35.2,
-   "inicio": 32,
-   "fin": 35.2,
-   "texto": "Guárdalo y compártelo.",
+   "ritmo": 1,
+   "total": 33.9,
+   "inicio": 28.9,
+   "fin": 33.9,
+   "texto": "Escríbenos y un equipo en Florida te acompaña en todo el proceso.",
    "tr": "barrido",
    "trs": "barrido",
    "sfx": [
@@ -915,12 +643,12 @@
      "vol": 0.16
     },
     {
-     "t": 0.4296875,
+     "t": 0.5,
      "tipo": "ding",
      "vol": 0.2
     },
     {
-     "t": 0.9453125000000001,
+     "t": 1.1,
      "tipo": "pop",
      "vol": 0.15
     }
