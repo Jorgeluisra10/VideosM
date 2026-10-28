@@ -18,7 +18,7 @@ import { cargarEnv } from "../ia/entorno.mjs";
 import { PERFIL_BASE, cargarPerfil, listarPerfiles, paletas, slug } from "../ia/perfil.mjs";
 import { RAIZ } from "../ia/puente.mjs";
 import { cargarNucleoAnim, compilarNucleo } from "../anim/nucleo.mjs";
-import { probarVoz, vozVigente } from "../anim/voz.mjs";
+import { leerTiemposOriginales, listarVocesEleven, probarVoz, vozVigente } from "../anim/voz.mjs";
 import { configuracion } from "../ia/entorno.mjs";
 import { espacioLibreGB, limpiarTemporales, mensajeSinEspacio } from "../_disco.mjs";
 import { archivosDoc, entorno, guardarAjustes, leerAjustes, probar } from "./ajustes.mjs";
@@ -129,6 +129,7 @@ const infoPerfil = (p) => ({
 // ---------------------------------------------------------------------------
 const agente = script("ia", "agente.mjs");
 const claveOpenAI = () => Boolean((process.env.OPENAI_API_KEY ?? "").trim());
+const claveEleven = () => Boolean((process.env.ELEVENLABS_API_KEY ?? "").trim());
 
 function pedir(cond, mensaje, codigo = 400) {
   if (!cond) throw Object.assign(new Error(mensaje), { codigo });
@@ -265,6 +266,13 @@ function lanzarAccion(nombre, id, opciones) {
 // Estudio de animación (guion en bloques → SVG + 3D). No usa proyectos ni ranura activa: trabaja sobre src/data/animacion.json.
 // ---------------------------------------------------------------------------
 const dirAnim = (...p) => join(RAIZ, "trabajo", "anim", ...p);
+/** Nombre de un audio subido: solo el nombre de archivo (sin rutas), caracteres seguros y extensión de audio. */
+const EXT_AUDIO = [".mp3", ".wav", ".m4a", ".aac", ".ogg", ".flac", ".opus", ".mp4"];
+function nombreAudioExterno(x) {
+  const base = String(x ?? "").split(/[\\/]/).pop().replace(/[^A-Za-z0-9._ ()\-áéíóúñÁÉÍÓÚÑ]/g, "_").replace(/^\.+/, "").slice(0, 80);
+  pedir(base && EXT_AUDIO.includes(extname(base).toLowerCase()), "El audio debe ser mp3, wav, m4a, aac, ogg, flac u opus.");
+  return base;
+}
 const archivoAnim = () => dato("animacion.json");
 const leerAnim = () => {
   try {
@@ -337,13 +345,22 @@ function lanzarRender(o = {}) {
   return lanzar({ nombre: "anim-render", titulo: "Renderizar video (1080×1920 a 60 fps)", pasos: [{ titulo: "Renderizar la animación", cmd: [script("render.mjs"), "--composicion=Animacion", ...(o.hilos ? [`--concurrency=${Number(o.hilos) || 1}`] : []), ...(o.desdeCero ? ["--desde-cero"] : []), ...(o.sinVoz ? ["--sin-voz"] : [])] }] });
 }
 
-/** Valida lo que llega del panel (estilo, voz, ritmo, instrucciones extra) contra el catálogo: nunca se pasa texto libre a un comando salvo `extra` (acotado). */
+/**
+ * Valida lo que llega del panel contra el catálogo: nunca se pasa texto libre a un comando salvo `extra` (acotado) y el nombre de la voz (solo para mostrarlo).
+ * motor «openai»: estilo, voz base, ritmo, instrucciones. motor «eleven»: ID de la voz (alfanumérico), modelo, perfil de expresión, ritmo. `ajuste`: «voz» (acelera la voz) o «video» (alarga escenas).
+ */
 function opcionesVoz(N, o = {}) {
   const estilo = N.estiloPorId(o.estilo)?.id ?? N.ESTILO_POR_DEFECTO;
   const ritmo = N.RITMOS_VOZ.find((r) => r.id === o.ritmo)?.id ?? N.RITMO_POR_DEFECTO;
   const voz = N.vozPorId(o.voz)?.id ?? N.vozEfectiva({ estilo });
   const extra = String(o.extra ?? "").replace(/[\r\n]+/g, " ").trim().slice(0, 600);
-  return { estilo, ritmo, voz, extra };
+  const motor = o.motor === "eleven" ? "eleven" : "openai";
+  return {
+    motor, estilo, ritmo, voz, extra,
+    voiceId: N.sanearVoiceId(o.voiceId), modelo: N.modeloElevenPorId(o.modelo).id, perfil: N.perfilElevenPorId(o.perfil).id,
+    nombreVoz: String(o.nombreVoz ?? "").replace(/[^\p{L}\p{N} ._()\-]/gu, "").trim().slice(0, 60),
+    ajuste: o.ajuste === "video" ? "video" : "voz",
+  };
 }
 
 /** Acciones del estudio (siempre «un trabajo a la vez», como el resto del panel). */
@@ -380,13 +397,20 @@ async function lanzarAnim(nombre, o = {}) {
       return lanzar({ nombre, titulo: `Cargar el ejemplo ${marca.nombre}`, pasos: [{ titulo: `Cargar «${ej.etiqueta.replace(/^\S+\s/, "")}» (${marca.nombre}; sin IA, sin coste)`, cmd: [script("anim", "ejemplo.mjs"), ...(o.sfx === false ? ["--sin-sfx"] : []), `--paleta=${paleta}`, ...(["viral", "estudio", "libre", "hud", "simple"].includes(o.formato) ? [`--formato=${o.formato}`] : []), ...(temas.includes(tema) ? [`--tema=${tema}`] : [])] }] });
     }
     case "anim-voz": {
-      pedir(claveOpenAI() || o.prueba, "Para ponerle voz hace falta la clave de OpenAI (pestaña Ajustes).", 412);
+      const N = await cargarNucleoAnim();
+      const op = opcionesVoz(N, o);
+      if (op.motor === "eleven") pedir(claveEleven() || o.prueba, "Para ponerle voz con ElevenLabs hace falta su clave (pestaña Ajustes).", 412);
+      else pedir(claveOpenAI() || o.prueba, "Para ponerle voz hace falta la clave de OpenAI (pestaña Ajustes).", 412);
       const a = leerAnim();
       pedir(a, "Primero genera la animación (o carga el ejemplo).", 412);
-      const N = await cargarNucleoAnim();
       pedir(N.textosVoz(a).length > 0, "Este video no trae texto de voz (locución). Usa el motor viral (una idea) o carga un ejemplo del motor viral.", 412);
-      const op = opcionesVoz(N, o);
-      return lanzar({ nombre, titulo: "Generar la voz en off", pasos: [{ titulo: `Voz «${op.voz}» · ${op.estilo} (una frase por escena, ajustada a su tiempo)`, cmd: [script("anim", "voz.mjs"), `--estilo=${op.estilo}`, `--voz=${op.voz}`, `--ritmo=${op.ritmo}`, ...(op.extra ? [`--instrucciones=${op.extra}`] : []), ...(o.sinCache ? ["--sin-cache"] : [])] }] });
+      if (op.motor === "eleven") pedir(op.voiceId, "Elige una voz de ElevenLabs (o pega su ID).", 412);
+      const comun = [`--ritmo=${op.ritmo}`, `--ajuste=${op.ajuste}`, ...(o.sinCache ? ["--sin-cache"] : [])];
+      const cmd = op.motor === "eleven"
+        ? [script("anim", "voz.mjs"), "--motor=eleven", `--voz-id=${op.voiceId}`, `--modelo=${op.modelo}`, `--perfil=${op.perfil}`, ...(op.nombreVoz ? [`--nombre-voz=${op.nombreVoz}`] : []), ...comun]
+        : [script("anim", "voz.mjs"), `--estilo=${op.estilo}`, `--voz=${op.voz}`, ...(op.extra ? [`--instrucciones=${op.extra}`] : []), ...comun];
+      const que = op.motor === "eleven" ? `ElevenLabs «${op.nombreVoz || op.voiceId}»` : `Voz «${op.voz}» · ${op.estilo}`;
+      return lanzar({ nombre, titulo: "Generar la voz en off", pasos: [{ titulo: `${que} (una frase por escena, ${op.ajuste === "video" ? "alargando las escenas que no caben" : "ajustada a su tiempo"})`, cmd }] });
     }
     case "anim-poner-voz": {
       pedir(leerAnim(), "Primero genera la animación (o carga el ejemplo).", 412);
@@ -395,7 +419,21 @@ async function lanzarAnim(nombre, o = {}) {
       const a = leerAnim();
       const { manifiesto } = await vozVigente(a);
       pedir(manifiesto, "Todavía no hay voz generada: pulsa «Generar voz» primero.", 412);
+      pedir(!(manifiesto.cambioTiempos && statSync(video).mtimeMs < Date.parse(manifiesto.creado)), "La voz cambió los tiempos del video (alargó escenas o lo alineó a tu voz): el MP4 ya renderizado quedó viejo. Pulsa «Renderizar con voz».", 412);
       return lanzar({ nombre, titulo: "Poner la voz al video ya renderizado", pasos: [{ titulo: "Mezclar la voz con el audio del video (sin volver a renderizar)", cmd: [script("anim", "poner-voz.mjs")] }] });
+    }
+    case "anim-voz-externa": {
+      // voz propia (CapCut, ElevenLabs, un locutor…): el VIDEO se ajusta a ella; o se deshace y vuelve a los tiempos originales
+      pedir(leerAnim(), "Primero genera la animación (o carga el ejemplo).", 412);
+      if (o.deshacer) return lanzar({ nombre, titulo: "Quitar mi voz", pasos: [{ titulo: "Volver a los tiempos originales", cmd: [script("anim", "voz-externa.mjs"), "--deshacer"] }] });
+      const archivo = nombreAudioExterno(o.archivo);
+      const ruta = dirAnim("voz", "externa", archivo);
+      pedir(existsSync(ruta), "Primero sube tu audio (mp3, wav, m4a…).", 412);
+      const durs = Array.isArray(o.duraciones) ? o.duraciones.slice(0, 80).map(Number) : [];
+      pedir(durs.every((d) => Number.isFinite(d) && d >= 1.2 && d <= 90), "Las duraciones deben ser números entre 1,2 y 90 segundos.");
+      const N = await cargarNucleoAnim();
+      pedir(N.textosVoz(leerAnim()).length > 0, "Este video no trae texto de locución (usa el motor viral).", 412);
+      return lanzar({ nombre, titulo: "Alinear el video a tu voz", pasos: [{ titulo: `Alinear las escenas a «${archivo}»`, cmd: [script("anim", "voz-externa.mjs"), `--audio=${ruta}`, ...(durs.length ? [`--duraciones=${durs.join(",")}`] : [])] }] });
     }
     case "anim-previa":
       pedir(leerAnim(), "Primero genera la animación (o carga el ejemplo).", 412);
@@ -519,21 +557,45 @@ async function api(req, res, url) {
     const arch = (f) => (existsSync(f) ? { url: `/salida/${f.split(/[\\/]/).pop()}?t=${statSync(f).mtimeMs | 0}`, mb: +(statSync(f).size / 1048576).toFixed(1) } : null);
     return json(res, 200, {
       claveOpenAI: claveOpenAI(),
+      claveEleven: claveEleven(),
       hayTexto: N.textosVoz(an).length > 0,
       estimado: N.estimarVoz(an),
-      voz: manifiesto ? { vigente, creado: manifiesto.creado, estilo: manifiesto.estilo, voz: manifiesto.voz, ritmo: manifiesto.ritmo, modelo: manifiesto.modelo, extra: manifiesto.extra, audio: manifiesto.audio ? `${manifiesto.audio}?t=${Date.parse(manifiesto.creado) | 0}` : null, escenas: manifiesto.escenas, costoUsd: manifiesto.costoUsd } : null,
+      estimadoEleven: Object.fromEntries(N.MODELOS_ELEVEN.map((m) => [m.id, N.estimarVozEleven(an, m.id)])),
+      voz: manifiesto ? { vigente, creado: manifiesto.creado, motor: manifiesto.motor ?? "openai", estilo: manifiesto.estilo, voz: manifiesto.voz, ritmo: manifiesto.ritmo, modelo: manifiesto.modelo, extra: manifiesto.extra, audio: manifiesto.audio ? `${manifiesto.audio}?t=${Date.parse(manifiesto.creado) | 0}` : null, escenas: manifiesto.escenas, costoUsd: manifiesto.costoUsd, creditos: manifiesto.creditos ?? 0, externa: Boolean(manifiesto.externa), archivo: manifiesto.archivo ?? null, avisos: manifiesto.avisos ?? [], aproximado: Boolean(manifiesto.aproximado), ajuste: manifiesto.ajuste ?? "voz", alargadas: manifiesto.alargadas ?? [], cambioTiempos: Boolean(manifiesto.cambioTiempos), necesitaRender: Boolean(manifiesto.cambioTiempos && existsSync(video) && statSync(video).mtimeMs < Date.parse(manifiesto.creado)) } : null,
+      externa: { hayCopia: Boolean(an && (await leerTiemposOriginales(an))), archivos: existsSync(dirAnim("voz", "externa")) ? readdirSync(dirAnim("voz", "externa")).filter((f) => EXT_AUDIO.includes(extname(f).toLowerCase())) : [] },
       video: arch(video),
       videoConVoz: arch(conVoz),
     });
+  }
+  if (m === "POST" && recurso === "anim" && a === "voz" && b === "subir") {
+    // sube el audio de tu voz (cuerpo = el archivo tal cual; el nombre va en ?nombre=)
+    const nombre = nombreAudioExterno(url.searchParams.get("nombre"));
+    const buf = await leerCuerpo(req, 80 * 1024 * 1024);
+    pedir(buf.length > 2000, "El archivo está vacío o es demasiado corto.");
+    mkdirSync(dirAnim("voz", "externa"), { recursive: true });
+    writeFileSync(dirAnim("voz", "externa", nombre), buf);
+    return json(res, 200, { ok: true, archivo: nombre, mb: +(buf.length / 1048576).toFixed(1) });
+  }
+  if (m === "GET" && recurso === "anim" && a === "voz" && b === "eleven-voces") {
+    // las voces de TU cuenta de ElevenLabs (con las de español primero)
+    pedir(claveEleven(), "Falta la clave de ElevenLabs (pestaña Ajustes).", 412);
+    try {
+      return json(res, 200, { voces: await listarVocesEleven({ clave: (process.env.ELEVENLABS_API_KEY ?? "").trim(), url: process.env.ELEVENLABS_BASE_URL }) });
+    } catch (e) {
+      return error(res, 502, `No pude leer las voces de ElevenLabs (${String(e.message ?? e).slice(0, 200)}). Si tu clave es restringida, pega el ID de la voz a mano.`);
+    }
   }
   if (m === "POST" && recurso === "anim" && a === "voz" && b === "probar") {
     const o = await leerJson(req);
     const N = await cargarNucleoAnim();
     const cfg = configuracion();
-    pedir(cfg.clave, "Para probar una voz hace falta la clave de OpenAI (pestaña Ajustes).", 412);
     const op = opcionesVoz(N, o);
+    if (op.motor === "eleven") pedir(claveEleven(), "Para probar una voz de ElevenLabs hace falta su clave (pestaña Ajustes).", 412);
+    else pedir(cfg.clave, "Para probar una voz hace falta la clave de OpenAI (pestaña Ajustes).", 412);
+    if (op.motor === "eleven") pedir(op.voiceId, "Elige una voz de ElevenLabs (o pega su ID).", 412);
     try {
-      const r = await probarVoz({ opciones: { estilo: op.estilo, voz: op.voz, ritmo: op.ritmo, extra: op.extra }, texto: typeof o.texto === "string" ? o.texto.slice(0, 400) : "", clave: cfg.clave, url: cfg.url });
+      const destino = op.motor === "eleven" ? { clave: (process.env.ELEVENLABS_API_KEY ?? "").trim(), url: process.env.ELEVENLABS_BASE_URL } : { clave: cfg.clave, url: cfg.url };
+      const r = await probarVoz({ opciones: { motor: op.motor, estilo: op.estilo, voz: op.voz, ritmo: op.ritmo, extra: op.extra, voiceId: op.voiceId, modelo: op.motor === "eleven" ? op.modelo : undefined, perfil: op.perfil, nombreVoz: op.nombreVoz }, texto: typeof o.texto === "string" ? o.texto.slice(0, 400) : "", ...destino });
       return json(res, 200, r);
     } catch (e) {
       return error(res, 502, String(e.message ?? e));

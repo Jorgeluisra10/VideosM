@@ -133,13 +133,88 @@ export function estimarVoz(anim: Parameters<typeof textosVoz>[0]): EstimacionVoz
 export const TEMPO_MAX = 1.35;
 export const COLA_ESCENA = 0.35; // s de silencio que se deja al final de cada escena
 export const ENTRADA_VOZ = 0.2; // s que tarda en arrancar la voz dentro de la escena
-export function ajusteTempo(durVoz: number, durEscena: number): { tempo: number; cabe: boolean; sobra: number } {
+export function ajusteTempo(durVoz: number, durEscena: number, tempoMax = TEMPO_MAX): { tempo: number; cabe: boolean; sobra: number } {
   const disp = Math.max(0.5, durEscena - COLA_ESCENA - ENTRADA_VOZ);
   if (durVoz <= disp) return { tempo: 1, cabe: true, sobra: 0 };
   const necesario = durVoz / disp;
-  const tempo = Math.min(TEMPO_MAX, necesario);
-  return { tempo, cabe: necesario <= TEMPO_MAX + 1e-9, sobra: Math.max(0, durVoz / tempo - disp) };
+  const tempo = Math.min(tempoMax, necesario);
+  return { tempo, cabe: necesario <= tempoMax + 1e-9, sobra: Math.max(0, durVoz / tempo - disp) };
 }
 
 /** Clave de caché de una frase: misma voz + instrucciones + modelo + texto → mismo audio (no se paga dos veces). */
 export const claveCacheVoz = (modelo: string, voz: string, instrucciones: string, texto: string): string => huella([modelo, voz, instrucciones, texto].join("\u0001"));
+
+// ───────────────────────────── ElevenLabs (voz de estudio) ─────────────────────────────
+// Los precios y los planes de ElevenLabs cambian: las cifras de abajo son una referencia para estimar ANTES de generar (verifícalas en elevenlabs.io/pricing).
+
+export type MotorVoz = "openai" | "eleven";
+export const MOTORES_VOZ: { id: MotorVoz; etiqueta: string }[] = [
+  { id: "eleven", etiqueta: "ElevenLabs · voz de estudio (la más natural)" },
+  { id: "openai", etiqueta: "OpenAI · gpt-4o-mini-tts (barata, con estilos colombianos)" },
+];
+
+export type ModeloEleven = { id: string; etiqueta: string; /** créditos que gasta cada carácter */ credito: number; /** US$ por 1.000 caracteres si se paga por uso de la API (referencia) */ usdPor1000Api: number };
+export const MODELOS_ELEVEN: ModeloEleven[] = [
+  { id: "eleven_multilingual_v2", etiqueta: "Multilingual v2 · la más natural y estable", credito: 1, usdPor1000Api: 0.1 },
+  { id: "eleven_flash_v2_5", etiqueta: "Flash v2.5 · rápida y la mitad de costo", credito: 0.5, usdPor1000Api: 0.05 },
+];
+export const MODELO_ELEVEN_POR_DEFECTO = "eleven_multilingual_v2";
+
+export type PerfilEleven = { id: string; etiqueta: string; estabilidad: number; similitud: number; estilo: number };
+export const PERFILES_ELEVEN: PerfilEleven[] = [
+  { id: "serena", etiqueta: "Serena y estable", estabilidad: 0.6, similitud: 0.8, estilo: 0.1 },
+  { id: "equilibrada", etiqueta: "Equilibrada (recomendada)", estabilidad: 0.45, similitud: 0.8, estilo: 0.3 },
+  { id: "expresiva", etiqueta: "Muy expresiva y alegre", estabilidad: 0.3, similitud: 0.8, estilo: 0.55 },
+];
+export const PERFIL_ELEVEN_POR_DEFECTO = "equilibrada";
+/** velocidad nativa de ElevenLabs (0,7–1,2) según el ritmo elegido: así la voz no pierde calidad por acelerarla después */
+export const VELOCIDAD_ELEVEN: Record<string, number> = { pausado: 0.92, normal: 1, agil: 1.06, "muy-agil": 1.12 };
+/** hasta cuánto se acelera una frase de ElevenLabs para que quepa (más suena apurada) */
+export const TEMPO_MAX_ELEVEN = 1.25;
+
+export type PlanEleven = { id: string; nombre: string; usdMes: number; creditos: number; comercial: boolean };
+export const PLANES_ELEVEN: PlanEleven[] = [
+  { id: "free", nombre: "Free", usdMes: 0, creditos: 10000, comercial: false },
+  { id: "starter", nombre: "Starter", usdMes: 6, creditos: 30000, comercial: true },
+  { id: "creator", nombre: "Creator", usdMes: 22, creditos: 121000, comercial: true },
+  { id: "pro", nombre: "Pro", usdMes: 99, creditos: 600000, comercial: true },
+];
+
+export const perfilElevenPorId = (id: unknown): PerfilEleven => PERFILES_ELEVEN.find((p) => p.id === id) ?? PERFILES_ELEVEN.find((p) => p.id === PERFIL_ELEVEN_POR_DEFECTO)!;
+export const modeloElevenPorId = (id: unknown): ModeloEleven => MODELOS_ELEVEN.find((m) => m.id === id) ?? MODELOS_ELEVEN.find((m) => m.id === MODELO_ELEVEN_POR_DEFECTO)!;
+/** El ID de una voz de ElevenLabs es alfanumérico (≈20 caracteres): cualquier otra cosa se descarta. */
+export const sanearVoiceId = (x: unknown): string => { const s = String(x ?? "").trim(); return /^[A-Za-z0-9]{10,40}$/.test(s) ? s : ""; };
+export const velocidadEleven = (ritmo: unknown): number => VELOCIDAD_ELEVEN[String(ritmo)] ?? VELOCIDAD_ELEVEN[RITMO_POR_DEFECTO];
+
+export type EstimacionEleven = {
+  escenas: number; caracteres: number; creditos: number; segundos: number;
+  /** US$ si se paga por uso de la API */
+  usdApi: number;
+  /** por plan: cuántos videos como este caben en sus créditos de un mes y cuánto cuesta cada uno (prorrateado) */
+  porPlan: { plan: PlanEleven; videos: number; usdPorVideo: number }[];
+};
+
+/** Cuánto gastaría la voz de la animación actual en ElevenLabs (créditos = caracteres × créditos por carácter del modelo). */
+export function estimarVozEleven(anim: Parameters<typeof textosVoz>[0], modeloId?: string): EstimacionEleven {
+  const m = modeloElevenPorId(modeloId);
+  const t = textosVoz(anim);
+  const caracteres = t.reduce((a, e) => a + e.texto.length, 0);
+  const creditos = Math.round(caracteres * m.credito);
+  return {
+    escenas: t.length, caracteres, creditos, segundos: caracteres / CARACTERES_POR_SEGUNDO,
+    usdApi: Math.round((caracteres / 1000) * m.usdPor1000Api * 10000) / 10000,
+    porPlan: PLANES_ELEVEN.map((plan) => ({ plan, videos: creditos > 0 ? Math.floor(plan.creditos / creditos) : 0, usdPorVideo: Math.round((plan.usdMes / plan.creditos) * creditos * 1000) / 1000 })),
+  };
+}
+
+export type AjustesEleven = { estabilidad: number; similitud: number; estilo: number; velocidad: number };
+export const ajustesEleven = (perfil: unknown, ritmo: unknown): AjustesEleven => { const p = perfilElevenPorId(perfil); return { estabilidad: p.estabilidad, similitud: p.similitud, estilo: p.estilo, velocidad: velocidadEleven(ritmo) }; };
+
+/** Clave de caché de una frase de ElevenLabs: misma voz + modelo + ajustes + texto (y vecinas, que cambian la entonación) → mismo audio (no se paga dos veces). */
+export const claveCacheEleven = (modelo: string, voiceId: string, a: AjustesEleven, texto: string, previo = "", siguiente = ""): string =>
+  huella(["eleven", modelo, voiceId, a.estabilidad, a.similitud, a.estilo, a.velocidad, texto, previo, siguiente].join("\u0001"));
+
+/** Las frases vecinas que se mandan como contexto para que la entonación continúe de una escena a la siguiente. */
+export function contextoFrases(textos: { texto: string }[], i: number): { previo: string; siguiente: string } {
+  return { previo: i > 0 ? textos[i - 1].texto.slice(-280) : "", siguiente: i < textos.length - 1 ? textos[i + 1].texto.slice(0, 280) : "" };
+}

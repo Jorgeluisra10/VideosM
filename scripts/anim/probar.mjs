@@ -8,7 +8,7 @@
  * Al terminar restaura src/data/animacion.json.
  */
 import { spawn, spawnSync } from "node:child_process";
-import { copyFileSync, existsSync, readFileSync, readdirSync, rmSync, writeFileSync } from "node:fs";
+import { copyFileSync, existsSync, mkdirSync, readFileSync, readdirSync, rmSync, writeFileSync } from "node:fs";
 import { join } from "node:path";
 import { iniciarMock, comprobarEstricto, validarEsquema } from "../ia/mock-server.mjs";
 import { configuracion } from "../ia/entorno.mjs";
@@ -117,10 +117,10 @@ try {
   const srcAnim = fuente(["src", "anim"]);
   prueba("el motor de animación no usa subtítulos ni encabezado", !/Subtitulos|Encabezado|timestamps\.json|tiempoDe/.test(srcAnim));
   prueba("el motor de animación solo monta <Audio> para la música del motor viral (y solo si llevaMusica(); los efectos van por SoundEffect y eventosSfx)", (readFileSync(p("src", "anim", "Animacion.tsx"), "utf8").match(/<Audio/g) ?? []).length === 1 && /llevaMusica\(animacion\) && \(\s*<Audio/.test(readFileSync(p("src", "anim", "Animacion.tsx"), "utf8")) && /eventosSfx/.test(readFileSync(p("src", "anim", "Animacion.tsx"), "utf8")));
-  // la voz en off con IA es opcional y vive SOLO en scripts/anim/voz.mjs (OpenAI audio/speech; nada de whisper, elevenlabs ni edge-tts); el resto de los scripts y el motor no tocan ninguna API de voz
+  // la voz en off con IA es opcional y vive SOLO en scripts/anim/voz.mjs (OpenAI audio/speech o ElevenLabs text-to-speech; nada de whisper ni edge-tts); el resto de los scripts y el motor no tocan ninguna API de voz
   const fuenteSinVoz = readdirSync(p("scripts", "anim")).filter((x) => /\.(tsx?|mjs)$/.test(x) && !["probar.mjs", "voz.mjs", "poner-voz.mjs"].includes(x)).map((x) => readFileSync(p("scripts", "anim", x), "utf8")).join("\n");
   const vozSrc = readFileSync(p("scripts", "anim", "voz.mjs"), "utf8");
-  prueba("los scripts de animación no llaman a ninguna API de voz (TTS/whisper/elevenlabs), salvo voz.mjs: la voz en off opcional con OpenAI audio/speech (sin whisper, elevenlabs ni edge-tts)", !/audio\/speech|audio\/transcriptions|elevenlabs|edge-tts|generar-voz/i.test(fuenteSinVoz) && !/audio\/speech/.test(srcAnim) && /audio\/speech/.test(vozSrc) && !/audio\/transcriptions|elevenlabs|edge-tts/i.test(vozSrc));
+  prueba("los scripts de animación no llaman a ninguna API de voz (TTS/whisper/ElevenLabs), salvo voz.mjs: la voz en off opcional con OpenAI audio/speech o ElevenLabs text-to-speech (sin whisper, with-timestamps ni edge-tts)", !/audio\/speech|audio\/transcriptions|api\.elevenlabs|text-to-speech|xi-api-key|edge-tts|generar-voz/i.test(fuenteSinVoz) && !/audio\/speech/.test(srcAnim) && /audio\/speech/.test(vozSrc) && /text-to-speech/.test(vozSrc) && !/audio\/transcriptions|with-timestamps|edge-tts/i.test(vozSrc));
   const pkg = JSON.parse(readFileSync(p("package.json"), "utf8"));
   prueba("dependencias 3D instaladas: three, @types/three, @react-three/fiber y @remotion/three", ["three", "@react-three/fiber", "@remotion/three"].every((d) => pkg.dependencies[d]) && pkg.devDependencies["@types/three"]);
   prueba("@remotion/three va a la misma versión exacta que remotion", pkg.dependencies["@remotion/three"] === pkg.dependencies.remotion, `${pkg.dependencies["@remotion/three"]} vs ${pkg.dependencies.remotion}`);
@@ -664,6 +664,33 @@ try {
       prueba("voces: la caché distingue voz, instrucciones, modelo y texto (misma entrada = misma clave)", N.claveCacheVoz("m", "coral", "i", "t") === N.claveCacheVoz("m", "coral", "i", "t") && new Set([N.claveCacheVoz("m", "coral", "i", "t"), N.claveCacheVoz("m", "nova", "i", "t"), N.claveCacheVoz("m", "coral", "j", "t"), N.claveCacheVoz("n", "coral", "i", "t"), N.claveCacheVoz("m", "coral", "i", "u")]).size === 5);
       const app = readFileSync(p("scripts", "panel", "web", "app.js"), "utf8");
       prueba("voces: el Estudio tiene la tarjeta «🎙️ Voz en off» con select de estilo colombiano, voz base y ritmo, probar voz, generar, renderizar con voz, ponerla al video ya renderizado y renderizar sin voz", ["select#voz-estilo", "select#voz-voz", "select#voz-ritmo", "Probar esta voz", "Generar la voz de este video", "Renderizar con voz", "Ponerla al video ya renderizado", "Renderizar sin voz", "anim-voz", "anim-poner-voz"].every((t) => app.includes(t)));
+      prueba("voces: el Estudio ofrece tres caminos para la voz (ElevenLabs, OpenAI y Mi voz de CapCut u otra), carga las voces de ElevenLabs, muestra el costo por plan, deja elegir acelerar la voz o alargar la escena, sube el audio propio, alinea el video a él y permite volver a los tiempos originales", ["selector-motor", "Cargar mis voces de ElevenLabs", "eleven-voces", "¿Cuánto me cuesta con un plan de ElevenLabs?", "select#voz-ajuste", "Subir el audio de mi voz", "Alinear el video a esta voz", "anim-voz-externa", "Volver a los tiempos originales", "Ponla al video ya renderizado", "api/anim/voz/subir"].every((t) => app.includes(t)));
+      // ── ElevenLabs y voz propia (lógica pura) ──
+      {
+        const eM = N.estimarVozEleven(animT, "eleven_multilingual_v2"), eF = N.estimarVozEleven(animT, "eleven_flash_v2_5"), eX = N.estimarVozEleven(animT, "inventado");
+        prueba("ElevenLabs: la estimación son caracteres × créditos del modelo (Multilingual v2 = 1, Flash = 0,5) con tarifa de API y cuántos videos como este caben en cada plan; un modelo desconocido cae al recomendado", eM.creditos === 20 && eF.creditos === 10 && eM.escenas === 2 && Math.abs(eM.usdApi - 0.002) < 1e-9 && Math.abs(eF.usdApi - 0.001) < 1e-9 && eX.creditos === 20 && eM.porPlan.find((q) => q.plan.id === "starter").videos === 1500 && eM.porPlan.length === N.PLANES_ELEVEN.length && N.PLANES_ELEVEN.find((q) => q.id === "free").comercial === false);
+        prueba("ElevenLabs: el ID de la voz solo acepta letras y números (nada de rutas ni espacios); perfil y velocidad caen a valores válidos y el ritmo se traduce a la velocidad nativa (0,7–1,2)", N.sanearVoiceId("pNInz6obpgDQGcFmaJgB") === "pNInz6obpgDQGcFmaJgB" && N.sanearVoiceId("../../x") === "" && N.sanearVoiceId("a b c d e f g h i j") === "" && N.sanearVoiceId("x".repeat(50)) === "" && N.sanearVoiceId(null) === "" && JSON.stringify(N.ajustesEleven("expresiva", "muy-agil")) === JSON.stringify({ estabilidad: 0.3, similitud: 0.8, estilo: 0.55, velocidad: 1.12 }) && N.ajustesEleven("no", "no").velocidad === N.velocidadEleven(N.RITMO_POR_DEFECTO) && Object.values(N.VELOCIDAD_ELEVEN).every((x) => x >= 0.7 && x <= 1.2));
+        const aE = N.ajustesEleven("equilibrada", "agil");
+        const kE = (o = {}) => N.claveCacheEleven(o.m ?? "m", o.v ?? "v", o.a ?? aE, o.t ?? "t", o.p ?? "", o.s ?? "");
+        prueba("ElevenLabs: la caché distingue modelo, voz, ajustes, texto y frases vecinas (cambian la entonación); misma entrada = misma clave", kE() === kE() && new Set([kE(), kE({ m: "n" }), kE({ v: "w" }), kE({ a: { ...aE, estilo: 0.9 } }), kE({ a: { ...aE, velocidad: 1.12 } }), kE({ t: "u" }), kE({ p: "antes" }), kE({ s: "después" })]).size === 8);
+        const ctx = N.contextoFrases([{ texto: "uno" }, { texto: "dos" }, { texto: "tres" }], 1);
+        prueba("ElevenLabs: cada frase se manda con el final de la anterior y el comienzo de la siguiente; la primera y la última no inventan contexto", ctx.previo === "uno" && ctx.siguiente === "tres" && N.contextoFrases([{ texto: "a" }, { texto: "b" }], 0).previo === "" && N.contextoFrases([{ texto: "a" }, { texto: "b" }], 1).siguiente === "");
+        const t125 = N.ajusteTempo(30, 10, N.TEMPO_MAX_ELEVEN);
+        prueba("ElevenLabs: una frase que no cabe se acelera como máximo ×1,25 (más suena apurada) y se marca; con OpenAI sigue siendo ×1,35", t125.tempo === 1.25 && !t125.cabe && N.TEMPO_MAX_ELEVEN === 1.25 && N.ajusteTempo(30, 10).tempo === 1.35);
+        // voz propia: elegir las pausas que separan las escenas
+        const sil = [{ ini: 3, fin: 3.2 }, { ini: 7.6, fin: 8.4 }, { ini: 15, fin: 15.3 }, { ini: 22.4, fin: 23 }];
+        const rc = N.elegirCortes({ silencios: sil, desde: 0.5, hasta: 30, pesos: [10, 20, 10] });
+        prueba("voz propia: de todas las pausas elige las que encajan con el largo de cada texto (centro de la pausa) y no marca nada como aproximado", rc.cortes.length === 2 && Math.abs(rc.cortes[0] - 8) < 1e-6 && Math.abs(rc.cortes[1] - 22.7) < 1e-6 && !rc.aproximado && rc.avisos.length === 0, JSON.stringify(rc));
+        const rp = N.elegirCortes({ silencios: [{ ini: 7.6, fin: 8.4 }], desde: 0.5, hasta: 30, pesos: [10, 20, 10] });
+        prueba("voz propia: si hay menos pausas que escenas reparte en proporción al texto y avisa (aproximado) para que pases las duraciones a mano; con una sola escena no hay cortes", rp.aproximado && rp.cortes.length === 2 && rp.avisos.length >= 1 && /duraciones a mano/.test(rp.avisos[0]) && N.elegirCortes({ silencios: [], desde: 0, hasta: 5, pesos: [10] }).cortes.length === 0);
+        const du = N.duracionesDesdeCortes([8, 22.7], 30, 0.5);
+        prueba("voz propia: de los cortes salen las duraciones (la última se alarga hasta el final del audio más 0,5 s de aire) y suman exactamente eso", du.length === 3 && Math.abs(du[0] - 8) < 1e-9 && Math.abs(du[1] - 14.7) < 1e-9 && Math.abs(du[2] - 7.8) < 1e-9 && Math.abs(du.reduce((a, b) => a + b, 0) - 30.5) < 0.02);
+        const animR = N.ensamblarViral(JSON.parse(readFileSync(p("ejemplos", "animacion-viral", "respuesta-ia-bogota-real.json"), "utf8")), { modo: "idea", paleta: "retro", sfx: true }).anim;
+        const tR = N.textosVoz(animR);
+        const nuevaR = N.reajustarAnimacion(animR, tR.map((e) => e.dur + 0.5));
+        const mismaR = N.reajustarAnimacion(animR, tR.map((e) => e.dur));
+        prueba("voz propia: reajustar la animación a otras duraciones deja las escenas seguidas (sin huecos), recalcula ritmo (0,55–1) y efectos de sonido, cambia la firma de la voz, no toca el original y con las mismas duraciones queda igual", nuevaR.escenas.every((e, i) => (i === 0 ? e.inicio === 0 : Math.abs(e.inicio - nuevaR.escenas[i - 1].fin) < 0.011) && Math.abs(e.fin - e.inicio - e.dur) < 0.011 && e.ritmo >= 0.55 && e.ritmo <= 1 && e.total === nuevaR.duracion) && Math.abs(nuevaR.duracion - (animR.duracion + 0.5 * tR.length)) < 0.05 * tR.length && N.firmaVoz(nuevaR) !== N.firmaVoz(animR) && N.textosVoz(animR)[0].dur === tR[0].dur && N.firmaVoz(mismaR) === N.firmaVoz(animR), `${nuevaR.duracion} vs ${animR.duracion}`);
+      }
       const rnd = readFileSync(p("scripts", "render.mjs"), "utf8");
       // mezcla real: con la voz, el audio de salida trae mucha más energía donde habla que solo con efectos y música (y la pista queda colocada en el tiempo de cada escena)
       {
@@ -1052,6 +1079,142 @@ try {
       rmSync(p("trabajo", "salida", "voz"), { recursive: true, force: true });
       h = await http("POST", "/api/accion", { nombre: "anim-poner-voz", opciones: {} });
       prueba("voz: sin video renderizado o sin voz generada se explica qué hacer (412), no se lanza nada", h.codigo === 412);
+    }
+    // ── Voz después del render: ElevenLabs simulado (voces, probar, generar por escena con contexto, caché, alargar escenas) y voz propia (subir, alinear, deshacer) ──
+    {
+      const dirVoz = p("trabajo", "anim", "voz");
+      const mp4 = p("trabajo", "salida", "video-animacion.mp4");
+      const { SR, escribirWavEstereo } = await import("../audio.mjs");
+      const { utimesSync } = await import("node:fs");
+      const claveAntes = { k: process.env.ELEVENLABS_API_KEY, u: process.env.ELEVENLABS_BASE_URL };
+      rmSync(dirVoz, { recursive: true, force: true });
+      rmSync(p("trabajo", "salida", "voz"), { recursive: true, force: true });
+      const animBase = readFileSync(ANIM, "utf8");
+      try {
+        delete process.env.ELEVENLABS_API_KEY;
+        h = await http("GET", "/api/anim/voz/eleven-voces");
+        prueba("ElevenLabs: sin clave no se llama a nadie y se explica qué hacer (412)", h.codigo === 412);
+        h = await http("POST", "/api/anim/voz/probar", { motor: "eleven", voiceId: "VozColombianaAbc123" });
+        prueba("ElevenLabs: probar una voz sin clave tampoco gasta nada (412)", h.codigo === 412);
+        process.env.ELEVENLABS_API_KEY = "prueba-eleven";
+        process.env.ELEVENLABS_BASE_URL = mock.url.replace(/\/v1\/?$/, "");
+        h = await http("GET", "/api/anim/voz");
+        prueba("ElevenLabs: el estado informa la clave y la estimación en créditos para cada modelo (Multilingual v2 = 1 por carácter, Flash = la mitad)", h.json.claveEleven === true && h.json.estimadoEleven.eleven_multilingual_v2.creditos === h.json.estimado.caracteres && h.json.estimadoEleven.eleven_flash_v2_5.creditos === Math.round(h.json.estimado.caracteres * 0.5) && h.json.estimadoEleven.eleven_multilingual_v2.porPlan.length === 4, h.texto.slice(0, 200));
+        h = await http("GET", "/api/anim/voz/eleven-voces");
+        prueba("ElevenLabs: lista las voces de tu cuenta con las de español primero, descarta IDs inválidos y solo deja vistas previas https", h.codigo === 200 && h.json.voces.length === 2 && h.json.voces[0].id === "VozColombianaAbc123" && h.json.voces[0].espanol === true && h.json.voces[0].acento === "colombian" && h.json.voces[1].espanol === false && h.json.voces.every((v) => /^https:/.test(v.preview)), h.texto.slice(0, 300));
+        h = await http("POST", "/api/anim/voz/probar", { motor: "eleven", voiceId: "VozColombianaAbc123", modelo: "eleven_flash_v2_5", perfil: "expresiva", ritmo: "muy-agil", nombreVoz: "Camila" });
+        const ue = mock.estado.ultimaEleven;
+        prueba("ElevenLabs: «Probar voz» pide la voz, el modelo, la expresión y la velocidad elegidos (audio directo, mp3) con la clave en la cabecera, y gasta solo la frase de prueba", h.codigo === 200 && /^\/salida\/voz\/prueba-.+\.mp3$/.test(h.json.url) && h.json.creditos > 0 && h.json.creditos < 400 && ue.voz === "VozColombianaAbc123" && ue.modelo === "eleven_flash_v2_5" && ue.ajustes.stability === 0.3 && ue.ajustes.style === 0.55 && ue.ajustes.speed === 1.12 && ue.conTiempos === false && /mp3_44100_128/.test(ue.query), JSON.stringify(ue).slice(0, 300));
+        const antesP = mock.estado.voz.elevenlabs;
+        await http("POST", "/api/anim/voz/probar", { motor: "eleven", voiceId: "VozColombianaAbc123", modelo: "eleven_flash_v2_5", perfil: "expresiva", ritmo: "muy-agil" });
+        prueba("ElevenLabs: repetir la misma prueba sale de la caché (0 créditos)", mock.estado.voz.elevenlabs === antesP);
+        h = await http("POST", "/api/anim/voz/probar", { motor: "eleven", voiceId: "../../etc/passwd" });
+        prueba("seguridad: un ID de voz con rutas o símbolos se descarta y no se llama a ElevenLabs (412)", h.codigo === 412);
+        h = await http("POST", "/api/accion", { nombre: "anim-voz", opciones: { motor: "eleven" } });
+        prueba("ElevenLabs: generar sin elegir voz explica qué hacer (412)", h.codigo === 412);
+
+        // generar la voz de todo el video
+        const antes = mock.estado.voz.elevenlabs, ctxAntes = mock.estado.elevenConContexto ?? 0;
+        h = await http("POST", "/api/accion", { nombre: "anim-voz", opciones: { motor: "eleven", voiceId: "VozColombianaAbc123", modelo: "eleven_multilingual_v2", perfil: "equilibrada", ritmo: "agil", nombreVoz: "Camila (simulada)" } });
+        const finE = await esperarTrabajo();
+        const manE = existsSync(join(dirVoz, "actual.json")) ? JSON.parse(readFileSync(join(dirVoz, "actual.json"), "utf8")) : null;
+        prueba("ElevenLabs: «Generar la voz» pide una frase por escena, deja el manifiesto con la voz, el modelo, los créditos gastados y la pista colocada en el tiempo", finE?.estado === "ok" && manE?.motor === "eleven" && manE.voiceId === "VozColombianaAbc123" && manE.voz === "Camila (simulada)" && manE.modelo === "eleven_multilingual_v2" && manE.escenas.length >= 5 && mock.estado.voz.elevenlabs - antes === manE.escenas.length && manE.creditos > 0 && manE.ajuste === "voz" && existsSync(join(dirVoz, "voz-mezcla.wav")) && existsSync(p("trabajo", "salida", "voz", "voz-completa.mp3")), JSON.stringify(finE).slice(0, 300));
+        prueba("ElevenLabs: cada frase viaja con el contexto de la anterior y la siguiente (entonación continua entre escenas): todas menos la primera y la última", (mock.estado.elevenConContexto ?? 0) - ctxAntes === manE.escenas.length - 2);
+        h = await http("GET", "/api/anim/voz");
+        prueba("ElevenLabs: el estado la reconoce como vigente, con el motor, los créditos reales y una fila por escena", h.json.voz?.vigente === true && h.json.voz.motor === "eleven" && h.json.voz.creditos === manE.creditos && h.json.voz.escenas.length === manE.escenas.length && h.json.voz.necesitaRender === false);
+        const antes2 = mock.estado.voz.elevenlabs;
+        await http("POST", "/api/accion", { nombre: "anim-voz", opciones: { motor: "eleven", voiceId: "VozColombianaAbc123", modelo: "eleven_multilingual_v2", perfil: "equilibrada", ritmo: "agil" } });
+        await esperarTrabajo();
+        prueba("ElevenLabs: repetir con la misma voz y ajustes sale de la caché (0 llamadas = 0 créditos)", mock.estado.voz.elevenlabs === antes2 && JSON.parse(readFileSync(join(dirVoz, "actual.json"), "utf8")).creditos === 0);
+        prueba("ElevenLabs: las frases que no caben se aceleran como máximo ×1,25 y se marcan; ninguna invade la escena siguiente", manE.escenas.every((e) => e.tempo <= 1.25 + 1e-6 && e.durVoz > 0));
+
+        // «alargar la escena»: una escena de 1,2 s no deja caber la voz → con el ajuste «video» se alarga y el MP4 viejo ya no sirve
+        const animA = JSON.parse(animBase);
+        const tvA = N.textosVoz(animA);
+        const durVoz0 = manE.escenas[0].durVoz;
+        const corta = N.reajustarAnimacion(animA, tvA.map((e, i) => (i === 0 ? 1.2 : e.dur)));
+        writeFileSync(ANIM, JSON.stringify(corta, null, 1));
+        writeFileSync(mp4, "no es un video real pero existe");
+        utimesSync(mp4, new Date(Date.now() - 3600e3), new Date(Date.now() - 3600e3));
+        await http("POST", "/api/accion", { nombre: "anim-voz", opciones: { motor: "eleven", voiceId: "VozColombianaAbc123", modelo: "eleven_multilingual_v2", perfil: "equilibrada", ritmo: "agil", ajuste: "video" } });
+        const finV2 = await esperarTrabajo();
+        const largo = JSON.parse(readFileSync(ANIM, "utf8"));
+        const manV = JSON.parse(readFileSync(join(dirVoz, "actual.json"), "utf8"));
+        const tvL = N.textosVoz(largo);
+        prueba("ElevenLabs · «alargar la escena»: la voz natural no se acelera (tempo 1); cada escena donde no cabía se alarga lo justo (voz + entrada + cola), las escenas quedan seguidas y el video crece", finV2?.estado === "ok" && manV.ajuste === "video" && manV.cambioTiempos === true && manV.alargadas.includes(tvA[0].n) && manV.escenas.every((e) => e.tempo === 1 && e.cabe && !e.cortada) && manV.escenas.every((e, i) => e.alargada === false || (tvL[i].dur >= e.durVoz + 0.55 && tvL[i].dur < e.durVoz + 0.9)) && largo.escenas.every((e, i) => i === 0 ? e.inicio === 0 : Math.abs(e.inicio - largo.escenas[i - 1].fin) < 0.011) && largo.duracion > corta.duracion, JSON.stringify({ finV2: finV2?.estado, alargadas: manV.alargadas, durVoz0, dur: largo.escenas[0].dur }));
+        h = await http("GET", "/api/anim/voz");
+        prueba("ElevenLabs · si cambiaron los tiempos del video, el MP4 ya renderizado queda viejo: el estado lo dice y «Ponerla al video ya renderizado» se niega con una explicación (412)", durVoz0 <= 0.65 || (h.json.voz?.vigente === true && h.json.voz.cambioTiempos === true && h.json.voz.necesitaRender === true && h.json.externa.hayCopia === true));
+        h = await http("POST", "/api/accion", { nombre: "anim-poner-voz", opciones: {} });
+        prueba("… y por eso poner la voz al video viejo se rechaza explicando que hay que renderizar de nuevo", durVoz0 <= 0.65 || (h.codigo === 412 && /Renderizar con voz/.test(h.json.error)), h.texto.slice(0, 200));
+        if (durVoz0 > 0.65) {
+          h = await http("POST", "/api/accion", { nombre: "anim-voz-externa", opciones: { deshacer: true } });
+          await esperarTrabajo();
+          const vuelta = JSON.parse(readFileSync(ANIM, "utf8"));
+          prueba("deshacer: vuelve a los tiempos que tenía el video, quita la voz que los cambió y borra la copia", vuelta.duracion === corta.duracion && vuelta.escenas[0].dur === 1.2 && !existsSync(join(dirVoz, "actual.json")) && !existsSync(join(dirVoz, "tiempos-originales.json")));
+        }
+        rmSync(mp4, { force: true });
+        writeFileSync(ANIM, animBase);
+
+        // ── voz propia (CapCut u otra): subir el audio, alinear el video a él y deshacer ──
+        rmSync(dirVoz, { recursive: true, force: true });
+        const tvB = N.textosVoz(JSON.parse(animBase));
+        const tono = (dur, f) => { const n = Math.round(dur * SR), a = new Float32Array(n); for (let i = 0; i < n; i++) a[i] = 0.4 * Math.sin((2 * Math.PI * f * i) / SR) * Math.min(1, i / 400, (n - i) / 400); return a; };
+        const silencio = (dur) => new Float32Array(Math.round(dur * SR));
+        const trozos = [silencio(0.9)], reales = [];
+        let tiempo = 0.9;
+        tvB.forEach((e, k) => {
+          const palabras = e.texto.split(/\s+/).length;
+          for (let w = 0; w < palabras; w++) { const d = 0.3 + 0.1 * ((w * 7 + k) % 3); trozos.push(tono(d, 200 + 40 * ((w + k) % 5))); tiempo += d; const pa = w % 9 === 8 ? 0.3 : 0.07; trozos.push(silencio(pa)); tiempo += pa; }
+          if (k < tvB.length - 1) { trozos.push(silencio(0.55)); tiempo += 0.55; reales.push(tiempo - 0.275); }
+        });
+        trozos.push(silencio(1.2));
+        const xV = new Float32Array(trozos.reduce((a, b) => a + b.length, 0));
+        let off = 0;
+        for (const z of trozos) { xV.set(z, off); off += z.length; }
+        mkdirSync(p("trabajo", "tmp", "prueba-externa"), { recursive: true });
+        const wavV = p("trabajo", "tmp", "prueba-externa", "mi-voz.wav");
+        escribirWavEstereo(wavV, xV);
+        const subir = (nombre, cuerpo) => fetch(`${panel.url}/api/anim/voz/subir?nombre=${encodeURIComponent(nombre)}`, { method: "POST", headers: { "X-VideMed": "panel", "Content-Type": "application/octet-stream" }, body: cuerpo });
+        let rs = await subir("mi voz (capcut).wav", readFileSync(wavV));
+        prueba("voz propia: se sube el audio y queda en trabajo/anim/voz/externa, listado en el estado", rs.status === 200 && existsSync(join(dirVoz, "externa", "mi voz (capcut).wav")) && (await http("GET", "/api/anim/voz")).json.externa.archivos.includes("mi voz (capcut).wav"));
+        rs = await subir("../../../escape.wav", readFileSync(wavV));
+        prueba("seguridad: el nombre del audio no sale de la carpeta (se queda solo con el nombre de archivo)", rs.status === 200 && existsSync(join(dirVoz, "externa", "escape.wav")) && !existsSync(p("escape.wav")) && !existsSync(p("trabajo", "escape.wav")));
+        rs = await subir("virus.exe", readFileSync(wavV));
+        prueba("seguridad: solo se aceptan audios (mp3, wav, m4a, aac, ogg, flac, opus); un .exe se rechaza", rs.status === 400 && !existsSync(join(dirVoz, "externa", "virus.exe")));
+        rs = await subir("vacio.wav", Buffer.alloc(10));
+        prueba("un archivo vacío o diminuto se rechaza", rs.status === 400);
+        h = await http("POST", "/api/accion", { nombre: "anim-voz-externa", opciones: { archivo: "no-existe.mp3" } });
+        prueba("alinear con un audio que no se ha subido se explica (412)", h.codigo === 412);
+        h = await http("POST", "/api/accion", { nombre: "anim-voz-externa", opciones: { archivo: "mi voz (capcut).wav", duraciones: [0.5, 3] } });
+        prueba("duraciones fuera de rango (menos de 1,2 s) se rechazan", h.codigo === 400);
+        h = await http("POST", "/api/accion", { nombre: "anim-voz-externa", opciones: { archivo: "mi voz (capcut).wav" } });
+        const finX = await esperarTrabajo();
+        const manX = existsSync(join(dirVoz, "actual.json")) ? JSON.parse(readFileSync(join(dirVoz, "actual.json"), "utf8")) : null;
+        const alin = JSON.parse(readFileSync(ANIM, "utf8"));
+        const desfases = tvB.slice(1).map((e, k) => Math.abs(alin.escenas.filter((q) => N.textosVoz({ escenas: [q] }).length)[k + 1].inicio - (reales[k] - 0.65)));
+        prueba("voz propia: el video se ajusta a la voz — cada corte cae en la pausa entre frases (a menos de 0,35 s de la real), la voz empieza en 0:00 y dura lo mismo que el video", finX?.estado === "ok" && manX?.externa === true && manX.motor === "externa" && manX.escenas.length === tvB.length && Math.max(...desfases) < 0.35 && !manX.aproximado && Math.abs(manX.escenas.reduce((q, e) => q + e.dur, 0) - (xV.length / SR - 1.0)) < 0.3, JSON.stringify({ estado: finX?.estado, desfases: desfases.map((x) => +x.toFixed(2)), dur: alin.duracion }));
+        h = await http("GET", "/api/anim/voz");
+        prueba("voz propia: queda vigente para el video alineado, con el nombre del archivo, y avisa que hay que renderizar (cambiaron los tiempos)", h.json.voz?.vigente === true && h.json.voz.externa === true && h.json.voz.archivo === "mi voz (capcut).wav" && h.json.voz.cambioTiempos === true && h.json.externa.hayCopia === true && existsSync(join(dirVoz, "voz-mezcla.wav")));
+        h = await http("POST", "/api/accion", { nombre: "anim-voz-externa", opciones: { archivo: "mi voz (capcut).wav", duraciones: tvB.map((e) => 3) } });
+        await esperarTrabajo();
+        const manail = JSON.parse(readFileSync(join(dirVoz, "actual.json"), "utf8"));
+        const alin2 = JSON.parse(readFileSync(ANIM, "utf8"));
+        prueba("voz propia: con duraciones a mano se respetan tal cual y repetir no encadena ajustes (siempre se parte de los tiempos originales)", manail.escenas.every((e) => Math.abs(e.dur - 3) < 0.011) && alin2.escenas.length === alin.escenas.length);
+        h = await http("POST", "/api/accion", { nombre: "anim-voz-externa", opciones: { archivo: "mi voz (capcut).wav", duraciones: [3, 3] } });
+        prueba("voz propia: si das menos duraciones que escenas con locución se explica el error (el trabajo falla con un mensaje claro)", await esperarTrabajo().then((t) => t?.estado !== "ok"));
+        h = await http("POST", "/api/accion", { nombre: "anim-voz-externa", opciones: { deshacer: true } });
+        await esperarTrabajo();
+        const orig = JSON.parse(animBase), vuelta2 = JSON.parse(readFileSync(ANIM, "utf8"));
+        prueba("deshacer: la animación vuelve exactamente a sus tiempos originales y se quita la voz propia", JSON.stringify(vuelta2) === JSON.stringify(orig) && !existsSync(join(dirVoz, "actual.json")) && !existsSync(join(dirVoz, "tiempos-originales.json")) && (await http("GET", "/api/anim/voz")).json.externa.hayCopia === false);
+      } finally {
+        if (claveAntes.k === undefined) delete process.env.ELEVENLABS_API_KEY; else process.env.ELEVENLABS_API_KEY = claveAntes.k;
+        if (claveAntes.u === undefined) delete process.env.ELEVENLABS_BASE_URL; else process.env.ELEVENLABS_BASE_URL = claveAntes.u;
+        writeFileSync(ANIM, animBase);
+        rmSync(mp4, { force: true });
+        rmSync(dirVoz, { recursive: true, force: true });
+        rmSync(p("trabajo", "salida", "voz"), { recursive: true, force: true });
+        rmSync(p("trabajo", "tmp", "prueba-externa"), { recursive: true, force: true });
+      }
     }
     h = await http("POST", "/api/anim/cargar", { id });
     prueba("cargar del historial devuelve el guion y las opciones", h.codigo === 200 && /\[ESCENA 1/.test(h.json.guion) && h.json.opciones.modelo === "gpt-4.1-mini");

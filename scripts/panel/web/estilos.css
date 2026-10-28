@@ -245,3 +245,11 @@ body[data-marca] .barra { border-bottom: 3px solid var(--marca); }
 .grupo-marca { margin: 0 0 18px; } .grupo-marca > .fila { margin-bottom: 10px; }
 .marca-opcion.todas { --m: var(--acento); --mf: var(--capa2); --mt: var(--texto); }
 .tarjeta.estudio.marca-sinapsis .btn.primario { color: #fff; }
+
+/* ───────── Voz en off: selector de camino y pasos ───────── */
+.pasos-voz { margin: 6px 0 12px; padding-left: 20px; color: var(--suave); font-size: .9rem; } .pasos-voz li { margin: 2px 0; }
+.selector-motor { display: grid; grid-template-columns: repeat(auto-fit, minmax(190px, 1fr)); gap: 10px; margin: 8px 0 14px; }
+.motor-op { text-align: left; display: flex; flex-direction: column; gap: 2px; padding: 10px 14px; border-radius: 12px; border: 1px solid var(--borde); background: var(--capa2); color: inherit; cursor: pointer; font: inherit; }
+.motor-op span { font-size: .8rem; color: var(--suave); }
+.motor-op.activa { border-color: var(--acento); box-shadow: 0 0 0 2px color-mix(in srgb, var(--acento) 35%, transparent); background: color-mix(in srgb, var(--acento) 10%, var(--capa2)); }
+.tarjeta.voz input[type="text"] { width: 100%; }

@@ -407,6 +407,15 @@ export function iniciarMock(puerto = 0) {
     };
     if (req.url === "/_mock/estado") return json(200, estado);
     // ElevenLabs: cabecera xi-api-key en vez de Bearer
+    if (req.url.startsWith("/v1/voices")) {
+      estado.peticiones++;
+      if (!req.headers["xi-api-key"]) return json(401, { detail: { status: "invalid_api_key", message: "Falta xi-api-key (simulado)" } });
+      return json(200, { voices: [
+        { voice_id: "VozColombianaAbc123", name: "Camila (simulada)", category: "professional", labels: { gender: "female", accent: "colombian", age: "young", use_case: "narration" }, verified_languages: [{ language: "es" }], preview_url: "https://example.invalid/camila.mp3" },
+        { voice_id: "VozEnglishXyz98765", name: "Adam (simulado)", category: "premade", labels: { gender: "male", accent: "american" }, verified_languages: [{ language: "en" }], preview_url: "https://example.invalid/adam.mp3" },
+        { voice_id: "no es un id valido!", name: "Rota", category: "premade", labels: {} },
+      ] });
+    }
     if (req.url.startsWith("/v1/text-to-speech/")) {
       let c = "";
       req.on("data", (x) => (c += x));
@@ -416,6 +425,14 @@ export function iniciarMock(puerto = 0) {
         if (!req.headers["xi-api-key"]) return json(401, { detail: { status: "invalid_api_key", message: "Falta xi-api-key (simulado)" } });
         const b = JSON.parse(c || "{}");
         const texto = String(b.text ?? "");
+        estado.ultimaEleven = { voz: decodeURIComponent(req.url.split("/")[3].split("?")[0]), modelo: b.model_id, ajustes: b.voice_settings, texto, previo: b.previous_text ?? null, siguiente: b.next_text ?? null, conTiempos: req.url.includes("/with-timestamps"), query: req.url.split("?")[1] ?? "" };
+        if (b.previous_text && b.next_text) estado.elevenConContexto = (estado.elevenConContexto ?? 0) + 1;
+        // sin /with-timestamps: el audio tal cual (así lo usa el Estudio, una frase por escena)
+        if (!req.url.includes("/with-timestamps")) {
+          const mp3 = mp3Ejemplo();
+          res.writeHead(200, { "Content-Type": "audio/mpeg", "Content-Length": mp3.length });
+          return res.end(mp3);
+        }
         const marcas = marcasSimuladas(texto);
         // tiempo de cada carácter: reparto uniforme dentro de su palabra; el espacio previo cae en el hueco entre palabras
         const ch = [...texto];

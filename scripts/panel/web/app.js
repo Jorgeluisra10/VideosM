@@ -503,10 +503,14 @@ async function cargarEjemplo(formato) {
   } catch (e) { fallo(e); }
 }
 
-/* ───────────── Voz en off con IA (OpenAI gpt-4o-mini-tts): estilos colombianos y alegres ───────────── */
-const VOZ = { estilo: leerLocal("videmed-voz-estilo") ?? "", voz: leerLocal("videmed-voz-voz") ?? "", ritmo: leerLocal("videmed-voz-ritmo") ?? "", extra: leerLocal("videmed-voz-extra") ?? "", info: null, probando: false, prueba: null };
-const guardarVoz = () => { guardarLocal("videmed-voz-estilo", VOZ.estilo); guardarLocal("videmed-voz-voz", VOZ.voz); guardarLocal("videmed-voz-ritmo", VOZ.ritmo); guardarLocal("videmed-voz-extra", VOZ.extra); };
-const opcionesDeVoz = () => ({ estilo: VOZ.estilo, voz: VOZ.voz, ritmo: VOZ.ritmo, extra: VOZ.extra });
+/* ───────────── Voz en off: se pone DESPUÉS de ver el video. Tres caminos: ElevenLabs (voz de estudio), OpenAI (barata, estilos colombianos) o tu propia voz (CapCut, locutor) ───────────── */
+const VOZ = {
+  motor: leerLocal("videmed-voz-motor") || "eleven", estilo: leerLocal("videmed-voz-estilo") ?? "", voz: leerLocal("videmed-voz-voz") ?? "", ritmo: leerLocal("videmed-voz-ritmo") ?? "", extra: leerLocal("videmed-voz-extra") ?? "",
+  voiceId: leerLocal("videmed-voz-id") ?? "", nombreVoz: leerLocal("videmed-voz-nombre") ?? "", modeloEleven: leerLocal("videmed-voz-modeloe") ?? "", perfil: leerLocal("videmed-voz-perfil") ?? "", ajuste: leerLocal("videmed-voz-ajuste") || "voz",
+  archivo: "", duraciones: "", vocesEleven: null, cargandoVoces: false, subiendo: false, info: null, probando: false, prueba: null,
+};
+const guardarVoz = () => { for (const [k, v] of [["motor", VOZ.motor], ["estilo", VOZ.estilo], ["voz", VOZ.voz], ["ritmo", VOZ.ritmo], ["extra", VOZ.extra], ["id", VOZ.voiceId], ["nombre", VOZ.nombreVoz], ["modeloe", VOZ.modeloEleven], ["perfil", VOZ.perfil], ["ajuste", VOZ.ajuste]]) guardarLocal(`videmed-voz-${k}`, v); };
+const opcionesDeVoz = () => ({ motor: VOZ.motor === "eleven" ? "eleven" : "openai", estilo: VOZ.estilo, voz: VOZ.voz, ritmo: VOZ.ritmo, extra: VOZ.extra, voiceId: VOZ.voiceId, nombreVoz: VOZ.nombreVoz, modelo: VOZ.modeloEleven, perfil: VOZ.perfil, ajuste: VOZ.ajuste });
 
 async function probarVozPanel() {
   if (VOZ.probando) return;
@@ -515,12 +519,42 @@ async function probarVozPanel() {
   try {
     const frase = animActiva()?.escenas?.[0]?.texto;
     VOZ.prueba = await api("/api/anim/voz/probar", { metodo: "POST", cuerpo: { ...opcionesDeVoz(), texto: frase ? String(frase).slice(0, 260) : "" } });
-    aviso(`🔊 Voz «${VOZ.prueba.voz}» lista${VOZ.prueba.costoUsd ? ` (≈ US$ ${VOZ.prueba.costoUsd})` : " (de la caché)"}.`, "ok", 3500);
+    const costo = VOZ.prueba.creditos ? ` (${VOZ.prueba.creditos} créditos)` : VOZ.prueba.costoUsd ? ` (≈ US$ ${VOZ.prueba.costoUsd})` : " (de la caché)";
+    aviso(`🔊 Voz «${VOZ.prueba.voz}» lista${costo}.`, "ok", 3500);
   } catch (e) { fallo(e); }
   VOZ.probando = false;
   await pintarVoz(false);
   document.querySelector("#voz-prueba-audio")?.play?.().catch(() => {});
 }
+
+async function cargarVocesEleven() {
+  VOZ.cargandoVoces = true;
+  await pintarVoz(false);
+  try {
+    VOZ.vocesEleven = (await api("/api/anim/voz/eleven-voces")).voces;
+    const v = VOZ.vocesEleven.find((x) => x.id === VOZ.voiceId) ?? VOZ.vocesEleven[0];
+    if (v) { VOZ.voiceId = v.id; VOZ.nombreVoz = v.nombre; guardarVoz(); }
+    aviso(`✅ ${VOZ.vocesEleven.length} voces de tu cuenta de ElevenLabs.`, "ok", 3500);
+  } catch (e) { fallo(e); }
+  VOZ.cargandoVoces = false;
+  await pintarVoz(false);
+}
+
+async function subirAudioVoz(archivo) {
+  if (!archivo) return;
+  VOZ.subiendo = true;
+  await pintarVoz(false);
+  try {
+    const r = await api(`/api/anim/voz/subir?nombre=${encodeURIComponent(archivo.name)}`, { metodo: "POST", crudo: archivo });
+    VOZ.archivo = r.archivo;
+    aviso(`✅ Audio subido (${r.mb} MB).`, "ok", 3500);
+  } catch (e) { fallo(e); }
+  VOZ.subiendo = false;
+  await pintarVoz();
+}
+
+/** «9.8, 11.2, 12» → [9.8, 11.2, 12] (con «;» o saltos de línea como separador, la coma puede ser decimal); vacío → [] (corte automático) */
+const leerDuraciones = (t) => { const x = String(t ?? "").trim(); return (/[;\n]/.test(x) ? x.split(/[;\n]+/) : x.split(/[,\s]+/)).map((q) => q.trim().replace(",", ".")).filter(Boolean).map(Number); };
 
 async function pintarVoz(recargar = true) {
   const cont = $("#estudio-voz");
@@ -532,51 +566,141 @@ async function pintarVoz(recargar = true) {
   VOZ.estilo = estilo.id;
   VOZ.ritmo = N.RITMOS_VOZ.find((r) => r.id === VOZ.ritmo)?.id ?? N.RITMO_POR_DEFECTO;
   if (VOZ.voz && !N.vozPorId(VOZ.voz)) VOZ.voz = "";
+  if (!["eleven", "openai", "propia"].includes(VOZ.motor)) VOZ.motor = "eleven";
+  VOZ.modeloEleven = N.modeloElevenPorId(VOZ.modeloEleven).id;
+  VOZ.perfil = N.perfilElevenPorId(VOZ.perfil).id;
+  if (VOZ.ajuste !== "video") VOZ.ajuste = "voz";
   const hayAnim = Boolean(animActiva());
-  const sinClave = !S.claves.openai;
-  const bloqueado = !hayAnim || !d?.hayTexto || sinClave || ocupado();
-  const razon = !hayAnim ? "Carga un ejemplo o genera un video primero" : !d?.hayTexto ? "Este video no trae texto de voz" : sinClave ? "Falta la clave de OpenAI (Ajustes)" : ocupado() ? "Hay un trabajo en curso" : "";
+  if (!hayAnim) { cont.replaceChildren(); return; }
+  const eleven = VOZ.motor === "eleven", propia = VOZ.motor === "propia";
+  const clave = eleven ? S.claves.elevenlabs : S.claves.openai;
+  const nombreClave = eleven ? "ElevenLabs" : "OpenAI";
+  const sinClave = !propia && !clave;
+  const faltaVoz = eleven && !VOZ.voiceId;
+  const bloqueado = !d?.hayTexto || sinClave || faltaVoz || ocupado();
+  const razon = !d?.hayTexto ? "Este video no trae texto de voz" : sinClave ? `Falta la clave de ${nombreClave} (Ajustes)` : faltaVoz ? "Elige una voz de ElevenLabs" : ocupado() ? "Hay un trabajo en curso" : "";
   const v = d?.voz;
   const est = d?.estimado;
-  if (!hayAnim) { cont.replaceChildren(); return; }
+  const estE = d?.estimadoEleven?.[VOZ.modeloEleven];
+  const elegir = (k, f) => (e) => { VOZ[k] = e.target.value; f?.(); guardarVoz(); pintarVoz(false); };
+  const ritmoSel = h("div.campo", h("label.etq", { for: "voz-ritmo" }, "Ritmo"),
+    h("select#voz-ritmo", { onchange: elegir("ritmo") }, N.RITMOS_VOZ.map((x) => h("option", { value: x.id, selected: x.id === VOZ.ritmo }, x.etiqueta))));
+
+  /* ── selector de dónde sale la voz ── */
+  const motores = [["eleven", "🎙️ ElevenLabs", "voz de estudio, la más natural"], ["openai", "🤖 OpenAI", "barata, estilos colombianos"], ["propia", "🎧 Mi voz", "CapCut, locutor o tu grabación"]];
+  const selector = h("div.selector-motor", { role: "tablist", "aria-label": "De dónde sale la voz" }, motores.map(([id, t, sub]) =>
+    h(`button.motor-op${VOZ.motor === id ? ".activa" : ""}`, { type: "button", role: "tab", "aria-selected": String(VOZ.motor === id), onclick: () => { VOZ.motor = id; VOZ.prueba = null; guardarVoz(); pintarVoz(false); } }, h("strong", t), h("span", sub))));
+
+  /* ── ajustes del camino elegido ── */
+  let ajustes;
+  if (eleven) {
+    const lista = VOZ.vocesEleven;
+    ajustes = [
+      h("div.ajustes-3",
+        h("div.campo", h("label.etq", { for: "voz-eleven" }, "Voz de ElevenLabs"),
+          lista ? h("select#voz-eleven", { onchange: (e) => { const x = lista.find((q) => q.id === e.target.value); VOZ.voiceId = x?.id ?? ""; VOZ.nombreVoz = x?.nombre ?? ""; VOZ.prueba = null; guardarVoz(); pintarVoz(false); } },
+            lista.some((x) => x.id === VOZ.voiceId) ? null : h("option", { value: "", selected: true }, "— elige una —"),
+            lista.map((x) => h("option", { value: x.id, selected: x.id === VOZ.voiceId }, `${x.espanol ? "🇪🇸 " : ""}${x.nombre}${[x.genero, x.acento, x.edad, x.uso].filter(Boolean).length ? " · " + [x.genero, x.acento, x.edad, x.uso].filter(Boolean).join(" · ") : ""}`)))
+            : h("p.chico-t.suave", { style: "margin:0" }, "Pulsa «Cargar mis voces» para ver las de tu cuenta, o pega abajo el ID de una voz."),
+          h("div.fila.chicos", h("button.btn.chico", { type: "button", disabled: !S.claves.elevenlabs || VOZ.cargandoVoces, onclick: cargarVocesEleven }, VOZ.cargandoVoces ? "⏳ Cargando…" : "🔄 Cargar mis voces de ElevenLabs"),
+            (lista?.find((x) => x.id === VOZ.voiceId)?.preview) ? h("audio", { controls: true, src: lista.find((x) => x.id === VOZ.voiceId).preview, style: "height:32px", preload: "none" }) : null)),
+        h("div.campo", h("label.etq", { for: "voz-id" }, "o pega el ID de la voz"),
+          h("input#voz-id", { type: "text", spellcheck: false, autocomplete: "off", placeholder: "p. ej. pNInz6obpgDQGcFmaJgB", value: VOZ.voiceId, oninput: (e) => { VOZ.voiceId = e.target.value.trim(); VOZ.nombreVoz = lista?.find((x) => x.id === VOZ.voiceId)?.nombre ?? ""; guardarVoz(); }, onchange: () => pintarVoz(false) }),
+          h("p.chico-t.suave", { style: "margin:0" }, "En elevenlabs.io → Voices: añade a «Mis voces» una colombiana o latina y copia su ID.")),
+        h("div.campo", h("label.etq", { for: "voz-modelo-e" }, "Modelo"),
+          h("select#voz-modelo-e", { onchange: elegir("modeloEleven") }, N.MODELOS_ELEVEN.map((x) => h("option", { value: x.id, selected: x.id === VOZ.modeloEleven }, x.etiqueta)))),
+        h("div.campo", h("label.etq", { for: "voz-perfil" }, "Expresión"),
+          h("select#voz-perfil", { onchange: elegir("perfil") }, N.PERFILES_ELEVEN.map((x) => h("option", { value: x.id, selected: x.id === VOZ.perfil }, x.etiqueta)))),
+        ritmoSel),
+    ];
+  } else if (!propia) {
+    ajustes = [
+      h("div.ajustes-3",
+        h("div.campo", h("label.etq", { for: "voz-estilo" }, "Estilo colombiano"),
+          h("select#voz-estilo", { onchange: elegir("estilo") }, N.ESTILOS_VOZ.map((x) => h("option", { value: x.id, selected: x.id === VOZ.estilo }, x.etiqueta)))),
+        h("div.campo", h("label.etq", { for: "voz-voz" }, "Voz base"),
+          h("select#voz-voz", { onchange: elegir("voz") },
+            h("option", { value: "", selected: !VOZ.voz }, `✨ Recomendada del estilo (${estilo.voz})`),
+            N.VOCES_OPENAI.map((x) => h("option", { value: x.id, selected: x.id === VOZ.voz }, `${x.nombre} · ${x.suena} · ${x.nota}`)))),
+        ritmoSel),
+      h("details", { open: Boolean(VOZ.extra) }, h("summary.chico-t.suave", "Instrucciones propias (opcional) y lo que se le pide al modelo"),
+        h("textarea#voz-extra", { rows: 2, spellcheck: false, placeholder: "Ej.: habla como si le contaras un chisme a una amiga; más emoción en las cifras; di «parce» al final…", value: VOZ.extra, oninput: (e) => { VOZ.extra = e.target.value; guardarVoz(); } }),
+        h("p.chico-t.suave", { style: "white-space:pre-wrap" }, N.construirInstrucciones(opcionesDeVoz()))),
+    ];
+  }
+
+  /* ── cómo se encaja la voz con el video (solo ElevenLabs y OpenAI) ── */
+  const ajusteCampo = propia ? null : h("div.campo", { style: "margin-top:10px" }, h("label.etq", { for: "voz-ajuste" }, "Si una frase no cabe en su escena…"),
+    h("select#voz-ajuste", { onchange: elegir("ajuste") },
+      h("option", { value: "voz", selected: VOZ.ajuste === "voz" }, `⏩ Acelerar un poco la voz (hasta ×${eleven ? N.TEMPO_MAX_ELEVEN : N.TEMPO_MAX}) · el video renderizado se queda igual`),
+      h("option", { value: "video", selected: VOZ.ajuste === "video" }, "↔️ Alargar esa escena y dejar la voz natural · hay que renderizar de nuevo")));
+
+  /* ── costo ── */
+  const costo = propia ? null
+    : eleven ? (estE && estE.escenas ? h("div", { style: "margin-top:10px" },
+      h("div.fila.chicos", h("span.chip", `${estE.escenas} escenas`), h("span.chip", `${num(estE.caracteres)} caracteres ≈ ${Math.round(estE.segundos)} s de voz`), h("span.chip.ok", `≈ ${num(estE.creditos)} créditos`), h("span.chip", `≈ US$ ${estE.usdApi.toFixed(2)} a tarifa de API`)),
+      h("details", h("summary.chico-t.suave", "¿Cuánto me cuesta con un plan de ElevenLabs?"),
+        h("table", h("thead", h("tr", h("th", "Plan"), h("th", "US$/mes"), h("th", "Créditos/mes"), h("th", "Videos como este"), h("th", "≈ por video"))),
+          h("tbody", estE.porPlan.map((q) => h("tr", h("td", q.plan.nombre + (q.plan.comercial ? "" : " (sin uso comercial)")), h("td", q.plan.usdMes), h("td", num(q.plan.creditos)), h("td", q.videos), h("td", `US$ ${q.usdPorVideo.toFixed(2)}`))))),
+        h("p.chico-t.suave", "Referencia (verifícala en elevenlabs.io/pricing: los planes cambian). Probar una voz y regenerar gastan créditos; las frases ya generadas con la misma voz y ajustes salen de la caché sin costo. Para publicar con fines comerciales necesitas un plan de pago."))) : null)
+      : est && est.escenas ? h("div.fila.chicos", { style: "margin-top:10px" }, h("span.chip", `${est.escenas} escenas`), h("span.chip", `${est.caracteres} caracteres ≈ ${Math.round(est.segundos)} s de voz`), h("span.chip.ok", `≈ US$ ${est.usd.toFixed(3)} (gpt-4o-mini-tts)`)) : null;
+
+  /* ── Mi voz (CapCut u otra) ── */
+  const archivos = d?.externa?.archivos ?? [];
+  if (propia && !archivos.includes(VOZ.archivo)) VOZ.archivo = archivos.at(-1) ?? "";
+  const bloquePropia = propia ? h("div",
+    h("div.nota", h("strong", "Con CapCut (o cualquier locutor): "), "genera la voz en CapCut con TODO el texto seguido (te lo dejo en «guion-locucion»), expórtala como audio (mp3/m4a/wav) y súbela aquí. El video se ajusta a ella: cada escena pasa a durar lo que dura su frase y la voz empieza en 0:00, igual que el video. Así ya no tienes que alinear nada a mano. Tu voz debe decir el mismo texto, en el mismo orden."),
+    h("div.fila", { style: "align-items:center;margin:8px 0" },
+      h("label.btn", { for: "voz-archivo" }, VOZ.subiendo ? "⏳ Subiendo…" : "📤 Subir el audio de mi voz"),
+      h("input#voz-archivo", { type: "file", accept: "audio/*,.mp3,.wav,.m4a,.aac,.ogg,.flac,.opus", hidden: true, disabled: VOZ.subiendo, onchange: (e) => subirAudioVoz(e.target.files?.[0]) }),
+      archivos.length ? h("select#voz-archivo-sel", { onchange: (e) => { VOZ.archivo = e.target.value; } }, archivos.map((f) => h("option", { value: f, selected: f === VOZ.archivo }, f))) : h("span.chico-t.suave", "Todavía no subiste ningún audio.")),
+    h("details", { open: Boolean(VOZ.duraciones) }, h("summary.chico-t.suave", `Si el corte automático se equivoca: escribe las duraciones a mano (${est?.escenas ?? "?"} números, una por escena con locución)`),
+      h("textarea#voz-duraciones", { rows: 2, spellcheck: false, placeholder: "Ej.: 9.8, 11.2, 8.5, …  (segundos, decimales con punto; vacío = automático)", value: VOZ.duraciones, oninput: (e) => { VOZ.duraciones = e.target.value; } })),
+    h("div.fila", { style: "margin-top:10px" }, h("span.espacio"),
+      h("button.btn.primario", { type: "button", disabled: ocupado() || !d?.hayTexto || !VOZ.archivo, title: !VOZ.archivo ? "Primero sube tu audio" : "", onclick: async () => { if (ocupado()) return aviso("Hay un trabajo en curso: espera a que termine.", "aviso"); await lanzar("anim-voz-externa", { archivo: VOZ.archivo, duraciones: leerDuraciones(VOZ.duraciones) }); } }, "🎯 Alinear el video a esta voz"))) : null;
+
+  /* ── resultado (común a los tres caminos) ── */
+  const etiquetaVoz = !v ? "" : v.externa ? `tu voz (${v.archivo})` : v.motor === "eleven" ? `ElevenLabs «${v.voz}» · ${v.modelo} · expresión ${v.estilo}` : `«${v.voz}» · ${N.estiloPorId(v.estilo)?.etiqueta ?? v.estilo} · ritmo ${v.ritmo}`;
+  const resultado = v ? h("div", { style: "margin-top:12px" },
+    v.vigente ? h("div.nota.ok", `✅ Voz lista: ${etiquetaVoz}. ${v.necesitaRender ? "Cambió los tiempos del video: renderízalo de nuevo (la voz se mezcla sola)." : "Se mezcla sola al renderizar, o ponla al video que ya renderizaste."}`) : h("div.nota.aviso", "⚠️ La voz generada es de otra versión de este video (cambió el texto o los tiempos). Vuelve a generarla."),
+    v.creditos ? h("p.chico-t.suave", `Gasto real de esta generación: ${num(v.creditos)} créditos (≈ US$ ${Number(v.costoUsd).toFixed(3)} a tarifa de API).`) : null,
+    v.avisos?.length ? h("div.nota.aviso", v.avisos.map((m) => h("div", `⚠️ ${m}`))) : null,
+    v.ajuste === "video" && v.alargadas?.length ? h("div.nota", `↔️ Alargué las escenas ${v.alargadas.join(", ")} para que la voz natural quepa. Al renderizar, el video dura lo que su locución.`) : null,
+    v.audio ? h("div.fila.chicos", h("span.chico-t.suave", "Escucha la voz completa:"), h("audio", { controls: true, src: v.audio, style: "height:36px" })) : null,
+    v.escenas?.some((x) => !x.cabe) ? h("div.nota.aviso", `⚠️ En la(s) escena(s) ${v.escenas.filter((x) => !x.cabe).map((x) => x.n).join(", ")} la voz es más larga que la escena (se aceleró al máximo y se cortó el final). Acorta ese texto, alarga la escena o elige «Alargar esa escena».`) : null,
+    h("details", h("summary.chico-t.suave", "Detalle por escena"),
+      h("table", h("thead", h("tr", h("th", "#"), h("th", "Escena"), h("th", "Voz"), h("th", "Ajuste"))),
+        h("tbody", v.escenas.map((x) => h("tr", h("td", x.n), h("td", `${num(x.dur, 1)} s`), h("td", `${num(x.durVoz, 1)} s`), h("td", x.cortada ? "✂️ cortada" : x.alargada ? "↔️ escena alargada" : x.tempo > 1.001 ? `⏩ ×${num(x.tempo, 2)}` : "✅")))))),
+    h("div.fila", { style: "margin-top:10px" },
+      h("button.btn.primario", { type: "button", disabled: ocupado() || !v.vigente, title: v.vigente ? "" : "La voz es de otra versión del video: vuelve a generarla", onclick: async () => { if (ocupado()) return aviso("Hay un trabajo en curso: espera a que termine.", "aviso"); await lanzar("anim-render"); } }, "🎬 Renderizar con voz"),
+      h("button.btn", { type: "button", disabled: ocupado() || !d?.video || !v.vigente || v.necesitaRender, title: !v.vigente ? "La voz es de otra versión del video: vuelve a generarla" : v.necesitaRender ? "Los tiempos del video cambiaron: usa «Renderizar con voz»" : d?.video ? "Mezcla la voz con el audio del MP4 ya renderizado, sin volver a renderizar" : "Primero renderiza el video", onclick: async () => { if (ocupado()) return aviso("Hay un trabajo en curso: espera a que termine.", "aviso"); await lanzar("anim-poner-voz"); } }, "➕ Ponerla al video ya renderizado"),
+      h("button.btn.chico", { type: "button", disabled: ocupado(), onclick: async () => { if (ocupado()) return aviso("Hay un trabajo en curso: espera a que termine.", "aviso"); await lanzar("anim-render", { sinVoz: true }); } }, "🔇 Renderizar sin voz"),
+      d?.externa?.hayCopia ? h("button.btn.chico", { type: "button", disabled: ocupado(), title: "Vuelve a los tiempos que tenía el video antes de ajustarlo a la voz", onclick: async () => { if (ocupado()) return aviso("Hay un trabajo en curso: espera a que termine.", "aviso"); await lanzar("anim-voz-externa", { deshacer: true }); } }, "↩️ Volver a los tiempos originales") : null)) : null;
+
   cont.replaceChildren(h("div.tarjeta.voz",
-    h("h2", "🎙️ Voz en off con IA · colombiana y alegre"),
-    h("p.suave", "Elige un estilo (bogotano, paisa, costeño, caleño…), pruébalo y genera la voz de TODAS las escenas de este video. Cada frase se ajusta al tiempo de su escena y se mezcla sola con los efectos y la música al renderizar."),
-    h("div.ajustes-3",
-      h("div.campo", h("label.etq", { for: "voz-estilo" }, "Estilo colombiano"),
-        h("select#voz-estilo", { onchange: (e) => { VOZ.estilo = e.target.value; guardarVoz(); pintarVoz(false); } }, N.ESTILOS_VOZ.map((x) => h("option", { value: x.id, selected: x.id === VOZ.estilo }, x.etiqueta)))),
-      h("div.campo", h("label.etq", { for: "voz-voz" }, "Voz base"),
-        h("select#voz-voz", { onchange: (e) => { VOZ.voz = e.target.value; guardarVoz(); pintarVoz(false); } },
-          h("option", { value: "", selected: !VOZ.voz }, `✨ Recomendada del estilo (${estilo.voz})`),
-          N.VOCES_OPENAI.map((x) => h("option", { value: x.id, selected: x.id === VOZ.voz }, `${x.nombre} · ${x.suena} · ${x.nota}`)))),
-      h("div.campo", h("label.etq", { for: "voz-ritmo" }, "Ritmo"),
-        h("select#voz-ritmo", { onchange: (e) => { VOZ.ritmo = e.target.value; guardarVoz(); pintarVoz(false); } }, N.RITMOS_VOZ.map((x) => h("option", { value: x.id, selected: x.id === VOZ.ritmo }, x.etiqueta))))),
-    h("details", { open: Boolean(VOZ.extra) }, h("summary.chico-t.suave", "Instrucciones propias (opcional) y lo que se le pide al modelo"),
-      h("textarea#voz-extra", { rows: 2, spellcheck: false, placeholder: "Ej.: habla como si le contaras un chisme a una amiga; más emoción en las cifras; di «parce» al final…", value: VOZ.extra, oninput: (e) => { VOZ.extra = e.target.value; guardarVoz(); } }),
-      h("p.chico-t.suave", { style: "white-space:pre-wrap" }, N.construirInstrucciones(opcionesDeVoz()))),
-    est && est.escenas ? h("div.fila.chicos", h("span.chip", `${est.escenas} escenas`), h("span.chip", `${est.caracteres} caracteres ≈ ${Math.round(est.segundos)} s de voz`), h("span.chip.ok", `≈ US$ ${est.usd.toFixed(3)} (gpt-4o-mini-tts)`)) : null,
-    h("div.fila", { style: "margin-top:10px;align-items:center" },
-      h("button.btn", { type: "button", disabled: sinClave || VOZ.probando || ocupado(), title: sinClave ? "Falta la clave de OpenAI (Ajustes)" : "", onclick: probarVozPanel }, VOZ.probando ? "⏳ Generando prueba…" : "🔊 Probar esta voz"),
-      VOZ.prueba ? h("audio#voz-prueba-audio", { controls: true, src: VOZ.prueba.url, style: "height:36px" }) : null,
-      h("span.espacio"),
-      h("button.btn.primario", { type: "button", disabled: bloqueado, title: razon, onclick: async () => { if (ocupado()) return aviso("Hay un trabajo en curso: espera a que termine.", "aviso"); await lanzar("anim-voz", opcionesDeVoz()); } }, v ? "🎙️ Volver a generar la voz" : "🎙️ Generar la voz de este video")),
-    sinClave ? h("div.nota.aviso", "🔑 Para generar la voz con IA falta la clave de OpenAI: ", h("a", { href: "#/ajustes" }, "ponla en Ajustes"), ".") : null,
-    v ? h("div", { style: "margin-top:12px" },
-      v.vigente ? h("div.nota.ok", `✅ Voz lista: «${v.voz}» · ${N.estiloPorId(v.estilo)?.etiqueta ?? v.estilo} · ritmo ${v.ritmo}. Se mezcla sola al renderizar.`) : h("div.nota.aviso", "⚠️ La voz generada es de otra versión de este video (cambió el texto o los tiempos). Vuelve a generarla."),
-      v.audio ? h("div.fila.chicos", h("span.chico-t.suave", "Escucha la voz completa:"), h("audio", { controls: true, src: v.audio, style: "height:36px" })) : null,
-      v.escenas?.some((x) => !x.cabe) ? h("div.nota.aviso", `⚠️ En la(s) escena(s) ${v.escenas.filter((x) => !x.cabe).map((x) => x.n).join(", ")} la voz es más larga que la escena (se aceleró al máximo y se cortó el final). Acorta ese texto o alarga la escena.`) : null,
-      h("details", h("summary.chico-t.suave", "Detalle por escena"),
-        h("table", h("thead", h("tr", h("th", "#"), h("th", "Escena"), h("th", "Voz"), h("th", "Ajuste"))),
-          h("tbody", v.escenas.map((x) => h("tr", h("td", x.n), h("td", `${num(x.dur, 1)} s`), h("td", `${num(x.durVoz, 1)} s`), h("td", x.cortada ? "✂️ cortada" : x.tempo > 1.001 ? `⏩ ×${num(x.tempo, 2)}` : "✅")))))),
-      h("div.fila", { style: "margin-top:10px" },
-        h("button.btn.primario", { type: "button", disabled: ocupado() || !v.vigente, title: v.vigente ? "" : "La voz es de otra versión del video: vuelve a generarla", onclick: async () => { if (ocupado()) return aviso("Hay un trabajo en curso: espera a que termine.", "aviso"); await lanzar("anim-render"); } }, "🎬 Renderizar con voz"),
-        h("button.btn", { type: "button", disabled: ocupado() || !d?.video || !v.vigente, title: !v.vigente ? "La voz es de otra versión del video: vuelve a generarla" : d?.video ? "Mezcla la voz con el audio del MP4 ya renderizado, sin volver a renderizar" : "Primero renderiza el video", onclick: async () => { if (ocupado()) return aviso("Hay un trabajo en curso: espera a que termine.", "aviso"); await lanzar("anim-poner-voz"); } }, "➕ Ponerla al video ya renderizado"),
-        h("button.btn.chico", { type: "button", disabled: ocupado(), onclick: async () => { if (ocupado()) return aviso("Hay un trabajo en curso: espera a que termine.", "aviso"); await lanzar("anim-render", { sinVoz: true }); } }, "🔇 Renderizar sin voz"))) : null,
+    h("h2", "🎙️ Voz en off · ponla después de ver tu video"),
+    h("ol.pasos-voz",
+      h("li", h("strong", "Renderiza el video sin voz"), " y míralo (el botón «Renderizar» de arriba)."),
+      h("li", h("strong", "Elige de dónde sale la voz"), ` y pruébala: ${d?.video ? "ya tienes un video renderizado ✅" : "todavía no hay video renderizado"}.`),
+      h("li", h("strong", "Genera la voz"), ": cada frase se ajusta a su escena."),
+      h("li", h("strong", "Ponla al video ya renderizado"), " (sin volver a renderizar) y descárgalo.")),
+    selector,
+    propia ? bloquePropia : [
+      h("p.suave", eleven ? "ElevenLabs entrega la voz más natural. Elige una de tu cuenta (mejor una latina o colombiana), pruébala y genera la voz de TODAS las escenas: cada frase se lee con el contexto de la anterior y la siguiente para que la entonación fluya." : "Elige un estilo (bogotano, paisa, costeño, caleño…), pruébalo y genera la voz de TODAS las escenas de este video. Cada frase se ajusta al tiempo de su escena."),
+      ajustes, ajusteCampo, costo,
+      h("div.fila", { style: "margin-top:10px;align-items:center" },
+        h("button.btn", { type: "button", disabled: sinClave || faltaVoz || VOZ.probando || ocupado(), title: sinClave ? `Falta la clave de ${nombreClave} (Ajustes)` : faltaVoz ? "Elige una voz de ElevenLabs" : "", onclick: probarVozPanel }, VOZ.probando ? "⏳ Generando prueba…" : "🔊 Probar esta voz"),
+        VOZ.prueba ? h("audio#voz-prueba-audio", { controls: true, src: VOZ.prueba.url, style: "height:36px" }) : null,
+        h("span.espacio"),
+        h("button.btn.primario", { type: "button", disabled: bloqueado, title: razon, onclick: async () => { if (ocupado()) return aviso("Hay un trabajo en curso: espera a que termine.", "aviso"); await lanzar("anim-voz", opcionesDeVoz()); } }, v && !v.externa ? "🎙️ Volver a generar la voz" : "🎙️ Generar la voz de este video")),
+      sinClave ? h("div.nota.aviso", `🔑 Para generar la voz con ${nombreClave} falta su clave: `, h("a", { href: "#/ajustes" }, "ponla en Ajustes"), ".") : null,
+    ],
+    resultado,
     d?.videoConVoz ? h("div", { style: "margin-top:12px" }, h("h3", "🎞️ Video con voz"),
       h("div.fila", { style: "align-items:flex-start;gap:18px" },
         h("video.reel", { src: d.videoConVoz.url, controls: true, preload: "metadata" }),
         h("div", h("p", `${d.videoConVoz.mb} MB · con la voz mezclada`), h("a.btn.primario", { href: "/salida/video-animacion-con-voz.mp4?descargar=1" }, "⬇️ Descargar el video con voz")))) : null,
-    h("p.chico-t.suave", "⚠️ Las voces de OpenAI no son «de un país»: el acento colombiano se logra pidiéndoselo al modelo y puede variar de una prueba a otra. Prueba varias y quédate con la que mejor suene. Es una voz sintética."),
+    propia ? null : h("p.chico-t.suave", "⚠️ Son voces sintéticas: la entonación puede variar de una generación a otra. Prueba varias y quédate con la que mejor suene."),
   ));
 }
 
