@@ -1,208 +1,19 @@
 {
  "version": 1,
- "titulo": "Los 4 tejidos que te construyen",
- "paleta": "medicina",
- "sfx": true,
+ "titulo": "El metro que valoriza Bogotá",
+ "paleta": "imnoba",
+ "sfx": false,
  "fps": 60,
- "duracion": 35.4,
+ "duracion": 28,
  "escenas": [
   {
    "n": 1,
-   "t": "PIEZA",
-   "voz": "Todo tu cuerpo son solo cuatro tejidos. Uno es líquido.",
-   "dur": 4.2,
-   "h": "SOLO 4 TEJIDOS. UNO ES LÍQUIDO",
-   "w": "LÍQUIDO",
-   "sub": "",
-   "ic": "brillo",
-   "num": null,
-   "vs": null,
-   "bars": [],
-   "barsU": "",
-   "hi": -1,
-   "line": null,
-   "items": [],
-   "stops": [],
-   "end": "",
-   "donut": [],
-   "picto": null,
-   "top": [],
-   "myth": "",
-   "truth": "",
-   "zoom": null,
-   "capas": null,
-   "mira": null,
-   "impacto": null,
-   "red": null,
-   "termo": null,
-   "pila": null,
-   "cap": "epitelial, conectivo, muscular y nervioso",
-   "papel": null,
-   "pilares": null,
-   "ciclo": null,
-   "duo": null,
-   "osc": null,
-   "cubo": null,
-   "diales": null,
-   "pieza": {
-    "id": "tej-gancho",
-    "props": {}
-   },
-   "cita": null,
-   "sc": "",
-   "modo": "VIRAL",
-   "tema": "oscuro",
-   "bg": "dark",
-   "ritmo": 1,
-   "total": 35.4,
-   "inicio": 0,
-   "fin": 4.2,
-   "texto": "Todo tu cuerpo son solo cuatro tejidos. Uno es líquido.",
-   "tr": "barrido",
-   "trs": "zoom",
-   "sfx": [
-    {
-     "t": 0.04,
-     "tipo": "whoosh",
-     "vol": 0.16
-    },
-    {
-     "t": 0.05,
-     "tipo": "whoosh",
-     "vol": 0.12
-    },
-    {
-     "t": 0.44999999999999996,
-     "tipo": "pop",
-     "vol": 0.1
-    },
-    {
-     "t": 0.87,
-     "tipo": "pop",
-     "vol": 0.1
-    },
-    {
-     "t": 1.29,
-     "tipo": "pop",
-     "vol": 0.1
-    },
-    {
-     "t": 1.71,
-     "tipo": "pop",
-     "vol": 0.1
-    },
-    {
-     "t": 2.5,
-     "tipo": "ding",
-     "vol": 0.16
-    }
-   ]
-  },
-  {
-   "n": 2,
-   "t": "PIEZA",
-   "voz": "Epitelial: tu estómago produce ácido que corroe metales, pero su revestimiento se renueva en días.",
-   "dur": 5.7,
-   "h": "EPITELIAL: SE RENUEVA EN DÍAS",
-   "w": "DÍAS",
-   "sub": "",
-   "ic": "diana",
-   "num": null,
-   "vs": null,
-   "bars": [],
-   "barsU": "",
-   "hi": -1,
-   "line": null,
-   "items": [],
-   "stops": [],
-   "end": "",
-   "donut": [],
-   "picto": null,
-   "top": [],
-   "myth": "",
-   "truth": "",
-   "zoom": null,
-   "capas": null,
-   "mira": null,
-   "impacto": null,
-   "red": null,
-   "termo": null,
-   "pila": null,
-   "cap": "ácido que ataca metales",
-   "papel": null,
-   "pilares": null,
-   "ciclo": null,
-   "duo": null,
-   "osc": null,
-   "cubo": null,
-   "diales": null,
-   "pieza": {
-    "id": "tej-epitelial",
-    "props": {}
-   },
-   "cita": null,
-   "sc": "",
-   "modo": "VIRAL",
-   "tema": "claro",
-   "bg": "light",
-   "ritmo": 1,
-   "total": 35.4,
-   "inicio": 4.2,
-   "fin": 9.9,
-   "texto": "Epitelial: tu estómago produce ácido que corroe metales, pero su revestimiento se renueva en días.",
-   "tr": "zoom",
-   "trs": "semitono",
-   "sfx": [
-    {
-     "t": 0.04,
-     "tipo": "whoosh",
-     "vol": 0.16
-    },
-    {
-     "t": 0.05,
-     "tipo": "whoosh",
-     "vol": 0.1
-    },
-    {
-     "t": 0.25,
-     "tipo": "pop",
-     "vol": 0.1
-    },
-    {
-     "t": 1.9,
-     "tipo": "tick",
-     "vol": 0.12
-    },
-    {
-     "t": 2.5999999999999996,
-     "tipo": "tick",
-     "vol": 0.12
-    },
-    {
-     "t": 3.3,
-     "tipo": "tick",
-     "vol": 0.12
-    },
-    {
-     "t": 3.9999999999999996,
-     "tipo": "tick",
-     "vol": 0.12
-    },
-    {
-     "t": 4.2,
-     "tipo": "ding",
-     "vol": 0.16
-    }
-   ]
-  },
-  {
-   "n": 3,
-   "t": "PIEZA",
-   "voz": "Conectivo: la sangre, tejido líquido, pasa de dos kilómetros por hora en la aorta.",
-   "dur": 5.4,
-   "h": "CONECTIVO: LA SANGRE ES UN TEJIDO",
-   "w": "CONECTIVO:",
-   "sub": "",
+   "t": "HOOK",
+   "voz": "Locución: ¿Y si publicar tu casa, apartamento o vehículo fuera completamente gratis? Visual: icono de casa y de auto con ondas amarillas, título grande «¿Y si publicar fuera GRATIS?», tarjeta con «$0 COP».",
+   "dur": 5,
+   "h": "BOGOTÁ NECESITA METRO",
+   "w": "METRO",
+   "sub": "y tu inmueble lo agradece",
    "ic": "tren",
    "num": null,
    "vs": null,
@@ -225,7 +36,7 @@
    "red": null,
    "termo": null,
    "pila": null,
-   "cap": "más de 2 km/h en la aorta",
+   "cap": "",
    "papel": null,
    "pilares": null,
    "ciclo": null,
@@ -233,441 +44,35 @@
    "osc": null,
    "cubo": null,
    "diales": null,
-   "pieza": {
-    "id": "tej-sangre",
-    "props": {}
-   },
+   "pieza": null,
    "cita": null,
    "sc": "",
    "modo": "VIRAL",
    "tema": "oscuro",
    "bg": "dark",
    "ritmo": 1,
-   "total": 35.4,
-   "inicio": 9.9,
-   "fin": 15.3,
-   "texto": "Conectivo: la sangre, tejido líquido, pasa de dos kilómetros por hora en la aorta.",
-   "tr": "semitono",
-   "trs": "corte",
-   "sfx": [
-    {
-     "t": 0.04,
-     "tipo": "whoosh",
-     "vol": 0.16
-    },
-    {
-     "t": 0.05,
-     "tipo": "whoosh",
-     "vol": 0.1
-    },
-    {
-     "t": 0.25,
-     "tipo": "pop",
-     "vol": 0.1
-    },
-    {
-     "t": 1.3,
-     "tipo": "heartbeat",
-     "vol": 0.14
-    },
-    {
-     "t": 2.2,
-     "tipo": "heartbeat",
-     "vol": 0.14
-    },
-    {
-     "t": 3.1,
-     "tipo": "heartbeat",
-     "vol": 0.14
-    },
-    {
-     "t": 3.2,
-     "tipo": "ding",
-     "vol": 0.16
-    }
-   ]
+   "total": 28,
+   "inicio": 0,
+   "fin": 5,
+   "texto": "Locución: ¿Y si publicar tu casa, apartamento o vehículo fuera completamente gratis? Visual: icono de casa y de auto con ondas amarillas, título grande «¿Y si publicar fuera GRATIS?», tarjeta con «$0 COP».",
+   "tr": "barrido",
+   "trs": "barrido"
   },
   {
-   "n": 4,
-   "t": "PIEZA",
-   "voz": "Tus huesos también son conectivo: se renuevan casi por completo cada diez años.",
+   "n": 2,
+   "t": "NUM",
+   "voz": "Locución: En IMNOBA tu inmueble se ve en el mapa de la ciudad, las 24 horas. Visual: maqueta 3D de una ciudad con una manzana resaltada en amarillo y un edificio alto; la cámara orbita.",
    "dur": 5,
-   "h": "TUS HUESOS TAMBIÉN SON CONECTIVO",
-   "w": "CONECTIVO",
+   "h": "TIEMPO PERDIDO",
+   "w": "PERDIDO",
    "sub": "",
-   "ic": "brillo",
-   "num": null,
-   "vs": null,
-   "bars": [],
-   "barsU": "",
-   "hi": -1,
-   "line": null,
-   "items": [],
-   "stops": [],
-   "end": "",
-   "donut": [],
-   "picto": null,
-   "top": [],
-   "myth": "",
-   "truth": "",
-   "zoom": null,
-   "capas": null,
-   "mira": null,
-   "impacto": null,
-   "red": null,
-   "termo": null,
-   "pila": null,
-   "cap": "esqueleto casi nuevo cada 10 años",
-   "papel": null,
-   "pilares": null,
-   "ciclo": null,
-   "duo": null,
-   "osc": null,
-   "cubo": null,
-   "diales": null,
-   "pieza": {
-    "id": "tej-hueso",
-    "props": {}
+   "ic": "reloj",
+   "num": {
+    "n": "2",
+    "u": "h",
+    "pre": "~",
+    "l": "AL DÍA EN TRANCONES"
    },
-   "cita": null,
-   "sc": "",
-   "modo": "VIRAL",
-   "tema": "claro",
-   "bg": "light",
-   "ritmo": 1,
-   "total": 35.4,
-   "inicio": 15.3,
-   "fin": 20.3,
-   "texto": "Tus huesos también son conectivo: se renuevan casi por completo cada diez años.",
-   "tr": "corte",
-   "trs": "zoom",
-   "sfx": [
-    {
-     "t": 0.04,
-     "tipo": "whoosh",
-     "vol": 0.16
-    },
-    {
-     "t": 0.05,
-     "tipo": "whoosh",
-     "vol": 0.1
-    },
-    {
-     "t": 0.25,
-     "tipo": "pop",
-     "vol": 0.1
-    },
-    {
-     "t": 1.1,
-     "tipo": "clic",
-     "vol": 0.05
-    },
-    {
-     "t": 1.23,
-     "tipo": "clic",
-     "vol": 0.05
-    },
-    {
-     "t": 1.36,
-     "tipo": "clic",
-     "vol": 0.05
-    },
-    {
-     "t": 1.4900000000000002,
-     "tipo": "clic",
-     "vol": 0.05
-    },
-    {
-     "t": 1.62,
-     "tipo": "clic",
-     "vol": 0.05
-    },
-    {
-     "t": 1.75,
-     "tipo": "clic",
-     "vol": 0.05
-    },
-    {
-     "t": 1.8800000000000001,
-     "tipo": "clic",
-     "vol": 0.05
-    },
-    {
-     "t": 2.0100000000000002,
-     "tipo": "clic",
-     "vol": 0.05
-    },
-    {
-     "t": 2.14,
-     "tipo": "clic",
-     "vol": 0.05
-    },
-    {
-     "t": 2.27,
-     "tipo": "clic",
-     "vol": 0.05
-    },
-    {
-     "t": 2.4000000000000004,
-     "tipo": "clic",
-     "vol": 0.05
-    },
-    {
-     "t": 2.5300000000000002,
-     "tipo": "clic",
-     "vol": 0.05
-    },
-    {
-     "t": 2.66,
-     "tipo": "clic",
-     "vol": 0.05
-    },
-    {
-     "t": 2.79,
-     "tipo": "clic",
-     "vol": 0.05
-    },
-    {
-     "t": 2.92,
-     "tipo": "clic",
-     "vol": 0.05
-    },
-    {
-     "t": 3.0500000000000003,
-     "tipo": "clic",
-     "vol": 0.05
-    },
-    {
-     "t": 3.18,
-     "tipo": "clic",
-     "vol": 0.05
-    },
-    {
-     "t": 3.31,
-     "tipo": "clic",
-     "vol": 0.05
-    },
-    {
-     "t": 3.44,
-     "tipo": "clic",
-     "vol": 0.05
-    },
-    {
-     "t": 3.5700000000000003,
-     "tipo": "clic",
-     "vol": 0.05
-    },
-    {
-     "t": 3.8000000000000003,
-     "tipo": "ding",
-     "vol": 0.18
-    }
-   ]
-  },
-  {
-   "n": 5,
-   "t": "PIEZA",
-   "voz": "Muscular: fuera del cuerpo, con oxígeno, tu corazón sigue latiendo con su propio marcapasos.",
-   "dur": 5.4,
-   "h": "MUSCULAR: EL CORAZÓN LATE SOLO",
-   "w": "SOLO",
-   "sub": "",
-   "ic": "brillo",
-   "num": null,
-   "vs": null,
-   "bars": [],
-   "barsU": "",
-   "hi": -1,
-   "line": null,
-   "items": [],
-   "stops": [],
-   "end": "",
-   "donut": [],
-   "picto": null,
-   "top": [],
-   "myth": "",
-   "truth": "",
-   "zoom": null,
-   "capas": null,
-   "mira": null,
-   "impacto": null,
-   "red": null,
-   "termo": null,
-   "pila": null,
-   "cap": "su propio marcapasos",
-   "papel": null,
-   "pilares": null,
-   "ciclo": null,
-   "duo": null,
-   "osc": null,
-   "cubo": null,
-   "diales": null,
-   "pieza": {
-    "id": "tej-muscular",
-    "props": {}
-   },
-   "cita": null,
-   "sc": "",
-   "modo": "VIRAL",
-   "tema": "oscuro",
-   "bg": "dark",
-   "ritmo": 1,
-   "total": 35.4,
-   "inicio": 20.3,
-   "fin": 25.7,
-   "texto": "Muscular: fuera del cuerpo, con oxígeno, tu corazón sigue latiendo con su propio marcapasos.",
-   "tr": "zoom",
-   "trs": "semitono",
-   "sfx": [
-    {
-     "t": 0.04,
-     "tipo": "whoosh",
-     "vol": 0.16
-    },
-    {
-     "t": 0.05,
-     "tipo": "whoosh",
-     "vol": 0.1
-    },
-    {
-     "t": 0.75,
-     "tipo": "heartbeat",
-     "vol": 0.14
-    },
-    {
-     "t": 1.55,
-     "tipo": "heartbeat",
-     "vol": 0.14
-    },
-    {
-     "t": 1.9,
-     "tipo": "zap",
-     "vol": 0.16
-    },
-    {
-     "t": 2.7,
-     "tipo": "heartbeat",
-     "vol": 0.14
-    },
-    {
-     "t": 3.5,
-     "tipo": "heartbeat",
-     "vol": 0.14
-    },
-    {
-     "t": 3.6,
-     "tipo": "ding",
-     "vol": 0.16
-    },
-    {
-     "t": 4.300000000000001,
-     "tipo": "heartbeat",
-     "vol": 0.14
-    }
-   ]
-  },
-  {
-   "n": 6,
-   "t": "PIEZA",
-   "voz": "Nervioso: la mayoría de tus neuronas no se renueva; tienen tu misma edad.",
-   "dur": 5,
-   "h": "NERVIOSO: TU MISMA EDAD",
-   "w": "EDAD",
-   "sub": "",
-   "ic": "brillo",
-   "num": null,
-   "vs": null,
-   "bars": [],
-   "barsU": "",
-   "hi": -1,
-   "line": null,
-   "items": [],
-   "stops": [],
-   "end": "",
-   "donut": [],
-   "picto": null,
-   "top": [],
-   "myth": "",
-   "truth": "",
-   "zoom": null,
-   "capas": null,
-   "mira": null,
-   "impacto": null,
-   "red": null,
-   "termo": null,
-   "pila": null,
-   "cap": "neuronas de la corteza",
-   "papel": null,
-   "pilares": null,
-   "ciclo": null,
-   "duo": null,
-   "osc": null,
-   "cubo": null,
-   "diales": null,
-   "pieza": {
-    "id": "tej-nervioso",
-    "props": {}
-   },
-   "cita": null,
-   "sc": "",
-   "modo": "VIRAL",
-   "tema": "claro",
-   "bg": "light",
-   "ritmo": 1,
-   "total": 35.4,
-   "inicio": 25.7,
-   "fin": 30.7,
-   "texto": "Nervioso: la mayoría de tus neuronas no se renueva; tienen tu misma edad.",
-   "tr": "semitono",
-   "trs": "barrido",
-   "sfx": [
-    {
-     "t": 0.04,
-     "tipo": "whoosh",
-     "vol": 0.16
-    },
-    {
-     "t": 0.05,
-     "tipo": "whoosh",
-     "vol": 0.1
-    },
-    {
-     "t": 0.45,
-     "tipo": "tick",
-     "vol": 0.1
-    },
-    {
-     "t": 0.95,
-     "tipo": "tick",
-     "vol": 0.1
-    },
-    {
-     "t": 1.45,
-     "tipo": "tick",
-     "vol": 0.1
-    },
-    {
-     "t": 2.7,
-     "tipo": "zap",
-     "vol": 0.14
-    },
-    {
-     "t": 3.7,
-     "tipo": "ding",
-     "vol": 0.18
-    }
-   ]
-  },
-  {
-   "n": 7,
-   "t": "CTA",
-   "voz": "El cuerpo es una máquina perfecta. Guarda esto y síguenos en Sinapsis.",
-   "dur": 4.7,
-   "h": "GUÁRDALO Y SÍGUENOS",
-   "w": "SÍGUENOS",
-   "sub": "Más ciencia en SINAPSIS",
-   "ic": "cohete",
-   "num": null,
    "vs": null,
    "bars": [],
    "barsU": "",
@@ -703,33 +108,208 @@
    "tema": "oscuro",
    "bg": "gold",
    "ritmo": 1,
-   "total": 35.4,
-   "inicio": 30.7,
-   "fin": 35.4,
-   "texto": "El cuerpo es una máquina perfecta. Guarda esto y síguenos en Sinapsis.",
+   "total": 28,
+   "inicio": 5,
+   "fin": 10,
+   "texto": "Locución: En IMNOBA tu inmueble se ve en el mapa de la ciudad, las 24 horas. Visual: maqueta 3D de una ciudad con una manzana resaltada en amarillo y un edificio alto; la cámara orbita.",
    "tr": "barrido",
-   "trs": "barrido",
-   "sfx": [
+   "trs": "barrido"
+  },
+  {
+   "n": 3,
+   "t": "VS",
+   "voz": "Locución: Con fotos claras y un plano que explica cada metro cuadrado. Visual: plano arquitectónico de un apartamento de 74 m² (sala 24, cocina 9, balcón 6, dos habitaciones de 14 y baño de 7) que se dibuja solo.",
+   "dur": 6,
+   "h": "LÍNEAS DE METRO",
+   "w": "METRO",
+   "sub": "",
+   "ic": "tren",
+   "num": null,
+   "vs": {
+    "a": {
+     "l": "BOGOTÁ",
+     "n": "0",
+     "ic": "tren"
+    },
+    "b": {
+     "l": "SANTIAGO",
+     "n": "7",
+     "ic": "tren"
+    },
+    "op": "<"
+   },
+   "bars": [],
+   "barsU": "",
+   "hi": -1,
+   "line": null,
+   "items": [],
+   "stops": [],
+   "end": "",
+   "donut": [],
+   "picto": null,
+   "top": [],
+   "myth": "",
+   "truth": "",
+   "zoom": null,
+   "capas": null,
+   "mira": null,
+   "impacto": null,
+   "red": null,
+   "termo": null,
+   "pila": null,
+   "cap": "",
+   "papel": null,
+   "pilares": null,
+   "ciclo": null,
+   "duo": null,
+   "osc": null,
+   "cubo": null,
+   "diales": null,
+   "pieza": null,
+   "cita": null,
+   "sc": "",
+   "modo": "VIRAL",
+   "tema": "oscuro",
+   "bg": "dark",
+   "ritmo": 1,
+   "total": 28,
+   "inicio": 10,
+   "fin": 16,
+   "texto": "Locución: Con fotos claras y un plano que explica cada metro cuadrado. Visual: plano arquitectónico de un apartamento de 74 m² (sala 24, cocina 9, balcón 6, dos habitaciones de 14 y baño de 7) que se dibuja solo.",
+   "tr": "barrido",
+   "trs": "barrido"
+  },
+  {
+   "n": 4,
+   "t": "ROUTE",
+   "voz": "Locución: Y tu inversión crece con el tiempo. Visual: cinco barras 3D crecientes (100, 112, 127, 141, 158) y un contador +58 %, aclarando que es un ejemplo ilustrativo.",
+   "dur": 6,
+   "h": "LA PRIMERA LÍNEA",
+   "w": "PRIMERA",
+   "sub": "",
+   "ic": "tendencia-alza",
+   "num": null,
+   "vs": null,
+   "bars": [],
+   "barsU": "",
+   "hi": -1,
+   "line": null,
+   "items": [],
+   "stops": [
+    "PORTAL AMÉRICAS",
+    "KENNEDY",
+    "CENTRO",
+    "CALLE 72"
+   ],
+   "end": "VALORIZACIÓN",
+   "donut": [],
+   "picto": null,
+   "top": [],
+   "myth": "",
+   "truth": "",
+   "zoom": null,
+   "capas": null,
+   "mira": null,
+   "impacto": null,
+   "red": null,
+   "termo": null,
+   "pila": null,
+   "cap": "",
+   "papel": null,
+   "pilares": null,
+   "ciclo": null,
+   "duo": null,
+   "osc": null,
+   "cubo": null,
+   "diales": null,
+   "pieza": null,
+   "cita": null,
+   "sc": "",
+   "modo": "VIRAL",
+   "tema": "oscuro",
+   "bg": "gold",
+   "ritmo": 1,
+   "total": 28,
+   "inicio": 16,
+   "fin": 22,
+   "texto": "Locución: Y tu inversión crece con el tiempo. Visual: cinco barras 3D crecientes (100, 112, 127, 141, 158) y un contador +58 %, aclarando que es un ejemplo ilustrativo.",
+   "tr": "barrido",
+   "trs": "barrido"
+  },
+  {
+   "n": 5,
+   "t": "STEPS",
+   "voz": "Locución: Publica hoy mismo en IMNOBA. Es gratis. Visual: logo IMNOBA en texto, casa que se dibuja con trazo, lista de tres beneficios y tarjeta «Es gratis».",
+   "dur": 6,
+   "h": "CAUSA Y EFECTO",
+   "w": "EFECTO",
+   "sub": "",
+   "ic": "casa",
+   "num": null,
+   "vs": null,
+   "bars": [],
+   "barsU": "",
+   "hi": -1,
+   "line": null,
+   "items": [
     {
-     "t": 0.04,
-     "tipo": "whoosh",
-     "vol": 0.16
+     "l": "METRO",
+     "ic": "tren"
     },
     {
-     "t": 0.5,
-     "tipo": "ding",
-     "vol": 0.2
+     "l": "MÁS DEMANDA",
+     "ic": "tendencia-alza"
     },
     {
-     "t": 1.1,
-     "tipo": "pop",
-     "vol": 0.15
+     "l": "MÁS VALOR",
+     "ic": "dolar"
     }
-   ]
+   ],
+   "stops": [],
+   "end": "",
+   "donut": [],
+   "picto": null,
+   "top": [],
+   "myth": "",
+   "truth": "",
+   "zoom": null,
+   "capas": null,
+   "mira": null,
+   "impacto": null,
+   "red": null,
+   "termo": null,
+   "pila": null,
+   "cap": "",
+   "papel": null,
+   "pilares": null,
+   "ciclo": null,
+   "duo": null,
+   "osc": null,
+   "cubo": null,
+   "diales": null,
+   "pieza": null,
+   "cita": null,
+   "sc": "",
+   "modo": "VIRAL",
+   "tema": "claro",
+   "bg": "light",
+   "ritmo": 1,
+   "total": 28,
+   "inicio": 22,
+   "fin": 28,
+   "texto": "Locución: Publica hoy mismo en IMNOBA. Es gratis. Visual: logo IMNOBA en texto, casa que se dibuja con trazo, lista de tres beneficios y tarjeta «Es gratis».",
+   "tr": "barrido",
+   "trs": "barrido"
   }
  ],
- "uso": null,
+ "uso": {
+  "modelo": "gpt-4o-mini",
+  "prompt_tokens": 1968,
+  "completion_tokens": 242,
+  "costo_usd": 0.00044039999999999997,
+  "llamadas": 1
+ },
  "hud": false,
  "formato": "viral",
- "musica": true
+ "musica": false
 }
