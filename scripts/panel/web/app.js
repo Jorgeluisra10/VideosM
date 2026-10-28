@@ -252,12 +252,21 @@ function ruta() {
   if (p[0] === "p" && p[1]) return { vista: "proyecto", id: p[1], paso: ETAPAS.some((e) => e.id === p[2]) ? p[2] : null };
   if (p[0] === "ajustes") return { vista: "ajustes" };
   if (p[0] === "guia") return { vista: "guia", doc: p[1] ?? "GUIA" };
+  if (p[0] === "videos") return { vista: "videos", partes: p.slice(1) };
+  if (p[0] === "voz") return { vista: "voz" };
   return { vista: "inicio" };
 }
 const ir = (hash) => { if (location.hash === hash) pintarVista(); else location.hash = hash; };
 
+/** Lo que necesitan el Panel de Videos y el Laboratorio de voz del panel principal (utilidades y el núcleo compartido). */
+async function contextoPaneles() {
+  EST.N ??= await import("/modulos/anim-nucleo.js");
+  return { h, api, aviso, fallo, num, N: EST.N };
+}
+
 async function pintarVista() {
   const v = ruta();
+  document.body.classList.toggle("modo-pv", ["videos", "voz"].includes(v.vista));
   $$(".menu a").forEach((a) => a.classList.toggle("activo", (a.dataset.nav === "clasico" && ["inicio", "nuevo", "proyecto"].includes(v.vista)) || a.dataset.nav === v.vista));
   const cont = $("#vista");
   try {
@@ -269,6 +278,8 @@ async function pintarVista() {
     else if (v.vista === "proyecto") await vistaProyecto(cont, v);
     else if (v.vista === "ajustes") await vistaAjustes(cont);
     else if (v.vista === "guia") await vistaGuia(cont, v.doc);
+    else if (v.vista === "videos") await (await import("/videos.js")).vistaVideos(cont, v.partes, await contextoPaneles());
+    else if (v.vista === "voz") await (await import("/lab.js")).vistaLab(cont, await contextoPaneles());
   } catch (e) {
     cont.replaceChildren(h("div.tarjeta", h("h2", "😕 Algo salió mal"), h("p", e.message), h("button.btn", { onclick: () => pintarVista() }, "Reintentar")));
   }

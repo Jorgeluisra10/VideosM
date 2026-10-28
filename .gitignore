@@ -18,3 +18,8 @@ public/fotos/*
 !public/fotos/LEEME.txt
 trabajo/anim/
 trabajo/salida/guion-locucion.txt
+
+# audios de voz ya pagados (caché por hash) y datos personales del Panel de Videos (métricas, copias de seguridad, videos)
+cache/
+data/*
+!data/LEEME.txt

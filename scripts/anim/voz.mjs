@@ -16,11 +16,12 @@ import "../_tmp.mjs";
 import { spawnSync } from "node:child_process";
 import { existsSync, mkdirSync, readFileSync, rmSync, writeFileSync } from "node:fs";
 import { join } from "node:path";
-import { decodificar, escribirWavEstereo, SR } from "../audio.mjs";
+import { decodificar, escribirWavEstereo, normalizarEnSitio, recortarSilenciosLargos, SR } from "../audio.mjs";
 import { cargarEnv, configuracion } from "../ia/entorno.mjs";
 import { buscarFfmpeg } from "../medios.mjs";
 import { ErrorVoz, pedir } from "../voz/comun.mjs";
 import { cargarNucleoAnim, RAIZ } from "./nucleo.mjs";
+import { dirCacheAudio, leerConfigVoz, leerPronunciacion, leerUsoVoz, registrarUsoVoz } from "./voz-config.mjs";
 
 export const dirVoz = (...p) => join(RAIZ, "trabajo", "anim", "voz", ...p);
 export const dirSalidaVoz = (...p) => join(RAIZ, "trabajo", "salida", "voz", ...p);
@@ -28,10 +29,10 @@ export const ARCHIVO_ACTUAL = () => dirVoz("actual.json");
 export const PISTA_VOZ = () => dirVoz("voz-mezcla.wav");
 
 /** Una frase → mp3 (gpt-4o-mini-tts). `speed` no se usa: ese modelo no lo admite; el ritmo se pide en las instrucciones. */
-export async function sintetizarFrase({ texto, voz, instrucciones, modelo, clave, url }) {
+export async function sintetizarFrase({ texto, voz, instrucciones, modelo, clave, url, formato = "mp3" }) {
   if (!clave) throw new ErrorVoz("Falta OPENAI_API_KEY (panel → Ajustes) para generar la voz con IA.");
   const base = (url || "https://api.openai.com/v1").replace(/\/+$/, "");
-  const r = await pedir(`${base}/audio/speech`, { method: "POST", headers: { Authorization: `Bearer ${clave}`, "Content-Type": "application/json" }, body: JSON.stringify({ model: modelo, voice: voz, input: texto, ...(instrucciones ? { instructions: instrucciones } : {}), response_format: "mp3" }) }, { etiqueta: "OpenAI audio.speech" });
+  const r = await pedir(`${base}/audio/speech`, { method: "POST", headers: { Authorization: `Bearer ${clave}`, "Content-Type": "application/json" }, body: JSON.stringify({ model: modelo, voice: voz, input: texto, ...(instrucciones ? { instructions: instrucciones } : {}), response_format: formato }) }, { etiqueta: "OpenAI audio.speech" });
   const mp3 = Buffer.from(await r.arrayBuffer());
   if (mp3.length < 1000) throw new ErrorVoz("OpenAI devolvió un audio vacío.");
   return mp3;
@@ -135,15 +136,20 @@ export async function restaurarTiemposOriginales(archivoAnim) {
  */
 export async function generarVozAnimacion({ anim, opciones = {}, clave, url, log = console.log, sinCache = false }) {
   const N = await cargarNucleoAnim();
+  const cfg = await leerConfigVoz();
+  const diccionario = await leerPronunciacion();
+  // la locutora por defecto sale de voz.config.json (voz e instrucciones); lo que pidas explícitamente manda
+  opciones = { ...opciones, instruccionesBase: opciones.instruccionesBase ?? cfg.instrucciones, vozPorDefecto: opciones.vozPorDefecto ?? cfg.voz };
   const eleven = opciones.motor === "eleven";
   const ajusteVideo = opciones.ajuste === "video";
   const archivoAnim = join(RAIZ, "src", "data", "animacion.json");
   // «ajustar el video» parte siempre de los tiempos originales (así repetirlo con otra voz no encadena alargues)
   const base = ajusteVideo ? (await leerTiemposOriginales(anim)) ?? anim : anim;
-  const textosBase = N.textosVoz(base);
+  // lo que se le manda a la voz: números a palabras, siglas como suenan, frases cortas (el guion de la animación no se toca)
+  const textosBase = N.textosVoz(base).map((e) => ({ ...e, hablado: N.prepararParaVoz(e.texto, { diccionario }).texto }));
   if (!textosBase.length) throw new ErrorVoz("Esta animación no trae texto de voz (la locución). Carga o genera un video con el motor viral.");
   const { ffmpeg } = buscarFfmpeg();
-  mkdirSync(dirVoz("cache"), { recursive: true });
+  mkdirSync(dirCacheAudio(), { recursive: true });
   const tmp = dirVoz("tmp");
 
   let modelo, voz, instrucciones = "", ajustes = null, estimado;
@@ -156,7 +162,7 @@ export async function generarVozAnimacion({ anim, opciones = {}, clave, url, log
     log(`🎙️ ElevenLabs · ${opciones.nombreVoz || voz} · ${modelo} · perfil «${N.perfilElevenPorId(opciones.perfil).id}» · ritmo «${opciones.ritmo || N.RITMO_POR_DEFECTO}» (velocidad ${ajustes.velocidad})`);
     log(`   ${estimado.escenas} escenas · ${estimado.caracteres} caracteres ≈ ${estimado.creditos} créditos (≈ US$ ${estimado.usdApi.toFixed(3)} a tarifa de API)`);
   } else {
-    modelo = opciones.modelo || N.MODELO_TTS;
+    modelo = opciones.modelo || cfg.modelo || N.MODELO_TTS;
     voz = N.vozEfectiva(opciones);
     instrucciones = N.construirInstrucciones(opciones);
     estimado = N.estimarVoz(base);
@@ -169,26 +175,33 @@ export async function generarVozAnimacion({ anim, opciones = {}, clave, url, log
   const pendientes = [];
   let desdeCache = 0, pedidas = 0, caracteresPedidos = 0;
   textosBase.forEach((e, i) => {
-    const ctx = N.contextoFrases(textosBase, i);
-    const clave_ = eleven ? N.claveCacheEleven(modelo, voz, ajustes, e.texto, ctx.previo, ctx.siguiente) : N.claveCacheVoz(modelo, voz, instrucciones, e.texto);
-    const f = dirVoz("cache", `${clave_}.mp3`);
+    const ctx = N.contextoFrases(textosBase.map((q) => ({ texto: q.hablado })), i);
+    const clave_ = eleven ? N.claveCacheEleven(modelo, voz, ajustes, e.hablado, ctx.previo, ctx.siguiente) : N.claveCacheVoz(`${modelo}|${cfg.formato}`, voz, instrucciones, e.hablado);
+    const f = dirCacheAudio(`${clave_}.${eleven ? "mp3" : cfg.formato}`);
     if (!sinCache && existsSync(f) && readFileSync(f).length > 1000) { mp3s[i] = f; desdeCache++; }
     else pendientes.push({ i, f, e, ctx });
   });
   for (let k = 0; k < pendientes.length; k += 3) {
     await Promise.all(pendientes.slice(k, k + 3).map(async ({ i, f, e, ctx }) => {
-      const mp3 = eleven ? await sintetizarFraseEleven({ texto: e.texto, voiceId: voz, modelo, clave, url, ajustes, previo: ctx.previo, siguiente: ctx.siguiente }) : await sintetizarFrase({ texto: e.texto, voz, instrucciones, modelo, clave, url });
+      const mp3 = eleven ? await sintetizarFraseEleven({ texto: e.hablado, voiceId: voz, modelo, clave, url, ajustes, previo: ctx.previo, siguiente: ctx.siguiente }) : await sintetizarFrase({ texto: e.hablado, voz, instrucciones, modelo, clave, url, formato: cfg.formato });
       writeFileSync(f, mp3);
       mp3s[i] = f;
       pedidas++;
-      caracteresPedidos += e.texto.length;
+      caracteresPedidos += e.hablado.length;
+      registrarUsoVoz({ motor: eleven ? "eleven" : "openai", caracteres: e.hablado.length });
       log(`   ↓ escena ${e.n}: «${e.texto.slice(0, 48)}${e.texto.length > 48 ? "…" : ""}»`);
     }));
   }
   if (desdeCache) log(`   ♻️ ${desdeCache} frases salieron de la caché (sin costo)`);
 
   // 2 · el audio de cada frase, recortado
-  const xs = mp3s.map((f) => recortarSilencio(decodificar(ffmpeg, f, tmp)));
+  // (silencios largos dentro de la frase se acortan; la velocidad de voz.config.json se aplica a OpenAI, que no admite `speed` en este modelo)
+  let silenciosSeg = 0;
+  const xs = mp3s.map((f) => {
+    const r = recortarSilenciosLargos(recortarSilencio(decodificar(ffmpeg, f, tmp)));
+    silenciosSeg += r.quitadosSeg;
+    return !eleven && Math.abs(cfg.velocidad - 1) > 0.005 ? acelerar(ffmpeg, r.audio, cfg.velocidad, tmp) : r.audio;
+  });
   const durNat = xs.map((x) => x.length / SR);
 
   // 3 · «ajustar el video a la voz»: las escenas donde la voz natural no cabe se alargan (las demás no se tocan)
@@ -248,6 +261,8 @@ export async function generarVozAnimacion({ anim, opciones = {}, clave, url, log
   mkdirSync(dirVoz(), { recursive: true });
   mkdirSync(dirSalidaVoz(), { recursive: true });
   escribirWavEstereo(PISTA_VOZ(), pista);
+  // volumen parejo: la voz a −16 LUFS (el video final se lleva a −14 LUFS al mezclar con la música y los efectos)
+  const normalizada = normalizarEnSitio(ffmpeg, PISTA_VOZ(), { objetivo: -16, pico: -1.5 });
   const mp3 = dirSalidaVoz("voz-completa.mp3");
   rmSync(mp3, { force: true });
   spawnSync(ffmpeg, ["-v", "error", "-y", "-i", PISTA_VOZ(), "-codec:a", "libmp3lame", "-q:a", "3", mp3], { encoding: "utf8" });
@@ -264,6 +279,7 @@ export async function generarVozAnimacion({ anim, opciones = {}, clave, url, log
     estilo: eleven ? N.perfilElevenPorId(opciones.perfil).id : opciones.estilo || N.ESTILO_POR_DEFECTO,
     ritmo: opciones.ritmo || N.RITMO_POR_DEFECTO, extra: eleven ? "" : opciones.extra || "",
     ajuste: ajusteVideo ? "video" : "voz", alargadas, cambioTiempos: alargadas.length > 0,
+    preparado: { frases: textosBase.filter((e) => e.hablado !== e.texto).length, silenciosRecortadosSeg: +silenciosSeg.toFixed(2), caracteresEnviados: caracteresPedidos, normalizadaLUFS: normalizada ? normalizada.objetivo : null },
     instrucciones,
     escenas,
     frasesPedidas: pedidas, frasesDeCache: desdeCache,
@@ -295,7 +311,10 @@ export async function vozVigente(anim) {
 export async function probarVoz({ opciones = {}, texto, clave, url }) {
   const N = await cargarNucleoAnim();
   const eleven = opciones.motor === "eleven";
-  const frase = N.textoParaVoz(texto) || "¿Sabías que Bogotá lleva setenta y siete años esperando un metro? En mil novecientos cuarenta y dos tenía cuatrocientos mil habitantes. Hoy, casi ocho millones.";
+  const cfg = await leerConfigVoz();
+  opciones = { ...opciones, instruccionesBase: opciones.instruccionesBase ?? cfg.instrucciones, vozPorDefecto: opciones.vozPorDefecto ?? cfg.voz };
+  const crudo = N.textoParaVoz(texto) || "¿Sabías que Bogotá lleva 77 años esperando un metro? En 1942 tenía 400.000 habitantes. Hoy, casi 8 millones.";
+  const frase = N.prepararParaVoz(crudo, { diccionario: await leerPronunciacion() }).texto;
   mkdirSync(dirSalidaVoz(), { recursive: true });
   if (eleven) {
     const modelo = N.modeloElevenPorId(opciones.modelo).id, voiceId = N.sanearVoiceId(opciones.voiceId);
@@ -306,21 +325,64 @@ export async function probarVoz({ opciones = {}, texto, clave, url }) {
     let creditos = 0;
     if (!existsSync(f) || readFileSync(f).length < 1000) {
       writeFileSync(f, await sintetizarFraseEleven({ texto: frase, voiceId, modelo, clave, url, ajustes }));
+      registrarUsoVoz({ motor: "eleven", caracteres: frase.length });
       creditos = Math.round(frase.length * N.modeloElevenPorId(modelo).credito);
     }
     return { url: `/salida/voz/prueba-${id}.mp3`, voz: opciones.nombreVoz || voiceId, modelo, creditos, costoUsd: Math.round((creditos ? (frase.length / 1000) * N.modeloElevenPorId(modelo).usdPor1000Api : 0) * 10000) / 10000, instrucciones: "" };
   }
-  const modelo = opciones.modelo || N.MODELO_TTS;
+  const modelo = opciones.modelo || cfg.modelo || N.MODELO_TTS;
   const voz = N.vozEfectiva(opciones);
   const instrucciones = N.construirInstrucciones(opciones);
-  const id = N.claveCacheVoz(modelo, voz, instrucciones, frase);
+  const id = N.claveCacheVoz(`${modelo}|${cfg.formato}`, voz, instrucciones, frase);
   const f = dirSalidaVoz(`prueba-${id}.mp3`);
   let costo = 0;
   if (!existsSync(f) || readFileSync(f).length < 1000) {
-    writeFileSync(f, await sintetizarFrase({ texto: frase, voz, instrucciones, modelo, clave, url }));
+    writeFileSync(f, await sintetizarFrase({ texto: frase, voz, instrucciones, modelo, clave, url, formato: cfg.formato }));
+    registrarUsoVoz({ motor: "openai", caracteres: frase.length });
     costo = Math.round(((frase.length / N.CARACTERES_POR_SEGUNDO) / 60) * N.USD_POR_MINUTO_TTS * 10000) / 10000;
   }
   return { url: `/salida/voz/prueba-${id}.mp3`, voz, modelo, costoUsd: costo, instrucciones };
+}
+
+/**
+ * LABORATORIO DE VOZ: el mismo guion corto con 1–3 versiones (voz + instrucciones) para oírlas lado a lado.
+ * Cada versión sale de la caché si ya se pagó; para escucharla se le quitan silencios largos y se lleva a −14 LUFS (así se comparan al mismo volumen).
+ * Devuelve el texto tal como se le manda a la voz (ya preparado), los cambios que hizo el preparador y, por versión: url del audio, voz, instrucciones, costo y si salió de la caché.
+ */
+export async function generarVariantesLab({ texto, variantes, preparar = true, clave, url }) {
+  const N = await cargarNucleoAnim();
+  const cfg = await leerConfigVoz();
+  const prep = preparar ? N.prepararParaVoz(texto, { diccionario: await leerPronunciacion() }) : { texto, cambios: [], tramos: N.tramosDe(texto) };
+  const { ffmpeg } = buscarFfmpeg();
+  mkdirSync(dirCacheAudio(), { recursive: true });
+  const versiones = new Array(variantes.length);
+  await Promise.all(variantes.map(async (v, i) => {
+    const id = N.claveCacheVoz(`${cfg.modelo}|${cfg.formato}`, v.voz, v.instrucciones, prep.texto);
+    const crudo = dirCacheAudio(`${id}.${cfg.formato}`), escuchar = dirCacheAudio(`lab-${id}.mp3`);
+    let desdeCache = true;
+    if (!existsSync(crudo) || readFileSync(crudo).length < 1000) {
+      writeFileSync(crudo, await sintetizarFrase({ texto: prep.texto, voz: v.voz, instrucciones: v.instrucciones, modelo: cfg.modelo, clave, url, formato: cfg.formato }));
+      registrarUsoVoz({ motor: "openai", caracteres: prep.texto.length });
+      desdeCache = false;
+    }
+    if (!existsSync(escuchar) || readFileSync(escuchar).length < 1000) {
+      const tmp = dirVoz(`tmp-lab-${id}`);
+      mkdirSync(tmp, { recursive: true });
+      try {
+        let x = recortarSilenciosLargos(recortarSilencio(decodificar(ffmpeg, crudo, tmp))).audio;
+        if (Math.abs(cfg.velocidad - 1) > 0.005) x = acelerar(ffmpeg, x, cfg.velocidad, tmp);
+        const wav = join(tmp, "lab.wav");
+        escribirWavEstereo(wav, x);
+        normalizarEnSitio(ffmpeg, wav, { objetivo: -14, pico: -1.5 });
+        spawnSync(ffmpeg, ["-v", "error", "-y", "-i", wav, "-codec:a", "libmp3lame", "-q:a", "3", escuchar], { encoding: "utf8" });
+      } finally {
+        rmSync(tmp, { recursive: true, force: true });
+      }
+    }
+    const usable = existsSync(escuchar) && readFileSync(escuchar).length > 1000 ? escuchar : crudo;
+    versiones[i] = { id, url: `/cache-audio/${usable.split(/[\\/]/).pop()}`, voz: v.voz, instrucciones: v.instrucciones, caracteres: prep.texto.length, desdeCache, costoUsd: desdeCache ? 0 : Math.round(((prep.texto.length / N.CARACTERES_POR_SEGUNDO) / 60) * N.USD_POR_MINUTO_TTS * 10000) / 10000 };
+  }));
+  return { textoHablado: prep.texto, cambios: prep.cambios, tramos: prep.tramos, versiones, uso: leerUsoVoz() };
 }
 
 // ---------------------------------------------------------------------------

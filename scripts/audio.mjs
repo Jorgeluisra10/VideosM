@@ -10,7 +10,7 @@
  *   await mezclarAudio({ raiz, ffmpeg, segundos, salidaWav })
  */
 import { spawnSync } from "node:child_process";
-import { existsSync, mkdirSync, readFileSync, rmSync, writeFileSync } from "node:fs";
+import { existsSync, mkdirSync, readFileSync, renameSync, rmSync, writeFileSync } from "node:fs";
 import { basename, dirname, join } from "node:path";
 import { build } from "esbuild";
 
@@ -156,6 +156,109 @@ export async function mezclarAudio({ raiz, ffmpeg, segundos, salidaWav }) {
   return { efectos: usados, pico: Math.min(pico, 0.97), segundos: N / SR };
 }
 
+// ---------------------------------------------------------------------------
+// Posproceso de la voz y de la mezcla: silencios largos, ducking de la música y volumen de plataforma (-14 LUFS)
+// ---------------------------------------------------------------------------
+const VENTANA_MS = 10;
+
+/** Silencios largos DENTRO de una frase (más de `max` s por debajo de `umbral` de RMS) se acortan a `deja` s; los bordes no se tocan. */
+export function recortarSilenciosLargos(x, { umbral = 0.006, max = 0.6, deja = 0.35 } = {}) {
+  const w = Math.round((VENTANA_MS / 1000) * SR);
+  const n = Math.floor(x.length / w);
+  const silencio = new Array(n).fill(false);
+  for (let i = 0; i < n; i++) {
+    let a = 0;
+    for (let k = i * w; k < (i + 1) * w; k++) a += x[k] * x[k];
+    silencio[i] = Math.sqrt(a / w) < umbral;
+  }
+  let ini = 0;
+  while (ini < n && silencio[ini]) ini++;
+  let fin = n - 1;
+  while (fin > ini && silencio[fin]) fin--;
+  const trozos = [];
+  let desde = 0, quitados = 0;
+  for (let i = ini; i <= fin; ) {
+    if (!silencio[i]) { i++; continue; }
+    let j = i;
+    while (j <= fin && silencio[j]) j++;
+    const largo = (j - i) * w;
+    if (largo > max * SR) {
+      const conserva = Math.round(deja * SR), mitad = Math.floor(conserva / 2);
+      trozos.push(x.subarray(desde, i * w + mitad), x.subarray(j * w - (conserva - mitad), j * w));
+      quitados += largo - conserva;
+      desde = j * w;
+    }
+    i = j;
+  }
+  if (!quitados) return { audio: x, quitadosSeg: 0 };
+  trozos.push(x.subarray(desde));
+  const sal = new Float32Array(x.length - quitados);
+  let o = 0;
+  for (const t of trozos) { sal.set(t, o); o += t.length; }
+  return { audio: sal, quitadosSeg: quitados / SR };
+}
+
+/** Envolvente de la voz (0 = calla, 1 = habla) con ataque rápido y caída lenta, una muestra cada 10 ms. */
+export function envolventeVoz(voz, { umbral = 0.012, ataque = 0.03, soltar = 0.35 } = {}) {
+  const w = Math.round((VENTANA_MS / 1000) * SR), n = Math.floor(voz.length / w), dt = VENTANA_MS / 1000;
+  const ca = 1 - Math.exp(-dt / ataque), cs = 1 - Math.exp(-dt / soltar);
+  const env = new Float32Array(n);
+  let e = 0;
+  for (let i = 0; i < n; i++) {
+    let a = 0;
+    for (let k = i * w; k < (i + 1) * w; k++) a += voz[k] * voz[k];
+    const objetivo = Math.sqrt(a / w) > umbral ? 1 : 0;
+    e += (objetivo - e) * (objetivo > e ? ca : cs);
+    env[i] = e;
+  }
+  return env;
+}
+
+/** Ducking: baja `base` (música, o el audio ya mezclado) mientras habla `voz`. `profundidad` 0,65 = hasta ×0,35 (≈ −9 dB). Modifica `base` en el sitio. */
+export function duckear(base, voz, { profundidad = 0.65, ...o } = {}) {
+  const env = envolventeVoz(voz, o), w = Math.round((VENTANA_MS / 1000) * SR);
+  let minimo = 1;
+  for (let i = 0; i < base.length; i++) {
+    const p = Math.min(env.length - 1, i / w), a = Math.floor(p), b = Math.min(env.length - 1, a + 1);
+    const e = env.length ? env[a] + (env[b] - env[a]) * (p - a) : 0;
+    const g = 1 - profundidad * e;
+    if (g < minimo) minimo = g;
+    base[i] *= g;
+  }
+  return { gananciaMinima: minimo };
+}
+
+/** Mide el volumen de un archivo con loudnorm (EBU R128): { integrado (LUFS), picoVerdadero (dBTP), lra }. null si no hay señal. */
+export function medirLUFS(ffmpeg, archivo, { objetivo = -14, pico = -1.5, lra = 11 } = {}) {
+  const r = spawnSync(ffmpeg, ["-hide_banner", "-nostats", "-i", archivo, "-af", `loudnorm=I=${objetivo}:TP=${pico}:LRA=${lra}:print_format=json`, "-f", "null", "-"], { encoding: "utf8", maxBuffer: 16 * 1024 * 1024 });
+  const m = /\{[^{}]*"input_i"[^{}]*\}/.exec(String(r.stderr ?? ""));
+  if (!m) return null;
+  const j = JSON.parse(m[0]);
+  const num = (v) => { const x = Number(v); return Number.isFinite(x) ? x : null; };
+  const integrado = num(j.input_i);
+  if (integrado === null || integrado < -69) return null;
+  return { integrado, picoVerdadero: num(j.input_tp), lra: num(j.input_lra), umbral: num(j.input_thresh), desfase: num(j.target_offset) };
+}
+
+/** Normaliza el volumen (loudnorm en dos pasadas, lineal) y escribe `salida` (wav estéreo 48 kHz). Devuelve las mediciones o null si no hay señal / ffmpeg falla. */
+export function normalizarLUFS(ffmpeg, entrada, salida, { objetivo = -14, pico = -1.5, lra = 11 } = {}) {
+  const med = medirLUFS(ffmpeg, entrada, { objetivo, pico, lra });
+  if (!med || med.umbral === null || med.desfase === null) return null;
+  const filtro = `loudnorm=I=${objetivo}:TP=${pico}:LRA=${lra}:measured_I=${med.integrado}:measured_TP=${med.picoVerdadero}:measured_LRA=${med.lra}:measured_thresh=${med.umbral}:offset=${med.desfase}:linear=true`;
+  const r = spawnSync(ffmpeg, ["-v", "error", "-y", "-i", entrada, "-af", filtro, "-ar", String(SR), "-ac", "2", "-c:a", "pcm_s16le", salida], { encoding: "utf8" });
+  if (r.status !== 0 || !existsSync(salida)) return null;
+  return { antes: med.integrado, picoAntes: med.picoVerdadero, objetivo };
+}
+
+/** Normaliza un wav EN EL SITIO (escribe un temporal y lo renombra). true si se aplicó. */
+export function normalizarEnSitio(ffmpeg, wav, opciones) {
+  const tmp = `${wav}.norm.wav`;
+  const r = normalizarLUFS(ffmpeg, wav, tmp, opciones);
+  if (!r) { rmSync(tmp, { force: true }); return null; }
+  renameSync(tmp, wav);
+  return r;
+}
+
 /**
  * Mezcla SOLO efectos de sonido (sin voz, sin ambiente, sin música) para el motor de animación.
  * `eventos` = [{ frame, tipo, vol }] con fotograma absoluto (lo da eventosSfx() de src/anim/sonido.ts).
@@ -168,26 +271,27 @@ export async function mezclarSfx({ raiz, ffmpeg, segundos, salidaWav, eventos, m
   const mezcla = new Float32Array(N);
   const tmpDir = join(dirname(salidaWav), "dec");
   const cache = new Map();
+  // voz en off (pista ya colocada por escena en scripts/anim/voz.mjs): volumen 1; se decodifica primero porque la música se «agacha» cuando habla
+  const voz = vozWav ? decodificar(ffmpeg, vozWav, tmpDir) : null;
   // música de fondo en bucle (motor viral): rampa de entrada y de salida, igual que <Audio volume> en src/anim/Animacion.tsx
   if (musica) {
     const mus = decodificar(ffmpeg, join(raiz, "public", musica.archivo), tmpDir);
+    const bg = new Float32Array(N);
     for (let i = 0; i < N; i++) {
       const seg = i / SR;
       const rampa = Math.min(1, seg / musica.entrada, Math.max(0, (segundos - seg) / musica.salida));
-      mezcla[i] += mus[i % mus.length] * musica.volumen * rampa * (vozWav ? 0.6 : 1); // con voz, la música baja para que la locución mande
+      bg[i] = mus[i % mus.length] * musica.volumen * rampa * (voz ? 0.85 : 1);
     }
+    if (voz) duckear(bg, voz); // ducking: con voz la música baja ≈ 9 dB mientras habla y vuelve a subir en las pausas
+    for (let i = 0; i < N; i++) mezcla[i] += bg[i];
   }
-  // voz en off (pista ya colocada por escena en scripts/anim/voz.mjs): volumen 1
-  if (vozWav) {
-    const voz = decodificar(ffmpeg, vozWav, tmpDir);
-    for (let i = 0; i < Math.min(N, voz.length); i++) mezcla[i] += voz[i];
-  }
+  if (voz) for (let i = 0; i < Math.min(N, voz.length); i++) mezcla[i] += voz[i];
   for (const s of eventos) {
     if (!cache.has(s.tipo)) cache.set(s.tipo, decodificar(ffmpeg, join(raiz, "public", archivoSfx(s.tipo)), tmpDir));
     const buf = cache.get(s.tipo);
     const inicio = Math.round(s.frame * (SR / FPS));
     const largo = Math.min(buf.length, Math.ceil(DUR_SFX[s.tipo] * FPS) * (SR / FPS));
-    const vol = (s.vol ?? VOL_SFX) * (vozWav ? 0.8 : 1);
+    const vol = (s.vol ?? VOL_SFX) * (voz ? 0.8 : 1);
     for (let k = 0; k < largo; k++) {
       const i = inicio + k;
       if (i >= 0 && i < N) mezcla[i] += buf[k] * vol;

@@ -31,7 +31,7 @@ import { join } from "node:path";
 import { bundle } from "@remotion/bundler";
 import { renderFrames, selectComposition } from "@remotion/renderer";
 import { abrirNavegador } from "./navegador.mjs";
-import { mezclarAudio, mezclarSfx } from "./audio.mjs";
+import { mezclarAudio, mezclarSfx, normalizarEnSitio } from "./audio.mjs";
 import { PISTA_VOZ, vozVigente } from "./anim/voz.mjs";
 import { cargarNucleoAnim } from "./anim/nucleo.mjs";
 import { esSinEspacio, espacioLibreGB, limpiarTemporales, mensajeSinEspacio } from "./_disco.mjs";
@@ -280,6 +280,11 @@ if (!CON_AUDIO) {
   console.log(`🔊 Mezclando efectos de sonido${musicaAnim ? " y música" : ""}${VOZ_PISTA ? " con la voz en off" : " (sin voz)"}...`);
   const m = await mezclarSfx({ raiz: RAIZ_PROYECTO, ffmpeg, segundos: total / FPS, salidaWav: AUDIO, eventos: eventosAnim, musica: musicaAnim, vozWav: VOZ_PISTA });
   console.log(`   ✔ audio listo: ${m.efectos} efectos${musicaAnim ? " + música" : ""}, ${m.segundos.toFixed(1)} s, pico ${m.pico.toFixed(2)}`);
+  // con voz en off el audio final se lleva a −14 LUFS (el volumen que piden las plataformas); sin voz se deja como estaba
+  if (VOZ_PISTA) {
+    const n = normalizarEnSitio(ffmpeg, AUDIO, { objetivo: -14, pico: -1.5 });
+    console.log(n ? `   ✔ volumen normalizado: ${n.antes.toFixed(1)} → −14 LUFS` : "   (no pude normalizar el volumen: se deja la mezcla tal cual)");
+  }
 } else {
   console.log("🔊 Mezclando audio (voz + ambiente + efectos)...");
   const m = await mezclarAudio({ raiz: RAIZ_PROYECTO, ffmpeg, segundos: total / FPS, salidaWav: AUDIO });

@@ -195,6 +195,36 @@ Con **`HUD: OFF`** desaparece el panel de medidores y el escenario crece hasta y
 
 ---
 
+## 1c. 🎙️ Voz de locutora colombiana, 📊 Panel de Videos y 🧪 Laboratorio de voz
+
+**Arrancar y abrir:** `npm run panel` y abre <http://localhost:4173> (o `npm run panel:abrir`). En el menú de arriba: **📊 Videos**, **🎙️ Voz** (laboratorio) y **✨ Estudio** (donde está la tarjeta «Voz en off»). **Variables de `.env`:** solo `OPENAI_API_KEY` (y, si usas ElevenLabs, `ELEVENLABS_API_KEY`); se ponen en ⚙️ Ajustes y quedan únicamente en `.env`, que está en `.gitignore`.
+
+### La voz por defecto: locutora joven bogotana, alegre y cercana
+- La voz usa `gpt-4o-mini-tts` y **siempre** manda `instructions` (cómo debe sonar) junto con `voice` e `input`. Lo de siempre está en **`voz.config.json`** (voz, modelo, instrucciones, velocidad, formato); edítalo a mano o desde el laboratorio. Las instrucciones por defecto: locutora colombiana de 24 años de Bogotá, acento neutro, alegre, cercana, ritmo ágil en el gancho y más pausado en el dato importante, pausas cortas, «im-NO-ba», nunca robótica ni de noticiero.
+- **Preparador de guion** (automático antes de enviar el texto a la voz): números, precios y áreas a palabras («$950.000.000» → «novecientos cincuenta millones de pesos», «85 m²» → «ochenta y cinco metros cuadrados», «37 %» → «treinta y siete por ciento», teléfonos en grupos), **diccionario de pronunciación** editable en **`pronunciacion.json`** (UPTC, VIS, IMN, Didit, imnoba.com → «im-no-ba punto com»…), sin puntos suspensivos, y frases largas partidas en tramos de 8 a 14 palabras con comas y puntos. **No inventa ni cambia datos**: solo cambia cómo se escriben las cifras y la puntuación.
+- **Posproceso (ffmpeg, el mismo que usa el render):** se acortan los silencios largos dentro de cada frase, la voz se normaliza a −16 LUFS, la **música baja sola mientras habla la voz** (ducking, ≈ 9 dB) y el audio final del video con voz sale a **−14 LUFS** (volumen de plataformas). También al usar «Ponerla al video ya renderizado».
+- **Ahorro:** cada audio se guarda en **`cache/audio/`** con nombre = hash de (texto + voz + instrucciones + modelo): si repites lo mismo no se paga otra vez. **`data/uso-voz.json`** lleva el contador mensual de caracteres (solo los que realmente se enviaron).
+
+### 🧪 Laboratorio de voz (`#/voz`)
+1. Escribe un guion corto o elige uno de ejemplo (frases reales de Imnoba). Debajo ves **«Así se lee en voz alta»**: el texto ya preparado y los cambios.
+2. Hasta **3 versiones** lado a lado: elige la voz (coral, nova, shimmer, sage y las demás de OpenAI) y edita las instrucciones de cada una.
+3. **«🎧 Generar y escuchar»**: oyes las versiones al mismo volumen (−14 LUFS) y sin silencios largos. Si repites lo mismo sale de la caché.
+4. **«⭐ Me gustó esta»** la guarda como tu voz por defecto en `voz.config.json` (la usa la tarjeta «Voz en off» del Estudio con el estilo «🎙️ Locutora joven bogotana»).
+5. También: velocidad y formato por defecto, **diccionario de pronunciación** (una línea por palabra: `UPTC = u pe te ce`) y el **uso del mes**.
+- **Muestras para decidir:** `npm run voz:muestras` genera 3 frases reales de Imnoba con coral, nova, shimmer y sage (≈ US$ 0,03) y deja `trabajo/salida/voz/muestras/muestras.html` con los reproductores.
+
+### 📊 Panel de Videos (`#/videos`) — tu centro de control local
+Todo se guarda en **`data/videos.json`** (texto legible y editable a mano). Antes de cada cambio se guarda una copia con fecha en **`data/backups/`** (las últimas 30) y se escribe de forma segura (archivo temporal + renombrar). Si el archivo se daña, el panel lo avisa y **no lo pisa**.
+- **📊 Resumen:** videos publicados este mes, vistas, guardados, compartidos y acciones de negocio, y dos gráficas por semana (vistas y acciones).
+- **🗂️ Biblioteca:** tabla con miniatura, serie, estado, fecha, plataformas, vistas, guardados y acciones; filtros (serie, plataforma, estado, fechas), búsqueda y orden por cualquier columna.
+- **Detalle de cada video:** datos editables (guion, gancho, voz e instrucciones usadas…), reproductor (si el video lo generó el sistema), enlaces por plataforma, historial de métricas con gráfica, acciones de negocio y **«Duplicar como nueva idea»**.
+- **✍️ Registrar métricas:** formulario de 30 segundos (vistas, guardados, compartidos, me gusta, comentarios; retención opcional) con la última medición como referencia.
+- **🧭 Pipeline:** idea → guion → grabado → programado → publicado; arrastra las tarjetas (o usa el selector de cada una).
+- **🏆 Qué funciona:** ranking de series y ganchos por **acciones de negocio, compartidos y guardados — no solo vistas**: 🟢 convierte, 🟡 interesa, ⚪ solo entretiene.
+- **💡 Nueva idea (evitar repetición):** mientras escribes el título o el gancho te avisa si hay uno parecido en los **últimos 60 días**.
+- **📥 Importar / exportar:** carga un CSV de videos ya subidos (`titulo, serie, plataforma, url, fecha, vistas, guardados, compartidos`), ves una vista previa con los errores fila por fila y los enlaces repetidos se omiten; hay un CSV de ejemplo descargable y un botón para exportar todo.
+- **Integración con el generador:** al terminar **«Renderizar»** (o «Ponerla al video ya renderizado») el video se **registra solo** con estado **«grabado»**, con su guion, voz e instrucciones usadas, una copia del MP4 y su miniatura (en `data/media/`); abrirlo desde el panel es un clic. Si vuelves a renderizar el mismo video se actualiza, no se duplica ni baja de estado.
+
 ## 2. El panel web, paso a paso
 
 El panel es una página local (solo accesible desde tu equipo). Arriba siempre ves el **trabajo en curso** (con barra de progreso); al pulsarlo se abre el **registro** en vivo, y puedes **cancelar** (lo ya renderizado se conserva).

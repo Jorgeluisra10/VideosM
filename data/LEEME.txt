@@ -1,0 +1,5 @@
+Datos locales del Panel de Videos (no se suben a git):
+  videos.json       todos tus videos, publicaciones, métricas y acciones de negocio (legible y editable a mano)
+  backups/          copia automática antes de cada cambio (las últimas 30)
+  media/            copia de cada video generado y su miniatura (para abrirlos desde el panel)
+  uso-voz.json      contador mensual de caracteres de voz generados (OpenAI / ElevenLabs)

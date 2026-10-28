@@ -15,5 +15,7 @@ export * from "./sonido";
 export * from "./voces";
 export * from "./marcas";
 export * from "./vozExterna";
+export * from "./preparador";
+export * from "./videos";
 export { iconosPermitidos, todosLosIconos } from "./iconos";
 export type * from "./tipos";

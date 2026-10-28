@@ -11,7 +11,7 @@ import "../_tmp.mjs";
 import { spawnSync } from "node:child_process";
 import { existsSync, mkdirSync, readFileSync, rmSync, statSync } from "node:fs";
 import { dirname, isAbsolute, join, resolve } from "node:path";
-import { decodificar, escribirWavEstereo, SR } from "../audio.mjs";
+import { decodificar, duckear, escribirWavEstereo, normalizarEnSitio, SR } from "../audio.mjs";
 import { buscarFfmpeg } from "../medios.mjs";
 import { cargarNucleoAnim, RAIZ } from "./nucleo.mjs";
 import { PISTA_VOZ, vozVigente } from "./voz.mjs";
@@ -34,17 +34,20 @@ export async function ponerVoz({ video, salida, original = 0.7, log = console.lo
   mkdirSync(tmp, { recursive: true });
   const N = Math.ceil((dur || anim.duracion) * SR);
   const mezcla = new Float32Array(N);
+  const v = decodificar(ffmpeg, PISTA_VOZ(), tmp);
   if (conAudio) {
     const o = decodificar(ffmpeg, video, tmp);
-    for (let i = 0; i < Math.min(N, o.length); i++) mezcla[i] += o[i] * original;
+    for (let i = 0; i < Math.min(N, o.length); i++) mezcla[i] = o[i] * original;
+    duckear(mezcla, v); // ducking: la música y los efectos del video bajan mientras habla la voz
   }
-  const v = decodificar(ffmpeg, PISTA_VOZ(), tmp);
   for (let i = 0; i < Math.min(N, v.length); i++) mezcla[i] += v[i];
   let pico = 0;
   for (let i = 0; i < N; i++) pico = Math.max(pico, Math.abs(mezcla[i]));
   if (pico > 0.97) for (let i = 0; i < N; i++) mezcla[i] *= 0.97 / pico;
   const wav = join(tmp, "mezcla-final.wav");
   escribirWavEstereo(wav, mezcla);
+  const norm = normalizarEnSitio(ffmpeg, wav, { objetivo: -14, pico: -1.5 }); // volumen de plataforma
+  log(norm ? `🔊 Volumen normalizado: ${norm.antes.toFixed(1)} → −14 LUFS` : "🔊 (no pude normalizar el volumen: se deja la mezcla tal cual)");
 
   rmSync(salida, { force: true });
   const r = spawnSync(ffmpeg, ["-v", "error", "-y", "-i", video, "-i", wav, "-map", "0:v:0", "-map", "1:a:0", "-c:v", "copy", "-c:a", "aac", "-b:a", "192k", "-shortest", salida], { encoding: "utf8" });

@@ -33,6 +33,14 @@ const guionEjemplo = readFileSync(p("ejemplos", "animacion-imnoba", "guion.txt")
 const respuestaEjemplo = JSON.parse(readFileSync(p("ejemplos", "animacion-imnoba", "respuesta-ia.json"), "utf8"));
 const cfgMock = (m) => ({ ...configuracion(), clave: "prueba", url: m.url, timeoutS: 60 });
 
+// las pruebas nunca tocan tus datos: voz.config.json, pronunciacion.json, data/ (videos, uso de voz) y cache/audio van a una carpeta temporal
+const DIR_PRUEBA = p("trabajo", "tmp", "prueba-datos");
+rmSync(DIR_PRUEBA, { recursive: true, force: true });
+mkdirSync(join(DIR_PRUEBA, "config"), { recursive: true });
+for (const f of ["voz.config.json", "pronunciacion.json"]) copyFileSync(p(f), join(DIR_PRUEBA, "config", f));
+process.env.VIDEMED_CONFIG = join(DIR_PRUEBA, "config");
+process.env.VIDEMED_DATOS = join(DIR_PRUEBA, "data");
+process.env.VIDEMED_CACHE = join(DIR_PRUEBA, "cache");
 const envAntes = { base: process.env.OPENAI_BASE_URL, clave: process.env.OPENAI_API_KEY };
 try {
   // ------------------------------------------------------------ parser local
@@ -691,6 +699,91 @@ try {
         const mismaR = N.reajustarAnimacion(animR, tR.map((e) => e.dur));
         prueba("voz propia: reajustar la animación a otras duraciones deja las escenas seguidas (sin huecos), recalcula ritmo (0,55–1) y efectos de sonido, cambia la firma de la voz, no toca el original y con las mismas duraciones queda igual", nuevaR.escenas.every((e, i) => (i === 0 ? e.inicio === 0 : Math.abs(e.inicio - nuevaR.escenas[i - 1].fin) < 0.011) && Math.abs(e.fin - e.inicio - e.dur) < 0.011 && e.ritmo >= 0.55 && e.ritmo <= 1 && e.total === nuevaR.duracion) && Math.abs(nuevaR.duracion - (animR.duracion + 0.5 * tR.length)) < 0.05 * tR.length && N.firmaVoz(nuevaR) !== N.firmaVoz(animR) && N.textosVoz(animR)[0].dur === tR[0].dur && N.firmaVoz(mismaR) === N.firmaVoz(animR), `${nuevaR.duracion} vs ${animR.duracion}`);
       }
+      // ── Parte 1: preparador de guion, configuración de la voz y posproceso del audio ──
+      {
+        const L = N.numeroALetras;
+        prueba("preparador: números a palabras (cero, veintiuno / veintiún, cien / ciento uno, mil, años, millones, mil millones, billón) y concordancia con el género", L(0) === "cero" && L(21) === "veintiuno" && L(21, { apocope: true }) === "veintiún" && L(100) === "cien" && L(101) === "ciento uno" && L(1000) === "mil" && L(2024) === "dos mil veinticuatro" && L(950e6) === "novecientos cincuenta millones" && L(1e6) === "un millón" && L(1.2e9) === "mil doscientos millones" && L(1e12) === "un billón" && L(200, { fem: true }) === "doscientas" && L(21000, { fem: true }) === "veintiuna mil" && L(2342001) === "dos millones trescientos cuarenta y dos mil uno");
+        const pv = (t, o) => N.prepararParaVoz(t, o).texto;
+        prueba("preparador: «$950.000.000» → «novecientos cincuenta millones de pesos»; «$950 millones» igual; «$1.200 millones» → mil doscientos millones de pesos; «2.500.000 pesos» sin «de»; sin cifras", /novecientos cincuenta millones de pesos/.test(pv("Cuesta $950.000.000 hoy")) && /novecientos cincuenta millones de pesos/.test(pv("Cuesta $950 millones hoy")) && /mil doscientos millones de pesos/.test(pv("Vale $1.200 millones")) && /dos millones quinientos mil pesos/.test(pv("Paga 2.500.000 pesos al mes")) && !/\d/.test(pv("Cuesta $950.000.000 y mide 85 m² con 3,5 % de 2024")));
+        prueba("preparador: áreas, porcentajes, decimales y años (85 m² → ochenta y cinco metros cuadrados; 85 m2 y 85 metros cuadrados igual; 37 % → treinta y siete por ciento; 3,5 % → tres coma cinco por ciento; 2024; 1 m² → un metro cuadrado)", /ochenta y cinco metros cuadrados/.test(pv("Tiene 85 m² útiles")) && /ochenta y cinco metros cuadrados/.test(pv("Tiene 85 m2 útiles")) && /ochenta y cinco metros cuadrados/.test(pv("Tiene 85 metros cuadrados")) && /treinta y siete por ciento/.test(pv("El 37 % lo logra")) && /tres coma cinco por ciento/.test(pv("Subió 3,5 % este año")) && /dos mil veinticuatro/.test(pv("En 2024 todo cambió")) && /un metro cuadrado/.test(pv("Mide 1 m²")) && /cuatro kilómetros/.test(pv("Está a 4 km")));
+        prueba("preparador: concordancia (1 vehículo → un vehículo; 1 propiedad → una propiedad; 21 propiedades → veintiuna propiedades; 200 propiedades → doscientas propiedades; 21 de marzo → veintiuno de marzo)", /\bun vehículo/.test(pv("Hay 1 vehículo")) && /\buna propiedad/.test(pv("Hay 1 propiedad")) && /veintiuna propiedades/.test(pv("Hay 21 propiedades")) && /doscientas propiedades/.test(pv("Hay 200 propiedades")) && /veintiuno de marzo/.test(pv("El 21 de marzo salimos")) && /ciento un vehículos/.test(pv("Hay 101 vehículos")));
+        prueba("preparador: teléfonos en grupos (3-3-4) y códigos cifra por cifra, no como un número enorme", /tres cero cero, uno dos tres, cuatro cinco seis siete/.test(pv("Escribe al 3001234567")) && /i eme ene cuatro cinco dos uno/.test(pv("Código IMN-4521")));
+        prueba("preparador: diccionario de pronunciación (imnoba.com → im-no-ba punto com, UPTC → u pe te ce, VIS, WhatsApp…), sin tocar palabras que lo contienen («visita»), y editable (las claves «_» son notas)", /im-no-ba punto com/.test(pv("Entra a imnoba.com ya")) && /u pe te ce/.test(pv("Cerca de la UPTC hay más")) && /vivienda de interés social/.test(pv("Es una VIS nueva")) && /la visita es hoy/i.test(pv("La visita es hoy")) && /guasap/.test(pv("Escríbenos por WhatsApp ahora")) && pv("Mira Zork ahora", { diccionario: { Zork: "Zórk", _nota: "no cuenta" } }).includes("Zórk") && !pv("Mira _nota ahora", { diccionario: { _nota: "x" } }).includes("x."));
+        const largo = "Si buscas una propiedad con tres habitaciones, dos baños, parqueadero cubierto, cerca de la UPTC y con vigilancia las veinticuatro horas, que además permite mascotas, escríbenos hoy mismo...";
+        const rl = N.prepararParaVoz(largo);
+        prueba("preparador: sin puntos suspensivos ni guiones largos ni paréntesis; frases largas partidas en tramos de ≤ 14 palabras con comas y puntos; termina en punto", !/(\.\.\.|…|—|–|\(|\))/.test(pv("Mira esto... y esto — y (esto)")) && Math.max(...rl.tramos) <= 14 && /[.!?]$/.test(rl.texto) && rl.texto.split(/(?<=[.!?])\s+/).length >= 3);
+        const sinNum = "Registra tu propiedad o vehículo gratis y conoce quiénes buscan algo parecido en tu zona, porque cada anuncio llega a personas reales que quieren hablar contigo";
+        const pal = (t) => t.toLowerCase().match(/[\p{L}\p{N}]+/gu).join(" ");
+        prueba("preparador: NO inventa ni cambia datos — sin cifras ni siglas, el resultado tiene exactamente las mismas palabras, en el mismo orden (solo cambia la puntuación)", pal(pv(sinNum)) === pal(sinNum) && pal(N.prepararParaVoz(sinNum, { partir: false }).texto) === pal(sinNum));
+        prueba("preparador: es estable (prepararlo dos veces da lo mismo) y reporta cada cambio (número, diccionario, puntuación, pausa)", pv(pv(largo)) === pv(largo) && N.prepararParaVoz("Cuesta $950.000.000... UPTC").cambios.map((c) => c.tipo).sort().join() === "diccionario,numero,puntuacion");
+
+        // configuración de la voz
+        const cv = N.normalizarConfigVoz({ voz: "inventada", velocidad: 3, formato: "exe", instrucciones: "   " });
+        prueba("config de voz: lo inválido cae al valor por defecto (voz → coral, velocidad fuera de 0,5–1,5 → 1, formato → mp3, instrucciones vacías → las de la locutora) y lo válido se respeta", cv.voz === "coral" && cv.velocidad === 1 && cv.formato === "mp3" && cv.instrucciones === N.INSTRUCCIONES_LOCUTORA && N.normalizarConfigVoz({ voz: "nova", velocidad: 1.1, formato: "wav", instrucciones: "Sé breve." }).voz === "nova" && N.normalizarConfigVoz({ velocidad: 1.1 }).velocidad === 1.1 && N.normalizarConfigVoz({ formato: "wav" }).formato === "wav" && N.normalizarConfigVoz(null).voz === "coral");
+        prueba("instrucciones por defecto: locutora colombiana de 24 años de Bogotá, acento neutro, alegre, ritmo ágil al inicio y pausado en el dato, pausas cortas, pronunciar «im-NO-ba», sin robótica ni noticiero, sin acento de España/México/Argentina", ["locutora colombiana de 24 años, de Bogotá", "acento neutro colombiano", "alegre", "ágil al inicio", "más pausado en el dato importante", "pausas cortas", "im-NO-ba", "robótica", "noticiero", "España"].every((t) => N.INSTRUCCIONES_LOCUTORA.includes(t)) && N.construirInstrucciones({}) === N.INSTRUCCIONES_LOCUTORA && N.ESTILO_POR_DEFECTO === "locutora");
+        prueba("instrucciones: las de voz.config.json mandan para la locutora; la indicación extra va al final con prioridad; un texto completo escrito a mano (laboratorio) se usa tal cual; la voz por defecto sale de la config pero un estilo propio conserva la suya", N.construirInstrucciones({ instruccionesBase: "Habla bajito." }) === "Habla bajito." && N.construirInstrucciones({ instruccionesBase: "Habla bajito.", extra: "más fuerte" }).endsWith("(tiene prioridad): más fuerte") && N.construirInstrucciones({ instrucciones: "Solo esto.", extra: "no cuenta", estilo: "paisa-f" }) === "Solo esto." && N.vozEfectiva({ vozPorDefecto: "nova" }) === "nova" && N.vozEfectiva({ estilo: "paisa-f", vozPorDefecto: "nova" }) === "coral" && N.vozEfectiva({ voz: "onyx", vozPorDefecto: "nova" }) === "onyx");
+
+        // posproceso del audio (ffmpeg real, sin red)
+        const A = await import("../audio.mjs");
+        const { buscarFfmpeg: bf } = await import("../medios.mjs");
+        const { ffmpeg: ff } = bf();
+        const tonoA = (seg, f, amp) => { const n = Math.round(seg * A.SR), a = new Float32Array(n); for (let i = 0; i < n; i++) a[i] = amp * Math.sin((2 * Math.PI * f * i) / A.SR) * Math.min(1, i / 300, (n - i) / 300); return a; };
+        const juntar = (...t) => { const x = new Float32Array(t.reduce((q, z) => q + z.length, 0)); let o = 0; for (const z of t) { x.set(z, o); o += z.length; } return x; };
+        const sil = (seg) => new Float32Array(Math.round(seg * A.SR));
+        const rmsA = (x, a, b) => { let q = 0, n = 0; for (let i = Math.floor(a * A.SR); i < Math.min(x.length, Math.floor(b * A.SR)); i++) { q += x[i] * x[i]; n++; } return Math.sqrt(q / Math.max(1, n)); };
+        const conHueco = juntar(sil(0.8), tonoA(1, 220, 0.4), sil(2), tonoA(1, 220, 0.4), sil(0.3), tonoA(1, 220, 0.4), sil(0.8));
+        const rec = A.recortarSilenciosLargos(conHueco);
+        prueba("posproceso: un silencio largo DENTRO de la frase (2 s) se acorta a ≈ 0,35 s; el silencio corto (0,3 s) y los bordes no se tocan", Math.abs(rec.quitadosSeg - 1.65) < 0.05 && Math.abs(rec.audio.length / A.SR - (conHueco.length / A.SR - 1.65)) < 0.05 && A.recortarSilenciosLargos(juntar(sil(0.8), tonoA(1, 220, 0.4), sil(0.3), tonoA(1, 220, 0.4), sil(0.8))).quitadosSeg === 0, String(rec.quitadosSeg));
+        const musica = tonoA(8, 330, 0.3), vozD = juntar(sil(3), tonoA(2, 200, 0.4), sil(3));
+        const mus0 = musica.slice();
+        const dk = A.duckear(musica, vozD);
+        prueba("ducking: la música baja ≈ 9 dB mientras habla la voz (≥ 55 % menos), sube de nuevo en las pausas (≥ 90 % a los 2,5 s de callar) y antes de hablar queda intacta", rmsA(musica, 3.6, 4.8) < 0.45 * rmsA(mus0, 3.6, 4.8) && rmsA(musica, 7.5, 8) > 0.9 * rmsA(mus0, 7.5, 8) && Math.abs(rmsA(musica, 0.2, 2.5) - rmsA(mus0, 0.2, 2.5)) < 0.01 && dk.gananciaMinima < 0.4, JSON.stringify({ bajo: rmsA(musica, 3.6, 4.8) / rmsA(mus0, 3.6, 4.8), libre: rmsA(musica, 7.5, 8) / rmsA(mus0, 7.5, 8), g: dk.gananciaMinima }));
+        mkdirSync(p("trabajo", "tmp", "prueba-posproceso"), { recursive: true });
+        const wavQ = p("trabajo", "tmp", "prueba-posproceso", "baja.wav");
+        A.escribirWavEstereo(wavQ, tonoA(12, 440, 0.04));
+        const antesL = A.medirLUFS(ff, wavQ);
+        const nr = A.normalizarEnSitio(ff, wavQ, { objetivo: -14, pico: -1.5 });
+        const despuesL = A.medirLUFS(ff, wavQ);
+        prueba("posproceso: normalizar a −14 LUFS lleva un audio flojo (≈ −30 LUFS) a −14 ±1 LUFS con el pico verdadero por debajo de −1,5 dBTP; un audio en silencio no se toca", antesL && antesL.integrado < -25 && nr && despuesL && Math.abs(despuesL.integrado + 14) < 1 && despuesL.picoVerdadero <= -1.4 && A.medirLUFS(ff, (() => { const f = p("trabajo", "tmp", "prueba-posproceso", "mudo.wav"); A.escribirWavEstereo(f, sil(4)); return f; })()) === null, JSON.stringify({ antes: antesL?.integrado, despues: despuesL }));
+        rmSync(p("trabajo", "tmp", "prueba-posproceso"), { recursive: true, force: true });
+      }
+      // ── Parte 2: Panel de Videos (lógica pura) ──
+      {
+        const mk = (o) => N.normalizarVideo({ titulo: "Video", estado: "publicado", fecha_publicacion: "2026-10-05", ...o }, "2026-10-20");
+        const nv = N.normalizarVideo({ id: "a/../b c", titulo: "  Hola  ", serie: "inventada", estado: "volando", fecha_publicacion: "2026-02-30", duracion_seg: -4, metricas: [{ vistas: -5, guardados: "12", fecha_medicion: "mañana", retencion_pct: 250 }, { vistas: 100.6 }], acciones: [{ tipo: "x", cantidad: 0 }], publicaciones: [{ plataforma: "myspace", url: "http://x" }] }, "2026-10-20");
+        prueba("videos: el id solo admite letras, números, guion y guion bajo (una ruta o símbolos se limpian)", /^[A-Za-z0-9_-]+$/.test(nv.id) && nv.id === "abc", nv.id);
+        prueba("videos: valores por defecto y límites del modelo de datos", nv.titulo === "Hola" && nv.serie === "otro" && nv.estado === "idea" && nv.fecha_publicacion === "" && nv.duracion_seg === 0 && nv.metricas[0].vistas === 0 && nv.metricas[0].guardados === 12 && nv.metricas[0].fecha_medicion === "2026-10-20" && nv.metricas[0].retencion_pct === 100 && nv.metricas[1].vistas === 101 && nv.acciones[0].tipo === "otro" && nv.acciones[0].cantidad === 1 && nv.publicaciones[0].plataforma === "instagram" && nv.publicaciones[0].fecha === "2026-10-20");
+        prueba("videos: fechas — «2026-02-30» no existe; «03/09/2026» (día/mes/año) → 2026-09-03; una fecha ISO con hora se recorta; basura → vacío", N.fechaValida("2026-02-30") === "" && N.fechaValida("03/09/2026") === "2026-09-03" && N.fechaValida("2026-9-3T10:00:00Z") === "2026-09-03" && N.fechaValida("ayer") === "" && N.validarVideo(N.normalizarVideo({ titulo: "", estado: "idea" })).length === 1 && N.validarVideo(N.normalizarVideo({ titulo: "x", estado: "publicado" })).length === 1);
+        const a = mk({ id: "a", serie: "estafas", metricas: [{ fecha_medicion: "2026-10-06", plataforma: "instagram", vistas: 1000, guardados: 10 }, { fecha_medicion: "2026-10-12", plataforma: "instagram", vistas: 3000, guardados: 90 }, { fecha_medicion: "2026-10-12", plataforma: "tiktok", vistas: 500, compartidos: 7 }], acciones: [{ tipo: "registro_agente", cantidad: 2, fecha: "2026-10-14" }, { tipo: "contacto_whatsapp", cantidad: 1, fecha: "2026-09-20" }] });
+        const m = N.metricasActuales(a);
+        prueba("videos: lo que tiene hoy un video = la ÚLTIMA medición de cada plataforma, sumadas (no se cuentan dos veces las anteriores), más todas sus acciones", m.vistas === 3500 && m.guardados === 90 && m.compartidos === 7 && m.acciones === 3);
+        const b = mk({ id: "b", serie: "florida", fecha_publicacion: "2026-09-28", metricas: [{ vistas: 800 }] });
+        const c = mk({ id: "c", estado: "grabado", fecha_publicacion: "", metricas: [{ vistas: 999 }] });
+        const rm = N.resumenMes([a, b, c], "2026-10-20");
+        prueba("videos: el resumen del mes cuenta solo los PUBLICADOS este mes (con sus vistas, guardados y compartidos), las acciones del mes de cualquier video (la de septiembre no) y el acumulado de todo", rm.mes === "2026-10" && rm.publicados === 1 && rm.mes_totales.vistas === 3500 && rm.mes_totales.guardados === 90 && rm.acciones_mes === 2 && rm.todo.vistas === 3500 + 800 + 999 && rm.videos === 3, JSON.stringify(rm));
+        const sem = N.serieSemanal([a, b], "2026-10-20", 4);
+        prueba("videos: la serie semanal trae 4 semanas (lunes) seguidas; las vistas van a la semana de publicación y las acciones a la semana en que ocurrieron", sem.length === 4 && sem[3].semana === "2026-10-19" && sem[0].semana === "2026-09-28" && sem[0].vistas === 800 && sem[1].vistas === 3500 && sem[2].acciones === 2 && sem.every((x, i) => i === 0 || N.diasEntre(sem[i - 1].semana, x.semana) === 7), JSON.stringify(sem));
+        const rk = N.rankingSeries([mk({ serie: "estafas", metricas: [{ vistas: 1000, guardados: 5 }], acciones: [{ tipo: "registro_agente", cantidad: 1 }] }), mk({ serie: "adivina_precio", metricas: [{ vistas: 50000, guardados: 20, compartidos: 10 }] }), mk({ serie: "florida", metricas: [{ vistas: 2000, guardados: 80, compartidos: 20 }] }), mk({ serie: "otro", estado: "idea", metricas: [{ vistas: 9e6 }] })]);
+        prueba("qué funciona: manda lo que convierte, no las vistas — la serie con una acción de negocio (1.000 vistas) va antes que la de 50.000 vistas; orden: convierte → interesa (guardan y comparten ≥ 2 %) → entretiene, y dentro de cada clase por puntos; las ideas sin publicar no cuentan", rk.length === 3 && rk.map((x) => x.clave).join() === "estafas,florida,adivina_precio" && rk[0].clase === "convierte" && rk[1].clase === "interesa" && rk[2].clase === "entretiene" && rk[2].vistas === 50000, JSON.stringify(rk.map((x) => [x.clave, x.clase, x.puntos])));
+        const gk = N.rankingGanchos([mk({ gancho: "¿Sabías que te pueden estafar?", metricas: [{ vistas: 100 }] }), mk({ gancho: "Sabías que te pueden estafar", metricas: [{ vistas: 100, guardados: 40 }] }), mk({ gancho: "Otro gancho distinto", acciones: [{ cantidad: 3, tipo: "otro" }] })]);
+        prueba("qué funciona: los ganchos iguales (sin importar signos ni mayúsculas) se juntan en una fila y se ordenan por resultados reales", gk.length === 2 && gk[0].etiqueta === "Otro gancho distinto" && gk[1].videos === 2);
+        const base = [mk({ id: "x1", titulo: "Estafas con propiedades: 3 señales para no caer", gancho: "¿Te ofrecieron una propiedad muy barata?", fecha_publicacion: "2026-09-25" }), mk({ id: "x2", titulo: "Estafas con propiedades: 3 señales para no caer", fecha_publicacion: "2026-06-01" }), mk({ id: "x3", titulo: "Cómo cocinar arroz", fecha_publicacion: "2026-10-10" })];
+        const pa = N.buscarParecidos({ titulo: "3 señales de estafas en propiedades" }, base, "2026-10-20");
+        const pg = N.buscarParecidos({ titulo: "Algo distinto", gancho: "Te ofrecieron una propiedad muy barata" }, base, "2026-10-20");
+        prueba("evitar repetición: avisa si hay un título parecido en los últimos 60 días (aunque cambie el orden o los plurales), ignora el de hace más de 60 días y el que no se parece, también compara el gancho, y no se compara con el mismo video", pa.length === 1 && pa[0].video.id === "x1" && pa[0].motivo === "título" && pa[0].dias === 25 && pg.length === 1 && pg[0].motivo === "gancho" && N.buscarParecidos({ titulo: "Estafas con propiedades: 3 señales para no caer", id: "x1" }, base, "2026-10-20").length === 0 && N.similitud("hola mundo", "adiós planeta") < 0.3 && N.similitud("Estafas con propiedades", "estafa en propiedad") > 0.5);
+        const csv = N.parsearCSV('﻿titulo;Serie;plataforma;URL;fecha;vistas;guardados;compartidos\n"Casas; no, propiedades ""baratas""";estafas;IG;https://x.co/1;03/09/2026;18.400;320;145\n');
+        prueba("importar CSV: lee punto y coma o coma, comillas con comas y comillas dobles, BOM y cabeceras con mayúsculas", csv.columnas.join() === "titulo,serie,plataforma,url,fecha,vistas,guardados,compartidos" && csv.filas.length === 1 && csv.filas[0].titulo === 'Casas; no, propiedades "baratas"' && csv.filas[0].vistas === "18.400" && N.parsearCSV("a,b\n1,2\n\n3,4\n").filas.length === 2 && N.parsearCSV("").errores.length === 1 && N.parsearCSV('a,b\n"sin cerrar,2\n').errores.length === 1);
+        prueba("importar CSV: números con separador de miles (18.400, 18,400, 1 200) y rechazo de letras o negativos", N.enteroCSV("18.400") === 18400 && N.enteroCSV("18,400") === 18400 && N.enteroCSV("1 200") === 1200 && N.enteroCSV("") === 0 && N.enteroCSV("12k") === null && N.enteroCSV("-5") === null && N.enteroCSV("1,5") === null);
+        const filas = N.parsearCSV([N.CSV_EJEMPLO, "Sin serie ni url,,tiktok,,2026-10-01,10,1,1", ",estafas,instagram,https://a.co/1,2026-10-01,1,1,1", "Mal,inventada,myspace,ftp://x,31/02/2026,doce,-1,", "Repetido,estafas,instagram,https://www.instagram.com/reel/ejemplo1/,2026-09-03,1,1,1"].join("\n")).filas;
+        const val = N.validarFilasCSV(filas, "2026-10-20", new Set());
+        prueba("importar CSV: el de ejemplo es válido; cada fila mala se reporta con su número de fila y TODOS sus errores (título, serie, plataforma, enlace, fecha, números); sin serie → «otro»; el enlace repetido en el archivo se marca como duplicado", val.slice(0, 3).every((f) => f.ok && f.video.estado === "publicado" && f.video.publicaciones.length === 1) && val[3].ok && val[3].video.serie === "otro" && !val[4].ok && val[4].fila === 6 && val[4].errores.some((e) => /título/.test(e)) && !val[5].ok && val[5].fila === 7 && val[5].errores.length >= 5 && val[6].duplicada && val[6].avisos.length === 1, JSON.stringify(val.map((f) => [f.fila, f.ok, f.errores.length, f.duplicada])));
+        const exp = N.aCSV([N.normalizarVideo({ titulo: 'Con "comillas", y coma', serie: "florida", estado: "publicado", fecha_publicacion: "2026-10-01", publicaciones: [{ plataforma: "instagram", url: "https://a.co/1", fecha: "2026-10-01" }, { plataforma: "tiktok", url: "https://a.co/2", fecha: "2026-10-02" }], metricas: [{ plataforma: "instagram", vistas: 1000, guardados: 30, compartidos: 5, retencion_pct: 42 }, { plataforma: "tiktok", vistas: 2000 }] }, "2026-10-20")]);
+        const vuelta = N.validarFilasCSV(N.parsearCSV(exp).filas, "2026-10-20");
+        prueba("exportar CSV: una fila por publicación con las 8 columnas de la importación (más estado, acciones, gancho, id): lo exportado se puede volver a importar y conserva título, serie y cifras", exp.split("\n")[0].startsWith(N.COLUMNAS_IMPORTAR.join(",")) && vuelta.length === 2 && vuelta.every((f) => f.ok) && vuelta[0].video.titulo === 'Con "comillas", y coma' && vuelta[0].video.serie === "florida" && vuelta[0].video.metricas[0].vistas === 1000 && vuelta[1].video.metricas[0].vistas === 2000 && vuelta[1].video.publicaciones[0].plataforma === "tiktok");
+        const vg = N.videoDesdeAnimacion({ titulo: "Estafas inmobiliarias: cómo evitarlas", duracion: 42.5, escenas: [{ voz: "¿Sabías que *miles* de personas caen? Evítalo." }, { voz: "Segunda frase." }] }, { voz: "OpenAI · coral", instrucciones: "Sé alegre" });
+        const dup = N.duplicarComoIdea(N.normalizarVideo({ titulo: "Original", serie: "florida", guion: "g", gancho: "h", estado: "publicado", fecha_publicacion: "2026-10-01", metricas: [{ vistas: 5 }], acciones: [{ cantidad: 2 }] }));
+        prueba("videos: el video que genera el sistema se registra «grabado» con título, guion, gancho (primera frase), duración, voz e instrucciones, serie deducida y una clave estable; duplicar deja una IDEA nueva sin fechas, métricas ni acciones", vg.estado === "grabado" && vg.origen === "generador" && vg.serie === "estafas" && vg.gancho === "¿Sabías que miles de personas caen?" && vg.guion.split("\n").length === 2 && vg.duracion_seg === 42.5 && vg.voz_usada === "OpenAI · coral" && vg.instrucciones_voz === "Sé alegre" && vg.origen_clave.length === 8 && vg.origen_clave === N.videoDesdeAnimacion({ titulo: "Estafas inmobiliarias: cómo evitarlas", escenas: [{ voz: "¿Sabías que *miles* de personas caen? Evítalo." }, { voz: "Segunda frase." }] }).origen_clave && dup.estado === "idea" && dup.titulo === "Original (nueva versión)" && dup.metricas.length === 0 && dup.acciones.length === 0 && dup.fecha_publicacion === "" && dup.serie === "florida" && dup.id !== "");
+      }
       const rnd = readFileSync(p("scripts", "render.mjs"), "utf8");
       // mezcla real: con la voz, el audio de salida trae mucha más energía donde habla que solo con efectos y música (y la pista queda colocada en el tiempo de cada escena)
       {
@@ -716,7 +809,7 @@ try {
           rmSync(p("trabajo", "salida", "voz"), { recursive: true, force: true });
         }
       }
-      prueba("voces: el render mezcla la voz sola cuando es vigente (y avisa si es de otra versión), con --sin-voz la omite, y la música baja bajo la voz", /vozVigente/.test(rnd) && /--sin-voz/.test(rnd) && /vozWav: VOZ_PISTA/.test(rnd) && /vozWav \? 0\.6/.test(readFileSync(p("scripts", "audio.mjs"), "utf8")));
+      prueba("voces: el render mezcla la voz sola cuando es vigente (y avisa si es de otra versión), con --sin-voz la omite, la música se agacha bajo la voz (ducking) y con voz el audio final se lleva a −14 LUFS", /vozVigente/.test(rnd) && /--sin-voz/.test(rnd) && /vozWav: VOZ_PISTA/.test(rnd) && /duckear\(bg, voz\)/.test(readFileSync(p("scripts", "audio.mjs"), "utf8")) && /normalizarEnSitio\(ffmpeg, AUDIO, \{ objetivo: -14/.test(rnd));
     }
 
     // ── Viral v3: plantillas documentales (ZOOM, CAPAS, MIRA, IMPACTO, RED, TERMO, SPLIT), cita, escenarios, zoom continuo, música y foley ──
@@ -1040,7 +1133,7 @@ try {
       prueba("voz: el mp3 de prueba se descarga del panel (audio/mpeg, con contenido)", rmp3.status === 200 && /audio/.test(rmp3.headers.get("content-type") ?? "") && (await rmp3.arrayBuffer()).byteLength > 1000);
       h = await http("POST", "/api/anim/voz/probar", { estilo: 'x"; rm -rf /', voz: "../../x", ritmo: "zz", extra: "línea 1\nlínea 2" });
       const uv2 = mock.estado.ultimaVoz;
-      prueba("voz: un estilo/voz/ritmo desconocido cae al valor por defecto (rolo → nova), nunca se pasa tal cual, y los saltos de línea se limpian", h.codigo === 200 && uv2.voz === "nova" && !/rm -rf/.test(uv2.instrucciones) && /línea 1 línea 2/.test(uv2.instrucciones));
+      prueba("voz: un estilo/voz/ritmo desconocido cae al valor por defecto (la locutora de voz.config.json → coral), nunca se pasa tal cual, y los saltos de línea se limpian", h.codigo === 200 && uv2.voz === "coral" && !/rm -rf/.test(uv2.instrucciones) && /línea 1 línea 2/.test(uv2.instrucciones));
       const antes = mock.estado.voz.speech;
       h = await http("POST", "/api/accion", { nombre: "anim-voz", opciones: { estilo: "costena-f", ritmo: "agil", extra: "" } });
       const finV = await esperarTrabajo();
@@ -1072,6 +1165,17 @@ try {
         await http("POST", "/api/accion", { nombre: "anim-poner-voz", opciones: {} });
         const finP = await esperarTrabajo();
         prueba("voz: «Ponerla al video ya renderizado» mezcla la voz con el audio del MP4 sin tocar el video y deja video-animacion-con-voz.mp4 con video H.264 y audio AAC", finP?.estado === "ok" && existsSync(conVoz) && /h264/.test(spawnSync(buscarFfmpeg().ffprobe, ["-v", "error", "-select_streams", "v:0", "-show_entries", "stream=codec_name", "-of", "csv=p=0", conVoz], { encoding: "utf8" }).stdout) && /aac/.test(spawnSync(buscarFfmpeg().ffprobe, ["-v", "error", "-select_streams", "a:0", "-show_entries", "stream=codec_name", "-of", "csv=p=0", conVoz], { encoding: "utf8" }).stdout), JSON.stringify(finP).slice(0, 300));
+        {
+          const lv = (await http("GET", "/api/videos")).json.videos;
+          const reg = lv.find((x) => x.ruta_archivo);
+          prueba("videos: al terminar el trabajo el sistema registra SOLO el video en el Panel de Videos (estado «grabado», origen generador, con el guion y la duración) y guarda una copia del MP4 y su miniatura", reg && reg.estado === "grabado" && reg.origen === "generador" && reg.guion.length > 50 && reg.duracion_seg > 5 && existsSync(join(DIR_PRUEBA, "data", "media", `${reg.id}.mp4`)) && existsSync(join(DIR_PRUEBA, "data", "media", `${reg.id}.jpg`)), JSON.stringify(reg ? { estado: reg.estado, origen: reg.origen, guion: reg.guion.length, voz: reg.voz_usada, ins: reg.instrucciones_voz.slice(0, 60), dur: reg.duracion_seg, mp4: existsSync(join(DIR_PRUEBA, "data", "media", `${reg.id}.mp4`)), jpg: existsSync(join(DIR_PRUEBA, "data", "media", `${reg.id}.jpg`)) } : lv).slice(0, 400));
+          if (reg) {
+            const rr = await fetch(`${panel.url}/media-videos/${reg.id}.mp4`, { headers: { Range: "bytes=0-99" } });
+            const rj = await fetch(`${panel.url}/media-videos/${reg.id}.jpg`);
+            const rx = await fetch(`${panel.url}/media-videos/..%2F..%2Fpackage.json`);
+            prueba("videos: el video registrado se abre desde el panel (MP4 con soporte de Range para mover el cursor) y su miniatura; las rutas no salen de la carpeta", rr.status === 206 && /video\/mp4/.test(rr.headers.get("content-type")) && (await rr.arrayBuffer()).byteLength === 100 && rj.status === 200 && /image\/jpeg/.test(rj.headers.get("content-type")) && rx.status !== 200);
+          }
+        }
         rmSync(mp4, { force: true });
         rmSync(conVoz, { force: true });
       } else prueba("voz: «Ponerla al video ya renderizado» (se omite: este ffmpeg no puede fabricar un MP4 de prueba)", true);
@@ -1215,6 +1319,154 @@ try {
         rmSync(p("trabajo", "salida", "voz"), { recursive: true, force: true });
         rmSync(p("trabajo", "tmp", "prueba-externa"), { recursive: true, force: true });
       }
+    }
+    // ── Parte 1: laboratorio de voz (API) y Parte 2: Panel de Videos (API, datos en carpeta temporal) ──
+    {
+      const cfgReal = readFileSync(p("voz.config.json"), "utf8"), dicReal = readFileSync(p("pronunciacion.json"), "utf8");
+      const DATOS = join(DIR_PRUEBA, "data"), CONFIG = join(DIR_PRUEBA, "config");
+      h = await http("GET", "/api/voz/config");
+      prueba("laboratorio: la configuración trae la voz por defecto (coral), las instrucciones de la locutora, el diccionario y el uso del mes", h.codigo === 200 && h.json.config.voz === "coral" && /locutora colombiana de 24 años/.test(h.json.config.instrucciones) && h.json.pronunciacion["imnoba.com"] === "im-no-ba punto com" && h.json.claveOpenAI === true && h.json.uso.mes === N.hoyISO().slice(0, 7), h.texto.slice(0, 200));
+      h = await http("POST", "/api/voz/preparar", { texto: "Cuesta $950.000.000, tiene 85 m² y está en imnoba.com..." });
+      prueba("laboratorio: «Así se lee en voz alta» devuelve el texto preparado (cifras a palabras, dominio como suena, sin puntos suspensivos) y la lista de cambios", h.codigo === 200 && /novecientos cincuenta millones de pesos/.test(h.json.texto) && /ochenta y cinco metros cuadrados/.test(h.json.texto) && /im-no-ba punto com/.test(h.json.texto) && !/\.\.\./.test(h.json.texto) && h.json.cambios.some((c) => c.tipo === "numero"));
+      // generar 3 versiones
+      const antesLab = mock.estado.voz.speech;
+      const uso0 = (await http("GET", "/api/voz/uso")).json;
+      const textoLab = "Esta propiedad cuesta $950.000.000 y tiene 85 m². Regístrala gratis en imnoba.com.";
+      const vars = [{ voz: "coral", instrucciones: "Sé alegre uno." }, { voz: "nova", instrucciones: "Sé alegre dos." }, { voz: "sage", instrucciones: "Sé alegre tres." }];
+      h = await http("POST", "/api/voz/lab", { texto: textoLab, variantes: vars });
+      const entradas = mock.estado.voz.speech - antesLab;
+      prueba("laboratorio: genera 3 versiones lado a lado (una llamada por versión) con la voz y las instrucciones de cada una, y al servicio le llega el texto YA preparado (sin cifras ni siglas)", h.codigo === 200 && entradas === 3 && h.json.versiones.length === 3 && h.json.versiones.map((x) => x.voz).join() === "coral,nova,sage" && h.json.versiones.every((x) => /^\/cache-audio\/lab-.+\.mp3$/.test(x.url) && x.desdeCache === false && x.costoUsd > 0) && !/\d/.test(mock.estado.ultimaVoz.entrada) && /novecientos cincuenta millones de pesos/.test(mock.estado.ultimaVoz.entrada) && /im-no-ba punto com/.test(mock.estado.ultimaVoz.entrada) && /Sé alegre/.test(mock.estado.ultimaVoz.instrucciones), JSON.stringify(h.json).slice(0, 300));
+      const au = await fetch(panel.url + h.json.versiones[0].url);
+      const bytesAu = Buffer.from(await au.arrayBuffer());
+      prueba("laboratorio: cada versión se escucha desde el panel (mp3 ya sin silencios largos y a −14 LUFS para comparar al mismo volumen)", au.status === 200 && /audio\/mpeg/.test(au.headers.get("content-type")) && bytesAu.length > 1000);
+      const A = await import("../audio.mjs"), { buscarFfmpeg: bf2 } = await import("../medios.mjs");
+      const lufs = A.medirLUFS(bf2().ffmpeg, join(DIR_PRUEBA, "cache", "audio", h.json.versiones[1].url.split("/").pop()));
+      prueba("laboratorio: el audio de escucha queda a −14 ±1,5 LUFS", lufs && Math.abs(lufs.integrado + 14) < 1.5, JSON.stringify(lufs));
+      const antesRep = mock.estado.voz.speech;
+      h = await http("POST", "/api/voz/lab", { texto: textoLab, variantes: vars });
+      prueba("laboratorio: repetir lo mismo sale de la caché (0 llamadas, costo 0) y el contador de caracteres NO sube", mock.estado.voz.speech === antesRep && h.json.versiones.every((x) => x.desdeCache === true && x.costoUsd === 0));
+      const usoA = (await http("GET", "/api/voz/uso")).json;
+      const textoPrep = h.json.textoHablado;
+      prueba("contador mensual: suma solo los caracteres realmente enviados (3 audios nuevos; los de la caché no), por motor, en data/uso-voz.json", usoA.total - uso0.total === textoPrep.length * 3 && usoA.porMotor.openai.solicitudes - (uso0.porMotor.openai?.solicitudes ?? 0) === 3 && existsSync(join(DATOS, "uso-voz.json")) && JSON.parse(readFileSync(join(DATOS, "uso-voz.json"), "utf8"))[usoA.mes].openai.caracteres + (usoA.porMotor.eleven?.caracteres ?? 0) === usoA.total, JSON.stringify({ antes: uso0.total, despues: usoA.total, por: textoPrep.length }));
+      h = await http("POST", "/api/voz/lab", { texto: textoLab, variantes: [{ voz: "../../x", instrucciones: "" }, ...vars, ...vars] });
+      prueba("laboratorio: máximo 3 versiones, una voz inválida cae a la de la configuración y sin instrucciones usa las de siempre", h.codigo === 200 && h.json.versiones.length === 3 && h.json.versiones[0].voz === "coral" && /locutora colombiana/.test(h.json.versiones[0].instrucciones));
+      h = await http("POST", "/api/voz/lab", { texto: "hola", variantes: vars });
+      prueba("laboratorio: un guion demasiado corto se rechaza (400)", h.codigo === 400);
+      // «me gustó»: guardar como voz por defecto
+      h = await http("POST", "/api/voz/config", { voz: "nova", instrucciones: "Habla muy sonriente y cercana.", velocidad: 3, formato: "exe" });
+      const cfgGuardada = JSON.parse(readFileSync(join(CONFIG, "voz.config.json"), "utf8"));
+      prueba("laboratorio: «Me gustó esta» guarda la voz y las instrucciones en voz.config.json; lo inválido (velocidad 3, formato exe) se corrige", h.codigo === 200 && cfgGuardada.voz === "nova" && cfgGuardada.instrucciones === "Habla muy sonriente y cercana." && cfgGuardada.velocidad === 1 && cfgGuardada.formato === "mp3");
+      await http("POST", "/api/anim/voz/probar", {});
+      const uvc = mock.estado.ultimaVoz;
+      prueba("voz por defecto: lo guardado en voz.config.json es lo que usa «Probar voz» del Estudio (voz nova + sus instrucciones), sin tocar el resto de estilos", uvc.voz === "nova" && /Habla muy sonriente y cercana\./.test(uvc.instrucciones) && uvc.formato === "mp3");
+      h = await http("POST", "/api/anim/voz/probar", { estilo: "paisa-f" });
+      prueba("… y un estilo propio (paisa) sigue con su voz y su acento", mock.estado.ultimaVoz.voz === "coral" && /paisa/.test(mock.estado.ultimaVoz.instrucciones) && !/Habla muy sonriente/.test(mock.estado.ultimaVoz.instrucciones));
+      h = await http("POST", "/api/voz/pronunciacion", { diccionario: { Zork: "Zórk", _nota: "hola" } });
+      const prz = await http("POST", "/api/voz/preparar", { texto: "Mira a Zork ahora." });
+      prueba("diccionario de pronunciación: se guarda en pronunciacion.json y se aplica a la siguiente preparación; valores que no son texto se rechazan (400)", h.codigo === 200 && JSON.parse(readFileSync(join(CONFIG, "pronunciacion.json"), "utf8")).Zork === "Zórk" && /Zórk/.test(prz.json.texto) && (await http("POST", "/api/voz/pronunciacion", { diccionario: { a: 5 } })).codigo === 400 && (await http("POST", "/api/voz/pronunciacion", { diccionario: [1] })).codigo === 400);
+      prueba("seguridad: las pruebas NO tocaron tu voz.config.json ni tu pronunciacion.json reales (se usó una carpeta temporal)", readFileSync(p("voz.config.json"), "utf8") === cfgReal && readFileSync(p("pronunciacion.json"), "utf8") === dicReal);
+      await http("POST", "/api/voz/config", { voz: "coral", instrucciones: N.INSTRUCCIONES_LOCUTORA });
+      // generación con la voz: el texto se prepara y la pista queda normalizada
+      h = await http("POST", "/api/accion", { nombre: "anim-voz", opciones: { estilo: "locutora", ritmo: "agil" } });
+      const finG = await esperarTrabajo();
+      const manG = existsSync(p("trabajo", "anim", "voz", "actual.json")) ? JSON.parse(readFileSync(p("trabajo", "anim", "voz", "actual.json"), "utf8")) : null;
+      const lufsVoz = manG ? A.medirLUFS(bf2().ffmpeg, p("trabajo", "anim", "voz", "voz-mezcla.wav")) : null;
+      prueba("voz del video: con la locutora por defecto la pista sale normalizada (≈ −16 LUFS), el preparador actuó y los audios van a cache/audio/ (no a trabajo/)", finG?.estado === "ok" && manG?.preparado?.normalizadaLUFS === -16 && lufsVoz && Math.abs(lufsVoz.integrado + 16) < 2 && readdirSync(join(DIR_PRUEBA, "cache", "audio")).length >= 4 && !existsSync(p("trabajo", "anim", "voz", "cache")), JSON.stringify({ manG: manG?.preparado, lufsVoz, estado: finG?.estado }));
+      {
+        // el video generado se registra con la voz usada y las instrucciones (lo que corre el panel al renderizar)
+        mkdirSync(DATOS, { recursive: true });
+        rmSync(join(DATOS, "videos.json"), { force: true });
+        const rcv = spawnSync(process.execPath, [p("scripts", "panel", "registrar-video.mjs")], { encoding: "utf8", env: { ...process.env } });
+        const rv = JSON.parse(readFileSync(join(DATOS, "videos.json"), "utf8")).videos[0];
+        prueba("videos: el registro automático guarda la voz usada (motor · voz · modelo · estilo) y las instrucciones de voz del manifiesto", rcv.status === 0 && /^OpenAI · coral · gpt-4o-mini-tts · locutora$/.test(rv.voz_usada) && /locutora colombiana de 24 años/.test(rv.instrucciones_voz), JSON.stringify({ voz: rv.voz_usada, ins: rv.instrucciones_voz.slice(0, 50), out: rcv.stdout + rcv.stderr }).slice(0, 300));
+      }
+      rmSync(p("trabajo", "anim", "voz"), { recursive: true, force: true });
+      rmSync(p("trabajo", "salida", "voz"), { recursive: true, force: true });
+
+      {
+        const antesM = mock.estado.voz.speech;
+        // asíncrono: el servidor simulado vive en este mismo proceso y tiene que poder responder mientras corre el script
+        const rm = await new Promise((ok) => { const c = spawn(process.execPath, [p("scripts", "anim", "muestras-voz.mjs")], { env: { ...process.env, OPENAI_API_KEY: "prueba", OPENAI_BASE_URL: mock.url } }); let o = ""; c.stdout.on("data", (d) => (o += d)); c.stderr.on("data", (d) => (o += d)); const t = setTimeout(() => c.kill(), 60000); c.on("close", (status) => { clearTimeout(t); ok({ status, stdout: o, stderr: "" }); }); });
+        const dm = p("trabajo", "salida", "voz", "muestras");
+        const archivosM = existsSync(dm) ? readdirSync(dm) : [];
+        prueba("muestras de voz: `npm run voz:muestras` genera las 3 frases reales de Imnoba con coral, nova, shimmer y sage (12 mp3) y una página con reproductores; hablan de «propiedad o vehículo»", rm.status === 0 && archivosM.filter((f) => f.endsWith(".mp3")).length === 12 && archivosM.includes("muestras.html") && mock.estado.voz.speech - antesM === 12 && /propiedad o un vehículo/.test(readFileSync(join(dm, "muestras.html"), "utf8")) && JSON.parse(readFileSync(p("package.json"), "utf8")).scripts["voz:muestras"] === "node scripts/anim/muestras-voz.mjs", rm.stdout + rm.stderr);
+        rmSync(dm, { recursive: true, force: true });
+      }
+      // ── Panel de Videos ──
+      const ARCH = join(DATOS, "videos.json");
+      rmSync(ARCH, { force: true });
+      rmSync(join(DATOS, "backups"), { recursive: true, force: true });
+      const antesVid = (await http("GET", "/api/videos")).json.videos.length;
+      h = await http("POST", "/api/videos/guardar", { video: { titulo: "Estafas con propiedades: 3 señales para no caer", serie: "estafas", gancho: "¿Te ofrecieron una propiedad demasiado barata?", estado: "guion", guion: "Primera frase." } });
+      const v1 = h.json.video;
+      prueba("videos: crear una idea guarda data/videos.json (JSON legible, con sangría), sin archivos temporales a medias", h.codigo === 200 && v1.id && v1.estado === "guion" && existsSync(ARCH) && /\n  "videos": \[/.test(readFileSync(ARCH, "utf8")) && readdirSync(DATOS).every((f) => !f.endsWith(".tmp")) && JSON.parse(readFileSync(ARCH, "utf8")).videos.length === antesVid + 1);
+      h = await http("POST", "/api/videos/guardar", { video: { titulo: "3 señales de estafas en propiedades", serie: "estafas" } });
+      prueba("evitar repetición: al guardar una idea parecida (últimos 60 días) la respuesta trae el aviso con el video parecido", h.codigo === 200 && h.json.parecidos.length === 1 && h.json.parecidos[0].video.id === v1.id && h.json.parecidos[0].motivo === "título");
+      h = await http("POST", "/api/videos/parecidos", { titulo: "Cómo cocinar arroz perfecto" });
+      prueba("evitar repetición: un título distinto no da avisos", h.codigo === 200 && h.json.parecidos.length === 0);
+      h = await http("POST", "/api/videos/guardar", { video: { titulo: "" } });
+      prueba("videos: sin título se rechaza (400) con un mensaje claro", h.codigo === 400 && /título/i.test(h.json.error));
+      h = await http("POST", "/api/videos/metrica", { id: v1.id, metrica: { plataforma: "instagram", vistas: 1200, guardados: 40, compartidos: 9 } });
+      prueba("métricas: se agrega una medición (con fecha de hoy por defecto) y se conserva el historial", h.codigo === 200 && h.json.video.metricas.length === 1 && h.json.video.metricas[0].fecha_medicion === N.hoyISO() && h.json.video.metricas[0].vistas === 1200);
+      h = await http("POST", "/api/videos/metrica", { id: v1.id, metrica: { vistas: "mucho", guardados: -3 } });
+      prueba("métricas: sin ningún número válido se rechaza (400); id inexistente da 404", h.codigo === 400 && (await http("POST", "/api/videos/metrica", { id: "nada", metrica: { vistas: 5 } })).codigo === 404);
+      h = await http("POST", "/api/videos/accion", { id: v1.id, accion: { tipo: "registro_agente", cantidad: 2, notas: "desde el reel" } });
+      prueba("acciones de negocio: se registran con tipo, cantidad, fecha y notas (tipo desconocido → «otro»)", h.codigo === 200 && h.json.video.acciones[0].tipo === "registro_agente" && h.json.video.acciones[0].cantidad === 2 && (await http("POST", "/api/videos/accion", { id: v1.id, accion: { tipo: "inventada" } })).json.video.acciones[1].tipo === "otro");
+      h = await http("POST", "/api/videos/guardar", { video: { id: v1.id, titulo: "Estafas con propiedades (editado)" } });
+      prueba("editar un video por el formulario NO pierde sus métricas, acciones ni publicaciones (solo cambia lo que se envía)", h.codigo === 200 && h.json.video.titulo.endsWith("(editado)") && h.json.video.metricas.length === 1 && h.json.video.acciones.length === 2 && h.json.video.creado === v1.creado);
+      h = await http("POST", "/api/videos/estado", { id: v1.id, estado: "publicado" });
+      prueba("pipeline: mover a «publicado» pone la fecha de hoy si no tenía; un estado inválido se rechaza (400)", h.codigo === 200 && h.json.video.estado === "publicado" && h.json.video.fecha_publicacion === N.hoyISO() && (await http("POST", "/api/videos/estado", { id: v1.id, estado: "volando" })).codigo === 400);
+      h = await http("POST", "/api/videos/duplicar", { id: v1.id });
+      prueba("duplicar como nueva idea: copia título, gancho, serie y guion; sin métricas, acciones ni fechas", h.codigo === 200 && h.json.video.estado === "idea" && h.json.video.metricas.length === 0 && h.json.video.gancho === v1.gancho && h.json.video.id !== v1.id);
+      const respaldos = existsSync(join(DATOS, "backups")) ? readdirSync(join(DATOS, "backups")) : [];
+      prueba("copias de seguridad: antes de cada escritura se guarda una copia con fecha en data/backups/ (y es un JSON válido de un estado anterior)", respaldos.length >= 3 && respaldos.every((f) => /^videos-\d{4}-\d{2}-\d{2}T.*\.json$/.test(f)) && JSON.parse(readFileSync(join(DATOS, "backups", respaldos.sort()[0]), "utf8")).videos.length < JSON.parse(readFileSync(ARCH, "utf8")).videos.length, String(respaldos.length));
+      for (let i = 0; i < 36; i++) await http("POST", "/api/videos/metrica", { id: v1.id, metrica: { vistas: 2000 + i } });
+      const nResp = readdirSync(join(DATOS, "backups")).length;
+      prueba("copias de seguridad: se conservan solo las últimas 30 (36 escrituras más no las hacen crecer)", nResp <= 30 && nResp >= 20, String(nResp));
+      // archivo corrupto: no se pisa
+      const bueno = readFileSync(ARCH, "utf8");
+      writeFileSync(ARCH, "{ esto no es json");
+      h = await http("GET", "/api/videos");
+      const sigue = readFileSync(ARCH, "utf8") === "{ esto no es json";
+      const h2 = await http("POST", "/api/videos/guardar", { video: { titulo: "No debe pisar" } });
+      prueba("si data/videos.json está corrupto se avisa con un mensaje claro y NO se sobrescribe (ni al guardar); se puede restaurar a mano", h.codigo === 500 && /no es un JSON válido/.test(h.json.error) && sigue && h2.codigo === 500 && readFileSync(ARCH, "utf8") === "{ esto no es json");
+      writeFileSync(ARCH, bueno);
+      // CSV
+      const csvOk = N.CSV_EJEMPLO + "\n";
+      h = await http("POST", "/api/videos/importar/vista-previa", { csv: csvOk + "Malo,inventada,myspace,ftp://x,31/02/2026,doce,-1,\n" });
+      prueba("importar: la vista previa dice cuántas filas valen, cuántas tienen errores (con su número de fila) y no guarda nada", h.codigo === 200 && h.json.resumen.validas === 3 && h.json.resumen.conError === 1 && h.json.filas[3].fila === 5 && h.json.filas[3].errores.length >= 4 && JSON.parse(readFileSync(ARCH, "utf8")).videos.length === (await http("GET", "/api/videos")).json.videos.length);
+      const totalAntes = (await http("GET", "/api/videos")).json.videos.length;
+      h = await http("POST", "/api/videos/importar", { csv: csvOk + "Malo,inventada,myspace,ftp://x,31/02/2026,doce,-1,\n" });
+      const lista = (await http("GET", "/api/videos")).json.videos;
+      prueba("importar: crea solo las filas válidas (3, publicadas, con su publicación y una medición) y las de error no entran", h.codigo === 200 && h.json.importados === 3 && h.json.conError === 1 && lista.length === totalAntes + 3 && lista.filter((x) => x.origen === "importado").length === 3 && lista.find((x) => x.titulo.startsWith("Adivina")).metricas[0].vistas === 52300);
+      h = await http("POST", "/api/videos/importar", { csv: csvOk });
+      prueba("importar: volver a cargar el mismo archivo no duplica nada (los enlaces repetidos se omiten)", h.json.importados === 0 && h.json.omitidas === 3 && (await http("GET", "/api/videos")).json.videos.length === lista.length);
+      h = await http("POST", "/api/videos/importar/vista-previa", { csv: "nombre,otra\nx,y\n" });
+      prueba("importar: un CSV sin las columnas obligatorias explica cuáles faltan (400)", h.codigo === 400 && /titulo|plataforma|fecha/.test(h.json.error));
+      const ex = await fetch(panel.url + "/api/videos/exportar.csv"), exBuf = Buffer.from(await ex.arrayBuffer()), exTxt = exBuf.toString("utf8").replace(/^\uFEFF/, "");
+      const ej = await fetch(panel.url + "/api/videos/ejemplo.csv"), ejTxt = await ej.text();
+      prueba("exportar: baja un CSV con todos los videos (UTF-8 con BOM para Excel, una fila por publicación) y hay un CSV de ejemplo descargable", ex.status === 200 && /text\/csv/.test(ex.headers.get("content-type")) && /attachment/.test(ex.headers.get("content-disposition")) && exBuf.subarray(0, 3).toString("hex") === "efbbbf" && exTxt.startsWith("titulo,serie,plataforma,url,fecha,vistas") && exTxt.includes("Adivina el precio de esta propiedad") && ej.status === 200 && ejTxt.includes("Estafas con propiedades: 3 señales para no caer"), JSON.stringify({ ej: ej.status, ejTxt: ejTxt.slice(0, 120), st: ex.status, ct: ex.headers.get("content-type"), cd: ex.headers.get("content-disposition"), bom: exBuf.subarray(0, 3).toString("hex"), ini: exTxt.slice(0, 60), tiene: exTxt.includes("Adivina el precio de esta propiedad") }));
+      h = await http("POST", "/api/videos/eliminar", { id: v1.id });
+      prueba("eliminar: quita el video (queda copia en data/backups) y uno inexistente da 404", h.codigo === 200 && !(await http("GET", "/api/videos")).json.videos.some((x) => x.id === v1.id) && (await http("POST", "/api/videos/eliminar", { id: v1.id })).codigo === 404);
+      // registro desde la línea de comandos (lo que corre el panel como último paso del render)
+      const reg0 = (await http("GET", "/api/videos")).json.videos.length;
+      const rc = spawnSync(process.execPath, [p("scripts", "panel", "registrar-video.mjs")], { encoding: "utf8", env: { ...process.env } });
+      const reg1 = (await http("GET", "/api/videos")).json.videos;
+      const rc2 = spawnSync(process.execPath, [p("scripts", "panel", "registrar-video.mjs")], { encoding: "utf8", env: { ...process.env } });
+      const reg2 = (await http("GET", "/api/videos")).json.videos;
+      prueba("registro automático: la animación activa se registra como «grabado» una sola vez (volver a renderizar el mismo video actualiza, no duplica)", rc.status === 0 && /Registrado en el Panel de Videos/.test(rc.stdout) && reg1.length === reg0 + 1 && reg1[0].origen === "generador" && reg1[0].estado === "grabado" && /Actualizado/.test(rc2.stdout) && reg2.length === reg1.length, `${rc.stdout}${rc.stderr}`);
+      const vg = reg2.find((x) => x.origen === "generador");
+      await http("POST", "/api/videos/estado", { id: vg.id, estado: "programado" });
+      spawnSync(process.execPath, [p("scripts", "panel", "registrar-video.mjs")], { encoding: "utf8", env: { ...process.env } });
+      prueba("registro automático: nunca baja de estado (un video ya programado o publicado se queda así al volver a renderizarlo)", (await http("GET", "/api/videos")).json.videos.find((x) => x.id === vg.id).estado === "programado");
+      const srv = readFileSync(p("scripts", "panel", "servidor.mjs"), "utf8");
+      prueba("el panel registra el video como último paso de «Renderizar» y de «Ponerla al video ya renderizado»", (srv.match(/registrar-video\.mjs/g) ?? []).length >= 2 && /Registrar el video en el Panel de Videos/.test(srv));
+      const vjs = readFileSync(p("scripts", "panel", "web", "videos.js"), "utf8"), ljs = readFileSync(p("scripts", "panel", "web", "lab.js"), "utf8"), idx = readFileSync(p("scripts", "panel", "web", "index.html"), "utf8"), css = readFileSync(p("scripts", "panel", "web", "estilos.css"), "utf8");
+      prueba("interfaz: el menú tiene «Videos» y «Voz»; el Panel de Videos trae las 8 pantallas (resumen, biblioteca, detalle, registrar métricas, pipeline arrastrable, qué funciona, evitar repetición, importar/exportar), con estados vacíos, filtros, orden y búsqueda", ['href="#/videos"', 'href="#/voz"'].every((t) => idx.includes(t)) && ["vistaResumen", "vistaBiblioteca", "vistaDetalle", "vistaMetricas", "vistaPipeline", "vistaFunciona", "vistaNueva", "vistaImportar", "ondragstart", "ondrop", "estadoVacio", "type: \"search\"", "PV.orden", "No pude leer data/videos.json"].every((t) => vjs.includes(t)));
+      prueba("interfaz: el laboratorio genera y escucha hasta 3 versiones, deja editar instrucciones, marcar «Me gustó esta» como voz por defecto, ver el texto preparado, editar el diccionario y ver el uso del mes", ["Generar y escuchar", "Me gustó esta", "api/voz/lab", "api/voz/config", "api/voz/preparar", "api/voz/pronunciacion", "Uso este mes", "Diccionario de pronunciación", "coral", "nova", "shimmer", "sage"].every((t) => ljs.includes(t)));
+      prueba("diseño: azul marino (#02224e) y dorado (#ffc500) con fuente Inter, solo dentro del Panel de Videos y el laboratorio", /--pv-navy: #02224e/.test(css) && /--pv-oro: #ffc500/.test(css) && /font-family: "Inter"/.test(css) && /body\.modo-pv|modo-pv/.test(readFileSync(p("scripts", "panel", "web", "app.js"), "utf8")));
+      const fz = await fetch(panel.url + "/fuentes/inter-latin-700-normal.woff2"), fx = await fetch(panel.url + "/fuentes/..%2F..%2Fpackage.json");
+      prueba("la fuente Inter se sirve desde el panel (woff2) y la ruta no deja salir de la carpeta", fz.status === 200 && /woff2/.test(fz.headers.get("content-type")) && fx.status !== 200);
     }
     h = await http("POST", "/api/anim/cargar", { id });
     prueba("cargar del historial devuelve el guion y las opciones", h.codigo === 200 && /\[ESCENA 1/.test(h.json.guion) && h.json.opciones.modelo === "gpt-4.1-mini");

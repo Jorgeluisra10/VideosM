@@ -41,6 +41,7 @@ export type EstiloVoz = {
 
 /** Estilos colombianos y alegres. Cada uno = voz base + acento; el tono alegre y el ritmo se añaden en `construirInstrucciones`. */
 export const ESTILOS_VOZ: EstiloVoz[] = [
+  { id: "locutora", etiqueta: "🎙️ Locutora joven bogotana · alegre y cercana (por defecto)", voz: "coral", acento: "neutro colombiano de Bogotá, claro y amable" },
   { id: "rolo-f", etiqueta: "🏙️ Bogotana (rola) alegre · mujer", voz: "nova", acento: "bogotano (rolo): dicción clara y amable, entonación suave y cortés, sin dejos de otros países" },
   { id: "rolo-m", etiqueta: "🏙️ Bogotano (rolo) alegre · hombre", voz: "echo", acento: "bogotano (rolo): dicción clara y amable, entonación suave y cortés, sin dejos de otros países" },
   { id: "paisa-f", etiqueta: "⛰️ Paisa alegre · mujer (Medellín)", voz: "coral", acento: "paisa (Antioquia/Medellín): entonación cantadita y cálida, vocales abiertas, 's' suave, cercana y simpática" },
@@ -60,22 +61,57 @@ export const RITMOS_VOZ: RitmoVoz[] = [
   { id: "muy-agil", etiqueta: "Muy ágil", frase: "Ritmo rápido y enérgico, claro en cada cifra, sin atropellarte." },
 ];
 
-export const ESTILO_POR_DEFECTO = "rolo-f";
+export const ESTILO_POR_DEFECTO = "locutora";
 export const RITMO_POR_DEFECTO = "agil";
 
 export const estiloPorId = (id: unknown): EstiloVoz | null => ESTILOS_VOZ.find((e) => e.id === id) ?? null;
 export const vozPorId = (id: unknown): VozOpenAI | null => VOCES_OPENAI.find((v) => v.id === id) ?? null;
 
-export type OpcionesVoz = { estilo?: string; voz?: string; ritmo?: string; extra?: string };
+/** Las instrucciones por defecto de la locutora (se pueden cambiar en voz.config.json o desde el laboratorio de voz). */
+export const INSTRUCCIONES_LOCUTORA = [
+  "Eres una locutora colombiana de 24 años, de Bogotá. Hablas con acento neutro colombiano, claro y amable.",
+  "Tu energía es alegre y positiva, con una sonrisa que se nota en la voz.",
+  "Cuentas las cosas como si se las contaras a una amiga: natural, cercana, sin sonar a anuncio.",
+  "Ritmo: ágil al inicio (el gancho) y más pausado en el dato importante. Haz pausas cortas entre ideas.",
+  "Enfatiza las palabras clave con suavidad, sin gritar ni exagerar.",
+  'Pronuncia "Imnoba" como "im-NO-ba". Nunca suenes robótica, monótona ni de noticiero.',
+  "No uses acento de España, de México ni de Argentina.",
+].join(" ");
+
+export type ConfigVoz = { voz: string; modelo: string; instrucciones: string; velocidad: number; formato: string };
+export const FORMATOS_VOZ = ["mp3", "wav", "aac", "flac", "opus"];
+export const CONFIG_VOZ_POR_DEFECTO: ConfigVoz = { voz: "coral", modelo: MODELO_TTS, instrucciones: INSTRUCCIONES_LOCUTORA, velocidad: 1, formato: "mp3" };
+
+/** Valida lo que llegue (archivo o panel): voz del catálogo, instrucciones acotadas, velocidad 0,5–1,5, formato conocido; lo que falle cae al valor por defecto. */
+export function normalizarConfigVoz(x: unknown): ConfigVoz {
+  const o = (x && typeof x === "object" ? x : {}) as Record<string, unknown>;
+  const d = CONFIG_VOZ_POR_DEFECTO;
+  const vel = Number(o.velocidad);
+  const ins = typeof o.instrucciones === "string" ? o.instrucciones.replace(/\s+/g, " ").trim().slice(0, 2000) : "";
+  return {
+    voz: vozPorId(o.voz)?.id ?? d.voz,
+    modelo: d.modelo,
+    instrucciones: ins || d.instrucciones,
+    velocidad: Number.isFinite(vel) && vel >= 0.5 && vel <= 1.5 ? Math.round(vel * 100) / 100 : d.velocidad,
+    formato: FORMATOS_VOZ.includes(String(o.formato)) ? String(o.formato) : d.formato,
+  };
+}
+
+export type OpcionesVoz = { estilo?: string; voz?: string; ritmo?: string; extra?: string; instruccionesBase?: string; instrucciones?: string; vozPorDefecto?: string };
 
 /**
  * Las `instructions` que se mandan a gpt-4o-mini-tts: acento colombiano, tono alegre, ritmo, claridad con las cifras y, si el usuario quiere, un texto propio.
  * Si hay `extra`, va al final y manda sobre lo demás.
  */
 export function construirInstrucciones(o: OpcionesVoz = {}): string {
+  // texto completo escrito a mano (laboratorio de voz): se usa tal cual
+  const propias = String(o.instrucciones ?? "").replace(/\s+/g, " ").trim().slice(0, 2000);
+  if (propias) return propias;
   const estilo = estiloPorId(o.estilo) ?? estiloPorId(ESTILO_POR_DEFECTO)!;
   const ritmo = RITMOS_VOZ.find((r) => r.id === o.ritmo) ?? RITMOS_VOZ.find((r) => r.id === RITMO_POR_DEFECTO)!;
   const extra = String(o.extra ?? "").trim().slice(0, 600);
+  // la locutora por defecto: sus instrucciones (voz.config.json) ya traen el ritmo, el tono y la pronunciación de «Imnoba»
+  if (estilo.id === "locutora") return [String(o.instruccionesBase ?? "").replace(/\s+/g, " ").trim().slice(0, 2000) || INSTRUCCIONES_LOCUTORA, extra ? `Indicación extra del usuario (tiene prioridad): ${extra}` : ""].filter(Boolean).join(" ");
   return [
     `Habla en español de Colombia con acento ${estilo.acento}. No uses acento de España, de México ni de Argentina.`,
     "Tono alegre, cálido y entusiasta: sonríe al hablar, como un creador de contenido joven que cuenta datos curiosos en un reel. Que se note la curiosidad y la sorpresa, sin exagerar ni sonar publicitario.",
@@ -87,7 +123,9 @@ export function construirInstrucciones(o: OpcionesVoz = {}): string {
 
 /** Voz base efectiva: la elegida a mano, o la recomendada del estilo, o la del estilo por defecto. */
 export function vozEfectiva(o: OpcionesVoz = {}): string {
-  return vozPorId(o.voz)?.id ?? (estiloPorId(o.estilo) ?? estiloPorId(ESTILO_POR_DEFECTO)!).voz;
+  const estilo = estiloPorId(o.estilo) ?? estiloPorId(ESTILO_POR_DEFECTO)!;
+  // la locutora por defecto usa la voz guardada en voz.config.json (la que elegiste en el laboratorio)
+  return vozPorId(o.voz)?.id ?? (estilo.id === "locutora" ? vozPorId(o.vozPorDefecto)?.id : undefined) ?? estilo.voz;
 }
 
 /** Limpia el texto de una escena para decirlo (sin asteriscos de énfasis ni espacios dobles). */

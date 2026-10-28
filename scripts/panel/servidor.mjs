@@ -18,7 +18,9 @@ import { cargarEnv } from "../ia/entorno.mjs";
 import { PERFIL_BASE, cargarPerfil, listarPerfiles, paletas, slug } from "../ia/perfil.mjs";
 import { RAIZ } from "../ia/puente.mjs";
 import { cargarNucleoAnim, compilarNucleo } from "../anim/nucleo.mjs";
-import { leerTiemposOriginales, listarVocesEleven, probarVoz, vozVigente } from "../anim/voz.mjs";
+import { generarVariantesLab, leerTiemposOriginales, listarVocesEleven, probarVoz, vozVigente } from "../anim/voz.mjs";
+import { dirCacheAudio, guardarConfigVoz, guardarPronunciacion, leerConfigVoz, leerPronunciacion, leerUsoVoz } from "../anim/voz-config.mjs";
+import * as videos from "./videos.mjs";
 import { configuracion } from "../ia/entorno.mjs";
 import { espacioLibreGB, limpiarTemporales, mensajeSinEspacio } from "../_disco.mjs";
 import { archivosDoc, entorno, guardarAjustes, leerAjustes, probar } from "./ajustes.mjs";
@@ -31,7 +33,7 @@ const salida = (...p) => join(RAIZ, "trabajo", "salida", ...p);
 const script = (...p) => join(RAIZ, "scripts", ...p);
 const dato = (n) => join(RAIZ, "src", "data", n);
 
-const TIPOS = { ".html": "text/html; charset=utf-8", ".js": "text/javascript; charset=utf-8", ".css": "text/css; charset=utf-8", ".json": "application/json; charset=utf-8", ".png": "image/png", ".jpg": "image/jpeg", ".jpeg": "image/jpeg", ".webp": "image/webp", ".gif": "image/gif", ".svg": "image/svg+xml", ".mp4": "video/mp4", ".mp3": "audio/mpeg", ".wav": "audio/wav", ".txt": "text/plain; charset=utf-8", ".md": "text/markdown; charset=utf-8", ".ico": "image/x-icon" };
+const TIPOS = { ".html": "text/html; charset=utf-8", ".js": "text/javascript; charset=utf-8", ".css": "text/css; charset=utf-8", ".json": "application/json; charset=utf-8", ".png": "image/png", ".jpg": "image/jpeg", ".jpeg": "image/jpeg", ".webp": "image/webp", ".gif": "image/gif", ".svg": "image/svg+xml", ".mp4": "video/mp4", ".mp3": "audio/mpeg", ".wav": "audio/wav", ".txt": "text/plain; charset=utf-8", ".md": "text/markdown; charset=utf-8", ".ico": "image/x-icon", ".woff2": "font/woff2", ".csv": "text/csv; charset=utf-8" };
 
 // ---------------------------------------------------------------------------
 // Utilidades HTTP
@@ -342,17 +344,20 @@ function estadoAnim() {
 
 /** Lanza el render de la animación activa (1080×1920 a 60 fps). */
 function lanzarRender(o = {}) {
-  return lanzar({ nombre: "anim-render", titulo: "Renderizar video (1080×1920 a 60 fps)", pasos: [{ titulo: "Renderizar la animación", cmd: [script("render.mjs"), "--composicion=Animacion", ...(o.hilos ? [`--concurrency=${Number(o.hilos) || 1}`] : []), ...(o.desdeCero ? ["--desde-cero"] : []), ...(o.sinVoz ? ["--sin-voz"] : [])] }] });
+  return lanzar({ nombre: "anim-render", titulo: "Renderizar video (1080×1920 a 60 fps)", pasos: [
+    { titulo: "Renderizar la animación", cmd: [script("render.mjs"), "--composicion=Animacion", ...(o.hilos ? [`--concurrency=${Number(o.hilos) || 1}`] : []), ...(o.desdeCero ? ["--desde-cero"] : []), ...(o.sinVoz ? ["--sin-voz"] : [])] },
+    { titulo: "Registrar el video en el Panel de Videos", cmd: [script("panel", "registrar-video.mjs"), ...(o.sinVoz ? ["--sin-voz"] : [])] },
+  ] });
 }
 
 /**
  * Valida lo que llega del panel contra el catálogo: nunca se pasa texto libre a un comando salvo `extra` (acotado) y el nombre de la voz (solo para mostrarlo).
  * motor «openai»: estilo, voz base, ritmo, instrucciones. motor «eleven»: ID de la voz (alfanumérico), modelo, perfil de expresión, ritmo. `ajuste`: «voz» (acelera la voz) o «video» (alarga escenas).
  */
-function opcionesVoz(N, o = {}) {
+function opcionesVoz(N, o = {}, cfg = null) {
   const estilo = N.estiloPorId(o.estilo)?.id ?? N.ESTILO_POR_DEFECTO;
   const ritmo = N.RITMOS_VOZ.find((r) => r.id === o.ritmo)?.id ?? N.RITMO_POR_DEFECTO;
-  const voz = N.vozPorId(o.voz)?.id ?? N.vozEfectiva({ estilo });
+  const voz = N.vozPorId(o.voz)?.id ?? N.vozEfectiva({ estilo, vozPorDefecto: cfg?.voz });
   const extra = String(o.extra ?? "").replace(/[\r\n]+/g, " ").trim().slice(0, 600);
   const motor = o.motor === "eleven" ? "eleven" : "openai";
   return {
@@ -398,7 +403,7 @@ async function lanzarAnim(nombre, o = {}) {
     }
     case "anim-voz": {
       const N = await cargarNucleoAnim();
-      const op = opcionesVoz(N, o);
+      const op = opcionesVoz(N, o, await leerConfigVoz());
       if (op.motor === "eleven") pedir(claveEleven() || o.prueba, "Para ponerle voz con ElevenLabs hace falta su clave (pestaña Ajustes).", 412);
       else pedir(claveOpenAI() || o.prueba, "Para ponerle voz hace falta la clave de OpenAI (pestaña Ajustes).", 412);
       const a = leerAnim();
@@ -420,7 +425,7 @@ async function lanzarAnim(nombre, o = {}) {
       const { manifiesto } = await vozVigente(a);
       pedir(manifiesto, "Todavía no hay voz generada: pulsa «Generar voz» primero.", 412);
       pedir(!(manifiesto.cambioTiempos && statSync(video).mtimeMs < Date.parse(manifiesto.creado)), "La voz cambió los tiempos del video (alargó escenas o lo alineó a tu voz): el MP4 ya renderizado quedó viejo. Pulsa «Renderizar con voz».", 412);
-      return lanzar({ nombre, titulo: "Poner la voz al video ya renderizado", pasos: [{ titulo: "Mezclar la voz con el audio del video (sin volver a renderizar)", cmd: [script("anim", "poner-voz.mjs")] }] });
+      return lanzar({ nombre, titulo: "Poner la voz al video ya renderizado", pasos: [{ titulo: "Mezclar la voz con el audio del video (sin volver a renderizar)", cmd: [script("anim", "poner-voz.mjs")] }, { titulo: "Actualizar el video en el Panel de Videos", cmd: [script("panel", "registrar-video.mjs")] }] });
     }
     case "anim-voz-externa": {
       // voz propia (CapCut, ElevenLabs, un locutor…): el VIDEO se ajusta a ella; o se deshace y vuelve a los tiempos originales
@@ -547,6 +552,51 @@ async function api(req, res, url) {
     if (t && existsSync(dirArchivo(t.id))) writeFileSync(join(dirArchivo(t.id), "texto-del-post.txt"), o.texto.trim() + "\n");
     return json(res, 200, { ok: true });
   }
+  // ── Panel de Videos (data/videos.json) ──
+  if (recurso === "videos") {
+    const cuerpo = m === "POST" ? await leerJson(req) : {};
+    try {
+      if (m === "GET" && !a) return json(res, 200, { videos: (await videos.leerBase()).videos });
+      if (m === "GET" && a === "exportar.csv") { res.writeHead(200, { "Content-Type": "text/csv; charset=utf-8", "Content-Disposition": `attachment; filename="videos-${new Date().toISOString().slice(0, 10)}.csv"` }); return res.end("\uFEFF" + (await videos.exportarCSV())); }
+      if (m === "GET" && a === "ejemplo.csv") { const N = await cargarNucleoAnim(); res.writeHead(200, { "Content-Type": "text/csv; charset=utf-8", "Content-Disposition": 'attachment; filename="videos-ejemplo.csv"' }); return res.end("\uFEFF" + N.CSV_EJEMPLO + "\n"); }
+      if (m === "POST" && a === "guardar") return json(res, 200, await videos.guardarVideo(cuerpo.video ?? {}));
+      if (m === "POST" && a === "eliminar") return json(res, 200, await videos.eliminarVideo(cuerpo.id));
+      if (m === "POST" && a === "duplicar") return json(res, 200, await videos.duplicarVideo(cuerpo.id));
+      if (m === "POST" && a === "metrica") return json(res, 200, await videos.agregarMetrica(cuerpo.id, cuerpo.metrica ?? {}));
+      if (m === "POST" && a === "accion") return json(res, 200, await videos.agregarAccion(cuerpo.id, cuerpo.accion ?? {}));
+      if (m === "POST" && a === "estado") return json(res, 200, await videos.cambiarEstado(cuerpo.id, cuerpo.estado));
+      if (m === "POST" && a === "parecidos") return json(res, 200, await videos.parecidos(cuerpo));
+      if (m === "POST" && a === "importar" && b === "vista-previa") return json(res, 200, await videos.vistaPreviaCSV(cuerpo.csv));
+      if (m === "POST" && a === "importar" && !b) { await videos.vistaPreviaCSV(cuerpo.csv); return json(res, 200, await videos.importarCSV(cuerpo.csv)); }
+    } catch (e) {
+      return error(res, e.codigo ?? 500, e.message ?? String(e));
+    }
+    return error(res, 404, "Ruta del Panel de Videos desconocida.");
+  }
+  // ── Laboratorio de voz ──
+  if (recurso === "voz" && ["config", "pronunciacion", "preparar", "lab", "uso"].includes(a)) {
+    const cuerpo = m === "POST" ? await leerJson(req) : {};
+    try {
+      const N = await cargarNucleoAnim();
+      if (m === "GET" && a === "config") return json(res, 200, { config: await leerConfigVoz(), pronunciacion: await leerPronunciacion(), uso: leerUsoVoz(), claveOpenAI: claveOpenAI(), claveEleven: claveEleven() });
+      if (m === "GET" && a === "uso") return json(res, 200, leerUsoVoz());
+      if (m === "POST" && a === "config") return json(res, 200, { config: await guardarConfigVoz(cuerpo) });
+      if (m === "POST" && a === "pronunciacion") return json(res, 200, { pronunciacion: await guardarPronunciacion(cuerpo.diccionario) });
+      if (m === "POST" && a === "preparar") { const r = N.prepararParaVoz(String(cuerpo.texto ?? "").slice(0, 4000), { diccionario: cuerpo.diccionario && typeof cuerpo.diccionario === "object" ? cuerpo.diccionario : await leerPronunciacion() }); return json(res, 200, r); }
+      if (m === "POST" && a === "lab") {
+        pedir(claveOpenAI(), "Para generar las versiones hace falta la clave de OpenAI (pestaña Ajustes).", 412);
+        const cfg = await leerConfigVoz();
+        const texto = String(cuerpo.texto ?? "").replace(/\s+/g, " ").trim().slice(0, 700);
+        pedir(texto.length >= 10, "Escribe un guion corto (al menos una frase).");
+        const vars = (Array.isArray(cuerpo.variantes) ? cuerpo.variantes : []).slice(0, 3).map((x) => ({ voz: N.vozPorId(x?.voz)?.id ?? cfg.voz, instrucciones: String(x?.instrucciones ?? "").replace(/\s+/g, " ").trim().slice(0, 2000) || cfg.instrucciones }));
+        pedir(vars.length >= 1, "Elige al menos una versión para generar.");
+        const c = configuracion();
+        return json(res, 200, await generarVariantesLab({ texto, variantes: vars, preparar: cuerpo.preparar !== false, clave: c.clave, url: c.url }));
+      }
+    } catch (e) {
+      return error(res, e.codigo ?? 502, e.message ?? String(e));
+    }
+  }
   if (m === "GET" && recurso === "anim" && a === "estado") return json(res, 200, estadoAnim());
   if (m === "GET" && recurso === "anim" && a === "voz" && !b) {
     // estado de la voz en off: ¿hay voz generada?, ¿sirve para este video?, costo estimado y los MP4 renderizados
@@ -589,7 +639,7 @@ async function api(req, res, url) {
     const o = await leerJson(req);
     const N = await cargarNucleoAnim();
     const cfg = configuracion();
-    const op = opcionesVoz(N, o);
+    const op = opcionesVoz(N, o, await leerConfigVoz());
     if (op.motor === "eleven") pedir(claveEleven(), "Para probar una voz de ElevenLabs hace falta su clave (pestaña Ajustes).", 412);
     else pedir(cfg.clave, "Para probar una voz hace falta la clave de OpenAI (pestaña Ajustes).", 412);
     if (op.motor === "eleven") pedir(op.voiceId, "Elige una voz de ElevenLabs (o pega su ID).", 412);
@@ -717,6 +767,9 @@ function crearServidor(puerto) {
         res.writeHead(200, { "Content-Type": "text/javascript; charset=utf-8", "Cache-Control": "no-cache" });
         return res.end(codigo);
       }
+      if ((m = url.pathname.match(/^\/fuentes\/(.+\.woff2)$/))) { const r = dentro(join(RAIZ, "public", "fonts"), m[1]); return r ? servirArchivo(req, res, r) : error(res, 403, "Ruta no válida."); }
+      if ((m = url.pathname.match(/^\/media-videos\/(.+)$/))) { const r = dentro(videos.dirMedia(), m[1]); return r ? servirArchivo(req, res, r, { descarga: url.searchParams.has("descargar") }) : error(res, 403, "Ruta no válida."); }
+      if ((m = url.pathname.match(/^\/cache-audio\/(.+)$/))) { const r = dentro(dirCacheAudio(), m[1]); return r ? servirArchivo(req, res, r) : error(res, 403, "Ruta no válida."); }
       if ((m = url.pathname.match(/^\/anim-previa\/(.+)$/))) { const r = dentro(join(RAIZ, "trabajo", "tmp", "anim-previa"), m[1]); return r ? servirArchivo(req, res, r) : error(res, 403, "Ruta no válida."); }
       if (url.pathname === "/audio/voz.mp3") return servirArchivo(req, res, join(RAIZ, "public", "audios", "voz.mp3"));
       if ((m = url.pathname.match(/^\/p\/([^/]+)\/media\/(.+)$/))) { const r = dentro(join(dirProyecto(m[1]), "media"), m[2]); return r ? servirArchivo(req, res, r) : error(res, 403, "Ruta no válida."); }
