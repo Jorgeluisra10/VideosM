@@ -225,6 +225,15 @@ Todo se guarda en **`data/videos.json`** (texto legible y editable a mano). Ante
 - **📥 Importar / exportar:** carga un CSV de videos ya subidos (`titulo, serie, plataforma, url, fecha, vistas, guardados, compartidos`), ves una vista previa con los errores fila por fila y los enlaces repetidos se omiten; hay un CSV de ejemplo descargable y un botón para exportar todo.
 - **Integración con el generador:** al terminar **«Renderizar»** (o «Ponerla al video ya renderizado») el video se **registra solo** con estado **«grabado»**, con su guion, voz e instrucciones usadas, una copia del MP4 y su miniatura (en `data/media/`); abrirlo desde el panel es un clic. Si vuelves a renderizar el mismo video se actualiza, no se duplica ni baja de estado.
 
+## 1d. 🎬 Videos diarios con `/video` y `/ideas` (Claude Code)
+
+- **Antes de cualquier video se lee `REGLAS_DE_VIDEO.md`** (ganchos, estructura viral, calidad, audio, voz, revisión, entrega y la sección **LECCIONES**: cuando dices «guarda esto», la lección se agrega ahí con fecha). **`PEDIDO_VIDEO.md`** es la plantilla del pedido; los campos vacíos los decide Claude.
+- **`/video <tema o pedido>`**: crea el video completo (3 ganchos, guion, escenas, animación, música y efectos, voz, render, revisión de fotogramas y entrega). Con solo un tema, elige el objetivo y la serie y te dice qué eligió.
+- **`/ideas [número]`**: propone ideas (10 por defecto) como pedidos listos para pegar tras `/video`, mezclando series y sin repetir ángulos de los últimos 60 días (lee el registro de `data/videos.json`).
+- Cada video queda en `videos/AAAA-MM-DD-slug/` (`idea.txt`, `respuesta-ia.json`, `entrega.md`). Herramientas que usa la receta (también sirven a mano): `node scripts/anim/desde-respuesta.mjs --idea=… --respuesta=…` (crea la animación sin IA), `node scripts/anim/previa.mjs --qa` (una captura por escena), `node scripts/anim/musica.mjs` (música libre), `node scripts/anim/voz.mjs`, `npm run anim:render` y **`node scripts/anim/revisar-video.mjs`** (≥ 8 fotogramas con guías de zona segura + volumen, pico, recortes y silencios), y `node scripts/panel/registrar-video.mjs --serie=… --notas=…` (registro «grabado» en el Panel de Videos).
+- **Audio:** al renderizar quedan las **pistas separadas** en `trabajo/salida/stems/` (`voz.wav` y `musica-y-efectos.wav`); la música se nivela sola y queda ≈ 24 dB bajo la voz (ducking). **Música libre:** deja pistas libres de derechos en `assets/musica/` (ver su `README.md`) y actívalas con `node scripts/anim/musica.mjs --usar=assets/musica/<pista>`; `--restaurar` vuelve a la sintetizada.
+- **Límites actuales:** el motor viral no genera subtítulos palabra por palabra ni usa fotos, y la zona segura del motor es algo más permisiva que la de las reglas (la revisión dibuja las guías de las reglas).
+
 ## 2. El panel web, paso a paso
 
 El panel es una página local (solo accesible desde tu equipo). Arriba siempre ves el **trabajo en curso** (con barra de progreso); al pulsarlo se abre el **registro** en vivo, y puedes **cancelar** (lo ya renderizado se conserva).

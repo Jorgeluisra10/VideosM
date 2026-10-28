@@ -25,7 +25,7 @@
 import { RAIZ_PROYECTO, TMP_PROYECTO } from "./_tmp.mjs";
 import { spawnSync } from "node:child_process";
 import { createHash } from "node:crypto";
-import { existsSync, mkdirSync, readFileSync, readdirSync, renameSync, rmSync, statSync, writeFileSync } from "node:fs";
+import { copyFileSync, existsSync, mkdirSync, readFileSync, readdirSync, renameSync, rmSync, statSync, writeFileSync } from "node:fs";
 import os from "node:os";
 import { join } from "node:path";
 import { bundle } from "@remotion/bundler";
@@ -278,8 +278,13 @@ if (!CON_AUDIO) {
   console.log("🔊 Audio ya mezclado (se reutiliza)");
 } else if (ES_ANIMACION) {
   console.log(`🔊 Mezclando efectos de sonido${musicaAnim ? " y música" : ""}${VOZ_PISTA ? " con la voz en off" : " (sin voz)"}...`);
-  const m = await mezclarSfx({ raiz: RAIZ_PROYECTO, ffmpeg, segundos: total / FPS, salidaWav: AUDIO, eventos: eventosAnim, musica: musicaAnim, vozWav: VOZ_PISTA });
+  const m = await mezclarSfx({ raiz: RAIZ_PROYECTO, ffmpeg, segundos: total / FPS, salidaWav: AUDIO, eventos: eventosAnim, musica: musicaAnim, vozWav: VOZ_PISTA, fondoWav: join(RAIZ_PROYECTO, "trabajo", "salida", "stems", "musica-y-efectos.wav") });
   console.log(`   ✔ audio listo: ${m.efectos} efectos${musicaAnim ? " + música" : ""}, ${m.segundos.toFixed(1)} s, pico ${m.pico.toFixed(2)}`);
+  // pista de voz sola (para reeditar con otra voz o con la tuya): la misma que se mezcló, colocada en el tiempo de cada escena
+  if (VOZ_PISTA) {
+    mkdirSync(join(RAIZ_PROYECTO, "trabajo", "salida", "stems"), { recursive: true });
+    copyFileSync(VOZ_PISTA, join(RAIZ_PROYECTO, "trabajo", "salida", "stems", "voz.wav"));
+  } else rmSync(join(RAIZ_PROYECTO, "trabajo", "salida", "stems", "voz.wav"), { force: true });
   // con voz en off el audio final se lleva a −14 LUFS (el volumen que piden las plataformas); sin voz se deja como estaba
   if (VOZ_PISTA) {
     const n = normalizarEnSitio(ffmpeg, AUDIO, { objetivo: -14, pico: -1.5 });

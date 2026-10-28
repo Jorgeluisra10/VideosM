@@ -160,6 +160,10 @@ export async function mezclarAudio({ raiz, ffmpeg, segundos, salidaWav }) {
 // Posproceso de la voz y de la mezcla: silencios largos, ducking de la música y volumen de plataforma (-14 LUFS)
 // ---------------------------------------------------------------------------
 const VENTANA_MS = 10;
+/** RMS de la música sintetizada del proyecto (≈ −16,9 dBFS): toda música se nivela a esto antes de mezclarla. */
+export const RMS_MUSICA_REFERENCIA = 0.1429;
+/** Ganancia de la música cuando hay voz: con el ducking deja la música ≈ 24 dB por debajo de la voz mientras habla (regla: −22 a −26 dB). */
+export const NIVEL_MUSICA_CON_VOZ = 1.4;
 
 /** Silencios largos DENTRO de una frase (más de `max` s por debajo de `umbral` de RMS) se acortan a `deja` s; los bordes no se tocan. */
 export function recortarSilenciosLargos(x, { umbral = 0.006, max = 0.6, deja = 0.35 } = {}) {
@@ -230,7 +234,7 @@ export function duckear(base, voz, { profundidad = 0.65, ...o } = {}) {
 
 /** Mide el volumen de un archivo con loudnorm (EBU R128): { integrado (LUFS), picoVerdadero (dBTP), lra }. null si no hay señal. */
 export function medirLUFS(ffmpeg, archivo, { objetivo = -14, pico = -1.5, lra = 11 } = {}) {
-  const r = spawnSync(ffmpeg, ["-hide_banner", "-nostats", "-i", archivo, "-af", `loudnorm=I=${objetivo}:TP=${pico}:LRA=${lra}:print_format=json`, "-f", "null", "-"], { encoding: "utf8", maxBuffer: 16 * 1024 * 1024 });
+  const r = spawnSync(ffmpeg, ["-hide_banner", "-nostats", "-i", archivo, "-vn", "-af", `loudnorm=I=${objetivo}:TP=${pico}:LRA=${lra}:print_format=json`, "-f", "null", "-"], { encoding: "utf8", maxBuffer: 16 * 1024 * 1024 });
   const m = /\{[^{}]*"input_i"[^{}]*\}/.exec(String(r.stderr ?? ""));
   if (!m) return null;
   const j = JSON.parse(m[0]);
@@ -263,7 +267,7 @@ export function normalizarEnSitio(ffmpeg, wav, opciones) {
  * Mezcla SOLO efectos de sonido (sin voz, sin ambiente, sin música) para el motor de animación.
  * `eventos` = [{ frame, tipo, vol }] con fotograma absoluto (lo da eventosSfx() de src/anim/sonido.ts).
  */
-export async function mezclarSfx({ raiz, ffmpeg, segundos, salidaWav, eventos, musica, vozWav }) {
+export async function mezclarSfx({ raiz, ffmpeg, segundos, salidaWav, eventos, musica, vozWav, fondoWav }) {
   const { DUR_SFX, VOL_SFX, archivoSfx } = await cargarSonido(raiz);
   const faltan = [...new Set(eventos.map((s) => archivoSfx(s.tipo)))].some((f) => !existsSync(join(raiz, "public", f))) || (musica && !existsSync(join(raiz, "public", musica.archivo)));
   if (faltan) spawnSync(process.execPath, [join(raiz, "scripts", "generar-sfx.mjs"), "--solo-faltantes"], { cwd: raiz, stdio: "ignore" });
@@ -273,30 +277,56 @@ export async function mezclarSfx({ raiz, ffmpeg, segundos, salidaWav, eventos, m
   const cache = new Map();
   // voz en off (pista ya colocada por escena en scripts/anim/voz.mjs): volumen 1; se decodifica primero porque la música se «agacha» cuando habla
   const voz = vozWav ? decodificar(ffmpeg, vozWav, tmpDir) : null;
-  // música de fondo en bucle (motor viral): rampa de entrada y de salida, igual que <Audio volume> en src/anim/Animacion.tsx
+  // música de fondo en bucle (motor viral): rampa de entrada y de salida, igual que <Audio volume> en src/anim/Animacion.tsx.
+  // Se nivela a un RMS de referencia (la pista sintetizada del proyecto) para que una música libre que pongas en public/audios/musica.wav
+  // (scripts/anim/musica.mjs) suene al mismo nivel, sea cual sea el volumen con el que venga.
+  let fondoMusica = null;
   if (musica) {
     const mus = decodificar(ffmpeg, join(raiz, "public", musica.archivo), tmpDir);
-    const bg = new Float32Array(N);
+    let q = 0;
+    for (let i = 0; i < mus.length; i++) q += mus[i] * mus[i];
+    const rmsMus = Math.sqrt(q / Math.max(1, mus.length));
+    const nivela = rmsMus > 1e-5 ? Math.min(6, Math.max(0.1, RMS_MUSICA_REFERENCIA / rmsMus)) : 1;
+    fondoMusica = new Float32Array(N);
     for (let i = 0; i < N; i++) {
       const seg = i / SR;
       const rampa = Math.min(1, seg / musica.entrada, Math.max(0, (segundos - seg) / musica.salida));
-      bg[i] = mus[i % mus.length] * musica.volumen * rampa * (voz ? 0.85 : 1);
+      fondoMusica[i] = mus[i % mus.length] * nivela * musica.volumen * rampa;
     }
-    if (voz) duckear(bg, voz); // ducking: con voz la música baja ≈ 9 dB mientras habla y vuelve a subir en las pausas
-    for (let i = 0; i < N; i++) mezcla[i] += bg[i];
   }
-  if (voz) for (let i = 0; i < Math.min(N, voz.length); i++) mezcla[i] += voz[i];
+  // efectos de sonido (cada uno arranca en su fotograma y se corta a su duración), sin el ajuste de volumen por la voz
+  const fxMezcla = new Float32Array(N);
   for (const s of eventos) {
     if (!cache.has(s.tipo)) cache.set(s.tipo, decodificar(ffmpeg, join(raiz, "public", archivoSfx(s.tipo)), tmpDir));
     const buf = cache.get(s.tipo);
     const inicio = Math.round(s.frame * (SR / FPS));
     const largo = Math.min(buf.length, Math.ceil(DUR_SFX[s.tipo] * FPS) * (SR / FPS));
-    const vol = (s.vol ?? VOL_SFX) * (voz ? 0.8 : 1);
+    const vol = s.vol ?? VOL_SFX;
     for (let k = 0; k < largo; k++) {
       const i = inicio + k;
-      if (i >= 0 && i < N) mezcla[i] += buf[k] * vol;
+      if (i >= 0 && i < N) fxMezcla[i] += buf[k] * vol;
     }
   }
+  // pista «música + efectos» sola (sin voz y sin ducking): sirve para reeditar con otra voz
+  if (fondoWav) {
+    const f = new Float32Array(N);
+    for (let i = 0; i < N; i++) f[i] = (fondoMusica ? fondoMusica[i] : 0) + fxMezcla[i];
+    let pf = 0;
+    for (let i = 0; i < N; i++) pf = Math.max(pf, Math.abs(f[i]));
+    if (pf > 0.97) for (let i = 0; i < N; i++) f[i] *= 0.97 / pf;
+    mkdirSync(dirname(fondoWav), { recursive: true });
+    escribirWavEstereo(fondoWav, f);
+  }
+  // mezcla final: con voz, la música sube ×1,4 (≈ −24 dB bajo la voz mientras habla, medido) y se agacha con el ducking; los efectos ×0,8
+  if (fondoMusica) {
+    if (voz) {
+      for (let i = 0; i < N; i++) fondoMusica[i] *= NIVEL_MUSICA_CON_VOZ;
+      duckear(fondoMusica, voz); // ducking: baja ≈ 9 dB mientras habla y vuelve a subir en las pausas
+    }
+    for (let i = 0; i < N; i++) mezcla[i] += fondoMusica[i];
+  }
+  if (voz) for (let i = 0; i < Math.min(N, voz.length); i++) mezcla[i] += voz[i];
+  for (let i = 0; i < N; i++) mezcla[i] += fxMezcla[i] * (voz ? 0.8 : 1);
   let pico = 0;
   for (let i = 0; i < N; i++) pico = Math.max(pico, Math.abs(mezcla[i]));
   if (pico > 0.97) for (let i = 0; i < N; i++) mezcla[i] *= 0.97 / pico;

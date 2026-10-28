@@ -165,16 +165,20 @@ function miniatura(video, destino) {
  * sin tocar su estado, publicaciones ni métricas.
  * `entrada` = { anim, manifiestoVoz?, mp4?, estado? }.
  */
-export async function registrarVideoGenerado({ anim, manifiestoVoz = null, mp4 = null, estado = "grabado" }) {
+export async function registrarVideoGenerado({ anim, manifiestoVoz = null, mp4 = null, estado = "grabado", serie = "", notas = "" }) {
   const N = await cargarNucleoAnim();
   const base = await leerBase();
   const voz = manifiestoVoz ? (manifiestoVoz.externa ? `Voz propia (${manifiestoVoz.archivo ?? "audio subido"})` : manifiestoVoz.motor === "eleven" ? `ElevenLabs · ${manifiestoVoz.voz} · ${manifiestoVoz.modelo}` : `OpenAI · ${manifiestoVoz.voz} · ${manifiestoVoz.modelo}${manifiestoVoz.estilo ? ` · ${manifiestoVoz.estilo}` : ""}`) : "";
   const nuevo = N.videoDesdeAnimacion(anim, { voz, instrucciones: manifiestoVoz?.instrucciones ?? "", estado });
+  if (N.SERIES.includes(serie)) nuevo.serie = serie; // la serie que pidió el usuario manda sobre la que se deduce del título
+  if (notas) nuevo.notas = String(notas).slice(0, 3000);
   let v = base.videos.find((x) => x.origen_clave && x.origen_clave === nuevo.origen_clave);
   const creado = !v;
   if (!v) { v = nuevo; base.videos.unshift(v); }
   else {
     v.duracion_seg = nuevo.duracion_seg;
+    if (N.SERIES.includes(serie)) v.serie = serie;
+    if (notas) v.notas = nuevo.notas;
     if (voz) { v.voz_usada = voz; v.instrucciones_voz = nuevo.instrucciones_voz; }
     // nunca se baja de estado: si ya estaba programado o publicado se queda así
     if (N.ESTADOS.indexOf(estado) > N.ESTADOS.indexOf(v.estado)) v.estado = estado;
@@ -191,7 +195,7 @@ export async function registrarVideoGenerado({ anim, manifiestoVoz = null, mp4 =
 }
 
 /** Lee lo necesario del proyecto activo (animación + voz vigente + MP4 más reciente) y registra el video. Lo llama el panel al terminar un render. */
-export async function registrarDesdeProyectoActivo({ estado = "grabado", sinVoz = false } = {}) {
+export async function registrarDesdeProyectoActivo({ estado = "grabado", sinVoz = false, serie = "", notas = "" } = {}) {
   const anim = leerJson(join(RAIZ, "src", "data", "animacion.json"), null);
   if (!anim?.escenas) return null;
   const { vozVigente } = await import("../anim/voz.mjs");
@@ -199,5 +203,5 @@ export async function registrarDesdeProyectoActivo({ estado = "grabado", sinVoz 
   const mp4ConVoz = join(RAIZ, "trabajo", "salida", "video-animacion-con-voz.mp4"), mp4Render = join(RAIZ, "trabajo", "salida", "video-animacion.mp4");
   // el MP4 con voz solo vale si es posterior al render (si no, es de un render anterior)
   const mp4 = !sinVoz && existsSync(mp4ConVoz) && existsSync(mp4Render) && statSync(mp4ConVoz).mtimeMs >= statSync(mp4Render).mtimeMs ? mp4ConVoz : mp4Render;
-  return registrarVideoGenerado({ anim, manifiestoVoz: vigente && !sinVoz ? manifiesto : null, mp4: existsSync(mp4) ? mp4 : null, estado });
+  return registrarVideoGenerado({ anim, manifiestoVoz: vigente && !sinVoz ? manifiesto : null, mp4: existsSync(mp4) ? mp4 : null, estado, serie, notas });
 }

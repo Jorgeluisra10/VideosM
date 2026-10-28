@@ -23,3 +23,11 @@ trabajo/salida/guion-locucion.txt
 cache/
 data/*
 !data/LEEME.txt
+
+# pistas de música (pesan; solo el README y las licencias van al repositorio)
+assets/musica/*
+!assets/musica/README.md
+!assets/musica/LICENCIAS.md
+
+# pistas separadas que deja el render (voz sola y música + efectos)
+trabajo/salida/stems/

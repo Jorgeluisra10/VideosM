@@ -784,6 +784,118 @@ try {
         const dup = N.duplicarComoIdea(N.normalizarVideo({ titulo: "Original", serie: "florida", guion: "g", gancho: "h", estado: "publicado", fecha_publicacion: "2026-10-01", metricas: [{ vistas: 5 }], acciones: [{ cantidad: 2 }] }));
         prueba("videos: el video que genera el sistema se registra «grabado» con título, guion, gancho (primera frase), duración, voz e instrucciones, serie deducida y una clave estable; duplicar deja una IDEA nueva sin fechas, métricas ni acciones", vg.estado === "grabado" && vg.origen === "generador" && vg.serie === "estafas" && vg.gancho === "¿Sabías que miles de personas caen?" && vg.guion.split("\n").length === 2 && vg.duracion_seg === 42.5 && vg.voz_usada === "OpenAI · coral" && vg.instrucciones_voz === "Sé alegre" && vg.origen_clave.length === 8 && vg.origen_clave === N.videoDesdeAnimacion({ titulo: "Estafas inmobiliarias: cómo evitarlas", escenas: [{ voz: "¿Sabías que *miles* de personas caen? Evítalo." }, { voz: "Segunda frase." }] }).origen_clave && dup.estado === "idea" && dup.titulo === "Original (nueva versión)" && dup.metricas.length === 0 && dup.acciones.length === 0 && dup.fecha_publicacion === "" && dup.serie === "florida" && dup.id !== "");
       }
+      // ── Fase 3: reglas de video, pistas separadas, música libre, desde-respuesta y revisión ──
+      {
+        const A3 = await import("../audio.mjs"), { buscarFfmpeg: bf3 } = await import("../medios.mjs");
+        const { ffmpeg: ff3 } = bf3();
+        const tono3 = (seg, f, amp) => { const n = Math.round(seg * A3.SR), a = new Float32Array(n); for (let i = 0; i < n; i++) a[i] = amp * Math.sin((2 * Math.PI * f * i) / A3.SR) * Math.min(1, i / 300, (n - i) / 300); return a; };
+        const sil3 = (seg) => new Float32Array(Math.round(seg * A3.SR));
+        const cat3 = (...t) => { const x = new Float32Array(t.reduce((q, z) => q + z.length, 0)); let o = 0; for (const z of t) { x.set(z, o); o += z.length; } return x; };
+        const rms3 = (x, a, b) => { let q = 0, n = 0; for (let i = Math.floor(a * A3.SR); i < Math.min(x.length, Math.floor(b * A3.SR)); i++) { q += x[i] * x[i]; n++; } return Math.sqrt(q / Math.max(1, n)); };
+        const dir3 = p("trabajo", "tmp", "prueba-fase3");
+        rmSync(dir3, { recursive: true, force: true });
+        mkdirSync(dir3, { recursive: true });
+
+        // pistas separadas y nivel de la música bajo la voz (mezclador real con la música real del proyecto)
+        const vozW = join(dir3, "voz.wav"), mezW = join(dir3, "mezcla.wav"), fondoW = join(dir3, "stems", "musica-y-efectos.wav");
+        A3.escribirWavEstereo(vozW, cat3(sil3(3), tono3(2.5, 200, 0.159), sil3(3.5)));
+        const evs = [{ frame: 60, tipo: "pop", vol: 0.5 }];
+        await A3.mezclarSfx({ raiz: RAIZ, ffmpeg: ff3, segundos: 9, salidaWav: mezW, eventos: evs, musica: N.MUSICA, vozWav: vozW, fondoWav: fondoW });
+        const vz = A3.decodificar(ff3, vozW, dir3), mz = A3.decodificar(ff3, mezW, dir3), fd = existsSync(fondoW) ? A3.decodificar(ff3, fondoW, dir3) : null;
+        const musicaBajoVoz = mz.map((x, i) => x - (vz[i] ?? 0));
+        const dBrel = 20 * Math.log10(rms3(musicaBajoVoz, 3.6, 5.3) / rms3(vz, 3.6, 5.3));
+        prueba("audio: la música queda ≈ 24 dB bajo la voz mientras habla (regla: −22 a −26 dB), medido con el mezclador real y la música del proyecto", dBrel <= -21 && dBrel >= -27, `${dBrel.toFixed(1)} dB`);
+        prueba("audio: el render exporta la pista «música + efectos» SOLA (sin voz y sin ducking, para reeditar con otra voz): no cambia cuando habla la voz y trae el efecto", fd && Math.abs(20 * Math.log10(rms3(fd, 3.6, 5.3) / rms3(fd, 6.2, 7.8))) < 4 && rms3(fd, 0.95, 1.2) > 1.5 * rms3(fd, 2.1, 2.4) && mz.length >= fd.length - 10);
+        const rndF3 = readFileSync(p("scripts", "render.mjs"), "utf8");
+        prueba("audio: render.mjs guarda la voz sola (stems/voz.wav) y la música + efectos (stems/musica-y-efectos.wav), y borra una voz vieja si el render sale sin voz", /stems", "voz\.wav"/.test(rndF3) && /musica-y-efectos\.wav/.test(rndF3) && /fondoWav/.test(rndF3) && /rmSync\(join\(RAIZ_PROYECTO, "trabajo", "salida", "stems", "voz\.wav"\)/.test(rndF3));
+        // una música libre muy baja suena igual de fuerte (se nivela)
+        const quieta = p("public", "audios", "musica-prueba-baja.wav");
+        spawnSync(ff3, ["-v", "error", "-y", "-i", p("public", "audios", "musica.wav"), "-af", "volume=0.15", quieta], { encoding: "utf8" });
+        const mezB = join(dir3, "mezcla-baja.wav");
+        await A3.mezclarSfx({ raiz: RAIZ, ffmpeg: ff3, segundos: 9, salidaWav: mezB, eventos: [], musica: { ...N.MUSICA, archivo: "audios/musica-prueba-baja.wav" }, vozWav: vozW });
+        const mb = A3.decodificar(ff3, mezB, dir3);
+        rmSync(quieta, { force: true });
+        const dBb = 20 * Math.log10(rms3(mb.map((x, i) => x - (vz[i] ?? 0)), 3.6, 5.3) / rms3(vz, 3.6, 5.3));
+        prueba("música libre: una pista grabada muy baja (−16 dB) se nivela y suena al mismo nivel bajo la voz (±2 dB)", Math.abs(dBb - dBrel) < 2, `${dBb.toFixed(1)} vs ${dBrel.toFixed(1)}`);
+
+        // música libre (assets/musica → public/audios/musica.wav)
+        const M = await import("./musica.mjs");
+        const raizM = join(dir3, "raiz-musica");
+        mkdirSync(join(raizM, "assets", "musica"), { recursive: true });
+        mkdirSync(join(raizM, "public", "audios"), { recursive: true });
+        copyFileSync(p("public", "audios", "musica.wav"), join(raizM, "public", "audios", "musica.wav"));
+        const originalM = readFileSync(join(raizM, "public", "audios", "musica.wav"));
+        A3.escribirWavEstereo(join(raizM, "assets", "musica", "pista-libre.wav"), tono3(12, 261, 0.3));
+        A3.escribirWavEstereo(join(raizM, "assets", "musica", "corta.wav"), tono3(3, 261, 0.3));
+        writeFileSync(join(raizM, "assets", "musica", "cancion.txt"), "no es audio");
+        const lista = M.listarMusica({ raiz: raizM });
+        prueba("música libre: `--listar` muestra las pistas de assets/musica/ (solo audio) con su duración; sin pistas se usa la sintetizada", lista.length === 2 && lista.some((x) => x.archivo === "pista-libre.wav" && Math.abs(x.segundos - 12) < 0.3) && M.musicaActual({ raiz: raizM }).origen === "sintetizada");
+        const um = M.usarMusica({ archivo: "assets/musica/pista-libre.wav", raiz: raizM });
+        const nuevoM = readFileSync(join(raizM, "public", "audios", "musica.wav"));
+        prueba("música libre: `--usar` convierte la pista a public/audios/musica.wav (la que lee el mezclador), guarda la sintetizada para volver y deja constancia de cuál se usa", Math.abs(um.segundos - 12) < 0.3 && !nuevoM.equals(originalM) && existsSync(join(raizM, "trabajo", "anim", "musica-sintetica.wav")) && M.musicaActual({ raiz: raizM }).archivo === "assets/musica/pista-libre.wav" && Math.abs(A3.decodificar(ff3, join(raizM, "public", "audios", "musica.wav"), dir3).length / A3.SR - 12) < 0.3);
+        let errs = [];
+        for (const a of ["assets/musica/corta.wav", "assets/musica/cancion.txt", "assets/musica/no-existe.mp3", "../../etc/passwd", "public/audios/musica.wav"]) { try { M.usarMusica({ archivo: a, raiz: raizM }); errs.push(`aceptó ${a}`); } catch { /* esperado */ } }
+        prueba("música libre: rechaza pistas muy cortas (< 8 s), que no sean audio, inexistentes o de FUERA de assets/musica/ (rutas con ../ o la carpeta del proyecto)", errs.length === 0, errs.join(" · "));
+        prueba("música libre: `--restaurar` devuelve exactamente la música sintetizada original y quita la ficha", M.restaurarMusica({ raiz: raizM }) === true && readFileSync(join(raizM, "public", "audios", "musica.wav")).equals(originalM) && M.musicaActual({ raiz: raizM }).origen === "sintetizada" && M.restaurarMusica({ raiz: raizM }) === false);
+
+        // crear la animación desde idea + respuesta (sin IA)
+        const D = await import("./desde-respuesta.mjs");
+        const ideaTxt = readFileSync(p("ejemplos", "animacion-viral", "idea.txt"), "utf8"), respJson = JSON.parse(readFileSync(p("ejemplos", "animacion-viral", "respuesta-ia.json"), "utf8"));
+        const dr = await D.crearDesdeRespuesta({ idea: ideaTxt, respuesta: respJson, paleta: "imnoba" });
+        let e1 = "", e2 = "", e3 = "";
+        try { await D.crearDesdeRespuesta({ idea: ideaTxt, respuesta: { titulo: "x" } }); } catch (e) { e1 = e.message; }
+        try { await D.crearDesdeRespuesta({ idea: ideaTxt, respuesta: respJson, paleta: "inventada" }); } catch (e) { e2 = e.message; }
+        try { await D.crearDesdeRespuesta({ idea: "hola", respuesta: respJson }); } catch (e) { e3 = e.message; }
+        prueba("desde-respuesta: idea + respuesta de Claude → animación viral válida (paleta IMNOBA, escenas con tiempos seguidos, SFX y locución) por el mismo ensamblado del panel; una respuesta sin «scenes», una paleta inventada o una idea demasiado corta dan un mensaje claro", dr.anim.formato === "viral" && dr.anim.paleta === "imnoba" && dr.anim.escenas.length >= 5 && dr.anim.sfx === true && dr.locucion.length > 100 && dr.anim.escenas.every((e, i) => i === 0 ? e.inicio === 0 : Math.abs(e.inicio - dr.anim.escenas[i - 1].fin) < 0.011) && /scenes/.test(e1) && /Paleta desconocida/.test(e2) && e3.length > 10, JSON.stringify({ e1, e2, e3 }));
+        const cd = spawnSync(process.execPath, [p("scripts", "anim", "desde-respuesta.mjs")], { encoding: "utf8" });
+        prueba("desde-respuesta: sin argumentos explica qué faltó y sale con error (no toca la animación activa)", cd.status === 1 && /--idea/.test(cd.stderr));
+
+        // revisión del video renderizado
+        const R = await import("./revisar-video.mjs");
+        const ins = R.instantesDeRevision(30, [{ inicio: 0 }, { inicio: 3.6 }, { inicio: 7 }, { inicio: 10.7 }], 8);
+        prueba("revisión: los fotogramas incluyen el inicio, el gancho (1 s), el comienzo de cada escena (+0,7 s) y el cierre; son ≥ 8, ordenados, separados ≥ 0,4 s y dentro del video", ins.length >= 8 && ins[0] <= 0.1 && ins.includes(1) && ins.includes(4.3) && ins.includes(7.7) && ins.includes(11.4) && ins.at(-1) >= 29.5 && ins.every((x, i) => i === 0 || x - ins[i - 1] >= 0.4) && ins.every((x) => x > 0 && x < 30), JSON.stringify(ins));
+        const lim = R.limitesDeSenal(cat3(sil3(0.3), tono3(2, 220, 0.3), sil3(0.5)));
+        prueba("revisión: mide cuándo empieza y termina la señal (≈ 0,3 s de silencio al inicio y 0,5 s al final)", lim && Math.abs(lim.inicio - 0.3) < 0.06 && Math.abs(lim.duracion - lim.fin - 0.5) < 0.06 && R.limitesDeSenal(sil3(2)) === null);
+        const mp4B = join(dir3, "bueno.mp4"), mp4M = join(dir3, "malo.mp4"), audioB = join(dir3, "audio.wav");
+        A3.escribirWavEstereo(audioB, cat3(sil3(0.3), tono3(21.2, 300, 0.3), sil3(0.5)));
+        const mk = (f, w, h, fps) => spawnSync(ff3, ["-v", "error", "-y", "-f", "lavfi", "-i", `nullsrc=s=${w}x${h}:d=22:r=${fps}`, "-i", audioB, "-c:v", "libx264", "-pix_fmt", "yuv420p", "-c:a", "aac", "-shortest", f], { encoding: "utf8" });
+        mk(mp4B, 1080, 1920, 60); mk(mp4M, 1280, 720, 24);
+        if (existsSync(mp4B) && existsSync(mp4M)) {
+          const salidaR = join(dir3, "fot"), logs = [];
+          const rb = await R.revisarVideo({ video: mp4B, salida: salidaR, raiz: dir3, log: (t) => logs.push(t) });
+          const rm = await R.revisarVideo({ video: mp4M, salida: join(dir3, "fot2"), raiz: dir3, log: () => {} });
+          const png = (f) => { const b = readFileSync(f); return b.subarray(0, 8).toString("hex") === "89504e470d0a1a0a" && b.readUInt32BE(16) === 540 && b.readUInt32BE(20) === 960; };
+          prueba("revisión: extrae ≥ 8 fotogramas PNG de 540×960 con las guías de zona segura, e informa resolución, fps, códecs, duración, volumen, pico, recortes y los silencios de la voz al inicio y al final", rb.fotogramas.length >= 8 && rb.fotogramas.every((f) => png(f.archivo)) && rb.resolucion === "1080x1920" && rb.fps === 60 && rb.audio && rb.audio.recortes === 0 && Math.abs(rb.audio.inicioSeg - 0.3) < 0.1 && Math.abs(rb.audio.colaSeg - 0.5) < 0.1 && existsSync(join(salidaR, "informe.json")) && logs.join("\n").includes("Fotogramas para mirar"), JSON.stringify({ n: rb.fotogramas.length, a: rb.audio, r: rb.resolucion }));
+          prueba("revisión: un video fuera de formato (1280×720 a 24 fps) se marca con ❌ / ⚠️; el vertical de 1080×1920 a 60 fps pasa la parte de formato", rm.checks.some((c) => c.estado === "error" && /1280×720/.test(c.texto)) && rm.checks.some((c) => c.estado === "aviso" && /24 fps/.test(c.texto)) && rb.checks.filter((c) => /Resolución|fps|Video h264/.test(c.texto)).every((c) => c.estado === "ok"));
+          // el primer fotograma lleva las líneas amarillas de las guías (y la versión sin guías no)
+          const sinG = await R.revisarVideo({ video: mp4B, salida: join(dir3, "fot3"), raiz: dir3, guias: false, log: () => {} });
+          prueba("revisión: con guías los fotogramas son distintos a los que no las llevan (líneas amarillas en el 12 % superior, el 20 % inferior y los márgenes de 6 %)", !readFileSync(rb.fotogramas[1].archivo).equals(readFileSync(sinG.fotogramas[1].archivo)));
+        } else prueba("revisión (se omite: este ffmpeg no puede fabricar un MP4 de prueba)", true);
+        let rx = "";
+        try { await R.revisarVideo({ video: join(dir3, "no-existe.mp4"), raiz: dir3, log: () => {} }); } catch (e) { rx = e.message; }
+        prueba("revisión: si no hay video renderizado lo explica (con el comando para renderizar)", /anim:render/.test(rx));
+
+        // registrar con serie y nota
+        const rg = spawnSync(process.execPath, [p("scripts", "panel", "registrar-video.mjs"), "--serie=florida", "--notas=Espero guardados; mirar compartidos"], { encoding: "utf8", env: { ...process.env } });
+        const vr = JSON.parse(readFileSync(join(DIR_PRUEBA, "data", "videos.json"), "utf8")).videos.find((x) => x.origen === "generador");
+        const rg2 = spawnSync(process.execPath, [p("scripts", "panel", "registrar-video.mjs"), "--serie=inventada"], { encoding: "utf8", env: { ...process.env } });
+        const vr2 = JSON.parse(readFileSync(join(DIR_PRUEBA, "data", "videos.json"), "utf8")).videos.find((x) => x.origen === "generador");
+        prueba("registro: `registrar-video.mjs --serie= --notas=` deja el video «grabado» con la serie y la nota pedidas; una serie inventada se ignora y no borra lo anterior", rg.status === 0 && vr?.serie === "florida" && vr.notas === "Espero guardados; mirar compartidos" && vr.estado === "grabado" && rg2.status === 0 && vr2.serie === "florida" && vr2.notas === vr.notas);
+        rmSync(join(DIR_PRUEBA, "data", "videos.json"), { force: true });
+        rmSync(dir3, { recursive: true, force: true });
+      }
+      // ── los archivos de reglas y comandos ──
+      {
+        const reglas = readFileSync(p("REGLAS_DE_VIDEO.md"), "utf8"), pedido = readFileSync(p("PEDIDO_VIDEO.md"), "utf8"), vid = readFileSync(p(".claude", "commands", "video.md"), "utf8"), ide = readFileSync(p(".claude", "commands", "ideas.md"), "utf8"), cl = readFileSync(p("CLAUDE.md"), "utf8"), mus = readFileSync(p("assets", "musica", "README.md"), "utf8"), gi = readFileSync(p(".gitignore"), "utf8");
+        prueba("reglas de video: tienen todas las secciones pedidas (contexto, reparto, antes de crear, estructura viral, calidad visual, audio, voz, revisión, entrega, aprendizaje y LECCIONES) y las reglas clave de marca y lenguaje", ["## Contexto", "## Reparto de trabajo", "## Antes de crear", "## Estructura viral obligatoria", "## Calidad visual", "## Audio", "## Voz", "## Revisión obligatoria antes de entregar", "## Qué me entregas siempre", "## Aprendizaje", "## LECCIONES", 'Di "propiedad o vehículo", nunca "casa o carro"', "No prometas ganancias", "-14 LUFS", "ducking", "azul marino y dorado, fuente Inter", "Nunca uses canciones comerciales", "0,3 s de silencio al inicio y 0,5 s al final", "al menos 8 fotogramas", "Los 3 ganchos propuestos"].every((t) => reglas.includes(t)) && /guarda esto/.test(reglas) && /Lee esa sección antes de cada video/.test(reglas));
+        prueba("reglas de video: la sección LECCIONES es la última (ahí se agregan las lecciones con fecha) y hay una receta técnica de ESTE sistema con sus límites (60 fps, sin subtítulos palabra por palabra, sin fotos, zona segura del motor, voz solo con clave)", reglas.trimEnd().endsWith("(vacío por ahora)") && reglas.lastIndexOf("## LECCIONES") > reglas.indexOf("# CÓMO SE HACE EN ESTE SISTEMA") && /60 fps/.test(reglas) && /NO genera\s+subtítulos|no genera\s+subtítulos/i.test(reglas) && /no\s+incorpora fotos/.test(reglas) && /220…1640/.test(reglas) && /OPENAI_API_KEY/.test(reglas));
+        const cmds = [...reglas.matchAll(/node (scripts\/[\w./-]+\.mjs)/g)].map((m) => m[1]), npms = [...reglas.matchAll(/npm run ([\w:-]+)/g)].map((m) => m[1]);
+        const pj = JSON.parse(readFileSync(p("package.json"), "utf8"));
+        prueba("reglas de video: TODOS los scripts y comandos npm que menciona existen (nada de pasos imaginarios)", cmds.length >= 7 && cmds.every((c) => existsSync(p(c))) && npms.every((c) => pj.scripts[c]), JSON.stringify({ faltan: cmds.filter((c) => !existsSync(p(c))), npm: npms.filter((c) => !pj.scripts[c]) }));
+        prueba("pedido de video: trae los 8 campos (TEMA, OBJETIVO, PÚBLICO, SERIE, DATOS Y MATERIAL, ESTILO EXTRA, DURACIÓN, LÍMITES) y la nota de que los campos vacíos los decide Claude", ["TEMA:", "OBJETIVO:", "PÚBLICO:", "SERIE:", "DATOS Y MATERIAL:", "ESTILO EXTRA:", "DURACIÓN:", "LÍMITES:", "Los campos vacíos los decides tú"].every((t) => pedido.includes(t)));
+        prueba("comandos: /video (lee las reglas y LECCIONES, recibe $ARGUMENTS, decide objetivo y serie y hace todo el proceso) y /ideas (usa el registro de videos, $ARGUMENTS ideas o 10, formato de pedido, 60 días) existen en .claude/commands/", /REGLAS_DE_VIDEO\.md/.test(vid) && /\$ARGUMENTS/.test(vid) && /LECCIONES/.test(vid) && /PEDIDO_VIDEO\.md/.test(vid) && /revisión de fotogramas/.test(vid) && /\$ARGUMENTS/.test(ide) && /10/.test(ide) && /60 días/.test(ide) && /data\/videos\.json/.test(ide) && /TEMA, OBJETIVO, SERIE/.test(ide));
+        prueba("CLAUDE.md dice que antes de cualquier video se lee REGLAS_DE_VIDEO.md, que /video crea un video y /ideas propone temas; y assets/musica/ trae su README (cómo agregar pistas libres, licencias, comandos) con las pistas fuera de git", /Antes de cualquier video, lee REGLAS_DE_VIDEO\.md\. El comando \/video crea un video y \/ideas propone temas\./.test(cl) && cl.indexOf("Antes de cualquier video") < cl.indexOf("Lo de arriba es el prompt original") && cl.indexOf("Antes de cualquier video") < cl.indexOf("@GEMINI.md") && /libres de derechos/.test(mus) && /musica\.mjs --usar/.test(mus) && /LICENCIAS\.md/.test(mus) && /assets\/musica\/\*/.test(gi) && existsSync(p("assets", "musica", "LICENCIAS.md")));
+      }
       const rnd = readFileSync(p("scripts", "render.mjs"), "utf8");
       // mezcla real: con la voz, el audio de salida trae mucha más energía donde habla que solo con efectos y música (y la pista queda colocada en el tiempo de cada escena)
       {
@@ -809,7 +921,7 @@ try {
           rmSync(p("trabajo", "salida", "voz"), { recursive: true, force: true });
         }
       }
-      prueba("voces: el render mezcla la voz sola cuando es vigente (y avisa si es de otra versión), con --sin-voz la omite, la música se agacha bajo la voz (ducking) y con voz el audio final se lleva a −14 LUFS", /vozVigente/.test(rnd) && /--sin-voz/.test(rnd) && /vozWav: VOZ_PISTA/.test(rnd) && /duckear\(bg, voz\)/.test(readFileSync(p("scripts", "audio.mjs"), "utf8")) && /normalizarEnSitio\(ffmpeg, AUDIO, \{ objetivo: -14/.test(rnd));
+      prueba("voces: el render mezcla la voz sola cuando es vigente (y avisa si es de otra versión), con --sin-voz la omite, la música se agacha bajo la voz (ducking) y con voz el audio final se lleva a −14 LUFS", /vozVigente/.test(rnd) && /--sin-voz/.test(rnd) && /vozWav: VOZ_PISTA/.test(rnd) && /duckear\(fondoMusica, voz\)/.test(readFileSync(p("scripts", "audio.mjs"), "utf8")) && /normalizarEnSitio\(ffmpeg, AUDIO, \{ objetivo: -14/.test(rnd));
     }
 
     // ── Viral v3: plantillas documentales (ZOOM, CAPAS, MIRA, IMPACTO, RED, TERMO, SPLIT), cita, escenarios, zoom continuo, música y foley ──
