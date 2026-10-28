@@ -3,11 +3,12 @@
  *   · lectura y escritura seguras (archivo temporal + renombrar), con copia con fecha en data/backups/ antes de cada cambio (se conservan las últimas 30);
  *   · crear / editar / eliminar / duplicar, métricas, acciones de negocio, estado (pipeline);
  *   · importar desde CSV (vista previa con errores por fila) y exportar todo a CSV;
- *   · registrar solo el video que genera el sistema (estado «grabado», con guion, voz e instrucciones) y guardar una copia del MP4 + miniatura para abrirlo desde el panel.
+ *   · registrar solo el video que genera el sistema (estado «grabado», con guion, voz e instrucciones) y guardar una copia del MP4 + miniatura para abrirlo desde el panel;
+ *   · sincronizar la carpeta videos/ (registro.json + revision.mp4 + miniatura.jpg de cada video), que SÍ viaja por git: así los videos creados en otra máquina o sesión aparecen en TU panel.
  */
 import { spawnSync } from "node:child_process";
-import { copyFileSync, existsSync, mkdirSync, rmSync, statSync } from "node:fs";
-import { basename, join } from "node:path";
+import { copyFileSync, existsSync, mkdirSync, readdirSync, rmSync, statSync, writeFileSync } from "node:fs";
+import { basename, join, relative, resolve } from "node:path";
 import { escribirJsonSeguro, leerJson } from "../archivo-seguro.mjs";
 import { buscarFfmpeg } from "../medios.mjs";
 import { cargarNucleoAnim, RAIZ } from "../anim/nucleo.mjs";
@@ -204,4 +205,83 @@ export async function registrarDesdeProyectoActivo({ estado = "grabado", sinVoz 
   // el MP4 con voz solo vale si es posterior al render (si no, es de un render anterior)
   const mp4 = !sinVoz && existsSync(mp4ConVoz) && existsSync(mp4Render) && statSync(mp4ConVoz).mtimeMs >= statSync(mp4Render).mtimeMs ? mp4ConVoz : mp4Render;
   return registrarVideoGenerado({ anim, manifiestoVoz: vigente && !sinVoz ? manifiesto : null, mp4: existsSync(mp4) ? mp4 : null, estado, serie, notas });
+}
+
+// ───────────────────────────── videos/<carpeta>/registro.json (viaja por git) ─────────────────────────────
+const dirVideos = () => process.env.VIDEMED_VIDEOS || join(RAIZ, "videos");
+
+/** Copia liviana para ver desde el panel (720 px de ancho, 30 fps): la versión final a 1080×1920@60 se queda en trabajo/archivo/. */
+function copiaLiviana(origen, destino) {
+  try {
+    const { ffmpeg } = buscarFfmpeg();
+    const r = spawnSync(ffmpeg, ["-v", "error", "-y", "-i", origen, "-vf", "scale=720:-2", "-r", "30", "-c:v", "libx264", "-preset", "medium", "-crf", "27", "-pix_fmt", "yuv420p", "-c:a", "aac", "-b:a", "96k", "-movflags", "+faststart", destino], { encoding: "utf8" });
+    return r.status === 0 && existsSync(destino) && statSync(destino).size > 1000;
+  } catch {
+    return false;
+  }
+}
+
+/**
+ * Escribe en la carpeta del video (videos/AAAA-MM-DD-slug/) su `registro.json` con lo que el panel guarda del video (título, serie, guion, notas…), una
+ * `miniatura.jpg` y una `revision.mp4` liviana. Esa carpeta va a git: al actualizar, el panel de cualquier computador trae el video (`sincronizarCarpetaVideos`).
+ * Se busca el video del panel por `titulo` (o, si no se da, por el título de la respuesta-ia.json de la carpeta).
+ */
+export async function exportarRegistroCarpeta({ carpeta, titulo = "", mp4 = null }) {
+  const raiz = resolve(dirVideos());
+  const abs = resolve(RAIZ, String(carpeta ?? ""));
+  if (relative(raiz, abs).startsWith("..") || abs === raiz || !existsSync(abs)) throw error("La carpeta debe estar dentro de videos/ y existir.");
+  const base = await leerBase();
+  const tituloBuscado = String(titulo || leerJson(join(abs, "respuesta-ia.json"), {})?.titulo || "");
+  const v = base.videos.find((x) => x.titulo === tituloBuscado);
+  if (!v) throw error(`No encuentro en el panel un video titulado «${tituloBuscado}». Registra primero el video (registrar-video.mjs).`, 404);
+  const fuente = mp4 && existsSync(mp4) ? mp4 : v.ruta_archivo && existsSync(join(RAIZ, v.ruta_archivo)) ? join(RAIZ, v.ruta_archivo) : null;
+  let video = "", mini = "";
+  if (fuente) {
+    if (copiaLiviana(fuente, join(abs, "revision.mp4"))) video = "revision.mp4";
+    if (miniatura(fuente, join(abs, "miniatura.jpg"))) mini = "miniatura.jpg";
+  }
+  const reg = { version: 1, slug: basename(abs), titulo: v.titulo, serie: v.serie, estado: v.estado, guion: v.guion, gancho: v.gancho, duracion_seg: v.duracion_seg, notas: v.notas, voz_usada: v.voz_usada, instrucciones_voz: v.instrucciones_voz, creado: v.creado, origen_clave: v.origen_clave, video, miniatura: mini, entrega: existsSync(join(abs, "entrega.md")) ? "entrega.md" : "" };
+  writeFileSync(join(abs, "registro.json"), JSON.stringify(reg, null, 2) + "\n");
+  return { registro: reg, carpeta: relative(RAIZ, abs) };
+}
+
+/**
+ * Trae al panel los videos de la carpeta videos/ (cada uno con su registro.json) que todavía no estén: los crea con estado «grabado» y les pone su copia
+ * de revisión y su miniatura. Es idempotente: los que ya existen (misma `origen_clave`) solo reciben el video o la miniatura si les faltaban; nunca se toca su estado,
+ * sus publicaciones ni sus métricas.
+ */
+export async function sincronizarCarpetaVideos() {
+  const N = await cargarNucleoAnim();
+  const raiz = dirVideos();
+  const r = { total: 0, nuevos: 0, actualizados: 0 };
+  if (!existsSync(raiz)) return r;
+  const base = await leerBase();
+  let cambios = false;
+  for (const nombre of readdirSync(raiz).sort()) {
+    const dir = join(raiz, nombre);
+    let reg = null;
+    try { reg = leerJson(join(dir, "registro.json"), null); } catch { reg = null; }
+    if (!reg?.titulo) continue;
+    r.total++;
+    const clave = String(reg.origen_clave || `carpeta:${nombre}`).slice(0, 40);
+    let v = base.videos.find((x) => x.origen_clave === clave);
+    const creado = !v;
+    if (!v) {
+      v = N.normalizarVideo({ titulo: reg.titulo, serie: reg.serie, guion: reg.guion, gancho: reg.gancho, duracion_seg: reg.duracion_seg, notas: reg.notas, voz_usada: reg.voz_usada, instrucciones_voz: reg.instrucciones_voz, estado: reg.estado || "grabado", creado: reg.creado, origen: "carpeta", origen_clave: clave });
+      base.videos.unshift(v);
+      r.nuevos++; cambios = true;
+    }
+    let toco = false;
+    const mp4 = reg.video ? join(dir, basename(String(reg.video))) : "";
+    if (!v.ruta_archivo && mp4 && existsSync(mp4)) { mkdirSync(dirMedia(), { recursive: true }); copyFileSync(mp4, dirMedia(`${v.id}.mp4`)); v.ruta_archivo = `data/media/${v.id}.mp4`; toco = true; }
+    const jpg = reg.miniatura ? join(dir, basename(String(reg.miniatura))) : "";
+    if (!v.ruta_miniatura) {
+      mkdirSync(dirMedia(), { recursive: true });
+      if (jpg && existsSync(jpg)) { copyFileSync(jpg, dirMedia(`${v.id}.jpg`)); v.ruta_miniatura = `data/media/${v.id}.jpg`; toco = true; }
+      else if (v.ruta_archivo && miniatura(dirMedia(`${v.id}.mp4`), dirMedia(`${v.id}.jpg`))) { v.ruta_miniatura = `data/media/${v.id}.jpg`; toco = true; }
+    }
+    if (toco) { tocar(v); cambios = true; if (!creado) r.actualizados++; }
+  }
+  if (cambios) await guardarBase(base);
+  return r;
 }

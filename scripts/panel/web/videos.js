@@ -41,6 +41,30 @@ function miniatura(v, clase = "pv-mini") {
   return u ? h(`img.${clase}`, { src: u, alt: "", loading: "lazy" }) : h(`div.${clase}.pv-mini-vacia`, { "aria-hidden": "true" }, (v.titulo || "?").slice(0, 1).toUpperCase());
 }
 
+/* ───────────── videos grabados: lo primero que se ve ───────────── */
+/** «Nuevo»: llegó de la carpeta videos/ (git) o se creó hace menos de 3 días y todavía no se publica. */
+const esNuevo = (v) => v.estado === "grabado" && (v.origen === "carpeta" || Date.now() - new Date(v.creado).getTime() < 3 * 864e5);
+const insigniaNuevo = (v) => (esNuevo(v) ? h("span.pv-nuevo", "🆕 NUEVO") : null);
+
+async function traerDeLaCarpeta() {
+  try {
+    const r = await api("/api/videos/sincronizar", { metodo: "POST", cuerpo: {} });
+    aviso(r.nuevos || r.actualizados ? `✅ Trajo ${r.nuevos} video(s) nuevo(s) de la carpeta videos/${r.actualizados ? ` y completó ${r.actualizados}` : ""}.` : `Todo al día: ${r.total} video(s) en la carpeta videos/ y ya están en el panel.`, "ok", 5000);
+    await PV.recargarVista?.();
+  } catch (er) { fallo(er); }
+}
+
+/** Tarjetas grandes con los videos «grabados» (listos para publicar), con su miniatura, serie y duración. Aparece arriba del Resumen y de la Biblioteca. */
+function bloqueGrabados() {
+  const l = PV.videos.filter((v) => v.estado === "grabado").sort((a, b) => String(b.creado).localeCompare(String(a.creado)));
+  const tarjeta = (v) => h("a.pv-video-tarjeta", { href: `#/videos/v/${v.id}`, title: "Abrir el video, su guion y sus notas" },
+    miniatura(v, "pv-mini-grande"),
+    h("div.pv-video-info", h("div", insigniaNuevo(v), chipSerie(v.serie)), h("strong", v.titulo), h("span.chico-t.suave", `${v.duracion_seg ? `${v.duracion_seg} s · ` : ""}${v.voz_usada ? `🎙️ ${v.voz_usada}` : "sin voz todavía"}`), h("span.pv-ver", urlVideo(v) ? "▶ Ver el video" : "Ver detalle")));
+  return h("section.pv-listos", { "aria-label": "Videos grabados listos para publicar" },
+    h("div.pv-listos-cab", h("h2", `🎬 Listos para publicar (${l.length})`), h("span.espacio"), h("button.btn.primario.chico", { type: "button", onclick: traerDeLaCarpeta, title: "Busca en la carpeta videos/ los videos que creó Claude y todavía no están aquí" }, "🔄 Traer videos de la carpeta videos/")),
+    l.length ? h("div.pv-listos-rejilla", l.map(tarjeta)) : h("p.suave", "Aún no hay videos grabados. Los que se crean con /video aparecen aquí solos (si no, pulsa «Traer videos de la carpeta videos/» después de actualizar el código)."));
+}
+
 /* ───────────── gráficas (SVG, sin librerías) ───────────── */
 function barras(datos, { clave, etiqueta, color }) {
   const W = 520, H = 160, pad = { l: 52, r: 8, t: 10, b: 24 };
@@ -80,7 +104,7 @@ const TABS = [["", "📊 Resumen"], ["biblioteca", "🗂️ Biblioteca"], ["pipe
 function marco(actual, ...contenido) {
   return h("div.pv",
     h("div.pv-cab", h("div", h("h1", "Panel de Videos"), h("p.suave", "Todos tus videos, lo que publicaste, qué resultados dio y qué contenido repetir o descartar. Todo se guarda en este computador (data/videos.json).")), h("span.espacio"), botonIr("＋ Nueva idea", "#/videos/nueva", "primario")),
-    h("nav.pv-tabs", { "aria-label": "Secciones del Panel de Videos" }, TABS.map(([r, t]) => h(`a.pv-tab${r === actual ? ".activa" : ""}`, { href: `#/videos${r ? "/" + r : ""}`, ...(r === actual ? { "aria-current": "page" } : {}) }, t))),
+    h("nav.pv-tabs", { "aria-label": "Secciones del Panel de Videos" }, TABS.map(([r, t]) => h(`a.pv-tab${r === actual ? ".activa" : ""}`, { href: `#/videos${r ? "/" + r : ""}`, ...(r === actual ? { "aria-current": "page" } : {}) }, t, r === "biblioteca" && PV.videos?.length ? h("span.pv-contador", String(PV.videos.length)) : null))),
     contenido);
 }
 
@@ -92,8 +116,10 @@ function vistaResumen(cont) {
   const [a, m] = r.mes.split("-").map(Number);
   const tarjeta = (ico, valor, titulo, sub) => h("div.pv-kpi", h("div.pv-kpi-ico", ico), h("div.pv-kpi-v", fmt(valor)), h("div.pv-kpi-t", titulo), sub ? h("div.pv-kpi-s", sub) : null);
   cont.replaceChildren(marco("",
+    bloqueGrabados(),
     h("h2", `Este mes · ${MESES[m - 1]} ${a}`),
     h("div.pv-kpis",
+      tarjeta("📦", PV.videos.filter((v) => v.estado === "grabado").length, "Grabados sin publicar", "listos para subir"),
       tarjeta("🎬", r.publicados, "Videos publicados", `${r.videos} en total`),
       tarjeta("👁️", r.mes_totales.vistas, "Vistas", "de los publicados este mes"),
       tarjeta("🔖", r.mes_totales.guardados, "Guardados", r.mes_totales.vistas ? `${pct(r.mes_totales.guardados / r.mes_totales.vistas)} de las vistas` : ""),
@@ -128,9 +154,10 @@ function vistaBiblioteca(cont) {
     if (!l.length) return cuerpo.replaceChildren(PV.videos.length ? estadoVacio("🔎", "Ningún video coincide", "Cambia o quita los filtros.", h("button.btn", { type: "button", onclick: () => { Object.assign(PV.filtros, { q: "", serie: "", plataforma: "", estado: "", desde: "", hasta: "" }); vistaBiblioteca(cont); } }, "Quitar filtros")) : estadoVacio("📭", "Aún no hay videos", ""));
     cuerpo.replaceChildren(h("p.chico-t.suave", `${l.length} de ${PV.videos.length} videos`),
       h("div.pv-scroll", h("table.pv-tabla", h("thead", h("tr", h("th", ""), th("titulo", "Título"), th("serie", "Serie"), th("estado", "Estado"), th("fecha", "Fecha"), h("th", "Plataformas"), th("vistas", "Vistas"), th("guardados", "Guardados"), th("acciones", "Acciones"))),
-        h("tbody", l.map((v) => { const m = N.metricasActuales(v); return h("tr", h("td", miniatura(v)), h("td", h("a.pv-titulo", { href: `#/videos/v/${v.id}` }, v.titulo)), h("td", chipSerie(v.serie)), h("td", chipEstado(v.estado)), h("td", fechaCorta(N.fechaDelVideo(v))), h("td", v.publicaciones.length ? v.publicaciones.map((p) => (p.url ? h("a.pv-plat", { href: p.url, target: "_blank", rel: "noopener noreferrer", title: p.url }, N.PLATAFORMAS_ETIQUETA[p.plataforma]) : h("span.pv-plat", N.PLATAFORMAS_ETIQUETA[p.plataforma]))) : h("span.suave", "—")), h("td.pv-num", fmt(m.vistas)), h("td.pv-num", fmt(m.guardados)), h("td.pv-num", fmt(m.acciones))); })))));
+        h("tbody", l.map((v) => { const m = N.metricasActuales(v); return h("tr", h("td", miniatura(v)), h("td", h("a.pv-titulo", { href: `#/videos/v/${v.id}` }, v.titulo), insigniaNuevo(v)), h("td", chipSerie(v.serie)), h("td", chipEstado(v.estado)), h("td", fechaCorta(N.fechaDelVideo(v))), h("td", v.publicaciones.length ? v.publicaciones.map((p) => (p.url ? h("a.pv-plat", { href: p.url, target: "_blank", rel: "noopener noreferrer", title: p.url }, N.PLATAFORMAS_ETIQUETA[p.plataforma]) : h("span.pv-plat", N.PLATAFORMAS_ETIQUETA[p.plataforma]))) : h("span.suave", "—")), h("td.pv-num", fmt(m.vistas)), h("td.pv-num", fmt(m.guardados)), h("td.pv-num", fmt(m.acciones))); })))));
   };
   cont.replaceChildren(marco("biblioteca",
+    bloqueGrabados(),
     h("div.pv-filtros",
       campo("Buscar", h("input", { type: "search", placeholder: "título, gancho, guion…", value: f.q, oninput: (e) => { f.q = e.target.value; pintarTabla(); } })),
       campo("Serie", sel("serie", N.SERIES.map((s) => [s, N.SERIES_ETIQUETA[s]]), "Todas")),
@@ -344,6 +371,7 @@ function vistaImportar(cont) {
 export async function vistaVideos(cont, partes, contexto) {
   ctx = contexto; ({ h, api, aviso, fallo, num, N } = ctx);
   void num;
+  PV.recargarVista = () => vistaVideos(cont, partes, contexto);
   document.body.classList.add("modo-pv");
   try {
     await cargar();

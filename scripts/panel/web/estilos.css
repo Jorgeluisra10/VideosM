@@ -326,3 +326,17 @@ body[data-marca] .barra { border-bottom: 3px solid var(--marca); }
 .lab .pv-tarjeta { margin-top: 16px; } .lab .pv-dos .pv-tarjeta { margin-top: 0; } .lab textarea { width: 100%; }
 @media (prefers-reduced-motion: reduce) { .pv * { transition: none !important; } }
 .pv-tabla th { text-transform: none; letter-spacing: 0; font-size: .85rem; }
+
+/* Panel de Videos · videos grabados (lo primero que se ve) */
+.pv-listos { margin-bottom: 20px; padding: 16px 18px; border-radius: 16px; border: 2px solid var(--pv-oro); background: linear-gradient(135deg, color-mix(in srgb, var(--pv-navy) 14%, var(--capa)), var(--capa)); box-shadow: var(--sombra); }
+.pv-listos-cab { display: flex; align-items: center; gap: 12px; flex-wrap: wrap; margin-bottom: 12px; } .pv-listos-cab h2 { margin: 0; font-size: 1.25rem; }
+.pv-listos-rejilla { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 12px; }
+.pv-video-tarjeta { display: flex; gap: 12px; padding: 10px; border-radius: 12px; background: var(--capa); border: 1px solid var(--borde); text-decoration: none; color: var(--texto); transition: transform .12s, border-color .12s; }
+.pv-video-tarjeta:hover { transform: translateY(-2px); border-color: var(--pv-oro); }
+.pv-mini-grande { width: 84px; height: 150px; object-fit: cover; border-radius: 8px; background: var(--capa2); display: flex; align-items: center; justify-content: center; font-size: 1.8rem; font-weight: 800; color: var(--pv-oro); flex: none; }
+.pv-mini-vacia.pv-mini-grande { background: var(--pv-navy); }
+.pv-video-info { display: flex; flex-direction: column; gap: 6px; justify-content: center; min-width: 0; } .pv-video-info > div { display: flex; flex-wrap: wrap; gap: 4px; } .pv-video-info .pv-chip { white-space: normal; text-align: left; } .pv-video-info strong { font-size: 1rem; line-height: 1.25; }
+.pv-ver { font-weight: 800; color: var(--pv-oro); }
+.pv-nuevo { display: inline-block; margin-right: 6px; padding: 1px 8px; border-radius: 999px; background: var(--pv-oro); color: var(--pv-navy); font-size: .7rem; font-weight: 900; letter-spacing: .03em; animation: pv-pulso 2s ease-in-out 3; }
+@keyframes pv-pulso { 0%, 100% { transform: scale(1); } 50% { transform: scale(1.12); } }
+.pv-contador { margin-left: 6px; padding: 0 7px; border-radius: 999px; background: var(--pv-oro); color: var(--pv-navy); font-size: .72rem; font-weight: 900; }

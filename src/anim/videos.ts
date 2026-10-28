@@ -5,10 +5,10 @@
  * Las fechas son texto «AAAA-MM-DD»; las funciones que necesitan «hoy» lo reciben como parámetro (así se pueden probar).
  */
 
-export const SERIES = ["estafas", "adivina_precio", "diario_fundador", "florida", "experimentos", "agente_semana", "propiedad_del_dia", "otro"] as const;
+export const SERIES = ["estafas", "adivina_precio", "diario_fundador", "florida", "experimentos", "agente_semana", "propiedad_del_dia", "secretos_usa", "anatomia", "otro"] as const;
 export const SERIES_ETIQUETA: Record<string, string> = {
   estafas: "Estafas", adivina_precio: "Adivina el precio", diario_fundador: "Diario del fundador", florida: "Florida", experimentos: "Experimentos",
-  agente_semana: "Agente de la semana", propiedad_del_dia: "Propiedad del día", otro: "Otro",
+  agente_semana: "Agente de la semana", propiedad_del_dia: "Propiedad del día", secretos_usa: "Secretos de inversión en USA", anatomia: "Anatomía humana · curiosidades médicas", otro: "Otro",
 };
 export const ESTADOS = ["idea", "guion", "grabado", "programado", "publicado"] as const;
 export const ESTADOS_ETIQUETA: Record<string, string> = { idea: "💡 Idea", guion: "📝 Guion", grabado: "🎬 Grabado", programado: "🗓️ Programado", publicado: "✅ Publicado" };
@@ -75,7 +75,7 @@ export function normalizarVideo(x: any, hoy = hoyISO()): Video {
     metricas: (Array.isArray(x?.metricas) ? x.metricas : []).slice(0, 500).map((m: any) => normalizarMetrica(m, hoy)),
     acciones: (Array.isArray(x?.acciones) ? x.acciones : []).slice(0, 500).map((a: any) => normalizarAccion(a, hoy)),
     creado: txt(x?.creado, 40) || ahora, actualizado: txt(x?.actualizado, 40) || ahora,
-    origen: dentro(x?.origen, ["manual", "generador", "importado"] as const, "manual"), origen_clave: txt(x?.origen_clave, 40),
+    origen: dentro(x?.origen, ["manual", "generador", "importado", "carpeta"] as const, "manual"), origen_clave: txt(x?.origen_clave, 40),
   };
 }
 

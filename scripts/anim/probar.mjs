@@ -40,6 +40,7 @@ mkdirSync(join(DIR_PRUEBA, "config"), { recursive: true });
 for (const f of ["voz.config.json", "pronunciacion.json"]) copyFileSync(p(f), join(DIR_PRUEBA, "config", f));
 process.env.VIDEMED_CONFIG = join(DIR_PRUEBA, "config");
 process.env.VIDEMED_DATOS = join(DIR_PRUEBA, "data");
+process.env.VIDEMED_VIDEOS = join(DIR_PRUEBA, "videos-vacia"); // las pruebas no leen la carpeta videos/ real (traería los videos de verdad al panel de prueba)
 process.env.VIDEMED_CACHE = join(DIR_PRUEBA, "cache");
 const envAntes = { base: process.env.OPENAI_BASE_URL, clave: process.env.OPENAI_API_KEY };
 try {
@@ -644,6 +645,42 @@ try {
       prueba("4 tejidos · datos y matices: epitelio 3–5 días, pH 1,5–3,5, pico en la aorta (el video dice «más de 2 km/h»), hueso ≈ 10 años, glóbulo rojo 120 días; NO dice «disuelve metal», «persona nueva» ni «todas las neuronas»; el corazón va «con oxígeno»", N.TEJ.epitelioDias[0] === 3 && N.TEJ.epitelioDias[1] === 5 && N.TEJ.phGastrico[0] === 1.5 && N.TEJ.phGastrico[1] === 3.5 && N.TEJ.sangreKmhMin === 2 && N.TEJ.huesoAnios === 10 && N.TEJ.globuloRojoDias === 120 && /corroe metales/.test(jT) && !/disuelve|persona nueva|todas las neuronas/i.test(jT) && /con oxígeno/.test(jT) && /la mayoría de tus neuronas/.test(jT));
       const gtT = leerT("guion-tecnico-tejidos.md"), locT = leerT("locucion-tejidos.txt");
       prueba("4 tejidos · el guion técnico cita Sender y Milo, Spalding, Africa Check y Langendorff con sus precauciones (ácido, 2 km/h pico, huesos, corazón, neuronas); la locución trae todas las voces", ["Sender", "Spalding", "Africa Check", "Langendorff", "Precauciones antes de publicar", "pico", "ersona nueva"].every((k) => gtT.includes(k)) && eT.anim.escenas.every((e) => locT.includes(e.voz)));
+    }
+
+    // ── Panel de Videos · los videos de la carpeta videos/ viajan por git y aparecen solos en el panel ──
+    {
+      const V = await import("../panel/videos.mjs");
+      const vid = join(DIR_PRUEBA, "videos-prueba");
+      process.env.VIDEMED_VIDEOS = vid;
+      mkdirSync(join(vid, "2026-01-01-uno"), { recursive: true });
+      mkdirSync(join(vid, "2026-01-02-dos"), { recursive: true });
+      mkdirSync(join(vid, "sin-registro"), { recursive: true });
+      writeFileSync(join(vid, "2026-01-01-uno", "registro.json"), JSON.stringify({ version: 1, slug: "2026-01-01-uno", titulo: "Video de prueba uno", serie: "anatomia", estado: "grabado", guion: "Primera frase.\nSegunda frase.", gancho: "Primera frase.", duracion_seg: 12.5, notas: "nota uno", origen_clave: "clavepruebauno", video: "revision.mp4", miniatura: "miniatura.jpg" }));
+      writeFileSync(join(vid, "2026-01-01-uno", "revision.mp4"), Buffer.alloc(4000, 1));
+      writeFileSync(join(vid, "2026-01-01-uno", "miniatura.jpg"), Buffer.alloc(500, 2));
+      writeFileSync(join(vid, "2026-01-02-dos", "registro.json"), JSON.stringify({ version: 1, titulo: "Video de prueba dos", serie: "secretos_usa", estado: "grabado", guion: "Hola.", origen_clave: "clavepruebados" }));
+      writeFileSync(join(vid, "sin-registro", "notas.txt"), "no es un video");
+      const r1 = await V.sincronizarCarpetaVideos();
+      const b1 = (await V.leerBase()).videos;
+      const u1 = b1.find((v) => v.titulo === "Video de prueba uno"), d1 = b1.find((v) => v.titulo === "Video de prueba dos");
+      prueba("videos/ → panel: la sincronización trae los videos que tienen registro.json (los demás se ignoran) como «grabado», origen «carpeta», con su serie, guion, notas, copia del video y miniatura", r1.total === 2 && r1.nuevos === 2 && Boolean(u1) && Boolean(d1) && u1.estado === "grabado" && u1.origen === "carpeta" && u1.serie === "anatomia" && d1.serie === "secretos_usa" && u1.guion.split("\n").length === 2 && u1.duracion_seg === 12.5 && u1.notas === "nota uno" && u1.ruta_archivo === `data/media/${u1.id}.mp4` && existsSync(V.dirMedia(`${u1.id}.mp4`)) && u1.ruta_miniatura === `data/media/${u1.id}.jpg` && existsSync(V.dirMedia(`${u1.id}.jpg`)) && !d1.ruta_archivo, JSON.stringify(r1));
+      await V.cambiarEstado(u1.id, "publicado");
+      await V.agregarMetrica(u1.id, { vistas: 1000, guardados: 50, plataforma: "instagram" });
+      const r2 = await V.sincronizarCarpetaVideos();
+      const b2 = (await V.leerBase()).videos;
+      const u2 = b2.find((v) => v.id === u1.id);
+      prueba("videos/ → panel: repetir la sincronización no duplica nada y NUNCA pisa el estado, las publicaciones ni las métricas que ya tenía el video", r2.nuevos === 0 && b2.length === 2 && u2.estado === "publicado" && u2.metricas.length === 1 && u2.metricas[0].vistas === 1000, JSON.stringify(r2));
+      await V.eliminarVideo(d1.id);
+      await V.guardarVideo({ titulo: "Local dos", origen: "generador", origen_clave: "clavepruebados", estado: "grabado" });
+      const r3 = await V.sincronizarCarpetaVideos();
+      const b3 = (await V.leerBase()).videos;
+      prueba("videos/ → panel: si el video ya está en el panel con la misma clave (p. ej. lo renderizaste en tu computador) no se crea un duplicado desde la carpeta", r3.nuevos === 0 && b3.length === 2 && b3.some((v) => v.titulo === "Local dos") && !b3.some((v) => v.titulo === "Video de prueba dos"), JSON.stringify(r3));
+      let errCarpeta = "";
+      try { await V.exportarRegistroCarpeta({ carpeta: "../fuera", titulo: "x" }); } catch (e) { errCarpeta = e.message; }
+      prueba("videos/ → panel: exportar el registro solo funciona dentro de videos/ y pide registrar el video antes", /dentro de videos/.test(errCarpeta));
+      const Nn = await cargarNucleoAnim();
+      prueba("panel de videos: hay series para «Secretos de inversión en USA» y «Anatomía humana», el origen «carpeta» es válido y la receta (REGLAS) explica --carpeta", Nn.SERIES.includes("secretos_usa") && Nn.SERIES.includes("anatomia") && Nn.normalizarVideo({ titulo: "x", origen: "carpeta" }).origen === "carpeta" && /--carpeta=videos/.test(readFileSync(p("REGLAS_DE_VIDEO.md"), "utf8")) && /Listos para publicar/.test(readFileSync(p("scripts", "panel", "web", "videos.js"), "utf8")));
+      process.env.VIDEMED_VIDEOS = join(DIR_PRUEBA, "videos-vacia");
     }
 
     // ── «La regla del 37 %» (parada óptima · video «¿sabías que?» de IMNOBA con figuras realistas) ──

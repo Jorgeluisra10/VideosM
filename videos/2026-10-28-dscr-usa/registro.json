@@ -1,0 +1,18 @@
+{
+  "version": 1,
+  "slug": "2026-10-28-dscr-usa",
+  "titulo": "El truco de los préstamos DSCR",
+  "serie": "secretos_usa",
+  "estado": "grabado",
+  "guion": "Invertir en Estados Unidos no exige medio millón en efectivo.\nExisten préstamos que miran la propiedad, no tu sueldo: la propiedad se paga sola.\nSi el alquiler cubre la cuota, no piden recibo de sueldo, historial ni visa.\nEso sí: financian hasta el setenta por ciento y tú pones cerca del treinta.\nMira proyectos y propiedades en imnoba punto com barra usa.\nEmpezar con menos capital es posible, si la cuenta cuadra.\nEscríbenos y un equipo en Florida te acompaña en todo el proceso.",
+  "gancho": "Invertir en Estados Unidos no exige medio millón en efectivo.",
+  "duracion_seg": 33.9,
+  "notas": "Qué espero: que guarden el video como su 'pasaporte' para invertir con menos capital (≈30 % de inicial) y lo compartan con quien cree que es imposible. Métrica: guardados y compartidos por alcance, y clics a imnoba.com/usa / mensajes recibidos. Serie real: secretos de inversión en USA (no está en la lista del panel). Sin voz: falta OPENAI_API_KEY.",
+  "voz_usada": "",
+  "instrucciones_voz": "",
+  "creado": "2026-10-28T05:17:55.459Z",
+  "origen_clave": "e791e537",
+  "video": "revision.mp4",
+  "miniatura": "miniatura.jpg",
+  "entrega": "entrega.md"
+}

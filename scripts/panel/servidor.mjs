@@ -556,7 +556,13 @@ async function api(req, res, url) {
   if (recurso === "videos") {
     const cuerpo = m === "POST" ? await leerJson(req) : {};
     try {
-      if (m === "GET" && !a) return json(res, 200, { videos: (await videos.leerBase()).videos });
+      if (m === "GET" && !a) {
+        // trae lo nuevo de la carpeta videos/ (los videos que viajan por git); si algo falla, el panel igual muestra sus videos
+        let sincronizados = { total: 0, nuevos: 0, actualizados: 0 };
+        try { sincronizados = await videos.sincronizarCarpetaVideos(); } catch (e) { console.error(`⚠️ No pude sincronizar la carpeta videos/: ${e.message ?? e}`); }
+        return json(res, 200, { videos: (await videos.leerBase()).videos, sincronizados });
+      }
+      if (m === "POST" && a === "sincronizar") return json(res, 200, await videos.sincronizarCarpetaVideos());
       if (m === "GET" && a === "exportar.csv") { res.writeHead(200, { "Content-Type": "text/csv; charset=utf-8", "Content-Disposition": `attachment; filename="videos-${new Date().toISOString().slice(0, 10)}.csv"` }); return res.end("\uFEFF" + (await videos.exportarCSV())); }
       if (m === "GET" && a === "ejemplo.csv") { const N = await cargarNucleoAnim(); res.writeHead(200, { "Content-Type": "text/csv; charset=utf-8", "Content-Disposition": 'attachment; filename="videos-ejemplo.csv"' }); return res.end("\uFEFF" + N.CSV_EJEMPLO + "\n"); }
       if (m === "POST" && a === "guardar") return json(res, 200, await videos.guardarVideo(cuerpo.video ?? {}));

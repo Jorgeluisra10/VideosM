@@ -1,0 +1,18 @@
+{
+  "version": 1,
+  "slug": "2026-10-28-cuatro-tejidos",
+  "titulo": "Los 4 tejidos que te construyen",
+  "serie": "anatomia",
+  "estado": "grabado",
+  "guion": "Todo tu cuerpo son solo cuatro tejidos. Uno es líquido.\nEpitelial: tu estómago produce ácido que corroe metales, pero su revestimiento se renueva en días.\nConectivo: la sangre, tejido líquido, pasa de dos kilómetros por hora en la aorta.\nTus huesos también son conectivo: se renuevan casi por completo cada diez años.\nMuscular: fuera del cuerpo, con oxígeno, tu corazón sigue latiendo con su propio marcapasos.\nNervioso: la mayoría de tus neuronas no se renueva; tienen tu misma edad.\nEl cuerpo es una máquina perfecta. Guarda esto y síguenos en Sinapsis.",
+  "gancho": "Todo tu cuerpo son solo cuatro tejidos.",
+  "duracion_seg": 35.4,
+  "notas": "Qué espero: que guarden el video como apunte de los 4 tejidos y compartan los datos (sangre = tejido líquido, corazón que late solo, neuronas con tu edad). Métrica: guardados y compartidos por alcance; retención al pasar la escena 3 (≈10 s). Serie real: anatomía humana / curiosidades médicas (no está en la lista del panel). Sin voz: falta OPENAI_API_KEY.",
+  "voz_usada": "",
+  "instrucciones_voz": "",
+  "creado": "2026-10-28T11:59:20.112Z",
+  "origen_clave": "54d2da30",
+  "video": "revision.mp4",
+  "miniatura": "miniatura.jpg",
+  "entrega": "entrega.md"
+}

@@ -1,0 +1,18 @@
+{
+  "version": 1,
+  "slug": "2026-10-28-astrocitos",
+  "titulo": "El pegamento que no era pegamento",
+  "serie": "anatomia",
+  "estado": "grabado",
+  "guion": "Te mintieron: la mitad de tu cerebro no es pegamento.\nHace siglo y medio las llamaron glía, que significa pegamento.\nHoy sabemos que casi la mitad de tus células cerebrales no son neuronas.\nUn astrocito, con forma de estrella, puede rodear hasta dos millones de sinapsis.\nNo son espectadoras: escuchan a las neuronas y ayudan a regular sus conexiones.\nEn ratones, reactivar los astrocitos activos al aprender estimuló el recuerdo.\nTu cerebro no tiene un jefe: la genialidad es un equipo.\nGuárdalo y compártelo.",
+  "gancho": "Te mintieron: la mitad de tu cerebro no es pegamento.",
+  "duracion_seg": 35.2,
+  "notas": "Qué espero: que guarden el dato 'casi la mitad de tu cerebro no son neuronas' y compartan el cierre 'no hay jefe: hay equipo'. Métrica: guardados y compartidos por alcance; retención al pasar la escena 3. Serie real: secretos de la anatomía humana (no existe en la lista del panel). Sin voz: falta OPENAI_API_KEY.",
+  "voz_usada": "",
+  "instrucciones_voz": "",
+  "creado": "2026-10-28T04:50:26.725Z",
+  "origen_clave": "ad5ac5a4",
+  "video": "revision.mp4",
+  "miniatura": "miniatura.jpg",
+  "entrega": "entrega.md"
+}

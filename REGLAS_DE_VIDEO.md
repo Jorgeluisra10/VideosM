@@ -182,10 +182,16 @@ revisa de nuevo hasta que esté bien.
 - Copia final: `trabajo/salida/video-animacion.mp4` (o `video-animacion-con-voz.mp4` si se le puso la
   voz después). Pistas sueltas en `trabajo/salida/stems/`.
 - Registro en el Panel de Videos con estado «grabado»:
-  `node scripts/panel/registrar-video.mjs --serie=<serie> --notas="<qué esperas y qué métrica mirar>"`
-  (series: `estafas adivina_precio diario_fundador florida experimentos agente_semana propiedad_del_dia otro`).
+  `node scripts/panel/registrar-video.mjs --serie=<serie> --notas="<qué esperas y qué métrica mirar>" --carpeta=videos/AAAA-MM-DD-slug`
+  (series: `estafas adivina_precio diario_fundador florida experimentos agente_semana propiedad_del_dia secretos_usa anatomia otro`).
   Guarda guion, voz, instrucciones, duración, una copia del MP4 y su miniatura. Si renderizaste desde
   el panel, ya se registró solo: el comando lo actualiza con la serie y la nota.
+  **`--carpeta` es lo que hace que el video aparezca en TU panel:** escribe en la carpeta del video su
+  `registro.json`, `miniatura.jpg` y una `revision.mp4` liviana (720 px, ≈ 2 MB). Esa carpeta SÍ va a git; al
+  hacer commit + push y actualizar (`npm run actualizar`), el Panel de Videos de tu computador trae el video solo
+  (🎬 «Listos para publicar», con 🆕 NUEVO). Sin `--carpeta`, el registro se queda en `data/videos.json` de la
+  máquina donde se creó (que no va a git) y en tu panel no aparece. Si ya registraste un video antes:
+  `node scripts/panel/exportar-registro.mjs --carpeta=videos/<carpeta> --mp4=<video-final.mp4>`.
 - Escribe `videos/<carpeta>/entrega.md` y responde con los 6 puntos de «Qué me entregas siempre».
 
 ## Límites actuales (si el pedido los toca, dilo claro)
