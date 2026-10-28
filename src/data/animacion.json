@@ -2,15 +2,15 @@
  "version": 1,
  "titulo": "El metro que valoriza Bogotá",
  "paleta": "imnoba",
- "sfx": false,
+ "sfx": true,
  "fps": 60,
- "duracion": 28,
+ "duracion": 36.9,
  "escenas": [
   {
    "n": 1,
    "t": "HOOK",
-   "voz": "Locución: ¿Y si publicar tu casa, apartamento o vehículo fuera completamente gratis? Visual: icono de casa y de auto con ondas amarillas, título grande «¿Y si publicar fuera GRATIS?», tarjeta con «$0 COP».",
-   "dur": 5,
+   "voz": "¿Te imaginas cruzar Bogotá en minutos? ¡Llega el metro!",
+   "dur": 3.6,
    "h": "BOGOTÁ NECESITA METRO",
    "w": "METRO",
    "sub": "y tu inmueble lo agradece",
@@ -51,18 +51,30 @@
    "tema": "oscuro",
    "bg": "dark",
    "ritmo": 1,
-   "total": 28,
+   "total": 36.9,
    "inicio": 0,
-   "fin": 5,
-   "texto": "Locución: ¿Y si publicar tu casa, apartamento o vehículo fuera completamente gratis? Visual: icono de casa y de auto con ondas amarillas, título grande «¿Y si publicar fuera GRATIS?», tarjeta con «$0 COP».",
+   "fin": 3.6,
+   "texto": "¿Te imaginas cruzar Bogotá en minutos? ¡Llega el metro!",
    "tr": "barrido",
-   "trs": "barrido"
+   "trs": "barrido",
+   "sfx": [
+    {
+     "t": 0.04,
+     "tipo": "whoosh",
+     "vol": 0.16
+    },
+    {
+     "t": 0.32,
+     "tipo": "thud",
+     "vol": 0.2
+    }
+   ]
   },
   {
    "n": 2,
    "t": "NUM",
-   "voz": "Locución: En IMNOBA tu inmueble se ve en el mapa de la ciudad, las 24 horas. Visual: maqueta 3D de una ciudad con una manzana resaltada en amarillo y un edificio alto; la cámara orbita.",
-   "dur": 5,
+   "voz": "Hoy se pierden horas en trancones cada día.",
+   "dur": 3.4,
    "h": "TIEMPO PERDIDO",
    "w": "PERDIDO",
    "sub": "",
@@ -107,19 +119,91 @@
    "modo": "VIRAL",
    "tema": "oscuro",
    "bg": "gold",
-   "ritmo": 1,
-   "total": 28,
-   "inicio": 5,
-   "fin": 10,
-   "texto": "Locución: En IMNOBA tu inmueble se ve en el mapa de la ciudad, las 24 horas. Visual: maqueta 3D de una ciudad con una manzana resaltada en amarillo y un edificio alto; la cámara orbita.",
+   "ritmo": 0.9833333333333333,
+   "total": 36.9,
+   "inicio": 3.6,
+   "fin": 7,
+   "texto": "Hoy se pierden horas en trancones cada día.",
    "tr": "barrido",
-   "trs": "barrido"
+   "trs": "barrido",
+   "sfx": [
+    {
+     "t": 0.04,
+     "tipo": "whoosh",
+     "vol": 0.16
+    },
+    {
+     "t": 0.59,
+     "tipo": "tick",
+     "vol": 0.12
+    },
+    {
+     "t": 0.59,
+     "tipo": "clic",
+     "vol": 0.07
+    },
+    {
+     "t": 0.72,
+     "tipo": "clic",
+     "vol": 0.07
+    },
+    {
+     "t": 0.85,
+     "tipo": "clic",
+     "vol": 0.07
+    },
+    {
+     "t": 0.98,
+     "tipo": "clic",
+     "vol": 0.07
+    },
+    {
+     "t": 1.1099999999999999,
+     "tipo": "clic",
+     "vol": 0.07
+    },
+    {
+     "t": 1.24,
+     "tipo": "clic",
+     "vol": 0.07
+    },
+    {
+     "t": 1.37,
+     "tipo": "clic",
+     "vol": 0.07
+    },
+    {
+     "t": 1.5,
+     "tipo": "clic",
+     "vol": 0.07
+    },
+    {
+     "t": 1.63,
+     "tipo": "clic",
+     "vol": 0.07
+    },
+    {
+     "t": 1.7599999999999998,
+     "tipo": "clic",
+     "vol": 0.07
+    },
+    {
+     "t": 1.8900000000000001,
+     "tipo": "clic",
+     "vol": 0.07
+    },
+    {
+     "t": 2.065,
+     "tipo": "ding",
+     "vol": 0.18
+    }
+   ]
   },
   {
    "n": 3,
    "t": "VS",
-   "voz": "Locución: Con fotos claras y un plano que explica cada metro cuadrado. Visual: plano arquitectónico de un apartamento de 74 m² (sala 24, cocina 9, balcón 6, dos habitaciones de 14 y baño de 7) que se dibuja solo.",
-   "dur": 6,
+   "voz": "Otras capitales ya tienen metro. Bogotá apenas empieza.",
+   "dur": 3.7,
    "h": "LÍNEAS DE METRO",
    "w": "METRO",
    "sub": "",
@@ -171,23 +255,95 @@
    "modo": "VIRAL",
    "tema": "oscuro",
    "bg": "dark",
-   "ritmo": 1,
-   "total": 28,
-   "inicio": 10,
-   "fin": 16,
-   "texto": "Locución: Con fotos claras y un plano que explica cada metro cuadrado. Visual: plano arquitectónico de un apartamento de 74 m² (sala 24, cocina 9, balcón 6, dos habitaciones de 14 y baño de 7) que se dibuja solo.",
+   "ritmo": 0.9027777777777778,
+   "total": 36.9,
+   "inicio": 7,
+   "fin": 10.7,
+   "texto": "Otras capitales ya tienen metro. Bogotá apenas empieza.",
    "tr": "barrido",
-   "trs": "barrido"
+   "trs": "barrido",
+   "sfx": [
+    {
+     "t": 0.04,
+     "tipo": "whoosh",
+     "vol": 0.16
+    },
+    {
+     "t": 0.5416666666666666,
+     "tipo": "clic",
+     "vol": 0.05
+    },
+    {
+     "t": 0.6716666666666666,
+     "tipo": "clic",
+     "vol": 0.05
+    },
+    {
+     "t": 0.8016666666666666,
+     "tipo": "clic",
+     "vol": 0.05
+    },
+    {
+     "t": 0.8125,
+     "tipo": "tick",
+     "vol": 0.12
+    },
+    {
+     "t": 0.9316666666666666,
+     "tipo": "clic",
+     "vol": 0.05
+    },
+    {
+     "t": 1.0616666666666665,
+     "tipo": "clic",
+     "vol": 0.05
+    },
+    {
+     "t": 1.1916666666666667,
+     "tipo": "clic",
+     "vol": 0.05
+    },
+    {
+     "t": 1.3216666666666668,
+     "tipo": "clic",
+     "vol": 0.05
+    },
+    {
+     "t": 1.4516666666666667,
+     "tipo": "clic",
+     "vol": 0.05
+    },
+    {
+     "t": 1.5816666666666666,
+     "tipo": "clic",
+     "vol": 0.05
+    },
+    {
+     "t": 1.7116666666666664,
+     "tipo": "clic",
+     "vol": 0.05
+    },
+    {
+     "t": 1.8055555555555556,
+     "tipo": "ding",
+     "vol": 0.18
+    },
+    {
+     "t": 1.8416666666666668,
+     "tipo": "clic",
+     "vol": 0.05
+    }
+   ]
   },
   {
    "n": 4,
    "t": "ROUTE",
-   "voz": "Locución: Y tu inversión crece con el tiempo. Visual: cinco barras 3D crecientes (100, 112, 127, 141, 158) y un contador +58 %, aclarando que es un ejemplo ilustrativo.",
-   "dur": 6,
+   "voz": "La primera línea conecta el sur con el norte.",
+   "dur": 4.4,
    "h": "LA PRIMERA LÍNEA",
    "w": "PRIMERA",
    "sub": "",
-   "ic": "tendencia-alza",
+   "ic": "brillo",
    "num": null,
    "vs": null,
    "bars": [],
@@ -228,19 +384,51 @@
    "modo": "VIRAL",
    "tema": "oscuro",
    "bg": "gold",
-   "ritmo": 1,
-   "total": 28,
-   "inicio": 16,
-   "fin": 22,
-   "texto": "Locución: Y tu inversión crece con el tiempo. Visual: cinco barras 3D crecientes (100, 112, 127, 141, 158) y un contador +58 %, aclarando que es un ejemplo ilustrativo.",
+   "ritmo": 0.9634146341463415,
+   "total": 36.9,
+   "inicio": 10.7,
+   "fin": 15.1,
+   "texto": "La primera línea conecta el sur con el norte.",
    "tr": "barrido",
-   "trs": "barrido"
+   "trs": "barrido",
+   "sfx": [
+    {
+     "t": 0.04,
+     "tipo": "whoosh",
+     "vol": 0.16
+    },
+    {
+     "t": 0.9152439024390244,
+     "tipo": "tick",
+     "vol": 0.12
+    },
+    {
+     "t": 1.5896341463414634,
+     "tipo": "tick",
+     "vol": 0.12
+    },
+    {
+     "t": 2.2640243902439026,
+     "tipo": "tick",
+     "vol": 0.12
+    },
+    {
+     "t": 2.9384146341463415,
+     "tipo": "tick",
+     "vol": 0.12
+    },
+    {
+     "t": 3.275609756097561,
+     "tipo": "ding",
+     "vol": 0.18
+    }
+   ]
   },
   {
    "n": 5,
    "t": "STEPS",
-   "voz": "Locución: Publica hoy mismo en IMNOBA. Es gratis. Visual: logo IMNOBA en texto, casa que se dibuja con trazo, lista de tres beneficios y tarjeta «Es gratis».",
-   "dur": 6,
+   "voz": "Más acceso, más demanda, más valor para tu propiedad.",
+   "dur": 3.6,
    "h": "CAUSA Y EFECTO",
    "w": "EFECTO",
    "sub": "",
@@ -294,22 +482,437 @@
    "tema": "claro",
    "bg": "light",
    "ritmo": 1,
-   "total": 28,
-   "inicio": 22,
-   "fin": 28,
-   "texto": "Locución: Publica hoy mismo en IMNOBA. Es gratis. Visual: logo IMNOBA en texto, casa que se dibuja con trazo, lista de tres beneficios y tarjeta «Es gratis».",
+   "total": 36.9,
+   "inicio": 15.1,
+   "fin": 18.7,
+   "texto": "Más acceso, más demanda, más valor para tu propiedad.",
    "tr": "barrido",
-   "trs": "barrido"
+   "trs": "barrido",
+   "sfx": [
+    {
+     "t": 0.04,
+     "tipo": "whoosh",
+     "vol": 0.16
+    },
+    {
+     "t": 0.75,
+     "tipo": "pop",
+     "vol": 0.14
+    },
+    {
+     "t": 1.37,
+     "tipo": "pop",
+     "vol": 0.14
+    },
+    {
+     "t": 1.99,
+     "tipo": "pop",
+     "vol": 0.14
+    }
+   ]
+  },
+  {
+   "n": 6,
+   "t": "LINE",
+   "voz": "Donde llega el transporte, el metro cuadrado sube.",
+   "dur": 3.8,
+   "h": "VALOR DEL M²",
+   "w": "M²",
+   "sub": "",
+   "ic": "tren",
+   "num": null,
+   "vs": null,
+   "bars": [],
+   "barsU": "",
+   "hi": -1,
+   "line": {
+    "pts": [
+     100,
+     104,
+     102,
+     112,
+     122,
+     128,
+     135
+    ],
+    "l0": "ANTES",
+    "l1": "DESPUÉS",
+    "end": "+35 %"
+   },
+   "items": [],
+   "stops": [],
+   "end": "",
+   "donut": [],
+   "picto": null,
+   "top": [],
+   "myth": "",
+   "truth": "",
+   "zoom": null,
+   "capas": null,
+   "mira": null,
+   "impacto": null,
+   "red": null,
+   "termo": null,
+   "pila": null,
+   "cap": "",
+   "papel": null,
+   "pilares": null,
+   "ciclo": null,
+   "duo": null,
+   "osc": null,
+   "cubo": null,
+   "diales": null,
+   "pieza": null,
+   "cita": null,
+   "sc": "",
+   "modo": "VIRAL",
+   "tema": "oscuro",
+   "bg": "dark",
+   "ritmo": 0.9054054054054054,
+   "total": 36.9,
+   "inicio": 18.7,
+   "fin": 22.5,
+   "texto": "Donde llega el transporte, el metro cuadrado sube.",
+   "tr": "barrido",
+   "trs": "barrido",
+   "sfx": [
+    {
+     "t": 0.04,
+     "tipo": "whoosh",
+     "vol": 0.16
+    },
+    {
+     "t": 0.6337837837837837,
+     "tipo": "zap",
+     "vol": 0.1
+    },
+    {
+     "t": 2.535135135135135,
+     "tipo": "ding",
+     "vol": 0.18
+    }
+   ]
+  },
+  {
+   "n": 7,
+   "t": "BARS",
+   "voz": "Mientras más cerca de la estación, más valorización.",
+   "dur": 3.4,
+   "h": "VALORIZACIÓN POR ZONA",
+   "w": "ZONA",
+   "sub": "",
+   "ic": "tren",
+   "num": null,
+   "vs": null,
+   "bars": [
+    {
+     "l": "LEJOS",
+     "v": 8
+    },
+    {
+     "l": "A 10 MIN",
+     "v": 19
+    },
+    {
+     "l": "A 5 MIN",
+     "v": 35
+    }
+   ],
+   "barsU": "%",
+   "hi": 2,
+   "line": null,
+   "items": [],
+   "stops": [],
+   "end": "",
+   "donut": [],
+   "picto": null,
+   "top": [],
+   "myth": "",
+   "truth": "",
+   "zoom": null,
+   "capas": null,
+   "mira": null,
+   "impacto": null,
+   "red": null,
+   "termo": null,
+   "pila": null,
+   "cap": "",
+   "papel": null,
+   "pilares": null,
+   "ciclo": null,
+   "duo": null,
+   "osc": null,
+   "cubo": null,
+   "diales": null,
+   "pieza": null,
+   "cita": null,
+   "sc": "",
+   "modo": "VIRAL",
+   "tema": "claro",
+   "bg": "light",
+   "ritmo": 1,
+   "total": 36.9,
+   "inicio": 22.5,
+   "fin": 25.9,
+   "texto": "Mientras más cerca de la estación, más valorización.",
+   "tr": "barrido",
+   "trs": "barrido",
+   "sfx": [
+    {
+     "t": 0.04,
+     "tipo": "whoosh",
+     "vol": 0.16
+    },
+    {
+     "t": 0.95,
+     "tipo": "pop",
+     "vol": 0.13
+    },
+    {
+     "t": 1.15,
+     "tipo": "pop",
+     "vol": 0.13
+    },
+    {
+     "t": 1.35,
+     "tipo": "pop",
+     "vol": 0.13
+    },
+    {
+     "t": 2,
+     "tipo": "ding",
+     "vol": 0.16
+    }
+   ]
+  },
+  {
+   "n": 8,
+   "t": "SKYLINE",
+   "voz": "Tu inmueble puede ser la próxima gran oportunidad.",
+   "dur": 3.4,
+   "h": "TU INMUEBLE, MÁS VALIOSO",
+   "w": "VALIOSO",
+   "sub": "cerca de las estaciones",
+   "ic": "casa",
+   "num": null,
+   "vs": null,
+   "bars": [],
+   "barsU": "",
+   "hi": -1,
+   "line": null,
+   "items": [],
+   "stops": [],
+   "end": "+35 %",
+   "donut": [],
+   "picto": null,
+   "top": [],
+   "myth": "",
+   "truth": "",
+   "zoom": null,
+   "capas": null,
+   "mira": null,
+   "impacto": null,
+   "red": null,
+   "termo": null,
+   "pila": null,
+   "cap": "",
+   "papel": null,
+   "pilares": null,
+   "ciclo": null,
+   "duo": null,
+   "osc": null,
+   "cubo": null,
+   "diales": null,
+   "pieza": null,
+   "cita": null,
+   "sc": "",
+   "modo": "VIRAL",
+   "tema": "oscuro",
+   "bg": "gold",
+   "ritmo": 0.9833333333333333,
+   "total": 36.9,
+   "inicio": 25.9,
+   "fin": 29.3,
+   "texto": "Tu inmueble puede ser la próxima gran oportunidad.",
+   "tr": "barrido",
+   "trs": "barrido",
+   "sfx": [
+    {
+     "t": 0.04,
+     "tipo": "whoosh",
+     "vol": 0.16
+    },
+    {
+     "t": 0.6883333333333332,
+     "tipo": "thud",
+     "vol": 0.14
+    },
+    {
+     "t": 1.8683333333333332,
+     "tipo": "ding",
+     "vol": 0.18
+    }
+   ]
+  },
+  {
+   "n": 9,
+   "t": "LIST",
+   "voz": "En IMNOBA publicas gratis, sin comisión: casas, apartamentos y autos.",
+   "dur": 4,
+   "h": "PUBLICA EN IMNOBA",
+   "w": "IMNOBA",
+   "sub": "",
+   "ic": "casa",
+   "num": null,
+   "vs": null,
+   "bars": [],
+   "barsU": "",
+   "hi": -1,
+   "line": null,
+   "items": [
+    {
+     "l": "Gratis y sin comisión",
+     "ic": "check"
+    },
+    {
+     "l": "Casas, apartamentos y autos",
+     "ic": "check"
+    },
+    {
+     "l": "Llegas a más compradores",
+     "ic": "check"
+    }
+   ],
+   "stops": [],
+   "end": "",
+   "donut": [],
+   "picto": null,
+   "top": [],
+   "myth": "",
+   "truth": "",
+   "zoom": null,
+   "capas": null,
+   "mira": null,
+   "impacto": null,
+   "red": null,
+   "termo": null,
+   "pila": null,
+   "cap": "",
+   "papel": null,
+   "pilares": null,
+   "ciclo": null,
+   "duo": null,
+   "osc": null,
+   "cubo": null,
+   "diales": null,
+   "pieza": null,
+   "cita": null,
+   "sc": "",
+   "modo": "VIRAL",
+   "tema": "oscuro",
+   "bg": "dark",
+   "ritmo": 1,
+   "total": 36.9,
+   "inicio": 29.3,
+   "fin": 33.3,
+   "texto": "En IMNOBA publicas gratis, sin comisión: casas, apartamentos y autos.",
+   "tr": "barrido",
+   "trs": "barrido",
+   "sfx": [
+    {
+     "t": 0.04,
+     "tipo": "whoosh",
+     "vol": 0.16
+    },
+    {
+     "t": 0.75,
+     "tipo": "pop",
+     "vol": 0.14
+    },
+    {
+     "t": 1.37,
+     "tipo": "pop",
+     "vol": 0.14
+    },
+    {
+     "t": 1.99,
+     "tipo": "pop",
+     "vol": 0.14
+    }
+   ]
+  },
+  {
+   "n": 10,
+   "t": "CTA",
+   "voz": "No esperes al metro: publica gratis hoy en IMNOBA.",
+   "dur": 3.6,
+   "h": "PUBLICA GRATIS HOY",
+   "w": "GRATIS",
+   "sub": "imnoba.com",
+   "ic": "cohete",
+   "num": null,
+   "vs": null,
+   "bars": [],
+   "barsU": "",
+   "hi": -1,
+   "line": null,
+   "items": [],
+   "stops": [],
+   "end": "",
+   "donut": [],
+   "picto": null,
+   "top": [],
+   "myth": "",
+   "truth": "",
+   "zoom": null,
+   "capas": null,
+   "mira": null,
+   "impacto": null,
+   "red": null,
+   "termo": null,
+   "pila": null,
+   "cap": "",
+   "papel": null,
+   "pilares": null,
+   "ciclo": null,
+   "duo": null,
+   "osc": null,
+   "cubo": null,
+   "diales": null,
+   "pieza": null,
+   "cita": null,
+   "sc": "",
+   "modo": "VIRAL",
+   "tema": "oscuro",
+   "bg": "gold",
+   "ritmo": 0.9843749999999999,
+   "total": 36.9,
+   "inicio": 33.3,
+   "fin": 36.9,
+   "texto": "No esperes al metro: publica gratis hoy en IMNOBA.",
+   "tr": "barrido",
+   "trs": "barrido",
+   "sfx": [
+    {
+     "t": 0.04,
+     "tipo": "whoosh",
+     "vol": 0.16
+    },
+    {
+     "t": 0.49218749999999994,
+     "tipo": "ding",
+     "vol": 0.2
+    },
+    {
+     "t": 1.0828125,
+     "tipo": "pop",
+     "vol": 0.15
+    }
+   ]
   }
  ],
- "uso": {
-  "modelo": "gpt-4o-mini",
-  "prompt_tokens": 1968,
-  "completion_tokens": 242,
-  "costo_usd": 0.00044039999999999997,
-  "llamadas": 1
- },
+ "uso": null,
  "hud": false,
  "formato": "viral",
- "musica": false
+ "musica": true
 }
