@@ -1,0 +1,13 @@
+{
+  "titulo": "El pegamento que no era pegamento",
+  "scenes": [
+    {"t": "PIEZA", "voz": "Te mintieron: la mitad de tu cerebro no es pegamento.", "dur": 4.0, "h": "TE MINTIERON", "w": "PEGAMENTO", "cap": "la mitad de tu cerebro no es relleno", "pieza": {"id": "astro-gancho"}},
+    {"t": "PIEZA", "voz": "Hace siglo y medio las llamaron glía, que significa pegamento.", "dur": 4.2, "h": "GLÍA = PEGAMENTO", "w": "PEGAMENTO", "cap": "el nombre viene de 1856", "pieza": {"id": "astro-glia"}},
+    {"t": "PIEZA", "voz": "Hoy sabemos que casi la mitad de tus células cerebrales no son neuronas.", "dur": 5.0, "h": "CASI LA MITAD", "w": "MITAD", "cap": "no son neuronas", "pieza": {"id": "astro-mitad"}},
+    {"t": "PIEZA", "voz": "Un astrocito, con forma de estrella, puede rodear hasta dos millones de sinapsis.", "dur": 5.0, "h": "UNA ESTRELLA, 2 MILLONES DE SINAPSIS", "w": "ESTRELLA", "cap": "estimación en humanos", "pieza": {"id": "astro-estrella"}},
+    {"t": "PIEZA", "voz": "No son espectadoras: escuchan a las neuronas y ayudan a regular sus conexiones.", "dur": 4.7, "h": "NO SON ESPECTADORAS", "w": "ESCUCHAN", "cap": "la sinapsis tripartita", "pieza": {"id": "astro-dialogo"}},
+    {"t": "PIEZA", "voz": "En ratones, reactivar los astrocitos activos al aprender estimuló el recuerdo.", "dur": 4.4, "h": "EN RATONES, EL RECUERDO SE ESTIMULÓ", "w": "RECUERDO", "cap": "estudio en ratones", "pieza": {"id": "astro-memoria"}},
+    {"t": "HOOK", "voz": "Tu cerebro no tiene un jefe: la genialidad es un equipo.", "dur": 4.4, "h": "NO HAY JEFE: HAY EQUIPO", "w": "EQUIPO", "cap": "así funciona la genialidad"},
+    {"t": "CTA", "voz": "Guárdalo y compártelo.", "dur": 3.0, "h": "GUÁRDALO Y COMPÁRTELO", "w": "COMPÁRTELO", "sub": "Más ciencia en SINAPSIS"}
+  ]
+}

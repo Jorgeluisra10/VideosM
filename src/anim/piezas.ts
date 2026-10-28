@@ -181,6 +181,31 @@ export const TM = {
   cierre: { tarjetas: 0.5, noImites: 4.4, pregunta: 7.4 },
 } as const;
 
+/**
+ * Datos del video «El pegamento que no era pegamento» (SINAPSIS). Cada cifra tiene su fuente en pantalla y en ejemplos/animacion-viral/guion-tecnico-astrocitos.md.
+ * Lo que NO se afirma: que los astrocitos «controlen» la memoria (hay evidencia de que participan y de que su reactivación estimuló el recuerdo en ratones), ni cifras en personas.
+ */
+export const AST = {
+  /** Azevedo et al., J Comp Neurol 2009 (cerebro adulto masculino; fraccionador isotrópico): neuronas y células NO neuronales, en unidades */
+  neuronas: 86_100_000_000,
+  noNeuronales: 84_600_000_000,
+  /** Oberheim et al., J Neurosci 2009: sinapsis dentro del dominio de un astrocito humano (estimación: ≈ 270.000 a 2 millones; en roedores ≈ 20.000–120.000) */
+  sinapsisMin: 270_000,
+  sinapsisMax: 2_000_000,
+  /** primer uso documentado del término «neuroglia» por Virchow (hay fuentes que dan 1858 para su presentación pública) */
+  anioGlia: 1856,
+} as const;
+
+/** Tiempos del video de astrocitos, compartidos entre el dibujo y el sonido (segundos a ritmo normal). */
+export const TAS = {
+  gancho: { frasco: 0.2, grieta: 2.3, rotura: 2.95, estrella: 3.0 },
+  glia: { neurona: 0.3, pegotes: 1.6, anio: 0.3, anioDur: 2.1, etq: 3.3 },
+  mitad: { puntos: 0.3, puntosDur: 1.4, neuronas: 1.9, otras: 3.7, cifras: 3.9 },
+  estrella: { crece: 0.4, creceDur: 2.2, sinapsis: 3.1, cuenta: 3.2, cuentaDur: 1.7 },
+  dialogo: { vesiculas: 0.7, calcio: 1.8, fortalece: 3.0 },
+  memoria: { activa: 1.2, enlaces: 2.2, recuerdo: 3.1 },
+} as const;
+
 /* ───────────── «La regla del 37 %» (problema de la parada óptima, ensayo abstracto para IMNOBA) ───────────── */
 
 /** Generador pseudoaleatorio determinista (mulberry32): mismos números en el render, en las pruebas y en cada fotograma. */
@@ -509,6 +534,31 @@ export const PIEZAS: Record<string, DefPieza> = {
   "par-supuestos": {
     id: "par-supuestos", nombre: "Regla del 37 % · los tres supuestos (dado, sentido único, copa)", ideal: 10.15, fondo: "dark", entra: "corte",
     sfx: (_d, r) => [ev(0.05, "whoosh", 0.1), ...[0, 1, 2].map((i) => ev(TPA.supuestos.c(i) * r, "pop", 0.12)), ...[0, 1, 2].map((i) => ev((TPA.supuestos.c(i) + 0.15) * r, "tick", 0.1)), ev(TPA.supuestos.final * r, "ding", 0.16)],
+  },
+  /* ───────────── «El pegamento que no era pegamento» (astrocitos · SINAPSIS) ───────────── */
+  "astro-gancho": {
+    id: "astro-gancho", nombre: "Astrocitos · el frasco de «pegamento» se rompe y sale una estrella (gancho)", ideal: 3.65, fondo: "dark",
+    sfx: (_d, r) => [ev(0.05, "whoosh", 0.12), ev(TAS.gancho.frasco * r + 0.2, "pop", 0.1), ev(TAS.gancho.grieta * r, "tick", 0.12), ev(TAS.gancho.rotura * r, "golpe", 0.2), ev((TAS.gancho.estrella + 0.1) * r, "ding", 0.16)],
+  },
+  "astro-glia": {
+    id: "astro-glia", nombre: "Astrocitos · «glía»: la neurona rodeada de pegamento (1856)", ideal: 3.95, fondo: "dark", entra: "corte",
+    sfx: (_d, r) => [ev(0.05, "whoosh", 0.1), ...clics(TAS.glia.anio * r, TAS.glia.anioDur * r, 0.05), ...[0, 1, 2, 3, 4, 5].map((i) => ev((TAS.glia.pegotes + i * 0.17) * r, "pop", 0.08)), ev(TAS.glia.etq * r, "golpe", 0.16)],
+  },
+  "astro-mitad": {
+    id: "astro-mitad", nombre: "Astrocitos · 100 células: casi la mitad no son neuronas", ideal: 4.95, fondo: "dark", entra: "corte",
+    sfx: (_d, r) => [ev(0.05, "whoosh", 0.1), ...clics(TAS.mitad.puntos * r, TAS.mitad.puntosDur * r, 0.04), ev(TAS.mitad.neuronas * r, "zap", 0.12), ev(TAS.mitad.otras * r, "thud", 0.16), ev((TAS.mitad.otras + 0.15) * r, "ding", 0.14)],
+  },
+  "astro-estrella": {
+    id: "astro-estrella", nombre: "Astrocitos · el astrocito crece como estrella y rodea hasta 2 millones de sinapsis", ideal: 4.95, fondo: "dark", entra: "corte",
+    sfx: (_d, r) => [ev(0.05, "whoosh", 0.1), ...clics(TAS.estrella.crece * r, TAS.estrella.creceDur * r, 0.04), ev(TAS.estrella.sinapsis * r, "zap", 0.12), ...clics(TAS.estrella.cuenta * r, TAS.estrella.cuentaDur * r, 0.05), ev((TAS.estrella.cuenta + TAS.estrella.cuentaDur) * r, "ding", 0.18)],
+  },
+  "astro-dialogo": {
+    id: "astro-dialogo", nombre: "Astrocitos · la sinapsis tripartita: escucha y ayuda a fortalecer", ideal: 4.55, fondo: "dark", entra: "corte",
+    sfx: (_d, r) => [ev(0.05, "whoosh", 0.1), ...[0, 1, 2].map((i) => ev((TAS.dialogo.vesiculas + i * 0.45) * r, "tick", 0.1)), ev(TAS.dialogo.calcio * r, "radar", 0.1), ev(TAS.dialogo.fortalece * r, "pop", 0.14), ev((TAS.dialogo.fortalece + 0.15) * r, "ding", 0.16)],
+  },
+  "astro-memoria": {
+    id: "astro-memoria", nombre: "Astrocitos · en ratones, reactivarlos estimuló el recuerdo", ideal: 4.15, fondo: "dark", entra: "corte",
+    sfx: (_d, r) => [ev(0.05, "whoosh", 0.1), ev(TAS.memoria.activa * r, "zap", 0.12), ev(TAS.memoria.enlaces * r, "radar", 0.1), ev(TAS.memoria.recuerdo * r, "golpe", 0.18), ev((TAS.memoria.recuerdo + 0.15) * r, "ding", 0.18)],
   },
 };
 

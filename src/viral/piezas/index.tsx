@@ -21,6 +21,8 @@ import { MedPylori1, MedVaso, MedGastritis, MedNobel2 } from "./med2";
 import { MedPolar1, MedCirugia, MedPolar2, MedCierre } from "./med3";
 import { ParGancho, ParKepler, ParN3, ParRegla } from "./par1";
 import { ParAplica, ParCurva, ParSimula, ParSupuestos } from "./par2";
+import { AstroGancho, AstroGlia, AstroMitad } from "./astro1";
+import { AstroDialogo, AstroEstrella, AstroMemoria } from "./astro2";
 
 export const COMPONENTES_PIEZA: Record<string, React.FC<{ e: EscenaViralGuardada }>> = {
   "metro-plano": MetroPlano,
@@ -73,6 +75,12 @@ export const COMPONENTES_PIEZA: Record<string, React.FC<{ e: EscenaViralGuardada
   "par-simula": ParSimula,
   "par-aplica": ParAplica,
   "par-supuestos": ParSupuestos,
+  "astro-gancho": AstroGancho,
+  "astro-glia": AstroGlia,
+  "astro-mitad": AstroMitad,
+  "astro-estrella": AstroEstrella,
+  "astro-dialogo": AstroDialogo,
+  "astro-memoria": AstroMemoria,
 };
 
 export const Pieza: React.FC<{ e: EscenaViralGuardada; alternativa: React.ReactNode }> = ({ e, alternativa }) => {
