@@ -183,7 +183,7 @@ revisa de nuevo hasta que esté bien.
   voz después). Pistas sueltas en `trabajo/salida/stems/`.
 - Registro en el Panel de Videos con estado «grabado»:
   `node scripts/panel/registrar-video.mjs --serie=<serie> --notas="<qué esperas y qué métrica mirar>" --carpeta=videos/AAAA-MM-DD-slug`
-  (series: `estafas adivina_precio diario_fundador florida experimentos agente_semana propiedad_del_dia secretos_usa anatomia otro`).
+  (series: `estafas adivina_precio diario_fundador florida experimentos agente_semana propiedad_del_dia secretos_usa anatomia neuroanatomia otro`).
   Guarda guion, voz, instrucciones, duración, una copia del MP4 y su miniatura. Si renderizaste desde
   el panel, ya se registró solo: el comando lo actualiza con la serie y la nota.
   **`--carpeta` es lo que hace que el video aparezca en TU panel:** escribe en la carpeta del video su

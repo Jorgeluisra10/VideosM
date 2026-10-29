@@ -1,20 +1,20 @@
 {
  "version": 1,
- "titulo": "El metro que valoriza Bogotá",
- "paleta": "imnoba",
+ "titulo": "Astrocitos: los dueños del cerebro",
+ "paleta": "medicina",
  "sfx": true,
  "fps": 60,
- "duracion": 36.9,
+ "duracion": 44.8,
  "escenas": [
   {
    "n": 1,
-   "t": "HOOK",
-   "voz": "¿Te imaginas cruzar Bogotá en minutos? ¡Llega el metro!",
-   "dur": 3.6,
-   "h": "BOGOTÁ NECESITA METRO",
-   "w": "METRO",
-   "sub": "y tu inmueble lo agradece",
-   "ic": "tren",
+   "t": "PIEZA",
+   "voz": "Ahora mismo, toxinas intentan entrar a tu cerebro. Algo las frena.",
+   "dur": 4.4,
+   "h": "TOXINAS CONTRA TU CEREBRO. ALGO",
+   "w": "TOXINAS",
+   "sub": "",
+   "ic": "reloj",
    "num": null,
    "vs": null,
    "bars": [],
@@ -36,7 +36,7 @@
    "red": null,
    "termo": null,
    "pila": null,
-   "cap": "",
+   "cap": "¿quién las detiene?",
    "papel": null,
    "pilares": null,
    "ciclo": null,
@@ -44,19 +44,22 @@
    "osc": null,
    "cubo": null,
    "diales": null,
-   "pieza": null,
+   "pieza": {
+    "id": "ein-gancho",
+    "props": {}
+   },
    "cita": null,
    "sc": "",
    "modo": "VIRAL",
    "tema": "oscuro",
    "bg": "dark",
    "ritmo": 1,
-   "total": 36.9,
+   "total": 44.8,
    "inicio": 0,
-   "fin": 3.6,
-   "texto": "¿Te imaginas cruzar Bogotá en minutos? ¡Llega el metro!",
+   "fin": 4.4,
+   "texto": "Ahora mismo, toxinas intentan entrar a tu cerebro. Algo las frena.",
    "tr": "barrido",
-   "trs": "barrido",
+   "trs": "zoom",
    "sfx": [
     {
      "t": 0.04,
@@ -64,284 +67,49 @@
      "vol": 0.16
     },
     {
-     "t": 0.32,
-     "tipo": "thud",
-     "vol": 0.2
+     "t": 0.05,
+     "tipo": "whoosh",
+     "vol": 0.12
+    },
+    {
+     "t": 0.4,
+     "tipo": "pop",
+     "vol": 0.1
+    },
+    {
+     "t": 1.1,
+     "tipo": "tick",
+     "vol": 0.1
+    },
+    {
+     "t": 1.5,
+     "tipo": "tick",
+     "vol": 0.1
+    },
+    {
+     "t": 1.9000000000000001,
+     "tipo": "tick",
+     "vol": 0.1
+    },
+    {
+     "t": 2,
+     "tipo": "zap",
+     "vol": 0.16
+    },
+    {
+     "t": 3,
+     "tipo": "ding",
+     "vol": 0.18
     }
    ]
   },
   {
    "n": 2,
-   "t": "NUM",
-   "voz": "Hoy se pierden horas en trancones cada día.",
-   "dur": 3.4,
-   "h": "TIEMPO PERDIDO",
-   "w": "PERDIDO",
-   "sub": "",
-   "ic": "reloj",
-   "num": {
-    "n": "2",
-    "u": "h",
-    "pre": "~",
-    "l": "AL DÍA EN TRANCONES"
-   },
-   "vs": null,
-   "bars": [],
-   "barsU": "",
-   "hi": -1,
-   "line": null,
-   "items": [],
-   "stops": [],
-   "end": "",
-   "donut": [],
-   "picto": null,
-   "top": [],
-   "myth": "",
-   "truth": "",
-   "zoom": null,
-   "capas": null,
-   "mira": null,
-   "impacto": null,
-   "red": null,
-   "termo": null,
-   "pila": null,
-   "cap": "",
-   "papel": null,
-   "pilares": null,
-   "ciclo": null,
-   "duo": null,
-   "osc": null,
-   "cubo": null,
-   "diales": null,
-   "pieza": null,
-   "cita": null,
-   "sc": "",
-   "modo": "VIRAL",
-   "tema": "oscuro",
-   "bg": "gold",
-   "ritmo": 0.9833333333333333,
-   "total": 36.9,
-   "inicio": 3.6,
-   "fin": 7,
-   "texto": "Hoy se pierden horas en trancones cada día.",
-   "tr": "barrido",
-   "trs": "barrido",
-   "sfx": [
-    {
-     "t": 0.04,
-     "tipo": "whoosh",
-     "vol": 0.16
-    },
-    {
-     "t": 0.59,
-     "tipo": "tick",
-     "vol": 0.12
-    },
-    {
-     "t": 0.59,
-     "tipo": "clic",
-     "vol": 0.07
-    },
-    {
-     "t": 0.72,
-     "tipo": "clic",
-     "vol": 0.07
-    },
-    {
-     "t": 0.85,
-     "tipo": "clic",
-     "vol": 0.07
-    },
-    {
-     "t": 0.98,
-     "tipo": "clic",
-     "vol": 0.07
-    },
-    {
-     "t": 1.1099999999999999,
-     "tipo": "clic",
-     "vol": 0.07
-    },
-    {
-     "t": 1.24,
-     "tipo": "clic",
-     "vol": 0.07
-    },
-    {
-     "t": 1.37,
-     "tipo": "clic",
-     "vol": 0.07
-    },
-    {
-     "t": 1.5,
-     "tipo": "clic",
-     "vol": 0.07
-    },
-    {
-     "t": 1.63,
-     "tipo": "clic",
-     "vol": 0.07
-    },
-    {
-     "t": 1.7599999999999998,
-     "tipo": "clic",
-     "vol": 0.07
-    },
-    {
-     "t": 1.8900000000000001,
-     "tipo": "clic",
-     "vol": 0.07
-    },
-    {
-     "t": 2.065,
-     "tipo": "ding",
-     "vol": 0.18
-    }
-   ]
-  },
-  {
-   "n": 3,
-   "t": "VS",
-   "voz": "Otras capitales ya tienen metro. Bogotá apenas empieza.",
-   "dur": 3.7,
-   "h": "LÍNEAS DE METRO",
-   "w": "METRO",
-   "sub": "",
-   "ic": "tren",
-   "num": null,
-   "vs": {
-    "a": {
-     "l": "BOGOTÁ",
-     "n": "0",
-     "ic": "tren"
-    },
-    "b": {
-     "l": "SANTIAGO",
-     "n": "7",
-     "ic": "tren"
-    },
-    "op": "<"
-   },
-   "bars": [],
-   "barsU": "",
-   "hi": -1,
-   "line": null,
-   "items": [],
-   "stops": [],
-   "end": "",
-   "donut": [],
-   "picto": null,
-   "top": [],
-   "myth": "",
-   "truth": "",
-   "zoom": null,
-   "capas": null,
-   "mira": null,
-   "impacto": null,
-   "red": null,
-   "termo": null,
-   "pila": null,
-   "cap": "",
-   "papel": null,
-   "pilares": null,
-   "ciclo": null,
-   "duo": null,
-   "osc": null,
-   "cubo": null,
-   "diales": null,
-   "pieza": null,
-   "cita": null,
-   "sc": "",
-   "modo": "VIRAL",
-   "tema": "oscuro",
-   "bg": "dark",
-   "ritmo": 0.9027777777777778,
-   "total": 36.9,
-   "inicio": 7,
-   "fin": 10.7,
-   "texto": "Otras capitales ya tienen metro. Bogotá apenas empieza.",
-   "tr": "barrido",
-   "trs": "barrido",
-   "sfx": [
-    {
-     "t": 0.04,
-     "tipo": "whoosh",
-     "vol": 0.16
-    },
-    {
-     "t": 0.5416666666666666,
-     "tipo": "clic",
-     "vol": 0.05
-    },
-    {
-     "t": 0.6716666666666666,
-     "tipo": "clic",
-     "vol": 0.05
-    },
-    {
-     "t": 0.8016666666666666,
-     "tipo": "clic",
-     "vol": 0.05
-    },
-    {
-     "t": 0.8125,
-     "tipo": "tick",
-     "vol": 0.12
-    },
-    {
-     "t": 0.9316666666666666,
-     "tipo": "clic",
-     "vol": 0.05
-    },
-    {
-     "t": 1.0616666666666665,
-     "tipo": "clic",
-     "vol": 0.05
-    },
-    {
-     "t": 1.1916666666666667,
-     "tipo": "clic",
-     "vol": 0.05
-    },
-    {
-     "t": 1.3216666666666668,
-     "tipo": "clic",
-     "vol": 0.05
-    },
-    {
-     "t": 1.4516666666666667,
-     "tipo": "clic",
-     "vol": 0.05
-    },
-    {
-     "t": 1.5816666666666666,
-     "tipo": "clic",
-     "vol": 0.05
-    },
-    {
-     "t": 1.7116666666666664,
-     "tipo": "clic",
-     "vol": 0.05
-    },
-    {
-     "t": 1.8055555555555556,
-     "tipo": "ding",
-     "vol": 0.18
-    },
-    {
-     "t": 1.8416666666666668,
-     "tipo": "clic",
-     "vol": 0.05
-    }
-   ]
-  },
-  {
-   "n": 4,
-   "t": "ROUTE",
-   "voz": "La primera línea conecta el sur con el norte.",
-   "dur": 4.4,
-   "h": "LA PRIMERA LÍNEA",
-   "w": "PRIMERA",
+   "t": "PIEZA",
+   "voz": "Son los astrocitos: con sus pies perivasculares envuelven cada capilar y ayudan a mantener la barrera hematoencefálica.",
+   "dur": 6.4,
+   "h": "BARRERA HEMATOENCEFÁLICA",
+   "w": "BARRERA",
    "sub": "",
    "ic": "brillo",
    "num": null,
@@ -351,108 +119,6 @@
    "hi": -1,
    "line": null,
    "items": [],
-   "stops": [
-    "PORTAL AMÉRICAS",
-    "KENNEDY",
-    "CENTRO",
-    "CALLE 72"
-   ],
-   "end": "VALORIZACIÓN",
-   "donut": [],
-   "picto": null,
-   "top": [],
-   "myth": "",
-   "truth": "",
-   "zoom": null,
-   "capas": null,
-   "mira": null,
-   "impacto": null,
-   "red": null,
-   "termo": null,
-   "pila": null,
-   "cap": "",
-   "papel": null,
-   "pilares": null,
-   "ciclo": null,
-   "duo": null,
-   "osc": null,
-   "cubo": null,
-   "diales": null,
-   "pieza": null,
-   "cita": null,
-   "sc": "",
-   "modo": "VIRAL",
-   "tema": "oscuro",
-   "bg": "gold",
-   "ritmo": 0.9634146341463415,
-   "total": 36.9,
-   "inicio": 10.7,
-   "fin": 15.1,
-   "texto": "La primera línea conecta el sur con el norte.",
-   "tr": "barrido",
-   "trs": "barrido",
-   "sfx": [
-    {
-     "t": 0.04,
-     "tipo": "whoosh",
-     "vol": 0.16
-    },
-    {
-     "t": 0.9152439024390244,
-     "tipo": "tick",
-     "vol": 0.12
-    },
-    {
-     "t": 1.5896341463414634,
-     "tipo": "tick",
-     "vol": 0.12
-    },
-    {
-     "t": 2.2640243902439026,
-     "tipo": "tick",
-     "vol": 0.12
-    },
-    {
-     "t": 2.9384146341463415,
-     "tipo": "tick",
-     "vol": 0.12
-    },
-    {
-     "t": 3.275609756097561,
-     "tipo": "ding",
-     "vol": 0.18
-    }
-   ]
-  },
-  {
-   "n": 5,
-   "t": "STEPS",
-   "voz": "Más acceso, más demanda, más valor para tu propiedad.",
-   "dur": 3.6,
-   "h": "CAUSA Y EFECTO",
-   "w": "EFECTO",
-   "sub": "",
-   "ic": "casa",
-   "num": null,
-   "vs": null,
-   "bars": [],
-   "barsU": "",
-   "hi": -1,
-   "line": null,
-   "items": [
-    {
-     "l": "METRO",
-     "ic": "tren"
-    },
-    {
-     "l": "MÁS DEMANDA",
-     "ic": "tendencia-alza"
-    },
-    {
-     "l": "MÁS VALOR",
-     "ic": "dolar"
-    }
-   ],
    "stops": [],
    "end": "",
    "donut": [],
@@ -467,7 +133,7 @@
    "red": null,
    "termo": null,
    "pila": null,
-   "cap": "",
+   "cap": "pies perivasculares",
    "papel": null,
    "pilares": null,
    "ciclo": null,
@@ -475,19 +141,22 @@
    "osc": null,
    "cubo": null,
    "diales": null,
-   "pieza": null,
+   "pieza": {
+    "id": "ein-barrera",
+    "props": {}
+   },
    "cita": null,
    "sc": "",
    "modo": "VIRAL",
    "tema": "claro",
    "bg": "light",
    "ritmo": 1,
-   "total": 36.9,
-   "inicio": 15.1,
-   "fin": 18.7,
-   "texto": "Más acceso, más demanda, más valor para tu propiedad.",
-   "tr": "barrido",
-   "trs": "barrido",
+   "total": 44.8,
+   "inicio": 4.4,
+   "fin": 10.8,
+   "texto": "Son los astrocitos: con sus pies perivasculares envuelven cada capilar y ayudan a mantener la barrera hematoencefálica.",
+   "tr": "zoom",
+   "trs": "semitono",
    "sfx": [
     {
      "t": 0.04,
@@ -495,50 +164,52 @@
      "vol": 0.16
     },
     {
-     "t": 0.75,
-     "tipo": "pop",
-     "vol": 0.14
+     "t": 0.05,
+     "tipo": "whoosh",
+     "vol": 0.1
     },
     {
-     "t": 1.37,
+     "t": 0.4,
      "tipo": "pop",
-     "vol": 0.14
+     "vol": 0.1
     },
     {
-     "t": 1.99,
+     "t": 1.8,
+     "tipo": "zap",
+     "vol": 0.12
+    },
+    {
+     "t": 3,
      "tipo": "pop",
-     "vol": 0.14
+     "vol": 0.1
+    },
+    {
+     "t": 3.3,
+     "tipo": "thud",
+     "vol": 0.16
+    },
+    {
+     "t": 4.5,
+     "tipo": "ding",
+     "vol": 0.16
     }
    ]
   },
   {
-   "n": 6,
-   "t": "LINE",
-   "voz": "Donde llega el transporte, el metro cuadrado sube.",
-   "dur": 3.8,
-   "h": "VALOR DEL M²",
-   "w": "M²",
+   "n": 3,
+   "t": "PIEZA",
+   "voz": "Los libros dibujan dos neuronas. Falso: hay un tercer participante, el astrocito.",
+   "dur": 4.8,
+   "h": "FALSO: HAY UN TERCER PARTICIPANTE",
+   "w": "TERCER",
    "sub": "",
-   "ic": "tren",
+   "ic": "brillo",
    "num": null,
    "vs": null,
    "bars": [],
    "barsU": "",
    "hi": -1,
-   "line": {
-    "pts": [
-     100,
-     104,
-     102,
-     112,
-     122,
-     128,
-     135
-    ],
-    "l0": "ANTES",
-    "l1": "DESPUÉS",
-    "end": "+35 %"
-   },
+   "line": null,
    "items": [],
    "stops": [],
    "end": "",
@@ -554,7 +225,7 @@
    "red": null,
    "termo": null,
    "pila": null,
-   "cap": "",
+   "cap": "la sinapsis tripartita",
    "papel": null,
    "pilares": null,
    "ciclo": null,
@@ -562,19 +233,22 @@
    "osc": null,
    "cubo": null,
    "diales": null,
-   "pieza": null,
+   "pieza": {
+    "id": "ein-tripartita",
+    "props": {}
+   },
    "cita": null,
    "sc": "",
    "modo": "VIRAL",
    "tema": "oscuro",
    "bg": "dark",
-   "ritmo": 0.9054054054054054,
-   "total": 36.9,
-   "inicio": 18.7,
-   "fin": 22.5,
-   "texto": "Donde llega el transporte, el metro cuadrado sube.",
-   "tr": "barrido",
-   "trs": "barrido",
+   "ritmo": 1,
+   "total": 44.8,
+   "inicio": 10.8,
+   "fin": 15.6,
+   "texto": "Los libros dibujan dos neuronas. Falso: hay un tercer participante, el astrocito.",
+   "tr": "semitono",
+   "trs": "corte",
    "sfx": [
     {
      "t": 0.04,
@@ -582,12 +256,423 @@
      "vol": 0.16
     },
     {
-     "t": 0.6337837837837837,
-     "tipo": "zap",
+     "t": 0.05,
+     "tipo": "whoosh",
      "vol": 0.1
     },
     {
-     "t": 2.535135135135135,
+     "t": 0.5,
+     "tipo": "tick",
+     "vol": 0.1
+    },
+    {
+     "t": 1.6,
+     "tipo": "thud",
+     "vol": 0.2
+    },
+    {
+     "t": 2.1,
+     "tipo": "zap",
+     "vol": 0.14
+    },
+    {
+     "t": 3.4,
+     "tipo": "ding",
+     "vol": 0.18
+    }
+   ]
+  },
+  {
+   "n": 4,
+   "t": "PIEZA",
+   "voz": "Si la conexión es débil, la eliminan; si importa, la refuerzan. Esculpen tus recuerdos.",
+   "dur": 5.4,
+   "h": "ESCULPEN TUS RECUERDOS",
+   "w": "ESCULPEN",
+   "sub": "",
+   "ic": "brillo",
+   "num": null,
+   "vs": null,
+   "bars": [],
+   "barsU": "",
+   "hi": -1,
+   "line": null,
+   "items": [],
+   "stops": [],
+   "end": "",
+   "donut": [],
+   "picto": null,
+   "top": [],
+   "myth": "",
+   "truth": "",
+   "zoom": null,
+   "capas": null,
+   "mira": null,
+   "impacto": null,
+   "red": null,
+   "termo": null,
+   "pila": null,
+   "cap": "eliminan lo débil, refuerzan lo importante",
+   "papel": null,
+   "pilares": null,
+   "ciclo": null,
+   "duo": null,
+   "osc": null,
+   "cubo": null,
+   "diales": null,
+   "pieza": {
+    "id": "ein-esculpe",
+    "props": {}
+   },
+   "cita": null,
+   "sc": "",
+   "modo": "VIRAL",
+   "tema": "claro",
+   "bg": "light",
+   "ritmo": 1,
+   "total": 44.8,
+   "inicio": 15.6,
+   "fin": 21,
+   "texto": "Si la conexión es débil, la eliminan; si importa, la refuerzan. Esculpen tus recuerdos.",
+   "tr": "corte",
+   "trs": "zoom",
+   "sfx": [
+    {
+     "t": 0.04,
+     "tipo": "whoosh",
+     "vol": 0.16
+    },
+    {
+     "t": 0.05,
+     "tipo": "whoosh",
+     "vol": 0.1
+    },
+    {
+     "t": 1.2,
+     "tipo": "clic",
+     "vol": 0.05
+    },
+    {
+     "t": 1.33,
+     "tipo": "clic",
+     "vol": 0.05
+    },
+    {
+     "t": 1.46,
+     "tipo": "clic",
+     "vol": 0.05
+    },
+    {
+     "t": 1.5899999999999999,
+     "tipo": "clic",
+     "vol": 0.05
+    },
+    {
+     "t": 1.72,
+     "tipo": "clic",
+     "vol": 0.05
+    },
+    {
+     "t": 1.85,
+     "tipo": "clic",
+     "vol": 0.05
+    },
+    {
+     "t": 1.98,
+     "tipo": "clic",
+     "vol": 0.05
+    },
+    {
+     "t": 2.11,
+     "tipo": "clic",
+     "vol": 0.05
+    },
+    {
+     "t": 2.24,
+     "tipo": "clic",
+     "vol": 0.05
+    },
+    {
+     "t": 2.37,
+     "tipo": "clic",
+     "vol": 0.05
+    },
+    {
+     "t": 2.5,
+     "tipo": "clic",
+     "vol": 0.05
+    },
+    {
+     "t": 2.63,
+     "tipo": "clic",
+     "vol": 0.05
+    },
+    {
+     "t": 2.76,
+     "tipo": "clic",
+     "vol": 0.05
+    },
+    {
+     "t": 2.8899999999999997,
+     "tipo": "clic",
+     "vol": 0.05
+    },
+    {
+     "t": 3,
+     "tipo": "zap",
+     "vol": 0.14
+    },
+    {
+     "t": 4.1,
+     "tipo": "ding",
+     "vol": 0.2
+    }
+   ]
+  },
+  {
+   "n": 5,
+   "t": "PIEZA",
+   "voz": "En los ochenta, Marian Diamond comparó el cerebro de Einstein con el de once hombres.",
+   "dur": 5.8,
+   "h": "1985: MARIAN DIAMOND Y EL CEREBRO",
+   "w": "1985:",
+   "sub": "",
+   "ic": "brillo",
+   "num": null,
+   "vs": null,
+   "bars": [],
+   "barsU": "",
+   "hi": -1,
+   "line": null,
+   "items": [],
+   "stops": [],
+   "end": "",
+   "donut": [],
+   "picto": null,
+   "top": [],
+   "myth": "",
+   "truth": "",
+   "zoom": null,
+   "capas": null,
+   "mira": null,
+   "impacto": null,
+   "red": null,
+   "termo": null,
+   "pila": null,
+   "cap": "¿qué encontró?",
+   "papel": null,
+   "pilares": null,
+   "ciclo": null,
+   "duo": null,
+   "osc": null,
+   "cubo": null,
+   "diales": null,
+   "pieza": {
+    "id": "ein-diamond",
+    "props": {}
+   },
+   "cita": null,
+   "sc": "",
+   "modo": "VIRAL",
+   "tema": "oscuro",
+   "bg": "dark",
+   "ritmo": 1,
+   "total": 44.8,
+   "inicio": 21,
+   "fin": 26.8,
+   "texto": "En los ochenta, Marian Diamond comparó el cerebro de Einstein con el de once hombres.",
+   "tr": "zoom",
+   "trs": "corte",
+   "sfx": [
+    {
+     "t": 0.04,
+     "tipo": "whoosh",
+     "vol": 0.16
+    },
+    {
+     "t": 0.05,
+     "tipo": "whoosh",
+     "vol": 0.1
+    },
+    {
+     "t": 0.4,
+     "tipo": "pop",
+     "vol": 0.1
+    },
+    {
+     "t": 1.7,
+     "tipo": "clic",
+     "vol": 0.05
+    },
+    {
+     "t": 1.83,
+     "tipo": "clic",
+     "vol": 0.05
+    },
+    {
+     "t": 1.96,
+     "tipo": "clic",
+     "vol": 0.05
+    },
+    {
+     "t": 2.09,
+     "tipo": "clic",
+     "vol": 0.05
+    },
+    {
+     "t": 2.2199999999999998,
+     "tipo": "clic",
+     "vol": 0.05
+    },
+    {
+     "t": 2.35,
+     "tipo": "clic",
+     "vol": 0.05
+    },
+    {
+     "t": 2.48,
+     "tipo": "clic",
+     "vol": 0.05
+    },
+    {
+     "t": 2.61,
+     "tipo": "clic",
+     "vol": 0.05
+    },
+    {
+     "t": 2.74,
+     "tipo": "clic",
+     "vol": 0.05
+    },
+    {
+     "t": 2.87,
+     "tipo": "clic",
+     "vol": 0.05
+    },
+    {
+     "t": 3,
+     "tipo": "clic",
+     "vol": 0.05
+    },
+    {
+     "t": 3.13,
+     "tipo": "clic",
+     "vol": 0.05
+    },
+    {
+     "t": 3.26,
+     "tipo": "clic",
+     "vol": 0.05
+    },
+    {
+     "t": 3.3899999999999997,
+     "tipo": "clic",
+     "vol": 0.05
+    },
+    {
+     "t": 3.52,
+     "tipo": "clic",
+     "vol": 0.05
+    },
+    {
+     "t": 3.6500000000000004,
+     "tipo": "clic",
+     "vol": 0.05
+    },
+    {
+     "t": 3.7800000000000002,
+     "tipo": "clic",
+     "vol": 0.05
+    },
+    {
+     "t": 3.91,
+     "tipo": "clic",
+     "vol": 0.05
+    },
+    {
+     "t": 4.3,
+     "tipo": "radar",
+     "vol": 0.12
+    }
+   ]
+  },
+  {
+   "n": 6,
+   "t": "PIEZA",
+   "voz": "En la corteza parietal izquierda, más células gliales por cada neurona.",
+   "dur": 4.4,
+   "h": "MÁS GLÍA POR NEURONA",
+   "w": "GLÍA",
+   "sub": "",
+   "ic": "brillo",
+   "num": null,
+   "vs": null,
+   "bars": [],
+   "barsU": "",
+   "hi": -1,
+   "line": null,
+   "items": [],
+   "stops": [],
+   "end": "",
+   "donut": [],
+   "picto": null,
+   "top": [],
+   "myth": "",
+   "truth": "",
+   "zoom": null,
+   "capas": null,
+   "mira": null,
+   "impacto": null,
+   "red": null,
+   "termo": null,
+   "pila": null,
+   "cap": "área 39 izquierda",
+   "papel": null,
+   "pilares": null,
+   "ciclo": null,
+   "duo": null,
+   "osc": null,
+   "cubo": null,
+   "diales": null,
+   "pieza": {
+    "id": "ein-hallazgo",
+    "props": {}
+   },
+   "cita": null,
+   "sc": "",
+   "modo": "VIRAL",
+   "tema": "claro",
+   "bg": "light",
+   "ritmo": 1,
+   "total": 44.8,
+   "inicio": 26.8,
+   "fin": 31.2,
+   "texto": "En la corteza parietal izquierda, más células gliales por cada neurona.",
+   "tr": "corte",
+   "trs": "semitono",
+   "sfx": [
+    {
+     "t": 0.04,
+     "tipo": "whoosh",
+     "vol": 0.16
+    },
+    {
+     "t": 0.05,
+     "tipo": "whoosh",
+     "vol": 0.1
+    },
+    {
+     "t": 0.4,
+     "tipo": "pop",
+     "vol": 0.1
+    },
+    {
+     "t": 2.2,
+     "tipo": "zap",
+     "vol": 0.14
+    },
+    {
+     "t": 3.2,
      "tipo": "ding",
      "vol": 0.18
     }
@@ -595,31 +680,18 @@
   },
   {
    "n": 7,
-   "t": "BARS",
-   "voz": "Mientras más cerca de la estación, más valorización.",
-   "dur": 3.4,
-   "h": "VALORIZACIÓN POR ZONA",
-   "w": "ZONA",
+   "t": "PIEZA",
+   "voz": "Una pista, no una prueba: era un solo cerebro.",
+   "dur": 3.8,
+   "h": "UNA PISTA, NO UNA PRUEBA",
+   "w": "PISTA,",
    "sub": "",
-   "ic": "tren",
+   "ic": "brillo",
    "num": null,
    "vs": null,
-   "bars": [
-    {
-     "l": "LEJOS",
-     "v": 8
-    },
-    {
-     "l": "A 10 MIN",
-     "v": 19
-    },
-    {
-     "l": "A 5 MIN",
-     "v": 35
-    }
-   ],
-   "barsU": "%",
-   "hi": 2,
+   "bars": [],
+   "barsU": "",
+   "hi": -1,
    "line": null,
    "items": [],
    "stops": [],
@@ -636,7 +708,7 @@
    "red": null,
    "termo": null,
    "pila": null,
-   "cap": "",
+   "cap": "un solo cerebro",
    "papel": null,
    "pilares": null,
    "ciclo": null,
@@ -644,98 +716,22 @@
    "osc": null,
    "cubo": null,
    "diales": null,
-   "pieza": null,
-   "cita": null,
-   "sc": "",
-   "modo": "VIRAL",
-   "tema": "claro",
-   "bg": "light",
-   "ritmo": 1,
-   "total": 36.9,
-   "inicio": 22.5,
-   "fin": 25.9,
-   "texto": "Mientras más cerca de la estación, más valorización.",
-   "tr": "barrido",
-   "trs": "barrido",
-   "sfx": [
-    {
-     "t": 0.04,
-     "tipo": "whoosh",
-     "vol": 0.16
-    },
-    {
-     "t": 0.95,
-     "tipo": "pop",
-     "vol": 0.13
-    },
-    {
-     "t": 1.15,
-     "tipo": "pop",
-     "vol": 0.13
-    },
-    {
-     "t": 1.35,
-     "tipo": "pop",
-     "vol": 0.13
-    },
-    {
-     "t": 2,
-     "tipo": "ding",
-     "vol": 0.16
-    }
-   ]
-  },
-  {
-   "n": 8,
-   "t": "SKYLINE",
-   "voz": "Tu inmueble puede ser la próxima gran oportunidad.",
-   "dur": 3.4,
-   "h": "TU INMUEBLE, MÁS VALIOSO",
-   "w": "VALIOSO",
-   "sub": "cerca de las estaciones",
-   "ic": "casa",
-   "num": null,
-   "vs": null,
-   "bars": [],
-   "barsU": "",
-   "hi": -1,
-   "line": null,
-   "items": [],
-   "stops": [],
-   "end": "+35 %",
-   "donut": [],
-   "picto": null,
-   "top": [],
-   "myth": "",
-   "truth": "",
-   "zoom": null,
-   "capas": null,
-   "mira": null,
-   "impacto": null,
-   "red": null,
-   "termo": null,
-   "pila": null,
-   "cap": "",
-   "papel": null,
-   "pilares": null,
-   "ciclo": null,
-   "duo": null,
-   "osc": null,
-   "cubo": null,
-   "diales": null,
-   "pieza": null,
+   "pieza": {
+    "id": "ein-cautela",
+    "props": {}
+   },
    "cita": null,
    "sc": "",
    "modo": "VIRAL",
    "tema": "oscuro",
-   "bg": "gold",
-   "ritmo": 0.9833333333333333,
-   "total": 36.9,
-   "inicio": 25.9,
-   "fin": 29.3,
-   "texto": "Tu inmueble puede ser la próxima gran oportunidad.",
-   "tr": "barrido",
-   "trs": "barrido",
+   "bg": "dark",
+   "ritmo": 0.9999999999999999,
+   "total": 44.8,
+   "inicio": 31.2,
+   "fin": 35,
+   "texto": "Una pista, no una prueba: era un solo cerebro.",
+   "tr": "semitono",
+   "trs": "zoom",
    "sfx": [
     {
      "t": 0.04,
@@ -743,46 +739,53 @@
      "vol": 0.16
     },
     {
-     "t": 0.6883333333333332,
-     "tipo": "thud",
-     "vol": 0.14
+     "t": 0.05,
+     "tipo": "whoosh",
+     "vol": 0.1
     },
     {
-     "t": 1.8683333333333332,
+     "t": 0.35,
+     "tipo": "thud",
+     "vol": 0.12
+    },
+    {
+     "t": 0.8999999999999999,
+     "tipo": "thud",
+     "vol": 0.12
+    },
+    {
+     "t": 1.45,
+     "tipo": "thud",
+     "vol": 0.12
+    },
+    {
+     "t": 2,
+     "tipo": "thud",
+     "vol": 0.12
+    },
+    {
+     "t": 2.5999999999999996,
      "tipo": "ding",
      "vol": 0.18
     }
    ]
   },
   {
-   "n": 9,
-   "t": "LIST",
-   "voz": "En IMNOBA publicas gratis, sin comisión: casas, apartamentos y autos.",
-   "dur": 4,
-   "h": "PUBLICA EN IMNOBA",
-   "w": "IMNOBA",
+   "n": 8,
+   "t": "PIEZA",
+   "voz": "Teñidos con GFAP, forman un cielo nocturno: tu cerebro está lleno de estrellas.",
+   "dur": 6.2,
+   "h": "TU CEREBRO ESTÁ LLENO DE ESTRELLAS",
+   "w": "ESTRELLAS",
    "sub": "",
-   "ic": "casa",
+   "ic": "brillo",
    "num": null,
    "vs": null,
    "bars": [],
    "barsU": "",
    "hi": -1,
    "line": null,
-   "items": [
-    {
-     "l": "Gratis y sin comisión",
-     "ic": "check"
-    },
-    {
-     "l": "Casas, apartamentos y autos",
-     "ic": "check"
-    },
-    {
-     "l": "Llegas a más compradores",
-     "ic": "check"
-    }
-   ],
+   "items": [],
    "stops": [],
    "end": "",
    "donut": [],
@@ -797,7 +800,7 @@
    "red": null,
    "termo": null,
    "pila": null,
-   "cap": "",
+   "cap": "GFAP a 40x",
    "papel": null,
    "pilares": null,
    "ciclo": null,
@@ -805,18 +808,21 @@
    "osc": null,
    "cubo": null,
    "diales": null,
-   "pieza": null,
+   "pieza": {
+    "id": "ein-gfap",
+    "props": {}
+   },
    "cita": null,
    "sc": "",
    "modo": "VIRAL",
-   "tema": "oscuro",
-   "bg": "dark",
+   "tema": "claro",
+   "bg": "light",
    "ritmo": 1,
-   "total": 36.9,
-   "inicio": 29.3,
-   "fin": 33.3,
-   "texto": "En IMNOBA publicas gratis, sin comisión: casas, apartamentos y autos.",
-   "tr": "barrido",
+   "total": 44.8,
+   "inicio": 35,
+   "fin": 41.2,
+   "texto": "Teñidos con GFAP, forman un cielo nocturno: tu cerebro está lleno de estrellas.",
+   "tr": "zoom",
    "trs": "barrido",
    "sfx": [
     {
@@ -825,30 +831,170 @@
      "vol": 0.16
     },
     {
-     "t": 0.75,
-     "tipo": "pop",
-     "vol": 0.14
+     "t": 0.05,
+     "tipo": "whoosh",
+     "vol": 0.12
     },
     {
-     "t": 1.37,
-     "tipo": "pop",
-     "vol": 0.14
+     "t": 0.4,
+     "tipo": "clic",
+     "vol": 0.04
     },
     {
-     "t": 1.99,
+     "t": 0.53,
+     "tipo": "clic",
+     "vol": 0.04
+    },
+    {
+     "t": 0.66,
+     "tipo": "clic",
+     "vol": 0.04
+    },
+    {
+     "t": 0.79,
+     "tipo": "clic",
+     "vol": 0.04
+    },
+    {
+     "t": 0.8,
      "tipo": "pop",
-     "vol": 0.14
+     "vol": 0.1
+    },
+    {
+     "t": 0.92,
+     "tipo": "clic",
+     "vol": 0.04
+    },
+    {
+     "t": 1.05,
+     "tipo": "clic",
+     "vol": 0.04
+    },
+    {
+     "t": 1.1800000000000002,
+     "tipo": "clic",
+     "vol": 0.04
+    },
+    {
+     "t": 1.31,
+     "tipo": "clic",
+     "vol": 0.04
+    },
+    {
+     "t": 1.44,
+     "tipo": "clic",
+     "vol": 0.04
+    },
+    {
+     "t": 1.5699999999999998,
+     "tipo": "clic",
+     "vol": 0.04
+    },
+    {
+     "t": 1.7000000000000002,
+     "tipo": "clic",
+     "vol": 0.04
+    },
+    {
+     "t": 1.83,
+     "tipo": "clic",
+     "vol": 0.04
+    },
+    {
+     "t": 1.96,
+     "tipo": "clic",
+     "vol": 0.04
+    },
+    {
+     "t": 2.09,
+     "tipo": "clic",
+     "vol": 0.04
+    },
+    {
+     "t": 2.22,
+     "tipo": "clic",
+     "vol": 0.04
+    },
+    {
+     "t": 2.35,
+     "tipo": "clic",
+     "vol": 0.04
+    },
+    {
+     "t": 2.48,
+     "tipo": "clic",
+     "vol": 0.04
+    },
+    {
+     "t": 2.61,
+     "tipo": "clic",
+     "vol": 0.04
+    },
+    {
+     "t": 2.7399999999999998,
+     "tipo": "clic",
+     "vol": 0.04
+    },
+    {
+     "t": 2.87,
+     "tipo": "clic",
+     "vol": 0.04
+    },
+    {
+     "t": 3,
+     "tipo": "clic",
+     "vol": 0.04
+    },
+    {
+     "t": 3.13,
+     "tipo": "clic",
+     "vol": 0.04
+    },
+    {
+     "t": 3.2600000000000002,
+     "tipo": "clic",
+     "vol": 0.04
+    },
+    {
+     "t": 3.39,
+     "tipo": "clic",
+     "vol": 0.04
+    },
+    {
+     "t": 3.52,
+     "tipo": "clic",
+     "vol": 0.04
+    },
+    {
+     "t": 3.65,
+     "tipo": "clic",
+     "vol": 0.04
+    },
+    {
+     "t": 3.78,
+     "tipo": "clic",
+     "vol": 0.04
+    },
+    {
+     "t": 4,
+     "tipo": "ding",
+     "vol": 0.2
+    },
+    {
+     "t": 4.4,
+     "tipo": "whoosh",
+     "vol": 0.12
     }
    ]
   },
   {
-   "n": 10,
+   "n": 9,
    "t": "CTA",
-   "voz": "No esperes al metro: publica gratis hoy en IMNOBA.",
+   "voz": "Guárdalo para tus repasos y síguenos en Sinapsis.",
    "dur": 3.6,
-   "h": "PUBLICA GRATIS HOY",
-   "w": "GRATIS",
-   "sub": "imnoba.com",
+   "h": "GUÁRDALO Y SÍGUENOS",
+   "w": "SÍGUENOS",
+   "sub": "Más ciencia en SINAPSIS",
    "ic": "cohete",
    "num": null,
    "vs": null,
@@ -886,10 +1032,10 @@
    "tema": "oscuro",
    "bg": "gold",
    "ritmo": 0.9843749999999999,
-   "total": 36.9,
-   "inicio": 33.3,
-   "fin": 36.9,
-   "texto": "No esperes al metro: publica gratis hoy en IMNOBA.",
+   "total": 44.8,
+   "inicio": 41.2,
+   "fin": 44.8,
+   "texto": "Guárdalo para tus repasos y síguenos en Sinapsis.",
    "tr": "barrido",
    "trs": "barrido",
    "sfx": [

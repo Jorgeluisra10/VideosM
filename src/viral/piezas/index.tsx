@@ -26,6 +26,8 @@ import { AstroDialogo, AstroEstrella, AstroMemoria } from "./astro2";
 import { DscCatalogo, DscDocs, DscGancho, DscHack, DscSplit } from "./dscr1";
 import { TejEpitelial, TejGancho, TejSangre } from "./tej1";
 import { TejHueso, TejMuscular, TejNervioso } from "./tej2";
+import { EinBarrera, EinEsculpe, EinGancho, EinTripartita } from "./ein1";
+import { EinCautela, EinDiamond, EinGfap, EinHallazgo } from "./ein2";
 
 export const COMPONENTES_PIEZA: Record<string, React.FC<{ e: EscenaViralGuardada }>> = {
   "metro-plano": MetroPlano,
@@ -95,6 +97,14 @@ export const COMPONENTES_PIEZA: Record<string, React.FC<{ e: EscenaViralGuardada
   "tej-hueso": TejHueso,
   "tej-muscular": TejMuscular,
   "tej-nervioso": TejNervioso,
+  "ein-gancho": EinGancho,
+  "ein-barrera": EinBarrera,
+  "ein-tripartita": EinTripartita,
+  "ein-esculpe": EinEsculpe,
+  "ein-diamond": EinDiamond,
+  "ein-hallazgo": EinHallazgo,
+  "ein-cautela": EinCautela,
+  "ein-gfap": EinGfap,
 };
 
 export const Pieza: React.FC<{ e: EscenaViralGuardada; alternativa: React.ReactNode }> = ({ e, alternativa }) => {

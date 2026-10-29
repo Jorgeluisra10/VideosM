@@ -1,0 +1,14 @@
+{
+  "titulo": "Astrocitos: los dueños del cerebro",
+  "scenes": [
+    {"t": "PIEZA", "voz": "Ahora mismo, toxinas intentan entrar a tu cerebro. Algo las frena.", "dur": 4.4, "h": "TOXINAS CONTRA TU CEREBRO. ALGO LAS FRENA", "w": "FRENA", "cap": "¿quién las detiene?", "pieza": {"id": "ein-gancho"}},
+    {"t": "PIEZA", "voz": "Son los astrocitos: con sus pies perivasculares envuelven cada capilar y ayudan a mantener la barrera hematoencefálica.", "dur": 5.8, "h": "BARRERA HEMATOENCEFÁLICA", "w": "BARRERA", "cap": "pies perivasculares", "pieza": {"id": "ein-barrera"}},
+    {"t": "PIEZA", "voz": "Los libros dibujan dos neuronas. Falso: hay un tercer participante, el astrocito.", "dur": 4.8, "h": "FALSO: HAY UN TERCER PARTICIPANTE", "w": "TERCER", "cap": "la sinapsis tripartita", "pieza": {"id": "ein-tripartita"}},
+    {"t": "PIEZA", "voz": "Si la conexión es débil, la eliminan; si importa, la refuerzan. Esculpen tus recuerdos.", "dur": 5.4, "h": "ESCULPEN TUS RECUERDOS", "w": "ESCULPEN", "cap": "eliminan lo débil, refuerzan lo importante", "pieza": {"id": "ein-esculpe"}},
+    {"t": "PIEZA", "voz": "En los ochenta, Marian Diamond comparó el cerebro de Einstein con el de once hombres.", "dur": 5.8, "h": "1985: MARIAN DIAMOND Y EL CEREBRO DE EINSTEIN", "w": "EINSTEIN", "cap": "¿qué encontró?", "pieza": {"id": "ein-diamond"}},
+    {"t": "PIEZA", "voz": "En la corteza parietal izquierda, más células gliales por cada neurona.", "dur": 4.4, "h": "MÁS GLÍA POR NEURONA", "w": "GLÍA", "cap": "área 39 izquierda", "pieza": {"id": "ein-hallazgo"}},
+    {"t": "PIEZA", "voz": "Una pista, no una prueba: era un solo cerebro.", "dur": 3.8, "h": "UNA PISTA, NO UNA PRUEBA", "w": "PISTA", "cap": "un solo cerebro", "pieza": {"id": "ein-cautela"}},
+    {"t": "PIEZA", "voz": "Teñidos con GFAP, forman un cielo nocturno: tu cerebro está lleno de estrellas.", "dur": 6.2, "h": "TU CEREBRO ESTÁ LLENO DE ESTRELLAS", "w": "ESTRELLAS", "cap": "GFAP a 40x", "pieza": {"id": "ein-gfap"}},
+    {"t": "CTA", "voz": "Guárdalo para tus repasos y síguenos en Sinapsis.", "dur": 3.6, "h": "GUÁRDALO Y SÍGUENOS", "w": "SÍGUENOS", "sub": "Más ciencia en SINAPSIS"}
+  ]
+}

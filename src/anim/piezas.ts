@@ -258,6 +258,34 @@ export const TTJ = {
   nervioso: { fila: (i: number) => 0.45 + i * 0.5, neurona: 2.7, chip: 3.7 },
 } as const;
 
+/**
+ * Datos del video «Los dueños del cerebro» (SINAPSIS · serie neuroanatomía): barrera hematoencefálica, sinapsis tripartita y el estudio de Einstein.
+ * Cifras con su fuente en ejemplos/animacion-viral/guion-tecnico-astrocitos-einstein.md. Matices que se respetan: la barrera la sella sobre todo el endotelio con sus
+ * uniones estrechas (los astrocitos y los pericitos la inducen y mantienen); Diamond et al. 1985 contaron «glía» sin separar astrocitos y solo 1 de 4 áreas fue
+ * significativa (A39 izquierda, p < 0,05, contra 11 controles); es UN cerebro: pista, no prueba. Chung et al. 2013 es en ratones.
+ */
+export const EIN = {
+  diamondAnio: 1985,
+  controles: 11,
+  areasEstudiadas: 4,
+  areasSignificativas: 1,
+  /** p < 0,05 (t = 2,62; gl 9) en el área 39 izquierda */
+  pMax: 0.05,
+  chungAnio: 2013,
+} as const;
+
+/** Tiempos del video «Los dueños del cerebro» (segundos a ritmo normal), compartidos entre el dibujo y el sonido. */
+export const TEIN = {
+  gancho: { vaso: 0.2, toxinas: 0.6, escudo: 2.0, estrella: 3.0 },
+  barrera: { campo: 0.2, astro: 0.9, pies: 1.8, nutri: 3.0, toxi: 3.3, chip: 4.5 },
+  tripartita: { dos: 0.2, falso: 1.6, astro: 2.1, chip: 3.4 },
+  esculpe: { red: 0.2, poda: 1.2, podaDur: 1.9, refuerza: 3.0, constelacion: 4.1 },
+  diamond: { placa: 0.2, campo: 1.1, cuenta: 1.7, cuentaDur: 2.4, pregunta: 4.3 },
+  hallazgo: { campos: 0.2, esquema: 0.9, barra: 2.2, p: 3.2 },
+  cautela: { ficha: (i: number) => 0.25 + i * 0.55, final: 2.6 },
+  gfap: { campo: 0.2, zoom: 0.4, zoomDur: 3.6, rotulo: 0.8, fugaz: 4.4 },
+} as const;
+
 /* ───────────── «La regla del 37 %» (problema de la parada óptima, ensayo abstracto para IMNOBA) ───────────── */
 
 /** Generador pseudoaleatorio determinista (mulberry32): mismos números en el render, en las pruebas y en cada fotograma. */
@@ -653,6 +681,39 @@ export const PIEZAS: Record<string, DefPieza> = {
   "tej-nervioso": {
     id: "tej-nervioso", nombre: "4 tejidos · nervioso: tus neuronas corticales tienen tu misma edad", ideal: 4.55, fondo: "dark", entra: "semitono",
     sfx: (_d, r) => [ev(0.05, "whoosh", 0.1), ...[0, 1, 2].map((i) => ev(TTJ.nervioso.fila(i) * r, "tick", 0.1)), ev(TTJ.nervioso.neurona * r, "zap", 0.14), ev(TTJ.nervioso.chip * r, "ding", 0.18)],
+  },
+  /* ───────────── «Los dueños del cerebro» (astrocitos v2 · SINAPSIS) ───────────── */
+  "ein-gancho": {
+    id: "ein-gancho", nombre: "Astrocitos v2 · toxinas contra el capilar: algo las frena (gancho)", ideal: 3.95, fondo: "dark",
+    sfx: (_d, r) => [ev(0.05, "whoosh", 0.12), ev(TEIN.gancho.vaso * r + 0.2, "pop", 0.1), ...[0, 1, 2].map((i) => ev((TEIN.gancho.toxinas + 0.5 + i * 0.4) * r, "tick", 0.1)), ev(TEIN.gancho.escudo * r, "zap", 0.16), ev(TEIN.gancho.estrella * r, "ding", 0.18)],
+  },
+  "ein-barrera": {
+    id: "ein-barrera", nombre: "Astrocitos v2 · pies perivasculares y barrera hematoencefálica (corte H&E esquemático)", ideal: 5.35, fondo: "dark", entra: "zoom",
+    sfx: (_d, r) => [ev(0.05, "whoosh", 0.1), ev(TEIN.barrera.campo * r + 0.2, "pop", 0.1), ev(TEIN.barrera.pies * r, "zap", 0.12), ev(TEIN.barrera.nutri * r, "pop", 0.1), ev(TEIN.barrera.toxi * r, "thud", 0.16), ev(TEIN.barrera.chip * r, "ding", 0.16)],
+  },
+  "ein-tripartita": {
+    id: "ein-tripartita", nombre: "Astrocitos v2 · lo que dibujan los libros (2 neuronas) y el tercer participante", ideal: 4.35, fondo: "dark", entra: "semitono",
+    sfx: (_d, r) => [ev(0.05, "whoosh", 0.1), ev(TEIN.tripartita.dos * r + 0.3, "tick", 0.1), ev(TEIN.tripartita.falso * r, "thud", 0.2), ev(TEIN.tripartita.astro * r, "zap", 0.14), ev(TEIN.tripartita.chip * r, "ding", 0.18)],
+  },
+  "ein-esculpe": {
+    id: "ein-esculpe", nombre: "Astrocitos v2 · poda lo débil, refuerza lo importante y esculpe una constelación", ideal: 4.95, fondo: "dark", entra: "corte",
+    sfx: (_d, r) => [ev(0.05, "whoosh", 0.1), ...clics(TEIN.esculpe.poda * r, TEIN.esculpe.podaDur * r, 0.05), ev(TEIN.esculpe.refuerza * r, "zap", 0.14), ev(TEIN.esculpe.constelacion * r, "ding", 0.2)],
+  },
+  "ein-diamond": {
+    id: "ein-diamond", nombre: "Astrocitos v2 · 1985: Marian Diamond cuenta células en el cerebro de Einstein", ideal: 5.35, fondo: "dark", entra: "zoom",
+    sfx: (_d, r) => [ev(0.05, "whoosh", 0.1), ev(TEIN.diamond.placa * r + 0.2, "pop", 0.1), ...clics(TEIN.diamond.cuenta * r, TEIN.diamond.cuentaDur * r, 0.05), ev(TEIN.diamond.pregunta * r, "radar", 0.12)],
+  },
+  "ein-hallazgo": {
+    id: "ein-hallazgo", nombre: "Astrocitos v2 · el hallazgo: más glía por neurona en el área 39 izquierda", ideal: 3.95, fondo: "dark", entra: "corte",
+    sfx: (_d, r) => [ev(0.05, "whoosh", 0.1), ev(TEIN.hallazgo.campos * r + 0.2, "pop", 0.1), ev(TEIN.hallazgo.barra * r, "zap", 0.14), ev(TEIN.hallazgo.p * r, "ding", 0.18)],
+  },
+  "ein-cautela": {
+    id: "ein-cautela", nombre: "Astrocitos v2 · una pista, no una prueba (1 cerebro, 1 de 4 áreas)", ideal: 3.35, fondo: "dark", entra: "semitono",
+    sfx: (_d, r) => [ev(0.05, "whoosh", 0.1), ...[0, 1, 2, 3].map((i) => ev(TEIN.cautela.ficha(i) * r + 0.1, "thud", 0.12)), ev(TEIN.cautela.final * r, "ding", 0.18)],
+  },
+  "ein-gfap": {
+    id: "ein-gfap", nombre: "Astrocitos v2 · campo de microscopio a 40x con GFAP: un cielo nocturno (cierre)", ideal: 5.75, fondo: "dark", entra: "zoom",
+    sfx: (_d, r) => [ev(0.05, "whoosh", 0.12), ...clics(TEIN.gfap.zoom * r, TEIN.gfap.zoomDur * r, 0.04), ev(TEIN.gfap.rotulo * r, "pop", 0.1), ev((TEIN.gfap.zoom + TEIN.gfap.zoomDur) * r, "ding", 0.2), ev(TEIN.gfap.fugaz * r, "whoosh", 0.12)],
   },
   "astro-memoria": {
     id: "astro-memoria", nombre: "Astrocitos · en ratones, reactivarlos estimuló el recuerdo", ideal: 4.15, fondo: "dark", entra: "corte",
