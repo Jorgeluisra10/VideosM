@@ -1,0 +1,13 @@
+{
+  "titulo": "El efecto del dígito izquierdo",
+  "scenes": [
+    {"t": "PIEZA", "voz": "Un solo peso. Pero tu cerebro lo siente como un abismo.", "dur": 4.4, "h": "UN PESO. UN ABISMO", "w": "ABISMO", "cap": "el efecto del dígito izquierdo", "pieza": {"id": "dig-gancho"}},
+    {"t": "PIEZA", "voz": "Se llama efecto del dígito izquierdo: el primer dígito pesa más que los demás.", "dur": 5.4, "h": "EL PRIMER DÍGITO PESA MÁS", "w": "PRIMER", "cap": "modelo clásico de lectura", "pieza": {"id": "dig-lectura"}},
+    {"t": "PIEZA", "voz": "El salto aparece cuando cambia el primer dígito, y el número gana una cifra.", "dur": 5.4, "h": "CUATRO CIFRAS CONTRA CINCO", "w": "CINCO", "cap": "de $9.999 a $10.000", "pieza": {"id": "dig-abismo"}},
+    {"t": "PIEZA", "voz": "En veintidós millones de ventas mayoristas de autos, el precio cae al cruzar cada diez mil millas.", "dur": 6.4, "h": "22 MILLONES DE VENTAS", "w": "MILLONES", "cap": "autos usados · American Economic Review 2012", "pieza": {"id": "dig-autos"}},
+    {"t": "PIEZA", "voz": "En cinco experimentos, Thomas y Morwitz vieron que el mismo centavo pesa distinto si cambia el primer dígito.", "dur": 7.0, "h": "EL MISMO CENTAVO PESA DISTINTO", "w": "DISTINTO", "cap": "Journal of Consumer Research, 2005", "pieza": {"id": "dig-thomas"}},
+    {"t": "PIEZA", "voz": "En tiendas reales, un centavo más sobre un noventa y nueve se siente como más de veinte.", "dur": 6.4, "h": "UN CENTAVO SE SIENTE COMO MÁS DE 20", "w": "VEINTE", "cap": "datos de 25 cadenas de tiendas", "pieza": {"id": "dig-escala"}},
+    {"t": "PIEZA", "voz": "Pero el seguimiento ocular lo complica: la primera mirada cae hacia el centro del precio.", "dur": 6.2, "h": "SESGO REAL, MECANISMO EN DEBATE", "w": "DEBATE", "cap": "seguimiento ocular, 2023", "pieza": {"id": "dig-ojo"}},
+    {"t": "CTA", "voz": "Guárdalo para tus repasos de sesgos y síguenos en Sinapsis.", "dur": 3.8, "h": "GUÁRDALO Y SÍGUENOS", "w": "SÍGUENOS", "sub": "Más ciencia en SINAPSIS"}
+  ]
+}

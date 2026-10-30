@@ -2,6 +2,8 @@
  * Registro de piezas a medida (carril B): id → componente. El motor las dibuja cuando una escena es de tipo PIEZA.
  * Para añadir una pieza nueva: (1) su ficha pura en src/anim/piezas.ts (duración ideal, fondo, sonido), (2) su componente aquí.
  */
+import { DigAbismo, DigAutos, DigGancho, DigLectura } from "./dig1";
+import { DigEscala, DigOjo, DigThomas } from "./dig2";
 import React from "react";
 import type { EscenaViralGuardada } from "../../anim/viral";
 import { MetroFriccion, MetroPlano, MetroRieles } from "./metro1";
@@ -97,6 +99,7 @@ export const COMPONENTES_PIEZA: Record<string, React.FC<{ e: EscenaViralGuardada
   "tej-hueso": TejHueso,
   "tej-muscular": TejMuscular,
   "tej-nervioso": TejNervioso,
+  "dig-gancho": DigGancho, "dig-lectura": DigLectura, "dig-abismo": DigAbismo, "dig-autos": DigAutos, "dig-thomas": DigThomas, "dig-escala": DigEscala, "dig-ojo": DigOjo,
   "ein-gancho": EinGancho,
   "ein-barrera": EinBarrera,
   "ein-tripartita": EinTripartita,

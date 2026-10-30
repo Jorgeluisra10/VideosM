@@ -286,6 +286,29 @@ export const TEIN = {
   gfap: { campo: 0.2, zoom: 0.4, zoomDur: 3.6, rotulo: 0.8, fugaz: 4.4 },
 } as const;
 
+/** Datos verificados del video «El efecto del dígito izquierdo» (SINAPSIS · neuroeconomía). Fuentes en ejemplos/animacion-viral/guion-tecnico-digito-izquierdo.md. */
+export const DIG = {
+  /** Thomas y Morwitz, J Consumer Research 32(1), 2005: 5 experimentos; el efecto aparece solo si cambia el dígito de más a la izquierda */
+  thomasAnio: 2005, thomasExperimentos: 5,
+  /** Lacetera, Pope y Sydnor, Am Econ Rev 2012: > 22 millones de ventas mayoristas de autos usados; caída ≈ US$ 150–200 en cada umbral de 10.000 millas; 79.900–79.999 vs 80.000–80.100 ≈ US$ 210, y vs 79.800–79.899 ≈ US$ 10 */
+  autosVentas: 22_000_000, autosSaltoMin: 150, autosSaltoMax: 200, autosUmbralMillas: 10_000, autosSalto80k: 210, autosSaltoVecino: 10,
+  /** Strulov-Shlain, Review of Economic Studies 2023: ≈ 3.500 productos de 25 cadenas; +1 centavo desde un precio en 99 se vive como > 20 centavos; los minoristas pierden 1–4 % de la ganancia bruta por subestimarlo; 1/4–1/3 de los precios termina en 99 */
+  escalaProductos: 3500, escalaCadenas: 25, escalaCentavos: 20, escalaPerdidaMin: 1, escalaPerdidaMax: 4,
+  /** Laurent, Vanhuele et al., J Consumer Research 50(3), 2023: seguimiento ocular; la 1.ª fijación cae entre el primer tercio y el centro del precio */
+  laurentAnio: 2023,
+} as const;
+
+/** Tiempos del video «El efecto del dígito izquierdo» (segundos a ritmo normal), compartidos entre el dibujo y el sonido. */
+export const TDIG = {
+  gancho: { tags: 0.2, cota: 1.0, abismo: 1.9, barraReal: 2.3, barraPercibida: 2.8, chip: 3.8 },
+  lectura: { precio: 0.2, cursor: 0.8, cursorDur: 2.1, ancla: 1.5, descuento: 2.7, chip: 4.1 },
+  abismo: { a: 0.2, b: 1.2, mas: 2.5, cambio: 3.3, chip: 4.1 },
+  autos: { ejes: 0.2, curva: 0.7, curvaDur: 2.4, cruce: 3.3, tabla: 4.1, fuente: 4.9 },
+  thomas: { ficha: 0.2, filaA: 1.0, circulo: 2.1, barraA: 2.5, filaB: 3.6, igual: 4.6, barraB: 5.0, sello: 5.8 },
+  escala: { balanza: 0.2, centavo: 1.0, monedas: 1.8, monedasDur: 1.5, inclina: 3.1, inclinaDur: 0.9, chip1: 4.3, chip2: 5.0 },
+  ojo: { etiqueta: 0.2, calor: 0.9, calorDur: 1.4, fijaciones: 2.4, fijDur: 1.8, nota: 4.3, debate: 5.0 },
+} as const;
+
 /* ───────────── «La regla del 37 %» (problema de la parada óptima, ensayo abstracto para IMNOBA) ───────────── */
 
 /** Generador pseudoaleatorio determinista (mulberry32): mismos números en el render, en las pruebas y en cada fotograma. */
@@ -714,6 +737,35 @@ export const PIEZAS: Record<string, DefPieza> = {
   "ein-gfap": {
     id: "ein-gfap", nombre: "Astrocitos v2 · campo de microscopio a 40x con GFAP: un cielo nocturno (cierre)", ideal: 5.75, fondo: "dark", entra: "zoom",
     sfx: (_d, r) => [ev(0.05, "whoosh", 0.12), ...clics(TEIN.gfap.zoom * r, TEIN.gfap.zoomDur * r, 0.04), ev(TEIN.gfap.rotulo * r, "pop", 0.1), ev((TEIN.gfap.zoom + TEIN.gfap.zoomDur) * r, "ding", 0.2), ev(TEIN.gfap.fugaz * r, "whoosh", 0.12)],
+  },
+  /* ───────────── «El efecto del dígito izquierdo» (SINAPSIS · neuroeconomía) ───────────── */
+  "dig-gancho": {
+    id: "dig-gancho", nombre: "Dígito izquierdo · $9.999 y $10.000: un peso real contra un abismo percibido (gancho)", ideal: 4.35, fondo: "dark",
+    sfx: (_d, r) => [ev(0.05, "whoosh", 0.12), ev(TDIG.gancho.tags * r + 0.1, "pop", 0.1), ev(TDIG.gancho.cota * r, "tick", 0.1), ev(TDIG.gancho.abismo * r, "thud", 0.18), ev(TDIG.gancho.barraPercibida * r, "zap", 0.14), ev(TDIG.gancho.chip * r, "ding", 0.14)],
+  },
+  "dig-lectura": {
+    id: "dig-lectura", nombre: "Dígito izquierdo · el modelo clásico: el primer dígito fija la cantidad y los demás entran con descuento", ideal: 4.95, fondo: "dark", entra: "semitono",
+    sfx: (_d, r) => [ev(0.05, "whoosh", 0.1), ev(TDIG.lectura.precio * r + 0.1, "pop", 0.1), ...clics(TDIG.lectura.cursor * r, 0.6, 0.04), ev(TDIG.lectura.ancla * r, "zap", 0.14), ev(TDIG.lectura.descuento * r, "tick", 0.1), ev(TDIG.lectura.chip * r, "ding", 0.14)],
+  },
+  "dig-abismo": {
+    id: "dig-abismo", nombre: "Dígito izquierdo · cuatro cifras contra cinco: columnas isométricas y el primer dígito que cambia (analogía visual)", ideal: 4.95, fondo: "dark", entra: "corte",
+    sfx: (_d, r) => [ev(0.05, "whoosh", 0.1), ev(TDIG.abismo.a * r + 0.15, "pop", 0.1), ev(TDIG.abismo.b * r + 0.15, "pop", 0.1), ev(TDIG.abismo.mas * r, "thud", 0.16), ev(TDIG.abismo.cambio * r, "zap", 0.14), ev(TDIG.abismo.chip * r, "ding", 0.14)],
+  },
+  "dig-autos": {
+    id: "dig-autos", nombre: "Dígito izquierdo · 22 millones de ventas de autos: el precio cae en cada umbral de 10.000 millas (esquema)", ideal: 5.75, fondo: "dark", entra: "zoom",
+    sfx: (_d, r) => [ev(0.05, "whoosh", 0.1), ...clics(TDIG.autos.curva * r, TDIG.autos.curvaDur * r * 0.6, 0.04), ev(TDIG.autos.cruce * r, "thud", 0.18), ev(TDIG.autos.tabla * r, "pop", 0.1), ev(TDIG.autos.fuente * r, "ding", 0.14)],
+  },
+  "dig-thomas": {
+    id: "dig-thomas", nombre: "Dígito izquierdo · ficha de laboratorio (papel): el mismo centavo pesa distinto si cambia el primer dígito (Thomas y Morwitz 2005)", ideal: 6.55, fondo: "light", entra: "corte",
+    sfx: (_d, r) => [ev(0.05, "whoosh", 0.1), ev(TDIG.thomas.ficha * r + 0.1, "pop", 0.1), ev(TDIG.thomas.filaA * r, "tick", 0.1), ev(TDIG.thomas.circulo * r, "zap", 0.12), ev(TDIG.thomas.barraA * r, "thud", 0.16), ev(TDIG.thomas.filaB * r, "tick", 0.1), ev(TDIG.thomas.barraB * r, "pop", 0.1), ev(TDIG.thomas.sello * r, "ding", 0.2)],
+  },
+  "dig-escala": {
+    id: "dig-escala", nombre: "Dígito izquierdo · una balanza: un centavo sobre un 99 se siente como más de veinte (Strulov-Shlain 2023)", ideal: 5.95, fondo: "dark", entra: "semitono",
+    sfx: (_d, r) => [ev(0.05, "whoosh", 0.1), ev(TDIG.escala.centavo * r, "tick", 0.1), ...clics(TDIG.escala.monedas * r, TDIG.escala.monedasDur * r, 0.05), ev(TDIG.escala.inclina * r, "thud", 0.2), ev(TDIG.escala.chip1 * r, "pop", 0.1), ev(TDIG.escala.chip2 * r, "ding", 0.14)],
+  },
+  "dig-ojo": {
+    id: "dig-ojo", nombre: "Dígito izquierdo · mapa de calor esquemático de seguimiento ocular: la primera mirada cae hacia el centro del precio (cierre)", ideal: 5.75, fondo: "dark", entra: "semitono",
+    sfx: (_d, r) => [ev(0.05, "whoosh", 0.12), ev(TDIG.ojo.etiqueta * r + 0.1, "pop", 0.1), ev(TDIG.ojo.calor * r, "radar", 0.1), ...[0, 1, 2, 3].map((i) => ev((TDIG.ojo.fijaciones + i * 0.42) * r, "tick", 0.1)), ev(TDIG.ojo.nota * r, "pop", 0.1), ev(TDIG.ojo.debate * r, "ding", 0.2)],
   },
   "astro-memoria": {
     id: "astro-memoria", nombre: "Astrocitos · en ratones, reactivarlos estimuló el recuerdo", ideal: 4.15, fondo: "dark", entra: "corte",
