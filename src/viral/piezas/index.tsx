@@ -2,6 +2,8 @@
  * Registro de piezas a medida (carril B): id → componente. El motor las dibuja cuando una escena es de tipo PIEZA.
  * Para añadir una pieza nueva: (1) su ficha pura en src/anim/piezas.ts (duración ideal, fondo, sonido), (2) su componente aquí.
  */
+import { PteDuelo, PteGancho, PteParabola } from "./pte1";
+import { PteBloque, PteCubo, PteRoebling, PteZoom } from "./pte2";
 import { DigAbismo, DigAutos, DigGancho, DigLectura } from "./dig1";
 import { DigEscala, DigOjo, DigThomas } from "./dig2";
 import React from "react";
@@ -99,6 +101,7 @@ export const COMPONENTES_PIEZA: Record<string, React.FC<{ e: EscenaViralGuardada
   "tej-hueso": TejHueso,
   "tej-muscular": TejMuscular,
   "tej-nervioso": TejNervioso,
+  "pte-gancho": PteGancho, "pte-parabola": PteParabola, "pte-duelo": PteDuelo, "pte-roebling": PteRoebling, "pte-bloque": PteBloque, "pte-cubo": PteCubo, "pte-zoom": PteZoom,
   "dig-gancho": DigGancho, "dig-lectura": DigLectura, "dig-abismo": DigAbismo, "dig-autos": DigAutos, "dig-thomas": DigThomas, "dig-escala": DigEscala, "dig-ojo": DigOjo,
   "ein-gancho": EinGancho,
   "ein-barrera": EinBarrera,

@@ -5,10 +5,10 @@
  * Las fechas son texto «AAAA-MM-DD»; las funciones que necesitan «hoy» lo reciben como parámetro (así se pueden probar).
  */
 
-export const SERIES = ["estafas", "adivina_precio", "diario_fundador", "florida", "experimentos", "agente_semana", "propiedad_del_dia", "secretos_usa", "anatomia", "neuroanatomia", "neuroeconomia", "otro"] as const;
+export const SERIES = ["estafas", "adivina_precio", "diario_fundador", "florida", "experimentos", "agente_semana", "propiedad_del_dia", "secretos_usa", "anatomia", "neuroanatomia", "neuroeconomia", "fisica_estructural", "otro"] as const;
 export const SERIES_ETIQUETA: Record<string, string> = {
   estafas: "Estafas", adivina_precio: "Adivina el precio", diario_fundador: "Diario del fundador", florida: "Florida", experimentos: "Experimentos",
-  agente_semana: "Agente de la semana", propiedad_del_dia: "Propiedad del día", secretos_usa: "Secretos de inversión en USA", anatomia: "Anatomía humana · curiosidades médicas", neuroanatomia: "Neuroanatomía en SINAPSIS", neuroeconomia: "Neuroeconomía en SINAPSIS", otro: "Otro",
+  agente_semana: "Agente de la semana", propiedad_del_dia: "Propiedad del día", secretos_usa: "Secretos de inversión en USA", anatomia: "Anatomía humana · curiosidades médicas", neuroanatomia: "Neuroanatomía en SINAPSIS", neuroeconomia: "Neuroeconomía en SINAPSIS", fisica_estructural: "Física estructural en SINAPSIS", otro: "Otro",
 };
 export const ESTADOS = ["idea", "guion", "grabado", "programado", "publicado"] as const;
 export const ESTADOS_ETIQUETA: Record<string, string> = { idea: "💡 Idea", guion: "📝 Guion", grabado: "🎬 Grabado", programado: "🗓️ Programado", publicado: "✅ Publicado" };

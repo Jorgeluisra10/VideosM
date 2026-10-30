@@ -309,6 +309,27 @@ export const TDIG = {
   ojo: { etiqueta: 0.2, calor: 0.9, calorDur: 1.4, fijaciones: 2.4, fijDur: 1.8, nota: 4.3, debate: 5.0 },
 } as const;
 
+/** Datos verificados del video «Puentes colgantes» (SINAPSIS · física estructural). Fuentes en ejemplos/animacion-viral/guion-tecnico-puentes.md. */
+export const PTE = {
+  /** Golden Gate (Golden Gate Bridge District): vano principal 1.280 m, torres de 227 m sobre el agua, cable de ≈ 0,92 m con 61 hebras y 27.572 alambres de 0,192 in; 61.500 t de carga de los cables sobre cada torre; anclajes de ≈ 60.000 t */
+  ggVanoM: 1280, ggTorreM: 227, ggCableM: 0.92, ggHebras: 61, ggAlambres: 27_572, ggCargaTorreTon: 61_500, ggAnclajeTon: 60_000,
+  /** Brooklyn (1883, diseño de J. A. Roebling): cable de ≈ 15¾ in (≈ 40 cm), 19 hebras, más de 5.000 alambres por cable (las fuentes dicen 5.434 o 5.282) y factor de seguridad de diseño 6 */
+  brooklynAnio: 1883, brooklynAlambresMin: 5000, brooklynHebras: 19, brooklynFactor: 6,
+  /** cable de carga uniforme: parábola con H = w·L²/(8·f) y V = w·L/2 en cada torre */
+  formula: "H = w·L² / (8·f)",
+} as const;
+
+/** Tiempos del video «Puentes colgantes» (segundos a ritmo normal), compartidos entre el dibujo y el sonido. */
+export const TPTE = {
+  gancho: { puente: 0.2, gravedad: 0.9, vectores: 1.7, chip: 3.2 },
+  parabola: { puente: 0.2, knobs: 0.6, w: 1.0, wDur: 1.5, f: 2.9, fDur: 1.8, formula: 4.9 },
+  duelo: { alambre: 0.2, xray: 1.0, cables: 1.7, vectores: 2.6, compresion: 3.8, chip1: 5.0, chip2: 5.7 },
+  roebling: { ficha: 0.2, corte: 0.8, hebras: 1.6, odometro: 2.6, odometroDur: 1.6, tally: 3.2, chip: 4.8 },
+  bloque: { barra: 0.2, haz: 0.9, graficas: 1.9, chip: 3.5 },
+  cubo: { cubo: 0.2, puntos: 0.9, puntosDur: 2.2, margen: 3.8, formula: 5.0, chip: 5.8 },
+  zoom: { ini: 0.3, dur: 4.3, chip: 5.0 },
+} as const;
+
 /* ───────────── «La regla del 37 %» (problema de la parada óptima, ensayo abstracto para IMNOBA) ───────────── */
 
 /** Generador pseudoaleatorio determinista (mulberry32): mismos números en el render, en las pruebas y en cada fotograma. */
@@ -766,6 +787,35 @@ export const PIEZAS: Record<string, DefPieza> = {
   "dig-ojo": {
     id: "dig-ojo", nombre: "Dígito izquierdo · mapa de calor esquemático de seguimiento ocular: la primera mirada cae hacia el centro del precio (cierre)", ideal: 5.75, fondo: "dark", entra: "semitono",
     sfx: (_d, r) => [ev(0.05, "whoosh", 0.12), ev(TDIG.ojo.etiqueta * r + 0.1, "pop", 0.1), ev(TDIG.ojo.calor * r, "radar", 0.1), ...[0, 1, 2, 3].map((i) => ev((TDIG.ojo.fijaciones + i * 0.42) * r, "tick", 0.1)), ev(TDIG.ojo.nota * r, "pop", 0.1), ev(TDIG.ojo.debate * r, "ding", 0.2)],
+  },
+  /* ───────────── «Puentes colgantes» (SINAPSIS · física estructural) ───────────── */
+  "pte-gancho": {
+    id: "pte-gancho", nombre: "Puentes · el cable no cuelga: tira (gravedad hacia abajo, tracción hacia las orillas)", ideal: 3.95, fondo: "dark",
+    sfx: (_d, r) => [ev(0.05, "whoosh", 0.12), ev(TPTE.gancho.puente * r + 0.1, "pop", 0.1), ev(TPTE.gancho.gravedad * r, "tick", 0.1), ev(TPTE.gancho.vectores * r, "zap", 0.16), ev(TPTE.gancho.chip * r, "ding", 0.14)],
+  },
+  "pte-parabola": {
+    id: "pte-parabola", nombre: "Puentes · cable parabólico en halftone con tres potenciómetros (peso, flecha y tensión horizontal H = wL²/8f)", ideal: 5.75, fondo: "dark", entra: "semitono",
+    sfx: (_d, r) => [ev(0.05, "whoosh", 0.1), ev(TPTE.parabola.knobs * r, "pop", 0.1), ...clics(TPTE.parabola.w * r, TPTE.parabola.wDur * r * 0.6, 0.04), ...clics(TPTE.parabola.f * r, TPTE.parabola.fDur * r * 0.6, 0.04), ev(TPTE.parabola.formula * r, "ding", 0.16)],
+  },
+  "pte-duelo": {
+    id: "pte-duelo", nombre: "Puentes · Rayos X alámbrico: tracción roja en los cables, compresión azul en la torre, anclaje que resiste", ideal: 6.45, fondo: "dark", entra: "corte",
+    sfx: (_d, r) => [ev(0.05, "whoosh", 0.1), ev(TPTE.duelo.xray * r, "radar", 0.12), ev(TPTE.duelo.vectores * r, "zap", 0.14), ev(TPTE.duelo.compresion * r, "thud", 0.2), ev(TPTE.duelo.chip1 * r, "pop", 0.1), ev(TPTE.duelo.chip2 * r, "ding", 0.14)],
+  },
+  "pte-roebling": {
+    id: "pte-roebling", nombre: "Puentes · cuaderno de campo sobre papel: Brooklyn, más de 5.000 alambres por cable, 19 hebras y marcas de conteo", ideal: 5.75, fondo: "light", entra: "corte",
+    sfx: (_d, r) => [ev(0.05, "whoosh", 0.1), ev(TPTE.roebling.ficha * r + 0.1, "pop", 0.1), ev(TPTE.roebling.hebras * r, "tick", 0.1), ...clics(TPTE.roebling.odometro * r, TPTE.roebling.odometroDur * r, 0.04), ev(TPTE.roebling.tally * r, "thud", 0.14), ev(TPTE.roebling.chip * r, "ding", 0.16)],
+  },
+  "pte-bloque": {
+    id: "pte-bloque", nombre: "Puentes · barra maciza contra haz de alambres delgados (comparación cualitativa)", ideal: 4.75, fondo: "dark", entra: "semitono",
+    sfx: (_d, r) => [ev(0.05, "whoosh", 0.1), ev(TPTE.bloque.barra * r + 0.1, "pop", 0.1), ev(TPTE.bloque.haz * r, "pop", 0.1), ev(TPTE.bloque.graficas * r, "thud", 0.16), ev(TPTE.bloque.chip * r, "ding", 0.14)],
+  },
+  "pte-cubo": {
+    id: "pte-cubo", nombre: "Puentes · cubo isométrico del espacio de parámetros (carga, área, límite elástico): resiste en rojo, colapsa en azul, margen 6", ideal: 6.75, fondo: "dark", entra: "zoom",
+    sfx: (_d, r) => [ev(0.05, "whoosh", 0.1), ev(TPTE.cubo.cubo * r + 0.1, "pop", 0.1), ...clics(TPTE.cubo.puntos * r, TPTE.cubo.puntosDur * r * 0.7, 0.04), ev(TPTE.cubo.margen * r, "zap", 0.14), ev(TPTE.cubo.formula * r, "pop", 0.1), ev(TPTE.cubo.chip * r, "ding", 0.16)],
+  },
+  "pte-zoom": {
+    id: "pte-zoom", nombre: "Puentes · zoom logarítmico de 1.000 m a 1 mm: del puente al cable, a las hebras y al panal de alambres (cierre)", ideal: 6.35, fondo: "dark", entra: "zoom",
+    sfx: (_d, r) => [ev(0.05, "whoosh", 0.12), ...clics(TPTE.zoom.ini * r, TPTE.zoom.dur * r, 0.04), ev((TPTE.zoom.ini + TPTE.zoom.dur) * r, "ding", 0.2), ev(TPTE.zoom.chip * r, "pop", 0.1)],
   },
   "astro-memoria": {
     id: "astro-memoria", nombre: "Astrocitos · en ratones, reactivarlos estimuló el recuerdo", ideal: 4.15, fondo: "dark", entra: "corte",

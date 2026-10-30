@@ -1,0 +1,13 @@
+{
+  "titulo": "El secreto de los puentes colgantes",
+  "scenes": [
+    {"t": "PIEZA", "voz": "El cable no cuelga: tira. Y tira con miles de toneladas.", "dur": 4.4, "h": "NO CUELGA: TIRA", "w": "TIRA", "cap": "puentes colgantes", "pieza": {"id": "pte-gancho"}},
+    {"t": "PIEZA", "voz": "El peso baja por los tirantes y el cable lo desvía hacia las orillas, en parábola.", "dur": 6.2, "h": "EL PESO SE DESVÍA HACIA LAS ORILLAS", "w": "PARÁBOLA", "cap": "tracción pura", "pieza": {"id": "pte-parabola"}},
+    {"t": "PIEZA", "voz": "Las torres lo convierten en compresión: sesenta y un mil quinientas toneladas por torre en el Golden Gate.", "dur": 6.9, "h": "EL TIRÓN SE VUELVE COMPRESIÓN", "w": "COMPRESIÓN", "cap": "Rayos X", "pieza": {"id": "pte-duelo"}},
+    {"t": "PIEZA", "voz": "Brooklyn no usó barras macizas: hiló en el aire más de cinco mil alambres por cable.", "dur": 6.2, "h": "MÁS DE 5.000 ALAMBRES", "w": "ALAMBRES", "cap": "Puente de Brooklyn, 1883", "pieza": {"id": "pte-roebling"}},
+    {"t": "PIEZA", "voz": "Y miles de alambres delgados pueden soportar más que una barra del mismo grosor.", "dur": 5.4, "h": "UNA BARRA O MILES DE ALAMBRES", "w": "ALAMBRES", "cap": "mismo grosor", "pieza": {"id": "pte-bloque"}},
+    {"t": "PIEZA", "voz": "Cada diseño tiene su límite: carga, área y límite elástico deciden si resiste. Brooklyn, con margen de seis.", "dur": 6.9, "h": "MARGEN DE SEIS", "w": "SEIS", "cap": "espacio de parámetros", "pieza": {"id": "pte-cubo"}},
+    {"t": "PIEZA", "voz": "Haz zoom de mil metros a un milímetro: no hay un tubo macizo, hay un panal de alambres.", "dur": 6.8, "h": "UN PANAL DE ALAMBRES", "w": "PANAL", "cap": "zoom logarítmico", "pieza": {"id": "pte-zoom"}},
+    {"t": "CTA", "voz": "Guárdalo para repasar estática y síguenos en Sinapsis.", "dur": 3.8, "h": "GUÁRDALO Y SÍGUENOS", "w": "SÍGUENOS", "sub": "Más ciencia en SINAPSIS"}
+  ]
+}

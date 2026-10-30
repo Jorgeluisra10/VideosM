@@ -1,347 +1,18 @@
 {
  "version": 1,
- "titulo": "El metro que valoriza Bogotá",
- "paleta": "imnoba",
+ "titulo": "El secreto de los puentes colgantes",
+ "paleta": "medicina",
  "sfx": true,
  "fps": 60,
- "duracion": 36.9,
+ "duracion": 46.6,
  "escenas": [
   {
    "n": 1,
-   "t": "HOOK",
-   "voz": "¿Te imaginas cruzar Bogotá en minutos? ¡Llega el metro!",
-   "dur": 3.6,
-   "h": "BOGOTÁ NECESITA METRO",
-   "w": "METRO",
-   "sub": "y tu inmueble lo agradece",
-   "ic": "tren",
-   "num": null,
-   "vs": null,
-   "bars": [],
-   "barsU": "",
-   "hi": -1,
-   "line": null,
-   "items": [],
-   "stops": [],
-   "end": "",
-   "donut": [],
-   "picto": null,
-   "top": [],
-   "myth": "",
-   "truth": "",
-   "zoom": null,
-   "capas": null,
-   "mira": null,
-   "impacto": null,
-   "red": null,
-   "termo": null,
-   "pila": null,
-   "cap": "",
-   "papel": null,
-   "pilares": null,
-   "ciclo": null,
-   "duo": null,
-   "osc": null,
-   "cubo": null,
-   "diales": null,
-   "pieza": null,
-   "cita": null,
-   "sc": "",
-   "modo": "VIRAL",
-   "tema": "oscuro",
-   "bg": "dark",
-   "ritmo": 1,
-   "total": 36.9,
-   "inicio": 0,
-   "fin": 3.6,
-   "texto": "¿Te imaginas cruzar Bogotá en minutos? ¡Llega el metro!",
-   "tr": "barrido",
-   "trs": "barrido",
-   "sfx": [
-    {
-     "t": 0.04,
-     "tipo": "whoosh",
-     "vol": 0.16
-    },
-    {
-     "t": 0.32,
-     "tipo": "thud",
-     "vol": 0.2
-    }
-   ]
-  },
-  {
-   "n": 2,
-   "t": "NUM",
-   "voz": "Hoy se pierden horas en trancones cada día.",
-   "dur": 3.4,
-   "h": "TIEMPO PERDIDO",
-   "w": "PERDIDO",
-   "sub": "",
-   "ic": "reloj",
-   "num": {
-    "n": "2",
-    "u": "h",
-    "pre": "~",
-    "l": "AL DÍA EN TRANCONES"
-   },
-   "vs": null,
-   "bars": [],
-   "barsU": "",
-   "hi": -1,
-   "line": null,
-   "items": [],
-   "stops": [],
-   "end": "",
-   "donut": [],
-   "picto": null,
-   "top": [],
-   "myth": "",
-   "truth": "",
-   "zoom": null,
-   "capas": null,
-   "mira": null,
-   "impacto": null,
-   "red": null,
-   "termo": null,
-   "pila": null,
-   "cap": "",
-   "papel": null,
-   "pilares": null,
-   "ciclo": null,
-   "duo": null,
-   "osc": null,
-   "cubo": null,
-   "diales": null,
-   "pieza": null,
-   "cita": null,
-   "sc": "",
-   "modo": "VIRAL",
-   "tema": "oscuro",
-   "bg": "gold",
-   "ritmo": 0.9833333333333333,
-   "total": 36.9,
-   "inicio": 3.6,
-   "fin": 7,
-   "texto": "Hoy se pierden horas en trancones cada día.",
-   "tr": "barrido",
-   "trs": "barrido",
-   "sfx": [
-    {
-     "t": 0.04,
-     "tipo": "whoosh",
-     "vol": 0.16
-    },
-    {
-     "t": 0.59,
-     "tipo": "tick",
-     "vol": 0.12
-    },
-    {
-     "t": 0.59,
-     "tipo": "clic",
-     "vol": 0.07
-    },
-    {
-     "t": 0.72,
-     "tipo": "clic",
-     "vol": 0.07
-    },
-    {
-     "t": 0.85,
-     "tipo": "clic",
-     "vol": 0.07
-    },
-    {
-     "t": 0.98,
-     "tipo": "clic",
-     "vol": 0.07
-    },
-    {
-     "t": 1.1099999999999999,
-     "tipo": "clic",
-     "vol": 0.07
-    },
-    {
-     "t": 1.24,
-     "tipo": "clic",
-     "vol": 0.07
-    },
-    {
-     "t": 1.37,
-     "tipo": "clic",
-     "vol": 0.07
-    },
-    {
-     "t": 1.5,
-     "tipo": "clic",
-     "vol": 0.07
-    },
-    {
-     "t": 1.63,
-     "tipo": "clic",
-     "vol": 0.07
-    },
-    {
-     "t": 1.7599999999999998,
-     "tipo": "clic",
-     "vol": 0.07
-    },
-    {
-     "t": 1.8900000000000001,
-     "tipo": "clic",
-     "vol": 0.07
-    },
-    {
-     "t": 2.065,
-     "tipo": "ding",
-     "vol": 0.18
-    }
-   ]
-  },
-  {
-   "n": 3,
-   "t": "VS",
-   "voz": "Otras capitales ya tienen metro. Bogotá apenas empieza.",
-   "dur": 3.7,
-   "h": "LÍNEAS DE METRO",
-   "w": "METRO",
-   "sub": "",
-   "ic": "tren",
-   "num": null,
-   "vs": {
-    "a": {
-     "l": "BOGOTÁ",
-     "n": "0",
-     "ic": "tren"
-    },
-    "b": {
-     "l": "SANTIAGO",
-     "n": "7",
-     "ic": "tren"
-    },
-    "op": "<"
-   },
-   "bars": [],
-   "barsU": "",
-   "hi": -1,
-   "line": null,
-   "items": [],
-   "stops": [],
-   "end": "",
-   "donut": [],
-   "picto": null,
-   "top": [],
-   "myth": "",
-   "truth": "",
-   "zoom": null,
-   "capas": null,
-   "mira": null,
-   "impacto": null,
-   "red": null,
-   "termo": null,
-   "pila": null,
-   "cap": "",
-   "papel": null,
-   "pilares": null,
-   "ciclo": null,
-   "duo": null,
-   "osc": null,
-   "cubo": null,
-   "diales": null,
-   "pieza": null,
-   "cita": null,
-   "sc": "",
-   "modo": "VIRAL",
-   "tema": "oscuro",
-   "bg": "dark",
-   "ritmo": 0.9027777777777778,
-   "total": 36.9,
-   "inicio": 7,
-   "fin": 10.7,
-   "texto": "Otras capitales ya tienen metro. Bogotá apenas empieza.",
-   "tr": "barrido",
-   "trs": "barrido",
-   "sfx": [
-    {
-     "t": 0.04,
-     "tipo": "whoosh",
-     "vol": 0.16
-    },
-    {
-     "t": 0.5416666666666666,
-     "tipo": "clic",
-     "vol": 0.05
-    },
-    {
-     "t": 0.6716666666666666,
-     "tipo": "clic",
-     "vol": 0.05
-    },
-    {
-     "t": 0.8016666666666666,
-     "tipo": "clic",
-     "vol": 0.05
-    },
-    {
-     "t": 0.8125,
-     "tipo": "tick",
-     "vol": 0.12
-    },
-    {
-     "t": 0.9316666666666666,
-     "tipo": "clic",
-     "vol": 0.05
-    },
-    {
-     "t": 1.0616666666666665,
-     "tipo": "clic",
-     "vol": 0.05
-    },
-    {
-     "t": 1.1916666666666667,
-     "tipo": "clic",
-     "vol": 0.05
-    },
-    {
-     "t": 1.3216666666666668,
-     "tipo": "clic",
-     "vol": 0.05
-    },
-    {
-     "t": 1.4516666666666667,
-     "tipo": "clic",
-     "vol": 0.05
-    },
-    {
-     "t": 1.5816666666666666,
-     "tipo": "clic",
-     "vol": 0.05
-    },
-    {
-     "t": 1.7116666666666664,
-     "tipo": "clic",
-     "vol": 0.05
-    },
-    {
-     "t": 1.8055555555555556,
-     "tipo": "ding",
-     "vol": 0.18
-    },
-    {
-     "t": 1.8416666666666668,
-     "tipo": "clic",
-     "vol": 0.05
-    }
-   ]
-  },
-  {
-   "n": 4,
-   "t": "ROUTE",
-   "voz": "La primera línea conecta el sur con el norte.",
+   "t": "PIEZA",
+   "voz": "El cable no cuelga: tira. Y tira con miles de toneladas.",
    "dur": 4.4,
-   "h": "LA PRIMERA LÍNEA",
-   "w": "PRIMERA",
+   "h": "NO CUELGA: TIRA",
+   "w": "TIRA",
    "sub": "",
    "ic": "brillo",
    "num": null,
@@ -351,108 +22,6 @@
    "hi": -1,
    "line": null,
    "items": [],
-   "stops": [
-    "PORTAL AMÉRICAS",
-    "KENNEDY",
-    "CENTRO",
-    "CALLE 72"
-   ],
-   "end": "VALORIZACIÓN",
-   "donut": [],
-   "picto": null,
-   "top": [],
-   "myth": "",
-   "truth": "",
-   "zoom": null,
-   "capas": null,
-   "mira": null,
-   "impacto": null,
-   "red": null,
-   "termo": null,
-   "pila": null,
-   "cap": "",
-   "papel": null,
-   "pilares": null,
-   "ciclo": null,
-   "duo": null,
-   "osc": null,
-   "cubo": null,
-   "diales": null,
-   "pieza": null,
-   "cita": null,
-   "sc": "",
-   "modo": "VIRAL",
-   "tema": "oscuro",
-   "bg": "gold",
-   "ritmo": 0.9634146341463415,
-   "total": 36.9,
-   "inicio": 10.7,
-   "fin": 15.1,
-   "texto": "La primera línea conecta el sur con el norte.",
-   "tr": "barrido",
-   "trs": "barrido",
-   "sfx": [
-    {
-     "t": 0.04,
-     "tipo": "whoosh",
-     "vol": 0.16
-    },
-    {
-     "t": 0.9152439024390244,
-     "tipo": "tick",
-     "vol": 0.12
-    },
-    {
-     "t": 1.5896341463414634,
-     "tipo": "tick",
-     "vol": 0.12
-    },
-    {
-     "t": 2.2640243902439026,
-     "tipo": "tick",
-     "vol": 0.12
-    },
-    {
-     "t": 2.9384146341463415,
-     "tipo": "tick",
-     "vol": 0.12
-    },
-    {
-     "t": 3.275609756097561,
-     "tipo": "ding",
-     "vol": 0.18
-    }
-   ]
-  },
-  {
-   "n": 5,
-   "t": "STEPS",
-   "voz": "Más acceso, más demanda, más valor para tu propiedad.",
-   "dur": 3.6,
-   "h": "CAUSA Y EFECTO",
-   "w": "EFECTO",
-   "sub": "",
-   "ic": "casa",
-   "num": null,
-   "vs": null,
-   "bars": [],
-   "barsU": "",
-   "hi": -1,
-   "line": null,
-   "items": [
-    {
-     "l": "METRO",
-     "ic": "tren"
-    },
-    {
-     "l": "MÁS DEMANDA",
-     "ic": "tendencia-alza"
-    },
-    {
-     "l": "MÁS VALOR",
-     "ic": "dolar"
-    }
-   ],
    "stops": [],
    "end": "",
    "donut": [],
@@ -467,7 +36,7 @@
    "red": null,
    "termo": null,
    "pila": null,
-   "cap": "",
+   "cap": "puentes colgantes",
    "papel": null,
    "pilares": null,
    "ciclo": null,
@@ -475,19 +44,22 @@
    "osc": null,
    "cubo": null,
    "diales": null,
-   "pieza": null,
+   "pieza": {
+    "id": "pte-gancho",
+    "props": {}
+   },
    "cita": null,
    "sc": "",
    "modo": "VIRAL",
-   "tema": "claro",
-   "bg": "light",
+   "tema": "oscuro",
+   "bg": "dark",
    "ritmo": 1,
-   "total": 36.9,
-   "inicio": 15.1,
-   "fin": 18.7,
-   "texto": "Más acceso, más demanda, más valor para tu propiedad.",
+   "total": 46.6,
+   "inicio": 0,
+   "fin": 4.4,
+   "texto": "El cable no cuelga: tira. Y tira con miles de toneladas.",
    "tr": "barrido",
-   "trs": "barrido",
+   "trs": "semitono",
    "sfx": [
     {
      "t": 0.04,
@@ -495,131 +67,519 @@
      "vol": 0.16
     },
     {
-     "t": 0.75,
+     "t": 0.05,
+     "tipo": "whoosh",
+     "vol": 0.12
+    },
+    {
+     "t": 0.30000000000000004,
      "tipo": "pop",
+     "vol": 0.1
+    },
+    {
+     "t": 0.9,
+     "tipo": "tick",
+     "vol": 0.1
+    },
+    {
+     "t": 1.7,
+     "tipo": "zap",
+     "vol": 0.16
+    },
+    {
+     "t": 3.2,
+     "tipo": "ding",
+     "vol": 0.14
+    }
+   ]
+  },
+  {
+   "n": 2,
+   "t": "PIEZA",
+   "voz": "El peso baja por los tirantes y el cable lo desvía hacia las orillas, en parábola.",
+   "dur": 6.2,
+   "h": "EL PESO SE DESVÍA HACIA LAS",
+   "w": "DESVÍA",
+   "sub": "",
+   "ic": "tendencia-baja",
+   "num": null,
+   "vs": null,
+   "bars": [],
+   "barsU": "",
+   "hi": -1,
+   "line": null,
+   "items": [],
+   "stops": [],
+   "end": "",
+   "donut": [],
+   "picto": null,
+   "top": [],
+   "myth": "",
+   "truth": "",
+   "zoom": null,
+   "capas": null,
+   "mira": null,
+   "impacto": null,
+   "red": null,
+   "termo": null,
+   "pila": null,
+   "cap": "tracción pura",
+   "papel": null,
+   "pilares": null,
+   "ciclo": null,
+   "duo": null,
+   "osc": null,
+   "cubo": null,
+   "diales": null,
+   "pieza": {
+    "id": "pte-parabola",
+    "props": {}
+   },
+   "cita": null,
+   "sc": "",
+   "modo": "VIRAL",
+   "tema": "claro",
+   "bg": "light",
+   "ritmo": 1,
+   "total": 46.6,
+   "inicio": 4.4,
+   "fin": 10.6,
+   "texto": "El peso baja por los tirantes y el cable lo desvía hacia las orillas, en parábola.",
+   "tr": "semitono",
+   "trs": "corte",
+   "sfx": [
+    {
+     "t": 0.04,
+     "tipo": "whoosh",
+     "vol": 0.16
+    },
+    {
+     "t": 0.05,
+     "tipo": "whoosh",
+     "vol": 0.1
+    },
+    {
+     "t": 0.6,
+     "tipo": "pop",
+     "vol": 0.1
+    },
+    {
+     "t": 1,
+     "tipo": "clic",
+     "vol": 0.04
+    },
+    {
+     "t": 1.13,
+     "tipo": "clic",
+     "vol": 0.04
+    },
+    {
+     "t": 1.26,
+     "tipo": "clic",
+     "vol": 0.04
+    },
+    {
+     "t": 1.3900000000000001,
+     "tipo": "clic",
+     "vol": 0.04
+    },
+    {
+     "t": 1.52,
+     "tipo": "clic",
+     "vol": 0.04
+    },
+    {
+     "t": 1.65,
+     "tipo": "clic",
+     "vol": 0.04
+    },
+    {
+     "t": 2.9,
+     "tipo": "clic",
+     "vol": 0.04
+    },
+    {
+     "t": 3.03,
+     "tipo": "clic",
+     "vol": 0.04
+    },
+    {
+     "t": 3.16,
+     "tipo": "clic",
+     "vol": 0.04
+    },
+    {
+     "t": 3.29,
+     "tipo": "clic",
+     "vol": 0.04
+    },
+    {
+     "t": 3.42,
+     "tipo": "clic",
+     "vol": 0.04
+    },
+    {
+     "t": 3.55,
+     "tipo": "clic",
+     "vol": 0.04
+    },
+    {
+     "t": 3.6799999999999997,
+     "tipo": "clic",
+     "vol": 0.04
+    },
+    {
+     "t": 3.81,
+     "tipo": "clic",
+     "vol": 0.04
+    },
+    {
+     "t": 4.9,
+     "tipo": "ding",
+     "vol": 0.16
+    }
+   ]
+  },
+  {
+   "n": 3,
+   "t": "PIEZA",
+   "voz": "Las torres lo convierten en compresión: sesenta y un mil quinientas toneladas por torre en el Golden Gate.",
+   "dur": 6.9,
+   "h": "EL TIRÓN SE VUELVE COMPRESIÓN",
+   "w": "COMPRESIÓN",
+   "sub": "",
+   "ic": "edificio",
+   "num": null,
+   "vs": null,
+   "bars": [],
+   "barsU": "",
+   "hi": -1,
+   "line": null,
+   "items": [],
+   "stops": [],
+   "end": "",
+   "donut": [],
+   "picto": null,
+   "top": [],
+   "myth": "",
+   "truth": "",
+   "zoom": null,
+   "capas": null,
+   "mira": null,
+   "impacto": null,
+   "red": null,
+   "termo": null,
+   "pila": null,
+   "cap": "Rayos X",
+   "papel": null,
+   "pilares": null,
+   "ciclo": null,
+   "duo": null,
+   "osc": null,
+   "cubo": null,
+   "diales": null,
+   "pieza": {
+    "id": "pte-duelo",
+    "props": {}
+   },
+   "cita": null,
+   "sc": "",
+   "modo": "VIRAL",
+   "tema": "oscuro",
+   "bg": "dark",
+   "ritmo": 1,
+   "total": 46.6,
+   "inicio": 10.6,
+   "fin": 17.5,
+   "texto": "Las torres lo convierten en compresión: sesenta y un mil quinientas toneladas por torre en el Golden Gate.",
+   "tr": "corte",
+   "trs": "corte",
+   "sfx": [
+    {
+     "t": 0.04,
+     "tipo": "whoosh",
+     "vol": 0.16
+    },
+    {
+     "t": 0.05,
+     "tipo": "whoosh",
+     "vol": 0.1
+    },
+    {
+     "t": 1,
+     "tipo": "radar",
+     "vol": 0.12
+    },
+    {
+     "t": 2.6,
+     "tipo": "zap",
      "vol": 0.14
     },
     {
-     "t": 1.37,
+     "t": 3.8,
+     "tipo": "thud",
+     "vol": 0.2
+    },
+    {
+     "t": 5,
      "tipo": "pop",
+     "vol": 0.1
+    },
+    {
+     "t": 5.7,
+     "tipo": "ding",
+     "vol": 0.14
+    }
+   ]
+  },
+  {
+   "n": 4,
+   "t": "PIEZA",
+   "voz": "Brooklyn no usó barras macizas: hiló en el aire más de cinco mil alambres por cable.",
+   "dur": 6.2,
+   "h": "MÁS DE 5.000 ALAMBRES",
+   "w": "ALAMBRES",
+   "sub": "",
+   "ic": "brillo",
+   "num": null,
+   "vs": null,
+   "bars": [],
+   "barsU": "",
+   "hi": -1,
+   "line": null,
+   "items": [],
+   "stops": [],
+   "end": "",
+   "donut": [],
+   "picto": null,
+   "top": [],
+   "myth": "",
+   "truth": "",
+   "zoom": null,
+   "capas": null,
+   "mira": null,
+   "impacto": null,
+   "red": null,
+   "termo": null,
+   "pila": null,
+   "cap": "Puente de Brooklyn, 1883",
+   "papel": null,
+   "pilares": null,
+   "ciclo": null,
+   "duo": null,
+   "osc": null,
+   "cubo": null,
+   "diales": null,
+   "pieza": {
+    "id": "pte-roebling",
+    "props": {}
+   },
+   "cita": null,
+   "sc": "",
+   "modo": "VIRAL",
+   "tema": "claro",
+   "bg": "light",
+   "ritmo": 1,
+   "total": 46.6,
+   "inicio": 17.5,
+   "fin": 23.7,
+   "texto": "Brooklyn no usó barras macizas: hiló en el aire más de cinco mil alambres por cable.",
+   "tr": "corte",
+   "trs": "semitono",
+   "sfx": [
+    {
+     "t": 0.04,
+     "tipo": "whoosh",
+     "vol": 0.16
+    },
+    {
+     "t": 0.05,
+     "tipo": "whoosh",
+     "vol": 0.1
+    },
+    {
+     "t": 0.30000000000000004,
+     "tipo": "pop",
+     "vol": 0.1
+    },
+    {
+     "t": 1.6,
+     "tipo": "tick",
+     "vol": 0.1
+    },
+    {
+     "t": 2.6,
+     "tipo": "clic",
+     "vol": 0.04
+    },
+    {
+     "t": 2.73,
+     "tipo": "clic",
+     "vol": 0.04
+    },
+    {
+     "t": 2.8600000000000003,
+     "tipo": "clic",
+     "vol": 0.04
+    },
+    {
+     "t": 2.99,
+     "tipo": "clic",
+     "vol": 0.04
+    },
+    {
+     "t": 3.12,
+     "tipo": "clic",
+     "vol": 0.04
+    },
+    {
+     "t": 3.2,
+     "tipo": "thud",
      "vol": 0.14
     },
     {
-     "t": 1.99,
+     "t": 3.25,
+     "tipo": "clic",
+     "vol": 0.04
+    },
+    {
+     "t": 3.38,
+     "tipo": "clic",
+     "vol": 0.04
+    },
+    {
+     "t": 3.5100000000000002,
+     "tipo": "clic",
+     "vol": 0.04
+    },
+    {
+     "t": 3.64,
+     "tipo": "clic",
+     "vol": 0.04
+    },
+    {
+     "t": 3.77,
+     "tipo": "clic",
+     "vol": 0.04
+    },
+    {
+     "t": 3.9000000000000004,
+     "tipo": "clic",
+     "vol": 0.04
+    },
+    {
+     "t": 4.03,
+     "tipo": "clic",
+     "vol": 0.04
+    },
+    {
+     "t": 4.8,
+     "tipo": "ding",
+     "vol": 0.16
+    }
+   ]
+  },
+  {
+   "n": 5,
+   "t": "PIEZA",
+   "voz": "Y miles de alambres delgados pueden soportar más que una barra del mismo grosor.",
+   "dur": 5.4,
+   "h": "UNA BARRA O MILES DE ALAMBRES",
+   "w": "ALAMBRES",
+   "sub": "",
+   "ic": "brillo",
+   "num": null,
+   "vs": null,
+   "bars": [],
+   "barsU": "",
+   "hi": -1,
+   "line": null,
+   "items": [],
+   "stops": [],
+   "end": "",
+   "donut": [],
+   "picto": null,
+   "top": [],
+   "myth": "",
+   "truth": "",
+   "zoom": null,
+   "capas": null,
+   "mira": null,
+   "impacto": null,
+   "red": null,
+   "termo": null,
+   "pila": null,
+   "cap": "mismo grosor",
+   "papel": null,
+   "pilares": null,
+   "ciclo": null,
+   "duo": null,
+   "osc": null,
+   "cubo": null,
+   "diales": null,
+   "pieza": {
+    "id": "pte-bloque",
+    "props": {}
+   },
+   "cita": null,
+   "sc": "",
+   "modo": "VIRAL",
+   "tema": "oscuro",
+   "bg": "dark",
+   "ritmo": 1,
+   "total": 46.6,
+   "inicio": 23.7,
+   "fin": 29.1,
+   "texto": "Y miles de alambres delgados pueden soportar más que una barra del mismo grosor.",
+   "tr": "semitono",
+   "trs": "zoom",
+   "sfx": [
+    {
+     "t": 0.04,
+     "tipo": "whoosh",
+     "vol": 0.16
+    },
+    {
+     "t": 0.05,
+     "tipo": "whoosh",
+     "vol": 0.1
+    },
+    {
+     "t": 0.30000000000000004,
      "tipo": "pop",
+     "vol": 0.1
+    },
+    {
+     "t": 0.9,
+     "tipo": "pop",
+     "vol": 0.1
+    },
+    {
+     "t": 1.9,
+     "tipo": "thud",
+     "vol": 0.16
+    },
+    {
+     "t": 3.5,
+     "tipo": "ding",
      "vol": 0.14
     }
    ]
   },
   {
    "n": 6,
-   "t": "LINE",
-   "voz": "Donde llega el transporte, el metro cuadrado sube.",
-   "dur": 3.8,
-   "h": "VALOR DEL M²",
-   "w": "M²",
+   "t": "PIEZA",
+   "voz": "Cada diseño tiene su límite: carga, área y límite elástico deciden si resiste. Brooklyn, con margen de seis.",
+   "dur": 6.9,
+   "h": "MARGEN DE SEIS",
+   "w": "SEIS",
    "sub": "",
-   "ic": "tren",
+   "ic": "brillo",
    "num": null,
    "vs": null,
    "bars": [],
    "barsU": "",
    "hi": -1,
-   "line": {
-    "pts": [
-     100,
-     104,
-     102,
-     112,
-     122,
-     128,
-     135
-    ],
-    "l0": "ANTES",
-    "l1": "DESPUÉS",
-    "end": "+35 %"
-   },
-   "items": [],
-   "stops": [],
-   "end": "",
-   "donut": [],
-   "picto": null,
-   "top": [],
-   "myth": "",
-   "truth": "",
-   "zoom": null,
-   "capas": null,
-   "mira": null,
-   "impacto": null,
-   "red": null,
-   "termo": null,
-   "pila": null,
-   "cap": "",
-   "papel": null,
-   "pilares": null,
-   "ciclo": null,
-   "duo": null,
-   "osc": null,
-   "cubo": null,
-   "diales": null,
-   "pieza": null,
-   "cita": null,
-   "sc": "",
-   "modo": "VIRAL",
-   "tema": "oscuro",
-   "bg": "dark",
-   "ritmo": 0.9054054054054054,
-   "total": 36.9,
-   "inicio": 18.7,
-   "fin": 22.5,
-   "texto": "Donde llega el transporte, el metro cuadrado sube.",
-   "tr": "barrido",
-   "trs": "barrido",
-   "sfx": [
-    {
-     "t": 0.04,
-     "tipo": "whoosh",
-     "vol": 0.16
-    },
-    {
-     "t": 0.6337837837837837,
-     "tipo": "zap",
-     "vol": 0.1
-    },
-    {
-     "t": 2.535135135135135,
-     "tipo": "ding",
-     "vol": 0.18
-    }
-   ]
-  },
-  {
-   "n": 7,
-   "t": "BARS",
-   "voz": "Mientras más cerca de la estación, más valorización.",
-   "dur": 3.4,
-   "h": "VALORIZACIÓN POR ZONA",
-   "w": "ZONA",
-   "sub": "",
-   "ic": "tren",
-   "num": null,
-   "vs": null,
-   "bars": [
-    {
-     "l": "LEJOS",
-     "v": 8
-    },
-    {
-     "l": "A 10 MIN",
-     "v": 19
-    },
-    {
-     "l": "A 5 MIN",
-     "v": 35
-    }
-   ],
-   "barsU": "%",
-   "hi": 2,
    "line": null,
    "items": [],
    "stops": [],
@@ -636,7 +596,7 @@
    "red": null,
    "termo": null,
    "pila": null,
-   "cap": "",
+   "cap": "espacio de parámetros",
    "papel": null,
    "pilares": null,
    "ciclo": null,
@@ -644,19 +604,22 @@
    "osc": null,
    "cubo": null,
    "diales": null,
-   "pieza": null,
+   "pieza": {
+    "id": "pte-cubo",
+    "props": {}
+   },
    "cita": null,
    "sc": "",
    "modo": "VIRAL",
    "tema": "claro",
    "bg": "light",
-   "ritmo": 1,
-   "total": 36.9,
-   "inicio": 22.5,
-   "fin": 25.9,
-   "texto": "Mientras más cerca de la estación, más valorización.",
-   "tr": "barrido",
-   "trs": "barrido",
+   "ritmo": 0.9555555555555556,
+   "total": 46.6,
+   "inicio": 29.1,
+   "fin": 36,
+   "texto": "Cada diseño tiene su límite: carga, área y límite elástico deciden si resiste. Brooklyn, con margen de seis.",
+   "tr": "zoom",
+   "trs": "zoom",
    "sfx": [
     {
      "t": 0.04,
@@ -664,36 +627,96 @@
      "vol": 0.16
     },
     {
-     "t": 0.95,
-     "tipo": "pop",
-     "vol": 0.13
+     "t": 0.05,
+     "tipo": "whoosh",
+     "vol": 0.1
     },
     {
-     "t": 1.15,
+     "t": 0.2911111111111111,
      "tipo": "pop",
-     "vol": 0.13
+     "vol": 0.1
     },
     {
-     "t": 1.35,
-     "tipo": "pop",
-     "vol": 0.13
+     "t": 0.8600000000000001,
+     "tipo": "clic",
+     "vol": 0.04
     },
     {
-     "t": 2,
+     "t": 0.9900000000000001,
+     "tipo": "clic",
+     "vol": 0.04
+    },
+    {
+     "t": 1.12,
+     "tipo": "clic",
+     "vol": 0.04
+    },
+    {
+     "t": 1.25,
+     "tipo": "clic",
+     "vol": 0.04
+    },
+    {
+     "t": 1.3800000000000001,
+     "tipo": "clic",
+     "vol": 0.04
+    },
+    {
+     "t": 1.5100000000000002,
+     "tipo": "clic",
+     "vol": 0.04
+    },
+    {
+     "t": 1.6400000000000001,
+     "tipo": "clic",
+     "vol": 0.04
+    },
+    {
+     "t": 1.77,
+     "tipo": "clic",
+     "vol": 0.04
+    },
+    {
+     "t": 1.9000000000000001,
+     "tipo": "clic",
+     "vol": 0.04
+    },
+    {
+     "t": 2.0300000000000002,
+     "tipo": "clic",
+     "vol": 0.04
+    },
+    {
+     "t": 2.16,
+     "tipo": "clic",
+     "vol": 0.04
+    },
+    {
+     "t": 3.631111111111111,
+     "tipo": "zap",
+     "vol": 0.14
+    },
+    {
+     "t": 4.777777777777778,
+     "tipo": "pop",
+     "vol": 0.1
+    },
+    {
+     "t": 5.542222222222223,
      "tipo": "ding",
      "vol": 0.16
     }
    ]
   },
   {
-   "n": 8,
-   "t": "SKYLINE",
-   "voz": "Tu inmueble puede ser la próxima gran oportunidad.",
-   "dur": 3.4,
-   "h": "TU INMUEBLE, MÁS VALIOSO",
-   "w": "VALIOSO",
-   "sub": "cerca de las estaciones",
-   "ic": "casa",
+   "n": 7,
+   "t": "PIEZA",
+   "voz": "Haz zoom de mil metros a un milímetro: no hay un tubo macizo, hay un panal de alambres.",
+   "dur": 6.8,
+   "h": "UN PANAL DE ALAMBRES",
+   "w": "PANAL",
+   "sub": "",
+   "ic": "tren",
    "num": null,
    "vs": null,
    "bars": [],
@@ -701,88 +724,6 @@
    "hi": -1,
    "line": null,
    "items": [],
-   "stops": [],
-   "end": "+35 %",
-   "donut": [],
-   "picto": null,
-   "top": [],
-   "myth": "",
-   "truth": "",
-   "zoom": null,
-   "capas": null,
-   "mira": null,
-   "impacto": null,
-   "red": null,
-   "termo": null,
-   "pila": null,
-   "cap": "",
-   "papel": null,
-   "pilares": null,
-   "ciclo": null,
-   "duo": null,
-   "osc": null,
-   "cubo": null,
-   "diales": null,
-   "pieza": null,
-   "cita": null,
-   "sc": "",
-   "modo": "VIRAL",
-   "tema": "oscuro",
-   "bg": "gold",
-   "ritmo": 0.9833333333333333,
-   "total": 36.9,
-   "inicio": 25.9,
-   "fin": 29.3,
-   "texto": "Tu inmueble puede ser la próxima gran oportunidad.",
-   "tr": "barrido",
-   "trs": "barrido",
-   "sfx": [
-    {
-     "t": 0.04,
-     "tipo": "whoosh",
-     "vol": 0.16
-    },
-    {
-     "t": 0.6883333333333332,
-     "tipo": "thud",
-     "vol": 0.14
-    },
-    {
-     "t": 1.8683333333333332,
-     "tipo": "ding",
-     "vol": 0.18
-    }
-   ]
-  },
-  {
-   "n": 9,
-   "t": "LIST",
-   "voz": "En IMNOBA publicas gratis, sin comisión: casas, apartamentos y autos.",
-   "dur": 4,
-   "h": "PUBLICA EN IMNOBA",
-   "w": "IMNOBA",
-   "sub": "",
-   "ic": "casa",
-   "num": null,
-   "vs": null,
-   "bars": [],
-   "barsU": "",
-   "hi": -1,
-   "line": null,
-   "items": [
-    {
-     "l": "Gratis y sin comisión",
-     "ic": "check"
-    },
-    {
-     "l": "Casas, apartamentos y autos",
-     "ic": "check"
-    },
-    {
-     "l": "Llegas a más compradores",
-     "ic": "check"
-    }
-   ],
    "stops": [],
    "end": "",
    "donut": [],
@@ -797,7 +738,7 @@
    "red": null,
    "termo": null,
    "pila": null,
-   "cap": "",
+   "cap": "zoom logarítmico",
    "papel": null,
    "pilares": null,
    "ciclo": null,
@@ -805,18 +746,21 @@
    "osc": null,
    "cubo": null,
    "diales": null,
-   "pieza": null,
+   "pieza": {
+    "id": "pte-zoom",
+    "props": {}
+   },
    "cita": null,
    "sc": "",
    "modo": "VIRAL",
    "tema": "oscuro",
    "bg": "dark",
    "ritmo": 1,
-   "total": 36.9,
-   "inicio": 29.3,
-   "fin": 33.3,
-   "texto": "En IMNOBA publicas gratis, sin comisión: casas, apartamentos y autos.",
-   "tr": "barrido",
+   "total": 46.6,
+   "inicio": 36,
+   "fin": 42.8,
+   "texto": "Haz zoom de mil metros a un milímetro: no hay un tubo macizo, hay un panal de alambres.",
+   "tr": "zoom",
    "trs": "barrido",
    "sfx": [
     {
@@ -825,30 +769,195 @@
      "vol": 0.16
     },
     {
-     "t": 0.75,
-     "tipo": "pop",
-     "vol": 0.14
+     "t": 0.05,
+     "tipo": "whoosh",
+     "vol": 0.12
     },
     {
-     "t": 1.37,
-     "tipo": "pop",
-     "vol": 0.14
+     "t": 0.3,
+     "tipo": "clic",
+     "vol": 0.04
+    },
+    {
+     "t": 0.43,
+     "tipo": "clic",
+     "vol": 0.04
+    },
+    {
+     "t": 0.56,
+     "tipo": "clic",
+     "vol": 0.04
+    },
+    {
+     "t": 0.69,
+     "tipo": "clic",
+     "vol": 0.04
+    },
+    {
+     "t": 0.8200000000000001,
+     "tipo": "clic",
+     "vol": 0.04
+    },
+    {
+     "t": 0.95,
+     "tipo": "clic",
+     "vol": 0.04
+    },
+    {
+     "t": 1.08,
+     "tipo": "clic",
+     "vol": 0.04
+    },
+    {
+     "t": 1.21,
+     "tipo": "clic",
+     "vol": 0.04
+    },
+    {
+     "t": 1.34,
+     "tipo": "clic",
+     "vol": 0.04
+    },
+    {
+     "t": 1.47,
+     "tipo": "clic",
+     "vol": 0.04
+    },
+    {
+     "t": 1.6,
+     "tipo": "clic",
+     "vol": 0.04
+    },
+    {
+     "t": 1.7300000000000002,
+     "tipo": "clic",
+     "vol": 0.04
+    },
+    {
+     "t": 1.86,
+     "tipo": "clic",
+     "vol": 0.04
     },
     {
      "t": 1.99,
+     "tipo": "clic",
+     "vol": 0.04
+    },
+    {
+     "t": 2.12,
+     "tipo": "clic",
+     "vol": 0.04
+    },
+    {
+     "t": 2.25,
+     "tipo": "clic",
+     "vol": 0.04
+    },
+    {
+     "t": 2.38,
+     "tipo": "clic",
+     "vol": 0.04
+    },
+    {
+     "t": 2.51,
+     "tipo": "clic",
+     "vol": 0.04
+    },
+    {
+     "t": 2.6399999999999997,
+     "tipo": "clic",
+     "vol": 0.04
+    },
+    {
+     "t": 2.77,
+     "tipo": "clic",
+     "vol": 0.04
+    },
+    {
+     "t": 2.9,
+     "tipo": "clic",
+     "vol": 0.04
+    },
+    {
+     "t": 3.03,
+     "tipo": "clic",
+     "vol": 0.04
+    },
+    {
+     "t": 3.16,
+     "tipo": "clic",
+     "vol": 0.04
+    },
+    {
+     "t": 3.29,
+     "tipo": "clic",
+     "vol": 0.04
+    },
+    {
+     "t": 3.42,
+     "tipo": "clic",
+     "vol": 0.04
+    },
+    {
+     "t": 3.55,
+     "tipo": "clic",
+     "vol": 0.04
+    },
+    {
+     "t": 3.6799999999999997,
+     "tipo": "clic",
+     "vol": 0.04
+    },
+    {
+     "t": 3.81,
+     "tipo": "clic",
+     "vol": 0.04
+    },
+    {
+     "t": 3.94,
+     "tipo": "clic",
+     "vol": 0.04
+    },
+    {
+     "t": 4.07,
+     "tipo": "clic",
+     "vol": 0.04
+    },
+    {
+     "t": 4.2,
+     "tipo": "clic",
+     "vol": 0.04
+    },
+    {
+     "t": 4.33,
+     "tipo": "clic",
+     "vol": 0.04
+    },
+    {
+     "t": 4.46,
+     "tipo": "clic",
+     "vol": 0.04
+    },
+    {
+     "t": 4.6,
+     "tipo": "ding",
+     "vol": 0.2
+    },
+    {
+     "t": 5,
      "tipo": "pop",
-     "vol": 0.14
+     "vol": 0.1
     }
    ]
   },
   {
-   "n": 10,
+   "n": 8,
    "t": "CTA",
-   "voz": "No esperes al metro: publica gratis hoy en IMNOBA.",
-   "dur": 3.6,
-   "h": "PUBLICA GRATIS HOY",
-   "w": "GRATIS",
-   "sub": "imnoba.com",
+   "voz": "Guárdalo para repasar estática y síguenos en Sinapsis.",
+   "dur": 3.8,
+   "h": "GUÁRDALO Y SÍGUENOS",
+   "w": "SÍGUENOS",
+   "sub": "Más ciencia en SINAPSIS",
    "ic": "cohete",
    "num": null,
    "vs": null,
@@ -885,11 +994,11 @@
    "modo": "VIRAL",
    "tema": "oscuro",
    "bg": "gold",
-   "ritmo": 0.9843749999999999,
-   "total": 36.9,
-   "inicio": 33.3,
-   "fin": 36.9,
-   "texto": "No esperes al metro: publica gratis hoy en IMNOBA.",
+   "ritmo": 1,
+   "total": 46.6,
+   "inicio": 42.8,
+   "fin": 46.6,
+   "texto": "Guárdalo para repasar estática y síguenos en Sinapsis.",
    "tr": "barrido",
    "trs": "barrido",
    "sfx": [
@@ -899,12 +1008,12 @@
      "vol": 0.16
     },
     {
-     "t": 0.49218749999999994,
+     "t": 0.5,
      "tipo": "ding",
      "vol": 0.2
     },
     {
-     "t": 1.0828125,
+     "t": 1.1,
      "tipo": "pop",
      "vol": 0.15
     }
