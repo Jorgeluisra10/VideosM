@@ -50,7 +50,7 @@ export const PteRoebling: React.FC<P> = ({ e }) => {
       </svg>
       <Cap e={e} color={AN.tinta} />
       <Frases id="titular-roebling" y={430} frases={[{ px: 100, t: 0.2, texto: "BROOKLYN,\n1883", color: AN.tinta }, { px: 100, t: 3.0, texto: "MÁS DE 5.000\nALAMBRES", color: AN.rojo }]} />
-      <Texto texto="CUADERNO DE CAMPO · J. A. ROEBLING" x={126} y={639} px={25} color={AN.papel} alinear="left" delay={0.3} peso={800} id="roebling-head" />
+      <Texto texto="CUADERNO DE CAMPO · BROOKLYN, 1883" x={126} y={639} px={25} color={AN.papel} alinear="left" delay={0.3} peso={800} id="roebling-head" />
       <Texto texto="19 hebras" x={CX} y={1170} px={30} color={AN.tinta} delay={R.hebras + 1.2} peso={800} id="roebling-hebras" />
       <Texto texto="corte · ≈ 40 cm (15¾ in)" x={CX} y={1216} px={22} color={AN.tinta} delay={R.hebras + 1.5} peso={500} id="roebling-diam" />
       <Odometro valor={n} x={780} y={860} px={92} digitos={4} prefijo="" sufijo="+" color={AN.rojo} id="roebling-odo" />
