@@ -8,6 +8,6 @@
     {"t": "PIEZA", "voz": "En cinco experimentos, Thomas y Morwitz vieron que el mismo centavo pesa distinto si cambia el primer dígito.", "dur": 7.0, "h": "EL MISMO CENTAVO PESA DISTINTO", "w": "DISTINTO", "cap": "Journal of Consumer Research, 2005", "pieza": {"id": "dig-thomas"}},
     {"t": "PIEZA", "voz": "En tiendas reales, un centavo más sobre un noventa y nueve se siente como más de veinte.", "dur": 6.4, "h": "UN CENTAVO SE SIENTE COMO MÁS DE 20", "w": "VEINTE", "cap": "datos de 25 cadenas de tiendas", "pieza": {"id": "dig-escala"}},
     {"t": "PIEZA", "voz": "Pero el seguimiento ocular lo complica: la primera mirada cae hacia el centro del precio.", "dur": 6.2, "h": "SESGO REAL, MECANISMO EN DEBATE", "w": "DEBATE", "cap": "seguimiento ocular, 2023", "pieza": {"id": "dig-ojo"}},
-    {"t": "CTA", "voz": "Guárdalo para tus repasos de sesgos y síguenos en Sinapsis.", "dur": 3.8, "h": "GUÁRDALO Y SÍGUENOS", "w": "SÍGUENOS", "sub": "Más ciencia en SINAPSIS"}
+    {"t": "CTA", "voz": "Guárdalo para repasar sesgos y síguenos en Sinapsis.", "dur": 3.8, "h": "GUÁRDALO Y SÍGUENOS", "w": "SÍGUENOS", "sub": "Más ciencia en SINAPSIS"}
   ]
 }
