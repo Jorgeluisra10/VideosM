@@ -1,0 +1,13 @@
+{
+  "titulo": "Tu cerebro se lava mientras duermes",
+  "scenes": [
+    {"t": "PIEZA", "voz": "Tu cerebro se lava solo mientras duermes.", "dur": 4.2, "h": "TU CEREBRO SE LAVA", "w": "LAVA", "cap": "solo mientras duermes", "pieza": {"id": "glf-gancho"}},
+    {"t": "PIEZA", "voz": "Despierto, tus neuronas trabajan y van dejando residuos entre las células.", "dur": 4.6, "h": "PENSAR ENSUCIA", "w": "ENSUCIA", "cap": "residuos entre las células", "pieza": {"id": "glf-basura"}},
+    {"t": "PIEZA", "voz": "Un líquido recorre los vasos y se lleva esos desechos.", "dur": 5.4, "h": "EL SISTEMA GLINFÁTICO", "w": "GLINFÁTICO", "cap": "descrito en 2012", "pieza": {"id": "glf-tuberias"}},
+    {"t": "PIEZA", "voz": "Al dormir, el espacio entre las células se ensancha.", "dur": 5.0, "h": "AL DORMIR, EL ESPACIO SE ABRE", "w": "ESPACIO", "cap": "en ratones", "pieza": {"id": "glf-sueno"}},
+    {"t": "PIEZA", "voz": "Y los desechos salen el doble de rápido.", "dur": 4.6, "h": "EL DOBLE DE RÁPIDO", "w": "DOBLE", "cap": "en ratones", "pieza": {"id": "glf-doble"}},
+    {"t": "PIEZA", "voz": "En personas dormidas se vieron olas lentas de líquido cada veinte segundos.", "dur": 5.2, "h": "EN HUMANOS: OLAS DE LÍQUIDO", "w": "OLAS", "cap": "resonancia, 2019", "pieza": {"id": "glf-humano"}},
+    {"t": "PIEZA", "voz": "Después de una sola noche en vela, el amiloide sube.", "dur": 5.0, "h": "UNA NOCHE EN VELA", "w": "VELA", "cap": "estudio con PET", "pieza": {"id": "glf-vela"}},
+    {"t": "CTA", "voz": "Duerme siete horas o más. Compártelo con quien trasnocha.", "dur": 3.6, "h": "DUERME 7 HORAS O MÁS", "w": "DUERME", "sub": "Más ciencia en SINAPSIS"}
+  ]
+}

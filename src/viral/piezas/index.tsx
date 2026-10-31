@@ -33,6 +33,8 @@ import { DscCatalogo, DscDocs, DscGancho, DscHack, DscSplit } from "./dscr1";
 import { TejEpitelial, TejGancho, TejSangre } from "./tej1";
 import { TejHueso, TejMuscular, TejNervioso } from "./tej2";
 import { EinBarrera, EinEsculpe, EinGancho, EinTripartita } from "./ein1";
+import { GlfBasura, GlfGancho, GlfTuberias } from "./glf1";
+import { GlfDoble, GlfHumano, GlfSueno, GlfVela } from "./glf2";
 import { EinCautela, EinDiamond, EinGfap, EinHallazgo } from "./ein2";
 
 export const COMPONENTES_PIEZA: Record<string, React.FC<{ e: EscenaViralGuardada }>> = {
@@ -66,6 +68,13 @@ export const COMPONENTES_PIEZA: Record<string, React.FC<{ e: EscenaViralGuardada
   "real-plusvalia": RealPlusvalia,
   "real-caminata": RealCaminata,
   "real-cierre": RealCierre,
+  "glf-gancho": GlfGancho,
+  "glf-basura": GlfBasura,
+  "glf-tuberias": GlfTuberias,
+  "glf-sueno": GlfSueno,
+  "glf-doble": GlfDoble,
+  "glf-humano": GlfHumano,
+  "glf-vela": GlfVela,
   "med-gancho": MedGancho,
   "med-sonda1": MedSonda1,
   "med-sonda2": MedSonda2,

@@ -1,0 +1,18 @@
+{
+  "version": 1,
+  "slug": "2026-10-31-cerebro-se-lava",
+  "titulo": "Tu cerebro se lava mientras duermes",
+  "serie": "neuroanatomia",
+  "estado": "grabado",
+  "guion": "Tu cerebro se lava solo mientras duermes.\nDespierto, tus neuronas trabajan y van dejando residuos entre las células.\nUn líquido recorre los vasos y se lleva esos desechos.\nAl dormir, el espacio entre las células se ensancha.\nY los desechos salen el doble de rápido.\nEn personas dormidas se vieron olas lentas de líquido cada veinte segundos.\nDespués de una sola noche en vela, el amiloide sube.\nDuerme siete horas o más. Compártelo con quien trasnocha.",
+  "gancho": "Tu cerebro se lava solo mientras duermes.",
+  "duracion_seg": 37.6,
+  "notas": "Se espera retención en los primeros 3 s (cerebro que se limpia) y guardados por el dato 2x y el cierre de 7 horas. Mirar: retención a 3 s, finalización, guardados y compartidos.",
+  "voz_usada": "",
+  "instrucciones_voz": "",
+  "creado": "2026-10-31T17:15:59.876Z",
+  "origen_clave": "5d2b7484",
+  "video": "revision.mp4",
+  "miniatura": "miniatura.jpg",
+  "entrega": "entrega.md"
+}

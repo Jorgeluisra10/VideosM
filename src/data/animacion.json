@@ -1,347 +1,18 @@
 {
  "version": 1,
- "titulo": "El metro que valoriza Bogotá",
- "paleta": "imnoba",
+ "titulo": "Tu cerebro se lava mientras duermes",
+ "paleta": "medicina",
  "sfx": true,
  "fps": 60,
- "duracion": 36.9,
+ "duracion": 37.6,
  "escenas": [
   {
    "n": 1,
-   "t": "HOOK",
-   "voz": "¿Te imaginas cruzar Bogotá en minutos? ¡Llega el metro!",
-   "dur": 3.6,
-   "h": "BOGOTÁ NECESITA METRO",
-   "w": "METRO",
-   "sub": "y tu inmueble lo agradece",
-   "ic": "tren",
-   "num": null,
-   "vs": null,
-   "bars": [],
-   "barsU": "",
-   "hi": -1,
-   "line": null,
-   "items": [],
-   "stops": [],
-   "end": "",
-   "donut": [],
-   "picto": null,
-   "top": [],
-   "myth": "",
-   "truth": "",
-   "zoom": null,
-   "capas": null,
-   "mira": null,
-   "impacto": null,
-   "red": null,
-   "termo": null,
-   "pila": null,
-   "cap": "",
-   "papel": null,
-   "pilares": null,
-   "ciclo": null,
-   "duo": null,
-   "osc": null,
-   "cubo": null,
-   "diales": null,
-   "pieza": null,
-   "cita": null,
-   "sc": "",
-   "modo": "VIRAL",
-   "tema": "oscuro",
-   "bg": "dark",
-   "ritmo": 1,
-   "total": 36.9,
-   "inicio": 0,
-   "fin": 3.6,
-   "texto": "¿Te imaginas cruzar Bogotá en minutos? ¡Llega el metro!",
-   "tr": "barrido",
-   "trs": "barrido",
-   "sfx": [
-    {
-     "t": 0.04,
-     "tipo": "whoosh",
-     "vol": 0.16
-    },
-    {
-     "t": 0.32,
-     "tipo": "thud",
-     "vol": 0.2
-    }
-   ]
-  },
-  {
-   "n": 2,
-   "t": "NUM",
-   "voz": "Hoy se pierden horas en trancones cada día.",
-   "dur": 3.4,
-   "h": "TIEMPO PERDIDO",
-   "w": "PERDIDO",
-   "sub": "",
-   "ic": "reloj",
-   "num": {
-    "n": "2",
-    "u": "h",
-    "pre": "~",
-    "l": "AL DÍA EN TRANCONES"
-   },
-   "vs": null,
-   "bars": [],
-   "barsU": "",
-   "hi": -1,
-   "line": null,
-   "items": [],
-   "stops": [],
-   "end": "",
-   "donut": [],
-   "picto": null,
-   "top": [],
-   "myth": "",
-   "truth": "",
-   "zoom": null,
-   "capas": null,
-   "mira": null,
-   "impacto": null,
-   "red": null,
-   "termo": null,
-   "pila": null,
-   "cap": "",
-   "papel": null,
-   "pilares": null,
-   "ciclo": null,
-   "duo": null,
-   "osc": null,
-   "cubo": null,
-   "diales": null,
-   "pieza": null,
-   "cita": null,
-   "sc": "",
-   "modo": "VIRAL",
-   "tema": "oscuro",
-   "bg": "gold",
-   "ritmo": 0.9833333333333333,
-   "total": 36.9,
-   "inicio": 3.6,
-   "fin": 7,
-   "texto": "Hoy se pierden horas en trancones cada día.",
-   "tr": "barrido",
-   "trs": "barrido",
-   "sfx": [
-    {
-     "t": 0.04,
-     "tipo": "whoosh",
-     "vol": 0.16
-    },
-    {
-     "t": 0.59,
-     "tipo": "tick",
-     "vol": 0.12
-    },
-    {
-     "t": 0.59,
-     "tipo": "clic",
-     "vol": 0.07
-    },
-    {
-     "t": 0.72,
-     "tipo": "clic",
-     "vol": 0.07
-    },
-    {
-     "t": 0.85,
-     "tipo": "clic",
-     "vol": 0.07
-    },
-    {
-     "t": 0.98,
-     "tipo": "clic",
-     "vol": 0.07
-    },
-    {
-     "t": 1.1099999999999999,
-     "tipo": "clic",
-     "vol": 0.07
-    },
-    {
-     "t": 1.24,
-     "tipo": "clic",
-     "vol": 0.07
-    },
-    {
-     "t": 1.37,
-     "tipo": "clic",
-     "vol": 0.07
-    },
-    {
-     "t": 1.5,
-     "tipo": "clic",
-     "vol": 0.07
-    },
-    {
-     "t": 1.63,
-     "tipo": "clic",
-     "vol": 0.07
-    },
-    {
-     "t": 1.7599999999999998,
-     "tipo": "clic",
-     "vol": 0.07
-    },
-    {
-     "t": 1.8900000000000001,
-     "tipo": "clic",
-     "vol": 0.07
-    },
-    {
-     "t": 2.065,
-     "tipo": "ding",
-     "vol": 0.18
-    }
-   ]
-  },
-  {
-   "n": 3,
-   "t": "VS",
-   "voz": "Otras capitales ya tienen metro. Bogotá apenas empieza.",
-   "dur": 3.7,
-   "h": "LÍNEAS DE METRO",
-   "w": "METRO",
-   "sub": "",
-   "ic": "tren",
-   "num": null,
-   "vs": {
-    "a": {
-     "l": "BOGOTÁ",
-     "n": "0",
-     "ic": "tren"
-    },
-    "b": {
-     "l": "SANTIAGO",
-     "n": "7",
-     "ic": "tren"
-    },
-    "op": "<"
-   },
-   "bars": [],
-   "barsU": "",
-   "hi": -1,
-   "line": null,
-   "items": [],
-   "stops": [],
-   "end": "",
-   "donut": [],
-   "picto": null,
-   "top": [],
-   "myth": "",
-   "truth": "",
-   "zoom": null,
-   "capas": null,
-   "mira": null,
-   "impacto": null,
-   "red": null,
-   "termo": null,
-   "pila": null,
-   "cap": "",
-   "papel": null,
-   "pilares": null,
-   "ciclo": null,
-   "duo": null,
-   "osc": null,
-   "cubo": null,
-   "diales": null,
-   "pieza": null,
-   "cita": null,
-   "sc": "",
-   "modo": "VIRAL",
-   "tema": "oscuro",
-   "bg": "dark",
-   "ritmo": 0.9027777777777778,
-   "total": 36.9,
-   "inicio": 7,
-   "fin": 10.7,
-   "texto": "Otras capitales ya tienen metro. Bogotá apenas empieza.",
-   "tr": "barrido",
-   "trs": "barrido",
-   "sfx": [
-    {
-     "t": 0.04,
-     "tipo": "whoosh",
-     "vol": 0.16
-    },
-    {
-     "t": 0.5416666666666666,
-     "tipo": "clic",
-     "vol": 0.05
-    },
-    {
-     "t": 0.6716666666666666,
-     "tipo": "clic",
-     "vol": 0.05
-    },
-    {
-     "t": 0.8016666666666666,
-     "tipo": "clic",
-     "vol": 0.05
-    },
-    {
-     "t": 0.8125,
-     "tipo": "tick",
-     "vol": 0.12
-    },
-    {
-     "t": 0.9316666666666666,
-     "tipo": "clic",
-     "vol": 0.05
-    },
-    {
-     "t": 1.0616666666666665,
-     "tipo": "clic",
-     "vol": 0.05
-    },
-    {
-     "t": 1.1916666666666667,
-     "tipo": "clic",
-     "vol": 0.05
-    },
-    {
-     "t": 1.3216666666666668,
-     "tipo": "clic",
-     "vol": 0.05
-    },
-    {
-     "t": 1.4516666666666667,
-     "tipo": "clic",
-     "vol": 0.05
-    },
-    {
-     "t": 1.5816666666666666,
-     "tipo": "clic",
-     "vol": 0.05
-    },
-    {
-     "t": 1.7116666666666664,
-     "tipo": "clic",
-     "vol": 0.05
-    },
-    {
-     "t": 1.8055555555555556,
-     "tipo": "ding",
-     "vol": 0.18
-    },
-    {
-     "t": 1.8416666666666668,
-     "tipo": "clic",
-     "vol": 0.05
-    }
-   ]
-  },
-  {
-   "n": 4,
-   "t": "ROUTE",
-   "voz": "La primera línea conecta el sur con el norte.",
-   "dur": 4.4,
-   "h": "LA PRIMERA LÍNEA",
-   "w": "PRIMERA",
+   "t": "PIEZA",
+   "voz": "Tu cerebro se lava solo mientras duermes.",
+   "dur": 4.2,
+   "h": "TU CEREBRO SE LAVA",
+   "w": "LAVA",
    "sub": "",
    "ic": "brillo",
    "num": null,
@@ -351,13 +22,8 @@
    "hi": -1,
    "line": null,
    "items": [],
-   "stops": [
-    "PORTAL AMÉRICAS",
-    "KENNEDY",
-    "CENTRO",
-    "CALLE 72"
-   ],
-   "end": "VALORIZACIÓN",
+   "stops": [],
+   "end": "",
    "donut": [],
    "picto": null,
    "top": [],
@@ -370,7 +36,7 @@
    "red": null,
    "termo": null,
    "pila": null,
-   "cap": "",
+   "cap": "solo mientras duermes",
    "papel": null,
    "pilares": null,
    "ciclo": null,
@@ -378,19 +44,22 @@
    "osc": null,
    "cubo": null,
    "diales": null,
-   "pieza": null,
+   "pieza": {
+    "id": "glf-gancho",
+    "props": {}
+   },
    "cita": null,
    "sc": "",
    "modo": "VIRAL",
    "tema": "oscuro",
-   "bg": "gold",
-   "ritmo": 0.9634146341463415,
-   "total": 36.9,
-   "inicio": 10.7,
-   "fin": 15.1,
-   "texto": "La primera línea conecta el sur con el norte.",
+   "bg": "dark",
+   "ritmo": 0.8928571428571428,
+   "total": 37.6,
+   "inicio": 0,
+   "fin": 4.2,
+   "texto": "Tu cerebro se lava solo mientras duermes.",
    "tr": "barrido",
-   "trs": "barrido",
+   "trs": "corte",
    "sfx": [
     {
      "t": 0.04,
@@ -398,27 +67,463 @@
      "vol": 0.16
     },
     {
-     "t": 0.9152439024390244,
-     "tipo": "tick",
+     "t": 0.05,
+     "tipo": "whoosh",
      "vol": 0.12
     },
     {
-     "t": 1.5896341463414634,
-     "tipo": "tick",
+     "t": 0.47857142857142854,
+     "tipo": "heartbeat",
+     "vol": 0.14
+    },
+    {
+     "t": 0.8035714285714285,
+     "tipo": "pop",
+     "vol": 0.1
+    },
+    {
+     "t": 1.5178571428571428,
+     "tipo": "pop",
      "vol": 0.12
     },
     {
-     "t": 2.2640243902439026,
+     "t": 2.4107142857142856,
+     "tipo": "whoosh",
+     "vol": 0.16
+    },
+    {
+     "t": 3.3035714285714284,
+     "tipo": "ding",
+     "vol": 0.18
+    }
+   ]
+  },
+  {
+   "n": 2,
+   "t": "PIEZA",
+   "voz": "Despierto, tus neuronas trabajan y van dejando residuos entre las células.",
+   "dur": 4.6,
+   "h": "PENSAR ENSUCIA",
+   "w": "ENSUCIA",
+   "sub": "",
+   "ic": "tendencia-baja",
+   "num": null,
+   "vs": null,
+   "bars": [],
+   "barsU": "",
+   "hi": -1,
+   "line": null,
+   "items": [],
+   "stops": [],
+   "end": "",
+   "donut": [],
+   "picto": null,
+   "top": [],
+   "myth": "",
+   "truth": "",
+   "zoom": null,
+   "capas": null,
+   "mira": null,
+   "impacto": null,
+   "red": null,
+   "termo": null,
+   "pila": null,
+   "cap": "residuos entre las células",
+   "papel": null,
+   "pilares": null,
+   "ciclo": null,
+   "duo": null,
+   "osc": null,
+   "cubo": null,
+   "diales": null,
+   "pieza": {
+    "id": "glf-basura",
+    "props": {}
+   },
+   "cita": null,
+   "sc": "",
+   "modo": "VIRAL",
+   "tema": "claro",
+   "bg": "light",
+   "ritmo": 0.9021739130434782,
+   "total": 37.6,
+   "inicio": 4.2,
+   "fin": 8.8,
+   "texto": "Despierto, tus neuronas trabajan y van dejando residuos entre las células.",
+   "tr": "corte",
+   "trs": "zoom",
+   "sfx": [
+    {
+     "t": 0.04,
+     "tipo": "whoosh",
+     "vol": 0.16
+    },
+    {
+     "t": 0.05,
+     "tipo": "whoosh",
+     "vol": 0.1
+    },
+    {
+     "t": 0.8119565217391304,
+     "tipo": "zap",
+     "vol": 0.1
+    },
+    {
+     "t": 0.9021739130434782,
+     "tipo": "clic",
+     "vol": 0.04
+    },
+    {
+     "t": 1.0321739130434782,
+     "tipo": "clic",
+     "vol": 0.04
+    },
+    {
+     "t": 1.1621739130434783,
+     "tipo": "clic",
+     "vol": 0.04
+    },
+    {
+     "t": 1.2630434782608693,
+     "tipo": "zap",
+     "vol": 0.1
+    },
+    {
+     "t": 1.2921739130434782,
+     "tipo": "clic",
+     "vol": 0.04
+    },
+    {
+     "t": 1.422173913043478,
+     "tipo": "clic",
+     "vol": 0.04
+    },
+    {
+     "t": 1.5521739130434782,
+     "tipo": "clic",
+     "vol": 0.04
+    },
+    {
+     "t": 1.6821739130434783,
+     "tipo": "clic",
+     "vol": 0.04
+    },
+    {
+     "t": 1.7141304347826085,
+     "tipo": "zap",
+     "vol": 0.1
+    },
+    {
+     "t": 1.8121739130434782,
+     "tipo": "clic",
+     "vol": 0.04
+    },
+    {
+     "t": 1.942173913043478,
+     "tipo": "clic",
+     "vol": 0.04
+    },
+    {
+     "t": 2.072173913043478,
+     "tipo": "clic",
+     "vol": 0.04
+    },
+    {
+     "t": 2.1652173913043473,
+     "tipo": "zap",
+     "vol": 0.1
+    },
+    {
+     "t": 2.2021739130434783,
+     "tipo": "clic",
+     "vol": 0.04
+    },
+    {
+     "t": 2.332173913043478,
+     "tipo": "clic",
+     "vol": 0.04
+    },
+    {
+     "t": 2.462173913043478,
+     "tipo": "clic",
+     "vol": 0.04
+    },
+    {
+     "t": 2.592173913043478,
+     "tipo": "clic",
+     "vol": 0.04
+    },
+    {
+     "t": 2.7221739130434783,
+     "tipo": "clic",
+     "vol": 0.04
+    },
+    {
+     "t": 2.8521739130434782,
+     "tipo": "clic",
+     "vol": 0.04
+    },
+    {
+     "t": 2.982173913043478,
+     "tipo": "clic",
+     "vol": 0.04
+    },
+    {
+     "t": 3.112173913043478,
+     "tipo": "clic",
+     "vol": 0.04
+    },
+    {
+     "t": 3.242173913043478,
+     "tipo": "clic",
+     "vol": 0.04
+    },
+    {
+     "t": 3.428260869565217,
+     "tipo": "thud",
+     "vol": 0.16
+    }
+   ]
+  },
+  {
+   "n": 3,
+   "t": "PIEZA",
+   "voz": "Un líquido recorre los vasos y se lleva esos desechos.",
+   "dur": 5.4,
+   "h": "EL SISTEMA GLINFÁTICO",
+   "w": "GLINFÁTICO",
+   "sub": "",
+   "ic": "brillo",
+   "num": null,
+   "vs": null,
+   "bars": [],
+   "barsU": "",
+   "hi": -1,
+   "line": null,
+   "items": [],
+   "stops": [],
+   "end": "",
+   "donut": [],
+   "picto": null,
+   "top": [],
+   "myth": "",
+   "truth": "",
+   "zoom": null,
+   "capas": null,
+   "mira": null,
+   "impacto": null,
+   "red": null,
+   "termo": null,
+   "pila": null,
+   "cap": "descrito en 2012",
+   "papel": null,
+   "pilares": null,
+   "ciclo": null,
+   "duo": null,
+   "osc": null,
+   "cubo": null,
+   "diales": null,
+   "pieza": {
+    "id": "glf-tuberias",
+    "props": {}
+   },
+   "cita": null,
+   "sc": "",
+   "modo": "VIRAL",
+   "tema": "oscuro",
+   "bg": "dark",
+   "ritmo": 0.9166666666666666,
+   "total": 37.6,
+   "inicio": 8.8,
+   "fin": 14.2,
+   "texto": "Un líquido recorre los vasos y se lleva esos desechos.",
+   "tr": "zoom",
+   "trs": "semitono",
+   "sfx": [
+    {
+     "t": 0.04,
+     "tipo": "whoosh",
+     "vol": 0.16
+    },
+    {
+     "t": 0.05,
+     "tipo": "whoosh",
+     "vol": 0.1
+    },
+    {
+     "t": 0.38333333333333336,
+     "tipo": "pop",
+     "vol": 0.1
+    },
+    {
+     "t": 0.9166666666666666,
+     "tipo": "pop",
+     "vol": 0.1
+    },
+    {
+     "t": 1.65,
+     "tipo": "whoosh",
+     "vol": 0.14
+    },
+    {
+     "t": 2.3833333333333333,
      "tipo": "tick",
+     "vol": 0.1
+    },
+    {
+     "t": 2.7958333333333334,
+     "tipo": "tick",
+     "vol": 0.1
+    },
+    {
+     "t": 3.208333333333333,
+     "tipo": "tick",
+     "vol": 0.1
+    },
+    {
+     "t": 3.9416666666666664,
+     "tipo": "ding",
+     "vol": 0.16
+    }
+   ]
+  },
+  {
+   "n": 4,
+   "t": "PIEZA",
+   "voz": "Al dormir, el espacio entre las células se ensancha.",
+   "dur": 5,
+   "h": "AL DORMIR, EL ESPACIO SE ABRE",
+   "w": "ESPACIO",
+   "sub": "",
+   "ic": "brillo",
+   "num": null,
+   "vs": null,
+   "bars": [],
+   "barsU": "",
+   "hi": -1,
+   "line": null,
+   "items": [],
+   "stops": [],
+   "end": "",
+   "donut": [],
+   "picto": null,
+   "top": [],
+   "myth": "",
+   "truth": "",
+   "zoom": null,
+   "capas": null,
+   "mira": null,
+   "impacto": null,
+   "red": null,
+   "termo": null,
+   "pila": null,
+   "cap": "en ratones",
+   "papel": null,
+   "pilares": null,
+   "ciclo": null,
+   "duo": null,
+   "osc": null,
+   "cubo": null,
+   "diales": null,
+   "pieza": {
+    "id": "glf-sueno",
+    "props": {}
+   },
+   "cita": null,
+   "sc": "",
+   "modo": "VIRAL",
+   "tema": "claro",
+   "bg": "light",
+   "ritmo": 0.9099999999999999,
+   "total": 37.6,
+   "inicio": 14.2,
+   "fin": 19.2,
+   "texto": "Al dormir, el espacio entre las células se ensancha.",
+   "tr": "semitono",
+   "trs": "corte",
+   "sfx": [
+    {
+     "t": 0.04,
+     "tipo": "whoosh",
+     "vol": 0.16
+    },
+    {
+     "t": 0.05,
+     "tipo": "whoosh",
+     "vol": 0.1
+    },
+    {
+     "t": 1.547,
+     "tipo": "clic",
+     "vol": 0.16
+    },
+    {
+     "t": 1.8199999999999998,
+     "tipo": "whoosh",
      "vol": 0.12
     },
     {
-     "t": 2.9384146341463415,
-     "tipo": "tick",
-     "vol": 0.12
+     "t": 2.002,
+     "tipo": "clic",
+     "vol": 0.05
     },
     {
-     "t": 3.275609756097561,
+     "t": 2.1319999999999997,
+     "tipo": "clic",
+     "vol": 0.05
+    },
+    {
+     "t": 2.2619999999999996,
+     "tipo": "clic",
+     "vol": 0.05
+    },
+    {
+     "t": 2.392,
+     "tipo": "clic",
+     "vol": 0.05
+    },
+    {
+     "t": 2.522,
+     "tipo": "clic",
+     "vol": 0.05
+    },
+    {
+     "t": 2.6519999999999997,
+     "tipo": "clic",
+     "vol": 0.05
+    },
+    {
+     "t": 2.782,
+     "tipo": "clic",
+     "vol": 0.05
+    },
+    {
+     "t": 2.912,
+     "tipo": "clic",
+     "vol": 0.05
+    },
+    {
+     "t": 3.042,
+     "tipo": "clic",
+     "vol": 0.05
+    },
+    {
+     "t": 3.1719999999999997,
+     "tipo": "clic",
+     "vol": 0.05
+    },
+    {
+     "t": 3.3019999999999996,
+     "tipo": "clic",
+     "vol": 0.05
+    },
+    {
+     "t": 3.432,
+     "tipo": "clic",
+     "vol": 0.05
+    },
+    {
+     "t": 3.6399999999999997,
      "tipo": "ding",
      "vol": 0.18
     }
@@ -426,33 +531,20 @@
   },
   {
    "n": 5,
-   "t": "STEPS",
-   "voz": "Más acceso, más demanda, más valor para tu propiedad.",
-   "dur": 3.6,
-   "h": "CAUSA Y EFECTO",
-   "w": "EFECTO",
+   "t": "PIEZA",
+   "voz": "Y los desechos salen el doble de rápido.",
+   "dur": 4.6,
+   "h": "EL DOBLE DE RÁPIDO",
+   "w": "DOBLE",
    "sub": "",
-   "ic": "casa",
+   "ic": "velocimetro",
    "num": null,
    "vs": null,
    "bars": [],
    "barsU": "",
    "hi": -1,
    "line": null,
-   "items": [
-    {
-     "l": "METRO",
-     "ic": "tren"
-    },
-    {
-     "l": "MÁS DEMANDA",
-     "ic": "tendencia-alza"
-    },
-    {
-     "l": "MÁS VALOR",
-     "ic": "dolar"
-    }
-   ],
+   "items": [],
    "stops": [],
    "end": "",
    "donut": [],
@@ -467,7 +559,7 @@
    "red": null,
    "termo": null,
    "pila": null,
-   "cap": "",
+   "cap": "en ratones",
    "papel": null,
    "pilares": null,
    "ciclo": null,
@@ -475,19 +567,22 @@
    "osc": null,
    "cubo": null,
    "diales": null,
-   "pieza": null,
+   "pieza": {
+    "id": "glf-doble",
+    "props": {}
+   },
    "cita": null,
    "sc": "",
    "modo": "VIRAL",
-   "tema": "claro",
-   "bg": "light",
-   "ritmo": 1,
-   "total": 36.9,
-   "inicio": 15.1,
-   "fin": 18.7,
-   "texto": "Más acceso, más demanda, más valor para tu propiedad.",
-   "tr": "barrido",
-   "trs": "barrido",
+   "tema": "oscuro",
+   "bg": "dark",
+   "ritmo": 0.9021739130434782,
+   "total": 37.6,
+   "inicio": 19.2,
+   "fin": 23.8,
+   "texto": "Y los desechos salen el doble de rápido.",
+   "tr": "corte",
+   "trs": "semitono",
    "sfx": [
     {
      "t": 0.04,
@@ -495,131 +590,136 @@
      "vol": 0.16
     },
     {
-     "t": 0.75,
-     "tipo": "pop",
-     "vol": 0.14
+     "t": 0.05,
+     "tipo": "whoosh",
+     "vol": 0.1
     },
     {
-     "t": 1.37,
+     "t": 0.3804347826086957,
      "tipo": "pop",
-     "vol": 0.14
+     "vol": 0.1
     },
     {
-     "t": 1.99,
-     "tipo": "pop",
-     "vol": 0.14
+     "t": 0.9923913043478261,
+     "tipo": "clic",
+     "vol": 0.045
+    },
+    {
+     "t": 1.122391304347826,
+     "tipo": "clic",
+     "vol": 0.045
+    },
+    {
+     "t": 1.252391304347826,
+     "tipo": "clic",
+     "vol": 0.045
+    },
+    {
+     "t": 1.3823913043478262,
+     "tipo": "clic",
+     "vol": 0.045
+    },
+    {
+     "t": 1.512391304347826,
+     "tipo": "clic",
+     "vol": 0.045
+    },
+    {
+     "t": 1.642391304347826,
+     "tipo": "clic",
+     "vol": 0.045
+    },
+    {
+     "t": 1.772391304347826,
+     "tipo": "clic",
+     "vol": 0.045
+    },
+    {
+     "t": 1.9023913043478262,
+     "tipo": "clic",
+     "vol": 0.045
+    },
+    {
+     "t": 2.032391304347826,
+     "tipo": "clic",
+     "vol": 0.045
+    },
+    {
+     "t": 2.162391304347826,
+     "tipo": "clic",
+     "vol": 0.045
+    },
+    {
+     "t": 2.2923913043478263,
+     "tipo": "clic",
+     "vol": 0.045
+    },
+    {
+     "t": 2.4223913043478262,
+     "tipo": "clic",
+     "vol": 0.045
+    },
+    {
+     "t": 2.552391304347826,
+     "tipo": "clic",
+     "vol": 0.045
+    },
+    {
+     "t": 2.682391304347826,
+     "tipo": "clic",
+     "vol": 0.045
+    },
+    {
+     "t": 2.812391304347826,
+     "tipo": "clic",
+     "vol": 0.045
+    },
+    {
+     "t": 2.9423913043478263,
+     "tipo": "clic",
+     "vol": 0.045
+    },
+    {
+     "t": 3.072391304347826,
+     "tipo": "clic",
+     "vol": 0.045
+    },
+    {
+     "t": 3.202391304347826,
+     "tipo": "clic",
+     "vol": 0.045
+    },
+    {
+     "t": 3.332391304347826,
+     "tipo": "clic",
+     "vol": 0.045
+    },
+    {
+     "t": 3.3380434782608694,
+     "tipo": "golpe",
+     "vol": 0.18
+    },
+    {
+     "t": 3.4380434782608695,
+     "tipo": "ding",
+     "vol": 0.18
     }
    ]
   },
   {
    "n": 6,
-   "t": "LINE",
-   "voz": "Donde llega el transporte, el metro cuadrado sube.",
-   "dur": 3.8,
-   "h": "VALOR DEL M²",
-   "w": "M²",
+   "t": "PIEZA",
+   "voz": "En personas dormidas se vieron olas lentas de líquido cada veinte segundos.",
+   "dur": 5.2,
+   "h": "EN HUMANOS: OLAS DE LÍQUIDO",
+   "w": "OLAS",
    "sub": "",
-   "ic": "tren",
+   "ic": "brillo",
    "num": null,
    "vs": null,
    "bars": [],
    "barsU": "",
    "hi": -1,
-   "line": {
-    "pts": [
-     100,
-     104,
-     102,
-     112,
-     122,
-     128,
-     135
-    ],
-    "l0": "ANTES",
-    "l1": "DESPUÉS",
-    "end": "+35 %"
-   },
-   "items": [],
-   "stops": [],
-   "end": "",
-   "donut": [],
-   "picto": null,
-   "top": [],
-   "myth": "",
-   "truth": "",
-   "zoom": null,
-   "capas": null,
-   "mira": null,
-   "impacto": null,
-   "red": null,
-   "termo": null,
-   "pila": null,
-   "cap": "",
-   "papel": null,
-   "pilares": null,
-   "ciclo": null,
-   "duo": null,
-   "osc": null,
-   "cubo": null,
-   "diales": null,
-   "pieza": null,
-   "cita": null,
-   "sc": "",
-   "modo": "VIRAL",
-   "tema": "oscuro",
-   "bg": "dark",
-   "ritmo": 0.9054054054054054,
-   "total": 36.9,
-   "inicio": 18.7,
-   "fin": 22.5,
-   "texto": "Donde llega el transporte, el metro cuadrado sube.",
-   "tr": "barrido",
-   "trs": "barrido",
-   "sfx": [
-    {
-     "t": 0.04,
-     "tipo": "whoosh",
-     "vol": 0.16
-    },
-    {
-     "t": 0.6337837837837837,
-     "tipo": "zap",
-     "vol": 0.1
-    },
-    {
-     "t": 2.535135135135135,
-     "tipo": "ding",
-     "vol": 0.18
-    }
-   ]
-  },
-  {
-   "n": 7,
-   "t": "BARS",
-   "voz": "Mientras más cerca de la estación, más valorización.",
-   "dur": 3.4,
-   "h": "VALORIZACIÓN POR ZONA",
-   "w": "ZONA",
-   "sub": "",
-   "ic": "tren",
-   "num": null,
-   "vs": null,
-   "bars": [
-    {
-     "l": "LEJOS",
-     "v": 8
-    },
-    {
-     "l": "A 10 MIN",
-     "v": 19
-    },
-    {
-     "l": "A 5 MIN",
-     "v": 35
-    }
-   ],
-   "barsU": "%",
-   "hi": 2,
    "line": null,
    "items": [],
    "stops": [],
@@ -636,7 +736,7 @@
    "red": null,
    "termo": null,
    "pila": null,
-   "cap": "",
+   "cap": "resonancia, 2019",
    "papel": null,
    "pilares": null,
    "ciclo": null,
@@ -644,19 +744,22 @@
    "osc": null,
    "cubo": null,
    "diales": null,
-   "pieza": null,
+   "pieza": {
+    "id": "glf-humano",
+    "props": {}
+   },
    "cita": null,
    "sc": "",
    "modo": "VIRAL",
    "tema": "claro",
    "bg": "light",
-   "ritmo": 1,
-   "total": 36.9,
-   "inicio": 22.5,
-   "fin": 25.9,
-   "texto": "Mientras más cerca de la estación, más valorización.",
-   "tr": "barrido",
-   "trs": "barrido",
+   "ritmo": 0.9134615384615384,
+   "total": 37.6,
+   "inicio": 23.8,
+   "fin": 29,
+   "texto": "En personas dormidas se vieron olas lentas de líquido cada veinte segundos.",
+   "tr": "semitono",
+   "trs": "zoom",
    "sfx": [
     {
      "t": 0.04,
@@ -664,36 +767,51 @@
      "vol": 0.16
     },
     {
-     "t": 0.95,
-     "tipo": "pop",
-     "vol": 0.13
+     "t": 0.05,
+     "tipo": "whoosh",
+     "vol": 0.1
     },
     {
-     "t": 1.15,
+     "t": 0.3826923076923077,
      "tipo": "pop",
-     "vol": 0.13
+     "vol": 0.1
     },
     {
-     "t": 1.35,
-     "tipo": "pop",
-     "vol": 0.13
+     "t": 1.2788461538461537,
+     "tipo": "radar",
+     "vol": 0.1
     },
     {
-     "t": 2,
+     "t": 1.5528846153846154,
+     "tipo": "heartbeat",
+     "vol": 0.1
+    },
+    {
+     "t": 2.420673076923077,
+     "tipo": "heartbeat",
+     "vol": 0.1
+    },
+    {
+     "t": 3.2884615384615383,
+     "tipo": "heartbeat",
+     "vol": 0.1
+    },
+    {
+     "t": 4.019230769230769,
      "tipo": "ding",
      "vol": 0.16
     }
    ]
   },
   {
-   "n": 8,
-   "t": "SKYLINE",
-   "voz": "Tu inmueble puede ser la próxima gran oportunidad.",
-   "dur": 3.4,
-   "h": "TU INMUEBLE, MÁS VALIOSO",
-   "w": "VALIOSO",
-   "sub": "cerca de las estaciones",
-   "ic": "casa",
+   "n": 7,
+   "t": "PIEZA",
+   "voz": "Después de una sola noche en vela, el amiloide sube.",
+   "dur": 5,
+   "h": "UNA NOCHE EN VELA",
+   "w": "VELA",
+   "sub": "",
+   "ic": "tendencia-alza",
    "num": null,
    "vs": null,
    "bars": [],
@@ -701,88 +819,6 @@
    "hi": -1,
    "line": null,
    "items": [],
-   "stops": [],
-   "end": "+35 %",
-   "donut": [],
-   "picto": null,
-   "top": [],
-   "myth": "",
-   "truth": "",
-   "zoom": null,
-   "capas": null,
-   "mira": null,
-   "impacto": null,
-   "red": null,
-   "termo": null,
-   "pila": null,
-   "cap": "",
-   "papel": null,
-   "pilares": null,
-   "ciclo": null,
-   "duo": null,
-   "osc": null,
-   "cubo": null,
-   "diales": null,
-   "pieza": null,
-   "cita": null,
-   "sc": "",
-   "modo": "VIRAL",
-   "tema": "oscuro",
-   "bg": "gold",
-   "ritmo": 0.9833333333333333,
-   "total": 36.9,
-   "inicio": 25.9,
-   "fin": 29.3,
-   "texto": "Tu inmueble puede ser la próxima gran oportunidad.",
-   "tr": "barrido",
-   "trs": "barrido",
-   "sfx": [
-    {
-     "t": 0.04,
-     "tipo": "whoosh",
-     "vol": 0.16
-    },
-    {
-     "t": 0.6883333333333332,
-     "tipo": "thud",
-     "vol": 0.14
-    },
-    {
-     "t": 1.8683333333333332,
-     "tipo": "ding",
-     "vol": 0.18
-    }
-   ]
-  },
-  {
-   "n": 9,
-   "t": "LIST",
-   "voz": "En IMNOBA publicas gratis, sin comisión: casas, apartamentos y autos.",
-   "dur": 4,
-   "h": "PUBLICA EN IMNOBA",
-   "w": "IMNOBA",
-   "sub": "",
-   "ic": "casa",
-   "num": null,
-   "vs": null,
-   "bars": [],
-   "barsU": "",
-   "hi": -1,
-   "line": null,
-   "items": [
-    {
-     "l": "Gratis y sin comisión",
-     "ic": "check"
-    },
-    {
-     "l": "Casas, apartamentos y autos",
-     "ic": "check"
-    },
-    {
-     "l": "Llegas a más compradores",
-     "ic": "check"
-    }
-   ],
    "stops": [],
    "end": "",
    "donut": [],
@@ -797,7 +833,7 @@
    "red": null,
    "termo": null,
    "pila": null,
-   "cap": "",
+   "cap": "estudio con PET",
    "papel": null,
    "pilares": null,
    "ciclo": null,
@@ -805,18 +841,21 @@
    "osc": null,
    "cubo": null,
    "diales": null,
-   "pieza": null,
+   "pieza": {
+    "id": "glf-vela",
+    "props": {}
+   },
    "cita": null,
    "sc": "",
    "modo": "VIRAL",
    "tema": "oscuro",
    "bg": "dark",
-   "ritmo": 1,
-   "total": 36.9,
-   "inicio": 29.3,
-   "fin": 33.3,
-   "texto": "En IMNOBA publicas gratis, sin comisión: casas, apartamentos y autos.",
-   "tr": "barrido",
+   "ritmo": 0.9099999999999999,
+   "total": 37.6,
+   "inicio": 29,
+   "fin": 34,
+   "texto": "Después de una sola noche en vela, el amiloide sube.",
+   "tr": "zoom",
    "trs": "barrido",
    "sfx": [
     {
@@ -825,31 +864,146 @@
      "vol": 0.16
     },
     {
-     "t": 0.75,
-     "tipo": "pop",
+     "t": 0.05,
+     "tipo": "whoosh",
+     "vol": 0.1
+    },
+    {
+     "t": 0.364,
+     "tipo": "clic",
+     "vol": 0.05
+    },
+    {
+     "t": 0.494,
+     "tipo": "clic",
+     "vol": 0.05
+    },
+    {
+     "t": 0.624,
+     "tipo": "clic",
+     "vol": 0.05
+    },
+    {
+     "t": 0.754,
+     "tipo": "clic",
+     "vol": 0.05
+    },
+    {
+     "t": 0.884,
+     "tipo": "clic",
+     "vol": 0.05
+    },
+    {
+     "t": 0.9099999999999999,
+     "tipo": "tick",
+     "vol": 0.1
+    },
+    {
+     "t": 1.014,
+     "tipo": "clic",
+     "vol": 0.05
+    },
+    {
+     "t": 1.1440000000000001,
+     "tipo": "clic",
+     "vol": 0.05
+    },
+    {
+     "t": 1.274,
+     "tipo": "clic",
+     "vol": 0.05
+    },
+    {
+     "t": 1.404,
+     "tipo": "clic",
+     "vol": 0.05
+    },
+    {
+     "t": 1.456,
+     "tipo": "tick",
+     "vol": 0.1
+    },
+    {
+     "t": 1.5339999999999998,
+     "tipo": "clic",
+     "vol": 0.05
+    },
+    {
+     "t": 1.6640000000000001,
+     "tipo": "clic",
+     "vol": 0.05
+    },
+    {
+     "t": 1.794,
+     "tipo": "clic",
+     "vol": 0.05
+    },
+    {
+     "t": 1.924,
+     "tipo": "clic",
+     "vol": 0.05
+    },
+    {
+     "t": 2.002,
+     "tipo": "tick",
+     "vol": 0.1
+    },
+    {
+     "t": 2.054,
+     "tipo": "clic",
+     "vol": 0.05
+    },
+    {
+     "t": 2.184,
+     "tipo": "clic",
+     "vol": 0.05
+    },
+    {
+     "t": 2.314,
+     "tipo": "clic",
+     "vol": 0.05
+    },
+    {
+     "t": 2.444,
+     "tipo": "clic",
+     "vol": 0.05
+    },
+    {
+     "t": 2.5479999999999996,
+     "tipo": "tick",
+     "vol": 0.1
+    },
+    {
+     "t": 2.574,
+     "tipo": "clic",
+     "vol": 0.05
+    },
+    {
+     "t": 2.7039999999999997,
+     "tipo": "clic",
+     "vol": 0.05
+    },
+    {
+     "t": 3.4579999999999997,
+     "tipo": "thud",
      "vol": 0.14
     },
     {
-     "t": 1.37,
-     "tipo": "pop",
-     "vol": 0.14
-    },
-    {
-     "t": 1.99,
-     "tipo": "pop",
+     "t": 3.558,
+     "tipo": "ding",
      "vol": 0.14
     }
    ]
   },
   {
-   "n": 10,
+   "n": 8,
    "t": "CTA",
-   "voz": "No esperes al metro: publica gratis hoy en IMNOBA.",
+   "voz": "Duerme siete horas o más. Compártelo con quien trasnocha.",
    "dur": 3.6,
-   "h": "PUBLICA GRATIS HOY",
-   "w": "GRATIS",
-   "sub": "imnoba.com",
-   "ic": "cohete",
+   "h": "DUERME 7 HORAS O MÁS",
+   "w": "DUERME",
+   "sub": "Más ciencia en SINAPSIS",
+   "ic": "reloj",
    "num": null,
    "vs": null,
    "bars": [],
@@ -886,10 +1040,10 @@
    "tema": "oscuro",
    "bg": "gold",
    "ritmo": 0.9843749999999999,
-   "total": 36.9,
-   "inicio": 33.3,
-   "fin": 36.9,
-   "texto": "No esperes al metro: publica gratis hoy en IMNOBA.",
+   "total": 37.6,
+   "inicio": 34,
+   "fin": 37.6,
+   "texto": "Duerme siete horas o más. Compártelo con quien trasnocha.",
    "tr": "barrido",
    "trs": "barrido",
    "sfx": [

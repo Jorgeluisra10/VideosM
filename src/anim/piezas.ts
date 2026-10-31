@@ -476,6 +476,27 @@ export const TPA = {
   supuestos: { c: (i: number): number => 1.2 + 2.3 * i, final: 8.4 },
 } as const;
 
+/**
+ * Datos del video «Tu cerebro se lava mientras duermes» (SINAPSIS · serie neuroanatomía). Cada cifra con su fuente y su límite:
+ *  · Iliff et al., Sci Transl Med 2012: describen el «sistema glinfático» en ratones (líquido cefalorraquídeo por los espacios alrededor de los vasos y canales de agua AQP4 de los astrocitos).
+ *  · Xie et al., Science 2013: en ratones dormidos o anestesiados el espacio entre células crece ≈ 60 % y el β-amiloide se elimina ≈ 2 veces más rápido.
+ *  · Fultz et al., Science 2019: en adultos dormidos (sueño NREM) la resonancia muestra olas lentas de líquido cefalorraquídeo (ciclos de ≈ 20 s) acopladas a las ondas lentas del EEG.
+ *  · Shokri-Kojori et al., PNAS 2018: tras UNA noche sin dormir, el PET muestra más β-amiloide en hipocampo y tálamo (adultos sanos).
+ * Matices que se respetan: casi todo el mecanismo viene de ratones; en humanos hay una pista de imagen; el sistema glinfático sigue en debate; esto NO es un diagnóstico ni una promesa de prevenir el alzhéimer.
+ */
+export const GLF = { iliffAnio: 2012, xieAnio: 2013, espacioMas: 60, limpiezaVeces: 2, fultzAnio: 2019, cicloSeg: 20, shokriAnio: 2018, horasAdulto: 7 } as const;
+
+/** Tiempos del video «Tu cerebro se lava mientras duermes» (segundos a ritmo normal), compartidos entre el dibujo y el sonido. */
+export const TGL = {
+  gancho: { cerebro: 0.2, t1: 0.9, t2: 1.7, ola: 2.7, olaDur: 1.0, t3: 2.9 },
+  basura: { disparo: (i: number): number => 0.9 + i * 0.5, medidor: 1.0, medidorDur: 2.8, sello: 3.8 },
+  tuberias: { vasos: 0.2, feet: 1.0, flujo: 1.8, barre: 2.6, chip: 4.3 },
+  sueno: { celulas: 0.2, interruptor: 1.7, ensancha: 2.0, ensanchaDur: 1.4, cifra: 2.2, cifraDur: 1.8 },
+  doble: { cajas: 0.2, limpia: 1.1, limpiaDur: 2.8, dos: 3.7 },
+  humano: { panel: 0.2, eeg: 0.8, eegDur: 3.6, lcr: 1.4, chip: 4.4 },
+  vela: { reloj: 0.4, relojDur: 2.8, sube: 1.0, caution: 3.8 },
+} as const;
+
 export const PIEZAS: Record<string, DefPieza> = {
   "metro-plano": {
     id: "metro-plano", nombre: "8 millones en un solo plano", ideal: 7.6, fondo: "dark",
@@ -703,6 +724,35 @@ export const PIEZAS: Record<string, DefPieza> = {
   "astro-dialogo": {
     id: "astro-dialogo", nombre: "Astrocitos · la sinapsis tripartita: escucha y ayuda a fortalecer", ideal: 4.55, fondo: "dark", entra: "corte",
     sfx: (_d, r) => [ev(0.05, "whoosh", 0.1), ...[0, 1, 2].map((i) => ev((TAS.dialogo.vesiculas + i * 0.45) * r, "tick", 0.1)), ev(TAS.dialogo.calcio * r, "radar", 0.1), ev(TAS.dialogo.fortalece * r, "pop", 0.14), ev((TAS.dialogo.fortalece + 0.15) * r, "ding", 0.16)],
+  },
+  /* ───────────── «Tu cerebro se lava mientras duermes» (SINAPSIS · sin voz) ───────────── */
+  "glf-gancho": {
+    id: "glf-gancho", nombre: "Glinfático · el cerebro sucio brilla en la noche y una ola lo limpia (gancho)", ideal: 4.2, fondo: "dark",
+    sfx: (_d, r) => [ev(0.05, "whoosh", 0.12), ev(TGL.gancho.cerebro * r + 0.3, "heartbeat", 0.14), ev(TGL.gancho.t1 * r, "pop", 0.1), ev(TGL.gancho.t2 * r, "pop", 0.12), ev(TGL.gancho.ola * r, "whoosh", 0.16), ev((TGL.gancho.ola + TGL.gancho.olaDur) * r, "ding", 0.18)],
+  },
+  "glf-basura": {
+    id: "glf-basura", nombre: "Glinfático · despierto, las neuronas trabajan y dejan residuos entre las células", ideal: 4.6, fondo: "dark", entra: "corte",
+    sfx: (_d, r) => [ev(0.05, "whoosh", 0.1), ...[0, 1, 2, 3].map((i) => ev(TGL.basura.disparo(i) * r, "zap", 0.1)), ...clics(TGL.basura.medidor * r, TGL.basura.medidorDur * r, 0.04), ev(TGL.basura.sello * r, "thud", 0.16)],
+  },
+  "glf-tuberias": {
+    id: "glf-tuberias", nombre: "Glinfático · líquido cefalorraquídeo entra por la arteria, cruza el tejido y sale por la vena (esquema)", ideal: 5.4, fondo: "dark", entra: "zoom",
+    sfx: (_d, r) => [ev(0.05, "whoosh", 0.1), ev(TGL.tuberias.vasos * r + 0.2, "pop", 0.1), ev(TGL.tuberias.feet * r, "pop", 0.1), ev(TGL.tuberias.flujo * r, "whoosh", 0.14), ...[0, 1, 2].map((i) => ev((TGL.tuberias.barre + i * 0.45) * r, "tick", 0.1)), ev(TGL.tuberias.chip * r, "ding", 0.16)],
+  },
+  "glf-sueno": {
+    id: "glf-sueno", nombre: "Glinfático · al dormir las células se encogen y el espacio entre ellas crece ≈ 60 % (ratones)", ideal: 5.0, fondo: "dark", entra: "semitono",
+    sfx: (_d, r) => [ev(0.05, "whoosh", 0.1), ev(TGL.sueno.interruptor * r, "clic", 0.16), ev(TGL.sueno.ensancha * r, "whoosh", 0.12), ...clics(TGL.sueno.cifra * r, TGL.sueno.cifraDur * r, 0.05), ev((TGL.sueno.cifra + TGL.sueno.cifraDur) * r, "ding", 0.18)],
+  },
+  "glf-doble": {
+    id: "glf-doble", nombre: "Glinfático · dormido se elimina el β-amiloide ≈ 2 veces más rápido (ratones)", ideal: 4.6, fondo: "dark", entra: "corte",
+    sfx: (_d, r) => [ev(0.05, "whoosh", 0.1), ev(TGL.doble.cajas * r + 0.2, "pop", 0.1), ...clics(TGL.doble.limpia * r, TGL.doble.limpiaDur * r, 0.045), ev(TGL.doble.dos * r, "golpe", 0.18), ev(TGL.doble.dos * r + 0.1, "ding", 0.18)],
+  },
+  "glf-humano": {
+    id: "glf-humano", nombre: "Glinfático · en humanos dormidos, olas lentas de líquido cada ≈ 20 s (resonancia, 2019)", ideal: 5.2, fondo: "dark", entra: "semitono",
+    sfx: (_d, r) => [ev(0.05, "whoosh", 0.1), ev(TGL.humano.panel * r + 0.2, "pop", 0.1), ...[0, 1, 2].map((i) => ev((TGL.humano.eeg + 0.9 + i * 0.95) * r, "heartbeat", 0.1)), ev(TGL.humano.lcr * r, "radar", 0.1), ev(TGL.humano.chip * r, "ding", 0.16)],
+  },
+  "glf-vela": {
+    id: "glf-vela", nombre: "Glinfático · tras una noche en vela el β-amiloide sube (PET) y una cautela honesta (cierre)", ideal: 5.0, fondo: "dark", entra: "zoom",
+    sfx: (_d, r) => [ev(0.05, "whoosh", 0.1), ...clics(TGL.vela.reloj * r, TGL.vela.relojDur * r, 0.05), ...[0, 1, 2, 3].map((i) => ev((TGL.vela.sube + i * 0.6) * r, "tick", 0.1)), ev(TGL.vela.caution * r, "thud", 0.14), ev(TGL.vela.caution * r + 0.1, "ding", 0.14)],
   },
   /* ───────────── «El truco de los préstamos DSCR» (IMNOBA) ───────────── */
   "dscr-gancho": {
