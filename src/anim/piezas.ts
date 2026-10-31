@@ -497,6 +497,28 @@ export const TGL = {
   vela: { reloj: 0.4, relojDur: 2.8, sube: 1.0, caution: 3.8 },
 } as const;
 
+/**
+ * Datos del video «Tu cerebro no siente dolor» (SINAPSIS · serie neuroanatomía). Lo que se afirma y su límite:
+ *  · El tejido cerebral (parénquima) no tiene receptores de dolor (nociceptores); el dolor de cabeza se siente en estructuras sensibles que lo rodean
+ *    (cuero cabelludo, músculos, periostio, meninges, vasos sanguíneos y nervios craneales). En la migraña también participan mecanismos del propio cerebro: es una simplificación didáctica.
+ *  · Craneotomía con el paciente despierto: anestesia local del cuero cabelludo; el paciente habla o se mueve mientras se estimula la corteza para mapear funciones y evitar dañarlas.
+ *  · Wilder Penfield (Montreal, años 1930–1950): estimuló la corteza de pacientes despiertos y dibujó el «homúnculo» (Penfield y Boldrey, Brain 1937). Tamaños = esquema.
+ *  · Hay casos documentados de músicos que tocaron un instrumento durante la cirugía para proteger sus funciones finas.
+ */
+export const DOL = { penfieldAnio: 1937, penfieldDecadas: "1930–1950" } as const;
+
+/** Tiempos del video «Tu cerebro no siente dolor» (segundos a ritmo normal), compartidos entre el dibujo y el sonido. */
+export const TDO = {
+  gancho: { cerebro: 0.2, pincha: 1.0, pinchaCada: 0.55, t1: 0.3, t2: 1.3, t3: 2.1, cero: 2.7 },
+  capas: { cuero: 0.4, craneo: 1.0, menin: 1.6, prueba: (i: number): number => 2.4 + i * 0.6, cero: 4.4 },
+  quirofano: { capas: 0.2, abre: 1.0, sonda: 1.8, cuenta: (i: number): number => 2.3 + i * 0.55, chip: 4.3 },
+  mapa: { tag: (i: number): number => 0.4 + i * 0.12, prueba: (i: number): number => 1.5 + i * 0.85, fin: 4.9 },
+  homunculo: { cuerpo: 0.2, morph: 1.7, morphDur: 2.0, chip: 4.2 },
+  musica: { violin: 0.2, arco: 1.0, cerebro: 1.8, chip: 3.9 },
+  cabeza: { capas: 0.2, banda: 1.2, vasos: 2.2, cero: 3.8 },
+  cierre: { cerebro: 0.2, pulso: (i: number): number => 1.0 + i * 0.7, cero: 3.9 },
+} as const;
+
 export const PIEZAS: Record<string, DefPieza> = {
   "metro-plano": {
     id: "metro-plano", nombre: "8 millones en un solo plano", ideal: 7.6, fondo: "dark",
@@ -753,6 +775,39 @@ export const PIEZAS: Record<string, DefPieza> = {
   "glf-vela": {
     id: "glf-vela", nombre: "Glinfático · tras una noche en vela el β-amiloide sube (PET) y una cautela honesta (cierre)", ideal: 5.0, fondo: "dark", entra: "zoom",
     sfx: (_d, r) => [ev(0.05, "whoosh", 0.1), ...clics(TGL.vela.reloj * r, TGL.vela.relojDur * r, 0.05), ...[0, 1, 2, 3].map((i) => ev((TGL.vela.sube + i * 0.6) * r, "tick", 0.1)), ev(TGL.vela.caution * r, "thud", 0.14), ev(TGL.vela.caution * r + 0.1, "ding", 0.14)],
+  },
+  /* ───────────── «Tu cerebro no siente dolor» (SINAPSIS · sin voz) ───────────── */
+  "dol-gancho": {
+    id: "dol-gancho", nombre: "Dolor · una sonda pincha el cerebro y el medidor de dolor se queda en cero (gancho)", ideal: 4.2, fondo: "dark",
+    sfx: (_d, r) => [ev(0.05, "whoosh", 0.12), ev(TDO.gancho.cerebro * r + 0.3, "heartbeat", 0.12), ...[0, 1, 2, 3, 4].map((i) => ev((TDO.gancho.pincha + i * TDO.gancho.pinchaCada) * r, "tick", 0.14)), ev(TDO.gancho.cero * r, "thud", 0.16), ev(TDO.gancho.cero * r + 0.1, "ding", 0.16)],
+  },
+  "dol-capas": {
+    id: "dol-capas", nombre: "Dolor · las capas de la cabeza: cuero cabelludo, cráneo y meninges duelen; el tejido cerebral, no", ideal: 6.0, fondo: "dark", entra: "corte",
+    sfx: (_d, r) => [ev(0.05, "whoosh", 0.1), ev(TDO.capas.cuero * r, "pop", 0.1), ev(TDO.capas.craneo * r, "pop", 0.1), ev(TDO.capas.menin * r, "pop", 0.1), ...[0, 1, 2].map((i) => ev(TDO.capas.prueba(i) * r, "zap", 0.14)), ev(TDO.capas.cero * r, "thud", 0.16), ev(TDO.capas.cero * r + 0.1, "ding", 0.16)],
+  },
+  "dol-quirofano": {
+    id: "dol-quirofano", nombre: "Dolor · craneotomía despierto: el paciente cuenta mientras la sonda estimula la corteza", ideal: 5.4, fondo: "dark", entra: "zoom",
+    sfx: (_d, r) => [ev(0.05, "whoosh", 0.1), ev(TDO.quirofano.abre * r, "thud", 0.14), ev(TDO.quirofano.sonda * r, "zap", 0.12), ...[0, 1, 2, 3].map((i) => ev(TDO.quirofano.cuenta(i) * r, "tick", 0.1)), ev(TDO.quirofano.chip * r, "ding", 0.16)],
+  },
+  "dol-mapa": {
+    id: "dol-mapa", nombre: "Dolor · mapeo de la corteza: cada punto se prueba y el habla se detiene en uno", ideal: 5.8, fondo: "dark", entra: "semitono",
+    sfx: (_d, r) => [ev(0.05, "whoosh", 0.1), ...[0, 1, 2, 3, 4].map((i) => ev(TDO.mapa.prueba(i) * r, "zap", 0.1)), ev(TDO.mapa.prueba(2) * r + 0.25, "golpe", 0.18), ev(TDO.mapa.fin * r, "ding", 0.16)],
+  },
+  "dol-homunculo": {
+    id: "dol-homunculo", nombre: "Dolor · el homúnculo de Penfield: el cuerpo se deforma según el espacio que ocupa en la corteza (esquema)", ideal: 5.8, fondo: "dark", entra: "corte",
+    sfx: (_d, r) => [ev(0.05, "whoosh", 0.1), ev(TDO.homunculo.cuerpo * r + 0.2, "pop", 0.1), ...clics(TDO.homunculo.morph * r, TDO.homunculo.morphDur * r, 0.05), ev((TDO.homunculo.morph + TDO.homunculo.morphDur) * r, "golpe", 0.18), ev(TDO.homunculo.chip * r, "ding", 0.16)],
+  },
+  "dol-musica": {
+    id: "dol-musica", nombre: "Dolor · un violín suena en plena operación: se protegen las manos del músico", ideal: 5.2, fondo: "dark", entra: "zoom",
+    sfx: (_d, r) => [ev(0.05, "whoosh", 0.1), ev(TDO.musica.violin * r + 0.2, "pop", 0.1), ...[0, 1, 2, 3, 4, 5].map((i) => ev((TDO.musica.arco + i * 0.45) * r, "tick", 0.08)), ev(TDO.musica.cerebro * r, "zap", 0.12), ev(TDO.musica.chip * r, "ding", 0.16)],
+  },
+  "dol-cabeza": {
+    id: "dol-cabeza", nombre: "Dolor · dolores de cabeza: la banda de músculos y los vasos de las meninges, no el tejido cerebral", ideal: 5.4, fondo: "dark", entra: "semitono",
+    sfx: (_d, r) => [ev(0.05, "whoosh", 0.1), ev(TDO.cabeza.capas * r + 0.2, "pop", 0.1), ev(TDO.cabeza.banda * r, "thud", 0.12), ...[0, 1, 2].map((i) => ev((TDO.cabeza.vasos + i * 0.5) * r, "heartbeat", 0.13)), ev(TDO.cabeza.cero * r, "ding", 0.16)],
+  },
+  "dol-cierre": {
+    id: "dol-cierre", nombre: "Dolor · el cerebro recibe el dolor del cuerpo pero no tiene sensores propios (cierre)", ideal: 5.0, fondo: "dark", entra: "corte",
+    sfx: (_d, r) => [ev(0.05, "whoosh", 0.1), ev(TDO.cierre.cerebro * r + 0.2, "pop", 0.1), ...[0, 1, 2, 3].map((i) => ev(TDO.cierre.pulso(i) * r + 0.6, "zap", 0.1)), ev(TDO.cierre.cero * r, "thud", 0.16), ev(TDO.cierre.cero * r + 0.1, "ding", 0.18)],
   },
   /* ───────────── «El truco de los préstamos DSCR» (IMNOBA) ───────────── */
   "dscr-gancho": {

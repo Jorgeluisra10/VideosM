@@ -1,0 +1,18 @@
+{
+  "version": 1,
+  "slug": "2026-10-31-cerebro-no-duele",
+  "titulo": "Tu cerebro no siente dolor",
+  "serie": "neuroanatomia",
+  "estado": "grabado",
+  "guion": "Tu cerebro no siente dolor.\nDuele lo que lo envuelve: el cuero cabelludo, el cráneo y las meninges.\nPor eso pueden operarte el cerebro despierto, con anestesia local en la cabeza.\nEl paciente cuenta mientras se prueba cada punto; donde se detiene el habla, no se toca.\nPenfield dibujó así el mapa del cuerpo: las manos y los labios ocupan muchísimo espacio.\nAlgunos músicos tocaron su instrumento en plena operación, para proteger sus manos.\nY el dolor de cabeza se siente en los músculos y vasos que lo rodean.\nRecibe todo tu dolor, pero no siente el suyo.\nGuárdalo y compártelo con alguien curioso.",
+  "gancho": "Tu cerebro no siente dolor.",
+  "duracion_seg": 47.1,
+  "notas": "Se espera retención en los primeros 3 s (sonda y medidor en cero) y guardados por el dato de las manos y labios en el homúnculo. Mirar: retención a 3 s, finalización, guardados y compartidos.",
+  "voz_usada": "",
+  "instrucciones_voz": "",
+  "creado": "2026-10-31T22:10:41.991Z",
+  "origen_clave": "768a8a44",
+  "video": "revision.mp4",
+  "miniatura": "miniatura.jpg",
+  "entrega": "entrega.md"
+}

@@ -1,0 +1,101 @@
+{
+ "titulo": "Tu cerebro no siente dolor",
+ "scenes": [
+  {
+   "t": "PIEZA",
+   "voz": "Tu cerebro no siente dolor.",
+   "dur": 4.2,
+   "h": "TU CEREBRO NO SIENTE DOLOR",
+   "w": "DOLOR",
+   "cap": "puedes pincharlo y no duele",
+   "pieza": {
+    "id": "dol-gancho"
+   }
+  },
+  {
+   "t": "PIEZA",
+   "voz": "Duele lo que lo envuelve: el cuero cabelludo, el cráneo y las meninges.",
+   "dur": 6.0,
+   "h": "LO QUE DUELE LO ENVUELVE",
+   "w": "ENVUELVE",
+   "cap": "el tejido cerebral no tiene receptores de dolor",
+   "pieza": {
+    "id": "dol-capas"
+   }
+  },
+  {
+   "t": "PIEZA",
+   "voz": "Por eso pueden operarte el cerebro despierto, con anestesia local en la cabeza.",
+   "dur": 5.4,
+   "h": "TE OPERAN DESPIERTO",
+   "w": "DESPIERTO",
+   "cap": "craneotomía despierto",
+   "pieza": {
+    "id": "dol-quirofano"
+   }
+  },
+  {
+   "t": "PIEZA",
+   "voz": "El paciente cuenta mientras se prueba cada punto; donde se detiene el habla, no se toca.",
+   "dur": 5.8,
+   "h": "CADA PUNTO SE PRUEBA",
+   "w": "PRUEBA",
+   "cap": "mapeo de la corteza",
+   "pieza": {
+    "id": "dol-mapa"
+   }
+  },
+  {
+   "t": "PIEZA",
+   "voz": "Penfield dibujó así el mapa del cuerpo: las manos y los labios ocupan muchísimo espacio.",
+   "dur": 5.8,
+   "h": "EL CUERPO EN TU CEREBRO",
+   "w": "CUERPO",
+   "cap": "homúnculo, esquema",
+   "pieza": {
+    "id": "dol-homunculo"
+   }
+  },
+  {
+   "t": "PIEZA",
+   "voz": "Algunos músicos tocaron su instrumento en plena operación, para proteger sus manos.",
+   "dur": 5.2,
+   "h": "TOCAR EN PLENA CIRUGÍA",
+   "w": "TOCAR",
+   "cap": "casos documentados",
+   "pieza": {
+    "id": "dol-musica"
+   }
+  },
+  {
+   "t": "PIEZA",
+   "voz": "Y el dolor de cabeza se siente en los músculos y vasos que lo rodean.",
+   "dur": 5.4,
+   "h": "EL DOLOR DE CABEZA",
+   "w": "RODEAN",
+   "cap": "no es consejo médico",
+   "pieza": {
+    "id": "dol-cabeza"
+   }
+  },
+  {
+   "t": "PIEZA",
+   "voz": "Recibe todo tu dolor, pero no siente el suyo.",
+   "dur": 5.0,
+   "h": "NO SIENTE EL SUYO",
+   "w": "SUYO",
+   "cap": "recibe tu dolor",
+   "pieza": {
+    "id": "dol-cierre"
+   }
+  },
+  {
+   "t": "CTA",
+   "voz": "Guárdalo y compártelo con alguien curioso.",
+   "dur": 3.8,
+   "h": "GUÁRDALO Y COMPÁRTELO",
+   "w": "COMPÁRTELO",
+   "sub": "Más ciencia en SINAPSIS"
+  }
+ ]
+}
