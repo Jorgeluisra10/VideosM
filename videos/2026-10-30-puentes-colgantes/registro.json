@@ -1,0 +1,18 @@
+{
+  "version": 1,
+  "slug": "2026-10-30-puentes-colgantes",
+  "titulo": "El secreto de los puentes colgantes",
+  "serie": "fisica_estructural",
+  "estado": "grabado",
+  "guion": "El cable no cuelga: tira. Y tira con miles de toneladas.\nEl peso baja por los tirantes y el cable lo desvía hacia las orillas, en parábola.\nLas torres lo convierten en compresión: sesenta y un mil quinientas toneladas por torre en el Golden Gate.\nBrooklyn no usó barras macizas: hiló en el aire más de cinco mil alambres por cable.\nY miles de alambres delgados pueden soportar más que una barra del mismo grosor.\nCada diseño tiene su límite: carga, área y límite elástico deciden si resiste. Brooklyn, con margen de seis.\nHaz zoom de mil metros a un milímetro: no hay un tubo macizo, hay un panal de alambres.\nGuárdalo para repasar estática y síguenos en Sinapsis.",
+  "gancho": "El cable no cuelga: tira.",
+  "duracion_seg": 46.6,
+  "notas": "Espero que estudiantes de ingeniería, arquitectura y física lo guarden como apunte de estática (cable parabólico, torres en compresión, factor de seguridad) y que el público lo comparta por «el cable no cuelga: tira». Métrica: guardados y compartidos por cada 1.000 alcanzados y retención al pasar la escena 3 (≈ 10 s, Rayos X). Ojo: sin voz, no publicar así.",
+  "voz_usada": "",
+  "instrucciones_voz": "",
+  "creado": "2026-10-31T00:01:42.332Z",
+  "origen_clave": "2a5e24f9",
+  "video": "revision.mp4",
+  "miniatura": "miniatura.jpg",
+  "entrega": ""
+}
