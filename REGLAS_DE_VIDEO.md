@@ -202,3 +202,4 @@ revisa de nuevo hasta que esté bien.
 
 ## LECCIONES
 - 2026-10-31 · Con CADA video, aunque salga sin voz, entrega también el «libro» de locución: `videos/<carpeta>/guion-locucion.txt` con las frases por escena y sus tiempos, y envíalo al usuario junto con el MP4.
+- 2026-10-31 · Con CADA video entrega también el texto listo para pegar en la descripción de la publicación: `videos/<carpeta>/descripcion-publicacion.txt` (gancho, 1–2 líneas del dato, llamada a la acción, aviso «no es consejo médico» si es salud, y 5 hashtags), y envíalo al usuario junto con el MP4 y el guion de locución.
