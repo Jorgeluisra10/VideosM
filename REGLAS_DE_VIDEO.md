@@ -201,4 +201,4 @@ revisa de nuevo hasta que esté bien.
 - Nada de esto se probó con la API real de OpenAI/ElevenLabs (solo con servidores simulados).
 
 ## LECCIONES
-(vacío por ahora)
+- 2026-10-31 · Con CADA video, aunque salga sin voz, entrega también el «libro» de locución: `videos/<carpeta>/guion-locucion.txt` con las frases por escena y sus tiempos, y envíalo al usuario junto con el MP4.
