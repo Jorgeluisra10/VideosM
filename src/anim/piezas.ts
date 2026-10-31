@@ -330,6 +330,30 @@ export const TPTE = {
   zoom: { ini: 0.3, dur: 4.3, chip: 5.0 },
 } as const;
 
+/** Datos del video «La física de los ruidos nocturnos» (SINAPSIS · física cotidiana). Fuentes en ejemplos/animacion-viral/guion-tecnico-ruidos.md. */
+export const RUI = {
+  /** coeficiente de dilatación lineal típico, 10⁻⁶ por kelvin (EngineeringToolbox, Misumi; varía según la fuente): aluminio 23; acero 12; hormigón 10–14; madera a lo largo de la fibra 3–5; madera a través de la fibra 30–70 */
+  alfa: { aluminio: 23, acero: 12, hormigon: 12, maderaLargo: 4, maderaAncho: 30 },
+  /** ΔL = α·L·ΔT para 1 m y una caída de 10 K, en mm */
+  dl1m10K: { aluminio: 0.23, acero: 0.12, hormigon: 0.12, maderaLargo: 0.04, maderaAncho: 0.3 },
+  /** velocidad del sonido en el aire a 20 °C (m/s) y distancia de ejemplo (m): tarda ≈ 14,6 ms */
+  sonidoMs: 343, distanciaM: 5,
+  /** un tablero de 0,5 m que se enfría 2 K con α = 30·10⁻⁶/K se acorta ≈ 30 µm */
+  tableroM: 0.5, tableroK: 2, tableroMicras: 30,
+} as const;
+
+/** Tiempos del video «Ruidos nocturnos» (segundos a ritmo normal), compartidos entre el dibujo y el sonido. */
+export const TRUI = {
+  gancho: { traza: 0.3, trazaDur: 2.1, pico: 2.5, ondas: 2.6, fisica: 3.8, chip: 4.2 },
+  dia: { malla: 0.2, fotones: 0.8, knobs: 0.6, subida: 0.9, subidaDur: 2.8, formula: 3.5 },
+  noche: { malla: 0.2, baja: 0.8, bajaDur: 2.8, tension: 2.2, formula: 3.9 },
+  ritmos: { cols: 0.3, vals: 2.3, mm: 3.3, diez: 4.5, chip: 5.3 },
+  friccion: { rejilla: 0.2, acumula: 0.9, acumulaDur: 3.2, salto: 4.35, ondas: 4.4, chip: 5.5, tof: 6.0 },
+  remate: { panel: 0.2, trazas: 0.7, trazasDur: 2.2, nota: 3.3, ast: 4.1 },
+  tally: { ficha: 0.2, tally: 0.8, barras: 2.1, sello: 3.7 },
+  micro: { zoom: 0.2, zoomDur: 4.8, colapso: 5.0, colapsoDur: 0.9, pregunta: 5.9 },
+} as const;
+
 /* ───────────── «La regla del 37 %» (problema de la parada óptima, ensayo abstracto para IMNOBA) ───────────── */
 
 /** Generador pseudoaleatorio determinista (mulberry32): mismos números en el render, en las pruebas y en cada fotograma. */
@@ -816,6 +840,39 @@ export const PIEZAS: Record<string, DefPieza> = {
   "pte-zoom": {
     id: "pte-zoom", nombre: "Puentes · zoom logarítmico de 1.000 m a 1 mm: del puente al cable, a las hebras y al panal de alambres (cierre)", ideal: 6.35, fondo: "dark", entra: "zoom",
     sfx: (_d, r) => [ev(0.05, "whoosh", 0.12), ...clics(TPTE.zoom.ini * r, TPTE.zoom.dur * r, 0.04), ev((TPTE.zoom.ini + TPTE.zoom.dur) * r, "ding", 0.2), ev(TPTE.zoom.chip * r, "pop", 0.1)],
+  },
+  /* ───────────── «La física de los ruidos nocturnos» (SINAPSIS · física cotidiana) ───────────── */
+  "rui-gancho": {
+    id: "rui-gancho", nombre: "Ruidos · telemetría 03:14: un pico en la señal y ondas de choque (gancho de terror)", ideal: 4.75, fondo: "dark",
+    sfx: (_d, r) => [ev(0.05, "estatica", 0.1), ...clics(TRUI.gancho.traza * r, TRUI.gancho.trazaDur * r * 0.7, 0.03), ev(TRUI.gancho.pico * r, "golpe", 0.3), ev(TRUI.gancho.pico * r + 0.05, "heartbeat", 0.22), ev(TRUI.gancho.fisica * r, "tick", 0.12)],
+  },
+  "rui-dia": {
+    id: "rui-dia", nombre: "Ruidos · de día: malla isométrica azul que absorbe fotones y se expande en silencio, con tres potenciómetros", ideal: 4.75, fondo: "dark", entra: "semitono",
+    sfx: (_d, r) => [ev(0.05, "whoosh", 0.08), ev(TRUI.dia.knobs * r, "pop", 0.08), ...clics(TRUI.dia.subida * r, TRUI.dia.subidaDur * r * 0.5, 0.03), ev(TRUI.dia.formula * r, "tick", 0.1)],
+  },
+  "rui-noche": {
+    id: "rui-noche", nombre: "Ruidos · de noche: la temperatura cae, la malla se encoge desigual y aparece la tensión (rojo)", ideal: 4.75, fondo: "dark", entra: "corte",
+    sfx: (_d, r) => [ev(0.05, "estatica", 0.1), ...clics(TRUI.noche.baja * r, TRUI.noche.bajaDur * r * 0.5, 0.04), ev(TRUI.noche.tension * r, "thud", 0.18), ev(TRUI.noche.formula * r, "heartbeat", 0.16)],
+  },
+  "rui-ritmos": {
+    id: "rui-ritmos", nombre: "Ruidos · columnas isométricas: cuánto se contrae cada material (α) y cuántos mm por metro con 10 °C menos", ideal: 5.95, fondo: "dark", entra: "zoom",
+    sfx: (_d, r) => [ev(0.05, "whoosh", 0.08), ...[0, 1, 2, 3, 4].map((i) => ev((TRUI.ritmos.cols + i * 0.3) * r, "pop", 0.08)), ev(TRUI.ritmos.mm * r, "tick", 0.1), ev(TRUI.ritmos.diez * r, "zap", 0.14), ev(TRUI.ritmos.chip * r, "ding", 0.1)],
+  },
+  "rui-friccion": {
+    id: "rui-friccion", nombre: "Ruidos · Rayos X alámbrico: nodos rojos tirados por resortes, la fricción acumula tensión y resbalan; onda de choque a 343 m/s", ideal: 6.45, fondo: "dark", entra: "semitono",
+    sfx: (_d, r) => [ev(0.05, "estatica", 0.1), ...clics(TRUI.friccion.acumula * r, TRUI.friccion.acumulaDur * r * 0.8, 0.05), ev(TRUI.friccion.salto * r, "golpe", 0.34), ev(TRUI.friccion.salto * r + 0.04, "thud", 0.26), ev(TRUI.friccion.chip * r, "tick", 0.1), ev(TRUI.friccion.tof * r, "tick", 0.1)],
+  },
+  "rui-remate": {
+    id: "rui-remate", nombre: "Ruidos · corte a papel: osciloscopio verde que compara un paso y un cajón que se enfría (esquemático, tono clínico)", ideal: 4.75, fondo: "light", entra: "corte",
+    sfx: (_d, r) => [ev(0.02, "clic", 0.14), ev(TRUI.remate.panel * r, "tick", 0.12), ...clics(TRUI.remate.trazas * r, TRUI.remate.trazasDur * r, 0.07), ev(TRUI.remate.nota * r, "ding", 0.14), ev(TRUI.remate.ast * r, "clic", 0.12)],
+  },
+  "rui-tally": {
+    id: "rui-tally", nombre: "Ruidos · caja de datos con marcas de conteo y μs > μk: fallo de diseño, no un fantasma (papel)", ideal: 4.95, fondo: "light", entra: "corte",
+    sfx: (_d, r) => [ev(0.05, "clic", 0.12), ...[0, 1, 2, 3, 4].map((i) => ev((TRUI.tally.tally + i * 0.22) * r, "clic", 0.1)), ev(TRUI.tally.barras * r, "tick", 0.12), ev(TRUI.tally.sello * r, "thud", 0.16), ev(TRUI.tally.sello * r + 0.1, "ding", 0.12)],
+  },
+  "rui-micro": {
+    id: "rui-micro", nombre: "Ruidos · zoom hasta la unión tornillo-madera: celdas de fibra raspando metal que colapsan en un punto rojo (cierre)", ideal: 6.95, fondo: "dark", entra: "zoom",
+    sfx: (_d, r) => [ev(0.05, "estatica", 0.12), ...clics(TRUI.micro.zoom * r, TRUI.micro.zoomDur * r * 0.8, 0.05), ev(TRUI.micro.colapso * r, "golpe", 0.26), ev((TRUI.micro.colapso + TRUI.micro.colapsoDur) * r, "heartbeat", 0.22), ev((TRUI.micro.colapso + TRUI.micro.colapsoDur + 0.9) * r, "heartbeat", 0.18)],
   },
   "astro-memoria": {
     id: "astro-memoria", nombre: "Astrocitos · en ratones, reactivarlos estimuló el recuerdo", ideal: 4.15, fondo: "dark", entra: "corte",
