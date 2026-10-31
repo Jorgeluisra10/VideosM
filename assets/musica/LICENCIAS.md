@@ -2,4 +2,4 @@
 
 Una línea por pista: archivo · de dónde salió (enlace) · licencia · atribución que exige (o «ninguna») · fecha.
 
-(vacío por ahora)
+ruidos-nocturnos.wav · creada por el sistema (síntesis aditiva con `videos/2026-10-31-ruidos-nocturnos/componer-musica.mjs`; el WAV no se sube a git, se regenera) · libre de derechos · ninguna · 2026-10-31

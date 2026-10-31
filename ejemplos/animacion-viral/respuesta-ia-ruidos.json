@@ -1,0 +1,14 @@
+{
+  "titulo": "La física de los ruidos nocturnos",
+  "scenes": [
+    {"t": "PIEZA", "voz": "A las tres y catorce, un paso en el pasillo. ¿Demonio? No: física.", "dur": 5.2, "h": "03:14 · ¿UN DEMONIO? NO: FÍSICA", "w": "FÍSICA", "cap": "ruidos nocturnos", "pieza": {"id": "rui-gancho"}},
+    {"t": "PIEZA", "voz": "De día el sol calienta tu casa y todo se expande, en silencio.", "dur": 5.2, "h": "DE DÍA TODO SE EXPANDE", "w": "EXPANDE", "cap": "dilatación térmica", "pieza": {"id": "rui-dia"}},
+    {"t": "PIEZA", "voz": "De noche la temperatura cae y todo se encoge, pero no por igual.", "dur": 5.2, "h": "DE NOCHE TODO SE ENCOGE, PERO NO POR IGUAL", "w": "IGUAL", "cap": "contracción térmica", "pieza": {"id": "rui-noche"}},
+    {"t": "PIEZA", "voz": "Aluminio, acero y madera se contraen distinto, y la madera varía hasta diez veces según su fibra.", "dur": 6.4, "h": "NO TODO SE ENCOGE IGUAL", "w": "DISTINTO", "cap": "coeficiente de dilatación α", "pieza": {"id": "rui-ritmos"}},
+    {"t": "PIEZA", "voz": "La fricción frena el movimiento y acumula tensión, hasta que resbala de golpe. Ese salto es el crujido.", "dur": 6.9, "h": "LA FRICCIÓN ACUMULA Y RESBALA", "w": "RESBALA", "cap": "Rayos X", "pieza": {"id": "rui-friccion"}},
+    {"t": "PIEZA", "voz": "Tu cerebro oye un asesino. La física oye un cajón enfriándose dos grados.", "dur": 5.2, "h": "TU CEREBRO: ASESINO. LA FÍSICA: UN CAJÓN", "w": "CAJÓN", "cap": "osciloscopio · esquemático", "pieza": {"id": "rui-remate"}},
+    {"t": "PIEZA", "voz": "El culpable: fricción estática mayor que cinética. Un fallo de diseño, no un fantasma.", "dur": 5.4, "h": "µs > µk", "w": "DISEÑO", "cap": "fallo de diseño", "pieza": {"id": "rui-tally"}},
+    {"t": "PIEZA", "voz": "Si te acercas, no hay espíritus: solo fibras de madera raspando metal. ¿Qué más está por crujir?", "dur": 7.4, "h": "¿QUÉ MÁS ESTÁ POR CRUJIR?", "w": "CRUJIR", "cap": "zoom a la unión tornillo-madera", "pieza": {"id": "rui-micro"}},
+    {"t": "CTA", "voz": "Guárdalo para tu próxima noche en vela y síguenos en Sinapsis.", "dur": 4.4, "h": "GUÁRDALO Y SÍGUENOS", "w": "SÍGUENOS", "sub": "Más ciencia en SINAPSIS"}
+  ]
+}
