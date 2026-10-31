@@ -1,0 +1,18 @@
+{
+  "version": 1,
+  "slug": "2026-10-31-ruidos-nocturnos",
+  "titulo": "La física de los ruidos nocturnos",
+  "serie": "fisica_cotidiana",
+  "estado": "grabado",
+  "guion": "A las tres y catorce, un paso en el pasillo. ¿Demonio? No: física.\nDe día el sol calienta tu casa y todo se expande, en silencio.\nDe noche la temperatura cae y todo se encoge, pero no por igual.\nAluminio, acero y madera se contraen distinto, y la madera varía hasta diez veces según su fibra.\nLa fricción frena el movimiento y acumula tensión, hasta que resbala de golpe. Ese salto es el crujido.\nTu cerebro oye un asesino. La física oye un cajón enfriándose dos grados.\nEl culpable: fricción estática mayor que cinética. Un fallo de diseño, no un fantasma.\nSi te acercas, no hay espíritus: solo fibras de madera raspando metal. ¿Qué más está por crujir?\nGuárdalo para tu próxima noche en vela y síguenos en Sinapsis.",
+  "gancho": "A las tres y catorce, un paso en el pasillo.",
+  "duracion_seg": 51.3,
+  "notas": "Espero que el público lo comparta por el giro terror → humor seco (el corte a papel en el segundo 29) y por entender por qué cruje su casa de noche. Métrica: compartidos y guardados por cada 1.000 alcanzados, y retención al pasar el corte a modo claro (≈ 29 s). Ojo: sin voz, no publicar así; la voz debe cambiar de susurro de terror a tono clínico en la escena 6.",
+  "voz_usada": "",
+  "instrucciones_voz": "",
+  "creado": "2026-10-31T03:22:48.368Z",
+  "origen_clave": "69e5fad2",
+  "video": "revision.mp4",
+  "miniatura": "miniatura.jpg",
+  "entrega": ""
+}
