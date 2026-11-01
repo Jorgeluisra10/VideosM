@@ -543,6 +543,29 @@ export const TIN = {
   cierre: { red: 0.2, pulso: (i: number): number => 1.0 + i * 0.6, chip: 3.6 },
 } as const;
 
+/**
+ * Datos del video «La dopamina NO es la molécula del placer» (SINAPSIS · serie neurociencia). Investigado (búsqueda web, 2026-11-01); límites:
+ *  · Schultz, Dayan y Montague, Science 275:1593 (1997): neuronas dopaminérgicas de monos disparan ante un premio (jugo) inesperado, luego ante la señal que lo anuncia
+ *    y dejan de disparar (caída) cuando el premio esperado no llega: señal de «error de predicción de la recompensa». Los trazos del video son esquemáticos, no datos reales.
+ *  · Berridge y Robinson (revisión, Am Psychol 2016): «querer» (saliencia de incentivo) depende de dopamina; «disfrutar» (agrado) no depende de ella. En ratas con casi toda la dopamina cerebral
+ *    depletada, las reacciones de agrado al dulce seguían normales; más dopamina (ratones hiperdopaminérgicos, Pecina et al. 2003) aumenta el querer sin aumentar el agrado.
+ *  · Es un tema en DEBATE: otros autores ponen el papel de la dopamina en el aprendizaje (error de predicción) y no solo en la motivación. El video lo dice.
+ *  · Vías: nigroestriatal (movimiento; su pérdida causa párkinson), mesolímbica (desear) y mesocortical (decidir): esquema simplificado.
+ *  · NO se afirma nada sobre redes sociales ni adicciones: la búsqueda no encontró evidencia directa para esa afirmación.
+ */
+export const DOP = { schultzAnio: 1997, berridgeAnio: 2016, pecinaAnio: 2003 } as const;
+
+/** Tiempos del video «La dopamina NO es la molécula del placer» (segundos a ritmo normal), compartidos entre el dibujo y el sonido. */
+export const TDP = {
+  gancho: { mol: 0.2, t1: 0.4, t2: 1.8, sello: 3.1 },
+  experimento: { setup: 0.3, gota: 1.2, rafaga: 2.1, chip: 3.9 },
+  prediccion: { A: 0.4, B: 2.2, C: 4.0, dur: 1.5, chip: 5.6 },
+  querer: { menos: 0.4, menosDur: 1.7, mas: 3.3, masDur: 1.7, chip: 5.5 },
+  rutas: { cerebro: 0.2, via: (i: number): number => 1.0 + i * 0.75, chip: 3.9 },
+  debate: { balanza: 0.2, oscila: 1.2, chip: 3.5 },
+  cierre: { mol: 0.2, aros: 1.3, chip: 3.1 },
+} as const;
+
 export const PIEZAS: Record<string, DefPieza> = {
   "metro-plano": {
     id: "metro-plano", nombre: "8 millones en un solo plano", ideal: 7.6, fondo: "dark",
@@ -865,6 +888,35 @@ export const PIEZAS: Record<string, DefPieza> = {
   "int-cierre": {
     id: "int-cierre", nombre: "Intestino · no es un segundo cerebro: es una red que habla con el primero (cierre)", ideal: 5.2, fondo: "dark", entra: "zoom",
     sfx: (_d, r) => [ev(0.05, "whoosh", 0.1), ev(TIN.cierre.red * r + 0.2, "pop", 0.1), ...[0, 1, 2, 3].map((i) => ev(TIN.cierre.pulso(i) * r + 0.4, "zap", 0.1)), ev(TIN.cierre.chip * r, "ding", 0.18)],
+  },
+  /* ───────────── «La dopamina NO es la molécula del placer» (SINAPSIS · con voz de CapCut) ───────────── */
+  "dop-gancho": {
+    id: "dop-gancho", nombre: "Dopamina · la molécula en 3D gira y se tacha la palabra «placer» (gancho)", ideal: 4.6, fondo: "dark",
+    sfx: (_d, r) => [ev(0.05, "whoosh", 0.12), ev(TDP.gancho.mol * r + 0.2, "pop", 0.12), ev(TDP.gancho.t2 * r, "pop", 0.12), ev(TDP.gancho.sello * r, "golpe", 0.2), ev(TDP.gancho.sello * r + 0.05, "thud", 0.14), ev(TDP.gancho.sello * r + 0.2, "ding", 0.14)],
+  },
+  "dop-experimento": {
+    id: "dop-experimento", nombre: "Dopamina · jugo inesperado: la neurona dispara una ráfaga (Schultz, esquema)", ideal: 5.6, fondo: "dark", entra: "corte",
+    sfx: (_d, r) => [ev(0.05, "whoosh", 0.1), ev(TDP.experimento.setup * r + 0.2, "pop", 0.1), ev(TDP.experimento.gota * r, "gota", 0.16), ...[0, 1, 2, 3, 4, 5].map((i) => ev((TDP.experimento.rafaga + i * 0.07) * r, "tick", 0.12)), ev(TDP.experimento.chip * r, "ding", 0.16)],
+  },
+  "dop-prediccion": {
+    id: "dop-prediccion", nombre: "Dopamina · tres casos: inesperado dispara, ya previsto no, y si no llega lo esperado, cae", ideal: 6.4, fondo: "dark", entra: "semitono",
+    sfx: (_d, r) => [ev(0.05, "whoosh", 0.1), ...[0, 1, 2].map((i) => ev((TDP.prediccion.A + i * 1.8) * r, "pop", 0.1)), ev((TDP.prediccion.A + 0.9) * r, "zap", 0.1), ev((TDP.prediccion.B + 0.3) * r, "zap", 0.1), ev((TDP.prediccion.C + 0.3) * r, "zap", 0.1), ev((TDP.prediccion.C + 1.1) * r, "thud", 0.16), ev(TDP.prediccion.chip * r, "ding", 0.16)],
+  },
+  "dop-querer": {
+    id: "dop-querer", nombre: "Dopamina · querer no es disfrutar: menos dopamina apaga el querer y deja el agrado", ideal: 6.4, fondo: "dark", entra: "corte",
+    sfx: (_d, r) => [ev(0.05, "whoosh", 0.1), ...clics(TDP.querer.menos * r, TDP.querer.menosDur * r, 0.05), ev((TDP.querer.menos + TDP.querer.menosDur) * r, "thud", 0.14), ...clics(TDP.querer.mas * r, TDP.querer.masDur * r, 0.05), ev((TDP.querer.mas + TDP.querer.masDur) * r, "golpe", 0.16), ev(TDP.querer.chip * r, "ding", 0.16)],
+  },
+  "dop-rutas": {
+    id: "dop-rutas", nombre: "Dopamina · tres vías desde el mesencéfalo: mueve, desea y decide (esquema)", ideal: 5.8, fondo: "dark", entra: "zoom",
+    sfx: (_d, r) => [ev(0.05, "whoosh", 0.1), ev(TDP.rutas.cerebro * r + 0.2, "pop", 0.1), ...[0, 1, 2].map((i) => ev(TDP.rutas.via(i) * r, "zap", 0.12)), ev(TDP.rutas.chip * r, "ding", 0.16)],
+  },
+  "dop-debate": {
+    id: "dop-debate", nombre: "Dopamina · la balanza: ¿enseña (aprender) o motiva (querer)? El debate sigue", ideal: 4.8, fondo: "dark", entra: "semitono",
+    sfx: (_d, r) => [ev(0.05, "whoosh", 0.1), ev(TDP.debate.balanza * r + 0.2, "pop", 0.1), ...[0, 1, 2].map((i) => ev((TDP.debate.oscila + i * 0.7) * r, "tick", 0.1)), ev(TDP.debate.chip * r, "ding", 0.16)],
+  },
+  "dop-cierre": {
+    id: "dop-cierre", nombre: "Dopamina · no es placer: es la chispa de querer ir por algo (cierre)", ideal: 5.0, fondo: "dark", entra: "zoom",
+    sfx: (_d, r) => [ev(0.05, "whoosh", 0.1), ev(TDP.cierre.mol * r + 0.2, "pop", 0.1), ...[0, 1, 2].map((i) => ev((TDP.cierre.aros + i * 0.5) * r, "radar", 0.1)), ev(TDP.cierre.chip * r, "golpe", 0.16), ev(TDP.cierre.chip * r + 0.1, "ding", 0.16)],
   },
   /* ───────────── «El truco de los préstamos DSCR» (IMNOBA) ───────────── */
   "dscr-gancho": {

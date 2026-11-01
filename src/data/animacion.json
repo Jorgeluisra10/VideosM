@@ -1,18 +1,18 @@
 {
  "version": 1,
- "titulo": "¿Tu intestino es un segundo cerebro?",
+ "titulo": "La dopamina NO es la molécula del placer",
  "paleta": "medicina",
  "sfx": true,
  "fps": 60,
- "duracion": 46.8,
+ "duracion": 42.4,
  "escenas": [
   {
    "n": 1,
    "t": "PIEZA",
-   "voz": "Tu intestino se maneja solo.",
-   "dur": 4.4,
-   "h": "TU INTESTINO SE MANEJA SOLO",
-   "w": "SOLO",
+   "voz": "La dopamina no es la molécula del placer.",
+   "dur": 4.6,
+   "h": "NO ES LA MOLÉCULA DEL PLACER",
+   "w": "PLACER",
    "sub": "",
    "ic": "brillo",
    "num": null,
@@ -36,7 +36,7 @@
    "red": null,
    "termo": null,
    "pila": null,
-   "cap": "sistema nervioso entérico",
+   "cap": "te contaron mal",
    "papel": null,
    "pilares": null,
    "ciclo": null,
@@ -45,7 +45,7 @@
    "cubo": null,
    "diales": null,
    "pieza": {
-    "id": "int-gancho",
+    "id": "dop-gancho",
     "props": {}
    },
    "cita": null,
@@ -53,11 +53,11 @@
    "modo": "VIRAL",
    "tema": "oscuro",
    "bg": "dark",
-   "ritmo": 0.8977272727272727,
-   "total": 46.8,
+   "ritmo": 0.9021739130434782,
+   "total": 42.4,
    "inicio": 0,
-   "fin": 4.4,
-   "texto": "Tu intestino se maneja solo.",
+   "fin": 4.6,
+   "texto": "La dopamina no es la molécula del placer.",
    "tr": "barrido",
    "trs": "corte",
    "sfx": [
@@ -72,111 +72,41 @@
      "vol": 0.12
     },
     {
-     "t": 0.3795454545454546,
-     "tipo": "pop",
-     "vol": 0.1
-    },
-    {
-     "t": 0.7181818181818183,
-     "tipo": "clic",
-     "vol": 0.05
-    },
-    {
-     "t": 0.8481818181818183,
-     "tipo": "clic",
-     "vol": 0.05
-    },
-    {
-     "t": 0.9781818181818183,
-     "tipo": "clic",
-     "vol": 0.05
-    },
-    {
-     "t": 1.1081818181818184,
-     "tipo": "clic",
-     "vol": 0.05
-    },
-    {
-     "t": 1.2381818181818183,
-     "tipo": "clic",
-     "vol": 0.05
-    },
-    {
-     "t": 1.3681818181818182,
-     "tipo": "clic",
-     "vol": 0.05
-    },
-    {
-     "t": 1.4363636363636365,
+     "t": 0.3804347826086957,
      "tipo": "pop",
      "vol": 0.12
     },
     {
-     "t": 1.4981818181818183,
-     "tipo": "clic",
-     "vol": 0.05
+     "t": 1.6239130434782607,
+     "tipo": "pop",
+     "vol": 0.12
     },
     {
-     "t": 1.6281818181818184,
-     "tipo": "clic",
-     "vol": 0.05
+     "t": 2.796739130434782,
+     "tipo": "golpe",
+     "vol": 0.2
     },
     {
-     "t": 1.7581818181818183,
-     "tipo": "clic",
-     "vol": 0.05
+     "t": 2.846739130434782,
+     "tipo": "thud",
+     "vol": 0.14
     },
     {
-     "t": 1.8881818181818182,
-     "tipo": "clic",
-     "vol": 0.05
-    },
-    {
-     "t": 2.0181818181818185,
-     "tipo": "clic",
-     "vol": 0.05
-    },
-    {
-     "t": 2.1481818181818184,
-     "tipo": "clic",
-     "vol": 0.05
-    },
-    {
-     "t": 2.2781818181818183,
-     "tipo": "clic",
-     "vol": 0.05
-    },
-    {
-     "t": 2.408181818181818,
-     "tipo": "clic",
-     "vol": 0.05
-    },
-    {
-     "t": 2.538181818181818,
-     "tipo": "clic",
-     "vol": 0.05
-    },
-    {
-     "t": 2.6681818181818184,
-     "tipo": "clic",
-     "vol": 0.05
-    },
-    {
-     "t": 3.0522727272727272,
+     "t": 2.9967391304347823,
      "tipo": "ding",
-     "vol": 0.16
+     "vol": 0.14
     }
    ]
   },
   {
    "n": 2,
    "t": "PIEZA",
-   "voz": "Tiene ciento sesenta y ocho millones de neuronas. Tu cerebro, ochenta y seis mil millones.",
-   "dur": 5.7,
-   "h": "¿UN SEGUNDO CEREBRO?",
-   "w": "CEREBRO?",
+   "voz": "Wolfram Shults midió neuronas de dopamina en monos que recibían jugo.",
+   "dur": 5.6,
+   "h": "JUGO INESPERADO",
+   "w": "INESPERADO",
    "sub": "",
-   "ic": "billete",
+   "ic": "brillo",
    "num": null,
    "vs": null,
    "bars": [],
@@ -198,7 +128,7 @@
    "red": null,
    "termo": null,
    "pila": null,
-   "cap": "no: es una red",
+   "cap": "Schultz, 1997",
    "papel": null,
    "pilares": null,
    "ciclo": null,
@@ -207,7 +137,7 @@
    "cubo": null,
    "diales": null,
    "pieza": {
-    "id": "int-escala",
+    "id": "dop-experimento",
     "props": {}
    },
    "cita": null,
@@ -215,11 +145,230 @@
    "modo": "VIRAL",
    "tema": "claro",
    "bg": "light",
-   "ritmo": 0.9375000000000001,
-   "total": 46.8,
-   "inicio": 4.4,
-   "fin": 10.1,
-   "texto": "Tiene ciento sesenta y ocho millones de neuronas. Tu cerebro, ochenta y seis mil millones.",
+   "ritmo": 0.9196428571428571,
+   "total": 42.4,
+   "inicio": 4.6,
+   "fin": 10.2,
+   "texto": "Wolfram Shults midió neuronas de dopamina en monos que recibían jugo.",
+   "tr": "corte",
+   "trs": "semitono",
+   "sfx": [
+    {
+     "t": 0.04,
+     "tipo": "whoosh",
+     "vol": 0.16
+    },
+    {
+     "t": 0.05,
+     "tipo": "whoosh",
+     "vol": 0.1
+    },
+    {
+     "t": 0.4758928571428571,
+     "tipo": "pop",
+     "vol": 0.1
+    },
+    {
+     "t": 1.1035714285714284,
+     "tipo": "gota",
+     "vol": 0.16
+    },
+    {
+     "t": 1.93125,
+     "tipo": "tick",
+     "vol": 0.12
+    },
+    {
+     "t": 1.9956249999999998,
+     "tipo": "tick",
+     "vol": 0.12
+    },
+    {
+     "t": 2.06,
+     "tipo": "tick",
+     "vol": 0.12
+    },
+    {
+     "t": 2.124375,
+     "tipo": "tick",
+     "vol": 0.12
+    },
+    {
+     "t": 2.1887499999999998,
+     "tipo": "tick",
+     "vol": 0.12
+    },
+    {
+     "t": 2.2531250000000003,
+     "tipo": "tick",
+     "vol": 0.12
+    },
+    {
+     "t": 3.5866071428571424,
+     "tipo": "ding",
+     "vol": 0.16
+    }
+   ]
+  },
+  {
+   "n": 3,
+   "t": "PIEZA",
+   "voz": "Disparan ante lo inesperado, y caen cuando el premio esperado no llega.",
+   "dur": 6.4,
+   "h": "LO INESPERADO DISPARA",
+   "w": "INESPERADO",
+   "sub": "",
+   "ic": "tendencia-baja",
+   "num": null,
+   "vs": null,
+   "bars": [],
+   "barsU": "",
+   "hi": -1,
+   "line": null,
+   "items": [],
+   "stops": [],
+   "end": "",
+   "donut": [],
+   "picto": null,
+   "top": [],
+   "myth": "",
+   "truth": "",
+   "zoom": null,
+   "capas": null,
+   "mira": null,
+   "impacto": null,
+   "red": null,
+   "termo": null,
+   "pila": null,
+   "cap": "error de predicción",
+   "papel": null,
+   "pilares": null,
+   "ciclo": null,
+   "duo": null,
+   "osc": null,
+   "cubo": null,
+   "diales": null,
+   "pieza": {
+    "id": "dop-prediccion",
+    "props": {}
+   },
+   "cita": null,
+   "sc": "",
+   "modo": "VIRAL",
+   "tema": "oscuro",
+   "bg": "dark",
+   "ritmo": 0.9296875,
+   "total": 42.4,
+   "inicio": 10.2,
+   "fin": 16.6,
+   "texto": "Disparan ante lo inesperado, y caen cuando el premio esperado no llega.",
+   "tr": "semitono",
+   "trs": "corte",
+   "sfx": [
+    {
+     "t": 0.04,
+     "tipo": "whoosh",
+     "vol": 0.16
+    },
+    {
+     "t": 0.05,
+     "tipo": "whoosh",
+     "vol": 0.1
+    },
+    {
+     "t": 0.371875,
+     "tipo": "pop",
+     "vol": 0.1
+    },
+    {
+     "t": 1.2085937500000001,
+     "tipo": "zap",
+     "vol": 0.1
+    },
+    {
+     "t": 2.0453125,
+     "tipo": "pop",
+     "vol": 0.1
+    },
+    {
+     "t": 2.32421875,
+     "tipo": "zap",
+     "vol": 0.1
+    },
+    {
+     "t": 3.71875,
+     "tipo": "pop",
+     "vol": 0.1
+    },
+    {
+     "t": 3.99765625,
+     "tipo": "zap",
+     "vol": 0.1
+    },
+    {
+     "t": 4.74140625,
+     "tipo": "thud",
+     "vol": 0.16
+    },
+    {
+     "t": 5.20625,
+     "tipo": "ding",
+     "vol": 0.16
+    }
+   ]
+  },
+  {
+   "n": 4,
+   "t": "PIEZA",
+   "voz": "Sin casi dopamina, las ratas disfrutaban el dulce, pero ya no iban por él.",
+   "dur": 6.4,
+   "h": "QUERER NO ES DISFRUTAR",
+   "w": "QUERER",
+   "sub": "",
+   "ic": "bus",
+   "num": null,
+   "vs": null,
+   "bars": [],
+   "barsU": "",
+   "hi": -1,
+   "line": null,
+   "items": [],
+   "stops": [],
+   "end": "",
+   "donut": [],
+   "picto": null,
+   "top": [],
+   "myth": "",
+   "truth": "",
+   "zoom": null,
+   "capas": null,
+   "mira": null,
+   "impacto": null,
+   "red": null,
+   "termo": null,
+   "pila": null,
+   "cap": "Berridge y Robinson",
+   "papel": null,
+   "pilares": null,
+   "ciclo": null,
+   "duo": null,
+   "osc": null,
+   "cubo": null,
+   "diales": null,
+   "pieza": {
+    "id": "dop-querer",
+    "props": {}
+   },
+   "cita": null,
+   "sc": "",
+   "modo": "VIRAL",
+   "tema": "claro",
+   "bg": "light",
+   "ritmo": 0.9296875,
+   "total": 42.4,
+   "inicio": 16.6,
+   "fin": 23,
+   "texto": "Sin casi dopamina, las ratas disfrutaban el dulce, pero ya no iban por él.",
    "tr": "corte",
    "trs": "zoom",
    "sfx": [
@@ -234,89 +383,149 @@
      "vol": 0.1
     },
     {
-     "t": 0.5750000000000001,
-     "tipo": "pop",
-     "vol": 0.1
-    },
-    {
-     "t": 2.0625000000000004,
-     "tipo": "pop",
-     "vol": 0.1
-    },
-    {
-     "t": 2.25,
+     "t": 0.371875,
      "tipo": "clic",
      "vol": 0.05
     },
     {
-     "t": 2.38,
+     "t": 0.5018750000000001,
      "tipo": "clic",
      "vol": 0.05
     },
     {
-     "t": 2.51,
+     "t": 0.631875,
      "tipo": "clic",
      "vol": 0.05
     },
     {
-     "t": 2.64,
+     "t": 0.7618750000000001,
      "tipo": "clic",
      "vol": 0.05
     },
     {
-     "t": 2.77,
+     "t": 0.891875,
      "tipo": "clic",
      "vol": 0.05
     },
     {
-     "t": 2.9,
+     "t": 1.021875,
      "tipo": "clic",
      "vol": 0.05
     },
     {
-     "t": 3.0300000000000002,
+     "t": 1.151875,
      "tipo": "clic",
      "vol": 0.05
     },
     {
-     "t": 3.16,
+     "t": 1.281875,
      "tipo": "clic",
      "vol": 0.05
     },
     {
-     "t": 3.29,
+     "t": 1.411875,
      "tipo": "clic",
      "vol": 0.05
     },
     {
-     "t": 3.42,
+     "t": 1.5418749999999999,
      "tipo": "clic",
      "vol": 0.05
     },
     {
-     "t": 3.55,
+     "t": 1.671875,
      "tipo": "clic",
      "vol": 0.05
     },
     {
-     "t": 4.3125,
+     "t": 1.8018750000000001,
+     "tipo": "clic",
+     "vol": 0.05
+    },
+    {
+     "t": 1.95234375,
+     "tipo": "thud",
+     "vol": 0.14
+    },
+    {
+     "t": 3.06796875,
+     "tipo": "clic",
+     "vol": 0.05
+    },
+    {
+     "t": 3.19796875,
+     "tipo": "clic",
+     "vol": 0.05
+    },
+    {
+     "t": 3.32796875,
+     "tipo": "clic",
+     "vol": 0.05
+    },
+    {
+     "t": 3.45796875,
+     "tipo": "clic",
+     "vol": 0.05
+    },
+    {
+     "t": 3.58796875,
+     "tipo": "clic",
+     "vol": 0.05
+    },
+    {
+     "t": 3.71796875,
+     "tipo": "clic",
+     "vol": 0.05
+    },
+    {
+     "t": 3.8479687499999997,
+     "tipo": "clic",
+     "vol": 0.05
+    },
+    {
+     "t": 3.97796875,
+     "tipo": "clic",
+     "vol": 0.05
+    },
+    {
+     "t": 4.1079687499999995,
+     "tipo": "clic",
+     "vol": 0.05
+    },
+    {
+     "t": 4.23796875,
+     "tipo": "clic",
+     "vol": 0.05
+    },
+    {
+     "t": 4.36796875,
+     "tipo": "clic",
+     "vol": 0.05
+    },
+    {
+     "t": 4.49796875,
+     "tipo": "clic",
+     "vol": 0.05
+    },
+    {
+     "t": 4.6484375,
      "tipo": "golpe",
-     "vol": 0.18
+     "vol": 0.16
     },
     {
-     "t": 4.4125,
+     "t": 5.11328125,
      "tipo": "ding",
      "vol": 0.16
     }
    ]
   },
   {
-   "n": 3,
+   "n": 5,
    "t": "PIEZA",
-   "voz": "Si cortas el nervio vago, el intestino sigue moviéndose.",
-   "dur": 5,
-   "h": "SIGUE MOVIÉNDOSE",
-   "w": "SIGUE",
+   "voz": "Sus vías también mueven tu cuerpo; si esas neuronas mueren, aparece el párkinson.",
+   "dur": 5.8,
+   "h": "UNA SEÑAL, TRES CAMINOS",
+   "w": "CAMINOS",
    "sub": "",
    "ic": "brillo",
    "num": null,
@@ -340,7 +549,7 @@
    "red": null,
    "termo": null,
    "pila": null,
-   "cap": "reflejo peristáltico",
+   "cap": "mueve, desea, decide",
    "papel": null,
    "pilares": null,
    "ciclo": null,
@@ -349,7 +558,7 @@
    "cubo": null,
    "diales": null,
    "pieza": {
-    "id": "int-autonomo",
+    "id": "dop-rutas",
     "props": {}
    },
    "cita": null,
@@ -357,110 +566,13 @@
    "modo": "VIRAL",
    "tema": "oscuro",
    "bg": "dark",
-   "ritmo": 0.9099999999999999,
-   "total": 46.8,
-   "inicio": 10.1,
-   "fin": 15.1,
-   "texto": "Si cortas el nervio vago, el intestino sigue moviéndose.",
+   "ritmo": 0.9224137931034483,
+   "total": 42.4,
+   "inicio": 23,
+   "fin": 28.8,
+   "texto": "Sus vías también mueven tu cuerpo; si esas neuronas mueren, aparece el párkinson.",
    "tr": "zoom",
    "trs": "semitono",
-   "sfx": [
-    {
-     "t": 0.04,
-     "tipo": "whoosh",
-     "vol": 0.16
-    },
-    {
-     "t": 0.05,
-     "tipo": "whoosh",
-     "vol": 0.1
-    },
-    {
-     "t": 0.382,
-     "tipo": "heartbeat",
-     "vol": 0.12
-    },
-    {
-     "t": 0.728,
-     "tipo": "pop",
-     "vol": 0.1
-    },
-    {
-     "t": 2.002,
-     "tipo": "zap",
-     "vol": 0.2
-    },
-    {
-     "t": 2.0519999999999996,
-     "tipo": "golpe",
-     "vol": 0.18
-    },
-    {
-     "t": 2.639,
-     "tipo": "tick",
-     "vol": 0.12
-    },
-    {
-     "t": 3.8219999999999996,
-     "tipo": "ding",
-     "vol": 0.16
-    }
-   ]
-  },
-  {
-   "n": 4,
-   "t": "PIEZA",
-   "voz": "Cuando el bolo estira la pared, detrás aprieta y delante se relaja.",
-   "dur": 5.8,
-   "h": "DETRÁS APRIETA, DELANTE AFLOJA",
-   "w": "APRIETA,",
-   "sub": "",
-   "ic": "brillo",
-   "num": null,
-   "vs": null,
-   "bars": [],
-   "barsU": "",
-   "hi": -1,
-   "line": null,
-   "items": [],
-   "stops": [],
-   "end": "",
-   "donut": [],
-   "picto": null,
-   "top": [],
-   "myth": "",
-   "truth": "",
-   "zoom": null,
-   "capas": null,
-   "mira": null,
-   "impacto": null,
-   "red": null,
-   "termo": null,
-   "pila": null,
-   "cap": "peristalsis",
-   "papel": null,
-   "pilares": null,
-   "ciclo": null,
-   "duo": null,
-   "osc": null,
-   "cubo": null,
-   "diales": null,
-   "pieza": {
-    "id": "int-peristalsis",
-    "props": {}
-   },
-   "cita": null,
-   "sc": "",
-   "modo": "VIRAL",
-   "tema": "claro",
-   "bg": "light",
-   "ritmo": 0.9224137931034483,
-   "total": 46.8,
-   "inicio": 15.1,
-   "fin": 20.9,
-   "texto": "Cuando el bolo estira la pared, detrás aprieta y delante se relaja.",
-   "tr": "semitono",
-   "trs": "corte",
    "sfx": [
     {
      "t": 0.04,
@@ -478,129 +590,22 @@
      "vol": 0.1
     },
     {
-     "t": 0.7379310344827587,
-     "tipo": "tick",
-     "vol": 0.1
-    },
-    {
-     "t": 1.3836206896551724,
-     "tipo": "tick",
-     "vol": 0.1
-    },
-    {
-     "t": 2.029310344827586,
-     "tipo": "tick",
-     "vol": 0.1
-    },
-    {
-     "t": 2.6749999999999994,
-     "tipo": "tick",
-     "vol": 0.1
-    },
-    {
-     "t": 3.3206896551724134,
-     "tipo": "tick",
-     "vol": 0.1
-    },
-    {
-     "t": 4.058620689655172,
-     "tipo": "ding",
-     "vol": 0.16
-    }
-   ]
-  },
-  {
-   "n": 5,
-   "t": "PIEZA",
-   "voz": "Sin esas neuronas en un tramo del colon, el alimento no avanza.",
-   "dur": 5.6,
-   "h": "SIN NEURONAS, NO HAY AVANCE",
-   "w": "NEURONAS,",
-   "sub": "",
-   "ic": "brillo",
-   "num": null,
-   "vs": null,
-   "bars": [],
-   "barsU": "",
-   "hi": -1,
-   "line": null,
-   "items": [],
-   "stops": [],
-   "end": "",
-   "donut": [],
-   "picto": null,
-   "top": [],
-   "myth": "",
-   "truth": "",
-   "zoom": null,
-   "capas": null,
-   "mira": null,
-   "impacto": null,
-   "red": null,
-   "termo": null,
-   "pila": null,
-   "cap": "enfermedad de Hirschsprung",
-   "papel": null,
-   "pilares": null,
-   "ciclo": null,
-   "duo": null,
-   "osc": null,
-   "cubo": null,
-   "diales": null,
-   "pieza": {
-    "id": "int-hirsch",
-    "props": {}
-   },
-   "cita": null,
-   "sc": "",
-   "modo": "VIRAL",
-   "tema": "oscuro",
-   "bg": "dark",
-   "ritmo": 0.9196428571428571,
-   "total": 46.8,
-   "inicio": 20.9,
-   "fin": 26.5,
-   "texto": "Sin esas neuronas en un tramo del colon, el alimento no avanza.",
-   "tr": "corte",
-   "trs": "corte",
-   "sfx": [
-    {
-     "t": 0.04,
-     "tipo": "whoosh",
-     "vol": 0.16
-    },
-    {
-     "t": 0.05,
-     "tipo": "whoosh",
-     "vol": 0.1
-    },
-    {
-     "t": 0.38392857142857145,
-     "tipo": "pop",
-     "vol": 0.1
-    },
-    {
-     "t": 0.7357142857142858,
+     "t": 0.9224137931034483,
      "tipo": "zap",
-     "vol": 0.1
-    },
-    {
-     "t": 1.6553571428571427,
-     "tipo": "thud",
      "vol": 0.12
     },
     {
-     "t": 2.1151785714285714,
-     "tipo": "thud",
+     "t": 1.6142241379310345,
+     "tipo": "zap",
      "vol": 0.12
     },
     {
-     "t": 2.5749999999999997,
-     "tipo": "thud",
+     "t": 2.3060344827586206,
+     "tipo": "zap",
      "vol": 0.12
     },
     {
-     "t": 3.494642857142857,
+     "t": 3.597413793103448,
      "tipo": "ding",
      "vol": 0.16
     }
@@ -609,10 +614,10 @@
   {
    "n": 6,
    "t": "PIEZA",
-   "voz": "Casi el noventa por ciento de tu serotonina se fabrica ahí, pero no llega al cerebro.",
-   "dur": 6,
-   "h": "90 % DE TU SEROTONINA",
-   "w": "SEROTONINA",
+   "voz": "Los científicos aún discuten si enseña o si motiva.",
+   "dur": 4.8,
+   "h": "¿ENSEÑA O MOTIVA?",
+   "w": "MOTIVA?",
    "sub": "",
    "ic": "brillo",
    "num": null,
@@ -636,7 +641,7 @@
    "red": null,
    "termo": null,
    "pila": null,
-   "cap": "no cruza la barrera",
+   "cap": "el debate sigue",
    "papel": null,
    "pilares": null,
    "ciclo": null,
@@ -645,7 +650,7 @@
    "cubo": null,
    "diales": null,
    "pieza": {
-    "id": "int-sero",
+    "id": "dop-debate",
     "props": {}
    },
    "cita": null,
@@ -653,118 +658,11 @@
    "modo": "VIRAL",
    "tema": "claro",
    "bg": "light",
-   "ritmo": 0.9568965517241379,
-   "total": 46.8,
-   "inicio": 26.5,
-   "fin": 32.5,
-   "texto": "Casi el noventa por ciento de tu serotonina se fabrica ahí, pero no llega al cerebro.",
-   "tr": "corte",
-   "trs": "semitono",
-   "sfx": [
-    {
-     "t": 0.04,
-     "tipo": "whoosh",
-     "vol": 0.16
-    },
-    {
-     "t": 0.05,
-     "tipo": "whoosh",
-     "vol": 0.1
-    },
-    {
-     "t": 0.3913793103448276,
-     "tipo": "pop",
-     "vol": 0.1
-    },
-    {
-     "t": 0.8612068965517241,
-     "tipo": "pop",
-     "vol": 0.08
-    },
-    {
-     "t": 1.1004310344827586,
-     "tipo": "pop",
-     "vol": 0.08
-    },
-    {
-     "t": 1.339655172413793,
-     "tipo": "pop",
-     "vol": 0.08
-    },
-    {
-     "t": 1.5788793103448275,
-     "tipo": "pop",
-     "vol": 0.08
-    },
-    {
-     "t": 1.7224137931034482,
-     "tipo": "whoosh",
-     "vol": 0.12
-    },
-    {
-     "t": 3.0620689655172413,
-     "tipo": "thud",
-     "vol": 0.18
-    },
-    {
-     "t": 3.1620689655172414,
-     "tipo": "ding",
-     "vol": 0.16
-    }
-   ]
-  },
-  {
-   "n": 7,
-   "t": "PIEZA",
-   "voz": "El nervio vago sube más información de la que baja: el ochenta por ciento.",
-   "dur": 5.3,
-   "h": "EL NERVIO VAGO SUBE",
-   "w": "VAGO",
-   "sub": "",
-   "ic": "tendencia-alza",
-   "num": null,
-   "vs": null,
-   "bars": [],
-   "barsU": "",
-   "hi": -1,
-   "line": null,
-   "items": [],
-   "stops": [],
-   "end": "",
-   "donut": [],
-   "picto": null,
-   "top": [],
-   "myth": "",
-   "truth": "",
-   "zoom": null,
-   "capas": null,
-   "mira": null,
-   "impacto": null,
-   "red": null,
-   "termo": null,
-   "pila": null,
-   "cap": "80 % hacia el cerebro",
-   "papel": null,
-   "pilares": null,
-   "ciclo": null,
-   "duo": null,
-   "osc": null,
-   "cubo": null,
-   "diales": null,
-   "pieza": {
-    "id": "int-vago",
-    "props": {}
-   },
-   "cita": null,
-   "sc": "",
-   "modo": "VIRAL",
-   "tema": "oscuro",
-   "bg": "dark",
-   "ritmo": 0.97,
-   "total": 46.8,
-   "inicio": 32.5,
-   "fin": 37.8,
-   "texto": "El nervio vago sube más información de la que baja: el ochenta por ciento.",
+   "ritmo": 0.90625,
+   "total": 42.4,
+   "inicio": 28.8,
+   "fin": 33.6,
+   "texto": "Los científicos aún discuten si enseña o si motiva.",
    "tr": "semitono",
    "trs": "zoom",
    "sfx": [
@@ -779,84 +677,39 @@
      "vol": 0.1
     },
     {
-     "t": 0.776,
-     "tipo": "clic",
-     "vol": 0.05
+     "t": 0.38125000000000003,
+     "tipo": "pop",
+     "vol": 0.1
     },
     {
-     "t": 0.906,
-     "tipo": "clic",
-     "vol": 0.05
+     "t": 1.0875,
+     "tipo": "tick",
+     "vol": 0.1
     },
     {
-     "t": 1.036,
-     "tipo": "clic",
-     "vol": 0.05
+     "t": 1.7218749999999998,
+     "tipo": "tick",
+     "vol": 0.1
     },
     {
-     "t": 1.166,
-     "tipo": "clic",
-     "vol": 0.05
+     "t": 2.3562499999999997,
+     "tipo": "tick",
+     "vol": 0.1
     },
     {
-     "t": 1.296,
-     "tipo": "clic",
-     "vol": 0.05
-    },
-    {
-     "t": 1.4260000000000002,
-     "tipo": "clic",
-     "vol": 0.05
-    },
-    {
-     "t": 1.556,
-     "tipo": "clic",
-     "vol": 0.05
-    },
-    {
-     "t": 1.686,
-     "tipo": "clic",
-     "vol": 0.05
-    },
-    {
-     "t": 1.816,
-     "tipo": "clic",
-     "vol": 0.05
-    },
-    {
-     "t": 1.946,
-     "tipo": "clic",
-     "vol": 0.05
-    },
-    {
-     "t": 2.076,
-     "tipo": "clic",
-     "vol": 0.05
-    },
-    {
-     "t": 2.7159999999999997,
-     "tipo": "whoosh",
-     "vol": 0.12
-    },
-    {
-     "t": 2.91,
-     "tipo": "golpe",
-     "vol": 0.16
-    },
-    {
-     "t": 3.0100000000000002,
+     "t": 3.171875,
      "tipo": "ding",
      "vol": 0.16
     }
    ]
   },
   {
-   "n": 8,
+   "n": 7,
    "t": "PIEZA",
-   "voz": "No es un segundo cerebro: es una red que habla con el primero.",
-   "dur": 5.2,
-   "h": "UNA RED QUE HABLA",
-   "w": "RED",
+   "voz": "No es placer: es la chispa que te hace ir por algo.",
+   "dur": 5,
+   "h": "LA CHISPA DE QUERER",
+   "w": "QUERER",
    "sub": "",
    "ic": "brillo",
    "num": null,
@@ -880,7 +733,7 @@
    "red": null,
    "termo": null,
    "pila": null,
-   "cap": "eje intestino-cerebro",
+   "cap": "ve por ello",
    "papel": null,
    "pilares": null,
    "ciclo": null,
@@ -889,19 +742,19 @@
    "cubo": null,
    "diales": null,
    "pieza": {
-    "id": "int-cierre",
+    "id": "dop-cierre",
     "props": {}
    },
    "cita": null,
    "sc": "",
    "modo": "VIRAL",
-   "tema": "claro",
-   "bg": "light",
-   "ritmo": 0.9134615384615384,
-   "total": 46.8,
-   "inicio": 37.8,
-   "fin": 43,
-   "texto": "No es un segundo cerebro: es una red que habla con el primero.",
+   "tema": "oscuro",
+   "bg": "dark",
+   "ritmo": 0.9099999999999999,
+   "total": 42.4,
+   "inicio": 33.6,
+   "fin": 38.6,
+   "texto": "No es placer: es la chispa que te hace ir por algo.",
    "tr": "zoom",
    "trs": "barrido",
    "sfx": [
@@ -916,39 +769,39 @@
      "vol": 0.1
     },
     {
-     "t": 0.3826923076923077,
+     "t": 0.382,
      "tipo": "pop",
      "vol": 0.1
     },
     {
-     "t": 1.3134615384615385,
-     "tipo": "zap",
+     "t": 1.1829999999999998,
+     "tipo": "radar",
      "vol": 0.1
     },
     {
-     "t": 1.8615384615384616,
-     "tipo": "zap",
+     "t": 1.638,
+     "tipo": "radar",
      "vol": 0.1
     },
     {
-     "t": 2.4096153846153845,
-     "tipo": "zap",
+     "t": 2.0929999999999995,
+     "tipo": "radar",
      "vol": 0.1
     },
     {
-     "t": 2.9576923076923074,
-     "tipo": "zap",
-     "vol": 0.1
+     "t": 2.8209999999999997,
+     "tipo": "golpe",
+     "vol": 0.16
     },
     {
-     "t": 3.2884615384615383,
+     "t": 2.921,
      "tipo": "ding",
-     "vol": 0.18
+     "vol": 0.16
     }
    ]
   },
   {
-   "n": 9,
+   "n": 8,
    "t": "CTA",
    "voz": "Guárdalo y compártelo con alguien curioso.",
    "dur": 3.8,
@@ -992,9 +845,9 @@
    "tema": "oscuro",
    "bg": "gold",
    "ritmo": 1,
-   "total": 46.8,
-   "inicio": 43,
-   "fin": 46.8,
+   "total": 42.4,
+   "inicio": 38.6,
+   "fin": 42.4,
    "texto": "Guárdalo y compártelo con alguien curioso.",
    "tr": "barrido",
    "trs": "barrido",

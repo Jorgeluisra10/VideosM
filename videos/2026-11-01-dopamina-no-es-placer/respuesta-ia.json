@@ -1,0 +1,13 @@
+{
+  "titulo": "La dopamina NO es la molécula del placer",
+  "scenes": [
+    {"t": "PIEZA", "voz": "La dopamina no es la molécula del placer.", "dur": 4.6, "h": "NO ES LA MOLÉCULA DEL PLACER", "w": "PLACER", "cap": "te contaron mal", "pieza": {"id": "dop-gancho"}},
+    {"t": "PIEZA", "voz": "Wolfram Shults midió neuronas de dopamina en monos que recibían jugo.", "dur": 5.6, "h": "JUGO INESPERADO", "w": "INESPERADO", "cap": "Schultz, 1997", "pieza": {"id": "dop-experimento"}},
+    {"t": "PIEZA", "voz": "Disparan ante lo inesperado, y caen cuando el premio esperado no llega.", "dur": 6.4, "h": "LO INESPERADO DISPARA", "w": "INESPERADO", "cap": "error de predicción", "pieza": {"id": "dop-prediccion"}},
+    {"t": "PIEZA", "voz": "Sin casi dopamina, las ratas disfrutaban el dulce, pero ya no iban por él.", "dur": 6.4, "h": "QUERER NO ES DISFRUTAR", "w": "QUERER", "cap": "Berridge y Robinson", "pieza": {"id": "dop-querer"}},
+    {"t": "PIEZA", "voz": "Sus vías también mueven tu cuerpo; si esas neuronas mueren, aparece el párkinson.", "dur": 5.8, "h": "UNA SEÑAL, TRES CAMINOS", "w": "CAMINOS", "cap": "mueve, desea, decide", "pieza": {"id": "dop-rutas"}},
+    {"t": "PIEZA", "voz": "Los científicos aún discuten si enseña o si motiva.", "dur": 4.8, "h": "¿ENSEÑA O MOTIVA?", "w": "MOTIVA", "cap": "el debate sigue", "pieza": {"id": "dop-debate"}},
+    {"t": "PIEZA", "voz": "No es placer: es la chispa que te hace ir por algo.", "dur": 5.0, "h": "LA CHISPA DE QUERER", "w": "QUERER", "cap": "ve por ello", "pieza": {"id": "dop-cierre"}},
+    {"t": "CTA", "voz": "Guárdalo y compártelo con alguien curioso.", "dur": 3.8, "h": "GUÁRDALO Y COMPÁRTELO", "w": "COMPÁRTELO", "sub": "Más ciencia en SINAPSIS"}
+  ]
+}
