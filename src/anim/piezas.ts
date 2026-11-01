@@ -519,6 +519,30 @@ export const TDO = {
   cierre: { cerebro: 0.2, pulso: (i: number): number => 1.0 + i * 0.7, cero: 3.9 },
 } as const;
 
+/**
+ * Datos del video «¿Tu intestino es un segundo cerebro?» (SINAPSIS · serie neuroanatomía). Investigado (búsqueda web, 2026-11-01); límites:
+ *  · Neuronas del sistema nervioso entérico humano: ≈ 168 millones (Michel et al., Neurogastroenterol Motil 2022; los datos humanos se apoyan en parte en la literatura), comparable a la médula espinal.
+ *    La cifra «500 millones» de fuentes generales no se pudo verificar. Cerebro: ≈ 86.000 millones de neuronas (Azevedo et al., J Comp Neurol 2009).
+ *  · El sistema entérico puede coordinar el movimiento del intestino aunque se corte el nervio vago (reflejo peristáltico; Furness, Nat Rev Gastroenterol Hepatol 2012, revisión).
+ *  · Hirschsprung: faltan las neuronas entéricas en un tramo del intestino distal; en la mayoría (≈ 60–85 %) es un tramo corto, el último del colon.
+ *  · ≈ 90 % (hasta 95 % según la fuente) de la serotonina del cuerpo se produce en el intestino (células enterocromafines); la serotonina periférica no cruza la barrera hematoencefálica: el cerebro fabrica la suya (TPH2).
+ *  · Nervio vago: ≈ 80 % de fibras aferentes (hacia el cerebro) y 20 % eferentes (estimación clásica; Bonaz et al., Front Neurosci 2018).
+ *  · «Segundo cerebro»: término popularizado por Michael Gershon (1996–1998). Es una metáfora: la red entérica no «piensa».
+ */
+export const INT = { neuronasEnt: 168, neuronasCer: 86000, enterocromafines: 90, vagoAfer: 80, vagoEfer: 20, michelAnio: 2022, azevedoAnio: 2009, bonazAnio: 2018 } as const;
+
+/** Tiempos del video «¿Tu intestino es un segundo cerebro?» (segundos a ritmo normal), compartidos entre el dibujo y el sonido. */
+export const TIN = {
+  gancho: { tubo: 0.2, red: 0.8, redDur: 2.4, t1: 0.3, t2: 1.6, chip: 3.4 },
+  escala: { cerebro: 0.4, barraDur: 1.4, intest: 2.2, cuenta: 2.4, cuentaDur: 1.6, chip: 4.6 },
+  autonomo: { cerebro: 0.2, cable: 0.8, corte: 2.2, sigue: 2.9, chip: 4.2 },
+  peristalsis: { tubo: 0.2, bolo: 0.8, boloDur: 3.6, chip: 1.2 },
+  hirsch: { tubo: 0.2, neuronas: 0.8, pila: 1.8, chip: 3.8 },
+  sero: { intestino: 0.2, ec: 0.9, suben: 1.8, bloqueo: 3.2, dato: 0.6 },
+  vago: { cable: 0.2, puntos: 0.8, puntosDur: 1.6, sube: 2.8, dato: 3.0 },
+  cierre: { red: 0.2, pulso: (i: number): number => 1.0 + i * 0.6, chip: 3.6 },
+} as const;
+
 export const PIEZAS: Record<string, DefPieza> = {
   "metro-plano": {
     id: "metro-plano", nombre: "8 millones en un solo plano", ideal: 7.6, fondo: "dark",
@@ -808,6 +832,39 @@ export const PIEZAS: Record<string, DefPieza> = {
   "dol-cierre": {
     id: "dol-cierre", nombre: "Dolor · el cerebro recibe el dolor del cuerpo pero no tiene sensores propios (cierre)", ideal: 5.0, fondo: "dark", entra: "corte",
     sfx: (_d, r) => [ev(0.05, "whoosh", 0.1), ev(TDO.cierre.cerebro * r + 0.2, "pop", 0.1), ...[0, 1, 2, 3].map((i) => ev(TDO.cierre.pulso(i) * r + 0.6, "zap", 0.1)), ev(TDO.cierre.cero * r, "thud", 0.16), ev(TDO.cierre.cero * r + 0.1, "ding", 0.18)],
+  },
+  /* ───────────── «¿Tu intestino es un segundo cerebro?» (SINAPSIS · sin voz) ───────────── */
+  "int-gancho": {
+    id: "int-gancho", nombre: "Intestino · un tubo con su propia red de neuronas se ilumina y mueve el alimento solo (gancho)", ideal: 4.4, fondo: "dark",
+    sfx: (_d, r) => [ev(0.05, "whoosh", 0.12), ev(TIN.gancho.tubo * r + 0.2, "pop", 0.1), ...clics(TIN.gancho.red * r, TIN.gancho.redDur * r, 0.05), ev(TIN.gancho.t2 * r, "pop", 0.12), ev(TIN.gancho.chip * r, "ding", 0.16)],
+  },
+  "int-escala": {
+    id: "int-escala", nombre: "Intestino · ≈ 168 millones de neuronas contra 86.000 millones: no es un segundo cerebro", ideal: 5.6, fondo: "dark", entra: "corte",
+    sfx: (_d, r) => [ev(0.05, "whoosh", 0.1), ev(TIN.escala.cerebro * r + 0.2, "pop", 0.1), ev(TIN.escala.intest * r, "pop", 0.1), ...clics(TIN.escala.cuenta * r, TIN.escala.cuentaDur * r, 0.05), ev(TIN.escala.chip * r, "golpe", 0.18), ev(TIN.escala.chip * r + 0.1, "ding", 0.16)],
+  },
+  "int-autonomo": {
+    id: "int-autonomo", nombre: "Intestino · se corta el nervio vago y el intestino sigue moviéndose", ideal: 5.0, fondo: "dark", entra: "zoom",
+    sfx: (_d, r) => [ev(0.05, "whoosh", 0.1), ev(TIN.autonomo.cerebro * r + 0.2, "heartbeat", 0.12), ev(TIN.autonomo.cable * r, "pop", 0.1), ev(TIN.autonomo.corte * r, "zap", 0.2), ev(TIN.autonomo.corte * r + 0.05, "golpe", 0.18), ev(TIN.autonomo.sigue * r, "tick", 0.12), ev(TIN.autonomo.chip * r, "ding", 0.16)],
+  },
+  "int-peristalsis": {
+    id: "int-peristalsis", nombre: "Intestino · la onda peristáltica: el sensor detecta el bolo, detrás aprieta y delante se relaja", ideal: 5.8, fondo: "dark", entra: "semitono",
+    sfx: (_d, r) => [ev(0.05, "whoosh", 0.1), ev(TIN.peristalsis.tubo * r + 0.2, "pop", 0.1), ...[0, 1, 2, 3, 4].map((i) => ev((TIN.peristalsis.bolo + i * 0.7) * r, "tick", 0.1)), ev((TIN.peristalsis.bolo + TIN.peristalsis.boloDur) * r, "ding", 0.16)],
+  },
+  "int-hirsch": {
+    id: "int-hirsch", nombre: "Intestino · Hirschsprung: sin neuronas en un tramo del colon, el alimento no avanza", ideal: 5.6, fondo: "dark", entra: "corte",
+    sfx: (_d, r) => [ev(0.05, "whoosh", 0.1), ev(TIN.hirsch.tubo * r + 0.2, "pop", 0.1), ev(TIN.hirsch.neuronas * r, "zap", 0.1), ...[0, 1, 2].map((i) => ev((TIN.hirsch.pila + i * 0.5) * r, "thud", 0.12)), ev(TIN.hirsch.chip * r, "ding", 0.16)],
+  },
+  "int-sero": {
+    id: "int-sero", nombre: "Intestino · ≈ 90 % de la serotonina se fabrica en el intestino, pero no cruza la barrera del cerebro", ideal: 5.8, fondo: "dark", entra: "corte",
+    sfx: (_d, r) => [ev(0.05, "whoosh", 0.1), ev(TIN.sero.intestino * r + 0.2, "pop", 0.1), ...[0, 1, 2, 3].map((i) => ev((TIN.sero.ec + i * 0.25) * r, "pop", 0.08)), ev(TIN.sero.suben * r, "whoosh", 0.12), ev(TIN.sero.bloqueo * r, "thud", 0.18), ev(TIN.sero.bloqueo * r + 0.1, "ding", 0.16)],
+  },
+  "int-vago": {
+    id: "int-vago", nombre: "Intestino · el nervio vago: ≈ 80 % de las fibras llevan información hacia el cerebro", ideal: 5.0, fondo: "dark", entra: "semitono",
+    sfx: (_d, r) => [ev(0.05, "whoosh", 0.1), ...clics(TIN.vago.puntos * r, TIN.vago.puntosDur * r, 0.05), ev(TIN.vago.sube * r, "whoosh", 0.12), ev(TIN.vago.dato * r, "golpe", 0.16), ev(TIN.vago.dato * r + 0.1, "ding", 0.16)],
+  },
+  "int-cierre": {
+    id: "int-cierre", nombre: "Intestino · no es un segundo cerebro: es una red que habla con el primero (cierre)", ideal: 5.2, fondo: "dark", entra: "zoom",
+    sfx: (_d, r) => [ev(0.05, "whoosh", 0.1), ev(TIN.cierre.red * r + 0.2, "pop", 0.1), ...[0, 1, 2, 3].map((i) => ev(TIN.cierre.pulso(i) * r + 0.4, "zap", 0.1)), ev(TIN.cierre.chip * r, "ding", 0.18)],
   },
   /* ───────────── «El truco de los préstamos DSCR» (IMNOBA) ───────────── */
   "dscr-gancho": {

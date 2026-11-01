@@ -33,6 +33,8 @@ import { DscCatalogo, DscDocs, DscGancho, DscHack, DscSplit } from "./dscr1";
 import { TejEpitelial, TejGancho, TejSangre } from "./tej1";
 import { TejHueso, TejMuscular, TejNervioso } from "./tej2";
 import { EinBarrera, EinEsculpe, EinGancho, EinTripartita } from "./ein1";
+import { IntAutonomo, IntEscala, IntGancho, IntPeristalsis } from "./int1";
+import { IntCierre, IntHirsch, IntSero, IntVago } from "./int2";
 import { DolCabeza, DolCierre, DolHomunculo, DolMusica } from "./dol2";
 import { DolCapas, DolGancho, DolMapa, DolQuirofano } from "./dol1";
 import { GlfBasura, GlfGancho, GlfTuberias } from "./glf1";
@@ -70,6 +72,14 @@ export const COMPONENTES_PIEZA: Record<string, React.FC<{ e: EscenaViralGuardada
   "real-plusvalia": RealPlusvalia,
   "real-caminata": RealCaminata,
   "real-cierre": RealCierre,
+  "int-gancho": IntGancho,
+  "int-escala": IntEscala,
+  "int-autonomo": IntAutonomo,
+  "int-peristalsis": IntPeristalsis,
+  "int-hirsch": IntHirsch,
+  "int-sero": IntSero,
+  "int-vago": IntVago,
+  "int-cierre": IntCierre,
   "dol-gancho": DolGancho,
   "dol-capas": DolCapas,
   "dol-quirofano": DolQuirofano,

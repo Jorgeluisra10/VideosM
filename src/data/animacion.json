@@ -1,18 +1,18 @@
 {
  "version": 1,
- "titulo": "Tu cerebro no siente dolor",
+ "titulo": "¿Tu intestino es un segundo cerebro?",
  "paleta": "medicina",
  "sfx": true,
  "fps": 60,
- "duracion": 47.1,
+ "duracion": 46.8,
  "escenas": [
   {
    "n": 1,
    "t": "PIEZA",
-   "voz": "Tu cerebro no siente dolor.",
-   "dur": 4.2,
-   "h": "TU CEREBRO NO SIENTE DOLOR",
-   "w": "DOLOR",
+   "voz": "Tu intestino se maneja solo.",
+   "dur": 4.4,
+   "h": "TU INTESTINO SE MANEJA SOLO",
+   "w": "SOLO",
    "sub": "",
    "ic": "brillo",
    "num": null,
@@ -36,7 +36,7 @@
    "red": null,
    "termo": null,
    "pila": null,
-   "cap": "puedes pincharlo y no duele",
+   "cap": "sistema nervioso entérico",
    "papel": null,
    "pilares": null,
    "ciclo": null,
@@ -45,7 +45,7 @@
    "cubo": null,
    "diales": null,
    "pieza": {
-    "id": "dol-gancho",
+    "id": "int-gancho",
     "props": {}
    },
    "cita": null,
@@ -53,11 +53,11 @@
    "modo": "VIRAL",
    "tema": "oscuro",
    "bg": "dark",
-   "ritmo": 0.8928571428571428,
-   "total": 47.1,
+   "ritmo": 0.8977272727272727,
+   "total": 46.8,
    "inicio": 0,
-   "fin": 4.2,
-   "texto": "Tu cerebro no siente dolor.",
+   "fin": 4.4,
+   "texto": "Tu intestino se maneja solo.",
    "tr": "barrido",
    "trs": "corte",
    "sfx": [
@@ -72,54 +72,251 @@
      "vol": 0.12
     },
     {
-     "t": 0.47857142857142854,
-     "tipo": "heartbeat",
+     "t": 0.3795454545454546,
+     "tipo": "pop",
+     "vol": 0.1
+    },
+    {
+     "t": 0.7181818181818183,
+     "tipo": "clic",
+     "vol": 0.05
+    },
+    {
+     "t": 0.8481818181818183,
+     "tipo": "clic",
+     "vol": 0.05
+    },
+    {
+     "t": 0.9781818181818183,
+     "tipo": "clic",
+     "vol": 0.05
+    },
+    {
+     "t": 1.1081818181818184,
+     "tipo": "clic",
+     "vol": 0.05
+    },
+    {
+     "t": 1.2381818181818183,
+     "tipo": "clic",
+     "vol": 0.05
+    },
+    {
+     "t": 1.3681818181818182,
+     "tipo": "clic",
+     "vol": 0.05
+    },
+    {
+     "t": 1.4363636363636365,
+     "tipo": "pop",
      "vol": 0.12
     },
     {
-     "t": 0.8928571428571428,
-     "tipo": "tick",
-     "vol": 0.14
+     "t": 1.4981818181818183,
+     "tipo": "clic",
+     "vol": 0.05
     },
     {
-     "t": 1.3839285714285714,
-     "tipo": "tick",
-     "vol": 0.14
+     "t": 1.6281818181818184,
+     "tipo": "clic",
+     "vol": 0.05
     },
     {
-     "t": 1.875,
-     "tipo": "tick",
-     "vol": 0.14
+     "t": 1.7581818181818183,
+     "tipo": "clic",
+     "vol": 0.05
     },
     {
-     "t": 2.366071428571429,
-     "tipo": "tick",
-     "vol": 0.14
+     "t": 1.8881818181818182,
+     "tipo": "clic",
+     "vol": 0.05
     },
     {
-     "t": 2.4107142857142856,
-     "tipo": "thud",
-     "vol": 0.16
+     "t": 2.0181818181818185,
+     "tipo": "clic",
+     "vol": 0.05
     },
     {
-     "t": 2.5107142857142857,
+     "t": 2.1481818181818184,
+     "tipo": "clic",
+     "vol": 0.05
+    },
+    {
+     "t": 2.2781818181818183,
+     "tipo": "clic",
+     "vol": 0.05
+    },
+    {
+     "t": 2.408181818181818,
+     "tipo": "clic",
+     "vol": 0.05
+    },
+    {
+     "t": 2.538181818181818,
+     "tipo": "clic",
+     "vol": 0.05
+    },
+    {
+     "t": 2.6681818181818184,
+     "tipo": "clic",
+     "vol": 0.05
+    },
+    {
+     "t": 3.0522727272727272,
      "tipo": "ding",
      "vol": 0.16
-    },
-    {
-     "t": 2.857142857142857,
-     "tipo": "tick",
-     "vol": 0.14
     }
    ]
   },
   {
    "n": 2,
    "t": "PIEZA",
-   "voz": "Duele lo que lo envuelve: el cuero cabelludo, el cráneo y las meninges.",
-   "dur": 6,
-   "h": "LO QUE DUELE LO ENVUELVE",
-   "w": "ENVUELVE",
+   "voz": "Tiene ciento sesenta y ocho millones de neuronas. Tu cerebro, ochenta y seis mil millones.",
+   "dur": 5.7,
+   "h": "¿UN SEGUNDO CEREBRO?",
+   "w": "CEREBRO?",
+   "sub": "",
+   "ic": "billete",
+   "num": null,
+   "vs": null,
+   "bars": [],
+   "barsU": "",
+   "hi": -1,
+   "line": null,
+   "items": [],
+   "stops": [],
+   "end": "",
+   "donut": [],
+   "picto": null,
+   "top": [],
+   "myth": "",
+   "truth": "",
+   "zoom": null,
+   "capas": null,
+   "mira": null,
+   "impacto": null,
+   "red": null,
+   "termo": null,
+   "pila": null,
+   "cap": "no: es una red",
+   "papel": null,
+   "pilares": null,
+   "ciclo": null,
+   "duo": null,
+   "osc": null,
+   "cubo": null,
+   "diales": null,
+   "pieza": {
+    "id": "int-escala",
+    "props": {}
+   },
+   "cita": null,
+   "sc": "",
+   "modo": "VIRAL",
+   "tema": "claro",
+   "bg": "light",
+   "ritmo": 0.9375000000000001,
+   "total": 46.8,
+   "inicio": 4.4,
+   "fin": 10.1,
+   "texto": "Tiene ciento sesenta y ocho millones de neuronas. Tu cerebro, ochenta y seis mil millones.",
+   "tr": "corte",
+   "trs": "zoom",
+   "sfx": [
+    {
+     "t": 0.04,
+     "tipo": "whoosh",
+     "vol": 0.16
+    },
+    {
+     "t": 0.05,
+     "tipo": "whoosh",
+     "vol": 0.1
+    },
+    {
+     "t": 0.5750000000000001,
+     "tipo": "pop",
+     "vol": 0.1
+    },
+    {
+     "t": 2.0625000000000004,
+     "tipo": "pop",
+     "vol": 0.1
+    },
+    {
+     "t": 2.25,
+     "tipo": "clic",
+     "vol": 0.05
+    },
+    {
+     "t": 2.38,
+     "tipo": "clic",
+     "vol": 0.05
+    },
+    {
+     "t": 2.51,
+     "tipo": "clic",
+     "vol": 0.05
+    },
+    {
+     "t": 2.64,
+     "tipo": "clic",
+     "vol": 0.05
+    },
+    {
+     "t": 2.77,
+     "tipo": "clic",
+     "vol": 0.05
+    },
+    {
+     "t": 2.9,
+     "tipo": "clic",
+     "vol": 0.05
+    },
+    {
+     "t": 3.0300000000000002,
+     "tipo": "clic",
+     "vol": 0.05
+    },
+    {
+     "t": 3.16,
+     "tipo": "clic",
+     "vol": 0.05
+    },
+    {
+     "t": 3.29,
+     "tipo": "clic",
+     "vol": 0.05
+    },
+    {
+     "t": 3.42,
+     "tipo": "clic",
+     "vol": 0.05
+    },
+    {
+     "t": 3.55,
+     "tipo": "clic",
+     "vol": 0.05
+    },
+    {
+     "t": 4.3125,
+     "tipo": "golpe",
+     "vol": 0.18
+    },
+    {
+     "t": 4.4125,
+     "tipo": "ding",
+     "vol": 0.16
+    }
+   ]
+  },
+  {
+   "n": 3,
+   "t": "PIEZA",
+   "voz": "Si cortas el nervio vago, el intestino sigue moviéndose.",
+   "dur": 5,
+   "h": "SIGUE MOVIÉNDOSE",
+   "w": "SIGUE",
    "sub": "",
    "ic": "brillo",
    "num": null,
@@ -143,7 +340,7 @@
    "red": null,
    "termo": null,
    "pila": null,
-   "cap": "el tejido cerebral no tiene receptores de dolor",
+   "cap": "reflejo peristáltico",
    "papel": null,
    "pilares": null,
    "ciclo": null,
@@ -152,114 +349,7 @@
    "cubo": null,
    "diales": null,
    "pieza": {
-    "id": "dol-capas",
-    "props": {}
-   },
-   "cita": null,
-   "sc": "",
-   "modo": "VIRAL",
-   "tema": "claro",
-   "bg": "light",
-   "ritmo": 0.9249999999999999,
-   "total": 47.1,
-   "inicio": 4.2,
-   "fin": 10.2,
-   "texto": "Duele lo que lo envuelve: el cuero cabelludo, el cráneo y las meninges.",
-   "tr": "corte",
-   "trs": "zoom",
-   "sfx": [
-    {
-     "t": 0.04,
-     "tipo": "whoosh",
-     "vol": 0.16
-    },
-    {
-     "t": 0.05,
-     "tipo": "whoosh",
-     "vol": 0.1
-    },
-    {
-     "t": 0.37,
-     "tipo": "pop",
-     "vol": 0.1
-    },
-    {
-     "t": 0.9249999999999999,
-     "tipo": "pop",
-     "vol": 0.1
-    },
-    {
-     "t": 1.48,
-     "tipo": "pop",
-     "vol": 0.1
-    },
-    {
-     "t": 2.2199999999999998,
-     "tipo": "zap",
-     "vol": 0.14
-    },
-    {
-     "t": 2.775,
-     "tipo": "zap",
-     "vol": 0.14
-    },
-    {
-     "t": 3.3299999999999996,
-     "tipo": "zap",
-     "vol": 0.14
-    },
-    {
-     "t": 4.07,
-     "tipo": "thud",
-     "vol": 0.16
-    },
-    {
-     "t": 4.17,
-     "tipo": "ding",
-     "vol": 0.16
-    }
-   ]
-  },
-  {
-   "n": 3,
-   "t": "PIEZA",
-   "voz": "Por eso pueden operarte el cerebro despierto, con anestesia local en la cabeza.",
-   "dur": 5.4,
-   "h": "TE OPERAN DESPIERTO",
-   "w": "DESPIERTO",
-   "sub": "",
-   "ic": "tienda",
-   "num": null,
-   "vs": null,
-   "bars": [],
-   "barsU": "",
-   "hi": -1,
-   "line": null,
-   "items": [],
-   "stops": [],
-   "end": "",
-   "donut": [],
-   "picto": null,
-   "top": [],
-   "myth": "",
-   "truth": "",
-   "zoom": null,
-   "capas": null,
-   "mira": null,
-   "impacto": null,
-   "red": null,
-   "termo": null,
-   "pila": null,
-   "cap": "craneotomía despierto",
-   "papel": null,
-   "pilares": null,
-   "ciclo": null,
-   "duo": null,
-   "osc": null,
-   "cubo": null,
-   "diales": null,
-   "pieza": {
-    "id": "dol-quirofano",
+    "id": "int-autonomo",
     "props": {}
    },
    "cita": null,
@@ -267,11 +357,11 @@
    "modo": "VIRAL",
    "tema": "oscuro",
    "bg": "dark",
-   "ritmo": 0.9166666666666666,
-   "total": 47.1,
-   "inicio": 10.2,
-   "fin": 15.6,
-   "texto": "Por eso pueden operarte el cerebro despierto, con anestesia local en la cabeza.",
+   "ritmo": 0.9099999999999999,
+   "total": 46.8,
+   "inicio": 10.1,
+   "fin": 15.1,
+   "texto": "Si cortas el nervio vago, el intestino sigue moviéndose.",
    "tr": "zoom",
    "trs": "semitono",
    "sfx": [
@@ -286,37 +376,32 @@
      "vol": 0.1
     },
     {
-     "t": 0.9166666666666666,
-     "tipo": "thud",
-     "vol": 0.14
-    },
-    {
-     "t": 1.65,
-     "tipo": "zap",
+     "t": 0.382,
+     "tipo": "heartbeat",
      "vol": 0.12
     },
     {
-     "t": 2.108333333333333,
-     "tipo": "tick",
+     "t": 0.728,
+     "tipo": "pop",
      "vol": 0.1
     },
     {
-     "t": 2.6124999999999994,
-     "tipo": "tick",
-     "vol": 0.1
+     "t": 2.002,
+     "tipo": "zap",
+     "vol": 0.2
     },
     {
-     "t": 3.1166666666666663,
-     "tipo": "tick",
-     "vol": 0.1
+     "t": 2.0519999999999996,
+     "tipo": "golpe",
+     "vol": 0.18
     },
     {
-     "t": 3.6208333333333336,
+     "t": 2.639,
      "tipo": "tick",
-     "vol": 0.1
+     "vol": 0.12
     },
     {
-     "t": 3.9416666666666664,
+     "t": 3.8219999999999996,
      "tipo": "ding",
      "vol": 0.16
     }
@@ -325,10 +410,10 @@
   {
    "n": 4,
    "t": "PIEZA",
-   "voz": "El paciente cuenta mientras se prueba cada punto; donde se detiene el habla, no se toca.",
-   "dur": 6,
-   "h": "CADA PUNTO SE PRUEBA",
-   "w": "PRUEBA",
+   "voz": "Cuando el bolo estira la pared, detrás aprieta y delante se relaja.",
+   "dur": 5.8,
+   "h": "DETRÁS APRIETA, DELANTE AFLOJA",
+   "w": "APRIETA,",
    "sub": "",
    "ic": "brillo",
    "num": null,
@@ -352,7 +437,7 @@
    "red": null,
    "termo": null,
    "pila": null,
-   "cap": "mapeo de la corteza",
+   "cap": "peristalsis",
    "papel": null,
    "pilares": null,
    "ciclo": null,
@@ -361,7 +446,7 @@
    "cubo": null,
    "diales": null,
    "pieza": {
-    "id": "dol-mapa",
+    "id": "int-peristalsis",
     "props": {}
    },
    "cita": null,
@@ -369,115 +454,13 @@
    "modo": "VIRAL",
    "tema": "claro",
    "bg": "light",
-   "ritmo": 0.9568965517241379,
-   "total": 47.1,
-   "inicio": 15.6,
-   "fin": 21.6,
-   "texto": "El paciente cuenta mientras se prueba cada punto; donde se detiene el habla, no se toca.",
+   "ritmo": 0.9224137931034483,
+   "total": 46.8,
+   "inicio": 15.1,
+   "fin": 20.9,
+   "texto": "Cuando el bolo estira la pared, detrás aprieta y delante se relaja.",
    "tr": "semitono",
    "trs": "corte",
-   "sfx": [
-    {
-     "t": 0.04,
-     "tipo": "whoosh",
-     "vol": 0.16
-    },
-    {
-     "t": 0.05,
-     "tipo": "whoosh",
-     "vol": 0.1
-    },
-    {
-     "t": 1.4353448275862069,
-     "tipo": "zap",
-     "vol": 0.1
-    },
-    {
-     "t": 2.2487068965517243,
-     "tipo": "zap",
-     "vol": 0.1
-    },
-    {
-     "t": 3.0620689655172413,
-     "tipo": "zap",
-     "vol": 0.1
-    },
-    {
-     "t": 3.3120689655172413,
-     "tipo": "golpe",
-     "vol": 0.18
-    },
-    {
-     "t": 3.8754310344827583,
-     "tipo": "zap",
-     "vol": 0.1
-    },
-    {
-     "t": 4.688793103448276,
-     "tipo": "zap",
-     "vol": 0.1
-    },
-    {
-     "t": 4.688793103448276,
-     "tipo": "ding",
-     "vol": 0.16
-    }
-   ]
-  },
-  {
-   "n": 5,
-   "t": "PIEZA",
-   "voz": "Penfield dibujó así el mapa del cuerpo: las manos y los labios ocupan muchísimo espacio.",
-   "dur": 5.8,
-   "h": "EL CUERPO EN TU CEREBRO",
-   "w": "CUERPO",
-   "sub": "",
-   "ic": "mapa",
-   "num": null,
-   "vs": null,
-   "bars": [],
-   "barsU": "",
-   "hi": -1,
-   "line": null,
-   "items": [],
-   "stops": [],
-   "end": "",
-   "donut": [],
-   "picto": null,
-   "top": [],
-   "myth": "",
-   "truth": "",
-   "zoom": null,
-   "capas": null,
-   "mira": null,
-   "impacto": null,
-   "red": null,
-   "termo": null,
-   "pila": null,
-   "cap": "homúnculo, esquema",
-   "papel": null,
-   "pilares": null,
-   "ciclo": null,
-   "duo": null,
-   "osc": null,
-   "cubo": null,
-   "diales": null,
-   "pieza": {
-    "id": "dol-homunculo",
-    "props": {}
-   },
-   "cita": null,
-   "sc": "",
-   "modo": "VIRAL",
-   "tema": "oscuro",
-   "bg": "dark",
-   "ritmo": 0.9224137931034483,
-   "total": 47.1,
-   "inicio": 21.6,
-   "fin": 27.4,
-   "texto": "Penfield dibujó así el mapa del cuerpo: las manos y los labios ocupan muchísimo espacio.",
-   "tr": "corte",
-   "trs": "zoom",
    "sfx": [
     {
      "t": 0.04,
@@ -495,94 +478,44 @@
      "vol": 0.1
     },
     {
-     "t": 1.568103448275862,
-     "tipo": "clic",
-     "vol": 0.05
+     "t": 0.7379310344827587,
+     "tipo": "tick",
+     "vol": 0.1
     },
     {
-     "t": 1.698103448275862,
-     "tipo": "clic",
-     "vol": 0.05
+     "t": 1.3836206896551724,
+     "tipo": "tick",
+     "vol": 0.1
     },
     {
-     "t": 1.828103448275862,
-     "tipo": "clic",
-     "vol": 0.05
+     "t": 2.029310344827586,
+     "tipo": "tick",
+     "vol": 0.1
     },
     {
-     "t": 1.9581034482758621,
-     "tipo": "clic",
-     "vol": 0.05
+     "t": 2.6749999999999994,
+     "tipo": "tick",
+     "vol": 0.1
     },
     {
-     "t": 2.088103448275862,
-     "tipo": "clic",
-     "vol": 0.05
+     "t": 3.3206896551724134,
+     "tipo": "tick",
+     "vol": 0.1
     },
     {
-     "t": 2.218103448275862,
-     "tipo": "clic",
-     "vol": 0.05
-    },
-    {
-     "t": 2.348103448275862,
-     "tipo": "clic",
-     "vol": 0.05
-    },
-    {
-     "t": 2.478103448275862,
-     "tipo": "clic",
-     "vol": 0.05
-    },
-    {
-     "t": 2.608103448275862,
-     "tipo": "clic",
-     "vol": 0.05
-    },
-    {
-     "t": 2.738103448275862,
-     "tipo": "clic",
-     "vol": 0.05
-    },
-    {
-     "t": 2.8681034482758623,
-     "tipo": "clic",
-     "vol": 0.05
-    },
-    {
-     "t": 2.998103448275862,
-     "tipo": "clic",
-     "vol": 0.05
-    },
-    {
-     "t": 3.128103448275862,
-     "tipo": "clic",
-     "vol": 0.05
-    },
-    {
-     "t": 3.258103448275862,
-     "tipo": "clic",
-     "vol": 0.05
-    },
-    {
-     "t": 3.412931034482759,
-     "tipo": "golpe",
-     "vol": 0.18
-    },
-    {
-     "t": 3.874137931034483,
+     "t": 4.058620689655172,
      "tipo": "ding",
      "vol": 0.16
     }
    ]
   },
   {
-   "n": 6,
+   "n": 5,
    "t": "PIEZA",
-   "voz": "Algunos músicos tocaron su instrumento en plena operación, para proteger sus manos.",
-   "dur": 5.2,
-   "h": "TOCAR EN PLENA CIRUGÍA",
-   "w": "TOCAR",
+   "voz": "Sin esas neuronas en un tramo del colon, el alimento no avanza.",
+   "dur": 5.6,
+   "h": "SIN NEURONAS, NO HAY AVANCE",
+   "w": "NEURONAS,",
    "sub": "",
    "ic": "brillo",
    "num": null,
@@ -606,7 +539,7 @@
    "red": null,
    "termo": null,
    "pila": null,
-   "cap": "casos documentados",
+   "cap": "enfermedad de Hirschsprung",
    "papel": null,
    "pilares": null,
    "ciclo": null,
@@ -615,7 +548,348 @@
    "cubo": null,
    "diales": null,
    "pieza": {
-    "id": "dol-musica",
+    "id": "int-hirsch",
+    "props": {}
+   },
+   "cita": null,
+   "sc": "",
+   "modo": "VIRAL",
+   "tema": "oscuro",
+   "bg": "dark",
+   "ritmo": 0.9196428571428571,
+   "total": 46.8,
+   "inicio": 20.9,
+   "fin": 26.5,
+   "texto": "Sin esas neuronas en un tramo del colon, el alimento no avanza.",
+   "tr": "corte",
+   "trs": "corte",
+   "sfx": [
+    {
+     "t": 0.04,
+     "tipo": "whoosh",
+     "vol": 0.16
+    },
+    {
+     "t": 0.05,
+     "tipo": "whoosh",
+     "vol": 0.1
+    },
+    {
+     "t": 0.38392857142857145,
+     "tipo": "pop",
+     "vol": 0.1
+    },
+    {
+     "t": 0.7357142857142858,
+     "tipo": "zap",
+     "vol": 0.1
+    },
+    {
+     "t": 1.6553571428571427,
+     "tipo": "thud",
+     "vol": 0.12
+    },
+    {
+     "t": 2.1151785714285714,
+     "tipo": "thud",
+     "vol": 0.12
+    },
+    {
+     "t": 2.5749999999999997,
+     "tipo": "thud",
+     "vol": 0.12
+    },
+    {
+     "t": 3.494642857142857,
+     "tipo": "ding",
+     "vol": 0.16
+    }
+   ]
+  },
+  {
+   "n": 6,
+   "t": "PIEZA",
+   "voz": "Casi el noventa por ciento de tu serotonina se fabrica ahí, pero no llega al cerebro.",
+   "dur": 6,
+   "h": "90 % DE TU SEROTONINA",
+   "w": "SEROTONINA",
+   "sub": "",
+   "ic": "brillo",
+   "num": null,
+   "vs": null,
+   "bars": [],
+   "barsU": "",
+   "hi": -1,
+   "line": null,
+   "items": [],
+   "stops": [],
+   "end": "",
+   "donut": [],
+   "picto": null,
+   "top": [],
+   "myth": "",
+   "truth": "",
+   "zoom": null,
+   "capas": null,
+   "mira": null,
+   "impacto": null,
+   "red": null,
+   "termo": null,
+   "pila": null,
+   "cap": "no cruza la barrera",
+   "papel": null,
+   "pilares": null,
+   "ciclo": null,
+   "duo": null,
+   "osc": null,
+   "cubo": null,
+   "diales": null,
+   "pieza": {
+    "id": "int-sero",
+    "props": {}
+   },
+   "cita": null,
+   "sc": "",
+   "modo": "VIRAL",
+   "tema": "claro",
+   "bg": "light",
+   "ritmo": 0.9568965517241379,
+   "total": 46.8,
+   "inicio": 26.5,
+   "fin": 32.5,
+   "texto": "Casi el noventa por ciento de tu serotonina se fabrica ahí, pero no llega al cerebro.",
+   "tr": "corte",
+   "trs": "semitono",
+   "sfx": [
+    {
+     "t": 0.04,
+     "tipo": "whoosh",
+     "vol": 0.16
+    },
+    {
+     "t": 0.05,
+     "tipo": "whoosh",
+     "vol": 0.1
+    },
+    {
+     "t": 0.3913793103448276,
+     "tipo": "pop",
+     "vol": 0.1
+    },
+    {
+     "t": 0.8612068965517241,
+     "tipo": "pop",
+     "vol": 0.08
+    },
+    {
+     "t": 1.1004310344827586,
+     "tipo": "pop",
+     "vol": 0.08
+    },
+    {
+     "t": 1.339655172413793,
+     "tipo": "pop",
+     "vol": 0.08
+    },
+    {
+     "t": 1.5788793103448275,
+     "tipo": "pop",
+     "vol": 0.08
+    },
+    {
+     "t": 1.7224137931034482,
+     "tipo": "whoosh",
+     "vol": 0.12
+    },
+    {
+     "t": 3.0620689655172413,
+     "tipo": "thud",
+     "vol": 0.18
+    },
+    {
+     "t": 3.1620689655172414,
+     "tipo": "ding",
+     "vol": 0.16
+    }
+   ]
+  },
+  {
+   "n": 7,
+   "t": "PIEZA",
+   "voz": "El nervio vago sube más información de la que baja: el ochenta por ciento.",
+   "dur": 5.3,
+   "h": "EL NERVIO VAGO SUBE",
+   "w": "VAGO",
+   "sub": "",
+   "ic": "tendencia-alza",
+   "num": null,
+   "vs": null,
+   "bars": [],
+   "barsU": "",
+   "hi": -1,
+   "line": null,
+   "items": [],
+   "stops": [],
+   "end": "",
+   "donut": [],
+   "picto": null,
+   "top": [],
+   "myth": "",
+   "truth": "",
+   "zoom": null,
+   "capas": null,
+   "mira": null,
+   "impacto": null,
+   "red": null,
+   "termo": null,
+   "pila": null,
+   "cap": "80 % hacia el cerebro",
+   "papel": null,
+   "pilares": null,
+   "ciclo": null,
+   "duo": null,
+   "osc": null,
+   "cubo": null,
+   "diales": null,
+   "pieza": {
+    "id": "int-vago",
+    "props": {}
+   },
+   "cita": null,
+   "sc": "",
+   "modo": "VIRAL",
+   "tema": "oscuro",
+   "bg": "dark",
+   "ritmo": 0.97,
+   "total": 46.8,
+   "inicio": 32.5,
+   "fin": 37.8,
+   "texto": "El nervio vago sube más información de la que baja: el ochenta por ciento.",
+   "tr": "semitono",
+   "trs": "zoom",
+   "sfx": [
+    {
+     "t": 0.04,
+     "tipo": "whoosh",
+     "vol": 0.16
+    },
+    {
+     "t": 0.05,
+     "tipo": "whoosh",
+     "vol": 0.1
+    },
+    {
+     "t": 0.776,
+     "tipo": "clic",
+     "vol": 0.05
+    },
+    {
+     "t": 0.906,
+     "tipo": "clic",
+     "vol": 0.05
+    },
+    {
+     "t": 1.036,
+     "tipo": "clic",
+     "vol": 0.05
+    },
+    {
+     "t": 1.166,
+     "tipo": "clic",
+     "vol": 0.05
+    },
+    {
+     "t": 1.296,
+     "tipo": "clic",
+     "vol": 0.05
+    },
+    {
+     "t": 1.4260000000000002,
+     "tipo": "clic",
+     "vol": 0.05
+    },
+    {
+     "t": 1.556,
+     "tipo": "clic",
+     "vol": 0.05
+    },
+    {
+     "t": 1.686,
+     "tipo": "clic",
+     "vol": 0.05
+    },
+    {
+     "t": 1.816,
+     "tipo": "clic",
+     "vol": 0.05
+    },
+    {
+     "t": 1.946,
+     "tipo": "clic",
+     "vol": 0.05
+    },
+    {
+     "t": 2.076,
+     "tipo": "clic",
+     "vol": 0.05
+    },
+    {
+     "t": 2.7159999999999997,
+     "tipo": "whoosh",
+     "vol": 0.12
+    },
+    {
+     "t": 2.91,
+     "tipo": "golpe",
+     "vol": 0.16
+    },
+    {
+     "t": 3.0100000000000002,
+     "tipo": "ding",
+     "vol": 0.16
+    }
+   ]
+  },
+  {
+   "n": 8,
+   "t": "PIEZA",
+   "voz": "No es un segundo cerebro: es una red que habla con el primero.",
+   "dur": 5.2,
+   "h": "UNA RED QUE HABLA",
+   "w": "RED",
+   "sub": "",
+   "ic": "brillo",
+   "num": null,
+   "vs": null,
+   "bars": [],
+   "barsU": "",
+   "hi": -1,
+   "line": null,
+   "items": [],
+   "stops": [],
+   "end": "",
+   "donut": [],
+   "picto": null,
+   "top": [],
+   "myth": "",
+   "truth": "",
+   "zoom": null,
+   "capas": null,
+   "mira": null,
+   "impacto": null,
+   "red": null,
+   "termo": null,
+   "pila": null,
+   "cap": "eje intestino-cerebro",
+   "papel": null,
+   "pilares": null,
+   "ciclo": null,
+   "duo": null,
+   "osc": null,
+   "cubo": null,
+   "diales": null,
+   "pieza": {
+    "id": "int-cierre",
     "props": {}
    },
    "cita": null,
@@ -624,12 +898,12 @@
    "tema": "claro",
    "bg": "light",
    "ritmo": 0.9134615384615384,
-   "total": 47.1,
-   "inicio": 27.4,
-   "fin": 32.6,
-   "texto": "Algunos músicos tocaron su instrumento en plena operación, para proteger sus manos.",
+   "total": 46.8,
+   "inicio": 37.8,
+   "fin": 43,
+   "texto": "No es un segundo cerebro: es una red que habla con el primero.",
    "tr": "zoom",
-   "trs": "semitono",
+   "trs": "barrido",
    "sfx": [
     {
      "t": 0.04,
@@ -647,241 +921,27 @@
      "vol": 0.1
     },
     {
-     "t": 0.9134615384615384,
-     "tipo": "tick",
-     "vol": 0.08
-    },
-    {
-     "t": 1.3245192307692306,
-     "tipo": "tick",
-     "vol": 0.08
-    },
-    {
-     "t": 1.6442307692307692,
-     "tipo": "zap",
-     "vol": 0.12
-    },
-    {
-     "t": 1.735576923076923,
-     "tipo": "tick",
-     "vol": 0.08
-    },
-    {
-     "t": 2.1466346153846154,
-     "tipo": "tick",
-     "vol": 0.08
-    },
-    {
-     "t": 2.5576923076923075,
-     "tipo": "tick",
-     "vol": 0.08
-    },
-    {
-     "t": 2.96875,
-     "tipo": "tick",
-     "vol": 0.08
-    },
-    {
-     "t": 3.5625,
-     "tipo": "ding",
-     "vol": 0.16
-    }
-   ]
-  },
-  {
-   "n": 7,
-   "t": "PIEZA",
-   "voz": "Y el dolor de cabeza se siente en los músculos y vasos que lo rodean.",
-   "dur": 5.7,
-   "h": "EL DOLOR DE CABEZA",
-   "w": "CABEZA",
-   "sub": "",
-   "ic": "brillo",
-   "num": null,
-   "vs": null,
-   "bars": [],
-   "barsU": "",
-   "hi": -1,
-   "line": null,
-   "items": [],
-   "stops": [],
-   "end": "",
-   "donut": [],
-   "picto": null,
-   "top": [],
-   "myth": "",
-   "truth": "",
-   "zoom": null,
-   "capas": null,
-   "mira": null,
-   "impacto": null,
-   "red": null,
-   "termo": null,
-   "pila": null,
-   "cap": "no es consejo médico",
-   "papel": null,
-   "pilares": null,
-   "ciclo": null,
-   "duo": null,
-   "osc": null,
-   "cubo": null,
-   "diales": null,
-   "pieza": {
-    "id": "dol-cabeza",
-    "props": {}
-   },
-   "cita": null,
-   "sc": "",
-   "modo": "VIRAL",
-   "tema": "oscuro",
-   "bg": "dark",
-   "ritmo": 0.9722222222222222,
-   "total": 47.1,
-   "inicio": 32.6,
-   "fin": 38.3,
-   "texto": "Y el dolor de cabeza se siente en los músculos y vasos que lo rodean.",
-   "tr": "semitono",
-   "trs": "corte",
-   "sfx": [
-    {
-     "t": 0.04,
-     "tipo": "whoosh",
-     "vol": 0.16
-    },
-    {
-     "t": 0.05,
-     "tipo": "whoosh",
-     "vol": 0.1
-    },
-    {
-     "t": 0.3944444444444445,
-     "tipo": "pop",
-     "vol": 0.1
-    },
-    {
-     "t": 1.1666666666666665,
-     "tipo": "thud",
-     "vol": 0.12
-    },
-    {
-     "t": 2.138888888888889,
-     "tipo": "heartbeat",
-     "vol": 0.13
-    },
-    {
-     "t": 2.625,
-     "tipo": "heartbeat",
-     "vol": 0.13
-    },
-    {
-     "t": 3.111111111111111,
-     "tipo": "heartbeat",
-     "vol": 0.13
-    },
-    {
-     "t": 3.694444444444444,
-     "tipo": "ding",
-     "vol": 0.16
-    }
-   ]
-  },
-  {
-   "n": 8,
-   "t": "PIEZA",
-   "voz": "Recibe todo tu dolor, pero no siente el suyo.",
-   "dur": 5,
-   "h": "NO SIENTE EL SUYO",
-   "w": "SUYO",
-   "sub": "",
-   "ic": "brillo",
-   "num": null,
-   "vs": null,
-   "bars": [],
-   "barsU": "",
-   "hi": -1,
-   "line": null,
-   "items": [],
-   "stops": [],
-   "end": "",
-   "donut": [],
-   "picto": null,
-   "top": [],
-   "myth": "",
-   "truth": "",
-   "zoom": null,
-   "capas": null,
-   "mira": null,
-   "impacto": null,
-   "red": null,
-   "termo": null,
-   "pila": null,
-   "cap": "recibe tu dolor",
-   "papel": null,
-   "pilares": null,
-   "ciclo": null,
-   "duo": null,
-   "osc": null,
-   "cubo": null,
-   "diales": null,
-   "pieza": {
-    "id": "dol-cierre",
-    "props": {}
-   },
-   "cita": null,
-   "sc": "",
-   "modo": "VIRAL",
-   "tema": "claro",
-   "bg": "light",
-   "ritmo": 0.9099999999999999,
-   "total": 47.1,
-   "inicio": 38.3,
-   "fin": 43.3,
-   "texto": "Recibe todo tu dolor, pero no siente el suyo.",
-   "tr": "corte",
-   "trs": "barrido",
-   "sfx": [
-    {
-     "t": 0.04,
-     "tipo": "whoosh",
-     "vol": 0.16
-    },
-    {
-     "t": 0.05,
-     "tipo": "whoosh",
-     "vol": 0.1
-    },
-    {
-     "t": 0.382,
-     "tipo": "pop",
-     "vol": 0.1
-    },
-    {
-     "t": 1.5099999999999998,
+     "t": 1.3134615384615385,
      "tipo": "zap",
      "vol": 0.1
     },
     {
-     "t": 2.147,
+     "t": 1.8615384615384616,
      "tipo": "zap",
      "vol": 0.1
     },
     {
-     "t": 2.784,
+     "t": 2.4096153846153845,
      "tipo": "zap",
      "vol": 0.1
     },
     {
-     "t": 3.4209999999999994,
+     "t": 2.9576923076923074,
      "tipo": "zap",
      "vol": 0.1
     },
     {
-     "t": 3.5489999999999995,
-     "tipo": "thud",
-     "vol": 0.16
-    },
-    {
-     "t": 3.6489999999999996,
+     "t": 3.2884615384615383,
      "tipo": "ding",
      "vol": 0.18
     }
@@ -932,9 +992,9 @@
    "tema": "oscuro",
    "bg": "gold",
    "ritmo": 1,
-   "total": 47.1,
-   "inicio": 43.3,
-   "fin": 47.1,
+   "total": 46.8,
+   "inicio": 43,
+   "fin": 46.8,
    "texto": "Guárdalo y compártelo con alguien curioso.",
    "tr": "barrido",
    "trs": "barrido",
