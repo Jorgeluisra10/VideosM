@@ -166,7 +166,7 @@ export const PisCarga: React.FC<P> = ({ e }) => {
           <line x1={X0} y1={YB - 230} x2={X1} y2={YB - 230} stroke={AN.papel} strokeOpacity={0.3} strokeWidth={2} strokeDasharray="6 10" />
         </g>
         {k > 0.02 && k < 0.98 && Array.from({ length: 6 }, (_, i) => <circle key={i} cx={X0 + 60 + ((i * 139 + t * 40) % (X1 - X0 - 120))} cy={YB - lleno + 10 + ((t * 70 + i * 37) % 40)} r={3 + (i % 3)} fill="none" stroke={AN.papel} strokeWidth={2} opacity={0.6} />)}
-        <Tally x={150} y={1232} n={15} k={k} color={AN.papel} alto={42} grosor={4} />
+        <Tally x={150} y={1212} n={15} k={k} color={AN.papel} alto={42} grosor={4} />
         <Knob cx={210} cy={1385} r={50} valor={clamp(k)} etiqueta="NIVEL" lectura={`${(PIS.profundidadM * k).toFixed(1).replace(".", ",")} m`} aparece={tanque} />
         <Knob cx={870} cy={1385} r={50} valor={clamp(k)} etiqueta="PRESIÓN" lectura={`${Math.round(presionKPa(PIS.profundidadM) * k)} kPa`} aparece={tanque} color={PS.agua} />
       </svg>
@@ -174,7 +174,7 @@ export const PisCarga: React.FC<P> = ({ e }) => {
       <Frases id="titular-carga" y={430} frases={[{ px: 90, t: 0.2, texto: "SE ABRE\nEL GRIFO", color: PS.agua }]} />
       <Odometro valor={ton} x={540} y={760} px={150} digitos={3} sufijo="t" color={PS.agua} id="carga-odo" />
       <Texto texto="toneladas de agua" x={540} y={880} px={26} color={AN.papel} delay={C.grifo} peso={600} id="carga-etq" />
-      <Nota texto="llenado por etapas: ilustración, no el protocolo real" x={540} y={1290} color={AN.papel} delay={C.chip} px={20} id="carga-nota" />
+      <Nota texto="llenado por etapas: ilustración, no el protocolo real" x={540} y={1306} color={AN.papel} delay={C.chip} px={20} id="carga-nota" />
       <Pie texto="IStructE: ≈ 150 t de agua · 15 marcas = 15 etapas de 10 t (esquema)" y={1520} delay={C.chip} />
     </Lienzo>
   );
