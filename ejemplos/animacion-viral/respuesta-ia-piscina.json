@@ -1,0 +1,14 @@
+{
+  "titulo": "La piscina que cuelga entre dos edificios",
+  "scenes": [
+    {"t": "PIEZA", "voz": "A treinta y cinco metros de altura, dos edificios sostienen ciento cincuenta toneladas de agua.", "dur": 5.8, "h": "35 METROS · 150 TONELADAS", "w": "TONELADAS", "cap": "la piscina suspendida de Londres", "pieza": {"id": "pis-gancho"}},
+    {"t": "PIEZA", "voz": "¿Y si fuera de vidrio? Sería más pesado, más frágil y menos claro. Por eso usaron acrílico.", "dur": 6.5, "h": "¿Y SI FUERA DE VIDRIO?", "w": "ACRÍLICO", "cap": "primera pieza: el material", "pieza": {"id": "pis-vidrio"}},
+    {"t": "PIEZA", "voz": "El acrílico flexiona más, por eso es grueso: paredes de dieciocho centímetros, fondo de treinta y seis.", "dur": 6.5, "h": "FLEXIONA MÁS: POR ESO ES GRUESO", "w": "GRUESO", "cap": "segunda pieza: el espesor", "pieza": {"id": "pis-acrilico"}},
+    {"t": "PIEZA", "voz": "Se unen secciones con juntas adhesivas transparentes, sin tornillos, y el acrílico casi no distorsiona el agua.", "dur": 6.5, "h": "UNA JUNTA TRANSPARENTE", "w": "TRANSPARENTE", "cap": "tercera pieza: la unión", "pieza": {"id": "pis-union"}},
+    {"t": "PIEZA", "voz": "En los extremos, dos tinas de acero y dos tensores de treinta y ocho milímetros abrazan el acrílico.", "dur": 6.6, "h": "TINAS DE ACERO Y TENSORES", "w": "TENSORES", "cap": "cuarta pieza: el acero", "pieza": {"id": "pis-tinas"}},
+    {"t": "PIEZA", "voz": "Pero los edificios se mueven con el viento y con el calor, así que la piscina descansa sobre apoyos deslizantes.", "dur": 7.5, "h": "LOS EDIFICIOS SE MUEVEN", "w": "DESLIZANTES", "cap": "quinta pieza: los apoyos", "pieza": {"id": "pis-viento"}},
+    {"t": "PIEZA", "voz": "Se abre el grifo: de cero a ciento cincuenta toneladas de agua.", "dur": 5.0, "h": "DE 0 A 150 TONELADAS", "w": "GRIFO", "cap": "prueba de carga · ilustración", "pieza": {"id": "pis-carga"}},
+    {"t": "PIEZA", "voz": "Del enlace molecular a la ciudad: una piscina brillando en el aire. ¿Te animarías a cruzar nadando?", "dur": 6.9, "h": "¿TE ANIMARÍAS A NADAR?", "w": "NADAR", "cap": "zoom de un micrómetro a cien metros", "pieza": {"id": "pis-zoom"}},
+    {"t": "CTA", "voz": "Guárdalo para tus repasos de estructuras y síguenos en Sinapsis.", "dur": 4.2, "h": "GUÁRDALO Y SÍGUENOS", "w": "SÍGUENOS", "sub": "Más ciencia en SINAPSIS"}
+  ]
+}

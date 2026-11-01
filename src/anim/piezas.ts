@@ -354,6 +354,46 @@ export const TRUI = {
   micro: { zoom: 0.2, zoomDur: 4.8, colapso: 5.0, colapsoDur: 0.9, pregunta: 5.9 },
 } as const;
 
+/** Datos del video «La piscina que cuelga entre dos edificios» (SINAPSIS · ingeniería extrema; Sky Pool de Embassy Gardens, Londres). Fuentes en ejemplos/animacion-viral/guion-tecnico-piscina.md. */
+export const PIS = {
+  /** altura de la piscina sobre el suelo (≈ 10 plantas), longitud, vano libre entre los edificios (Eckersley O'Callaghan: ≈ 15 m; otras fuentes 14 m) y profundidad, en metros */
+  alturaM: 35, longitudM: 25, vanoM: 15, profundidadM: 3.2,
+  /** masa del agua (t; IStructE, ≈ 148 m³) y del acrílico (t; Architectural Digest) */
+  aguaTon: 150, acrilicoTon: 50,
+  /** espesores según fuentes: paredes ≈ 180 mm (200 mm en el anuncio de 2015) y fondo ≈ 356 mm (14 in) */
+  paredMm: 180, fondoMm: 356,
+  /** dos tensores de acero inoxidable de 38 mm bajo la piscina que unen las dos tinas de acero (pretensados o postensados según la fuente) */
+  tensoresN: 2, tensorMm: 38,
+  /** densidades (g/cm³): acrílico ≈ 1,18 y vidrio ≈ 2,4–2,8; índices de refracción: acrílico ≈ 1,49 y agua ≈ 1,33; acrílico ≈ ¼ de la resistencia y ≈ 20× más flecha que el vidrio (Eckersley O'Callaghan, vía RIBA J) */
+  densAcrilico: 1.18, densVidrio: 2.6, nAcrilico: 1.49, nAgua: 1.33, resistRel: 0.25, flechaRel: 20,
+  /** izado con una grúa móvil de 500 t en ≈ 2 horas; abrió a los residentes el 19 de mayo de 2021 */
+  gruaTon: 500, izadoHoras: 2, anioApertura: 2021,
+  /** coeficiente de dilatación del acrílico ≈ 70–80·10⁻⁶ /K (se usa 70) */
+  alfaAcrilico: 70,
+} as const;
+/** presión hidrostática en el fondo (kPa) con el agua a `h` metros: ρ·g·h */
+export const presionKPa = (h: number): number => (1000 * 9.81 * h) / 1000;
+/** dilatación (mm) de `L` metros de acrílico con `dT` grados de cambio: α·L·ΔT */
+export const dilatacionMm = (L: number, dT: number): number => PIS.alfaAcrilico * 1e-6 * L * dT * 1000;
+/** segundo momento de área (m⁴) de una canaleta en U (ancho exterior B, alto exterior H, pared tw y fondo tb): sirve para el esquema cualitativo de la flecha (δ ∝ 1/I) */
+export function inerciaU(tw: number, tb: number, B = 3.4, H = 3.4): number {
+  const A1 = B * tb, y1 = tb / 2, A2 = 2 * tw * (H - tb), y2 = tb + (H - tb) / 2;
+  const yc = (A1 * y1 + A2 * y2) / (A1 + A2);
+  return (B * tb ** 3) / 12 + A1 * (y1 - yc) ** 2 + (2 * tw * (H - tb) ** 3) / 12 + A2 * (y2 - yc) ** 2;
+}
+
+/** Tiempos del video «Piscina suspendida» (segundos a ritmo normal), compartidos entre el dibujo y el sonido. */
+export const TPIS = {
+  gancho: { torres: 0.2, hueco: 1.1, cota: 1.9, rect: 2.5, rectDur: 1.4, agua: 3.9, aguaDur: 1.1, chip: 4.4 },
+  vidrio: { viga: 0.2, carga: 0.9, cargaDur: 1.7, rompe: 2.8, acril: 4.0, dens: 4.9, chip: 5.6 },
+  acrilico: { corte: 0.2, knobs: 0.6, lat: 1.0, latDur: 1.7, fondo: 2.7, fondoDur: 1.7, flecha: 4.4, chip: 5.5 },
+  union: { bloques: 0.2, junta: 1.0, inyecta: 1.7, borra: 2.7, rayos: 3.5, chip: 5.2 },
+  tinas: { tinas: 0.2, viga: 1.0, tensores: 1.9, presion: 3.3, chip: 5.4 },
+  viento: { torres: 0.2, rigido: 0.9, rafaga: 1.5, falla: 3.1, rayosx: 4.0, apoyos: 4.4, flota: 5.4, chip: 6.2 },
+  carga: { tanque: 0.2, grifo: 0.8, sube: 1.0, subeDur: 3.2, chip: 4.6 },
+  zoom: { ini: 0.2, dur: 5.0, nada: 5.5, pregunta: 6.0 },
+} as const;
+
 /* ───────────── «La regla del 37 %» (problema de la parada óptima, ensayo abstracto para IMNOBA) ───────────── */
 
 /** Generador pseudoaleatorio determinista (mulberry32): mismos números en el render, en las pruebas y en cada fotograma. */
@@ -873,6 +913,39 @@ export const PIEZAS: Record<string, DefPieza> = {
   "rui-micro": {
     id: "rui-micro", nombre: "Ruidos · zoom hasta la unión tornillo-madera: celdas de fibra raspando metal que colapsan en un punto rojo (cierre)", ideal: 6.95, fondo: "dark", entra: "zoom",
     sfx: (_d, r) => [ev(0.05, "estatica", 0.12), ...clics(TRUI.micro.zoom * r, TRUI.micro.zoomDur * r * 0.8, 0.05), ev(TRUI.micro.colapso * r, "golpe", 0.26), ev((TRUI.micro.colapso + TRUI.micro.colapsoDur) * r, "heartbeat", 0.22), ev((TRUI.micro.colapso + TRUI.micro.colapsoDur + 0.9) * r, "heartbeat", 0.18)],
+  },
+  /* ───────────── «La piscina que cuelga entre dos edificios» (SINAPSIS · ingeniería extrema) ───────────── */
+  "pis-gancho": {
+    id: "pis-gancho", nombre: "Piscina · dos torres isométricas, un hueco de ≈ 15 m a 35 m de altura y 150 t de agua (gancho)", ideal: 5.25, fondo: "dark",
+    sfx: (_d, r) => [ev(0.05, "whoosh", 0.12), ev(TPIS.gancho.torres * r + 0.1, "thud", 0.1), ev(TPIS.gancho.cota * r, "tick", 0.1), ...clics(TPIS.gancho.rect * r, TPIS.gancho.rectDur * r * 0.7, 0.04), ev(TPIS.gancho.agua * r, "gota", 0.14), ev(TPIS.gancho.chip * r, "ding", 0.14)],
+  },
+  "pis-vidrio": {
+    id: "pis-vidrio", nombre: "Piscina · viga de vidrio que cede (ilustración) y el acrílico que la reemplaza", ideal: 6.2, fondo: "dark", entra: "semitono",
+    sfx: (_d, r) => [ev(0.05, "whoosh", 0.1), ev(TPIS.vidrio.carga * r, "gota", 0.1), ev(TPIS.vidrio.rompe * r, "golpe", 0.3), ev(TPIS.vidrio.rompe * r + 0.05, "estatica", 0.2), ev(TPIS.vidrio.acril * r, "thud", 0.16), ev(TPIS.vidrio.dens * r, "tick", 0.1), ev(TPIS.vidrio.chip * r, "ding", 0.14)],
+  },
+  "pis-acrilico": {
+    id: "pis-acrilico", nombre: "Piscina · sección en U con tres potenciómetros: espesor de la pared, del fondo y flecha (esquema)", ideal: 6.45, fondo: "dark", entra: "corte",
+    sfx: (_d, r) => [ev(0.05, "whoosh", 0.1), ev(TPIS.acrilico.knobs * r, "pop", 0.1), ...clics(TPIS.acrilico.lat * r, TPIS.acrilico.latDur * r * 0.6, 0.04), ...clics(TPIS.acrilico.fondo * r, TPIS.acrilico.fondoDur * r * 0.6, 0.04), ev(TPIS.acrilico.flecha * r, "thud", 0.14), ev(TPIS.acrilico.chip * r, "ding", 0.14)],
+  },
+  "pis-union": {
+    id: "pis-union", nombre: "Piscina · juntas adhesivas transparentes y refracción acrílico/agua (papel)", ideal: 6.2, fondo: "light", entra: "corte",
+    sfx: (_d, r) => [ev(0.02, "clic", 0.14), ev(TPIS.union.bloques * r, "thud", 0.12), ev(TPIS.union.inyecta * r, "gota", 0.12), ev(TPIS.union.borra * r, "ding", 0.12), ev(TPIS.union.rayos * r, "tick", 0.12), ev(TPIS.union.chip * r, "clic", 0.12)],
+  },
+  "pis-tinas": {
+    id: "pis-tinas", nombre: "Piscina · Rayos X: tinas de acero, dos tensores de 38 mm y la presión del agua sobre las paredes", ideal: 6.7, fondo: "dark", entra: "semitono",
+    sfx: (_d, r) => [ev(0.05, "whoosh", 0.1), ev(TPIS.tinas.tinas * r, "golpe", 0.2), ev(TPIS.tinas.viga * r, "thud", 0.14), ev(TPIS.tinas.tensores * r, "zap", 0.14), ev(TPIS.tinas.presion * r, "radar", 0.1), ev(TPIS.tinas.chip * r, "ding", 0.14)],
+  },
+  "pis-viento": {
+    id: "pis-viento", nombre: "Piscina · torres que se mecen con el viento: unión rígida que falla (ilustración) y apoyos que deslizan", ideal: 7.0, fondo: "dark", entra: "corte",
+    sfx: (_d, r) => [ev(0.05, "estatica", 0.12), ev(TPIS.viento.rafaga * r, "whoosh", 0.18), ev(TPIS.viento.falla * r, "golpe", 0.26), ev(TPIS.viento.rayosx * r, "radar", 0.12), ev(TPIS.viento.apoyos * r, "thud", 0.18), ev(TPIS.viento.flota * r, "ding", 0.14), ev(TPIS.viento.chip * r, "tick", 0.1)],
+  },
+  "pis-carga": {
+    id: "pis-carga", nombre: "Piscina · llenado con odómetro de 0 a 150 t y marcas de conteo (ilustración)", ideal: 5.2, fondo: "dark", entra: "semitono",
+    sfx: (_d, r) => [ev(0.05, "whoosh", 0.1), ev(TPIS.carga.grifo * r, "pop", 0.12), ...clics(TPIS.carga.sube * r, TPIS.carga.subeDur * r, 0.04), ev((TPIS.carga.sube + TPIS.carga.subeDur) * r, "ding", 0.18), ev(TPIS.carga.chip * r, "tick", 0.1)],
+  },
+  "pis-zoom": {
+    id: "pis-zoom", nombre: "Piscina · zoom logarítmico de 1 µm a 100 m: del polímero a la ciudad, con una silueta nadando (cierre)", ideal: 6.9, fondo: "dark", entra: "zoom",
+    sfx: (_d, r) => [ev(0.05, "whoosh", 0.12), ...clics(TPIS.zoom.ini * r, TPIS.zoom.dur * r * 0.8, 0.04), ev((TPIS.zoom.ini + TPIS.zoom.dur) * r, "ding", 0.2), ev(TPIS.zoom.nada * r, "gota", 0.16), ev(TPIS.zoom.pregunta * r, "pop", 0.1)],
   },
   "astro-memoria": {
     id: "astro-memoria", nombre: "Astrocitos · en ratones, reactivarlos estimuló el recuerdo", ideal: 4.15, fondo: "dark", entra: "corte",
