@@ -118,11 +118,11 @@ add(T(5, SC.tinas.viga), 0.7, (t) => 0.4 * Math.sin(TAU * 74 * t) * ex(t, 0.16) 
     const k = clamp((g - t0) / d), env = sua(g, t0 - 0.1, t0 + 0.4) * (1 - sua(g, t0 + d, t0 + d + 0.4));
     const w = R() * 2 - 1, f1 = 500 + 1500 * k, f2 = 2500 + 1500 * k;
     a += (1 - Math.exp(-TAU * f1 / SR)) * (w - a); b += (1 - Math.exp(-TAU * f2 / SR)) * (w - b);
-    return env * (0.25 + 0.2 * k) * (a * 2.4 + (b - a) * 0.5 * (0.5 + 0.5 * Math.sin(TAU * 11 * g)));
+    return env * (0.7 + 0.5 * k) * (a * 2.4 + (b - a) * 0.5 * (0.5 + 0.5 * Math.sin(TAU * 11 * g)));
   }; })());
   const nb = 140;
   for (let k = 0; k < nb; k++) {                                                                                           // burbujas: «bloop» que suben de tono
-    const u = (k + R()) / nb, tk = t0 + u * d, f0 = 380 + 900 * R() + 700 * u, g = (0.05 + 0.06 * R()) * (0.5 + u);
+    const u = (k + R()) / nb, tk = t0 + u * d, f0 = 380 + 900 * R() + 700 * u, g = (0.12 + 0.14 * R()) * (0.5 + u);
     add(tk, 0.09, (t) => g * Math.sin(TAU * (f0 * (1 + 4 * t)) * t) * ex(t, 0.03) * Math.min(1, t / 0.002));
   }
   const tl = t0 + d;
