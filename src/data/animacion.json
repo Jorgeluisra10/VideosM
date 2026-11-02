@@ -1,20 +1,20 @@
 {
  "version": 1,
- "titulo": "El aire que no avisa",
+ "titulo": "Un día sin dormir",
  "paleta": "medicina",
  "sfx": true,
  "fps": 60,
- "duracion": 61.8,
+ "duracion": 61.4,
  "escenas": [
   {
    "n": 1,
    "t": "PIEZA",
-   "voz": "Un jet privado cayó en Florida. A diez mil metros, tu cuerpo no avisa cuando se queda sin aire.",
-   "dur": 7.1,
-   "h": "UN JET CAYÓ EN FLORIDA",
-   "w": "FLORIDA",
+   "voz": "Un día sin dormir te deja como si estuvieras borracho, y la ciencia lo midió.",
+   "dur": 6.2,
+   "h": "UN DÍA SIN DORMIR = BORRACHO",
+   "w": "BORRACHO",
    "sub": "",
-   "ic": "tren",
+   "ic": "brillo",
    "num": null,
    "vs": null,
    "bars": [],
@@ -45,7 +45,7 @@
    "cubo": null,
    "diales": null,
    "pieza": {
-    "id": "jet-gancho",
+    "id": "sue-gancho",
     "props": {}
    },
    "cita": null,
@@ -54,178 +54,11 @@
    "tema": "oscuro",
    "bg": "dark",
    "ritmo": 1,
-   "total": 61.8,
+   "total": 61.4,
    "inicio": 0,
-   "fin": 7.1,
-   "texto": "Un jet privado cayó en Florida. A diez mil metros, tu cuerpo no avisa cuando se queda sin aire.",
+   "fin": 6.2,
+   "texto": "Un día sin dormir te deja como si estuvieras borracho, y la ciencia lo midió.",
    "tr": "barrido",
-   "trs": "semitono",
-   "sfx": [
-    {
-     "t": 0.04,
-     "tipo": "whoosh",
-     "vol": 0.16
-    },
-    {
-     "t": 0.05,
-     "tipo": "whoosh",
-     "vol": 0.14
-    },
-    {
-     "t": 0.4,
-     "tipo": "ding",
-     "vol": 0.1
-    },
-    {
-     "t": 0.8,
-     "tipo": "clic",
-     "vol": 0.04
-    },
-    {
-     "t": 0.93,
-     "tipo": "clic",
-     "vol": 0.04
-    },
-    {
-     "t": 1.06,
-     "tipo": "clic",
-     "vol": 0.04
-    },
-    {
-     "t": 1.19,
-     "tipo": "clic",
-     "vol": 0.04
-    },
-    {
-     "t": 1.32,
-     "tipo": "clic",
-     "vol": 0.04
-    },
-    {
-     "t": 1.4500000000000002,
-     "tipo": "clic",
-     "vol": 0.04
-    },
-    {
-     "t": 1.58,
-     "tipo": "clic",
-     "vol": 0.04
-    },
-    {
-     "t": 1.71,
-     "tipo": "clic",
-     "vol": 0.04
-    },
-    {
-     "t": 1.84,
-     "tipo": "clic",
-     "vol": 0.04
-    },
-    {
-     "t": 1.97,
-     "tipo": "clic",
-     "vol": 0.04
-    },
-    {
-     "t": 2.1,
-     "tipo": "clic",
-     "vol": 0.04
-    },
-    {
-     "t": 2.2300000000000004,
-     "tipo": "clic",
-     "vol": 0.04
-    },
-    {
-     "t": 2.3600000000000003,
-     "tipo": "clic",
-     "vol": 0.04
-    },
-    {
-     "t": 2.49,
-     "tipo": "clic",
-     "vol": 0.04
-    },
-    {
-     "t": 2.62,
-     "tipo": "clic",
-     "vol": 0.04
-    },
-    {
-     "t": 2.7,
-     "tipo": "thud",
-     "vol": 0.2
-    },
-    {
-     "t": 2.75,
-     "tipo": "clic",
-     "vol": 0.04
-    },
-    {
-     "t": 3.2,
-     "tipo": "heartbeat",
-     "vol": 0.16
-    },
-    {
-     "t": 3.4000000000000004,
-     "tipo": "ding",
-     "vol": 0.16
-    }
-   ]
-  },
-  {
-   "n": 2,
-   "t": "PIEZA",
-   "voz": "La causa sigue en investigación. Lo que sí se mide: a diez mil metros, la presión del aire cae a casi una cuarta parte.",
-   "dur": 8.9,
-   "h": "LA PRESIÓN SÍ SE MIDE",
-   "w": "PRESIÓN",
-   "sub": "",
-   "ic": "tren",
-   "num": null,
-   "vs": null,
-   "bars": [],
-   "barsU": "",
-   "hi": -1,
-   "line": null,
-   "items": [],
-   "stops": [],
-   "end": "",
-   "donut": [],
-   "picto": null,
-   "top": [],
-   "myth": "",
-   "truth": "",
-   "zoom": null,
-   "capas": null,
-   "mira": null,
-   "impacto": null,
-   "red": null,
-   "termo": null,
-   "pila": null,
-   "cap": "primer dato: la presión del aire",
-   "papel": null,
-   "pilares": null,
-   "ciclo": null,
-   "duo": null,
-   "osc": null,
-   "cubo": null,
-   "diales": null,
-   "pieza": {
-    "id": "jet-ascenso",
-    "props": {}
-   },
-   "cita": null,
-   "sc": "",
-   "modo": "VIRAL",
-   "tema": "claro",
-   "bg": "light",
-   "ritmo": 1,
-   "total": 61.8,
-   "inicio": 7.1,
-   "fin": 16,
-   "texto": "La causa sigue en investigación. Lo que sí se mide: a diez mil metros, la presión del aire cae a casi una cuarta parte.",
-   "tr": "semitono",
    "trs": "corte",
    "sfx": [
     {
@@ -236,600 +69,17 @@
     {
      "t": 0.05,
      "tipo": "whoosh",
-     "vol": 0.1
-    },
-    {
-     "t": 0.4,
-     "tipo": "golpe",
-     "vol": 0.24
-    },
-    {
-     "t": 3.1,
-     "tipo": "whoosh",
      "vol": 0.12
     },
     {
-     "t": 3.3,
-     "tipo": "clic",
-     "vol": 0.04
-    },
-    {
-     "t": 3.4299999999999997,
-     "tipo": "clic",
-     "vol": 0.04
-    },
-    {
-     "t": 3.5599999999999996,
-     "tipo": "clic",
-     "vol": 0.04
-    },
-    {
-     "t": 3.69,
-     "tipo": "clic",
-     "vol": 0.04
-    },
-    {
-     "t": 3.82,
-     "tipo": "clic",
-     "vol": 0.04
-    },
-    {
-     "t": 3.9499999999999997,
-     "tipo": "clic",
-     "vol": 0.04
-    },
-    {
-     "t": 4.08,
-     "tipo": "clic",
-     "vol": 0.04
-    },
-    {
-     "t": 4.21,
-     "tipo": "clic",
-     "vol": 0.04
-    },
-    {
-     "t": 4.34,
-     "tipo": "clic",
-     "vol": 0.04
-    },
-    {
-     "t": 4.47,
-     "tipo": "clic",
-     "vol": 0.04
-    },
-    {
-     "t": 4.6,
-     "tipo": "clic",
-     "vol": 0.04
-    },
-    {
-     "t": 4.73,
-     "tipo": "clic",
-     "vol": 0.04
-    },
-    {
-     "t": 4.859999999999999,
-     "tipo": "clic",
-     "vol": 0.04
-    },
-    {
-     "t": 4.99,
-     "tipo": "clic",
-     "vol": 0.04
-    },
-    {
-     "t": 5.12,
-     "tipo": "clic",
-     "vol": 0.04
-    },
-    {
-     "t": 5.25,
-     "tipo": "clic",
-     "vol": 0.04
-    },
-    {
-     "t": 5.38,
-     "tipo": "clic",
-     "vol": 0.04
-    },
-    {
-     "t": 5.51,
-     "tipo": "clic",
-     "vol": 0.04
-    },
-    {
-     "t": 5.64,
-     "tipo": "clic",
-     "vol": 0.04
-    },
-    {
-     "t": 5.77,
-     "tipo": "clic",
-     "vol": 0.04
-    },
-    {
-     "t": 5.9,
-     "tipo": "clic",
-     "vol": 0.04
-    },
-    {
-     "t": 6.029999999999999,
-     "tipo": "clic",
-     "vol": 0.04
-    },
-    {
-     "t": 6.16,
-     "tipo": "clic",
-     "vol": 0.04
-    },
-    {
-     "t": 6.29,
-     "tipo": "clic",
-     "vol": 0.04
-    },
-    {
-     "t": 6.42,
-     "tipo": "clic",
-     "vol": 0.04
-    },
-    {
-     "t": 6.55,
-     "tipo": "clic",
-     "vol": 0.04
-    },
-    {
-     "t": 6.68,
-     "tipo": "clic",
-     "vol": 0.04
-    },
-    {
-     "t": 7.7,
-     "tipo": "ding",
-     "vol": 0.18
-    },
-    {
-     "t": 7.8,
-     "tipo": "thud",
-     "vol": 0.16
-    }
-   ]
-  },
-  {
-   "n": 3,
-   "t": "PIEZA",
-   "voz": "Sigue siendo veintiuno por ciento de oxígeno, pero a tus pulmones llega cinco veces menos, incluso menos que en el Everest.",
-   "dur": 8.2,
-   "h": "CINCO VECES MENOS OXÍGENO",
-   "w": "OXÍGENO",
-   "sub": "",
-   "ic": "brillo",
-   "num": null,
-   "vs": null,
-   "bars": [],
-   "barsU": "",
-   "hi": -1,
-   "line": null,
-   "items": [],
-   "stops": [],
-   "end": "",
-   "donut": [],
-   "picto": null,
-   "top": [],
-   "myth": "",
-   "truth": "",
-   "zoom": null,
-   "capas": null,
-   "mira": null,
-   "impacto": null,
-   "red": null,
-   "termo": null,
-   "pila": null,
-   "cap": "segundo dato: el oxígeno que llega al pulmón",
-   "papel": null,
-   "pilares": null,
-   "ciclo": null,
-   "duo": null,
-   "osc": null,
-   "cubo": null,
-   "diales": null,
-   "pieza": {
-    "id": "jet-aire",
-    "props": {}
-   },
-   "cita": null,
-   "sc": "",
-   "modo": "VIRAL",
-   "tema": "oscuro",
-   "bg": "dark",
-   "ritmo": 0.9687499999999999,
-   "total": 61.8,
-   "inicio": 16,
-   "fin": 24.2,
-   "texto": "Sigue siendo veintiuno por ciento de oxígeno, pero a tus pulmones llega cinco veces menos, incluso menos que en el Everest.",
-   "tr": "corte",
-   "trs": "semitono",
-   "sfx": [
-    {
-     "t": 0.04,
-     "tipo": "whoosh",
-     "vol": 0.16
-    },
-    {
-     "t": 0.05,
-     "tipo": "whoosh",
-     "vol": 0.1
-    },
-    {
-     "t": 0.29062499999999997,
-     "tipo": "thud",
-     "vol": 0.12
-    },
-    {
-     "t": 1.8406249999999997,
+     "t": 0.5,
      "tipo": "pop",
      "vol": 0.12
-    },
-    {
-     "t": 2.51875,
-     "tipo": "whoosh",
-     "vol": 0.12
-    },
-    {
-     "t": 3.3906249999999996,
-     "tipo": "clic",
-     "vol": 0.04
-    },
-    {
-     "t": 3.5206249999999994,
-     "tipo": "clic",
-     "vol": 0.04
-    },
-    {
-     "t": 3.650625,
-     "tipo": "clic",
-     "vol": 0.04
-    },
-    {
-     "t": 3.7806249999999997,
-     "tipo": "clic",
-     "vol": 0.04
-    },
-    {
-     "t": 3.9106249999999996,
-     "tipo": "clic",
-     "vol": 0.04
-    },
-    {
-     "t": 4.0406249999999995,
-     "tipo": "clic",
-     "vol": 0.04
-    },
-    {
-     "t": 4.170624999999999,
-     "tipo": "clic",
-     "vol": 0.04
-    },
-    {
-     "t": 4.300624999999999,
-     "tipo": "clic",
-     "vol": 0.04
-    },
-    {
-     "t": 4.843749999999999,
-     "tipo": "tick",
-     "vol": 0.14
-    },
-    {
-     "t": 5.23125,
-     "tipo": "clic",
-     "vol": 0.04
-    },
-    {
-     "t": 5.36125,
-     "tipo": "clic",
-     "vol": 0.04
-    },
-    {
-     "t": 5.49125,
-     "tipo": "clic",
-     "vol": 0.04
-    },
-    {
-     "t": 5.62125,
-     "tipo": "clic",
-     "vol": 0.04
-    },
-    {
-     "t": 5.751250000000001,
-     "tipo": "clic",
-     "vol": 0.04
-    },
-    {
-     "t": 5.8812500000000005,
-     "tipo": "clic",
-     "vol": 0.04
-    },
-    {
-     "t": 6.01125,
-     "tipo": "clic",
-     "vol": 0.04
-    },
-    {
-     "t": 6.14125,
-     "tipo": "clic",
-     "vol": 0.04
-    },
-    {
-     "t": 6.684374999999999,
-     "tipo": "ding",
-     "vol": 0.16
-    }
-   ]
-  },
-  {
-   "n": 4,
-   "t": "PIEZA",
-   "voz": "Por eso la cabina se presuriza: adentro, la altura equivalente se limita a unos dos mil cuatrocientos metros.",
-   "dur": 6.8,
-   "h": "UNA BURBUJA DE PRESIÓN",
-   "w": "BURBUJA",
-   "sub": "",
-   "ic": "tren",
-   "num": null,
-   "vs": null,
-   "bars": [],
-   "barsU": "",
-   "hi": -1,
-   "line": null,
-   "items": [],
-   "stops": [],
-   "end": "",
-   "donut": [],
-   "picto": null,
-   "top": [],
-   "myth": "",
-   "truth": "",
-   "zoom": null,
-   "capas": null,
-   "mira": null,
-   "impacto": null,
-   "red": null,
-   "termo": null,
-   "pila": null,
-   "cap": "la cabina presurizada",
-   "papel": null,
-   "pilares": null,
-   "ciclo": null,
-   "duo": null,
-   "osc": null,
-   "cubo": null,
-   "diales": null,
-   "pieza": {
-    "id": "jet-cabina",
-    "props": {}
-   },
-   "cita": null,
-   "sc": "",
-   "modo": "VIRAL",
-   "tema": "claro",
-   "bg": "light",
-   "ritmo": 0.9921874999999999,
-   "total": 61.8,
-   "inicio": 24.2,
-   "fin": 31,
-   "texto": "Por eso la cabina se presuriza: adentro, la altura equivalente se limita a unos dos mil cuatrocientos metros.",
-   "tr": "semitono",
-   "trs": "corte",
-   "sfx": [
-    {
-     "t": 0.04,
-     "tipo": "whoosh",
-     "vol": 0.16
-    },
-    {
-     "t": 0.05,
-     "tipo": "estatica",
-     "vol": 0.08
-    },
-    {
-     "t": 0.1984375,
-     "tipo": "thud",
-     "vol": 0.14
-    },
-    {
-     "t": 0.8929687499999999,
-     "tipo": "pop",
-     "vol": 0.12
-    },
-    {
-     "t": 1.8851562499999996,
-     "tipo": "whoosh",
-     "vol": 0.12
-    },
-    {
-     "t": 3.3734374999999996,
-     "tipo": "ding",
-     "vol": 0.14
-    },
-    {
-     "t": 5.258593749999999,
-     "tipo": "radar",
-     "vol": 0.14
-    },
-    {
-     "t": 6.052343749999999,
-     "tipo": "tick",
-     "vol": 0.1
-    }
-   ]
-  },
-  {
-   "n": 5,
-   "t": "PIEZA",
-   "voz": "El cerebro pesa dos por ciento del cuerpo, pero gasta veinte por ciento del oxígeno.",
-   "dur": 5.8,
-   "h": "EL CEREBRO GASTA MUCHO",
-   "w": "CEREBRO",
-   "sub": "",
-   "ic": "brillo",
-   "num": null,
-   "vs": null,
-   "bars": [],
-   "barsU": "",
-   "hi": -1,
-   "line": null,
-   "items": [],
-   "stops": [],
-   "end": "",
-   "donut": [],
-   "picto": null,
-   "top": [],
-   "myth": "",
-   "truth": "",
-   "zoom": null,
-   "capas": null,
-   "mira": null,
-   "impacto": null,
-   "red": null,
-   "termo": null,
-   "pila": null,
-   "cap": "el órgano que más lo nota",
-   "papel": null,
-   "pilares": null,
-   "ciclo": null,
-   "duo": null,
-   "osc": null,
-   "cubo": null,
-   "diales": null,
-   "pieza": {
-    "id": "jet-cerebro",
-    "props": {}
-   },
-   "cita": null,
-   "sc": "",
-   "modo": "VIRAL",
-   "tema": "oscuro",
-   "bg": "dark",
-   "ritmo": 0.9907407407407406,
-   "total": 61.8,
-   "inicio": 31,
-   "fin": 36.8,
-   "texto": "El cerebro pesa dos por ciento del cuerpo, pero gasta veinte por ciento del oxígeno.",
-   "tr": "corte",
-   "trs": "semitono",
-   "sfx": [
-    {
-     "t": 0.04,
-     "tipo": "whoosh",
-     "vol": 0.16
-    },
-    {
-     "t": 0.05,
-     "tipo": "heartbeat",
-     "vol": 0.18
-    },
-    {
-     "t": 0.7925925925925925,
-     "tipo": "zap",
-     "vol": 0.1
-    },
-    {
-     "t": 1.2879629629629628,
-     "tipo": "pop",
-     "vol": 0.1
-    },
-    {
-     "t": 2.8731481481481476,
-     "tipo": "golpe",
-     "vol": 0.2
-    },
-    {
-     "t": 3.1703703703703696,
-     "tipo": "ding",
-     "vol": 0.14
-    },
-    {
-     "t": 4.458333333333333,
-     "tipo": "heartbeat",
-     "vol": 0.16
-    }
-   ]
-  },
-  {
-   "n": 6,
-   "t": "PIEZA",
-   "voz": "A treinta y cinco mil pies, la conciencia útil dura entre treinta y sesenta segundos.",
-   "dur": 6.4,
-   "h": "30 A 60 SEGUNDOS",
-   "w": "SEGUNDOS",
-   "sub": "",
-   "ic": "brillo",
-   "num": null,
-   "vs": null,
-   "bars": [],
-   "barsU": "",
-   "hi": -1,
-   "line": null,
-   "items": [],
-   "stops": [],
-   "end": "",
-   "donut": [],
-   "picto": null,
-   "top": [],
-   "myth": "",
-   "truth": "",
-   "zoom": null,
-   "capas": null,
-   "mira": null,
-   "impacto": null,
-   "red": null,
-   "termo": null,
-   "pila": null,
-   "cap": "tiempo de conciencia útil (FAA)",
-   "papel": null,
-   "pilares": null,
-   "ciclo": null,
-   "duo": null,
-   "osc": null,
-   "cubo": null,
-   "diales": null,
-   "pieza": {
-    "id": "jet-reloj",
-    "props": {}
-   },
-   "cita": null,
-   "sc": "",
-   "modo": "VIRAL",
-   "tema": "claro",
-   "bg": "light",
-   "ritmo": 1,
-   "total": 61.8,
-   "inicio": 36.8,
-   "fin": 43.2,
-   "texto": "A treinta y cinco mil pies, la conciencia útil dura entre treinta y sesenta segundos.",
-   "tr": "semitono",
-   "trs": "corte",
-   "sfx": [
-    {
-     "t": 0.04,
-     "tipo": "whoosh",
-     "vol": 0.16
-    },
-    {
-     "t": 0.05,
-     "tipo": "whoosh",
-     "vol": 0.1
     },
     {
      "t": 0.9,
      "tipo": "clic",
      "vol": 0.05
-    },
-    {
-     "t": 1,
-     "tipo": "tick",
-     "vol": 0.1
     },
     {
      "t": 1.03,
@@ -852,11 +102,6 @@
      "vol": 0.05
     },
     {
-     "t": 1.42,
-     "tipo": "tick",
-     "vol": 0.1
-    },
-    {
      "t": 1.55,
      "tipo": "clic",
      "vol": 0.05
@@ -870,11 +115,6 @@
      "t": 1.81,
      "tipo": "clic",
      "vol": 0.05
-    },
-    {
-     "t": 1.8399999999999999,
-     "tipo": "tick",
-     "vol": 0.1
     },
     {
      "t": 1.94,
@@ -892,11 +132,6 @@
      "vol": 0.05
     },
     {
-     "t": 2.26,
-     "tipo": "tick",
-     "vol": 0.1
-    },
-    {
      "t": 2.33,
      "tipo": "clic",
      "vol": 0.05
@@ -910,11 +145,6 @@
      "t": 2.59,
      "tipo": "clic",
      "vol": 0.05
-    },
-    {
-     "t": 2.6799999999999997,
-     "tipo": "tick",
-     "vol": 0.1
     },
     {
      "t": 2.72,
@@ -937,26 +167,51 @@
      "vol": 0.05
     },
     {
-     "t": 3.9,
+     "t": 3.2399999999999998,
+     "tipo": "clic",
+     "vol": 0.05
+    },
+    {
+     "t": 3.37,
+     "tipo": "clic",
+     "vol": 0.05
+    },
+    {
+     "t": 3.5,
+     "tipo": "clic",
+     "vol": 0.05
+    },
+    {
+     "t": 3.63,
+     "tipo": "clic",
+     "vol": 0.05
+    },
+    {
+     "t": 3.7600000000000002,
+     "tipo": "clic",
+     "vol": 0.05
+    },
+    {
+     "t": 4.3,
      "tipo": "ding",
      "vol": 0.18
     },
     {
-     "t": 4.6,
-     "tipo": "heartbeat",
-     "vol": 0.2
+     "t": 4.5,
+     "tipo": "thud",
+     "vol": 0.18
     }
    ]
   },
   {
-   "n": 7,
+   "n": 2,
    "t": "PIEZA",
-   "voz": "Lo peligroso es que no duele ni ahoga: aparece euforia, visión en túnel, labios azulados y poco juicio.",
+   "voz": "A las diecisiete horas despierto, tu rendimiento ya iguala al de cero coma cero cinco por ciento de alcohol.",
    "dur": 7.2,
-   "h": "NO DUELE, NO AHOGA",
-   "w": "DUELE,",
+   "h": "17 HORAS = 0,05 %",
+   "w": "17",
    "sub": "",
-   "ic": "alerta",
+   "ic": "reloj",
    "num": null,
    "vs": null,
    "bars": [],
@@ -978,7 +233,7 @@
    "red": null,
    "termo": null,
    "pila": null,
-   "cap": "la hipoxia es silenciosa",
+   "cap": "primer dato: 17 horas despierto",
    "papel": null,
    "pilares": null,
    "ciclo": null,
@@ -987,19 +242,19 @@
    "cubo": null,
    "diales": null,
    "pieza": {
-    "id": "jet-silencio",
+    "id": "sue-horas",
     "props": {}
    },
    "cita": null,
    "sc": "",
    "modo": "VIRAL",
-   "tema": "oscuro",
-   "bg": "dark",
-   "ritmo": 1,
-   "total": 61.8,
-   "inicio": 43.2,
-   "fin": 50.4,
-   "texto": "Lo peligroso es que no duele ni ahoga: aparece euforia, visión en túnel, labios azulados y poco juicio.",
+   "tema": "claro",
+   "bg": "light",
+   "ritmo": 0.9926470588235294,
+   "total": 61.4,
+   "inicio": 6.2,
+   "fin": 13.4,
+   "texto": "A las diecisiete horas despierto, tu rendimiento ya iguala al de cero coma cero cinco por ciento de alcohol.",
    "tr": "corte",
    "trs": "semitono",
    "sfx": [
@@ -1010,58 +265,569 @@
     },
     {
      "t": 0.05,
-     "tipo": "estatica",
+     "tipo": "whoosh",
      "vol": 0.1
     },
     {
-     "t": 1.2,
-     "tipo": "heartbeat",
-     "vol": 0.16
+     "t": 0.7941176470588236,
+     "tipo": "clic",
+     "vol": 0.05
     },
     {
-     "t": 2,
-     "tipo": "pop",
-     "vol": 0.12
+     "t": 0.9241176470588236,
+     "tipo": "clic",
+     "vol": 0.05
     },
     {
-     "t": 2.8,
-     "tipo": "heartbeat",
-     "vol": 0.2
+     "t": 1.0541176470588236,
+     "tipo": "clic",
+     "vol": 0.05
     },
     {
-     "t": 3,
-     "tipo": "pop",
-     "vol": 0.12
+     "t": 1.1841176470588235,
+     "tipo": "clic",
+     "vol": 0.05
     },
     {
-     "t": 3.95,
-     "tipo": "pop",
-     "vol": 0.12
+     "t": 1.3141176470588236,
+     "tipo": "clic",
+     "vol": 0.05
     },
     {
-     "t": 4.2,
-     "tipo": "heartbeat",
-     "vol": 0.24
+     "t": 1.4441176470588237,
+     "tipo": "clic",
+     "vol": 0.05
     },
     {
-     "t": 4.9,
-     "tipo": "pop",
-     "vol": 0.12
+     "t": 1.5741176470588236,
+     "tipo": "clic",
+     "vol": 0.05
     },
     {
-     "t": 5.8,
-     "tipo": "golpe",
-     "vol": 0.22
+     "t": 1.7041176470588235,
+     "tipo": "clic",
+     "vol": 0.05
+    },
+    {
+     "t": 1.8341176470588236,
+     "tipo": "clic",
+     "vol": 0.05
+    },
+    {
+     "t": 1.9641176470588235,
+     "tipo": "clic",
+     "vol": 0.05
+    },
+    {
+     "t": 2.0941176470588236,
+     "tipo": "clic",
+     "vol": 0.05
+    },
+    {
+     "t": 2.224117647058824,
+     "tipo": "clic",
+     "vol": 0.05
+    },
+    {
+     "t": 2.354117647058824,
+     "tipo": "clic",
+     "vol": 0.05
+    },
+    {
+     "t": 2.4841176470588238,
+     "tipo": "clic",
+     "vol": 0.05
+    },
+    {
+     "t": 2.6141176470588237,
+     "tipo": "clic",
+     "vol": 0.05
+    },
+    {
+     "t": 2.7441176470588236,
+     "tipo": "clic",
+     "vol": 0.05
+    },
+    {
+     "t": 2.8741176470588234,
+     "tipo": "clic",
+     "vol": 0.05
+    },
+    {
+     "t": 3.0041176470588233,
+     "tipo": "clic",
+     "vol": 0.05
+    },
+    {
+     "t": 3.1341176470588232,
+     "tipo": "clic",
+     "vol": 0.05
+    },
+    {
+     "t": 3.264117647058824,
+     "tipo": "clic",
+     "vol": 0.05
+    },
+    {
+     "t": 3.394117647058824,
+     "tipo": "clic",
+     "vol": 0.05
+    },
+    {
+     "t": 3.524117647058824,
+     "tipo": "clic",
+     "vol": 0.05
+    },
+    {
+     "t": 3.6541176470588237,
+     "tipo": "clic",
+     "vol": 0.05
+    },
+    {
+     "t": 3.7841176470588236,
+     "tipo": "clic",
+     "vol": 0.05
+    },
+    {
+     "t": 4.36764705882353,
+     "tipo": "ding",
+     "vol": 0.18
+    },
+    {
+     "t": 4.5661764705882355,
+     "tipo": "radar",
+     "vol": 0.1
+    },
+    {
+     "t": 5.5588235294117645,
+     "tipo": "tick",
+     "vol": 0.1
     }
    ]
   },
   {
-   "n": 8,
+   "n": 3,
    "t": "PIEZA",
-   "voz": "Por eso los pilotos entrenan en cámaras de altura y usan máscara. El remedio: oxígeno puro y descender.",
+   "voz": "Hacia las veinticuatro horas ya es cero coma diez: más que el límite legal para conducir en Estados Unidos.",
    "dur": 7.2,
-   "h": "OXÍGENO PURO Y DESCENDER",
-   "w": "DESCENDER",
+   "h": "MÁS QUE EL LÍMITE LEGAL",
+   "w": "LÍMITE",
+   "sub": "",
+   "ic": "reloj",
+   "num": null,
+   "vs": null,
+   "bars": [],
+   "barsU": "",
+   "hi": -1,
+   "line": null,
+   "items": [],
+   "stops": [],
+   "end": "",
+   "donut": [],
+   "picto": null,
+   "top": [],
+   "myth": "",
+   "truth": "",
+   "zoom": null,
+   "capas": null,
+   "mira": null,
+   "impacto": null,
+   "red": null,
+   "termo": null,
+   "pila": null,
+   "cap": "segundo dato: 24 horas despierto",
+   "papel": null,
+   "pilares": null,
+   "ciclo": null,
+   "duo": null,
+   "osc": null,
+   "cubo": null,
+   "diales": null,
+   "pieza": {
+    "id": "sue-limite",
+    "props": {}
+   },
+   "cita": null,
+   "sc": "",
+   "modo": "VIRAL",
+   "tema": "oscuro",
+   "bg": "dark",
+   "ritmo": 1,
+   "total": 61.4,
+   "inicio": 13.4,
+   "fin": 20.6,
+   "texto": "Hacia las veinticuatro horas ya es cero coma diez: más que el límite legal para conducir en Estados Unidos.",
+   "tr": "semitono",
+   "trs": "corte",
+   "sfx": [
+    {
+     "t": 0.04,
+     "tipo": "whoosh",
+     "vol": 0.16
+    },
+    {
+     "t": 0.05,
+     "tipo": "whoosh",
+     "vol": 0.1
+    },
+    {
+     "t": 0.6,
+     "tipo": "clic",
+     "vol": 0.05
+    },
+    {
+     "t": 0.73,
+     "tipo": "clic",
+     "vol": 0.05
+    },
+    {
+     "t": 0.86,
+     "tipo": "clic",
+     "vol": 0.05
+    },
+    {
+     "t": 0.99,
+     "tipo": "clic",
+     "vol": 0.05
+    },
+    {
+     "t": 1.12,
+     "tipo": "clic",
+     "vol": 0.05
+    },
+    {
+     "t": 1.25,
+     "tipo": "clic",
+     "vol": 0.05
+    },
+    {
+     "t": 1.38,
+     "tipo": "clic",
+     "vol": 0.05
+    },
+    {
+     "t": 1.51,
+     "tipo": "clic",
+     "vol": 0.05
+    },
+    {
+     "t": 1.6400000000000001,
+     "tipo": "clic",
+     "vol": 0.05
+    },
+    {
+     "t": 1.77,
+     "tipo": "clic",
+     "vol": 0.05
+    },
+    {
+     "t": 1.9,
+     "tipo": "clic",
+     "vol": 0.05
+    },
+    {
+     "t": 1.9,
+     "tipo": "zap",
+     "vol": 0.2
+    },
+    {
+     "t": 2.0300000000000002,
+     "tipo": "clic",
+     "vol": 0.05
+    },
+    {
+     "t": 2.5,
+     "tipo": "golpe",
+     "vol": 0.24
+    },
+    {
+     "t": 3,
+     "tipo": "radar",
+     "vol": 0.14
+    },
+    {
+     "t": 4.4,
+     "tipo": "tick",
+     "vol": 0.1
+    }
+   ]
+  },
+  {
+   "n": 4,
+   "t": "PIEZA",
+   "voz": "¿Por qué? Mientras estás despierto, tu cerebro acumula adenosina, una molécula que empuja al sueño.",
+   "dur": 6.2,
+   "h": "SE ACUMULA ADENOSINA",
+   "w": "ADENOSINA",
+   "sub": "",
+   "ic": "brillo",
+   "num": null,
+   "vs": null,
+   "bars": [],
+   "barsU": "",
+   "hi": -1,
+   "line": null,
+   "items": [],
+   "stops": [],
+   "end": "",
+   "donut": [],
+   "picto": null,
+   "top": [],
+   "myth": "",
+   "truth": "",
+   "zoom": null,
+   "capas": null,
+   "mira": null,
+   "impacto": null,
+   "red": null,
+   "termo": null,
+   "pila": null,
+   "cap": "la causa: la presión de sueño",
+   "papel": null,
+   "pilares": null,
+   "ciclo": null,
+   "duo": null,
+   "osc": null,
+   "cubo": null,
+   "diales": null,
+   "pieza": {
+    "id": "sue-adenosina",
+    "props": {}
+   },
+   "cita": null,
+   "sc": "",
+   "modo": "VIRAL",
+   "tema": "claro",
+   "bg": "light",
+   "ritmo": 0.9745762711864406,
+   "total": 61.4,
+   "inicio": 20.6,
+   "fin": 26.8,
+   "texto": "¿Por qué? Mientras estás despierto, tu cerebro acumula adenosina, una molécula que empuja al sueño.",
+   "tr": "corte",
+   "trs": "semitono",
+   "sfx": [
+    {
+     "t": 0.04,
+     "tipo": "whoosh",
+     "vol": 0.16
+    },
+    {
+     "t": 0.05,
+     "tipo": "heartbeat",
+     "vol": 0.14
+    },
+    {
+     "t": 0.7796610169491526,
+     "tipo": "pop",
+     "vol": 0.1
+    },
+    {
+     "t": 0.9745762711864406,
+     "tipo": "clic",
+     "vol": 0.04
+    },
+    {
+     "t": 1.1045762711864406,
+     "tipo": "clic",
+     "vol": 0.04
+    },
+    {
+     "t": 1.2345762711864405,
+     "tipo": "clic",
+     "vol": 0.04
+    },
+    {
+     "t": 1.3645762711864406,
+     "tipo": "clic",
+     "vol": 0.04
+    },
+    {
+     "t": 1.4945762711864408,
+     "tipo": "clic",
+     "vol": 0.04
+    },
+    {
+     "t": 1.6245762711864407,
+     "tipo": "clic",
+     "vol": 0.04
+    },
+    {
+     "t": 1.7545762711864406,
+     "tipo": "clic",
+     "vol": 0.04
+    },
+    {
+     "t": 1.8845762711864407,
+     "tipo": "clic",
+     "vol": 0.04
+    },
+    {
+     "t": 2.014576271186441,
+     "tipo": "clic",
+     "vol": 0.04
+    },
+    {
+     "t": 2.1445762711864407,
+     "tipo": "clic",
+     "vol": 0.04
+    },
+    {
+     "t": 2.2745762711864406,
+     "tipo": "clic",
+     "vol": 0.04
+    },
+    {
+     "t": 2.404576271186441,
+     "tipo": "clic",
+     "vol": 0.04
+    },
+    {
+     "t": 2.534576271186441,
+     "tipo": "clic",
+     "vol": 0.04
+    },
+    {
+     "t": 2.6645762711864407,
+     "tipo": "clic",
+     "vol": 0.04
+    },
+    {
+     "t": 2.7945762711864406,
+     "tipo": "clic",
+     "vol": 0.04
+    },
+    {
+     "t": 2.924576271186441,
+     "tipo": "clic",
+     "vol": 0.04
+    },
+    {
+     "t": 3.054576271186441,
+     "tipo": "clic",
+     "vol": 0.04
+    },
+    {
+     "t": 3.1845762711864407,
+     "tipo": "clic",
+     "vol": 0.04
+    },
+    {
+     "t": 3.3145762711864406,
+     "tipo": "clic",
+     "vol": 0.04
+    },
+    {
+     "t": 3.444576271186441,
+     "tipo": "clic",
+     "vol": 0.04
+    },
+    {
+     "t": 3.574576271186441,
+     "tipo": "clic",
+     "vol": 0.04
+    },
+    {
+     "t": 4.677966101694915,
+     "tipo": "ding",
+     "vol": 0.16
+    }
+   ]
+  },
+  {
+   "n": 5,
+   "t": "PIEZA",
+   "voz": "El café no la elimina: solo tapa sus receptores, y la adenosina sigue ahí, esperando.",
+   "dur": 6.2,
+   "h": "EL CAFÉ NO LA ELIMINA",
+   "w": "CAFÉ",
+   "sub": "",
+   "ic": "brillo",
+   "num": null,
+   "vs": null,
+   "bars": [],
+   "barsU": "",
+   "hi": -1,
+   "line": null,
+   "items": [],
+   "stops": [],
+   "end": "",
+   "donut": [],
+   "picto": null,
+   "top": [],
+   "myth": "",
+   "truth": "",
+   "zoom": null,
+   "capas": null,
+   "mira": null,
+   "impacto": null,
+   "red": null,
+   "termo": null,
+   "pila": null,
+   "cap": "qué hace la cafeína",
+   "papel": null,
+   "pilares": null,
+   "ciclo": null,
+   "duo": null,
+   "osc": null,
+   "cubo": null,
+   "diales": null,
+   "pieza": {
+    "id": "sue-cafe",
+    "props": {}
+   },
+   "cita": null,
+   "sc": "",
+   "modo": "VIRAL",
+   "tema": "oscuro",
+   "bg": "dark",
+   "ritmo": 0.9745762711864406,
+   "total": 61.4,
+   "inicio": 26.8,
+   "fin": 33,
+   "texto": "El café no la elimina: solo tapa sus receptores, y la adenosina sigue ahí, esperando.",
+   "tr": "semitono",
+   "trs": "corte",
+   "sfx": [
+    {
+     "t": 0.04,
+     "tipo": "whoosh",
+     "vol": 0.16
+    },
+    {
+     "t": 0.05,
+     "tipo": "whoosh",
+     "vol": 0.1
+    },
+    {
+     "t": 1.461864406779661,
+     "tipo": "clic",
+     "vol": 0.16
+    },
+    {
+     "t": 2.241525423728813,
+     "tipo": "gota",
+     "vol": 0.14
+    },
+    {
+     "t": 3.216101694915254,
+     "tipo": "golpe",
+     "vol": 0.2
+    },
+    {
+     "t": 4.288135593220339,
+     "tipo": "pop",
+     "vol": 0.1
+    }
+   ]
+  },
+  {
+   "n": 6,
+   "t": "PIEZA",
+   "voz": "Y llegan los microsueños: a cien kilómetros por hora, cuatro segundos son ciento once metros a ciegas.",
+   "dur": 6.9,
+   "h": "4 SEGUNDOS = 111 METROS",
+   "w": "METROS",
    "sub": "",
    "ic": "tren",
    "num": null,
@@ -1085,7 +851,7 @@
    "red": null,
    "termo": null,
    "pila": null,
-   "cap": "qué sí funciona",
+   "cap": "microsueños al volante",
    "papel": null,
    "pilares": null,
    "ciclo": null,
@@ -1094,7 +860,7 @@
    "cubo": null,
    "diales": null,
    "pieza": {
-    "id": "jet-descenso",
+    "id": "sue-micro",
     "props": {}
    },
    "cita": null,
@@ -1103,11 +869,290 @@
    "tema": "claro",
    "bg": "light",
    "ritmo": 1,
-   "total": 61.8,
-   "inicio": 50.4,
-   "fin": 57.6,
-   "texto": "Por eso los pilotos entrenan en cámaras de altura y usan máscara. El remedio: oxígeno puro y descender.",
+   "total": 61.4,
+   "inicio": 33,
+   "fin": 39.9,
+   "texto": "Y llegan los microsueños: a cien kilómetros por hora, cuatro segundos son ciento once metros a ciegas.",
+   "tr": "corte",
+   "trs": "semitono",
+   "sfx": [
+    {
+     "t": 0.04,
+     "tipo": "whoosh",
+     "vol": 0.16
+    },
+    {
+     "t": 0.05,
+     "tipo": "estatica",
+     "vol": 0.1
+    },
+    {
+     "t": 2.1,
+     "tipo": "thud",
+     "vol": 0.24
+    },
+    {
+     "t": 2.6,
+     "tipo": "clic",
+     "vol": 0.05
+    },
+    {
+     "t": 2.73,
+     "tipo": "clic",
+     "vol": 0.05
+    },
+    {
+     "t": 2.8600000000000003,
+     "tipo": "clic",
+     "vol": 0.05
+    },
+    {
+     "t": 2.99,
+     "tipo": "clic",
+     "vol": 0.05
+    },
+    {
+     "t": 3.12,
+     "tipo": "clic",
+     "vol": 0.05
+    },
+    {
+     "t": 3.25,
+     "tipo": "clic",
+     "vol": 0.05
+    },
+    {
+     "t": 3.38,
+     "tipo": "clic",
+     "vol": 0.05
+    },
+    {
+     "t": 3.5100000000000002,
+     "tipo": "clic",
+     "vol": 0.05
+    },
+    {
+     "t": 3.64,
+     "tipo": "clic",
+     "vol": 0.05
+    },
+    {
+     "t": 3.77,
+     "tipo": "clic",
+     "vol": 0.05
+    },
+    {
+     "t": 3.9000000000000004,
+     "tipo": "clic",
+     "vol": 0.05
+    },
+    {
+     "t": 4.03,
+     "tipo": "clic",
+     "vol": 0.05
+    },
+    {
+     "t": 4.16,
+     "tipo": "clic",
+     "vol": 0.05
+    },
+    {
+     "t": 4.29,
+     "tipo": "clic",
+     "vol": 0.05
+    },
+    {
+     "t": 4.42,
+     "tipo": "clic",
+     "vol": 0.05
+    },
+    {
+     "t": 4.550000000000001,
+     "tipo": "clic",
+     "vol": 0.05
+    },
+    {
+     "t": 4.68,
+     "tipo": "clic",
+     "vol": 0.05
+    },
+    {
+     "t": 4.8100000000000005,
+     "tipo": "clic",
+     "vol": 0.05
+    },
+    {
+     "t": 4.9399999999999995,
+     "tipo": "clic",
+     "vol": 0.05
+    },
+    {
+     "t": 5.4,
+     "tipo": "golpe",
+     "vol": 0.3
+    },
+    {
+     "t": 5.5,
+     "tipo": "heartbeat",
+     "vol": 0.26
+    },
+    {
+     "t": 5.8,
+     "tipo": "ding",
+     "vol": 0.12
+    }
+   ]
+  },
+  {
+   "n": 7,
+   "t": "PIEZA",
+   "voz": "Internos con turnos de más de veinticuatro horas cometieron treinta y seis por ciento más errores graves, y chocaron más al volver a casa.",
+   "dur": 9,
+   "h": "EN MEDICINA YA SE MIDIÓ",
+   "w": "MIDIÓ",
+   "sub": "",
+   "ic": "casa",
+   "num": null,
+   "vs": null,
+   "bars": [],
+   "barsU": "",
+   "hi": -1,
+   "line": null,
+   "items": [],
+   "stops": [],
+   "end": "",
+   "donut": [],
+   "picto": null,
+   "top": [],
+   "myth": "",
+   "truth": "",
+   "zoom": null,
+   "capas": null,
+   "mira": null,
+   "impacto": null,
+   "red": null,
+   "termo": null,
+   "pila": null,
+   "cap": "estudios en médicos internos",
+   "papel": null,
+   "pilares": null,
+   "ciclo": null,
+   "duo": null,
+   "osc": null,
+   "cubo": null,
+   "diales": null,
+   "pieza": {
+    "id": "sue-hospital",
+    "props": {}
+   },
+   "cita": null,
+   "sc": "",
+   "modo": "VIRAL",
+   "tema": "oscuro",
+   "bg": "dark",
+   "ritmo": 1,
+   "total": 61.4,
+   "inicio": 39.9,
+   "fin": 48.9,
+   "texto": "Internos con turnos de más de veinticuatro horas cometieron treinta y seis por ciento más errores graves, y chocaron más al volver a casa.",
    "tr": "semitono",
+   "trs": "zoom",
+   "sfx": [
+    {
+     "t": 0.04,
+     "tipo": "whoosh",
+     "vol": 0.16
+    },
+    {
+     "t": 0.05,
+     "tipo": "radar",
+     "vol": 0.1
+    },
+    {
+     "t": 1,
+     "tipo": "pop",
+     "vol": 0.1
+    },
+    {
+     "t": 2,
+     "tipo": "pop",
+     "vol": 0.12
+    },
+    {
+     "t": 3.8,
+     "tipo": "golpe",
+     "vol": 0.2
+    },
+    {
+     "t": 5,
+     "tipo": "whoosh",
+     "vol": 0.12
+    },
+    {
+     "t": 6,
+     "tipo": "thud",
+     "vol": 0.22
+    },
+    {
+     "t": 6.4,
+     "tipo": "ding",
+     "vol": 0.16
+    }
+   ]
+  },
+  {
+   "n": 8,
+   "t": "PIEZA",
+   "voz": "No hay atajo: dormir siete horas o más. Ni el café ni la fuerza de voluntad pagan esa deuda.",
+   "dur": 7.9,
+   "h": "NO HAY ATAJO: DORMIR",
+   "w": "DORMIR",
+   "sub": "",
+   "ic": "reloj",
+   "num": null,
+   "vs": null,
+   "bars": [],
+   "barsU": "",
+   "hi": -1,
+   "line": null,
+   "items": [],
+   "stops": [],
+   "end": "",
+   "donut": [],
+   "picto": null,
+   "top": [],
+   "myth": "",
+   "truth": "",
+   "zoom": null,
+   "capas": null,
+   "mira": null,
+   "impacto": null,
+   "red": null,
+   "termo": null,
+   "pila": null,
+   "cap": "lo único que lo repara",
+   "papel": null,
+   "pilares": null,
+   "ciclo": null,
+   "duo": null,
+   "osc": null,
+   "cubo": null,
+   "diales": null,
+   "pieza": {
+    "id": "sue-dormir",
+    "props": {}
+   },
+   "cita": null,
+   "sc": "",
+   "modo": "VIRAL",
+   "tema": "claro",
+   "bg": "light",
+   "ritmo": 1,
+   "total": 61.4,
+   "inicio": 48.9,
+   "fin": 56.8,
+   "texto": "No hay atajo: dormir siete horas o más. Ni el café ni la fuerza de voluntad pagan esa deuda.",
+   "tr": "zoom",
    "trs": "barrido",
    "sfx": [
     {
@@ -1116,143 +1161,148 @@
      "vol": 0.16
     },
     {
-     "t": 0.2,
-     "tipo": "clic",
-     "vol": 0.16
-    },
-    {
-     "t": 0.5,
-     "tipo": "thud",
-     "vol": 0.2
-    },
-    {
-     "t": 1.6,
+     "t": 0.05,
      "tipo": "whoosh",
-     "vol": 0.14
+     "vol": 0.1
     },
     {
-     "t": 2.2,
-     "tipo": "clic",
-     "vol": 0.04
-    },
-    {
-     "t": 2.33,
-     "tipo": "clic",
-     "vol": 0.04
-    },
-    {
-     "t": 2.46,
-     "tipo": "clic",
-     "vol": 0.04
-    },
-    {
-     "t": 2.5900000000000003,
-     "tipo": "clic",
-     "vol": 0.04
-    },
-    {
-     "t": 2.6,
+     "t": 0.6,
      "tipo": "pop",
-     "vol": 0.14
+     "vol": 0.08
     },
     {
-     "t": 2.72,
+     "t": 1,
      "tipo": "clic",
-     "vol": 0.04
+     "vol": 0.03
     },
     {
-     "t": 2.85,
+     "t": 1.13,
      "tipo": "clic",
-     "vol": 0.04
+     "vol": 0.03
     },
     {
-     "t": 2.9800000000000004,
+     "t": 1.26,
      "tipo": "clic",
-     "vol": 0.04
+     "vol": 0.03
     },
     {
-     "t": 3.1100000000000003,
+     "t": 1.3900000000000001,
      "tipo": "clic",
-     "vol": 0.04
+     "vol": 0.03
     },
     {
-     "t": 3.24,
+     "t": 1.52,
      "tipo": "clic",
-     "vol": 0.04
+     "vol": 0.03
     },
     {
-     "t": 3.37,
+     "t": 1.65,
      "tipo": "clic",
-     "vol": 0.04
+     "vol": 0.03
     },
     {
-     "t": 3.5,
+     "t": 1.78,
      "tipo": "clic",
-     "vol": 0.04
+     "vol": 0.03
     },
     {
-     "t": 3.6300000000000003,
+     "t": 1.9100000000000001,
      "tipo": "clic",
-     "vol": 0.04
+     "vol": 0.03
     },
     {
-     "t": 3.7600000000000002,
+     "t": 2.04,
      "tipo": "clic",
-     "vol": 0.04
+     "vol": 0.03
     },
     {
-     "t": 3.89,
+     "t": 2.17,
      "tipo": "clic",
-     "vol": 0.04
+     "vol": 0.03
     },
     {
-     "t": 4.0200000000000005,
+     "t": 2.3,
      "tipo": "clic",
-     "vol": 0.04
+     "vol": 0.03
     },
     {
-     "t": 4.15,
+     "t": 2.43,
      "tipo": "clic",
-     "vol": 0.04
+     "vol": 0.03
     },
     {
-     "t": 4.28,
+     "t": 2.56,
      "tipo": "clic",
-     "vol": 0.04
+     "vol": 0.03
     },
     {
-     "t": 4.41,
+     "t": 2.69,
      "tipo": "clic",
-     "vol": 0.04
+     "vol": 0.03
     },
     {
-     "t": 4.54,
+     "t": 2.8200000000000003,
      "tipo": "clic",
-     "vol": 0.04
+     "vol": 0.03
     },
     {
-     "t": 4.67,
+     "t": 2.95,
      "tipo": "clic",
-     "vol": 0.04
+     "vol": 0.03
     },
     {
-     "t": 5.6,
+     "t": 3.08,
+     "tipo": "clic",
+     "vol": 0.03
+    },
+    {
+     "t": 3.21,
+     "tipo": "clic",
+     "vol": 0.03
+    },
+    {
+     "t": 3.34,
+     "tipo": "clic",
+     "vol": 0.03
+    },
+    {
+     "t": 3.47,
+     "tipo": "clic",
+     "vol": 0.03
+    },
+    {
+     "t": 3.6,
+     "tipo": "clic",
+     "vol": 0.03
+    },
+    {
+     "t": 3.73,
+     "tipo": "clic",
+     "vol": 0.03
+    },
+    {
+     "t": 5.2,
      "tipo": "ding",
-     "vol": 0.2
+     "vol": 0.18
     },
     {
-     "t": 5.7,
+     "t": 5.2,
+     "tipo": "pop",
+     "vol": 0.12
+    },
+    {
+     "t": 6,
      "tipo": "heartbeat",
-     "vol": 0.14
+     "vol": 0.12
     }
    ]
   },
   {
    "n": 9,
    "t": "CTA",
-   "voz": "Guárdalo para tu próximo vuelo y síguenos en Sinapsis.",
-   "dur": 4.2,
-   "h": "GUÁRDALO Y SÍGUENOS",
+   "voz": "Mándaselo a quien presume de dormir poco y síguenos en Sinapsis.",
+   "dur": 4.6,
+   "h": "MÁNDASELO Y SÍGUENOS",
    "w": "SÍGUENOS",
    "sub": "Más ciencia en SINAPSIS",
    "ic": "cohete",
@@ -1292,10 +1342,10 @@
    "tema": "oscuro",
    "bg": "gold",
    "ritmo": 1,
-   "total": 61.8,
-   "inicio": 57.6,
-   "fin": 61.8,
-   "texto": "Guárdalo para tu próximo vuelo y síguenos en Sinapsis.",
+   "total": 61.4,
+   "inicio": 56.8,
+   "fin": 61.4,
+   "texto": "Mándaselo a quien presume de dormir poco y síguenos en Sinapsis.",
    "tr": "barrido",
    "trs": "barrido",
    "sfx": [

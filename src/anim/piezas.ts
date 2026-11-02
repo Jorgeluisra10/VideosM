@@ -431,6 +431,41 @@ export const TJET = {
   descenso: { techo: 0.2, mascara: 0.5, bolsa: 1.6, desc: 2.2, descDur: 3.4, abre: 2.6, frase: 5.7 },
 } as const;
 
+/** Datos del video «Un día sin dormir» (SINAPSIS · medicina cotidiana). Fuentes y precauciones en ejemplos/animacion-viral/guion-tecnico-sueno.md. */
+export const SUE = {
+  /** hora a la que te despiertas en el ejemplo (7:00) */
+  despiertaH: 7,
+  /** rendimiento equivalente a alcohol en sangre (%): ≈ 0,05 tras 17 h despierto (Dawson y Reid 1997; Williamson y Feyer 2000) y ≈ 0,10 hacia las 20–25 h según la tarea (Lamond y Dawson 1999); límite legal de EE. UU. = 0,08 */
+  h17: 17, bac17: 0.05, h24: 24, bac24: 0.1, limiteUSA: 0.08,
+  /** microsueño de 4 s a 100 km/h: 100/3,6 · 4 = 111 m */
+  microSeg: 4, kmh: 100,
+  /** internos con turnos de más de 24 h: +35,9 % de errores graves en UCI (Landrigan 2004, NEJM) y odds de choque ×2,3 al volver a casa (Barger 2005, NEJM) */
+  erroresMas: 35.9, choqueOR: 2.3,
+  /** adultos: 7 horas o más de sueño (consenso AASM/SRS 2015) */
+  sueñoMinH: 7,
+} as const;
+/** rendimiento equivalente a alcohol (% en sangre) tras `h` horas despierto: esquema lineal entre los puntos de la literatura (0 h → 0; 17 h → 0,05; 24 h → 0,10) y sigue la misma pendiente después, con tope 0,12 */
+export const bacPorHoras = (h: number): number => {
+  if (h <= 0) return 0;
+  if (h <= SUE.h17) return (SUE.bac17 * h) / SUE.h17;
+  const pend = (SUE.bac24 - SUE.bac17) / (SUE.h24 - SUE.h17);
+  return Math.min(0.12, SUE.bac17 + pend * (h - SUE.h17));
+};
+/** metros recorridos por un vehículo a `kmh` durante `seg` segundos */
+export const metrosEn = (kmh: number, seg: number): number => (kmh / 3.6) * seg;
+
+/** Tiempos del video «Un día sin dormir» (segundos a ritmo normal), compartidos entre el dibujo y el sonido. */
+export const TSUE = {
+  gancho: { reloj: 0.2, alcohol: 0.5, sube: 0.9, subeDur: 3.4, lectura: 4.5 },
+  horas: { reloj: 0.2, sube: 0.8, subeDur: 3.6, marca: 4.6, nota: 5.6 },
+  limite: { dial: 0.2, sube: 0.6, subeDur: 2.0, cruza: 1.9, alerta: 2.5, nota: 4.4 },
+  adenosina: { cerebro: 0.2, moleculas: 0.8, sube: 1.0, subeDur: 3.6, chip: 4.8 },
+  cafe: { receptor: 0.2, adeno: 0.6, une: 1.5, cafe: 2.3, bloquea: 3.3, sigue: 4.4 },
+  micro: { carretera: 0.2, cabecea: 1.5, cierra: 2.1, cierraDur: 0.5, ciego: 2.6, ciegoDur: 2.8, abre: 5.4, chip: 5.8 },
+  hospital: { pasillo: 0.0, panel1: 0.6, barraA: 1.0, barraB: 2.0, mas36: 3.8, panel2: 5.0, choque: 6.0, x23: 6.4 },
+  dormir: { luna: 0.2, eeg: 0.6, sube: 1.0, subeDur: 4.2, siete: 5.2, frase: 6.0 },
+} as const;
+
 /* ───────────── «La regla del 37 %» (problema de la parada óptima, ensayo abstracto para IMNOBA) ───────────── */
 
 /** Generador pseudoaleatorio determinista (mulberry32): mismos números en el render, en las pruebas y en cada fotograma. */
@@ -1016,6 +1051,39 @@ export const PIEZAS: Record<string, DefPieza> = {
   "jet-descenso": {
     id: "jet-descenso", nombre: "Jet · la máscara de oxígeno cae, el avión desciende de 35.000 a 10.000 pies y la visión se abre de nuevo (cierre)", ideal: 6.4, fondo: "dark", entra: "semitono",
     sfx: (_d, r) => [ev(TJET.descenso.techo * r, "clic", 0.16), ev(TJET.descenso.mascara * r, "thud", 0.2), ev(TJET.descenso.bolsa * r, "whoosh", 0.14), ...clics(TJET.descenso.desc * r, TJET.descenso.descDur * r * 0.8, 0.04), ev(TJET.descenso.abre * r, "pop", 0.14), ev((TJET.descenso.desc + TJET.descenso.descDur) * r, "ding", 0.2), ev(TJET.descenso.frase * r, "heartbeat", 0.14)],
+  },
+  /* ───────────── «Un día sin dormir» (SINAPSIS · medicina cotidiana) ───────────── */
+  "sue-gancho": {
+    id: "sue-gancho", nombre: "Sueño · un reloj de pared avanza 24 h mientras un alcoholímetro sube a 0,10 % (gancho)", ideal: 5.7, fondo: "dark",
+    sfx: (_d, r) => [ev(0.05, "whoosh", 0.12), ...clics(TSUE.gancho.sube * r, TSUE.gancho.subeDur * r * 0.9, 0.05), ev(TSUE.gancho.alcohol * r, "pop", 0.12), ev((TSUE.gancho.sube + TSUE.gancho.subeDur) * r, "ding", 0.18), ev(TSUE.gancho.lectura * r, "thud", 0.18)],
+  },
+  "sue-horas": {
+    id: "sue-horas", nombre: "Sueño · 7:00 → medianoche: 17 h despierto y el dial de rendimiento llega a 0,05 %", ideal: 6.8, fondo: "dark", entra: "corte",
+    sfx: (_d, r) => [ev(0.05, "whoosh", 0.1), ...clics(TSUE.horas.sube * r, TSUE.horas.subeDur * r * 0.9, 0.05), ev((TSUE.horas.sube + TSUE.horas.subeDur) * r, "ding", 0.18), ev(TSUE.horas.marca * r, "radar", 0.1), ev(TSUE.horas.nota * r, "tick", 0.1)],
+  },
+  "sue-limite": {
+    id: "sue-limite", nombre: "Sueño · el dial cruza el límite legal de 0,08 % y llega a 0,10 % (alerta roja)", ideal: 6.7, fondo: "dark", entra: "semitono",
+    sfx: (_d, r) => [ev(0.05, "whoosh", 0.1), ...clics(TSUE.limite.sube * r, TSUE.limite.subeDur * r * 0.8, 0.05), ev(TSUE.limite.cruza * r, "zap", 0.2), ev(TSUE.limite.alerta * r, "golpe", 0.24), ev((TSUE.limite.alerta + 0.5) * r, "radar", 0.14), ev(TSUE.limite.nota * r, "tick", 0.1)],
+  },
+  "sue-adenosina": {
+    id: "sue-adenosina", nombre: "Sueño · el cerebro acumula adenosina (moléculas violeta) y sube la presión de sueño", ideal: 5.9, fondo: "dark", entra: "corte",
+    sfx: (_d, r) => [ev(0.05, "heartbeat", 0.14), ev(TSUE.adenosina.moleculas * r, "pop", 0.1), ...clics(TSUE.adenosina.sube * r, TSUE.adenosina.subeDur * r * 0.8, 0.04), ev(TSUE.adenosina.chip * r, "ding", 0.16)],
+  },
+  "sue-cafe": {
+    id: "sue-cafe", nombre: "Sueño · un receptor de membrana: la cafeína ocupa el hueco de la adenosina, que sigue acumulándose", ideal: 5.9, fondo: "dark", entra: "semitono",
+    sfx: (_d, r) => [ev(0.05, "whoosh", 0.1), ev(TSUE.cafe.une * r, "clic", 0.16), ev(TSUE.cafe.cafe * r, "gota", 0.14), ev(TSUE.cafe.bloquea * r, "golpe", 0.2), ev(TSUE.cafe.sigue * r, "pop", 0.1)],
+  },
+  "sue-micro": {
+    id: "sue-micro", nombre: "Sueño · carretera de noche vista por el conductor: los párpados se cierran 4 s = 111 m a ciegas", ideal: 6.4, fondo: "dark", entra: "corte",
+    sfx: (_d, r) => [ev(0.05, "estatica", 0.1), ev(TSUE.micro.cierra * r, "thud", 0.24), ...clics(TSUE.micro.ciego * r, TSUE.micro.ciegoDur * r * 0.9, 0.05), ev(TSUE.micro.abre * r, "golpe", 0.3), ev((TSUE.micro.abre + 0.1) * r, "heartbeat", 0.26), ev(TSUE.micro.chip * r, "ding", 0.12)],
+  },
+  "sue-hospital": {
+    id: "sue-hospital", nombre: "Sueño · pasillo de hospital: internos con turnos de más de 24 h, +36 % de errores graves y ×2,3 de choques", ideal: 8.4, fondo: "dark", entra: "semitono",
+    sfx: (_d, r) => [ev(0.05, "radar", 0.1), ev(TSUE.hospital.barraA * r, "pop", 0.1), ev(TSUE.hospital.barraB * r, "pop", 0.12), ev(TSUE.hospital.mas36 * r, "golpe", 0.2), ev(TSUE.hospital.panel2 * r, "whoosh", 0.12), ev(TSUE.hospital.choque * r, "thud", 0.22), ev(TSUE.hospital.x23 * r, "ding", 0.16)],
+  },
+  "sue-dormir": {
+    id: "sue-dormir", nombre: "Sueño · luna y ondas lentas: durmiendo, el rendimiento vuelve a cero; 7 h o más (cierre)", ideal: 7.4, fondo: "dark", entra: "zoom",
+    sfx: (_d, r) => [ev(0.05, "whoosh", 0.1), ev(TSUE.dormir.eeg * r, "pop", 0.08), ...clics(TSUE.dormir.sube * r, TSUE.dormir.subeDur * r * 0.7, 0.03), ev((TSUE.dormir.sube + TSUE.dormir.subeDur) * r, "ding", 0.18), ev(TSUE.dormir.siete * r, "pop", 0.12), ev(TSUE.dormir.frase * r, "heartbeat", 0.12)],
   },
   "astro-memoria": {
     id: "astro-memoria", nombre: "Astrocitos · en ratones, reactivarlos estimuló el recuerdo", ideal: 4.15, fondo: "dark", entra: "corte",

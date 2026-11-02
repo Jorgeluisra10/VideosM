@@ -2,6 +2,8 @@
  * Registro de piezas a medida (carril B): id → componente. El motor las dibuja cuando una escena es de tipo PIEZA.
  * Para añadir una pieza nueva: (1) su ficha pura en src/anim/piezas.ts (duración ideal, fondo, sonido), (2) su componente aquí.
  */
+import { SueAdenosina, SueGancho, SueHoras, SueLimite } from "./sue1";
+import { SueCafe, SueDormir, SueHospital, SueMicro } from "./sue2";
 import { JetAire, JetAscenso, JetCabina, JetGancho } from "./jet1";
 import { JetCerebro, JetDescenso, JetReloj, JetSilencio } from "./jet2";
 import { PisAcrilico, PisGancho, PisUnion, PisVidrio } from "./pis1";
@@ -107,6 +109,7 @@ export const COMPONENTES_PIEZA: Record<string, React.FC<{ e: EscenaViralGuardada
   "tej-hueso": TejHueso,
   "tej-muscular": TejMuscular,
   "tej-nervioso": TejNervioso,
+  "sue-gancho": SueGancho, "sue-horas": SueHoras, "sue-limite": SueLimite, "sue-adenosina": SueAdenosina, "sue-cafe": SueCafe, "sue-micro": SueMicro, "sue-hospital": SueHospital, "sue-dormir": SueDormir,
   "jet-gancho": JetGancho, "jet-ascenso": JetAscenso, "jet-aire": JetAire, "jet-cabina": JetCabina, "jet-cerebro": JetCerebro, "jet-reloj": JetReloj, "jet-silencio": JetSilencio, "jet-descenso": JetDescenso,
   "pis-gancho": PisGancho, "pis-vidrio": PisVidrio, "pis-acrilico": PisAcrilico, "pis-union": PisUnion, "pis-tinas": PisTinas, "pis-viento": PisViento, "pis-carga": PisCarga, "pis-zoom": PisZoom,
   "rui-gancho": RuiGancho, "rui-dia": RuiDia, "rui-noche": RuiNoche, "rui-ritmos": RuiRitmos, "rui-friccion": RuiFriccion, "rui-remate": RuiRemate, "rui-tally": RuiTally, "rui-micro": RuiMicro,
