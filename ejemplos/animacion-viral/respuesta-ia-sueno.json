@@ -1,0 +1,14 @@
+{
+  "titulo": "Un día sin dormir",
+  "scenes": [
+    {"t": "PIEZA", "voz": "Un día sin dormir te deja como si estuvieras borracho, y la ciencia lo midió.", "dur": 6.2, "h": "UN DÍA SIN DORMIR = BORRACHO", "w": "BORRACHO", "pieza": {"id": "sue-gancho"}},
+    {"t": "PIEZA", "voz": "A las diecisiete horas despierto, tu rendimiento ya iguala al de cero coma cero cinco por ciento de alcohol.", "dur": 7.2, "h": "17 HORAS = 0,05 %", "w": "17", "cap": "primer dato: 17 horas despierto", "pieza": {"id": "sue-horas"}},
+    {"t": "PIEZA", "voz": "Hacia las veinticuatro horas ya es cero coma diez: más que el límite legal para conducir en Estados Unidos.", "dur": 7.2, "h": "MÁS QUE EL LÍMITE LEGAL", "w": "LÍMITE", "cap": "segundo dato: 24 horas despierto", "pieza": {"id": "sue-limite"}},
+    {"t": "PIEZA", "voz": "¿Por qué? Mientras estás despierto, tu cerebro acumula adenosina, una molécula que empuja al sueño.", "dur": 6.2, "h": "SE ACUMULA ADENOSINA", "w": "ADENOSINA", "cap": "la causa: la presión de sueño", "pieza": {"id": "sue-adenosina"}},
+    {"t": "PIEZA", "voz": "El café no la elimina: solo tapa sus receptores, y la adenosina sigue ahí, esperando.", "dur": 6.2, "h": "EL CAFÉ NO LA ELIMINA", "w": "CAFÉ", "cap": "qué hace la cafeína", "pieza": {"id": "sue-cafe"}},
+    {"t": "PIEZA", "voz": "Y llegan los microsueños: a cien kilómetros por hora, cuatro segundos son ciento once metros a ciegas.", "dur": 6.9, "h": "4 SEGUNDOS = 111 METROS", "w": "METROS", "cap": "microsueños al volante", "pieza": {"id": "sue-micro"}},
+    {"t": "PIEZA", "voz": "Internos con turnos de más de veinticuatro horas cometieron treinta y seis por ciento más errores graves, y chocaron más al volver a casa.", "dur": 9.0, "h": "EN MEDICINA YA SE MIDIÓ", "w": "MIDIÓ", "cap": "estudios en médicos internos", "pieza": {"id": "sue-hospital"}},
+    {"t": "PIEZA", "voz": "No hay atajo: dormir siete horas o más. Ni el café ni la fuerza de voluntad pagan esa deuda.", "dur": 7.9, "h": "NO HAY ATAJO: DORMIR", "w": "DORMIR", "cap": "lo único que lo repara", "pieza": {"id": "sue-dormir"}},
+    {"t": "CTA", "voz": "Mándaselo a quien presume de dormir poco y síguenos en Sinapsis.", "dur": 4.6, "h": "MÁNDASELO Y SÍGUENOS", "w": "SÍGUENOS", "sub": "Más ciencia en SINAPSIS"}
+  ]
+}
