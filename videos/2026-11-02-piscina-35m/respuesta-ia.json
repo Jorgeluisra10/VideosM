@@ -1,0 +1,79 @@
+{
+  "titulo": "Así se construye una piscina a 35 metros",
+  "scenes": [
+    {
+      "t": "PIEZA",
+      "voz": "Ciento cincuenta toneladas de agua, a treinta y cinco metros, sin nada debajo. ¿Cómo se construye?",
+      "dur": 6.2,
+      "h": "150 TONELADAS SIN NADA DEBAJO",
+      "w": "150",
+      "cap": "35 m de altura",
+      "pieza": {
+        "id": "sky-gancho"
+      }
+    },
+    {
+      "t": "PIEZA",
+      "voz": "Paso uno: el acrílico se flexiona más que el vidrio, por eso su fondo mide treinta y seis centímetros.",
+      "dur": 7.1,
+      "h": "PASO 1: ACRÍLICO GRUESO",
+      "w": "ACRÍLICO",
+      "cap": "fondo 36 cm",
+      "pieza": {
+        "id": "sky-espesor"
+      }
+    },
+    {
+      "t": "PIEZA",
+      "voz": "Paso dos: se fabrica en secciones y se une con juntas adhesivas transparentes.",
+      "dur": 5.0,
+      "h": "PASO 2: JUNTAS ADHESIVAS",
+      "w": "JUNTAS",
+      "cap": "≈ 50 t",
+      "pieza": {
+        "id": "sky-union"
+      }
+    },
+    {
+      "t": "PIEZA",
+      "voz": "Paso tres: una grúa sube unas cincuenta toneladas, con un margen de apenas treinta centímetros.",
+      "dur": 6.0,
+      "h": "PASO 3: LA GRÚA",
+      "w": "GRÚA",
+      "cap": "margen ≈ 30 cm",
+      "pieza": {
+        "id": "sky-izado"
+      }
+    },
+    {
+      "t": "PIEZA",
+      "voz": "Paso cuatro: los edificios se mueven distinto. Por eso la piscina descansa sobre apoyos que deslizan y giran.",
+      "dur": 7.1,
+      "h": "PASO 4: APOYOS MÓVILES",
+      "w": "APOYOS",
+      "cap": "deslizan y giran",
+      "pieza": {
+        "id": "sky-apoyos"
+      }
+    },
+    {
+      "t": "PIEZA",
+      "voz": "Solo entonces se llena: de cero a ciento cincuenta toneladas. ¿Te animarías a nadar ahí?",
+      "dur": 6.0,
+      "h": "¿TE ANIMARÍAS?",
+      "w": "ANIMARÍAS",
+      "cap": "0 → 150 t",
+      "pieza": {
+        "id": "sky-llenado"
+      }
+    },
+    {
+      "t": "CTA",
+      "voz": "Guárdalo y síguenos en IMNOBA, tu plataforma de propiedades y vehículos.",
+      "dur": 5.0,
+      "h": "SÍGUENOS EN IMNOBA",
+      "w": "IMNOBA",
+      "ic": "casa"
+    }
+  ]
+}

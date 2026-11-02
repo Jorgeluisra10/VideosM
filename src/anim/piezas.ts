@@ -539,6 +539,27 @@ export const TPA = {
   supuestos: { c: (i: number): number => 1.2 + 2.3 * i, final: 8.4 },
 } as const;
 
+/** Datos del video «Así se construye una piscina a 35 m» (IMNOBA · ingeniería extrema; Sky Pool de Embassy Gardens, Londres). Reusan `PIS`; fuentes y precauciones en ejemplos/animacion-viral/guion-tecnico-piscina-35m.md. */
+export const SKY = {
+  alturaM: PIS.alturaM, longitudM: PIS.longitudM, vanoM: PIS.vanoM, profundidadM: PIS.profundidadM, aguaTon: PIS.aguaTon,
+  /** espesores (cm): paredes ≈ 18 y fondo ≈ 36 (356 mm); una regla escolar mide 30 */
+  paredCm: 18, fondoCm: 36, reglaCm: 30,
+  /** estructura completa de acrílico ≈ 50 t (fuentes: 50 a 55 t) y margen de colocación ≈ 30 cm durante el izado (prensa del izado) */
+  estructuraTon: 50, margenCm: 30,
+  /** dilatación de 25 m de acrílico con +20 °C (cálculo propio: α·L·ΔT) */
+  dT: 20,
+} as const;
+
+/** Tiempos de «Así se construye una piscina a 35 m» (s a ritmo normal), compartidos entre el dibujo y el sonido. */
+export const TSK = {
+  gancho: { torres: 0.0, piscina: 0.6, agua: 1.1, aguaDur: 2.3, cota: 3.0, nada: 3.9, chip: 5.0 },
+  espesor: { seccion: 0.2, agua: 0.6, aguaDur: 1.0, presion: 1.6, presionDur: 1.2, kpa: 2.9, pared: 3.3, fondo: 3.9, barras: 4.3, chip: 6.3 },
+  union: { bloques: 0.15, cierra: 0.9, cierraDur: 0.6, junta: 1.6, borra: 2.4, viga: 2.4, peso: 3.0, pesoDur: 1.0, chip: 4.2 },
+  izado: { grua: 0.15, eleva: 0.7, elevaDur: 2.9, llega: 3.6, margen: 3.9, asienta: 4.9, chip: 5.1 },
+  apoyos: { torres: 0.15, vaiven: 0.6, apoyo: 1.2, desliza: 2.1, gira: 4.2, dilata: 5.6, chip: 6.2 },
+  llenado: { piscina: 0.15, grifo: 0.8, sube: 1.0, subeDur: 2.6, ding: 3.6, nada: 3.7, pregunta: 4.7 },
+} as const;
+
 export const PIEZAS: Record<string, DefPieza> = {
   "metro-plano": {
     id: "metro-plano", nombre: "8 millones en un solo plano", ideal: 7.6, fondo: "dark",
@@ -998,6 +1019,31 @@ export const PIEZAS: Record<string, DefPieza> = {
   "astro-memoria": {
     id: "astro-memoria", nombre: "Astrocitos · en ratones, reactivarlos estimuló el recuerdo", ideal: 4.15, fondo: "dark", entra: "corte",
     sfx: (_d, r) => [ev(0.05, "whoosh", 0.1), ev(TAS.memoria.activa * r, "zap", 0.12), ev(TAS.memoria.enlaces * r, "radar", 0.1), ev(TAS.memoria.recuerdo * r, "golpe", 0.18), ev((TAS.memoria.recuerdo + 0.15) * r, "ding", 0.18)],
+  },
+  /* ───────────── «Así se construye una piscina a 35 m» (IMNOBA · ingeniería extrema · figuras realistas) ───────────── */
+  "sky-gancho": {
+    id: "sky-gancho", nombre: "Piscina a 35 m · 150 t de agua sin nada debajo (gancho)", ideal: 5.75, fondo: "dark",
+    sfx: (_d, r) => [ev(0.05, "whoosh", 0.12), ev(TSK.gancho.torres * r + 0.1, "thud", 0.1), ev(TSK.gancho.piscina * r, "golpe", 0.12), ev(TSK.gancho.agua * r, "gota", 0.14), ...clics(TSK.gancho.agua * r, TSK.gancho.aguaDur * r * 0.9, 0.04), ev(TSK.gancho.cota * r, "tick", 0.1), ev(TSK.gancho.nada * r, "radar", 0.1), ev(TSK.gancho.chip * r, "ding", 0.14)],
+  },
+  "sky-espesor": {
+    id: "sky-espesor", nombre: "Piscina a 35 m · paso 1: el acrílico grueso (fondo 36 cm) y la presión del agua", ideal: 6.65, fondo: "dark", entra: "corte",
+    sfx: (_d, r) => [ev(0.05, "whoosh", 0.1), ev(TSK.espesor.agua * r, "gota", 0.12), ...clics(TSK.espesor.presion * r, TSK.espesor.presionDur * r * 0.8, 0.04), ev(TSK.espesor.kpa * r, "zap", 0.12), ev(TSK.espesor.pared * r, "pop", 0.1), ev(TSK.espesor.fondo * r, "thud", 0.16), ev(TSK.espesor.barras * r, "tick", 0.1), ev(TSK.espesor.chip * r, "ding", 0.14)],
+  },
+  "sky-union": {
+    id: "sky-union", nombre: "Piscina a 35 m · paso 2: secciones unidas con juntas adhesivas transparentes (≈ 50 t)", ideal: 4.55, fondo: "dark", entra: "corte",
+    sfx: (_d, r) => [ev(0.05, "whoosh", 0.1), ev(TSK.union.cierra * r + TSK.union.cierraDur * r * 0.8, "thud", 0.2), ev(TSK.union.junta * r, "gota", 0.12), ev(TSK.union.borra * r, "ding", 0.1), ev(TSK.union.viga * r, "pop", 0.1), ...clics(TSK.union.peso * r, TSK.union.pesoDur * r * 0.8, 0.04), ev(TSK.union.chip * r, "tick", 0.1)],
+  },
+  "sky-izado": {
+    id: "sky-izado", nombre: "Piscina a 35 m · paso 3: la grúa sube la estructura con ≈ 30 cm de margen", ideal: 5.55, fondo: "dark", entra: "corte",
+    sfx: (_d, r) => [ev(0.05, "whoosh", 0.1), ev(TSK.izado.grua * r, "thud", 0.12), ev(TSK.izado.eleva * r, "whoosh", 0.12), ...clics(TSK.izado.eleva * r, TSK.izado.elevaDur * r * 0.85, 0.04), ev(TSK.izado.llega * r, "radar", 0.1), ev(TSK.izado.margen * r, "pop", 0.12), ev(TSK.izado.asienta * r, "golpe", 0.22), ev(TSK.izado.asienta * r + 0.05, "thud", 0.18), ev(TSK.izado.chip * r, "ding", 0.14)],
+  },
+  "sky-apoyos": {
+    id: "sky-apoyos", nombre: "Piscina a 35 m · paso 4: apoyos que deslizan y giran (ilustración)", ideal: 6.65, fondo: "dark", entra: "corte",
+    sfx: (_d, r) => [ev(0.05, "estatica", 0.1), ev(TSK.apoyos.vaiven * r, "whoosh", 0.14), ev(TSK.apoyos.apoyo * r, "pop", 0.12), ev(TSK.apoyos.desliza * r, "zap", 0.1), ev(TSK.apoyos.desliza * r + 0.8, "zap", 0.08), ev(TSK.apoyos.gira * r, "radar", 0.1), ev(TSK.apoyos.dilata * r, "tick", 0.12), ev(TSK.apoyos.chip * r, "ding", 0.14)],
+  },
+  "sky-llenado": {
+    id: "sky-llenado", nombre: "Piscina a 35 m · se llena de 0 a 150 t y alguien nada (cierre)", ideal: 5.5, fondo: "dark", entra: "zoom",
+    sfx: (_d, r) => [ev(0.05, "whoosh", 0.1), ev(TSK.llenado.piscina * r, "thud", 0.1), ev(TSK.llenado.grifo * r, "gota", 0.14), ...clics(TSK.llenado.sube * r, TSK.llenado.subeDur * r * 0.9, 0.04), ev(TSK.llenado.ding * r, "ding", 0.2), ev(TSK.llenado.nada * r, "gota", 0.14), ev(TSK.llenado.pregunta * r, "pop", 0.1)],
   },
 };
 
