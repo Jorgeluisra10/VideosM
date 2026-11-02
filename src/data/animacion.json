@@ -1,18 +1,18 @@
 {
  "version": 1,
- "titulo": "La dopamina NO es la molécula del placer",
+ "titulo": "¿Por qué se te duerme el pie?",
  "paleta": "medicina",
  "sfx": true,
  "fps": 60,
- "duracion": 42.4,
+ "duracion": 44.2,
  "escenas": [
   {
    "n": 1,
    "t": "PIEZA",
-   "voz": "La dopamina no es la molécula del placer.",
+   "voz": "¿Por qué se te duerme el pie?",
    "dur": 4.6,
-   "h": "NO ES LA MOLÉCULA DEL PLACER",
-   "w": "PLACER",
+   "h": "¿POR QUÉ SE TE DUERME EL PIE?",
+   "w": "PIE?",
    "sub": "",
    "ic": "brillo",
    "num": null,
@@ -36,7 +36,7 @@
    "red": null,
    "termo": null,
    "pila": null,
-   "cap": "te contaron mal",
+   "cap": "nos pasa a todos",
    "papel": null,
    "pilares": null,
    "ciclo": null,
@@ -45,7 +45,7 @@
    "cubo": null,
    "diales": null,
    "pieza": {
-    "id": "dop-gancho",
+    "id": "pie-gancho",
     "props": {}
    },
    "cita": null,
@@ -54,10 +54,10 @@
    "tema": "oscuro",
    "bg": "dark",
    "ritmo": 0.9021739130434782,
-   "total": 42.4,
+   "total": 44.2,
    "inicio": 0,
    "fin": 4.6,
-   "texto": "La dopamina no es la molécula del placer.",
+   "texto": "¿Por qué se te duerme el pie?",
    "tr": "barrido",
    "trs": "corte",
    "sfx": [
@@ -77,34 +77,49 @@
      "vol": 0.12
     },
     {
-     "t": 1.6239130434782607,
-     "tipo": "pop",
-     "vol": 0.12
+     "t": 1.8043478260869563,
+     "tipo": "tick",
+     "vol": 0.1
     },
     {
-     "t": 2.796739130434782,
-     "tipo": "golpe",
-     "vol": 0.2
+     "t": 1.9126086956521737,
+     "tipo": "tick",
+     "vol": 0.1
     },
     {
-     "t": 2.846739130434782,
-     "tipo": "thud",
-     "vol": 0.14
+     "t": 2.0208695652173914,
+     "tipo": "tick",
+     "vol": 0.1
     },
     {
-     "t": 2.9967391304347823,
+     "t": 2.1291304347826085,
+     "tipo": "tick",
+     "vol": 0.1
+    },
+    {
+     "t": 2.2373913043478257,
+     "tipo": "tick",
+     "vol": 0.1
+    },
+    {
+     "t": 2.3456521739130434,
+     "tipo": "tick",
+     "vol": 0.1
+    },
+    {
+     "t": 3.067391304347826,
      "tipo": "ding",
-     "vol": 0.14
+     "vol": 0.16
     }
    ]
   },
   {
    "n": 2,
    "t": "PIEZA",
-   "voz": "Wolfram Shults midió neuronas de dopamina en monos que recibían jugo.",
+   "voz": "No es solo la sangre: es un nervio aplastado.",
    "dur": 5.6,
-   "h": "JUGO INESPERADO",
-   "w": "INESPERADO",
+   "h": "UN NERVIO APLASTADO",
+   "w": "NERVIO",
    "sub": "",
    "ic": "brillo",
    "num": null,
@@ -128,7 +143,7 @@
    "red": null,
    "termo": null,
    "pila": null,
-   "cap": "Schultz, 1997",
+   "cap": "no es solo la sangre",
    "papel": null,
    "pilares": null,
    "ciclo": null,
@@ -137,7 +152,7 @@
    "cubo": null,
    "diales": null,
    "pieza": {
-    "id": "dop-experimento",
+    "id": "pie-mito",
     "props": {}
    },
    "cita": null,
@@ -146,12 +161,12 @@
    "tema": "claro",
    "bg": "light",
    "ritmo": 0.9196428571428571,
-   "total": 42.4,
+   "total": 44.2,
    "inicio": 4.6,
    "fin": 10.2,
-   "texto": "Wolfram Shults midió neuronas de dopamina en monos que recibían jugo.",
+   "texto": "No es solo la sangre: es un nervio aplastado.",
    "tr": "corte",
-   "trs": "semitono",
+   "trs": "zoom",
    "sfx": [
     {
      "t": 0.04,
@@ -169,42 +184,17 @@
      "vol": 0.1
     },
     {
-     "t": 1.1035714285714284,
-     "tipo": "gota",
+     "t": 0.8276785714285714,
+     "tipo": "heartbeat",
+     "vol": 0.14
+    },
+    {
+     "t": 2.1151785714285714,
+     "tipo": "thud",
      "vol": 0.16
     },
     {
-     "t": 1.93125,
-     "tipo": "tick",
-     "vol": 0.12
-    },
-    {
-     "t": 1.9956249999999998,
-     "tipo": "tick",
-     "vol": 0.12
-    },
-    {
-     "t": 2.06,
-     "tipo": "tick",
-     "vol": 0.12
-    },
-    {
-     "t": 2.124375,
-     "tipo": "tick",
-     "vol": 0.12
-    },
-    {
-     "t": 2.1887499999999998,
-     "tipo": "tick",
-     "vol": 0.12
-    },
-    {
-     "t": 2.2531250000000003,
-     "tipo": "tick",
-     "vol": 0.12
-    },
-    {
-     "t": 3.5866071428571424,
+     "t": 3.8625,
      "tipo": "ding",
      "vol": 0.16
     }
@@ -213,319 +203,10 @@
   {
    "n": 3,
    "t": "PIEZA",
-   "voz": "Disparan ante lo inesperado, y caen cuando el premio esperado no llega.",
+   "voz": "Al cruzar las piernas, presionas el nervio peroneo, justo debajo de la rodilla.",
    "dur": 6.4,
-   "h": "LO INESPERADO DISPARA",
-   "w": "INESPERADO",
-   "sub": "",
-   "ic": "tendencia-baja",
-   "num": null,
-   "vs": null,
-   "bars": [],
-   "barsU": "",
-   "hi": -1,
-   "line": null,
-   "items": [],
-   "stops": [],
-   "end": "",
-   "donut": [],
-   "picto": null,
-   "top": [],
-   "myth": "",
-   "truth": "",
-   "zoom": null,
-   "capas": null,
-   "mira": null,
-   "impacto": null,
-   "red": null,
-   "termo": null,
-   "pila": null,
-   "cap": "error de predicción",
-   "papel": null,
-   "pilares": null,
-   "ciclo": null,
-   "duo": null,
-   "osc": null,
-   "cubo": null,
-   "diales": null,
-   "pieza": {
-    "id": "dop-prediccion",
-    "props": {}
-   },
-   "cita": null,
-   "sc": "",
-   "modo": "VIRAL",
-   "tema": "oscuro",
-   "bg": "dark",
-   "ritmo": 0.9296875,
-   "total": 42.4,
-   "inicio": 10.2,
-   "fin": 16.6,
-   "texto": "Disparan ante lo inesperado, y caen cuando el premio esperado no llega.",
-   "tr": "semitono",
-   "trs": "corte",
-   "sfx": [
-    {
-     "t": 0.04,
-     "tipo": "whoosh",
-     "vol": 0.16
-    },
-    {
-     "t": 0.05,
-     "tipo": "whoosh",
-     "vol": 0.1
-    },
-    {
-     "t": 0.371875,
-     "tipo": "pop",
-     "vol": 0.1
-    },
-    {
-     "t": 1.2085937500000001,
-     "tipo": "zap",
-     "vol": 0.1
-    },
-    {
-     "t": 2.0453125,
-     "tipo": "pop",
-     "vol": 0.1
-    },
-    {
-     "t": 2.32421875,
-     "tipo": "zap",
-     "vol": 0.1
-    },
-    {
-     "t": 3.71875,
-     "tipo": "pop",
-     "vol": 0.1
-    },
-    {
-     "t": 3.99765625,
-     "tipo": "zap",
-     "vol": 0.1
-    },
-    {
-     "t": 4.74140625,
-     "tipo": "thud",
-     "vol": 0.16
-    },
-    {
-     "t": 5.20625,
-     "tipo": "ding",
-     "vol": 0.16
-    }
-   ]
-  },
-  {
-   "n": 4,
-   "t": "PIEZA",
-   "voz": "Sin casi dopamina, las ratas disfrutaban el dulce, pero ya no iban por él.",
-   "dur": 6.4,
-   "h": "QUERER NO ES DISFRUTAR",
-   "w": "QUERER",
-   "sub": "",
-   "ic": "bus",
-   "num": null,
-   "vs": null,
-   "bars": [],
-   "barsU": "",
-   "hi": -1,
-   "line": null,
-   "items": [],
-   "stops": [],
-   "end": "",
-   "donut": [],
-   "picto": null,
-   "top": [],
-   "myth": "",
-   "truth": "",
-   "zoom": null,
-   "capas": null,
-   "mira": null,
-   "impacto": null,
-   "red": null,
-   "termo": null,
-   "pila": null,
-   "cap": "Berridge y Robinson",
-   "papel": null,
-   "pilares": null,
-   "ciclo": null,
-   "duo": null,
-   "osc": null,
-   "cubo": null,
-   "diales": null,
-   "pieza": {
-    "id": "dop-querer",
-    "props": {}
-   },
-   "cita": null,
-   "sc": "",
-   "modo": "VIRAL",
-   "tema": "claro",
-   "bg": "light",
-   "ritmo": 0.9296875,
-   "total": 42.4,
-   "inicio": 16.6,
-   "fin": 23,
-   "texto": "Sin casi dopamina, las ratas disfrutaban el dulce, pero ya no iban por él.",
-   "tr": "corte",
-   "trs": "zoom",
-   "sfx": [
-    {
-     "t": 0.04,
-     "tipo": "whoosh",
-     "vol": 0.16
-    },
-    {
-     "t": 0.05,
-     "tipo": "whoosh",
-     "vol": 0.1
-    },
-    {
-     "t": 0.371875,
-     "tipo": "clic",
-     "vol": 0.05
-    },
-    {
-     "t": 0.5018750000000001,
-     "tipo": "clic",
-     "vol": 0.05
-    },
-    {
-     "t": 0.631875,
-     "tipo": "clic",
-     "vol": 0.05
-    },
-    {
-     "t": 0.7618750000000001,
-     "tipo": "clic",
-     "vol": 0.05
-    },
-    {
-     "t": 0.891875,
-     "tipo": "clic",
-     "vol": 0.05
-    },
-    {
-     "t": 1.021875,
-     "tipo": "clic",
-     "vol": 0.05
-    },
-    {
-     "t": 1.151875,
-     "tipo": "clic",
-     "vol": 0.05
-    },
-    {
-     "t": 1.281875,
-     "tipo": "clic",
-     "vol": 0.05
-    },
-    {
-     "t": 1.411875,
-     "tipo": "clic",
-     "vol": 0.05
-    },
-    {
-     "t": 1.5418749999999999,
-     "tipo": "clic",
-     "vol": 0.05
-    },
-    {
-     "t": 1.671875,
-     "tipo": "clic",
-     "vol": 0.05
-    },
-    {
-     "t": 1.8018750000000001,
-     "tipo": "clic",
-     "vol": 0.05
-    },
-    {
-     "t": 1.95234375,
-     "tipo": "thud",
-     "vol": 0.14
-    },
-    {
-     "t": 3.06796875,
-     "tipo": "clic",
-     "vol": 0.05
-    },
-    {
-     "t": 3.19796875,
-     "tipo": "clic",
-     "vol": 0.05
-    },
-    {
-     "t": 3.32796875,
-     "tipo": "clic",
-     "vol": 0.05
-    },
-    {
-     "t": 3.45796875,
-     "tipo": "clic",
-     "vol": 0.05
-    },
-    {
-     "t": 3.58796875,
-     "tipo": "clic",
-     "vol": 0.05
-    },
-    {
-     "t": 3.71796875,
-     "tipo": "clic",
-     "vol": 0.05
-    },
-    {
-     "t": 3.8479687499999997,
-     "tipo": "clic",
-     "vol": 0.05
-    },
-    {
-     "t": 3.97796875,
-     "tipo": "clic",
-     "vol": 0.05
-    },
-    {
-     "t": 4.1079687499999995,
-     "tipo": "clic",
-     "vol": 0.05
-    },
-    {
-     "t": 4.23796875,
-     "tipo": "clic",
-     "vol": 0.05
-    },
-    {
-     "t": 4.36796875,
-     "tipo": "clic",
-     "vol": 0.05
-    },
-    {
-     "t": 4.49796875,
-     "tipo": "clic",
-     "vol": 0.05
-    },
-    {
-     "t": 4.6484375,
-     "tipo": "golpe",
-     "vol": 0.16
-    },
-    {
-     "t": 5.11328125,
-     "tipo": "ding",
-     "vol": 0.16
-    }
-   ]
-  },
-  {
-   "n": 5,
-   "t": "PIEZA",
-   "voz": "Sus vías también mueven tu cuerpo; si esas neuronas mueren, aparece el párkinson.",
-   "dur": 5.8,
-   "h": "UNA SEÑAL, TRES CAMINOS",
-   "w": "CAMINOS",
+   "h": "PRESIONAS UN NERVIO",
+   "w": "NERVIO",
    "sub": "",
    "ic": "brillo",
    "num": null,
@@ -549,7 +230,7 @@
    "red": null,
    "termo": null,
    "pila": null,
-   "cap": "mueve, desea, decide",
+   "cap": "nervio peroneo",
    "papel": null,
    "pilares": null,
    "ciclo": null,
@@ -558,7 +239,7 @@
    "cubo": null,
    "diales": null,
    "pieza": {
-    "id": "dop-rutas",
+    "id": "pie-nervio",
     "props": {}
    },
    "cita": null,
@@ -566,11 +247,11 @@
    "modo": "VIRAL",
    "tema": "oscuro",
    "bg": "dark",
-   "ritmo": 0.9224137931034483,
-   "total": 42.4,
-   "inicio": 23,
-   "fin": 28.8,
-   "texto": "Sus vías también mueven tu cuerpo; si esas neuronas mueren, aparece el párkinson.",
+   "ritmo": 0.9296875,
+   "total": 44.2,
+   "inicio": 10.2,
+   "fin": 16.6,
+   "texto": "Al cruzar las piernas, presionas el nervio peroneo, justo debajo de la rodilla.",
    "tr": "zoom",
    "trs": "semitono",
    "sfx": [
@@ -585,39 +266,39 @@
      "vol": 0.1
     },
     {
-     "t": 0.3844827586206897,
+     "t": 0.38593750000000004,
      "tipo": "pop",
      "vol": 0.1
     },
     {
-     "t": 0.9224137931034483,
+     "t": 0.8367187500000001,
      "tipo": "zap",
-     "vol": 0.12
+     "vol": 0.1
     },
     {
-     "t": 1.6142241379310345,
-     "tipo": "zap",
-     "vol": 0.12
+     "t": 2.2312499999999997,
+     "tipo": "thud",
+     "vol": 0.2
     },
     {
-     "t": 2.3060344827586206,
-     "tipo": "zap",
-     "vol": 0.12
+     "t": 3.5328125,
+     "tipo": "golpe",
+     "vol": 0.16
     },
     {
-     "t": 3.597413793103448,
+     "t": 4.6484375,
      "tipo": "ding",
      "vol": 0.16
     }
    ]
   },
   {
-   "n": 6,
+   "n": 4,
    "t": "PIEZA",
-   "voz": "Los científicos aún discuten si enseña o si motiva.",
-   "dur": 4.8,
-   "h": "¿ENSEÑA O MOTIVA?",
-   "w": "MOTIVA?",
+   "voz": "Apretado, el nervio deja de enviar señales, y no sientes el pie.",
+   "dur": 6.4,
+   "h": "SIN SEÑAL",
+   "w": "SEÑAL",
    "sub": "",
    "ic": "brillo",
    "num": null,
@@ -641,7 +322,7 @@
    "red": null,
    "termo": null,
    "pila": null,
-   "cap": "el debate sigue",
+   "cap": "el nervio se bloquea",
    "papel": null,
    "pilares": null,
    "ciclo": null,
@@ -650,7 +331,7 @@
    "cubo": null,
    "diales": null,
    "pieza": {
-    "id": "dop-debate",
+    "id": "pie-senal",
     "props": {}
    },
    "cita": null,
@@ -658,11 +339,265 @@
    "modo": "VIRAL",
    "tema": "claro",
    "bg": "light",
-   "ritmo": 0.90625,
-   "total": 42.4,
-   "inicio": 28.8,
-   "fin": 33.6,
-   "texto": "Los científicos aún discuten si enseña o si motiva.",
+   "ritmo": 0.9296875,
+   "total": 44.2,
+   "inicio": 16.6,
+   "fin": 23,
+   "texto": "Apretado, el nervio deja de enviar señales, y no sientes el pie.",
+   "tr": "semitono",
+   "trs": "corte",
+   "sfx": [
+    {
+     "t": 0.04,
+     "tipo": "whoosh",
+     "vol": 0.16
+    },
+    {
+     "t": 0.05,
+     "tipo": "whoosh",
+     "vol": 0.1
+    },
+    {
+     "t": 0.74375,
+     "tipo": "clic",
+     "vol": 0.05
+    },
+    {
+     "t": 0.87375,
+     "tipo": "clic",
+     "vol": 0.05
+    },
+    {
+     "t": 1.0037500000000001,
+     "tipo": "clic",
+     "vol": 0.05
+    },
+    {
+     "t": 1.13375,
+     "tipo": "clic",
+     "vol": 0.05
+    },
+    {
+     "t": 1.26375,
+     "tipo": "clic",
+     "vol": 0.05
+    },
+    {
+     "t": 1.39375,
+     "tipo": "clic",
+     "vol": 0.05
+    },
+    {
+     "t": 1.5237500000000002,
+     "tipo": "clic",
+     "vol": 0.05
+    },
+    {
+     "t": 1.65375,
+     "tipo": "clic",
+     "vol": 0.05
+    },
+    {
+     "t": 1.78375,
+     "tipo": "clic",
+     "vol": 0.05
+    },
+    {
+     "t": 1.9137499999999998,
+     "tipo": "clic",
+     "vol": 0.05
+    },
+    {
+     "t": 2.04375,
+     "tipo": "clic",
+     "vol": 0.05
+    },
+    {
+     "t": 2.4171875000000003,
+     "tipo": "thud",
+     "vol": 0.2
+    },
+    {
+     "t": 2.975,
+     "tipo": "zap",
+     "vol": 0.14
+    },
+    {
+     "t": 4.6484375,
+     "tipo": "ding",
+     "vol": 0.16
+    }
+   ]
+  },
+  {
+   "n": 5,
+   "t": "PIEZA",
+   "voz": "Al soltarlo, sus fibras despiertan y disparan señales sueltas: es el hormigueo.",
+   "dur": 6.4,
+   "h": "EL HORMIGUEO",
+   "w": "HORMIGUEO",
+   "sub": "",
+   "ic": "brillo",
+   "num": null,
+   "vs": null,
+   "bars": [],
+   "barsU": "",
+   "hi": -1,
+   "line": null,
+   "items": [],
+   "stops": [],
+   "end": "",
+   "donut": [],
+   "picto": null,
+   "top": [],
+   "myth": "",
+   "truth": "",
+   "zoom": null,
+   "capas": null,
+   "mira": null,
+   "impacto": null,
+   "red": null,
+   "termo": null,
+   "pila": null,
+   "cap": "Ochoa y Torebjörk, 1980",
+   "papel": null,
+   "pilares": null,
+   "ciclo": null,
+   "duo": null,
+   "osc": null,
+   "cubo": null,
+   "diales": null,
+   "pieza": {
+    "id": "pie-hormigueo",
+    "props": {}
+   },
+   "cita": null,
+   "sc": "",
+   "modo": "VIRAL",
+   "tema": "oscuro",
+   "bg": "dark",
+   "ritmo": 0.9296875,
+   "total": 44.2,
+   "inicio": 23,
+   "fin": 29.4,
+   "texto": "Al soltarlo, sus fibras despiertan y disparan señales sueltas: es el hormigueo.",
+   "tr": "corte",
+   "trs": "semitono",
+   "sfx": [
+    {
+     "t": 0.04,
+     "tipo": "whoosh",
+     "vol": 0.16
+    },
+    {
+     "t": 0.05,
+     "tipo": "whoosh",
+     "vol": 0.1
+    },
+    {
+     "t": 0.8367187500000001,
+     "tipo": "golpe",
+     "vol": 0.14
+    },
+    {
+     "t": 1.5804687499999999,
+     "tipo": "tick",
+     "vol": 0.12
+    },
+    {
+     "t": 1.84078125,
+     "tipo": "tick",
+     "vol": 0.12
+    },
+    {
+     "t": 2.10109375,
+     "tipo": "tick",
+     "vol": 0.12
+    },
+    {
+     "t": 2.36140625,
+     "tipo": "tick",
+     "vol": 0.12
+    },
+    {
+     "t": 2.6217187500000003,
+     "tipo": "tick",
+     "vol": 0.12
+    },
+    {
+     "t": 2.8820312500000003,
+     "tipo": "tick",
+     "vol": 0.12
+    },
+    {
+     "t": 3.1423437499999998,
+     "tipo": "tick",
+     "vol": 0.12
+    },
+    {
+     "t": 3.40265625,
+     "tipo": "tick",
+     "vol": 0.12
+    },
+    {
+     "t": 4.4624999999999995,
+     "tipo": "ding",
+     "vol": 0.16
+    }
+   ]
+  },
+  {
+   "n": 6,
+   "t": "PIEZA",
+   "voz": "Muévete despacio y espera a sentirlo antes de pararte.",
+   "dur": 5.6,
+   "h": "QUÉ HACER",
+   "w": "HACER",
+   "sub": "",
+   "ic": "brillo",
+   "num": null,
+   "vs": null,
+   "bars": [],
+   "barsU": "",
+   "hi": -1,
+   "line": null,
+   "items": [],
+   "stops": [],
+   "end": "",
+   "donut": [],
+   "picto": null,
+   "top": [],
+   "myth": "",
+   "truth": "",
+   "zoom": null,
+   "capas": null,
+   "mira": null,
+   "impacto": null,
+   "red": null,
+   "termo": null,
+   "pila": null,
+   "cap": "consulta si es frecuente",
+   "papel": null,
+   "pilares": null,
+   "ciclo": null,
+   "duo": null,
+   "osc": null,
+   "cubo": null,
+   "diales": null,
+   "pieza": {
+    "id": "pie-consejo",
+    "props": {}
+   },
+   "cita": null,
+   "sc": "",
+   "modo": "VIRAL",
+   "tema": "claro",
+   "bg": "light",
+   "ritmo": 0.9196428571428571,
+   "total": 44.2,
+   "inicio": 29.4,
+   "fin": 35,
+   "texto": "Muévete despacio y espera a sentirlo antes de pararte.",
    "tr": "semitono",
    "trs": "zoom",
    "sfx": [
@@ -677,39 +612,49 @@
      "vol": 0.1
     },
     {
-     "t": 0.38125000000000003,
+     "t": 0.8517857142857141,
      "tipo": "pop",
-     "vol": 0.1
+     "vol": 0.12
     },
     {
-     "t": 1.0875,
-     "tipo": "tick",
-     "vol": 0.1
-    },
-    {
-     "t": 1.7218749999999998,
-     "tipo": "tick",
-     "vol": 0.1
-    },
-    {
-     "t": 2.3562499999999997,
-     "tipo": "tick",
-     "vol": 0.1
-    },
-    {
-     "t": 3.171875,
+     "t": 1.1517857142857142,
      "tipo": "ding",
-     "vol": 0.16
+     "vol": 0.1
+    },
+    {
+     "t": 1.9553571428571426,
+     "tipo": "pop",
+     "vol": 0.12
+    },
+    {
+     "t": 2.2553571428571426,
+     "tipo": "ding",
+     "vol": 0.1
+    },
+    {
+     "t": 3.058928571428571,
+     "tipo": "pop",
+     "vol": 0.12
+    },
+    {
+     "t": 3.3589285714285713,
+     "tipo": "ding",
+     "vol": 0.1
+    },
+    {
+     "t": 4.046428571428572,
+     "tipo": "thud",
+     "vol": 0.12
     }
    ]
   },
   {
    "n": 7,
    "t": "PIEZA",
-   "voz": "No es placer: es la chispa que te hace ir por algo.",
-   "dur": 5,
-   "h": "LA CHISPA DE QUERER",
-   "w": "QUERER",
+   "voz": "Tu pie no se durmió: solo estuvo desconectado.",
+   "dur": 5.4,
+   "h": "ESTUVO DESCONECTADO",
+   "w": "DESCONECTADO",
    "sub": "",
    "ic": "brillo",
    "num": null,
@@ -733,7 +678,7 @@
    "red": null,
    "termo": null,
    "pila": null,
-   "cap": "ve por ello",
+   "cap": "vuelve a conectarse",
    "papel": null,
    "pilares": null,
    "ciclo": null,
@@ -742,7 +687,7 @@
    "cubo": null,
    "diales": null,
    "pieza": {
-    "id": "dop-cierre",
+    "id": "pie-cierre",
     "props": {}
    },
    "cita": null,
@@ -750,11 +695,11 @@
    "modo": "VIRAL",
    "tema": "oscuro",
    "bg": "dark",
-   "ritmo": 0.9099999999999999,
-   "total": 42.4,
-   "inicio": 33.6,
-   "fin": 38.6,
-   "texto": "No es placer: es la chispa que te hace ir por algo.",
+   "ritmo": 0.9166666666666666,
+   "total": 44.2,
+   "inicio": 35,
+   "fin": 40.4,
+   "texto": "Tu pie no se durmió: solo estuvo desconectado.",
    "tr": "zoom",
    "trs": "barrido",
    "sfx": [
@@ -769,32 +714,57 @@
      "vol": 0.1
     },
     {
-     "t": 0.382,
+     "t": 0.38333333333333336,
      "tipo": "pop",
      "vol": 0.1
     },
     {
-     "t": 1.1829999999999998,
-     "tipo": "radar",
-     "vol": 0.1
+     "t": 1.1916666666666667,
+     "tipo": "clic",
+     "vol": 0.05
     },
     {
-     "t": 1.638,
-     "tipo": "radar",
-     "vol": 0.1
+     "t": 1.3216666666666668,
+     "tipo": "clic",
+     "vol": 0.05
     },
     {
-     "t": 2.0929999999999995,
-     "tipo": "radar",
-     "vol": 0.1
+     "t": 1.4516666666666667,
+     "tipo": "clic",
+     "vol": 0.05
     },
     {
-     "t": 2.8209999999999997,
+     "t": 1.5816666666666666,
+     "tipo": "clic",
+     "vol": 0.05
+    },
+    {
+     "t": 1.7116666666666667,
+     "tipo": "clic",
+     "vol": 0.05
+    },
+    {
+     "t": 1.8416666666666668,
+     "tipo": "clic",
+     "vol": 0.05
+    },
+    {
+     "t": 1.9716666666666667,
+     "tipo": "clic",
+     "vol": 0.05
+    },
+    {
+     "t": 2.108333333333333,
+     "tipo": "zap",
+     "vol": 0.14
+    },
+    {
+     "t": 3.025,
      "tipo": "golpe",
      "vol": 0.16
     },
     {
-     "t": 2.921,
+     "t": 3.125,
      "tipo": "ding",
      "vol": 0.16
     }
@@ -845,9 +815,9 @@
    "tema": "oscuro",
    "bg": "gold",
    "ritmo": 1,
-   "total": 42.4,
-   "inicio": 38.6,
-   "fin": 42.4,
+   "total": 44.2,
+   "inicio": 40.4,
+   "fin": 44.2,
    "texto": "Guárdalo y compártelo con alguien curioso.",
    "tr": "barrido",
    "trs": "barrido",

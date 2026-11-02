@@ -1,0 +1,65 @@
+TEXTO PARA CAPCUT (Texto a voz) · ¿Por qué se te duerme el pie? · SINAPSIS
+==============================================================================
+
+LA FORMA MÁS FÁCIL (3 pasos, sin calibrar nada)
+  1. En CapCut: Texto → «Texto a voz». Pega TODO el bloque «TEXTO CORRIDO» de abajo en UN solo texto y elige la voz que más te guste (velocidad 1.0x; no la cambies).
+  2. Genera la voz y expórtala como AUDIO (mp3 o wav) o simplemente como el video con voz.
+  3. Mándame ese audio: yo cuento las pausas, ajusto la duración de cada escena a TU voz, mezclo todo a −14 LUFS y te devuelvo el video final con la voz ya puesta.
+     (Si prefieres hacerlo tú en tu computador: panel → Estudio → «Voz en off» → «Mi voz» → subes el audio y el video se ajusta solo.)
+
+SI NO PUEDES MANDARME EL AUDIO (opción manual)
+  • Crea un texto por escena en CapCut (la tabla de abajo) y colócalo en su segundo de inicio; genera la voz de cada uno con la MISMA voz.
+  • Las escenas están pensadas con holgura: con una voz normal (≥ 2,4 palabras por segundo) cada frase termina antes de que acabe su escena.
+  • Si una frase se pasa un poco, aumenta la velocidad de ESE clip a 1.1x o 1.2x.
+
+------------------------------------------------------------------------------
+TABLA POR ESCENA (inicio · duración · palabras · frase para pegar)
+------------------------------------------------------------------------------
+ESCENA 1 · 0,0 s · 4,6 s · 7 palabras
+¿Por qué se te duerme el pie?
+
+ESCENA 2 · 4,6 s · 5,6 s · 9 palabras
+No es solo la sangre: es un nervio aplastado.
+
+ESCENA 3 · 10,2 s · 6,4 s · 13 palabras
+Al cruzar las piernas, presionas el nervio peroneo, justo debajo de la rodilla.
+
+ESCENA 4 · 16,6 s · 6,4 s · 12 palabras
+Apretado, el nervio deja de enviar señales, y no sientes el pie.
+
+ESCENA 5 · 23,0 s · 6,4 s · 12 palabras
+Al soltarlo, sus fibras despiertan y disparan señales sueltas: es el hormigueo.
+
+ESCENA 6 · 29,4 s · 5,6 s · 9 palabras
+Muévete despacio y espera a sentirlo antes de pararte.
+
+ESCENA 7 · 35,0 s · 5,4 s · 8 palabras
+Tu pie no se durmió: solo estuvo desconectado.
+
+ESCENA 8 · 40,4 s · 3,8 s · 6 palabras
+Guárdalo y compártelo con alguien curioso.
+
+------------------------------------------------------------------------------
+TEXTO CORRIDO (pégalo entero en un solo texto de CapCut)
+------------------------------------------------------------------------------
+¿Por qué se te duerme el pie?
+
+No es solo la sangre: es un nervio aplastado.
+
+Al cruzar las piernas, presionas el nervio peroneo, justo debajo de la rodilla.
+
+Apretado, el nervio deja de enviar señales, y no sientes el pie.
+
+Al soltarlo, sus fibras despiertan y disparan señales sueltas: es el hormigueo.
+
+Muévete despacio y espera a sentirlo antes de pararte.
+
+Tu pie no se durmió: solo estuvo desconectado.
+
+Guárdalo y compártelo con alguien curioso.
+
+------------------------------------------------------------------------------
+NOTAS
+  • No hay cifras, siglas ni símbolos en el texto: cualquier voz lo lee igual.
+  • Si una voz lee raro una palabra (p. ej. un nombre), prueba otra voz de la lista (las latinas suelen salir mejor) o escríbela como suena.
+  • Música: va como cama suave (≈ −23 LUFS). Si tapa tu voz en CapCut, bájala a ~40 %.

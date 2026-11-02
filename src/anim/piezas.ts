@@ -566,6 +566,27 @@ export const TDP = {
   cierre: { mol: 0.2, aros: 1.3, chip: 3.1 },
 } as const;
 
+/**
+ * Datos del video «¿Por qué se te duerme el pie?» (SINAPSIS · serie «cuerpo cotidiano»). Investigado (búsqueda web, 2026-11-02); límites:
+ *  · La sensación de «pie dormido» (parestesia) se debe sobre todo a la compresión temporal de un nervio (p. ej. el nervio peroneo común/fibular, que rodea la cabeza del peroné,
+ *    justo debajo de la rodilla, al cruzar las piernas), no solo a la falta de sangre; la circulación influye como factor secundario (las fuentes divergen: se dice «no es solo la sangre»).
+ *  · El hormigueo aparece cuando el nervio se recupera: fibras que descargan impulsos espontáneos (ectópicos), registrados en humanos con microneurografía (Ochoa y Torebjörk, Brain 1980).
+ *  · Suele ser inofensivo si es breve; la compresión prolongada (p. ej. sedado o inmóvil) puede lesionar el nervio, y el entumecimiento frecuente o que no se quita merece consulta.
+ *  · NO se afirma qué tipo de fibra se bloquea primero (no se pudo verificar). Las ilustraciones son esquemas.
+ */
+export const PIE = { ochoaAnio: 1980 } as const;
+
+/** Tiempos del video «¿Por qué se te duerme el pie?» (segundos a ritmo normal), compartidos entre el dibujo y el sonido. */
+export const TPI = {
+  gancho: { pierna: 0.2, t1: 0.4, t2: 1.8, chispas: 2.0, chip: 3.4 },
+  mito: { paneles: 0.3, sangre: 0.9, nervio: 2.3, chip: 4.2 },
+  nervio: { pierna: 0.2, nervio: 0.9, presion: 2.4, apaga: 3.8, chip: 5.0 },
+  senal: { cable: 0.2, pulsos: 0.8, aprieta: 2.6, corte: 3.2, chip: 5.0 },
+  hormigueo: { cable: 0.2, suelta: 0.9, rafagas: 1.7, chip: 4.8 },
+  consejo: { paso: (i: number): number => 0.6 + i * 1.2, aviso: 4.4 },
+  cierre: { pierna: 0.2, conecta: 1.3, chip: 3.3 },
+} as const;
+
 export const PIEZAS: Record<string, DefPieza> = {
   "metro-plano": {
     id: "metro-plano", nombre: "8 millones en un solo plano", ideal: 7.6, fondo: "dark",
@@ -917,6 +938,35 @@ export const PIEZAS: Record<string, DefPieza> = {
   "dop-cierre": {
     id: "dop-cierre", nombre: "Dopamina · no es placer: es la chispa de querer ir por algo (cierre)", ideal: 5.0, fondo: "dark", entra: "zoom",
     sfx: (_d, r) => [ev(0.05, "whoosh", 0.1), ev(TDP.cierre.mol * r + 0.2, "pop", 0.1), ...[0, 1, 2].map((i) => ev((TDP.cierre.aros + i * 0.5) * r, "radar", 0.1)), ev(TDP.cierre.chip * r, "golpe", 0.16), ev(TDP.cierre.chip * r + 0.1, "ding", 0.16)],
+  },
+  /* ───────────── «¿Por qué se te duerme el pie?» (SINAPSIS · cuerpo cotidiano · voz de CapCut) ───────────── */
+  "pie-gancho": {
+    id: "pie-gancho", nombre: "Pie dormido · la pierna se apaga y salen chispas de hormigueo (gancho)", ideal: 4.6, fondo: "dark",
+    sfx: (_d, r) => [ev(0.05, "whoosh", 0.12), ev(TPI.gancho.pierna * r + 0.2, "pop", 0.12), ...[0, 1, 2, 3, 4, 5].map((i) => ev((TPI.gancho.chispas + i * 0.12) * r, "tick", 0.1)), ev(TPI.gancho.chip * r, "ding", 0.16)],
+  },
+  "pie-mito": {
+    id: "pie-mito", nombre: "Pie dormido · no es solo la sangre: es un nervio aplastado (mito contra explicación)", ideal: 5.6, fondo: "dark", entra: "corte",
+    sfx: (_d, r) => [ev(0.05, "whoosh", 0.1), ev(TPI.mito.paneles * r + 0.2, "pop", 0.1), ev(TPI.mito.sangre * r, "heartbeat", 0.14), ev(TPI.mito.nervio * r, "thud", 0.16), ev(TPI.mito.chip * r, "ding", 0.16)],
+  },
+  "pie-nervio": {
+    id: "pie-nervio", nombre: "Pie dormido · cruzar las piernas presiona el nervio peroneo bajo la rodilla (anatomía)", ideal: 6.4, fondo: "dark", entra: "zoom",
+    sfx: (_d, r) => [ev(0.05, "whoosh", 0.1), ev(TPI.nervio.pierna * r + 0.2, "pop", 0.1), ev(TPI.nervio.nervio * r, "zap", 0.1), ev(TPI.nervio.presion * r, "thud", 0.2), ev(TPI.nervio.apaga * r, "golpe", 0.16), ev(TPI.nervio.chip * r, "ding", 0.16)],
+  },
+  "pie-senal": {
+    id: "pie-senal", nombre: "Pie dormido · el nervio apretado deja de enviar señales al cerebro (conducción bloqueada)", ideal: 6.4, fondo: "dark", entra: "semitono",
+    sfx: (_d, r) => [ev(0.05, "whoosh", 0.1), ...clics(TPI.senal.pulsos * r, 1.6 * r, 0.05), ev(TPI.senal.aprieta * r, "thud", 0.2), ev(TPI.senal.corte * r, "zap", 0.14), ev(TPI.senal.chip * r, "ding", 0.16)],
+  },
+  "pie-hormigueo": {
+    id: "pie-hormigueo", nombre: "Pie dormido · al soltar, las fibras despiertan y disparan señales sueltas: el hormigueo (Ochoa y Torebjörk 1980)", ideal: 6.4, fondo: "dark", entra: "corte",
+    sfx: (_d, r) => [ev(0.05, "whoosh", 0.1), ev(TPI.hormigueo.suelta * r, "golpe", 0.14), ...[0, 1, 2, 3, 4, 5, 6, 7].map((i) => ev((TPI.hormigueo.rafagas + i * 0.28) * r, "tick", 0.12)), ev(TPI.hormigueo.chip * r, "ding", 0.16)],
+  },
+  "pie-consejo": {
+    id: "pie-consejo", nombre: "Pie dormido · qué hacer: moverse despacio y esperar a sentirlo antes de pararse (y cuándo consultar)", ideal: 5.6, fondo: "dark", entra: "semitono",
+    sfx: (_d, r) => [ev(0.05, "whoosh", 0.1), ...[0, 1, 2].map((i) => ev(TPI.consejo.paso(i) * r + 0.3, "pop", 0.12)), ...[0, 1, 2].map((i) => ev(TPI.consejo.paso(i) * r + 0.6, "ding", 0.1)), ev(TPI.consejo.aviso * r, "thud", 0.12)],
+  },
+  "pie-cierre": {
+    id: "pie-cierre", nombre: "Pie dormido · el pie no se durmió: estuvo desconectado y vuelve a conectarse (cierre)", ideal: 5.4, fondo: "dark", entra: "zoom",
+    sfx: (_d, r) => [ev(0.05, "whoosh", 0.1), ev(TPI.cierre.pierna * r + 0.2, "pop", 0.1), ...clics(TPI.cierre.conecta * r, 1.0 * r, 0.05), ev((TPI.cierre.conecta + 1.0) * r, "zap", 0.14), ev(TPI.cierre.chip * r, "golpe", 0.16), ev(TPI.cierre.chip * r + 0.1, "ding", 0.16)],
   },
   /* ───────────── «El truco de los préstamos DSCR» (IMNOBA) ───────────── */
   "dscr-gancho": {

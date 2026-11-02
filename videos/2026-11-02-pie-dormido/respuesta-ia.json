@@ -1,0 +1,13 @@
+{
+  "titulo": "¿Por qué se te duerme el pie?",
+  "scenes": [
+    {"t": "PIEZA", "voz": "¿Por qué se te duerme el pie?", "dur": 4.6, "h": "¿POR QUÉ SE TE DUERME EL PIE?", "w": "PIE", "cap": "nos pasa a todos", "pieza": {"id": "pie-gancho"}},
+    {"t": "PIEZA", "voz": "No es solo la sangre: es un nervio aplastado.", "dur": 5.6, "h": "UN NERVIO APLASTADO", "w": "NERVIO", "cap": "no es solo la sangre", "pieza": {"id": "pie-mito"}},
+    {"t": "PIEZA", "voz": "Al cruzar las piernas, presionas el nervio peroneo, justo debajo de la rodilla.", "dur": 6.4, "h": "PRESIONAS UN NERVIO", "w": "NERVIO", "cap": "nervio peroneo", "pieza": {"id": "pie-nervio"}},
+    {"t": "PIEZA", "voz": "Apretado, el nervio deja de enviar señales, y no sientes el pie.", "dur": 6.4, "h": "SIN SEÑAL", "w": "SEÑAL", "cap": "el nervio se bloquea", "pieza": {"id": "pie-senal"}},
+    {"t": "PIEZA", "voz": "Al soltarlo, sus fibras despiertan y disparan señales sueltas: es el hormigueo.", "dur": 6.4, "h": "EL HORMIGUEO", "w": "HORMIGUEO", "cap": "Ochoa y Torebjörk, 1980", "pieza": {"id": "pie-hormigueo"}},
+    {"t": "PIEZA", "voz": "Muévete despacio y espera a sentirlo antes de pararte.", "dur": 5.6, "h": "QUÉ HACER", "w": "HACER", "cap": "consulta si es frecuente", "pieza": {"id": "pie-consejo"}},
+    {"t": "PIEZA", "voz": "Tu pie no se durmió: solo estuvo desconectado.", "dur": 5.4, "h": "ESTUVO DESCONECTADO", "w": "DESCONECTADO", "cap": "vuelve a conectarse", "pieza": {"id": "pie-cierre"}},
+    {"t": "CTA", "voz": "Guárdalo y compártelo con alguien curioso.", "dur": 3.8, "h": "GUÁRDALO Y COMPÁRTELO", "w": "COMPÁRTELO", "sub": "Más ciencia en SINAPSIS"}
+  ]
+}

@@ -33,6 +33,8 @@ import { DscCatalogo, DscDocs, DscGancho, DscHack, DscSplit } from "./dscr1";
 import { TejEpitelial, TejGancho, TejSangre } from "./tej1";
 import { TejHueso, TejMuscular, TejNervioso } from "./tej2";
 import { EinBarrera, EinEsculpe, EinGancho, EinTripartita } from "./ein1";
+import { PieCierre, PieConsejo, PieHormigueo, PieSenal } from "./pie2";
+import { PieGancho, PieMito, PieNervio } from "./pie1";
 import { DopCierre, DopDebate, DopQuerer, DopRutas } from "./dop2";
 import { DopExperimento, DopGancho, DopPrediccion } from "./dop1";
 import { IntAutonomo, IntEscala, IntGancho, IntPeristalsis } from "./int1";
@@ -74,6 +76,13 @@ export const COMPONENTES_PIEZA: Record<string, React.FC<{ e: EscenaViralGuardada
   "real-plusvalia": RealPlusvalia,
   "real-caminata": RealCaminata,
   "real-cierre": RealCierre,
+  "pie-gancho": PieGancho,
+  "pie-mito": PieMito,
+  "pie-nervio": PieNervio,
+  "pie-senal": PieSenal,
+  "pie-hormigueo": PieHormigueo,
+  "pie-consejo": PieConsejo,
+  "pie-cierre": PieCierre,
   "dop-gancho": DopGancho,
   "dop-experimento": DopExperimento,
   "dop-prediccion": DopPrediccion,
