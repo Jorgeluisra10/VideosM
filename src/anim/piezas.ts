@@ -394,6 +394,29 @@ export const TPIS = {
   zoom: { ini: 0.2, dur: 5.0, nada: 5.5, pregunta: 6.0 },
 } as const;
 
+/** Datos del video «Tus cables se enredan solos» (SINAPSIS · física cotidiana). Fuente: Raymer D. M. y Smith D. E., «Spontaneous knotting of an agitated string», PNAS 2007;104(42):16432–16437. */
+export const CAB = {
+  anio: 2007,
+  /** una caja con una cuerda, girada a 1 vuelta por segundo durante 10 segundos */
+  tumbleSeg: 10, rps: 1,
+  /** por debajo de 0,46 m (≈ 1,5 ft) no se formaron nudos; entre 0,46 y ≈ 1,5 m la probabilidad sube con rapidez y luego se estanca por debajo del 100 % */
+  umbralCm: 46, mesetaCm: 150,
+  /** casi todos los nudos eran primos, con 3 a 11 cruces mínimos; la probabilidad relativa decae de forma exponencial con el número de cruces */
+  crucesMin: 3, crucesMax: 11,
+  /** una cuerda más flexible se anuda más que una rígida */
+  masFlexibleMasNudos: true,
+} as const;
+
+/** Tiempos del video «Tus cables se enredan solos» (segundos a ritmo normal), compartidos entre el dibujo y el sonido. */
+export const TCAB = {
+  gancho: { coil: 0.2, nudo: 2.0, nudoDur: 2.2, chip: 3.6 },
+  caja: { caja: 0.2, gira: 0.9, giraDur: 5.0, cruces: 1.6, chip: 5.9 },
+  largo: { ejes: 0.2, curva: 0.9, curvaDur: 3.4, umbral: 1.6, meseta: 4.4, chip: 5.8 },
+  flexible: { cajas: 0.2, gira: 0.8, giraDur: 3.6, compara: 4.0, chip: 4.4 },
+  nudos: { papel: 0.2, trebol: 0.8, quinto: 1.9, barras: 3.1, chip: 5.0 },
+  receta: { lista: 0.2, i1: 0.8, i2: 1.8, i3: 2.8, igual: 3.9, chip: 5.2 },
+} as const;
+
 /* ───────────── «La regla del 37 %» (problema de la parada óptima, ensayo abstracto para IMNOBA) ───────────── */
 
 /** Generador pseudoaleatorio determinista (mulberry32): mismos números en el render, en las pruebas y en cada fotograma. */
@@ -946,6 +969,31 @@ export const PIEZAS: Record<string, DefPieza> = {
   "pis-zoom": {
     id: "pis-zoom", nombre: "Piscina · zoom logarítmico de 1 µm a 100 m: del polímero a la ciudad, con una silueta nadando (cierre)", ideal: 6.9, fondo: "dark", entra: "zoom",
     sfx: (_d, r) => [ev(0.05, "whoosh", 0.12), ...clics(TPIS.zoom.ini * r, TPIS.zoom.dur * r * 0.8, 0.04), ev((TPIS.zoom.ini + TPIS.zoom.dur) * r, "ding", 0.2), ev(TPIS.zoom.nada * r, "gota", 0.16), ev(TPIS.zoom.pregunta * r, "pop", 0.1)],
+  },
+  /* ───────────── «Tus cables se enredan solos» (SINAPSIS · física cotidiana) ───────────── */
+  "cab-gancho": {
+    id: "cab-gancho", nombre: "Cables · el cable bien enrollado se desordena hasta ser un nudo (gancho)", ideal: 4.55, fondo: "dark",
+    sfx: (_d, r) => [ev(0.05, "whoosh", 0.12), ev(TCAB.gancho.coil * r + 0.1, "pop", 0.1), ...[0, 1, 2, 3, 4].map((i) => ev((TCAB.gancho.nudo + i * 0.4) * r, "clic", 0.08)), ev((TCAB.gancho.nudo + TCAB.gancho.nudoDur) * r, "golpe", 0.2), ev(TCAB.gancho.chip * r, "ding", 0.12)],
+  },
+  "cab-caja": {
+    id: "cab-caja", nombre: "Cables · una cuerda en una caja que gira a 1 vuelta por segundo durante 10 s (simulación 2D ilustrativa)", ideal: 6.35, fondo: "dark", entra: "semitono",
+    sfx: (_d, r) => [ev(0.05, "whoosh", 0.1), ev(TCAB.caja.caja * r + 0.1, "pop", 0.1), ...clics(TCAB.caja.gira * r, TCAB.caja.giraDur * r, 0.05), ev(TCAB.caja.cruces * r, "tick", 0.1), ev((TCAB.caja.gira + TCAB.caja.giraDur) * r, "ding", 0.16), ev(TCAB.caja.chip * r, "pop", 0.1)],
+  },
+  "cab-largo": {
+    id: "cab-largo", nombre: "Cables · curva esquemática: sin nudos por debajo de 46 cm, sube hasta ≈ 1,5 m y se estanca (papel)", ideal: 6.7, fondo: "light", entra: "corte",
+    sfx: (_d, r) => [ev(0.02, "clic", 0.14), ev(TCAB.largo.ejes * r + 0.1, "tick", 0.1), ...clics(TCAB.largo.curva * r, TCAB.largo.curvaDur * r, 0.05), ev(TCAB.largo.umbral * r, "pop", 0.12), ev(TCAB.largo.meseta * r, "ding", 0.14), ev(TCAB.largo.chip * r, "clic", 0.1)],
+  },
+  "cab-flexible": {
+    id: "cab-flexible", nombre: "Cables · dos cajas: la cuerda rígida y la flexible (simulación 2D ilustrativa)", ideal: 4.75, fondo: "dark", entra: "semitono",
+    sfx: (_d, r) => [ev(0.05, "whoosh", 0.1), ev(TCAB.flexible.cajas * r + 0.1, "pop", 0.1), ...clics(TCAB.flexible.gira * r, TCAB.flexible.giraDur * r, 0.04), ev(TCAB.flexible.compara * r, "zap", 0.12), ev(TCAB.flexible.chip * r, "ding", 0.12)],
+  },
+  "cab-nudos": {
+    id: "cab-nudos", nombre: "Cables · nudos de 3 y 5 cruces dibujados con arriba y abajo, y la probabilidad que cae con los cruces (papel)", ideal: 5.85, fondo: "light", entra: "corte",
+    sfx: (_d, r) => [ev(0.02, "clic", 0.14), ev(TCAB.nudos.trebol * r, "pop", 0.12), ev(TCAB.nudos.quinto * r, "pop", 0.12), ...[0, 1, 2, 3, 4].map((i) => ev((TCAB.nudos.barras + i * 0.2) * r, "tick", 0.1)), ev(TCAB.nudos.chip * r, "ding", 0.12)],
+  },
+  "cab-receta": {
+    id: "cab-receta", nombre: "Cables · la receta del nudo: largo, flexible y agitado (cierre)", ideal: 6.05, fondo: "dark", entra: "zoom",
+    sfx: (_d, r) => [ev(0.05, "whoosh", 0.1), ev(TCAB.receta.i1 * r, "pop", 0.12), ev(TCAB.receta.i2 * r, "pop", 0.12), ev(TCAB.receta.i3 * r, "pop", 0.12), ev(TCAB.receta.igual * r, "golpe", 0.18), ev((TCAB.receta.igual + 0.1) * r, "ding", 0.16), ev(TCAB.receta.chip * r, "tick", 0.1)],
   },
   "astro-memoria": {
     id: "astro-memoria", nombre: "Astrocitos · en ratones, reactivarlos estimuló el recuerdo", ideal: 4.15, fondo: "dark", entra: "corte",

@@ -1,0 +1,12 @@
+{
+  "titulo": "Por qué tus cables se enredan solos",
+  "scenes": [
+    {"t": "PIEZA", "voz": "Guardas tus audífonos bien enrollados y, al sacarlos, ya son un nudo.", "dur": 5.0, "h": "AL SACARLOS: NUDO", "w": "NUDO", "cap": "no es mala suerte", "pieza": {"id": "cab-gancho"}},
+    {"t": "PIEZA", "voz": "Dos físicos de San Diego metieron una cuerda en una caja y la hicieron girar diez segundos.", "dur": 6.8, "h": "UNA CUERDA, UNA CAJA", "w": "CAJA", "cap": "el experimento de 2007", "pieza": {"id": "cab-caja"}},
+    {"t": "PIEZA", "voz": "Con menos de cuarenta y seis centímetros no hubo nudos; entre ahí y metro y medio, subieron rápido.", "dur": 7.0, "h": "CERO NUDOS BAJO 46 CM", "w": "CENTÍMETROS", "cap": "primer ingrediente: el largo", "pieza": {"id": "cab-largo"}},
+    {"t": "PIEZA", "voz": "Y cuanto más flexible es la cuerda, más fácil se anuda.", "dur": 5.0, "h": "MÁS FLEXIBLE: MÁS NUDOS", "w": "FLEXIBLE", "cap": "segundo ingrediente: la flexibilidad", "pieza": {"id": "cab-flexible"}},
+    {"t": "PIEZA", "voz": "Casi todos los nudos eran de tres a once cruces, y cuantos más cruces, menos frecuentes.", "dur": 6.3, "h": "DE 3 A 11 CRUCES", "w": "CRUCES", "cap": "la forma de los nudos", "pieza": {"id": "cab-nudos"}},
+    {"t": "PIEZA", "voz": "Tu bolsillo no es una caja de laboratorio, pero agitar un cable largo y flexible puede anudarlo.", "dur": 6.5, "h": "LA RECETA DEL NUDO", "w": "RECETA", "cap": "tercer ingrediente: agitarlo", "pieza": {"id": "cab-receta"}},
+    {"t": "CTA", "voz": "Guárdalo y síguenos en Sinapsis.", "dur": 3.8, "h": "GUÁRDALO", "w": "SINAPSIS", "sub": "física cotidiana en SINAPSIS"}
+  ]
+}

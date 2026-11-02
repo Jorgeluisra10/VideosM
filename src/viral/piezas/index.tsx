@@ -4,6 +4,8 @@
  */
 import { PisAcrilico, PisGancho, PisUnion, PisVidrio } from "./pis1";
 import { PisCarga, PisTinas, PisViento, PisZoom } from "./pis2";
+import { CabCaja, CabGancho, CabLargo } from "./cab1";
+import { CabFlexible, CabNudos, CabReceta } from "./cab2";
 import { RuiDia, RuiGancho, RuiNoche, RuiRitmos } from "./rui1";
 import { RuiFriccion, RuiMicro, RuiRemate, RuiTally } from "./rui2";
 import { PteDuelo, PteGancho, PteParabola } from "./pte1";
@@ -106,6 +108,7 @@ export const COMPONENTES_PIEZA: Record<string, React.FC<{ e: EscenaViralGuardada
   "tej-muscular": TejMuscular,
   "tej-nervioso": TejNervioso,
   "pis-gancho": PisGancho, "pis-vidrio": PisVidrio, "pis-acrilico": PisAcrilico, "pis-union": PisUnion, "pis-tinas": PisTinas, "pis-viento": PisViento, "pis-carga": PisCarga, "pis-zoom": PisZoom,
+  "cab-gancho": CabGancho, "cab-caja": CabCaja, "cab-largo": CabLargo, "cab-flexible": CabFlexible, "cab-nudos": CabNudos, "cab-receta": CabReceta,
   "rui-gancho": RuiGancho, "rui-dia": RuiDia, "rui-noche": RuiNoche, "rui-ritmos": RuiRitmos, "rui-friccion": RuiFriccion, "rui-remate": RuiRemate, "rui-tally": RuiTally, "rui-micro": RuiMicro,
   "pte-gancho": PteGancho, "pte-parabola": PteParabola, "pte-duelo": PteDuelo, "pte-roebling": PteRoebling, "pte-bloque": PteBloque, "pte-cubo": PteCubo, "pte-zoom": PteZoom,
   "dig-gancho": DigGancho, "dig-lectura": DigLectura, "dig-abismo": DigAbismo, "dig-autos": DigAutos, "dig-thomas": DigThomas, "dig-escala": DigEscala, "dig-ojo": DigOjo,
