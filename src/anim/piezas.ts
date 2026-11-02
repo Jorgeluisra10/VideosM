@@ -394,6 +394,43 @@ export const TPIS = {
   zoom: { ini: 0.2, dur: 5.0, nada: 5.5, pregunta: 6.0 },
 } as const;
 
+/** Datos del video «El aire que no avisa» (SINAPSIS · medicina de altura; noticia: Learjet 60 en Greenacres, Florida, 1 nov 2026). Fuentes y precauciones en ejemplos/animacion-viral/guion-tecnico-jet.md.
+ *  La CAUSA del accidente sigue en investigación (NTSB): el video NO la afirma ni sugiere que la hipoxia la provocara; los gráficos fisiológicos son educativos. */
+export const JET = {
+  /** altitud de crucero típica de un jet de negocios (FL350 = 35.000 pies), cabina presurizada: límite regulatorio ≈ 8.000 pies (14 CFR 25.841), cima del Everest */
+  fl350M: 10668, fl350Ft: 35000, cabinaM: 2438, cabinaFt: 8000, everestM: 8849,
+  /** fracción de O₂ del aire seco y presión de vapor de agua en la vía aérea (mmHg) para la presión inspirada de O₂ */
+  fO2: 0.2095, pH2O: 47,
+  /** el cerebro: ≈ 2 % del peso del cuerpo y ≈ 20 % del oxígeno que consume en reposo (Raichle y Gusnard 2002) */
+  cerebroPesoPct: 2, cerebroO2Pct: 20,
+  /** tiempo de conciencia útil sin oxígeno suplementario (FAA, AIM 8-1-2): altitud en pies, texto, segundos mínimos y máximos */
+  tuc: [
+    { ft: 18000, txt: "20–30 min", min: 1200, max: 1800 },
+    { ft: 25000, txt: "3–5 min", min: 180, max: 300 },
+    { ft: 30000, txt: "1–2 min", min: 60, max: 120 },
+    { ft: 35000, txt: "30–60 s", min: 30, max: 60 },
+    { ft: 40000, txt: "15–20 s", min: 15, max: 20 },
+  ],
+} as const;
+/** presión atmosférica estándar (kPa) a `h` metros (troposfera, ISA): 101,325·(1 − 2,25577·10⁻⁵·h)^5,25588 */
+export const isaKPa = (h: number): number => 101.325 * Math.pow(1 - 2.25577e-5 * h, 5.25588);
+/** temperatura estándar (°C) a `h` metros en la troposfera */
+export const isaC = (h: number): number => 15 - 6.5 * (h / 1000);
+/** presión inspirada de O₂ (mmHg) a `h` metros: fO₂·(P − 47 mmHg) */
+export const pio2MmHg = (h: number): number => JET.fO2 * (isaKPa(h) * 7.50062 - JET.pH2O);
+
+/** Tiempos del video «El aire que no avisa» (segundos a ritmo normal), compartidos entre el dibujo y el sonido. */
+export const TJET = {
+  gancho: { jet: 0.2, chip: 0.4, alt: 0.8, altDur: 2.6, estela: 1.2, frase2: 2.7, fuente: 1.4 },
+  ascenso: { sello: 0.4, sale: 3.1, asc: 3.3, ascDur: 4.4, cuarta: 7.8 },
+  aire: { camaras: 0.3, mol: 0.5, o2: 1.9, sube: 2.6, subeDur: 1.6, pio: 3.5, pioDur: 1.5, barras: 5.4, barrasDur: 2.0, ever: 6.9 },
+  cabina: { casco: 0.2, interior: 0.9, aire: 1.9, gauge: 3.4, fuga: 5.3, chip: 6.1 },
+  cerebro: { cerebro: 0.2, flujo: 0.8, col2: 1.3, col20: 2.9, apaga: 4.5 },
+  reloj: { cron: 0.2, aguja: 0.9, agujaDur: 3.0, tabla: 1.0, tablaPaso: 0.42, luz: 3.9, tunel: 4.6 },
+  silencio: { panel: 0.2, tunel: 1.2, tunelDur: 4.8, chips: [2.0, 3.0, 3.95, 4.9, 5.8] },
+  descenso: { techo: 0.2, mascara: 0.5, bolsa: 1.6, desc: 2.2, descDur: 3.4, abre: 2.6, frase: 5.7 },
+} as const;
+
 /* ───────────── «La regla del 37 %» (problema de la parada óptima, ensayo abstracto para IMNOBA) ───────────── */
 
 /** Generador pseudoaleatorio determinista (mulberry32): mismos números en el render, en las pruebas y en cada fotograma. */
@@ -946,6 +983,39 @@ export const PIEZAS: Record<string, DefPieza> = {
   "pis-zoom": {
     id: "pis-zoom", nombre: "Piscina · zoom logarítmico de 1 µm a 100 m: del polímero a la ciudad, con una silueta nadando (cierre)", ideal: 6.9, fondo: "dark", entra: "zoom",
     sfx: (_d, r) => [ev(0.05, "whoosh", 0.12), ...clics(TPIS.zoom.ini * r, TPIS.zoom.dur * r * 0.8, 0.04), ev((TPIS.zoom.ini + TPIS.zoom.dur) * r, "ding", 0.2), ev(TPIS.zoom.nada * r, "gota", 0.16), ev(TPIS.zoom.pregunta * r, "pop", 0.1)],
+  },
+  /* ───────────── «El aire que no avisa» (SINAPSIS · medicina de altura) ───────────── */
+  "jet-gancho": {
+    id: "jet-gancho", nombre: "Jet · un jet de negocios cruza un mar de nubes al atardecer con su altímetro subiendo a 35.000 pies (gancho de la noticia)", ideal: 6.6, fondo: "dark",
+    sfx: (_d, r) => [ev(0.05, "whoosh", 0.14), ev(TJET.gancho.chip * r, "ding", 0.1), ...clics(TJET.gancho.alt * r, TJET.gancho.altDur * r * 0.8, 0.04), ev((TJET.gancho.alt + TJET.gancho.altDur) * r, "ding", 0.16), ev(TJET.gancho.frase2 * r, "thud", 0.2), ev((TJET.gancho.frase2 + 0.5) * r, "heartbeat", 0.16)],
+  },
+  "jet-ascenso": {
+    id: "jet-ascenso", nombre: "Jet · causa en investigación (sello) y ascenso de 0 a 10.668 m con la presión cayendo a casi una cuarta parte (cálculo ISA)", ideal: 8.4, fondo: "dark", entra: "semitono",
+    sfx: (_d, r) => [ev(0.05, "whoosh", 0.1), ev(TJET.ascenso.sello * r, "golpe", 0.24), ev(TJET.ascenso.sale * r, "whoosh", 0.12), ...clics(TJET.ascenso.asc * r, TJET.ascenso.ascDur * r * 0.8, 0.04), ev((TJET.ascenso.asc + TJET.ascenso.ascDur) * r, "ding", 0.18), ev(TJET.ascenso.cuarta * r, "thud", 0.16)],
+  },
+  "jet-aire": {
+    id: "jet-aire", nombre: "Jet · dos cámaras de gas con el mismo 21 % de oxígeno pero 5,4 veces menos presión de O₂ inspirado, comparadas con la cabina y el Everest", ideal: 8.0, fondo: "dark", entra: "corte",
+    sfx: (_d, r) => [ev(0.05, "whoosh", 0.1), ev(TJET.aire.camaras * r, "thud", 0.12), ev(TJET.aire.o2 * r, "pop", 0.12), ev(TJET.aire.sube * r, "whoosh", 0.12), ...clics(TJET.aire.pio * r, TJET.aire.pioDur * r * 0.8, 0.04), ev((TJET.aire.pio + TJET.aire.pioDur) * r, "tick", 0.14), ...clics(TJET.aire.barras * r, TJET.aire.barrasDur * r * 0.6, 0.04), ev(TJET.aire.ever * r, "ding", 0.16)],
+  },
+  "jet-cabina": {
+    id: "jet-cabina", nombre: "Jet · corte transversal de la cabina presurizada con pasajeros: aire denso adentro, delgado y helado afuera (≈ 2.400 m equivalentes)", ideal: 6.4, fondo: "dark", entra: "semitono",
+    sfx: (_d, r) => [ev(0.05, "estatica", 0.08), ev(TJET.cabina.casco * r, "thud", 0.14), ev(TJET.cabina.interior * r, "pop", 0.12), ev(TJET.cabina.aire * r, "whoosh", 0.12), ev(TJET.cabina.gauge * r, "ding", 0.14), ev(TJET.cabina.fuga * r, "radar", 0.14), ev(TJET.cabina.chip * r, "tick", 0.1)],
+  },
+  "jet-cerebro": {
+    id: "jet-cerebro", nombre: "Jet · el cerebro iluminado: 2 % del peso del cuerpo, 20 % del oxígeno (columnas comparadas, flujo de sangre y neuronas)", ideal: 5.4, fondo: "dark", entra: "corte",
+    sfx: (_d, r) => [ev(0.05, "heartbeat", 0.18), ev(TJET.cerebro.flujo * r, "zap", 0.1), ev(TJET.cerebro.col2 * r, "pop", 0.1), ev(TJET.cerebro.col20 * r, "golpe", 0.2), ev((TJET.cerebro.col20 + 0.3) * r, "ding", 0.14), ev(TJET.cerebro.apaga * r, "heartbeat", 0.16)],
+  },
+  "jet-reloj": {
+    id: "jet-reloj", nombre: "Jet · cronómetro de conciencia útil a 35.000 pies (30–60 s) y la tabla de la FAA por altitud", ideal: 5.8, fondo: "dark", entra: "semitono",
+    sfx: (_d, r) => [ev(0.05, "whoosh", 0.1), ...clics(TJET.reloj.aguja * r, TJET.reloj.agujaDur * r * 0.8, 0.05), ...[0, 1, 2, 3, 4].map((i) => ev((TJET.reloj.tabla + TJET.reloj.tablaPaso * i) * r, "tick", 0.1)), ev(TJET.reloj.luz * r, "ding", 0.18), ev(TJET.reloj.tunel * r, "heartbeat", 0.2)],
+  },
+  "jet-silencio": {
+    id: "jet-silencio", nombre: "Jet · tablero de instrumentos visto en primera persona: la visión en túnel se cierra mientras aparecen los síntomas silenciosos de la hipoxia", ideal: 6.7, fondo: "dark", entra: "corte",
+    sfx: (_d, r) => [ev(0.05, "estatica", 0.1), ...TJET.silencio.chips.map((c, i) => ev(c * r, i === 4 ? "golpe" : "pop", i === 4 ? 0.22 : 0.12)), ev(TJET.silencio.tunel * r, "heartbeat", 0.16), ev((TJET.silencio.tunel + 1.6) * r, "heartbeat", 0.2), ev((TJET.silencio.tunel + 3.0) * r, "heartbeat", 0.24)],
+  },
+  "jet-descenso": {
+    id: "jet-descenso", nombre: "Jet · la máscara de oxígeno cae, el avión desciende de 35.000 a 10.000 pies y la visión se abre de nuevo (cierre)", ideal: 6.4, fondo: "dark", entra: "semitono",
+    sfx: (_d, r) => [ev(TJET.descenso.techo * r, "clic", 0.16), ev(TJET.descenso.mascara * r, "thud", 0.2), ev(TJET.descenso.bolsa * r, "whoosh", 0.14), ...clics(TJET.descenso.desc * r, TJET.descenso.descDur * r * 0.8, 0.04), ev(TJET.descenso.abre * r, "pop", 0.14), ev((TJET.descenso.desc + TJET.descenso.descDur) * r, "ding", 0.2), ev(TJET.descenso.frase * r, "heartbeat", 0.14)],
   },
   "astro-memoria": {
     id: "astro-memoria", nombre: "Astrocitos · en ratones, reactivarlos estimuló el recuerdo", ideal: 4.15, fondo: "dark", entra: "corte",

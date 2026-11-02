@@ -4,3 +4,4 @@ Una línea por pista: archivo · de dónde salió (enlace) · licencia · atribu
 
 ruidos-nocturnos.wav · creada por el sistema (síntesis aditiva con `videos/2026-10-31-ruidos-nocturnos/componer-musica.mjs`; el WAV no se sube a git, se regenera) · libre de derechos · ninguna · 2026-10-31
 piscina-suspendida.wav · creada por el sistema (síntesis con `videos/2026-11-01-piscina-suspendida/componer-musica.mjs`; el WAV no se sube a git, se regenera) · libre de derechos · ninguna · 2026-11-01
+jet-florida-hipoxia.wav · creada por el sistema (síntesis con `videos/2026-11-02-jet-florida-hipoxia/componer-musica.mjs`; el WAV no se sube a git, se regenera) · libre de derechos · ninguna · 2026-11-02

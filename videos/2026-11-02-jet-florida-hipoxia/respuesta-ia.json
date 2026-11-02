@@ -1,0 +1,14 @@
+{
+  "titulo": "El aire que no avisa",
+  "scenes": [
+    {"t": "PIEZA", "voz": "Un jet privado cayó en Florida. A diez mil metros, tu cuerpo no avisa cuando se queda sin aire.", "dur": 7.1, "h": "UN JET CAYÓ EN FLORIDA", "w": "FLORIDA", "pieza": {"id": "jet-gancho"}},
+    {"t": "PIEZA", "voz": "La causa sigue en investigación. Lo que sí se mide: a diez mil metros, la presión del aire cae a casi una cuarta parte.", "dur": 8.9, "h": "LA PRESIÓN SÍ SE MIDE", "w": "PRESIÓN", "cap": "primer dato: la presión del aire", "pieza": {"id": "jet-ascenso"}},
+    {"t": "PIEZA", "voz": "Sigue siendo veintiuno por ciento de oxígeno, pero a tus pulmones llega cinco veces menos, incluso menos que en el Everest.", "dur": 8.2, "h": "CINCO VECES MENOS OXÍGENO", "w": "OXÍGENO", "cap": "segundo dato: el oxígeno que llega al pulmón", "pieza": {"id": "jet-aire"}},
+    {"t": "PIEZA", "voz": "Por eso la cabina se presuriza: adentro, la altura equivalente se limita a unos dos mil cuatrocientos metros.", "dur": 6.8, "h": "UNA BURBUJA DE PRESIÓN", "w": "BURBUJA", "cap": "la cabina presurizada", "pieza": {"id": "jet-cabina"}},
+    {"t": "PIEZA", "voz": "El cerebro pesa dos por ciento del cuerpo, pero gasta veinte por ciento del oxígeno.", "dur": 5.8, "h": "EL CEREBRO GASTA MUCHO", "w": "CEREBRO", "cap": "el órgano que más lo nota", "pieza": {"id": "jet-cerebro"}},
+    {"t": "PIEZA", "voz": "A treinta y cinco mil pies, la conciencia útil dura entre treinta y sesenta segundos.", "dur": 6.4, "h": "30 A 60 SEGUNDOS", "w": "SEGUNDOS", "cap": "tiempo de conciencia útil (FAA)", "pieza": {"id": "jet-reloj"}},
+    {"t": "PIEZA", "voz": "Lo peligroso es que no duele ni ahoga: aparece euforia, visión en túnel, labios azulados y poco juicio.", "dur": 7.2, "h": "NO DUELE, NO AHOGA", "w": "SILENCIOSOS", "cap": "la hipoxia es silenciosa", "pieza": {"id": "jet-silencio"}},
+    {"t": "PIEZA", "voz": "Por eso los pilotos entrenan en cámaras de altura y usan máscara. El remedio: oxígeno puro y descender.", "dur": 7.2, "h": "OXÍGENO PURO Y DESCENDER", "w": "DESCENDER", "cap": "qué sí funciona", "pieza": {"id": "jet-descenso"}},
+    {"t": "CTA", "voz": "Guárdalo para tu próximo vuelo y síguenos en Sinapsis.", "dur": 4.2, "h": "GUÁRDALO Y SÍGUENOS", "w": "SÍGUENOS", "sub": "Más ciencia en SINAPSIS"}
+  ]
+}
