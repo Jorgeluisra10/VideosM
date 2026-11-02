@@ -1,0 +1,18 @@
+{
+  "version": 1,
+  "slug": "2026-11-02-un-dia-sin-dormir",
+  "titulo": "Un día sin dormir",
+  "serie": "medicina_cotidiana",
+  "estado": "grabado",
+  "guion": "Un día sin dormir te deja como si estuvieras borracho, y la ciencia lo midió.\nA las diecisiete horas despierto, tu rendimiento ya iguala al de cero coma cero cinco por ciento de alcohol.\nHacia las veinticuatro horas ya es cero coma diez: más que el límite legal para conducir en Estados Unidos.\n¿Por qué? Mientras estás despierto, tu cerebro acumula adenosina, una molécula que empuja al sueño.\nEl café no la elimina: solo tapa sus receptores, y la adenosina sigue ahí, esperando.\nY llegan los microsueños: a cien kilómetros por hora, cuatro segundos son ciento once metros a ciegas.\nInternos con turnos de más de veinticuatro horas cometieron treinta y seis por ciento más errores graves, y chocaron más al volver a casa.\nNo hay atajo: dormir siete horas o más. Ni el café ni la fuerza de voluntad pagan esa deuda.\nMándaselo a quien presume de dormir poco y síguenos en Sinapsis.",
+  "gancho": "Un día sin dormir te deja como si estuvieras borracho, y la ciencia lo midió.",
+  "duracion_seg": 61.4,
+  "notas": "Espero que lo compartan (se lo mandan a quien duerme poco) y que lo guarden estudiantes y profesionales de salud que hacen guardias. Métrica: compartidos y guardados por cada 1.000 alcanzados, y retención al pasar la escena 3 (≈ 13 s, el límite legal). «Borracho» = rendimiento en pruebas de laboratorio, no alcohol real; 24 h ≈ 0,10 % es aproximado. Ojo: sin voz, no publicar así.",
+  "voz_usada": "",
+  "instrucciones_voz": "",
+  "creado": "2026-11-02T13:36:04.570Z",
+  "origen_clave": "dd39642e",
+  "video": "revision.mp4",
+  "miniatura": "miniatura.jpg",
+  "entrega": ""
+}
