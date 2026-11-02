@@ -1,19 +1,19 @@
 {
  "version": 1,
- "titulo": "El metro que valoriza Bogotá",
- "paleta": "imnoba",
+ "titulo": "El aire que no avisa",
+ "paleta": "medicina",
  "sfx": true,
  "fps": 60,
- "duracion": 36.9,
+ "duracion": 61.8,
  "escenas": [
   {
    "n": 1,
-   "t": "HOOK",
-   "voz": "¿Te imaginas cruzar Bogotá en minutos? ¡Llega el metro!",
-   "dur": 3.6,
-   "h": "BOGOTÁ NECESITA METRO",
-   "w": "METRO",
-   "sub": "y tu inmueble lo agradece",
+   "t": "PIEZA",
+   "voz": "Un jet privado cayó en Florida. A diez mil metros, tu cuerpo no avisa cuando se queda sin aire.",
+   "dur": 7.1,
+   "h": "UN JET CAYÓ EN FLORIDA",
+   "w": "FLORIDA",
+   "sub": "",
    "ic": "tren",
    "num": null,
    "vs": null,
@@ -44,19 +44,22 @@
    "osc": null,
    "cubo": null,
    "diales": null,
-   "pieza": null,
+   "pieza": {
+    "id": "jet-gancho",
+    "props": {}
+   },
    "cita": null,
    "sc": "",
    "modo": "VIRAL",
    "tema": "oscuro",
    "bg": "dark",
    "ritmo": 1,
-   "total": 36.9,
+   "total": 61.8,
    "inicio": 0,
-   "fin": 3.6,
-   "texto": "¿Te imaginas cruzar Bogotá en minutos? ¡Llega el metro!",
+   "fin": 7.1,
+   "texto": "Un jet privado cayó en Florida. A diez mil metros, tu cuerpo no avisa cuando se queda sin aire.",
    "tr": "barrido",
-   "trs": "barrido",
+   "trs": "semitono",
    "sfx": [
     {
      "t": 0.04,
@@ -64,27 +67,122 @@
      "vol": 0.16
     },
     {
-     "t": 0.32,
+     "t": 0.05,
+     "tipo": "whoosh",
+     "vol": 0.14
+    },
+    {
+     "t": 0.4,
+     "tipo": "ding",
+     "vol": 0.1
+    },
+    {
+     "t": 0.8,
+     "tipo": "clic",
+     "vol": 0.04
+    },
+    {
+     "t": 0.93,
+     "tipo": "clic",
+     "vol": 0.04
+    },
+    {
+     "t": 1.06,
+     "tipo": "clic",
+     "vol": 0.04
+    },
+    {
+     "t": 1.19,
+     "tipo": "clic",
+     "vol": 0.04
+    },
+    {
+     "t": 1.32,
+     "tipo": "clic",
+     "vol": 0.04
+    },
+    {
+     "t": 1.4500000000000002,
+     "tipo": "clic",
+     "vol": 0.04
+    },
+    {
+     "t": 1.58,
+     "tipo": "clic",
+     "vol": 0.04
+    },
+    {
+     "t": 1.71,
+     "tipo": "clic",
+     "vol": 0.04
+    },
+    {
+     "t": 1.84,
+     "tipo": "clic",
+     "vol": 0.04
+    },
+    {
+     "t": 1.97,
+     "tipo": "clic",
+     "vol": 0.04
+    },
+    {
+     "t": 2.1,
+     "tipo": "clic",
+     "vol": 0.04
+    },
+    {
+     "t": 2.2300000000000004,
+     "tipo": "clic",
+     "vol": 0.04
+    },
+    {
+     "t": 2.3600000000000003,
+     "tipo": "clic",
+     "vol": 0.04
+    },
+    {
+     "t": 2.49,
+     "tipo": "clic",
+     "vol": 0.04
+    },
+    {
+     "t": 2.62,
+     "tipo": "clic",
+     "vol": 0.04
+    },
+    {
+     "t": 2.7,
      "tipo": "thud",
      "vol": 0.2
+    },
+    {
+     "t": 2.75,
+     "tipo": "clic",
+     "vol": 0.04
+    },
+    {
+     "t": 3.2,
+     "tipo": "heartbeat",
+     "vol": 0.16
+    },
+    {
+     "t": 3.4000000000000004,
+     "tipo": "ding",
+     "vol": 0.16
     }
    ]
   },
   {
    "n": 2,
-   "t": "NUM",
-   "voz": "Hoy se pierden horas en trancones cada día.",
-   "dur": 3.4,
-   "h": "TIEMPO PERDIDO",
-   "w": "PERDIDO",
+   "t": "PIEZA",
+   "voz": "La causa sigue en investigación. Lo que sí se mide: a diez mil metros, la presión del aire cae a casi una cuarta parte.",
+   "dur": 8.9,
+   "h": "LA PRESIÓN SÍ SE MIDE",
+   "w": "PRESIÓN",
    "sub": "",
-   "ic": "reloj",
-   "num": {
-    "n": "2",
-    "u": "h",
-    "pre": "~",
-    "l": "AL DÍA EN TRANCONES"
-   },
+   "ic": "tren",
+   "num": null,
    "vs": null,
    "bars": [],
    "barsU": "",
@@ -105,7 +203,7 @@
    "red": null,
    "termo": null,
    "pila": null,
-   "cap": "",
+   "cap": "primer dato: la presión del aire",
    "papel": null,
    "pilares": null,
    "ciclo": null,
@@ -113,19 +211,22 @@
    "osc": null,
    "cubo": null,
    "diales": null,
-   "pieza": null,
+   "pieza": {
+    "id": "jet-ascenso",
+    "props": {}
+   },
    "cita": null,
    "sc": "",
    "modo": "VIRAL",
-   "tema": "oscuro",
-   "bg": "gold",
-   "ritmo": 0.9833333333333333,
-   "total": 36.9,
-   "inicio": 3.6,
-   "fin": 7,
-   "texto": "Hoy se pierden horas en trancones cada día.",
-   "tr": "barrido",
-   "trs": "barrido",
+   "tema": "claro",
+   "bg": "light",
+   "ritmo": 1,
+   "total": 61.8,
+   "inicio": 7.1,
+   "fin": 16,
+   "texto": "La causa sigue en investigación. Lo que sí se mide: a diez mil metros, la presión del aire cae a casi una cuarta parte.",
+   "tr": "semitono",
+   "trs": "corte",
    "sfx": [
     {
      "t": 0.04,
@@ -133,215 +234,174 @@
      "vol": 0.16
     },
     {
-     "t": 0.59,
-     "tipo": "tick",
+     "t": 0.05,
+     "tipo": "whoosh",
+     "vol": 0.1
+    },
+    {
+     "t": 0.4,
+     "tipo": "golpe",
+     "vol": 0.24
+    },
+    {
+     "t": 3.1,
+     "tipo": "whoosh",
      "vol": 0.12
     },
     {
-     "t": 0.59,
+     "t": 3.3,
      "tipo": "clic",
-     "vol": 0.07
+     "vol": 0.04
     },
     {
-     "t": 0.72,
+     "t": 3.4299999999999997,
      "tipo": "clic",
-     "vol": 0.07
+     "vol": 0.04
     },
     {
-     "t": 0.85,
+     "t": 3.5599999999999996,
      "tipo": "clic",
-     "vol": 0.07
+     "vol": 0.04
     },
     {
-     "t": 0.98,
+     "t": 3.69,
      "tipo": "clic",
-     "vol": 0.07
+     "vol": 0.04
     },
     {
-     "t": 1.1099999999999999,
+     "t": 3.82,
      "tipo": "clic",
-     "vol": 0.07
+     "vol": 0.04
     },
     {
-     "t": 1.24,
+     "t": 3.9499999999999997,
      "tipo": "clic",
-     "vol": 0.07
+     "vol": 0.04
     },
     {
-     "t": 1.37,
+     "t": 4.08,
      "tipo": "clic",
-     "vol": 0.07
+     "vol": 0.04
     },
     {
-     "t": 1.5,
+     "t": 4.21,
      "tipo": "clic",
-     "vol": 0.07
+     "vol": 0.04
     },
     {
-     "t": 1.63,
+     "t": 4.34,
      "tipo": "clic",
-     "vol": 0.07
+     "vol": 0.04
     },
     {
-     "t": 1.7599999999999998,
+     "t": 4.47,
      "tipo": "clic",
-     "vol": 0.07
+     "vol": 0.04
     },
     {
-     "t": 1.8900000000000001,
+     "t": 4.6,
      "tipo": "clic",
-     "vol": 0.07
+     "vol": 0.04
     },
     {
-     "t": 2.065,
+     "t": 4.73,
+     "tipo": "clic",
+     "vol": 0.04
+    },
+    {
+     "t": 4.859999999999999,
+     "tipo": "clic",
+     "vol": 0.04
+    },
+    {
+     "t": 4.99,
+     "tipo": "clic",
+     "vol": 0.04
+    },
+    {
+     "t": 5.12,
+     "tipo": "clic",
+     "vol": 0.04
+    },
+    {
+     "t": 5.25,
+     "tipo": "clic",
+     "vol": 0.04
+    },
+    {
+     "t": 5.38,
+     "tipo": "clic",
+     "vol": 0.04
+    },
+    {
+     "t": 5.51,
+     "tipo": "clic",
+     "vol": 0.04
+    },
+    {
+     "t": 5.64,
+     "tipo": "clic",
+     "vol": 0.04
+    },
+    {
+     "t": 5.77,
+     "tipo": "clic",
+     "vol": 0.04
+    },
+    {
+     "t": 5.9,
+     "tipo": "clic",
+     "vol": 0.04
+    },
+    {
+     "t": 6.029999999999999,
+     "tipo": "clic",
+     "vol": 0.04
+    },
+    {
+     "t": 6.16,
+     "tipo": "clic",
+     "vol": 0.04
+    },
+    {
+     "t": 6.29,
+     "tipo": "clic",
+     "vol": 0.04
+    },
+    {
+     "t": 6.42,
+     "tipo": "clic",
+     "vol": 0.04
+    },
+    {
+     "t": 6.55,
+     "tipo": "clic",
+     "vol": 0.04
+    },
+    {
+     "t": 6.68,
+     "tipo": "clic",
+     "vol": 0.04
+    },
+    {
+     "t": 7.7,
      "tipo": "ding",
      "vol": 0.18
+    },
+    {
+     "t": 7.8,
+     "tipo": "thud",
+     "vol": 0.16
     }
    ]
   },
   {
    "n": 3,
-   "t": "VS",
-   "voz": "Otras capitales ya tienen metro. Bogotá apenas empieza.",
-   "dur": 3.7,
-   "h": "LÍNEAS DE METRO",
-   "w": "METRO",
-   "sub": "",
-   "ic": "tren",
-   "num": null,
-   "vs": {
-    "a": {
-     "l": "BOGOTÁ",
-     "n": "0",
-     "ic": "tren"
-    },
-    "b": {
-     "l": "SANTIAGO",
-     "n": "7",
-     "ic": "tren"
-    },
-    "op": "<"
-   },
-   "bars": [],
-   "barsU": "",
-   "hi": -1,
-   "line": null,
-   "items": [],
-   "stops": [],
-   "end": "",
-   "donut": [],
-   "picto": null,
-   "top": [],
-   "myth": "",
-   "truth": "",
-   "zoom": null,
-   "capas": null,
-   "mira": null,
-   "impacto": null,
-   "red": null,
-   "termo": null,
-   "pila": null,
-   "cap": "",
-   "papel": null,
-   "pilares": null,
-   "ciclo": null,
-   "duo": null,
-   "osc": null,
-   "cubo": null,
-   "diales": null,
-   "pieza": null,
-   "cita": null,
-   "sc": "",
-   "modo": "VIRAL",
-   "tema": "oscuro",
-   "bg": "dark",
-   "ritmo": 0.9027777777777778,
-   "total": 36.9,
-   "inicio": 7,
-   "fin": 10.7,
-   "texto": "Otras capitales ya tienen metro. Bogotá apenas empieza.",
-   "tr": "barrido",
-   "trs": "barrido",
-   "sfx": [
-    {
-     "t": 0.04,
-     "tipo": "whoosh",
-     "vol": 0.16
-    },
-    {
-     "t": 0.5416666666666666,
-     "tipo": "clic",
-     "vol": 0.05
-    },
-    {
-     "t": 0.6716666666666666,
-     "tipo": "clic",
-     "vol": 0.05
-    },
-    {
-     "t": 0.8016666666666666,
-     "tipo": "clic",
-     "vol": 0.05
-    },
-    {
-     "t": 0.8125,
-     "tipo": "tick",
-     "vol": 0.12
-    },
-    {
-     "t": 0.9316666666666666,
-     "tipo": "clic",
-     "vol": 0.05
-    },
-    {
-     "t": 1.0616666666666665,
-     "tipo": "clic",
-     "vol": 0.05
-    },
-    {
-     "t": 1.1916666666666667,
-     "tipo": "clic",
-     "vol": 0.05
-    },
-    {
-     "t": 1.3216666666666668,
-     "tipo": "clic",
-     "vol": 0.05
-    },
-    {
-     "t": 1.4516666666666667,
-     "tipo": "clic",
-     "vol": 0.05
-    },
-    {
-     "t": 1.5816666666666666,
-     "tipo": "clic",
-     "vol": 0.05
-    },
-    {
-     "t": 1.7116666666666664,
-     "tipo": "clic",
-     "vol": 0.05
-    },
-    {
-     "t": 1.8055555555555556,
-     "tipo": "ding",
-     "vol": 0.18
-    },
-    {
-     "t": 1.8416666666666668,
-     "tipo": "clic",
-     "vol": 0.05
-    }
-   ]
-  },
-  {
-   "n": 4,
-   "t": "ROUTE",
-   "voz": "La primera línea conecta el sur con el norte.",
-   "dur": 4.4,
-   "h": "LA PRIMERA LÍNEA",
-   "w": "PRIMERA",
+   "t": "PIEZA",
+   "voz": "Sigue siendo veintiuno por ciento de oxígeno, pero a tus pulmones llega cinco veces menos, incluso menos que en el Everest.",
+   "dur": 8.2,
+   "h": "CINCO VECES MENOS OXÍGENO",
+   "w": "OXÍGENO",
    "sub": "",
    "ic": "brillo",
    "num": null,
@@ -351,13 +411,8 @@
    "hi": -1,
    "line": null,
    "items": [],
-   "stops": [
-    "PORTAL AMÉRICAS",
-    "KENNEDY",
-    "CENTRO",
-    "CALLE 72"
-   ],
-   "end": "VALORIZACIÓN",
+   "stops": [],
+   "end": "",
    "donut": [],
    "picto": null,
    "top": [],
@@ -370,7 +425,7 @@
    "red": null,
    "termo": null,
    "pila": null,
-   "cap": "",
+   "cap": "segundo dato: el oxígeno que llega al pulmón",
    "papel": null,
    "pilares": null,
    "ciclo": null,
@@ -378,19 +433,22 @@
    "osc": null,
    "cubo": null,
    "diales": null,
-   "pieza": null,
+   "pieza": {
+    "id": "jet-aire",
+    "props": {}
+   },
    "cita": null,
    "sc": "",
    "modo": "VIRAL",
    "tema": "oscuro",
-   "bg": "gold",
-   "ritmo": 0.9634146341463415,
-   "total": 36.9,
-   "inicio": 10.7,
-   "fin": 15.1,
-   "texto": "La primera línea conecta el sur con el norte.",
-   "tr": "barrido",
-   "trs": "barrido",
+   "bg": "dark",
+   "ritmo": 0.9687499999999999,
+   "total": 61.8,
+   "inicio": 16,
+   "fin": 24.2,
+   "texto": "Sigue siendo veintiuno por ciento de oxígeno, pero a tus pulmones llega cinco veces menos, incluso menos que en el Everest.",
+   "tr": "corte",
+   "trs": "semitono",
    "sfx": [
     {
      "t": 0.04,
@@ -398,61 +456,230 @@
      "vol": 0.16
     },
     {
-     "t": 0.9152439024390244,
-     "tipo": "tick",
+     "t": 0.05,
+     "tipo": "whoosh",
+     "vol": 0.1
+    },
+    {
+     "t": 0.29062499999999997,
+     "tipo": "thud",
      "vol": 0.12
     },
     {
-     "t": 1.5896341463414634,
-     "tipo": "tick",
+     "t": 1.8406249999999997,
+     "tipo": "pop",
      "vol": 0.12
     },
     {
-     "t": 2.2640243902439026,
-     "tipo": "tick",
+     "t": 2.51875,
+     "tipo": "whoosh",
      "vol": 0.12
     },
     {
-     "t": 2.9384146341463415,
-     "tipo": "tick",
-     "vol": 0.12
+     "t": 3.3906249999999996,
+     "tipo": "clic",
+     "vol": 0.04
     },
     {
-     "t": 3.275609756097561,
+     "t": 3.5206249999999994,
+     "tipo": "clic",
+     "vol": 0.04
+    },
+    {
+     "t": 3.650625,
+     "tipo": "clic",
+     "vol": 0.04
+    },
+    {
+     "t": 3.7806249999999997,
+     "tipo": "clic",
+     "vol": 0.04
+    },
+    {
+     "t": 3.9106249999999996,
+     "tipo": "clic",
+     "vol": 0.04
+    },
+    {
+     "t": 4.0406249999999995,
+     "tipo": "clic",
+     "vol": 0.04
+    },
+    {
+     "t": 4.170624999999999,
+     "tipo": "clic",
+     "vol": 0.04
+    },
+    {
+     "t": 4.300624999999999,
+     "tipo": "clic",
+     "vol": 0.04
+    },
+    {
+     "t": 4.843749999999999,
+     "tipo": "tick",
+     "vol": 0.14
+    },
+    {
+     "t": 5.23125,
+     "tipo": "clic",
+     "vol": 0.04
+    },
+    {
+     "t": 5.36125,
+     "tipo": "clic",
+     "vol": 0.04
+    },
+    {
+     "t": 5.49125,
+     "tipo": "clic",
+     "vol": 0.04
+    },
+    {
+     "t": 5.62125,
+     "tipo": "clic",
+     "vol": 0.04
+    },
+    {
+     "t": 5.751250000000001,
+     "tipo": "clic",
+     "vol": 0.04
+    },
+    {
+     "t": 5.8812500000000005,
+     "tipo": "clic",
+     "vol": 0.04
+    },
+    {
+     "t": 6.01125,
+     "tipo": "clic",
+     "vol": 0.04
+    },
+    {
+     "t": 6.14125,
+     "tipo": "clic",
+     "vol": 0.04
+    },
+    {
+     "t": 6.684374999999999,
      "tipo": "ding",
-     "vol": 0.18
+     "vol": 0.16
+    }
+   ]
+  },
+  {
+   "n": 4,
+   "t": "PIEZA",
+   "voz": "Por eso la cabina se presuriza: adentro, la altura equivalente se limita a unos dos mil cuatrocientos metros.",
+   "dur": 6.8,
+   "h": "UNA BURBUJA DE PRESIÓN",
+   "w": "BURBUJA",
+   "sub": "",
+   "ic": "tren",
+   "num": null,
+   "vs": null,
+   "bars": [],
+   "barsU": "",
+   "hi": -1,
+   "line": null,
+   "items": [],
+   "stops": [],
+   "end": "",
+   "donut": [],
+   "picto": null,
+   "top": [],
+   "myth": "",
+   "truth": "",
+   "zoom": null,
+   "capas": null,
+   "mira": null,
+   "impacto": null,
+   "red": null,
+   "termo": null,
+   "pila": null,
+   "cap": "la cabina presurizada",
+   "papel": null,
+   "pilares": null,
+   "ciclo": null,
+   "duo": null,
+   "osc": null,
+   "cubo": null,
+   "diales": null,
+   "pieza": {
+    "id": "jet-cabina",
+    "props": {}
+   },
+   "cita": null,
+   "sc": "",
+   "modo": "VIRAL",
+   "tema": "claro",
+   "bg": "light",
+   "ritmo": 0.9921874999999999,
+   "total": 61.8,
+   "inicio": 24.2,
+   "fin": 31,
+   "texto": "Por eso la cabina se presuriza: adentro, la altura equivalente se limita a unos dos mil cuatrocientos metros.",
+   "tr": "semitono",
+   "trs": "corte",
+   "sfx": [
+    {
+     "t": 0.04,
+     "tipo": "whoosh",
+     "vol": 0.16
+    },
+    {
+     "t": 0.05,
+     "tipo": "estatica",
+     "vol": 0.08
+    },
+    {
+     "t": 0.1984375,
+     "tipo": "thud",
+     "vol": 0.14
+    },
+    {
+     "t": 0.8929687499999999,
+     "tipo": "pop",
+     "vol": 0.12
+    },
+    {
+     "t": 1.8851562499999996,
+     "tipo": "whoosh",
+     "vol": 0.12
+    },
+    {
+     "t": 3.3734374999999996,
+     "tipo": "ding",
+     "vol": 0.14
+    },
+    {
+     "t": 5.258593749999999,
+     "tipo": "radar",
+     "vol": 0.14
+    },
+    {
+     "t": 6.052343749999999,
+     "tipo": "tick",
+     "vol": 0.1
     }
    ]
   },
   {
    "n": 5,
-   "t": "STEPS",
-   "voz": "Más acceso, más demanda, más valor para tu propiedad.",
-   "dur": 3.6,
-   "h": "CAUSA Y EFECTO",
-   "w": "EFECTO",
+   "t": "PIEZA",
+   "voz": "El cerebro pesa dos por ciento del cuerpo, pero gasta veinte por ciento del oxígeno.",
+   "dur": 5.8,
+   "h": "EL CEREBRO GASTA MUCHO",
+   "w": "CEREBRO",
    "sub": "",
-   "ic": "casa",
+   "ic": "brillo",
    "num": null,
    "vs": null,
    "bars": [],
    "barsU": "",
    "hi": -1,
    "line": null,
-   "items": [
-    {
-     "l": "METRO",
-     "ic": "tren"
-    },
-    {
-     "l": "MÁS DEMANDA",
-     "ic": "tendencia-alza"
-    },
-    {
-     "l": "MÁS VALOR",
-     "ic": "dolar"
-    }
-   ],
+   "items": [],
    "stops": [],
    "end": "",
    "donut": [],
@@ -467,7 +694,7 @@
    "red": null,
    "termo": null,
    "pila": null,
-   "cap": "",
+   "cap": "el órgano que más lo nota",
    "papel": null,
    "pilares": null,
    "ciclo": null,
@@ -475,19 +702,22 @@
    "osc": null,
    "cubo": null,
    "diales": null,
-   "pieza": null,
+   "pieza": {
+    "id": "jet-cerebro",
+    "props": {}
+   },
    "cita": null,
    "sc": "",
    "modo": "VIRAL",
-   "tema": "claro",
-   "bg": "light",
-   "ritmo": 1,
-   "total": 36.9,
-   "inicio": 15.1,
-   "fin": 18.7,
-   "texto": "Más acceso, más demanda, más valor para tu propiedad.",
-   "tr": "barrido",
-   "trs": "barrido",
+   "tema": "oscuro",
+   "bg": "dark",
+   "ritmo": 0.9907407407407406,
+   "total": 61.8,
+   "inicio": 31,
+   "fin": 36.8,
+   "texto": "El cerebro pesa dos por ciento del cuerpo, pero gasta veinte por ciento del oxígeno.",
+   "tr": "corte",
+   "trs": "semitono",
    "sfx": [
     {
      "t": 0.04,
@@ -495,131 +725,51 @@
      "vol": 0.16
     },
     {
-     "t": 0.75,
+     "t": 0.05,
+     "tipo": "heartbeat",
+     "vol": 0.18
+    },
+    {
+     "t": 0.7925925925925925,
+     "tipo": "zap",
+     "vol": 0.1
+    },
+    {
+     "t": 1.2879629629629628,
      "tipo": "pop",
+     "vol": 0.1
+    },
+    {
+     "t": 2.8731481481481476,
+     "tipo": "golpe",
+     "vol": 0.2
+    },
+    {
+     "t": 3.1703703703703696,
+     "tipo": "ding",
      "vol": 0.14
     },
     {
-     "t": 1.37,
-     "tipo": "pop",
-     "vol": 0.14
-    },
-    {
-     "t": 1.99,
-     "tipo": "pop",
-     "vol": 0.14
+     "t": 4.458333333333333,
+     "tipo": "heartbeat",
+     "vol": 0.16
     }
    ]
   },
   {
    "n": 6,
-   "t": "LINE",
-   "voz": "Donde llega el transporte, el metro cuadrado sube.",
-   "dur": 3.8,
-   "h": "VALOR DEL M²",
-   "w": "M²",
+   "t": "PIEZA",
+   "voz": "A treinta y cinco mil pies, la conciencia útil dura entre treinta y sesenta segundos.",
+   "dur": 6.4,
+   "h": "30 A 60 SEGUNDOS",
+   "w": "SEGUNDOS",
    "sub": "",
-   "ic": "tren",
+   "ic": "brillo",
    "num": null,
    "vs": null,
    "bars": [],
    "barsU": "",
    "hi": -1,
-   "line": {
-    "pts": [
-     100,
-     104,
-     102,
-     112,
-     122,
-     128,
-     135
-    ],
-    "l0": "ANTES",
-    "l1": "DESPUÉS",
-    "end": "+35 %"
-   },
-   "items": [],
-   "stops": [],
-   "end": "",
-   "donut": [],
-   "picto": null,
-   "top": [],
-   "myth": "",
-   "truth": "",
-   "zoom": null,
-   "capas": null,
-   "mira": null,
-   "impacto": null,
-   "red": null,
-   "termo": null,
-   "pila": null,
-   "cap": "",
-   "papel": null,
-   "pilares": null,
-   "ciclo": null,
-   "duo": null,
-   "osc": null,
-   "cubo": null,
-   "diales": null,
-   "pieza": null,
-   "cita": null,
-   "sc": "",
-   "modo": "VIRAL",
-   "tema": "oscuro",
-   "bg": "dark",
-   "ritmo": 0.9054054054054054,
-   "total": 36.9,
-   "inicio": 18.7,
-   "fin": 22.5,
-   "texto": "Donde llega el transporte, el metro cuadrado sube.",
-   "tr": "barrido",
-   "trs": "barrido",
-   "sfx": [
-    {
-     "t": 0.04,
-     "tipo": "whoosh",
-     "vol": 0.16
-    },
-    {
-     "t": 0.6337837837837837,
-     "tipo": "zap",
-     "vol": 0.1
-    },
-    {
-     "t": 2.535135135135135,
-     "tipo": "ding",
-     "vol": 0.18
-    }
-   ]
-  },
-  {
-   "n": 7,
-   "t": "BARS",
-   "voz": "Mientras más cerca de la estación, más valorización.",
-   "dur": 3.4,
-   "h": "VALORIZACIÓN POR ZONA",
-   "w": "ZONA",
-   "sub": "",
-   "ic": "tren",
-   "num": null,
-   "vs": null,
-   "bars": [
-    {
-     "l": "LEJOS",
-     "v": 8
-    },
-    {
-     "l": "A 10 MIN",
-     "v": 19
-    },
-    {
-     "l": "A 5 MIN",
-     "v": 35
-    }
-   ],
-   "barsU": "%",
-   "hi": 2,
    "line": null,
    "items": [],
    "stops": [],
@@ -636,7 +786,7 @@
    "red": null,
    "termo": null,
    "pila": null,
-   "cap": "",
+   "cap": "tiempo de conciencia útil (FAA)",
    "papel": null,
    "pilares": null,
    "ciclo": null,
@@ -644,19 +794,22 @@
    "osc": null,
    "cubo": null,
    "diales": null,
-   "pieza": null,
+   "pieza": {
+    "id": "jet-reloj",
+    "props": {}
+   },
    "cita": null,
    "sc": "",
    "modo": "VIRAL",
    "tema": "claro",
    "bg": "light",
    "ritmo": 1,
-   "total": 36.9,
-   "inicio": 22.5,
-   "fin": 25.9,
-   "texto": "Mientras más cerca de la estación, más valorización.",
-   "tr": "barrido",
-   "trs": "barrido",
+   "total": 61.8,
+   "inicio": 36.8,
+   "fin": 43.2,
+   "texto": "A treinta y cinco mil pies, la conciencia útil dura entre treinta y sesenta segundos.",
+   "tr": "semitono",
+   "trs": "corte",
    "sfx": [
     {
      "t": 0.04,
@@ -664,36 +817,146 @@
      "vol": 0.16
     },
     {
-     "t": 0.95,
-     "tipo": "pop",
-     "vol": 0.13
+     "t": 0.05,
+     "tipo": "whoosh",
+     "vol": 0.1
     },
     {
-     "t": 1.15,
-     "tipo": "pop",
-     "vol": 0.13
+     "t": 0.9,
+     "tipo": "clic",
+     "vol": 0.05
     },
     {
-     "t": 1.35,
-     "tipo": "pop",
-     "vol": 0.13
+     "t": 1,
+     "tipo": "tick",
+     "vol": 0.1
     },
     {
-     "t": 2,
+     "t": 1.03,
+     "tipo": "clic",
+     "vol": 0.05
+    },
+    {
+     "t": 1.1600000000000001,
+     "tipo": "clic",
+     "vol": 0.05
+    },
+    {
+     "t": 1.29,
+     "tipo": "clic",
+     "vol": 0.05
+    },
+    {
+     "t": 1.42,
+     "tipo": "clic",
+     "vol": 0.05
+    },
+    {
+     "t": 1.42,
+     "tipo": "tick",
+     "vol": 0.1
+    },
+    {
+     "t": 1.55,
+     "tipo": "clic",
+     "vol": 0.05
+    },
+    {
+     "t": 1.6800000000000002,
+     "tipo": "clic",
+     "vol": 0.05
+    },
+    {
+     "t": 1.81,
+     "tipo": "clic",
+     "vol": 0.05
+    },
+    {
+     "t": 1.8399999999999999,
+     "tipo": "tick",
+     "vol": 0.1
+    },
+    {
+     "t": 1.94,
+     "tipo": "clic",
+     "vol": 0.05
+    },
+    {
+     "t": 2.07,
+     "tipo": "clic",
+     "vol": 0.05
+    },
+    {
+     "t": 2.2,
+     "tipo": "clic",
+     "vol": 0.05
+    },
+    {
+     "t": 2.26,
+     "tipo": "tick",
+     "vol": 0.1
+    },
+    {
+     "t": 2.33,
+     "tipo": "clic",
+     "vol": 0.05
+    },
+    {
+     "t": 2.46,
+     "tipo": "clic",
+     "vol": 0.05
+    },
+    {
+     "t": 2.59,
+     "tipo": "clic",
+     "vol": 0.05
+    },
+    {
+     "t": 2.6799999999999997,
+     "tipo": "tick",
+     "vol": 0.1
+    },
+    {
+     "t": 2.72,
+     "tipo": "clic",
+     "vol": 0.05
+    },
+    {
+     "t": 2.85,
+     "tipo": "clic",
+     "vol": 0.05
+    },
+    {
+     "t": 2.98,
+     "tipo": "clic",
+     "vol": 0.05
+    },
+    {
+     "t": 3.11,
+     "tipo": "clic",
+     "vol": 0.05
+    },
+    {
+     "t": 3.9,
      "tipo": "ding",
-     "vol": 0.16
+     "vol": 0.18
+    },
+    {
+     "t": 4.6,
+     "tipo": "heartbeat",
+     "vol": 0.2
     }
    ]
   },
   {
-   "n": 8,
-   "t": "SKYLINE",
-   "voz": "Tu inmueble puede ser la próxima gran oportunidad.",
-   "dur": 3.4,
-   "h": "TU INMUEBLE, MÁS VALIOSO",
-   "w": "VALIOSO",
-   "sub": "cerca de las estaciones",
-   "ic": "casa",
+   "n": 7,
+   "t": "PIEZA",
+   "voz": "Lo peligroso es que no duele ni ahoga: aparece euforia, visión en túnel, labios azulados y poco juicio.",
+   "dur": 7.2,
+   "h": "NO DUELE, NO AHOGA",
+   "w": "DUELE,",
+   "sub": "",
+   "ic": "alerta",
    "num": null,
    "vs": null,
    "bars": [],
@@ -701,88 +964,6 @@
    "hi": -1,
    "line": null,
    "items": [],
-   "stops": [],
-   "end": "+35 %",
-   "donut": [],
-   "picto": null,
-   "top": [],
-   "myth": "",
-   "truth": "",
-   "zoom": null,
-   "capas": null,
-   "mira": null,
-   "impacto": null,
-   "red": null,
-   "termo": null,
-   "pila": null,
-   "cap": "",
-   "papel": null,
-   "pilares": null,
-   "ciclo": null,
-   "duo": null,
-   "osc": null,
-   "cubo": null,
-   "diales": null,
-   "pieza": null,
-   "cita": null,
-   "sc": "",
-   "modo": "VIRAL",
-   "tema": "oscuro",
-   "bg": "gold",
-   "ritmo": 0.9833333333333333,
-   "total": 36.9,
-   "inicio": 25.9,
-   "fin": 29.3,
-   "texto": "Tu inmueble puede ser la próxima gran oportunidad.",
-   "tr": "barrido",
-   "trs": "barrido",
-   "sfx": [
-    {
-     "t": 0.04,
-     "tipo": "whoosh",
-     "vol": 0.16
-    },
-    {
-     "t": 0.6883333333333332,
-     "tipo": "thud",
-     "vol": 0.14
-    },
-    {
-     "t": 1.8683333333333332,
-     "tipo": "ding",
-     "vol": 0.18
-    }
-   ]
-  },
-  {
-   "n": 9,
-   "t": "LIST",
-   "voz": "En IMNOBA publicas gratis, sin comisión: casas, apartamentos y autos.",
-   "dur": 4,
-   "h": "PUBLICA EN IMNOBA",
-   "w": "IMNOBA",
-   "sub": "",
-   "ic": "casa",
-   "num": null,
-   "vs": null,
-   "bars": [],
-   "barsU": "",
-   "hi": -1,
-   "line": null,
-   "items": [
-    {
-     "l": "Gratis y sin comisión",
-     "ic": "check"
-    },
-    {
-     "l": "Casas, apartamentos y autos",
-     "ic": "check"
-    },
-    {
-     "l": "Llegas a más compradores",
-     "ic": "check"
-    }
-   ],
    "stops": [],
    "end": "",
    "donut": [],
@@ -797,7 +978,7 @@
    "red": null,
    "termo": null,
    "pila": null,
-   "cap": "",
+   "cap": "la hipoxia es silenciosa",
    "papel": null,
    "pilares": null,
    "ciclo": null,
@@ -805,18 +986,128 @@
    "osc": null,
    "cubo": null,
    "diales": null,
-   "pieza": null,
+   "pieza": {
+    "id": "jet-silencio",
+    "props": {}
+   },
    "cita": null,
    "sc": "",
    "modo": "VIRAL",
    "tema": "oscuro",
    "bg": "dark",
    "ritmo": 1,
-   "total": 36.9,
-   "inicio": 29.3,
-   "fin": 33.3,
-   "texto": "En IMNOBA publicas gratis, sin comisión: casas, apartamentos y autos.",
-   "tr": "barrido",
+   "total": 61.8,
+   "inicio": 43.2,
+   "fin": 50.4,
+   "texto": "Lo peligroso es que no duele ni ahoga: aparece euforia, visión en túnel, labios azulados y poco juicio.",
+   "tr": "corte",
+   "trs": "semitono",
+   "sfx": [
+    {
+     "t": 0.04,
+     "tipo": "whoosh",
+     "vol": 0.16
+    },
+    {
+     "t": 0.05,
+     "tipo": "estatica",
+     "vol": 0.1
+    },
+    {
+     "t": 1.2,
+     "tipo": "heartbeat",
+     "vol": 0.16
+    },
+    {
+     "t": 2,
+     "tipo": "pop",
+     "vol": 0.12
+    },
+    {
+     "t": 2.8,
+     "tipo": "heartbeat",
+     "vol": 0.2
+    },
+    {
+     "t": 3,
+     "tipo": "pop",
+     "vol": 0.12
+    },
+    {
+     "t": 3.95,
+     "tipo": "pop",
+     "vol": 0.12
+    },
+    {
+     "t": 4.2,
+     "tipo": "heartbeat",
+     "vol": 0.24
+    },
+    {
+     "t": 4.9,
+     "tipo": "pop",
+     "vol": 0.12
+    },
+    {
+     "t": 5.8,
+     "tipo": "golpe",
+     "vol": 0.22
+    }
+   ]
+  },
+  {
+   "n": 8,
+   "t": "PIEZA",
+   "voz": "Por eso los pilotos entrenan en cámaras de altura y usan máscara. El remedio: oxígeno puro y descender.",
+   "dur": 7.2,
+   "h": "OXÍGENO PURO Y DESCENDER",
+   "w": "DESCENDER",
+   "sub": "",
+   "ic": "tren",
+   "num": null,
+   "vs": null,
+   "bars": [],
+   "barsU": "",
+   "hi": -1,
+   "line": null,
+   "items": [],
+   "stops": [],
+   "end": "",
+   "donut": [],
+   "picto": null,
+   "top": [],
+   "myth": "",
+   "truth": "",
+   "zoom": null,
+   "capas": null,
+   "mira": null,
+   "impacto": null,
+   "red": null,
+   "termo": null,
+   "pila": null,
+   "cap": "qué sí funciona",
+   "papel": null,
+   "pilares": null,
+   "ciclo": null,
+   "duo": null,
+   "osc": null,
+   "cubo": null,
+   "diales": null,
+   "pieza": {
+    "id": "jet-descenso",
+    "props": {}
+   },
+   "cita": null,
+   "sc": "",
+   "modo": "VIRAL",
+   "tema": "claro",
+   "bg": "light",
+   "ritmo": 1,
+   "total": 61.8,
+   "inicio": 50.4,
+   "fin": 57.6,
+   "texto": "Por eso los pilotos entrenan en cámaras de altura y usan máscara. El remedio: oxígeno puro y descender.",
+   "tr": "semitono",
    "trs": "barrido",
    "sfx": [
     {
@@ -825,30 +1116,145 @@
      "vol": 0.16
     },
     {
-     "t": 0.75,
+     "t": 0.2,
+     "tipo": "clic",
+     "vol": 0.16
+    },
+    {
+     "t": 0.5,
+     "tipo": "thud",
+     "vol": 0.2
+    },
+    {
+     "t": 1.6,
+     "tipo": "whoosh",
+     "vol": 0.14
+    },
+    {
+     "t": 2.2,
+     "tipo": "clic",
+     "vol": 0.04
+    },
+    {
+     "t": 2.33,
+     "tipo": "clic",
+     "vol": 0.04
+    },
+    {
+     "t": 2.46,
+     "tipo": "clic",
+     "vol": 0.04
+    },
+    {
+     "t": 2.5900000000000003,
+     "tipo": "clic",
+     "vol": 0.04
+    },
+    {
+     "t": 2.6,
      "tipo": "pop",
      "vol": 0.14
     },
     {
-     "t": 1.37,
-     "tipo": "pop",
-     "vol": 0.14
+     "t": 2.72,
+     "tipo": "clic",
+     "vol": 0.04
     },
     {
-     "t": 1.99,
-     "tipo": "pop",
+     "t": 2.85,
+     "tipo": "clic",
+     "vol": 0.04
+    },
+    {
+     "t": 2.9800000000000004,
+     "tipo": "clic",
+     "vol": 0.04
+    },
+    {
+     "t": 3.1100000000000003,
+     "tipo": "clic",
+     "vol": 0.04
+    },
+    {
+     "t": 3.24,
+     "tipo": "clic",
+     "vol": 0.04
+    },
+    {
+     "t": 3.37,
+     "tipo": "clic",
+     "vol": 0.04
+    },
+    {
+     "t": 3.5,
+     "tipo": "clic",
+     "vol": 0.04
+    },
+    {
+     "t": 3.6300000000000003,
+     "tipo": "clic",
+     "vol": 0.04
+    },
+    {
+     "t": 3.7600000000000002,
+     "tipo": "clic",
+     "vol": 0.04
+    },
+    {
+     "t": 3.89,
+     "tipo": "clic",
+     "vol": 0.04
+    },
+    {
+     "t": 4.0200000000000005,
+     "tipo": "clic",
+     "vol": 0.04
+    },
+    {
+     "t": 4.15,
+     "tipo": "clic",
+     "vol": 0.04
+    },
+    {
+     "t": 4.28,
+     "tipo": "clic",
+     "vol": 0.04
+    },
+    {
+     "t": 4.41,
+     "tipo": "clic",
+     "vol": 0.04
+    },
+    {
+     "t": 4.54,
+     "tipo": "clic",
+     "vol": 0.04
+    },
+    {
+     "t": 4.67,
+     "tipo": "clic",
+     "vol": 0.04
+    },
+    {
+     "t": 5.6,
+     "tipo": "ding",
+     "vol": 0.2
+    },
+    {
+     "t": 5.7,
+     "tipo": "heartbeat",
      "vol": 0.14
     }
    ]
   },
   {
-   "n": 10,
+   "n": 9,
    "t": "CTA",
-   "voz": "No esperes al metro: publica gratis hoy en IMNOBA.",
-   "dur": 3.6,
-   "h": "PUBLICA GRATIS HOY",
-   "w": "GRATIS",
-   "sub": "imnoba.com",
+   "voz": "Guárdalo para tu próximo vuelo y síguenos en Sinapsis.",
+   "dur": 4.2,
+   "h": "GUÁRDALO Y SÍGUENOS",
+   "w": "SÍGUENOS",
+   "sub": "Más ciencia en SINAPSIS",
    "ic": "cohete",
    "num": null,
    "vs": null,
@@ -885,11 +1291,11 @@
    "modo": "VIRAL",
    "tema": "oscuro",
    "bg": "gold",
-   "ritmo": 0.9843749999999999,
-   "total": 36.9,
-   "inicio": 33.3,
-   "fin": 36.9,
-   "texto": "No esperes al metro: publica gratis hoy en IMNOBA.",
+   "ritmo": 1,
+   "total": 61.8,
+   "inicio": 57.6,
+   "fin": 61.8,
+   "texto": "Guárdalo para tu próximo vuelo y síguenos en Sinapsis.",
    "tr": "barrido",
    "trs": "barrido",
    "sfx": [
@@ -899,12 +1305,12 @@
      "vol": 0.16
     },
     {
-     "t": 0.49218749999999994,
+     "t": 0.5,
      "tipo": "ding",
      "vol": 0.2
     },
     {
-     "t": 1.0828125,
+     "t": 1.1,
      "tipo": "pop",
      "vol": 0.15
     }
