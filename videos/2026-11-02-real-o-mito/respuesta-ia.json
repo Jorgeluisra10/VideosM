@@ -1,0 +1,14 @@
+{
+  "titulo": "¿Real o mito? Seis datos de medicina",
+  "scenes": [
+    {"t": "PIEZA", "voz": "¿Real o mito? Seis datos de medicina tan locos que parecen chiste.", "dur": 5.2, "h": "¿REAL O MITO?", "w": "MITO", "pieza": {"id": "cur-gancho"}},
+    {"t": "PIEZA", "voz": "Uno: Charles Osborne tuvo hipo durante sesenta y ocho años. Todo empezó con un cerdo. ¡Real!", "dur": 6.6, "h": "EL HIPO MÁS LARGO", "w": "HIPO", "pieza": {"id": "cur-hipo"}},
+    {"t": "PIEZA", "voz": "Dos: no puedes hacerte cosquillas a ti mismo, porque tu cerebelo ya sabe que eres tú. ¡Real!", "dur": 6.9, "h": "COSQUILLAS A TI MISMO", "w": "COSQUILLAS", "pieza": {"id": "cur-cosquillas"}},
+    {"t": "PIEZA", "voz": "Tres: un chicle tragado tarda siete años en salir. ¡Mito! Normalmente sale en unos días.", "dur": 6.2, "h": "EL CHICLE DE 7 AÑOS", "w": "CHICLE", "pieza": {"id": "cur-chicle"}},
+    {"t": "PIEZA", "voz": "Cuatro: una pastilla de azúcar de dos dólares con cincuenta calma más el dolor que una de diez centavos. ¡Real!", "dur": 7.9, "h": "LA PASTILLA CARA", "w": "PASTILLA", "pieza": {"id": "cur-pastilla"}},
+    {"t": "PIEZA", "voz": "Cinco: un violinista tocó mientras le implantaban electrodos en el cerebro, y el tejido cerebral no siente dolor. ¡Real!", "dur": 7.6, "h": "VIOLÍN CON ELECTRODOS", "w": "VIOLÍN", "pieza": {"id": "cur-violin"}},
+    {"t": "PIEZA", "voz": "Seis: tras una lesión cerebral, una noruega empezó a sonar alemana. Se llama síndrome del acento extranjero. ¡Real!", "dur": 6.9, "h": "ACENTO EXTRANJERO", "w": "ACENTO", "pieza": {"id": "cur-acento"}},
+    {"t": "PIEZA", "voz": "Cinco eran reales y uno, mito. ¿Cuántos acertaste? Cuéntame en los comentarios.", "dur": 5.2, "h": "¿CUÁNTOS ACERTASTE?", "w": "ACERTASTE", "pieza": {"id": "cur-marcador"}},
+    {"t": "CTA", "voz": "Mándaselo a ese amigo que cree que sabe de medicina y síguenos en Sinapsis.", "dur": 5.6, "h": "MÁNDASELO Y SÍGUENOS", "w": "SÍGUENOS", "sub": "Más ciencia en SINAPSIS"}
+  ]
+}

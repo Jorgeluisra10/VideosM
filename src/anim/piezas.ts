@@ -466,6 +466,35 @@ export const TSUE = {
   dormir: { luna: 0.2, eeg: 0.6, sube: 1.0, subeDur: 4.2, siete: 5.2, frase: 6.0 },
 } as const;
 
+/** Datos del video «¿Real o mito?» (SINAPSIS · curiosidades médicas con humor). Fuentes y precauciones en ejemplos/animacion-viral/guion-tecnico-real-o-mito.md. */
+export const CUR = {
+  /** Charles Osborne: hipo de 1922 a 1990 (Guinness: el ataque más largo confirmado); ≈ 430 millones de hipos = estimado de una sola fuente */
+  hipo: { desde: 1922, hasta: 1990, anios: 68, hipos: 430_000_000 },
+  /** cosquillas: Blakemore, Wolpert y Frith 1998 (Nature Neuroscience): el cerebelo predice el toque propio y lo cancela */
+  /** chicle: el mito de los 7 años; sale con el tránsito normal (días) */
+  chicle: { mitoAnios: 7 },
+  /** Waber, Shiv, Carmon y Ariely 2008 (JAMA, carta de investigación, 82 voluntarios, descargas en la muñeca): placebo de US$ 2,50 → 85,4 % de alivio; de US$ 0,10 → 61,0 % */
+  pastilla: { caro: 2.5, barato: 0.1, aliviaCaro: 85.4, aliviaBarato: 61.0, n: 82 },
+  /** Roger Frisch (Minnesota Orchestra) tocó el violín durante la implantación de electrodos (estimulación cerebral profunda por temblor esencial, Mayo Clinic, cirugía de 2010) */
+  violin: { anio: 2010 },
+  /** síndrome del acento extranjero: Monrad-Krohn 1947 (Astrid L., noruega que sonaba alemana tras una lesión); descrito ya en 1907 (Pierre Marie); ≈ 100–200 casos documentados */
+  acento: { anio: 1947 },
+  /** resultado final: 5 reales y 1 mito (el 3.º es el mito) */
+  veredictos: ["real", "real", "mito", "real", "real", "real"] as ("real" | "mito")[],
+} as const;
+
+/** Tiempos del video «¿Real o mito?» (segundos a ritmo normal), compartidos entre el dibujo y el sonido. */
+export const TCUR = {
+  gancho: { titulo: 0.2, mascota: 0.3, cartas: 2.6, cartaPaso: 0.32, pregunta: 4.4 },
+  hipo: { cerdo: 0.5, hombre: 0.9, anios: 1.5, aniosDur: 2.8, hic: [1.7, 2.6, 3.5, 4.4, 5.3], sello: 5.7 },
+  cosquillas: { cara: 0.2, otro: 0.9, serio: 3.0, cerebelo: 3.8, sello: 5.6 },
+  chicle: { boca: 0.2, siete: 1.0, tacha: 2.6, sello: 3.7, viaje: 4.1, viajeDur: 1.9, dias: 4.6 },
+  pastilla: { barata: 0.5, cara: 1.4, barras: 3.3, barrasDur: 2.2, mas: 5.5, sello: 6.6 },
+  violin: { cabeza: 0.3, violin: 0.9, electrodo: 2.2, dolor: 4.8, sello: 6.2 },
+  acento: { persona: 0.3, antes: 1.0, golpe: 2.3, despues: 2.9, banderas: 4.1, sello: 5.6 },
+  marcador: { luces: 0.5, luzPaso: 0.38, copa: 3.0, comentar: 3.6 },
+} as const;
+
 /* ───────────── «La regla del 37 %» (problema de la parada óptima, ensayo abstracto para IMNOBA) ───────────── */
 
 /** Generador pseudoaleatorio determinista (mulberry32): mismos números en el render, en las pruebas y en cada fotograma. */
@@ -1084,6 +1113,39 @@ export const PIEZAS: Record<string, DefPieza> = {
   "sue-dormir": {
     id: "sue-dormir", nombre: "Sueño · luna y ondas lentas: durmiendo, el rendimiento vuelve a cero; 7 h o más (cierre)", ideal: 7.4, fondo: "dark", entra: "zoom",
     sfx: (_d, r) => [ev(0.05, "whoosh", 0.1), ev(TSUE.dormir.eeg * r, "pop", 0.08), ...clics(TSUE.dormir.sube * r, TSUE.dormir.subeDur * r * 0.7, 0.03), ev((TSUE.dormir.sube + TSUE.dormir.subeDur) * r, "ding", 0.18), ev(TSUE.dormir.siete * r, "pop", 0.12), ev(TSUE.dormir.frase * r, "heartbeat", 0.12)],
+  },
+  /* ───────────── «¿Real o mito?» (SINAPSIS · curiosidades médicas con humor) ───────────── */
+  "cur-gancho": {
+    id: "cur-gancho", nombre: "Real o mito · Cerebrito presenta el concurso: seis cartas con signo de pregunta (gancho)", ideal: 4.8, fondo: "dark",
+    sfx: (_d, r) => [ev(0.05, "whoosh", 0.14), ev(TCUR.gancho.mascota * r, "pop", 0.16), ...[0, 1, 2, 3, 4, 5].map((i) => ev((TCUR.gancho.cartas + TCUR.gancho.cartaPaso * i) * r, "pop", 0.1)), ev(TCUR.gancho.pregunta * r, "ding", 0.14)],
+  },
+  "cur-hipo": {
+    id: "cur-hipo", nombre: "Real o mito · #1 Charles Osborne: 68 años de hipo (1922–1990), con un cerdo y hics que lo hacen saltar → REAL", ideal: 6.2, fondo: "dark", entra: "corte",
+    sfx: (_d, r) => [ev(0.05, "whoosh", 0.1), ev(TCUR.hipo.cerdo * r, "pop", 0.14), ...TCUR.hipo.hic.map((h) => ev(h * r, "pop", 0.16)), ...clics(TCUR.hipo.anios * r, TCUR.hipo.aniosDur * r * 0.9, 0.04), ev(TCUR.hipo.sello * r, "golpe", 0.3), ev((TCUR.hipo.sello + 0.1) * r, "ding", 0.2)],
+  },
+  "cur-cosquillas": {
+    id: "cur-cosquillas", nombre: "Real o mito · #2 No puedes hacerte cosquillas: tu cerebelo predice tu propia mano → REAL", ideal: 6.4, fondo: "dark", entra: "semitono",
+    sfx: (_d, r) => [ev(0.05, "whoosh", 0.1), ev(TCUR.cosquillas.otro * r, "pop", 0.12), ev((TCUR.cosquillas.otro + 0.5) * r, "pop", 0.12), ev((TCUR.cosquillas.otro + 1.0) * r, "pop", 0.12), ev(TCUR.cosquillas.serio * r, "thud", 0.14), ev(TCUR.cosquillas.cerebelo * r, "zap", 0.14), ev(TCUR.cosquillas.sello * r, "golpe", 0.3), ev((TCUR.cosquillas.sello + 0.1) * r, "ding", 0.2)],
+  },
+  "cur-chicle": {
+    id: "cur-chicle", nombre: "Real o mito · #3 El chicle tragado tarda 7 años: MITO, recorre el tubo digestivo en unos días", ideal: 5.9, fondo: "dark", entra: "corte",
+    sfx: (_d, r) => [ev(0.05, "whoosh", 0.1), ev(TCUR.chicle.boca * r, "pop", 0.12), ev(TCUR.chicle.siete * r, "tick", 0.12), ev(TCUR.chicle.tacha * r, "zap", 0.16), ev(TCUR.chicle.sello * r, "golpe", 0.3), ev(TCUR.chicle.sello * r, "estatica", 0.18), ...clics(TCUR.chicle.viaje * r, TCUR.chicle.viajeDur * r * 0.9, 0.04), ev(TCUR.chicle.dias * r, "ding", 0.14)],
+  },
+  "cur-pastilla": {
+    id: "cur-pastilla", nombre: "Real o mito · #4 La pastilla de azúcar cara (US$ 2,50) alivia más que la barata (US$ 0,10): 85 % vs 61 % → REAL", ideal: 7.4, fondo: "dark", entra: "semitono",
+    sfx: (_d, r) => [ev(0.05, "whoosh", 0.1), ev(TCUR.pastilla.barata * r, "pop", 0.12), ev(TCUR.pastilla.cara * r, "cash", 0.16), ...clics(TCUR.pastilla.barras * r, TCUR.pastilla.barrasDur * r * 0.8, 0.04), ev(TCUR.pastilla.mas * r, "zap", 0.14), ev(TCUR.pastilla.sello * r, "golpe", 0.3), ev((TCUR.pastilla.sello + 0.1) * r, "ding", 0.2)],
+  },
+  "cur-violin": {
+    id: "cur-violin", nombre: "Real o mito · #5 Un violinista tocó mientras le implantaban electrodos: el tejido cerebral no siente dolor → REAL", ideal: 7.1, fondo: "dark", entra: "corte",
+    sfx: (_d, r) => [ev(0.05, "whoosh", 0.1), ev(TCUR.violin.cabeza * r, "pop", 0.12), ev(TCUR.violin.violin * r, "pop", 0.14), ev(TCUR.violin.electrodo * r, "zap", 0.16), ev(TCUR.violin.dolor * r, "tick", 0.14), ev(TCUR.violin.sello * r, "golpe", 0.3), ev((TCUR.violin.sello + 0.1) * r, "ding", 0.2)],
+  },
+  "cur-acento": {
+    id: "cur-acento", nombre: "Real o mito · #6 Síndrome del acento extranjero: una noruega empieza a sonar alemana tras una lesión cerebral (1947) → REAL", ideal: 6.4, fondo: "dark", entra: "semitono",
+    sfx: (_d, r) => [ev(0.05, "whoosh", 0.1), ev(TCUR.acento.persona * r, "pop", 0.12), ev(TCUR.acento.antes * r, "pop", 0.12), ev(TCUR.acento.golpe * r, "golpe", 0.22), ev(TCUR.acento.despues * r, "pop", 0.14), ev(TCUR.acento.banderas * r, "ding", 0.14), ev(TCUR.acento.sello * r, "golpe", 0.3), ev((TCUR.acento.sello + 0.1) * r, "ding", 0.2)],
+  },
+  "cur-marcador": {
+    id: "cur-marcador", nombre: "Real o mito · el marcador: 5 reales y 1 mito, trofeo y pregunta «¿cuántos acertaste?» (cierre)", ideal: 4.8, fondo: "dark", entra: "zoom",
+    sfx: (_d, r) => [ev(0.05, "whoosh", 0.1), ...[0, 1, 2, 3, 4, 5].map((i) => ev((TCUR.marcador.luces + TCUR.marcador.luzPaso * i) * r, i === 2 ? "golpe" : "ding", i === 2 ? 0.2 : 0.12)), ev(TCUR.marcador.copa * r, "cash", 0.18), ev(TCUR.marcador.comentar * r, "pop", 0.14)],
   },
   "astro-memoria": {
     id: "astro-memoria", nombre: "Astrocitos · en ratones, reactivarlos estimuló el recuerdo", ideal: 4.15, fondo: "dark", entra: "corte",

@@ -1,18 +1,18 @@
 {
  "version": 1,
- "titulo": "Un día sin dormir",
+ "titulo": "¿Real o mito? Seis datos de medicina",
  "paleta": "medicina",
  "sfx": true,
  "fps": 60,
- "duracion": 61.4,
+ "duracion": 58.1,
  "escenas": [
   {
    "n": 1,
    "t": "PIEZA",
-   "voz": "Un día sin dormir te deja como si estuvieras borracho, y la ciencia lo midió.",
-   "dur": 6.2,
-   "h": "UN DÍA SIN DORMIR = BORRACHO",
-   "w": "BORRACHO",
+   "voz": "¿Real o mito? Seis datos de medicina tan locos que parecen chiste.",
+   "dur": 5.2,
+   "h": "¿REAL O MITO?",
+   "w": "MITO?",
    "sub": "",
    "ic": "brillo",
    "num": null,
@@ -45,7 +45,7 @@
    "cubo": null,
    "diales": null,
    "pieza": {
-    "id": "sue-gancho",
+    "id": "cur-gancho",
     "props": {}
    },
    "cita": null,
@@ -53,11 +53,11 @@
    "modo": "VIRAL",
    "tema": "oscuro",
    "bg": "dark",
-   "ritmo": 1,
-   "total": 61.4,
+   "ritmo": 0.9895833333333334,
+   "total": 58.1,
    "inicio": 0,
-   "fin": 6.2,
-   "texto": "Un día sin dormir te deja como si estuvieras borracho, y la ciencia lo midió.",
+   "fin": 5.2,
+   "texto": "¿Real o mito? Seis datos de medicina tan locos que parecen chiste.",
    "tr": "barrido",
    "trs": "corte",
    "sfx": [
@@ -69,7 +69,575 @@
     {
      "t": 0.05,
      "tipo": "whoosh",
+     "vol": 0.14
+    },
+    {
+     "t": 0.296875,
+     "tipo": "pop",
+     "vol": 0.16
+    },
+    {
+     "t": 2.572916666666667,
+     "tipo": "pop",
+     "vol": 0.1
+    },
+    {
+     "t": 2.8895833333333334,
+     "tipo": "pop",
+     "vol": 0.1
+    },
+    {
+     "t": 3.2062500000000003,
+     "tipo": "pop",
+     "vol": 0.1
+    },
+    {
+     "t": 3.5229166666666667,
+     "tipo": "pop",
+     "vol": 0.1
+    },
+    {
+     "t": 3.8395833333333336,
+     "tipo": "pop",
+     "vol": 0.1
+    },
+    {
+     "t": 4.15625,
+     "tipo": "pop",
+     "vol": 0.1
+    },
+    {
+     "t": 4.354166666666667,
+     "tipo": "ding",
+     "vol": 0.14
+    }
+   ]
+  },
+  {
+   "n": 2,
+   "t": "PIEZA",
+   "voz": "Uno: Charles Osborne tuvo hipo durante sesenta y ocho años. Todo empezó con un cerdo. ¡Real!",
+   "dur": 6.6,
+   "h": "EL HIPO MÁS LARGO",
+   "w": "HIPO",
+   "sub": "",
+   "ic": "brillo",
+   "num": null,
+   "vs": null,
+   "bars": [],
+   "barsU": "",
+   "hi": -1,
+   "line": null,
+   "items": [],
+   "stops": [],
+   "end": "",
+   "donut": [],
+   "picto": null,
+   "top": [],
+   "myth": "",
+   "truth": "",
+   "zoom": null,
+   "capas": null,
+   "mira": null,
+   "impacto": null,
+   "red": null,
+   "termo": null,
+   "pila": null,
+   "cap": "",
+   "papel": null,
+   "pilares": null,
+   "ciclo": null,
+   "duo": null,
+   "osc": null,
+   "cubo": null,
+   "diales": null,
+   "pieza": {
+    "id": "cur-hipo",
+    "props": {}
+   },
+   "cita": null,
+   "sc": "",
+   "modo": "VIRAL",
+   "tema": "claro",
+   "bg": "light",
+   "ritmo": 0.9919354838709676,
+   "total": 58.1,
+   "inicio": 5.2,
+   "fin": 11.8,
+   "texto": "Uno: Charles Osborne tuvo hipo durante sesenta y ocho años. Todo empezó con un cerdo. ¡Real!",
+   "tr": "corte",
+   "trs": "semitono",
+   "sfx": [
+    {
+     "t": 0.04,
+     "tipo": "whoosh",
+     "vol": 0.16
+    },
+    {
+     "t": 0.05,
+     "tipo": "whoosh",
+     "vol": 0.1
+    },
+    {
+     "t": 0.4959677419354838,
+     "tipo": "pop",
+     "vol": 0.14
+    },
+    {
+     "t": 1.4879032258064515,
+     "tipo": "clic",
+     "vol": 0.04
+    },
+    {
+     "t": 1.6179032258064514,
+     "tipo": "clic",
+     "vol": 0.04
+    },
+    {
+     "t": 1.686290322580645,
+     "tipo": "pop",
+     "vol": 0.16
+    },
+    {
+     "t": 1.7479032258064515,
+     "tipo": "clic",
+     "vol": 0.04
+    },
+    {
+     "t": 1.8779032258064516,
+     "tipo": "clic",
+     "vol": 0.04
+    },
+    {
+     "t": 2.0079032258064515,
+     "tipo": "clic",
+     "vol": 0.04
+    },
+    {
+     "t": 2.1379032258064514,
+     "tipo": "clic",
+     "vol": 0.04
+    },
+    {
+     "t": 2.2679032258064513,
+     "tipo": "clic",
+     "vol": 0.04
+    },
+    {
+     "t": 2.3979032258064517,
+     "tipo": "clic",
+     "vol": 0.04
+    },
+    {
+     "t": 2.5279032258064515,
+     "tipo": "clic",
+     "vol": 0.04
+    },
+    {
+     "t": 2.5790322580645157,
+     "tipo": "pop",
+     "vol": 0.16
+    },
+    {
+     "t": 2.6579032258064514,
+     "tipo": "clic",
+     "vol": 0.04
+    },
+    {
+     "t": 2.787903225806452,
+     "tipo": "clic",
+     "vol": 0.04
+    },
+    {
+     "t": 2.9179032258064517,
+     "tipo": "clic",
+     "vol": 0.04
+    },
+    {
+     "t": 3.0479032258064516,
+     "tipo": "clic",
+     "vol": 0.04
+    },
+    {
+     "t": 3.1779032258064515,
+     "tipo": "clic",
+     "vol": 0.04
+    },
+    {
+     "t": 3.3079032258064514,
+     "tipo": "clic",
+     "vol": 0.04
+    },
+    {
+     "t": 3.4379032258064517,
+     "tipo": "clic",
+     "vol": 0.04
+    },
+    {
+     "t": 3.4717741935483866,
+     "tipo": "pop",
+     "vol": 0.16
+    },
+    {
+     "t": 3.5679032258064516,
+     "tipo": "clic",
+     "vol": 0.04
+    },
+    {
+     "t": 3.6979032258064515,
+     "tipo": "clic",
+     "vol": 0.04
+    },
+    {
+     "t": 3.8279032258064514,
+     "tipo": "clic",
+     "vol": 0.04
+    },
+    {
+     "t": 4.364516129032258,
+     "tipo": "pop",
+     "vol": 0.16
+    },
+    {
+     "t": 5.257258064516129,
+     "tipo": "pop",
+     "vol": 0.16
+    },
+    {
+     "t": 5.6540322580645155,
+     "tipo": "golpe",
+     "vol": 0.3
+    },
+    {
+     "t": 5.753225806451612,
+     "tipo": "ding",
+     "vol": 0.2
+    }
+   ]
+  },
+  {
+   "n": 3,
+   "t": "PIEZA",
+   "voz": "Dos: no puedes hacerte cosquillas a ti mismo, porque tu cerebelo ya sabe que eres tú. ¡Real!",
+   "dur": 6.9,
+   "h": "COSQUILLAS A TI MISMO",
+   "w": "COSQUILLAS",
+   "sub": "",
+   "ic": "reloj",
+   "num": null,
+   "vs": null,
+   "bars": [],
+   "barsU": "",
+   "hi": -1,
+   "line": null,
+   "items": [],
+   "stops": [],
+   "end": "",
+   "donut": [],
+   "picto": null,
+   "top": [],
+   "myth": "",
+   "truth": "",
+   "zoom": null,
+   "capas": null,
+   "mira": null,
+   "impacto": null,
+   "red": null,
+   "termo": null,
+   "pila": null,
+   "cap": "",
+   "papel": null,
+   "pilares": null,
+   "ciclo": null,
+   "duo": null,
+   "osc": null,
+   "cubo": null,
+   "diales": null,
+   "pieza": {
+    "id": "cur-cosquillas",
+    "props": {}
+   },
+   "cita": null,
+   "sc": "",
+   "modo": "VIRAL",
+   "tema": "oscuro",
+   "bg": "dark",
+   "ritmo": 1,
+   "total": 58.1,
+   "inicio": 11.8,
+   "fin": 18.7,
+   "texto": "Dos: no puedes hacerte cosquillas a ti mismo, porque tu cerebelo ya sabe que eres tú. ¡Real!",
+   "tr": "semitono",
+   "trs": "corte",
+   "sfx": [
+    {
+     "t": 0.04,
+     "tipo": "whoosh",
+     "vol": 0.16
+    },
+    {
+     "t": 0.05,
+     "tipo": "whoosh",
+     "vol": 0.1
+    },
+    {
+     "t": 0.9,
+     "tipo": "pop",
      "vol": 0.12
+    },
+    {
+     "t": 1.4,
+     "tipo": "pop",
+     "vol": 0.12
+    },
+    {
+     "t": 1.9,
+     "tipo": "pop",
+     "vol": 0.12
+    },
+    {
+     "t": 3,
+     "tipo": "thud",
+     "vol": 0.14
+    },
+    {
+     "t": 3.8,
+     "tipo": "zap",
+     "vol": 0.14
+    },
+    {
+     "t": 5.6,
+     "tipo": "golpe",
+     "vol": 0.3
+    },
+    {
+     "t": 5.699999999999999,
+     "tipo": "ding",
+     "vol": 0.2
+    }
+   ]
+  },
+  {
+   "n": 4,
+   "t": "PIEZA",
+   "voz": "Tres: un chicle tragado tarda siete años en salir. ¡Mito! Normalmente sale en unos días.",
+   "dur": 6.2,
+   "h": "EL CHICLE DE 7 AÑOS",
+   "w": "CHICLE",
+   "sub": "",
+   "ic": "brillo",
+   "num": null,
+   "vs": null,
+   "bars": [],
+   "barsU": "",
+   "hi": -1,
+   "line": null,
+   "items": [],
+   "stops": [],
+   "end": "",
+   "donut": [],
+   "picto": null,
+   "top": [],
+   "myth": "",
+   "truth": "",
+   "zoom": null,
+   "capas": null,
+   "mira": null,
+   "impacto": null,
+   "red": null,
+   "termo": null,
+   "pila": null,
+   "cap": "",
+   "papel": null,
+   "pilares": null,
+   "ciclo": null,
+   "duo": null,
+   "osc": null,
+   "cubo": null,
+   "diales": null,
+   "pieza": {
+    "id": "cur-chicle",
+    "props": {}
+   },
+   "cita": null,
+   "sc": "",
+   "modo": "VIRAL",
+   "tema": "claro",
+   "bg": "light",
+   "ritmo": 0.9745762711864406,
+   "total": 58.1,
+   "inicio": 18.7,
+   "fin": 24.9,
+   "texto": "Tres: un chicle tragado tarda siete años en salir. ¡Mito! Normalmente sale en unos días.",
+   "tr": "corte",
+   "trs": "semitono",
+   "sfx": [
+    {
+     "t": 0.04,
+     "tipo": "whoosh",
+     "vol": 0.16
+    },
+    {
+     "t": 0.05,
+     "tipo": "whoosh",
+     "vol": 0.1
+    },
+    {
+     "t": 0.19491525423728814,
+     "tipo": "pop",
+     "vol": 0.12
+    },
+    {
+     "t": 0.9745762711864406,
+     "tipo": "tick",
+     "vol": 0.12
+    },
+    {
+     "t": 2.5338983050847457,
+     "tipo": "zap",
+     "vol": 0.16
+    },
+    {
+     "t": 3.6059322033898304,
+     "tipo": "golpe",
+     "vol": 0.3
+    },
+    {
+     "t": 3.6059322033898304,
+     "tipo": "estatica",
+     "vol": 0.18
+    },
+    {
+     "t": 3.995762711864406,
+     "tipo": "clic",
+     "vol": 0.04
+    },
+    {
+     "t": 4.1257627118644065,
+     "tipo": "clic",
+     "vol": 0.04
+    },
+    {
+     "t": 4.255762711864406,
+     "tipo": "clic",
+     "vol": 0.04
+    },
+    {
+     "t": 4.385762711864406,
+     "tipo": "clic",
+     "vol": 0.04
+    },
+    {
+     "t": 4.483050847457626,
+     "tipo": "ding",
+     "vol": 0.14
+    },
+    {
+     "t": 4.515762711864406,
+     "tipo": "clic",
+     "vol": 0.04
+    },
+    {
+     "t": 4.645762711864406,
+     "tipo": "clic",
+     "vol": 0.04
+    },
+    {
+     "t": 4.775762711864406,
+     "tipo": "clic",
+     "vol": 0.04
+    },
+    {
+     "t": 4.905762711864406,
+     "tipo": "clic",
+     "vol": 0.04
+    },
+    {
+     "t": 5.035762711864406,
+     "tipo": "clic",
+     "vol": 0.04
+    },
+    {
+     "t": 5.1657627118644065,
+     "tipo": "clic",
+     "vol": 0.04
+    },
+    {
+     "t": 5.295762711864406,
+     "tipo": "clic",
+     "vol": 0.04
+    },
+    {
+     "t": 5.425762711864406,
+     "tipo": "clic",
+     "vol": 0.04
+    }
+   ]
+  },
+  {
+   "n": 5,
+   "t": "PIEZA",
+   "voz": "Cuatro: una pastilla de azúcar de dos dólares con cincuenta calma más el dolor que una de diez centavos. ¡Real!",
+   "dur": 7.9,
+   "h": "LA PASTILLA CARA",
+   "w": "PASTILLA",
+   "sub": "",
+   "ic": "dolar",
+   "num": null,
+   "vs": null,
+   "bars": [],
+   "barsU": "",
+   "hi": -1,
+   "line": null,
+   "items": [],
+   "stops": [],
+   "end": "",
+   "donut": [],
+   "picto": null,
+   "top": [],
+   "myth": "",
+   "truth": "",
+   "zoom": null,
+   "capas": null,
+   "mira": null,
+   "impacto": null,
+   "red": null,
+   "termo": null,
+   "pila": null,
+   "cap": "",
+   "papel": null,
+   "pilares": null,
+   "ciclo": null,
+   "duo": null,
+   "osc": null,
+   "cubo": null,
+   "diales": null,
+   "pieza": {
+    "id": "cur-pastilla",
+    "props": {}
+   },
+   "cita": null,
+   "sc": "",
+   "modo": "VIRAL",
+   "tema": "oscuro",
+   "bg": "dark",
+   "ritmo": 1,
+   "total": 58.1,
+   "inicio": 24.9,
+   "fin": 32.8,
+   "texto": "Cuatro: una pastilla de azúcar de dos dólares con cincuenta calma más el dolor que una de diez centavos. ¡Real!",
+   "tr": "semitono",
+   "trs": "corte",
+   "sfx": [
+    {
+     "t": 0.04,
+     "tipo": "whoosh",
+     "vol": 0.16
+    },
+    {
+     "t": 0.05,
+     "tipo": "whoosh",
+     "vol": 0.1
     },
     {
      "t": 0.5,
@@ -77,759 +645,101 @@
      "vol": 0.12
     },
     {
-     "t": 0.9,
-     "tipo": "clic",
-     "vol": 0.05
-    },
-    {
-     "t": 1.03,
-     "tipo": "clic",
-     "vol": 0.05
-    },
-    {
-     "t": 1.1600000000000001,
-     "tipo": "clic",
-     "vol": 0.05
-    },
-    {
-     "t": 1.29,
-     "tipo": "clic",
-     "vol": 0.05
-    },
-    {
-     "t": 1.42,
-     "tipo": "clic",
-     "vol": 0.05
-    },
-    {
-     "t": 1.55,
-     "tipo": "clic",
-     "vol": 0.05
-    },
-    {
-     "t": 1.6800000000000002,
-     "tipo": "clic",
-     "vol": 0.05
-    },
-    {
-     "t": 1.81,
-     "tipo": "clic",
-     "vol": 0.05
-    },
-    {
-     "t": 1.94,
-     "tipo": "clic",
-     "vol": 0.05
-    },
-    {
-     "t": 2.07,
-     "tipo": "clic",
-     "vol": 0.05
-    },
-    {
-     "t": 2.2,
-     "tipo": "clic",
-     "vol": 0.05
-    },
-    {
-     "t": 2.33,
-     "tipo": "clic",
-     "vol": 0.05
-    },
-    {
-     "t": 2.46,
-     "tipo": "clic",
-     "vol": 0.05
-    },
-    {
-     "t": 2.59,
-     "tipo": "clic",
-     "vol": 0.05
-    },
-    {
-     "t": 2.72,
-     "tipo": "clic",
-     "vol": 0.05
-    },
-    {
-     "t": 2.85,
-     "tipo": "clic",
-     "vol": 0.05
-    },
-    {
-     "t": 2.98,
-     "tipo": "clic",
-     "vol": 0.05
-    },
-    {
-     "t": 3.11,
-     "tipo": "clic",
-     "vol": 0.05
-    },
-    {
-     "t": 3.2399999999999998,
-     "tipo": "clic",
-     "vol": 0.05
-    },
-    {
-     "t": 3.37,
-     "tipo": "clic",
-     "vol": 0.05
-    },
-    {
-     "t": 3.5,
-     "tipo": "clic",
-     "vol": 0.05
-    },
-    {
-     "t": 3.63,
-     "tipo": "clic",
-     "vol": 0.05
-    },
-    {
-     "t": 3.7600000000000002,
-     "tipo": "clic",
-     "vol": 0.05
-    },
-    {
-     "t": 4.3,
-     "tipo": "ding",
-     "vol": 0.18
-    },
-    {
-     "t": 4.5,
-     "tipo": "thud",
-     "vol": 0.18
-    }
-   ]
-  },
-  {
-   "n": 2,
-   "t": "PIEZA",
-   "voz": "A las diecisiete horas despierto, tu rendimiento ya iguala al de cero coma cero cinco por ciento de alcohol.",
-   "dur": 7.2,
-   "h": "17 HORAS = 0,05 %",
-   "w": "17",
-   "sub": "",
-   "ic": "reloj",
-   "num": null,
-   "vs": null,
-   "bars": [],
-   "barsU": "",
-   "hi": -1,
-   "line": null,
-   "items": [],
-   "stops": [],
-   "end": "",
-   "donut": [],
-   "picto": null,
-   "top": [],
-   "myth": "",
-   "truth": "",
-   "zoom": null,
-   "capas": null,
-   "mira": null,
-   "impacto": null,
-   "red": null,
-   "termo": null,
-   "pila": null,
-   "cap": "primer dato: 17 horas despierto",
-   "papel": null,
-   "pilares": null,
-   "ciclo": null,
-   "duo": null,
-   "osc": null,
-   "cubo": null,
-   "diales": null,
-   "pieza": {
-    "id": "sue-horas",
-    "props": {}
-   },
-   "cita": null,
-   "sc": "",
-   "modo": "VIRAL",
-   "tema": "claro",
-   "bg": "light",
-   "ritmo": 0.9926470588235294,
-   "total": 61.4,
-   "inicio": 6.2,
-   "fin": 13.4,
-   "texto": "A las diecisiete horas despierto, tu rendimiento ya iguala al de cero coma cero cinco por ciento de alcohol.",
-   "tr": "corte",
-   "trs": "semitono",
-   "sfx": [
-    {
-     "t": 0.04,
-     "tipo": "whoosh",
+     "t": 1.4,
+     "tipo": "cash",
      "vol": 0.16
     },
     {
-     "t": 0.05,
-     "tipo": "whoosh",
-     "vol": 0.1
-    },
-    {
-     "t": 0.7941176470588236,
+     "t": 3.3,
      "tipo": "clic",
-     "vol": 0.05
+     "vol": 0.04
     },
     {
-     "t": 0.9241176470588236,
+     "t": 3.4299999999999997,
      "tipo": "clic",
-     "vol": 0.05
+     "vol": 0.04
     },
     {
-     "t": 1.0541176470588236,
+     "t": 3.5599999999999996,
      "tipo": "clic",
-     "vol": 0.05
+     "vol": 0.04
     },
     {
-     "t": 1.1841176470588235,
+     "t": 3.69,
      "tipo": "clic",
-     "vol": 0.05
+     "vol": 0.04
     },
     {
-     "t": 1.3141176470588236,
+     "t": 3.82,
      "tipo": "clic",
-     "vol": 0.05
+     "vol": 0.04
     },
     {
-     "t": 1.4441176470588237,
+     "t": 3.9499999999999997,
      "tipo": "clic",
-     "vol": 0.05
+     "vol": 0.04
     },
     {
-     "t": 1.5741176470588236,
+     "t": 4.08,
      "tipo": "clic",
-     "vol": 0.05
+     "vol": 0.04
     },
     {
-     "t": 1.7041176470588235,
+     "t": 4.21,
      "tipo": "clic",
-     "vol": 0.05
+     "vol": 0.04
     },
     {
-     "t": 1.8341176470588236,
+     "t": 4.34,
      "tipo": "clic",
-     "vol": 0.05
+     "vol": 0.04
     },
     {
-     "t": 1.9641176470588235,
+     "t": 4.47,
      "tipo": "clic",
-     "vol": 0.05
+     "vol": 0.04
     },
     {
-     "t": 2.0941176470588236,
+     "t": 4.6,
      "tipo": "clic",
-     "vol": 0.05
+     "vol": 0.04
     },
     {
-     "t": 2.224117647058824,
+     "t": 4.73,
      "tipo": "clic",
-     "vol": 0.05
+     "vol": 0.04
     },
     {
-     "t": 2.354117647058824,
+     "t": 4.859999999999999,
      "tipo": "clic",
-     "vol": 0.05
+     "vol": 0.04
     },
     {
-     "t": 2.4841176470588238,
-     "tipo": "clic",
-     "vol": 0.05
-    },
-    {
-     "t": 2.6141176470588237,
-     "tipo": "clic",
-     "vol": 0.05
-    },
-    {
-     "t": 2.7441176470588236,
-     "tipo": "clic",
-     "vol": 0.05
-    },
-    {
-     "t": 2.8741176470588234,
-     "tipo": "clic",
-     "vol": 0.05
-    },
-    {
-     "t": 3.0041176470588233,
-     "tipo": "clic",
-     "vol": 0.05
-    },
-    {
-     "t": 3.1341176470588232,
-     "tipo": "clic",
-     "vol": 0.05
-    },
-    {
-     "t": 3.264117647058824,
-     "tipo": "clic",
-     "vol": 0.05
-    },
-    {
-     "t": 3.394117647058824,
-     "tipo": "clic",
-     "vol": 0.05
-    },
-    {
-     "t": 3.524117647058824,
-     "tipo": "clic",
-     "vol": 0.05
-    },
-    {
-     "t": 3.6541176470588237,
-     "tipo": "clic",
-     "vol": 0.05
-    },
-    {
-     "t": 3.7841176470588236,
-     "tipo": "clic",
-     "vol": 0.05
-    },
-    {
-     "t": 4.36764705882353,
-     "tipo": "ding",
-     "vol": 0.18
-    },
-    {
-     "t": 4.5661764705882355,
-     "tipo": "radar",
-     "vol": 0.1
-    },
-    {
-     "t": 5.5588235294117645,
-     "tipo": "tick",
-     "vol": 0.1
-    }
-   ]
-  },
-  {
-   "n": 3,
-   "t": "PIEZA",
-   "voz": "Hacia las veinticuatro horas ya es cero coma diez: más que el límite legal para conducir en Estados Unidos.",
-   "dur": 7.2,
-   "h": "MÁS QUE EL LÍMITE LEGAL",
-   "w": "LÍMITE",
-   "sub": "",
-   "ic": "reloj",
-   "num": null,
-   "vs": null,
-   "bars": [],
-   "barsU": "",
-   "hi": -1,
-   "line": null,
-   "items": [],
-   "stops": [],
-   "end": "",
-   "donut": [],
-   "picto": null,
-   "top": [],
-   "myth": "",
-   "truth": "",
-   "zoom": null,
-   "capas": null,
-   "mira": null,
-   "impacto": null,
-   "red": null,
-   "termo": null,
-   "pila": null,
-   "cap": "segundo dato: 24 horas despierto",
-   "papel": null,
-   "pilares": null,
-   "ciclo": null,
-   "duo": null,
-   "osc": null,
-   "cubo": null,
-   "diales": null,
-   "pieza": {
-    "id": "sue-limite",
-    "props": {}
-   },
-   "cita": null,
-   "sc": "",
-   "modo": "VIRAL",
-   "tema": "oscuro",
-   "bg": "dark",
-   "ritmo": 1,
-   "total": 61.4,
-   "inicio": 13.4,
-   "fin": 20.6,
-   "texto": "Hacia las veinticuatro horas ya es cero coma diez: más que el límite legal para conducir en Estados Unidos.",
-   "tr": "semitono",
-   "trs": "corte",
-   "sfx": [
-    {
-     "t": 0.04,
-     "tipo": "whoosh",
-     "vol": 0.16
-    },
-    {
-     "t": 0.05,
-     "tipo": "whoosh",
-     "vol": 0.1
-    },
-    {
-     "t": 0.6,
-     "tipo": "clic",
-     "vol": 0.05
-    },
-    {
-     "t": 0.73,
-     "tipo": "clic",
-     "vol": 0.05
-    },
-    {
-     "t": 0.86,
-     "tipo": "clic",
-     "vol": 0.05
-    },
-    {
-     "t": 0.99,
-     "tipo": "clic",
-     "vol": 0.05
-    },
-    {
-     "t": 1.12,
-     "tipo": "clic",
-     "vol": 0.05
-    },
-    {
-     "t": 1.25,
-     "tipo": "clic",
-     "vol": 0.05
-    },
-    {
-     "t": 1.38,
-     "tipo": "clic",
-     "vol": 0.05
-    },
-    {
-     "t": 1.51,
-     "tipo": "clic",
-     "vol": 0.05
-    },
-    {
-     "t": 1.6400000000000001,
-     "tipo": "clic",
-     "vol": 0.05
-    },
-    {
-     "t": 1.77,
-     "tipo": "clic",
-     "vol": 0.05
-    },
-    {
-     "t": 1.9,
-     "tipo": "clic",
-     "vol": 0.05
-    },
-    {
-     "t": 1.9,
+     "t": 5.5,
      "tipo": "zap",
-     "vol": 0.2
+     "vol": 0.14
     },
     {
-     "t": 2.0300000000000002,
-     "tipo": "clic",
-     "vol": 0.05
-    },
-    {
-     "t": 2.5,
+     "t": 6.6,
      "tipo": "golpe",
-     "vol": 0.24
+     "vol": 0.3
     },
     {
-     "t": 3,
-     "tipo": "radar",
-     "vol": 0.14
-    },
-    {
-     "t": 4.4,
-     "tipo": "tick",
-     "vol": 0.1
-    }
-   ]
-  },
-  {
-   "n": 4,
-   "t": "PIEZA",
-   "voz": "¿Por qué? Mientras estás despierto, tu cerebro acumula adenosina, una molécula que empuja al sueño.",
-   "dur": 6.2,
-   "h": "SE ACUMULA ADENOSINA",
-   "w": "ADENOSINA",
-   "sub": "",
-   "ic": "brillo",
-   "num": null,
-   "vs": null,
-   "bars": [],
-   "barsU": "",
-   "hi": -1,
-   "line": null,
-   "items": [],
-   "stops": [],
-   "end": "",
-   "donut": [],
-   "picto": null,
-   "top": [],
-   "myth": "",
-   "truth": "",
-   "zoom": null,
-   "capas": null,
-   "mira": null,
-   "impacto": null,
-   "red": null,
-   "termo": null,
-   "pila": null,
-   "cap": "la causa: la presión de sueño",
-   "papel": null,
-   "pilares": null,
-   "ciclo": null,
-   "duo": null,
-   "osc": null,
-   "cubo": null,
-   "diales": null,
-   "pieza": {
-    "id": "sue-adenosina",
-    "props": {}
-   },
-   "cita": null,
-   "sc": "",
-   "modo": "VIRAL",
-   "tema": "claro",
-   "bg": "light",
-   "ritmo": 0.9745762711864406,
-   "total": 61.4,
-   "inicio": 20.6,
-   "fin": 26.8,
-   "texto": "¿Por qué? Mientras estás despierto, tu cerebro acumula adenosina, una molécula que empuja al sueño.",
-   "tr": "corte",
-   "trs": "semitono",
-   "sfx": [
-    {
-     "t": 0.04,
-     "tipo": "whoosh",
-     "vol": 0.16
-    },
-    {
-     "t": 0.05,
-     "tipo": "heartbeat",
-     "vol": 0.14
-    },
-    {
-     "t": 0.7796610169491526,
-     "tipo": "pop",
-     "vol": 0.1
-    },
-    {
-     "t": 0.9745762711864406,
-     "tipo": "clic",
-     "vol": 0.04
-    },
-    {
-     "t": 1.1045762711864406,
-     "tipo": "clic",
-     "vol": 0.04
-    },
-    {
-     "t": 1.2345762711864405,
-     "tipo": "clic",
-     "vol": 0.04
-    },
-    {
-     "t": 1.3645762711864406,
-     "tipo": "clic",
-     "vol": 0.04
-    },
-    {
-     "t": 1.4945762711864408,
-     "tipo": "clic",
-     "vol": 0.04
-    },
-    {
-     "t": 1.6245762711864407,
-     "tipo": "clic",
-     "vol": 0.04
-    },
-    {
-     "t": 1.7545762711864406,
-     "tipo": "clic",
-     "vol": 0.04
-    },
-    {
-     "t": 1.8845762711864407,
-     "tipo": "clic",
-     "vol": 0.04
-    },
-    {
-     "t": 2.014576271186441,
-     "tipo": "clic",
-     "vol": 0.04
-    },
-    {
-     "t": 2.1445762711864407,
-     "tipo": "clic",
-     "vol": 0.04
-    },
-    {
-     "t": 2.2745762711864406,
-     "tipo": "clic",
-     "vol": 0.04
-    },
-    {
-     "t": 2.404576271186441,
-     "tipo": "clic",
-     "vol": 0.04
-    },
-    {
-     "t": 2.534576271186441,
-     "tipo": "clic",
-     "vol": 0.04
-    },
-    {
-     "t": 2.6645762711864407,
-     "tipo": "clic",
-     "vol": 0.04
-    },
-    {
-     "t": 2.7945762711864406,
-     "tipo": "clic",
-     "vol": 0.04
-    },
-    {
-     "t": 2.924576271186441,
-     "tipo": "clic",
-     "vol": 0.04
-    },
-    {
-     "t": 3.054576271186441,
-     "tipo": "clic",
-     "vol": 0.04
-    },
-    {
-     "t": 3.1845762711864407,
-     "tipo": "clic",
-     "vol": 0.04
-    },
-    {
-     "t": 3.3145762711864406,
-     "tipo": "clic",
-     "vol": 0.04
-    },
-    {
-     "t": 3.444576271186441,
-     "tipo": "clic",
-     "vol": 0.04
-    },
-    {
-     "t": 3.574576271186441,
-     "tipo": "clic",
-     "vol": 0.04
-    },
-    {
-     "t": 4.677966101694915,
+     "t": 6.699999999999999,
      "tipo": "ding",
-     "vol": 0.16
-    }
-   ]
-  },
-  {
-   "n": 5,
-   "t": "PIEZA",
-   "voz": "El café no la elimina: solo tapa sus receptores, y la adenosina sigue ahí, esperando.",
-   "dur": 6.2,
-   "h": "EL CAFÉ NO LA ELIMINA",
-   "w": "CAFÉ",
-   "sub": "",
-   "ic": "brillo",
-   "num": null,
-   "vs": null,
-   "bars": [],
-   "barsU": "",
-   "hi": -1,
-   "line": null,
-   "items": [],
-   "stops": [],
-   "end": "",
-   "donut": [],
-   "picto": null,
-   "top": [],
-   "myth": "",
-   "truth": "",
-   "zoom": null,
-   "capas": null,
-   "mira": null,
-   "impacto": null,
-   "red": null,
-   "termo": null,
-   "pila": null,
-   "cap": "qué hace la cafeína",
-   "papel": null,
-   "pilares": null,
-   "ciclo": null,
-   "duo": null,
-   "osc": null,
-   "cubo": null,
-   "diales": null,
-   "pieza": {
-    "id": "sue-cafe",
-    "props": {}
-   },
-   "cita": null,
-   "sc": "",
-   "modo": "VIRAL",
-   "tema": "oscuro",
-   "bg": "dark",
-   "ritmo": 0.9745762711864406,
-   "total": 61.4,
-   "inicio": 26.8,
-   "fin": 33,
-   "texto": "El café no la elimina: solo tapa sus receptores, y la adenosina sigue ahí, esperando.",
-   "tr": "semitono",
-   "trs": "corte",
-   "sfx": [
-    {
-     "t": 0.04,
-     "tipo": "whoosh",
-     "vol": 0.16
-    },
-    {
-     "t": 0.05,
-     "tipo": "whoosh",
-     "vol": 0.1
-    },
-    {
-     "t": 1.461864406779661,
-     "tipo": "clic",
-     "vol": 0.16
-    },
-    {
-     "t": 2.241525423728813,
-     "tipo": "gota",
-     "vol": 0.14
-    },
-    {
-     "t": 3.216101694915254,
-     "tipo": "golpe",
      "vol": 0.2
-    },
-    {
-     "t": 4.288135593220339,
-     "tipo": "pop",
-     "vol": 0.1
     }
    ]
   },
   {
    "n": 6,
    "t": "PIEZA",
-   "voz": "Y llegan los microsueños: a cien kilómetros por hora, cuatro segundos son ciento once metros a ciegas.",
-   "dur": 6.9,
-   "h": "4 SEGUNDOS = 111 METROS",
-   "w": "METROS",
+   "voz": "Cinco: un violinista tocó mientras le implantaban electrodos en el cerebro, y el tejido cerebral no siente dolor. ¡Real!",
+   "dur": 7.6,
+   "h": "VIOLÍN CON ELECTRODOS",
+   "w": "VIOLÍN",
    "sub": "",
-   "ic": "tren",
+   "ic": "idea",
    "num": null,
    "vs": null,
    "bars": [],
@@ -851,7 +761,7 @@
    "red": null,
    "termo": null,
    "pila": null,
-   "cap": "microsueños al volante",
+   "cap": "",
    "papel": null,
    "pilares": null,
    "ciclo": null,
@@ -860,7 +770,7 @@
    "cubo": null,
    "diales": null,
    "pieza": {
-    "id": "sue-micro",
+    "id": "cur-violin",
     "props": {}
    },
    "cita": null,
@@ -869,10 +779,10 @@
    "tema": "claro",
    "bg": "light",
    "ritmo": 1,
-   "total": 61.4,
-   "inicio": 33,
-   "fin": 39.9,
-   "texto": "Y llegan los microsueños: a cien kilómetros por hora, cuatro segundos son ciento once metros a ciegas.",
+   "total": 58.1,
+   "inicio": 32.8,
+   "fin": 40.4,
+   "texto": "Cinco: un violinista tocó mientras le implantaban electrodos en el cerebro, y el tejido cerebral no siente dolor. ¡Real!",
    "tr": "corte",
    "trs": "semitono",
    "sfx": [
@@ -883,135 +793,50 @@
     },
     {
      "t": 0.05,
-     "tipo": "estatica",
+     "tipo": "whoosh",
      "vol": 0.1
     },
     {
-     "t": 2.1,
-     "tipo": "thud",
-     "vol": 0.24
+     "t": 0.3,
+     "tipo": "pop",
+     "vol": 0.12
     },
     {
-     "t": 2.6,
-     "tipo": "clic",
-     "vol": 0.05
+     "t": 0.9,
+     "tipo": "pop",
+     "vol": 0.14
     },
     {
-     "t": 2.73,
-     "tipo": "clic",
-     "vol": 0.05
+     "t": 2.2,
+     "tipo": "zap",
+     "vol": 0.16
     },
     {
-     "t": 2.8600000000000003,
-     "tipo": "clic",
-     "vol": 0.05
+     "t": 4.8,
+     "tipo": "tick",
+     "vol": 0.14
     },
     {
-     "t": 2.99,
-     "tipo": "clic",
-     "vol": 0.05
-    },
-    {
-     "t": 3.12,
-     "tipo": "clic",
-     "vol": 0.05
-    },
-    {
-     "t": 3.25,
-     "tipo": "clic",
-     "vol": 0.05
-    },
-    {
-     "t": 3.38,
-     "tipo": "clic",
-     "vol": 0.05
-    },
-    {
-     "t": 3.5100000000000002,
-     "tipo": "clic",
-     "vol": 0.05
-    },
-    {
-     "t": 3.64,
-     "tipo": "clic",
-     "vol": 0.05
-    },
-    {
-     "t": 3.77,
-     "tipo": "clic",
-     "vol": 0.05
-    },
-    {
-     "t": 3.9000000000000004,
-     "tipo": "clic",
-     "vol": 0.05
-    },
-    {
-     "t": 4.03,
-     "tipo": "clic",
-     "vol": 0.05
-    },
-    {
-     "t": 4.16,
-     "tipo": "clic",
-     "vol": 0.05
-    },
-    {
-     "t": 4.29,
-     "tipo": "clic",
-     "vol": 0.05
-    },
-    {
-     "t": 4.42,
-     "tipo": "clic",
-     "vol": 0.05
-    },
-    {
-     "t": 4.550000000000001,
-     "tipo": "clic",
-     "vol": 0.05
-    },
-    {
-     "t": 4.68,
-     "tipo": "clic",
-     "vol": 0.05
-    },
-    {
-     "t": 4.8100000000000005,
-     "tipo": "clic",
-     "vol": 0.05
-    },
-    {
-     "t": 4.9399999999999995,
-     "tipo": "clic",
-     "vol": 0.05
-    },
-    {
-     "t": 5.4,
+     "t": 6.2,
      "tipo": "golpe",
      "vol": 0.3
     },
     {
-     "t": 5.5,
-     "tipo": "heartbeat",
-     "vol": 0.26
-    },
-    {
-     "t": 5.8,
+     "t": 6.3,
      "tipo": "ding",
-     "vol": 0.12
+     "vol": 0.2
     }
    ]
   },
   {
    "n": 7,
    "t": "PIEZA",
-   "voz": "Internos con turnos de más de veinticuatro horas cometieron treinta y seis por ciento más errores graves, y chocaron más al volver a casa.",
-   "dur": 9,
-   "h": "EN MEDICINA YA SE MIDIÓ",
-   "w": "MIDIÓ",
+   "voz": "Seis: tras una lesión cerebral, una noruega empezó a sonar alemana. Se llama síndrome del acento extranjero. ¡Real!",
+   "dur": 6.9,
+   "h": "ACENTO EXTRANJERO",
+   "w": "ACENTO",
    "sub": "",
-   "ic": "casa",
+   "ic": "telefono",
    "num": null,
    "vs": null,
    "bars": [],
@@ -1033,7 +858,7 @@
    "red": null,
    "termo": null,
    "pila": null,
-   "cap": "estudios en médicos internos",
+   "cap": "",
    "papel": null,
    "pilares": null,
    "ciclo": null,
@@ -1042,7 +867,7 @@
    "cubo": null,
    "diales": null,
    "pieza": {
-    "id": "sue-hospital",
+    "id": "cur-acento",
     "props": {}
    },
    "cita": null,
@@ -1051,10 +876,10 @@
    "tema": "oscuro",
    "bg": "dark",
    "ritmo": 1,
-   "total": 61.4,
-   "inicio": 39.9,
-   "fin": 48.9,
-   "texto": "Internos con turnos de más de veinticuatro horas cometieron treinta y seis por ciento más errores graves, y chocaron más al volver a casa.",
+   "total": 58.1,
+   "inicio": 40.4,
+   "fin": 47.3,
+   "texto": "Seis: tras una lesión cerebral, una noruega empezó a sonar alemana. Se llama síndrome del acento extranjero. ¡Real!",
    "tr": "semitono",
    "trs": "zoom",
    "sfx": [
@@ -1065,50 +890,55 @@
     },
     {
      "t": 0.05,
-     "tipo": "radar",
+     "tipo": "whoosh",
      "vol": 0.1
+    },
+    {
+     "t": 0.3,
+     "tipo": "pop",
+     "vol": 0.12
     },
     {
      "t": 1,
      "tipo": "pop",
-     "vol": 0.1
-    },
-    {
-     "t": 2,
-     "tipo": "pop",
      "vol": 0.12
     },
     {
-     "t": 3.8,
+     "t": 2.3,
      "tipo": "golpe",
-     "vol": 0.2
-    },
-    {
-     "t": 5,
-     "tipo": "whoosh",
-     "vol": 0.12
-    },
-    {
-     "t": 6,
-     "tipo": "thud",
      "vol": 0.22
     },
     {
-     "t": 6.4,
+     "t": 2.9,
+     "tipo": "pop",
+     "vol": 0.14
+    },
+    {
+     "t": 4.1,
      "tipo": "ding",
-     "vol": 0.16
+     "vol": 0.14
+    },
+    {
+     "t": 5.6,
+     "tipo": "golpe",
+     "vol": 0.3
+    },
+    {
+     "t": 5.699999999999999,
+     "tipo": "ding",
+     "vol": 0.2
     }
    ]
   },
   {
    "n": 8,
    "t": "PIEZA",
-   "voz": "No hay atajo: dormir siete horas o más. Ni el café ni la fuerza de voluntad pagan esa deuda.",
-   "dur": 7.9,
-   "h": "NO HAY ATAJO: DORMIR",
-   "w": "DORMIR",
+   "voz": "Cinco eran reales y uno, mito. ¿Cuántos acertaste? Cuéntame en los comentarios.",
+   "dur": 5.2,
+   "h": "¿CUÁNTOS ACERTASTE?",
+   "w": "ACERTASTE?",
    "sub": "",
-   "ic": "reloj",
+   "ic": "brillo",
    "num": null,
    "vs": null,
    "bars": [],
@@ -1130,7 +960,7 @@
    "red": null,
    "termo": null,
    "pila": null,
-   "cap": "lo único que lo repara",
+   "cap": "",
    "papel": null,
    "pilares": null,
    "ciclo": null,
@@ -1139,7 +969,7 @@
    "cubo": null,
    "diales": null,
    "pieza": {
-    "id": "sue-dormir",
+    "id": "cur-marcador",
     "props": {}
    },
    "cita": null,
@@ -1147,11 +977,11 @@
    "modo": "VIRAL",
    "tema": "claro",
    "bg": "light",
-   "ritmo": 1,
-   "total": 61.4,
-   "inicio": 48.9,
-   "fin": 56.8,
-   "texto": "No hay atajo: dormir siete horas o más. Ni el café ni la fuerza de voluntad pagan esa deuda.",
+   "ritmo": 0.9895833333333334,
+   "total": 58.1,
+   "inicio": 47.3,
+   "fin": 52.5,
+   "texto": "Cinco eran reales y uno, mito. ¿Cuántos acertaste? Cuéntame en los comentarios.",
    "tr": "zoom",
    "trs": "barrido",
    "sfx": [
@@ -1166,142 +996,52 @@
      "vol": 0.1
     },
     {
-     "t": 0.6,
-     "tipo": "pop",
-     "vol": 0.08
-    },
-    {
-     "t": 1,
-     "tipo": "clic",
-     "vol": 0.03
-    },
-    {
-     "t": 1.13,
-     "tipo": "clic",
-     "vol": 0.03
-    },
-    {
-     "t": 1.26,
-     "tipo": "clic",
-     "vol": 0.03
-    },
-    {
-     "t": 1.3900000000000001,
-     "tipo": "clic",
-     "vol": 0.03
-    },
-    {
-     "t": 1.52,
-     "tipo": "clic",
-     "vol": 0.03
-    },
-    {
-     "t": 1.65,
-     "tipo": "clic",
-     "vol": 0.03
-    },
-    {
-     "t": 1.78,
-     "tipo": "clic",
-     "vol": 0.03
-    },
-    {
-     "t": 1.9100000000000001,
-     "tipo": "clic",
-     "vol": 0.03
-    },
-    {
-     "t": 2.04,
-     "tipo": "clic",
-     "vol": 0.03
-    },
-    {
-     "t": 2.17,
-     "tipo": "clic",
-     "vol": 0.03
-    },
-    {
-     "t": 2.3,
-     "tipo": "clic",
-     "vol": 0.03
-    },
-    {
-     "t": 2.43,
-     "tipo": "clic",
-     "vol": 0.03
-    },
-    {
-     "t": 2.56,
-     "tipo": "clic",
-     "vol": 0.03
-    },
-    {
-     "t": 2.69,
-     "tipo": "clic",
-     "vol": 0.03
-    },
-    {
-     "t": 2.8200000000000003,
-     "tipo": "clic",
-     "vol": 0.03
-    },
-    {
-     "t": 2.95,
-     "tipo": "clic",
-     "vol": 0.03
-    },
-    {
-     "t": 3.08,
-     "tipo": "clic",
-     "vol": 0.03
-    },
-    {
-     "t": 3.21,
-     "tipo": "clic",
-     "vol": 0.03
-    },
-    {
-     "t": 3.34,
-     "tipo": "clic",
-     "vol": 0.03
-    },
-    {
-     "t": 3.47,
-     "tipo": "clic",
-     "vol": 0.03
-    },
-    {
-     "t": 3.6,
-     "tipo": "clic",
-     "vol": 0.03
-    },
-    {
-     "t": 3.73,
-     "tipo": "clic",
-     "vol": 0.03
-    },
-    {
-     "t": 5.2,
+     "t": 0.4947916666666667,
      "tipo": "ding",
+     "vol": 0.12
+    },
+    {
+     "t": 0.8708333333333333,
+     "tipo": "ding",
+     "vol": 0.12
+    },
+    {
+     "t": 1.246875,
+     "tipo": "golpe",
+     "vol": 0.2
+    },
+    {
+     "t": 1.6229166666666668,
+     "tipo": "ding",
+     "vol": 0.12
+    },
+    {
+     "t": 1.9989583333333334,
+     "tipo": "ding",
+     "vol": 0.12
+    },
+    {
+     "t": 2.375,
+     "tipo": "ding",
+     "vol": 0.12
+    },
+    {
+     "t": 2.96875,
+     "tipo": "cash",
      "vol": 0.18
     },
     {
-     "t": 5.2,
+     "t": 3.5625,
      "tipo": "pop",
-     "vol": 0.12
-    },
-    {
-     "t": 6,
-     "tipo": "heartbeat",
-     "vol": 0.12
+     "vol": 0.14
     }
    ]
   },
   {
    "n": 9,
    "t": "CTA",
-   "voz": "Mándaselo a quien presume de dormir poco y síguenos en Sinapsis.",
-   "dur": 4.6,
+   "voz": "Mándaselo a ese amigo que cree que sabe de medicina y síguenos en Sinapsis.",
+   "dur": 5.6,
    "h": "MÁNDASELO Y SÍGUENOS",
    "w": "SÍGUENOS",
    "sub": "Más ciencia en SINAPSIS",
@@ -1342,10 +1082,10 @@
    "tema": "oscuro",
    "bg": "gold",
    "ritmo": 1,
-   "total": 61.4,
-   "inicio": 56.8,
-   "fin": 61.4,
-   "texto": "Mándaselo a quien presume de dormir poco y síguenos en Sinapsis.",
+   "total": 58.1,
+   "inicio": 52.5,
+   "fin": 58.1,
+   "texto": "Mándaselo a ese amigo que cree que sabe de medicina y síguenos en Sinapsis.",
    "tr": "barrido",
    "trs": "barrido",
    "sfx": [
