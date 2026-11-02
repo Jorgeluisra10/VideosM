@@ -34,7 +34,7 @@ Además suena lo que pone el motor (clics, golpes, estática, gotas, ding). Sin 
 
 ## Precauciones antes de publicar
 - **Causa del accidente: no se afirma.** La NTSB investiga; el piloto reportó hielo y turbulencia antes de la caída. El video **no sugiere** que la hipoxia, una despresurización o un problema médico causaran el accidente, y lo dice en pantalla (escenas 1, 2 y 8). No muestra víctimas, restos ni imágenes del siniestro. Si la NTSB publica una causa, revisa el gancho y los textos antes de reutilizarlos.
-- **Greenacres y no Miami:** el hecho ocurrió en Greenacres (condado de Palm Beach), a ≈ 100 km al norte de Miami; el video dice «Florida». Los medios locales de Miami (NBC 6) lo cubrieron.
+- **Greenacres (no es Miami):** el hecho ocurrió en Greenacres (condado de Palm Beach), a ≈ 100 km al norte de Miami; el video dice «Florida». Los medios locales de Miami (NBC 6) lo cubrieron.
 - **Altitud del vuelo:** algunos reportes (Wikipedia, un medio especializado) hablan de 35.000 pies antes de la caída; no está confirmado por la NTSB, así que el video usa 10.668 m como altitud de crucero **típica** de un jet de negocios.
 - **Cálculos propios (no son datos de la investigación):** presión y temperatura con la atmósfera estándar ISA; PiO2 con la ecuación del gas alveolar simplificada; los 40 mmHg del Everest salen del mismo modelo (mediciones reales ≈ 43 mmHg).
 - **Ilustraciones:** la lectura del oxímetro (72 → 98 %), el pulso, los síntomas y la pérdida de presión de la cabina son esquemas educativos; no son registros de ningún vuelo. Los tiempos de conciencia útil son rangos de la FAA y varían por persona; no es consejo médico ni una guía de procedimientos de vuelo.

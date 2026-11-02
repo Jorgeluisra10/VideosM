@@ -1,0 +1,18 @@
+{
+  "version": 1,
+  "slug": "2026-11-02-jet-florida-hipoxia",
+  "titulo": "El aire que no avisa",
+  "serie": "medicina_actualidad",
+  "estado": "grabado",
+  "guion": "Un jet privado cayó en Florida. A diez mil metros, tu cuerpo no avisa cuando se queda sin aire.\nLa causa sigue en investigación. Lo que sí se mide: a diez mil metros, la presión del aire cae a casi una cuarta parte.\nSigue siendo veintiuno por ciento de oxígeno, pero a tus pulmones llega cinco veces menos, incluso menos que en el Everest.\nPor eso la cabina se presuriza: adentro, la altura equivalente se limita a unos dos mil cuatrocientos metros.\nEl cerebro pesa dos por ciento del cuerpo, pero gasta veinte por ciento del oxígeno.\nA treinta y cinco mil pies, la conciencia útil dura entre treinta y sesenta segundos.\nLo peligroso es que no duele ni ahoga: aparece euforia, visión en túnel, labios azulados y poco juicio.\nPor eso los pilotos entrenan en cámaras de altura y usan máscara. El remedio: oxígeno puro y descender.\nGuárdalo para tu próximo vuelo y síguenos en Sinapsis.",
+  "gancho": "Un jet privado cayó en Florida.",
+  "duracion_seg": 61.8,
+  "notas": "Espero que estudiantes y profesionales de salud lo guarden como repaso de fisiología de altura (presión parcial, hipoxia, tiempo de conciencia útil) y que el público lo comparta por la noticia. Métrica: retención al pasar la escena 2 (≈ 7 s, el sello «causa en investigación») y guardados + compartidos por cada 1.000 alcanzados. La causa del accidente NO se afirma (NTSB investiga). Ojo: sin voz, no publicar así.",
+  "voz_usada": "",
+  "instrucciones_voz": "",
+  "creado": "2026-11-02T08:08:32.228Z",
+  "origen_clave": "694f59d3",
+  "video": "revision.mp4",
+  "miniatura": "miniatura.jpg",
+  "entrega": "entrega.md"
+}
