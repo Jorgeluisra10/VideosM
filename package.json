@@ -42,7 +42,8 @@
     "ia:prompt": "node scripts/ia/exportar-prompt.mjs",
     "ia:importar": "node scripts/ia/importar-plan.mjs",
     "ia:mock": "node scripts/ia/mock-server.mjs",
-    "proyecto": "node scripts/proyecto.mjs"
+    "proyecto": "node scripts/proyecto.mjs",
+    "capcut": "node scripts/anim/capcut.mjs"
   },
   "keywords": [
     "remotion",

@@ -161,7 +161,7 @@ comerciales.
 con el preparador de guion (cifras a palabras, pronunciación). Cuesta ≈ US$ 0,015 por minuto y repetir
 lo mismo sale de la caché. Mira el resumen: si alguna escena «no cabe», acorta esa frase o alarga la
 escena y vuelve a generar. **Sin `OPENAI_API_KEY`**: sigue sin voz, avísalo y entrega el guion de
-locución. **Si el usuario grabó su voz**: `node scripts/anim/voz-externa.mjs --audio=<archivo>`.
+locución. **Si el usuario quiere voces de CapCut**: `npm run capcut` (texto listo para pegar) → `npm run capcut -- --audio=mi-voz.mp3` (alinea y da un informe de confianza; o `--escenas=carpeta` con un audio por escena, 100 % exacto) → `npm run anim:render`. **Si el usuario grabó su voz**: `node scripts/anim/voz-externa.mjs --audio=<archivo>`.
 
 ## 6 · Render
 `npm run anim:render` (1080×1920 a 60 fps; tarda varios minutos según el equipo y es reanudable si se corta). Mezcla solo la voz

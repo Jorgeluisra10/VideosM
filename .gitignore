@@ -31,3 +31,4 @@ assets/musica/*
 
 # pistas separadas que deja el render (voz sola y música + efectos)
 trabajo/salida/stems/
+trabajo/salida/guion-capcut*.txt

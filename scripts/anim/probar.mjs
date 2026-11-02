@@ -718,6 +718,46 @@ try {
       prueba("Piscina · el guion técnico describe el diseño sonoro (viento, fractura, encastre, zumbido, llenado, chapuzón) y cita Eckersley O'Callaghan, Ballymore, IStructE y Reynolds con sus precauciones (el vidrio no se parte «el primer día», juntas adhesivas y no «fusión molecular», 18 y 36 cm en vez de 20 y 30, ni un gramo de torsión, ilustraciones); la locución trae todas las voces; el compositor existe", ["Diseño sonoro", "Viento de altura", "Fractura de cristal", "Zumbido de tensión", "Llenado de agua", "Chapuzón", "Eckersley O'Callaghan", "Ballymore", "IStructE", "Reynolds", "Precauciones antes de publicar", "el primer día", "fusión molecular", "ni un gramo", "ilustración"].every((k) => gtS.toLowerCase().includes(k.toLowerCase())) && eS.anim.escenas.every((e) => locS.includes(e.voz)) && /componer-musica|DURACION = 56/.test(readFileSync(p("videos", "2026-11-01-piscina-suspendida", "componer-musica.mjs"), "utf8")));
     }
 
+    // ── Voz de CapCut en 3 pasos (scripts/anim/capcut.mjs): texto listo, informe de la alineación y audio por escena ──
+    {
+      const C = await import("./capcut.mjs");
+      const VE = await import("./voz-externa.mjs");
+      const A = await import("../audio.mjs");
+      const textosC = [{ n: 1, texto: "Tus audífonos se anudan solos" }, { n: 2, texto: "No es mala suerte: es matemática." }, { n: 3, texto: "Guárdalo y síguenos en Sinapsis" }];
+      const pc = C.prepararTextoCapcut(textosC);
+      prueba("CapCut · el texto para pegar trae cada escena en su párrafo (línea en blanco entre escenas), todas terminadas en punto, sin números de escena ni marcas; la versión por escena sí las trae; cuenta palabras y estima la duración de la voz", pc.texto === "Tus audífonos se anudan solos.\n\nNo es mala suerte: es matemática.\n\nGuárdalo y síguenos en Sinapsis.\n" && !/ESCENA|—/.test(pc.texto) && pc.porEscena.includes("— ESCENA 2 —\nNo es mala suerte: es matemática.") && pc.palabras === 16 && pc.escenas === 3 && pc.voz.min < pc.voz.max && pc.voz.min >= 4 && pc.voz.max <= 9);
+      const inf = C.informeAlineacion(textosC, [2.0, 2.8, 0.9]);
+      const inf2 = C.informeAlineacion(textosC, [2.0, 2.8, 2.5], { aproximado: true, avisos: ["Solo encontré 1 pausas"] });
+      const inf3 = C.informeAlineacion(textosC, [2.0, 2.8, 2.5]);
+      prueba("CapCut · el informe marca ⚠️ la escena que sale apretada (más de 4 palabras por segundo → el corte cayó en otra pausa), baja la confianza a MEDIA; con pausas insuficientes la confianza es BAJA y da el consejo de pegar el texto con una línea en blanco o usar un audio por escena; si todo es natural la confianza es ALTA y no da consejos", inf.filas[2].estado === "apretada" && inf.confianza === "MEDIA" && inf.consejos.some((c) => /Escena 3/.test(c)) && inf2.confianza === "BAJA" && inf2.consejos.some((c) => /línea en blanco/.test(c)) && inf3.confianza === "ALTA" && inf3.consejos.length === 0);
+      // voz sintética que imita el habla: ráfagas por palabra, pausas de 0,17 s tras la puntuación y de 0,5 s entre escenas
+      let sd = 11; const rnd = () => { sd = (sd * 1664525 + 1013904223) >>> 0; return sd / 4294967296; };
+      const silencio = (q) => new Float32Array(Math.round(A.SR * q));
+      const palabra = (l) => { const d = Math.round(A.SR * (0.1 + 0.032 * l)); const x = new Float32Array(d); let lp = 0; for (let i = 0; i < d; i++) { lp += 0.25 * ((rnd() * 2 - 1) - lp); x[i] = (lp * 1.5 + 0.2 * Math.sin((2 * Math.PI * 140 * i) / A.SR)) * Math.sin((Math.PI * i) / d); } return x; };
+      const escenaVoz = (t) => t.split(/\s+/).flatMap((w) => [palabra(w.length), silencio(0.05), ...(/[,.;:?!]$/.test(w) ? [silencio(0.17)] : [])]);
+      const unir = (ps) => { const y = new Float32Array(ps.reduce((a, q) => a + q.length, 0)); let o = 0; for (const q of ps) { y.set(q, o); o += q.length; } return y; };
+      const textosVoz3 = ["Tus audífonos se anudan solos y casi siempre justo cuando tienes prisa.", "No es mala suerte: es matemática y también es un poco de física pura.", "Guárdalo para tus repasos y síguenos en Sinapsis."];
+      const partes = [silencio(0.5)];
+      const finales = [];
+      textosVoz3.forEach((t, i) => { partes.push(...escenaVoz(t)); partes.push(silencio(0.5)); finales.push(partes.reduce((a, q) => a + q.length, 0) / A.SR - 0.25); });
+      const voz = unir(partes);
+      const an = VE.analizarVoz(voz);
+      const rc = N.elegirCortes({ silencios: an.silencios, desde: an.desde, hasta: an.hasta, pesos: textosVoz3.map((t) => t.split(/\s+/).length) });
+      prueba("CapCut · con una voz que imita el habla (ráfagas por palabra y pausas), la detección encuentra las pausas entre escenas y los cortes caen a menos de 0,4 s de los límites reales, sin avisos", rc.cortes.length === 2 && !rc.aproximado && Math.abs(rc.cortes[0] - finales[0]) < 0.4 && Math.abs(rc.cortes[1] - finales[1]) < 0.4 && rc.avisos.length === 0, rc.cortes.join(", ") + " vs " + finales.slice(0, 2).map((v) => v.toFixed(2)).join(", "));
+      // un audio por escena: se unen con duraciones EXACTAS (sin detectar pausas)
+      const carpetaC = join(DIR_PRUEBA, "capcut-escenas");
+      mkdirSync(carpetaC, { recursive: true });
+      const largos = [1.4, 2.2, 0.9];
+      largos.forEach((d, i) => { const x = silencio(0.3 + d + 0.3); for (let k = Math.round(0.3 * A.SR); k < Math.round((0.3 + d) * A.SR); k++) x[k] = 0.4 * Math.sin((2 * Math.PI * 180 * k) / A.SR) * (0.7 + 0.3 * Math.sin((2 * Math.PI * 5 * k) / A.SR)); A.escribirWavEstereo(join(carpetaC, `${i + 1}.wav`), x); });
+      writeFileSync(join(carpetaC, "10.wav"), readFileSync(join(carpetaC, "1.wav")));
+      const { buscarFfmpeg: bf } = await import("../medios.mjs");
+      let falloCuenta = ""; try { await C.unirAudiosPorEscena({ carpeta: carpetaC, esperadas: 3, ffmpeg: bf().ffmpeg }); } catch (e) { falloCuenta = String(e.message); }
+      rmSync(join(carpetaC, "10.wav"));
+      const uni = await C.unirAudiosPorEscena({ carpeta: carpetaC, esperadas: 3, ffmpeg: bf().ffmpeg });
+      prueba("CapCut · un audio por escena: avisa si la cantidad de audios no coincide con las escenas, los ordena en orden natural (2 antes que 10) y cada escena dura lo que dura su voz más un poco de aire (voz + 0,12–0,25 s antes + 0,3–0,45 s después)", /3 escenas|esperadas|iguales/.test(falloCuenta) && /4 audios/.test(falloCuenta) && uni.nombres.join(",") === "1.wav,2.wav,3.wav" && uni.durs.length === 3 && Math.abs(uni.durs[0] - (0.25 + 1.4 + 0.3 + 0.06)) < 0.15 && Math.abs(uni.durs[1] - (0.12 + 2.2 + 0.3 + 0.06)) < 0.15 && Math.abs(uni.durs[2] - (0.12 + 0.9 + 0.45 + 0.06)) < 0.15, uni.durs.join(", "));
+      prueba("CapCut · el comando está en package.json (npm run capcut) y la guía lo explica en 3 pasos", /"capcut": "node scripts\/anim\/capcut\.mjs"/.test(readFileSync(p("package.json"), "utf8")) && /npm run capcut/.test(readFileSync(p("GUIA.md"), "utf8")) && /npm run capcut/.test(readFileSync(p("REGLAS_DE_VIDEO.md"), "utf8")));
+    }
+
     // ── Panel de Videos · los videos de la carpeta videos/ viajan por git y aparecen solos en el panel ──
     {
       const V = await import("../panel/videos.mjs");
