@@ -1,0 +1,41 @@
+# Paro cardíaco de un futbolista · guion técnico (SINAPSIS, 9:16, ≈ 65 s)
+
+**Serie:** medicina y actualidad en SINAPSIS · **Paleta:** `medicina` (marca SINAPSIS) · **Estilo:** monitor clínico sobrio: papel milimetrado de ECG, corazón anatómico, corte del tórax, desfibrilador, manos de RCP y una vela. **Sin humor, sin imágenes del lance, sin mostrar a ninguna persona implicada.**
+**Noticia que aprovecha:** el lunes 2 de noviembre de 2026, en el partido CD Tenerife – FC Andorra (Segunda División), el delantero Jesús de Miguel, de 30 años, recibió un golpe en el pecho en el tramo final, quedó inconsciente, necesitó reanimación cardiopulmonar y pasó a cuidados intensivos («estable, dentro de la gravedad»); después el club informó de un empeoramiento neurológico y **comunicó su fallecimiento el martes 3 de noviembre a las 8:00**. El partido se suspendió, el portero visitante fue expulsado y la **Policía Nacional investiga las circunstancias** (posible homicidio imprudente; no hay indicio de intencionalidad). **La causa médica exacta no se ha informado.** (El Español, Infobae, SCMP, Yahoo Sports, Gulf Business.)
+**Cómo se carga:** `node scripts/anim/desde-respuesta.mjs --idea=ejemplos/animacion-viral/idea-futbolista.txt --respuesta=ejemplos/animacion-viral/respuesta-ia-futbolista.json --paleta=medicina`. Carpeta de trabajo: `videos/2026-11-03-futbolista-paro-cardiaco/`. Código: `src/viral/piezas/fut-kit.tsx`, `fut1.tsx` y `fut2.tsx` (sobre `real-kit`, `jet-kit` y `sue-kit`); datos y tiempos en `src/anim/piezas.ts` (`FUT`, `TFUT`, `ecgOnda`, `ecgFibrilacion`, `supervivenciaSinDescarga`).
+
+## Diseño sonoro
+Pista propia por síntesis, sin muestras ni licencias, de tono **sobrio**: `videos/2026-11-03-futbolista-paro-cardiaco/componer-musica.mjs`. Se activa con `node scripts/anim/musica.mjs --usar=assets/musica/futbolista-paro-cardiaco.wav` y se retira con `--restaurar` (el WAV no va a git). Los eventos se calculan con el ritmo real de cada escena:
+| Sonido | Cuándo (s) | Cómo |
+|---|---|---|
+| Colchón suave | 0–66 | acorde muy suave en Re menor (Re–La–Fa) y ruido de sala; pasa a Re mayor en el homenaje final |
+| Monitor cardíaco | 0,9–6,0 · 14,7–18,6 · 41,6–46 | pitido de 1 kHz en cada onda R a 75 lpm; se detiene al caer el golpe en la ventana vulnerable y vuelve tras la descarga |
+| Golpes sordos | 3,8 · 8,3 · 16,9 · 18,8 · 24,0 | golpe grave sin estridencia al decir «paro cardíaco», al estamparse el sello y en los impactos del esquema |
+| Fibrilación | 18,9–28 | zumbido grave irregular que crece y se apaga al terminar la escena 4 |
+| Cerebro | 29,9–34,1 | tictac que se acelera y tensión grave que sube sin dramatizar; golpe sordo a los 34,1 s |
+| Desfibrilador | 38,9–42 | tres pitidos de análisis (600, 800 y 1.000 Hz), carga que sube de tono, descarga eléctrica a los 40,9 s y vuelta del latido |
+| Reanimación | 47,8–53,5 | tono de llamada, metrónomo de 110 por minuto y tres pitidos del DEA |
+| Homenaje | 54–66 | notas suaves de arpa y acorde abierto de Re mayor; fundido final de 1,5 s |
+Además suena lo que pone el motor (clics, golpes, estática, ding). Sin voz, el nivel total es ≈ −28 LUFS; con voz, el render normaliza a −14 LUFS.
+
+| # | Pieza | Voz en off | Dato / fuente | Imagen |
+|---|---|---|---|---|
+| 1 | `fut-gancho` | «Tras un golpe en el pecho, el futbolista Jesús de Miguel sufrió un paro cardíaco y falleció. ¿Cómo puede pasar?» | Comunicados del CD Tenerife y medios (2–3 nov 2026) | «EN MEMORIA», nombre, ECG que se apaga con calma y líneas de cancha (sin personas) |
+| 2 | `fut-causa` | «La causa médica exacta no se ha informado. Pero existe un mecanismo conocido: la commotio cordis.» | Diagnóstico oficial: no informado. Otras causas posibles tras un traumatismo torácico: contusión cardíaca, lesión de grandes vasos, enfermedad cardíaca previa | Sello «CAUSA MÉDICA EXACTA: NO INFORMADA» y el término *commotio cordis* («agitación del corazón») |
+| 3 | `fut-ventana` | «El corazón late con una señal eléctrica. En cada latido hay una ventana de veinte milisegundos donde un golpe puede desordenarla.» | Link y cols., NEJM 1998 (modelo en cerdos): fibrilación en 9 de 10 impactos entre 30 y 15 ms antes del pico de la onda T y en ningún otro momento del ciclo; otras revisiones dan 10–30 ms | Un latido de ECG con la zona roja de la ventana; el mismo golpe fuera de ella no hace nada y dentro de ella desencadena fibrilación (esquema, no a escala) |
+| 4 | `fut-fibrilacion` | «Si coincide, el corazón deja de latir y solo tiembla: fibrilación ventricular. Ya no bombea sangre.» | Definición clínica de la fibrilación ventricular | Corazón anatómico que late y de pronto tiembla; ECG caótico |
+| 5 | `fut-cerebro` | «Sin sangre, el cerebro se queda sin oxígeno. Se pierde el conocimiento en segundos, y cada minuto cuenta.» | AHA (marco de la cadena de supervivencia): sin RCP ni desfibrilación la supervivencia cae ≈ 7–10 % por minuto (fuentes secundarias) | Cerebro que se oscurece y curva de supervivencia ilustrativa de 100 % a 0 % en 10 min |
+| 6 | `fut-descarga` | «Lo que reinicia el ritmo es una descarga con desfibrilador. En el registro de Estados Unidos, sobrevivió el cincuenta y ocho por ciento.» | Registro de EE. UU. de commotio cordis (Heart Rhythm 2013): 31 de 53 (58 %) en los 6 años más recientes; 34 % en 1994–2012; el aumento se atribuye a desfibriladores públicos y a mayor conocimiento | DEA con pantalla, parches, análisis, carga, descarga y vuelta del ritmo; tarjeta «58 %» |
+| 7 | `fut-rcp` | «Si alguien está inconsciente y no respira: llama a emergencias, comprime el centro del pecho fuerte y rápido, y busca un desfibrilador.» | Pautas de RCP de adultos (AHA, fuentes secundarias): 100–120 compresiones por minuto y 5–6 cm de profundidad; llamar a emergencias (112, 123, 911) y usar un DEA lo antes posible | Tres tarjetas: teléfono, manos que comprimen a 110 por minuto y DEA |
+| 8 | `fut-cierre` | «Aprender reanimación toma una tarde y puede salvar a alguien que quieres. Descanse en paz, Jesús de Miguel.» | — | Una vela, «APRENDE RCP» y homenaje |
+| 9 | `CTA` | «Compártelo: alguien cerca de ti puede necesitar saberlo. Síguenos en Sinapsis.» | — | Cierre de SINAPSIS |
+
+## Precauciones antes de publicar
+- **No se afirma la causa del fallecimiento ni que haya sido commotio cordis.** La causa médica exacta no se ha informado y hay una investigación policial. El video lo dice dos veces en pantalla (escena 2 y en la fuente de la escena 1) y presenta la commotio cordis solo como «un mecanismo conocido», junto con otras causas posibles. Si el club o las autoridades publican un diagnóstico, **revisa el video antes de reutilizarlo**.
+- **No se muestra el lance, no se nombra al portero y no se culpa a nadie.** Los medios describen el golpe de formas distintas (rodillazo, patada, entrada, choque); el video solo dice «golpe en el pecho». No hay humor ni dramatización.
+- **Publicación:** la noticia es de hace horas y hay una familia en duelo; publica con respeto (no uses el nombre como hashtag ni como gancho de clickbait). El texto de la descripción no sugiere responsabilidades.
+- **Datos médicos:** (1) la ventana vulnerable sale de un modelo **en cerdos** (Link 1998), no de humanos; la zona roja del dibujo es un **esquema no a escala**. (2) El 58 % es del **registro de EE. UU. de commotio cordis** (mayoría de casos en deportes juveniles), no de este caso ni de todos los paros. (3) La curva de supervivencia (−10 % por minuto) es una **ilustración** del orden de magnitud de la AHA; el daño cerebral depende de cada caso. (4) Las cifras de RCP (100–120/min, 5–6 cm) vienen de fuentes secundarias: confírmalas en las guías vigentes.
+- **No sustituye un curso de primeros auxilios ni es consejo médico.** Se invita a buscar un curso de RCP.
+- **Ilustraciones:** el corazón, el corte del tórax, el DEA y la curva son esquemas; no hay imágenes reales del caso.
+- **No pude abrir** los artículos originales ni las guías de la AHA en esta sesión (red restringida): trabajé con resúmenes de búsqueda. **Confirma las cifras en los textos completos antes de usarlas en un trabajo.** No se sabe si se usó un desfibrilador en el campo: el video no lo afirma.
+- **Sin voz:** no hay `OPENAI_API_KEY`; la locución está en `ejemplos/animacion-viral/locucion-futbolista.txt`. Sin voz el audio sale a ≈ −28 LUFS: no lo publiques así.
