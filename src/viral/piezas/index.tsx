@@ -2,6 +2,8 @@
  * Registro de piezas a medida (carril B): id → componente. El motor las dibuja cuando una escena es de tipo PIEZA.
  * Para añadir una pieza nueva: (1) su ficha pura en src/anim/piezas.ts (duración ideal, fondo, sonido), (2) su componente aquí.
  */
+import { FutCausa, FutFibrilacion, FutGancho, FutVentana } from "./fut1";
+import { FutCerebro, FutCierre, FutDescarga, FutRcp } from "./fut2";
 import { CurChicle, CurCosquillas, CurGancho, CurHipo } from "./cur1";
 import { CurAcento, CurMarcador, CurPastilla, CurViolin } from "./cur2";
 import { SueAdenosina, SueGancho, SueHoras, SueLimite } from "./sue1";
@@ -111,6 +113,7 @@ export const COMPONENTES_PIEZA: Record<string, React.FC<{ e: EscenaViralGuardada
   "tej-hueso": TejHueso,
   "tej-muscular": TejMuscular,
   "tej-nervioso": TejNervioso,
+  "fut-gancho": FutGancho, "fut-causa": FutCausa, "fut-ventana": FutVentana, "fut-fibrilacion": FutFibrilacion, "fut-cerebro": FutCerebro, "fut-descarga": FutDescarga, "fut-rcp": FutRcp, "fut-cierre": FutCierre,
   "cur-gancho": CurGancho, "cur-hipo": CurHipo, "cur-cosquillas": CurCosquillas, "cur-chicle": CurChicle, "cur-pastilla": CurPastilla, "cur-violin": CurViolin, "cur-acento": CurAcento, "cur-marcador": CurMarcador,
   "sue-gancho": SueGancho, "sue-horas": SueHoras, "sue-limite": SueLimite, "sue-adenosina": SueAdenosina, "sue-cafe": SueCafe, "sue-micro": SueMicro, "sue-hospital": SueHospital, "sue-dormir": SueDormir,
   "jet-gancho": JetGancho, "jet-ascenso": JetAscenso, "jet-aire": JetAire, "jet-cabina": JetCabina, "jet-cerebro": JetCerebro, "jet-reloj": JetReloj, "jet-silencio": JetSilencio, "jet-descenso": JetDescenso,

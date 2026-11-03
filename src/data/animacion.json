@@ -1,18 +1,18 @@
 {
  "version": 1,
- "titulo": "¿Real o mito? Seis datos de medicina",
+ "titulo": "Un golpe en el pecho y un corazón que se detiene",
  "paleta": "medicina",
  "sfx": true,
  "fps": 60,
- "duracion": 58.1,
+ "duracion": 65.4,
  "escenas": [
   {
    "n": 1,
    "t": "PIEZA",
-   "voz": "¿Real o mito? Seis datos de medicina tan locos que parecen chiste.",
-   "dur": 5.2,
-   "h": "¿REAL O MITO?",
-   "w": "MITO?",
+   "voz": "Tras un golpe en el pecho, el futbolista Jesús de Miguel sufrió un paro cardíaco y falleció. ¿Cómo puede pasar?",
+   "dur": 7.9,
+   "h": "UN GOLPE EN EL PECHO",
+   "w": "PECHO",
    "sub": "",
    "ic": "brillo",
    "num": null,
@@ -45,7 +45,7 @@
    "cubo": null,
    "diales": null,
    "pieza": {
-    "id": "cur-gancho",
+    "id": "fut-gancho",
     "props": {}
    },
    "cita": null,
@@ -53,11 +53,11 @@
    "modo": "VIRAL",
    "tema": "oscuro",
    "bg": "dark",
-   "ritmo": 0.9895833333333334,
-   "total": 58.1,
+   "ritmo": 1,
+   "total": 65.4,
    "inicio": 0,
-   "fin": 5.2,
-   "texto": "¿Real o mito? Seis datos de medicina tan locos que parecen chiste.",
+   "fin": 7.9,
+   "texto": "Tras un golpe en el pecho, el futbolista Jesús de Miguel sufrió un paro cardíaco y falleció. ¿Cómo puede pasar?",
    "tr": "barrido",
    "trs": "corte",
    "sfx": [
@@ -69,57 +69,57 @@
     {
      "t": 0.05,
      "tipo": "whoosh",
-     "vol": 0.14
-    },
-    {
-     "t": 0.296875,
-     "tipo": "pop",
-     "vol": 0.16
-    },
-    {
-     "t": 2.572916666666667,
-     "tipo": "pop",
      "vol": 0.1
     },
     {
-     "t": 2.8895833333333334,
-     "tipo": "pop",
-     "vol": 0.1
-    },
-    {
-     "t": 3.2062500000000003,
-     "tipo": "pop",
-     "vol": 0.1
-    },
-    {
-     "t": 3.5229166666666667,
-     "tipo": "pop",
-     "vol": 0.1
-    },
-    {
-     "t": 3.8395833333333336,
-     "tipo": "pop",
-     "vol": 0.1
-    },
-    {
-     "t": 4.15625,
-     "tipo": "pop",
-     "vol": 0.1
-    },
-    {
-     "t": 4.354166666666667,
+     "t": 0.3,
      "tipo": "ding",
-     "vol": 0.14
+     "vol": 0.1
+    },
+    {
+     "t": 0.8,
+     "tipo": "tick",
+     "vol": 0.12
+    },
+    {
+     "t": 1.6,
+     "tipo": "tick",
+     "vol": 0.12
+    },
+    {
+     "t": 2.4000000000000004,
+     "tipo": "tick",
+     "vol": 0.12
+    },
+    {
+     "t": 3.2,
+     "tipo": "tick",
+     "vol": 0.12
+    },
+    {
+     "t": 3.8,
+     "tipo": "thud",
+     "vol": 0.2
+    },
+    {
+     "t": 4,
+     "tipo": "tick",
+     "vol": 0.12
+    },
+    {
+     "t": 5.9,
+     "tipo": "radar",
+     "vol": 0.12
     }
    ]
   },
   {
    "n": 2,
    "t": "PIEZA",
-   "voz": "Uno: Charles Osborne tuvo hipo durante sesenta y ocho años. Todo empezó con un cerdo. ¡Real!",
-   "dur": 6.6,
-   "h": "EL HIPO MÁS LARGO",
-   "w": "HIPO",
+   "voz": "La causa médica exacta no se ha informado. Pero existe un mecanismo conocido: la commotio cordis.",
+   "dur": 6.5,
+   "h": "NO SE SABE LA CAUSA",
+   "w": "CAUSA",
    "sub": "",
    "ic": "brillo",
    "num": null,
@@ -143,7 +143,7 @@
    "red": null,
    "termo": null,
    "pila": null,
-   "cap": "",
+   "cap": "lo que sí sabe la medicina",
    "papel": null,
    "pilares": null,
    "ciclo": null,
@@ -152,7 +152,7 @@
    "cubo": null,
    "diales": null,
    "pieza": {
-    "id": "cur-hipo",
+    "id": "fut-causa",
     "props": {}
    },
    "cita": null,
@@ -160,13 +160,140 @@
    "modo": "VIRAL",
    "tema": "claro",
    "bg": "light",
-   "ritmo": 0.9919354838709676,
-   "total": 58.1,
-   "inicio": 5.2,
-   "fin": 11.8,
-   "texto": "Uno: Charles Osborne tuvo hipo durante sesenta y ocho años. Todo empezó con un cerdo. ¡Real!",
+   "ritmo": 1,
+   "total": 65.4,
+   "inicio": 7.9,
+   "fin": 14.4,
+   "texto": "La causa médica exacta no se ha informado. Pero existe un mecanismo conocido: la commotio cordis.",
    "tr": "corte",
    "trs": "semitono",
+   "sfx": [
+    {
+     "t": 0.04,
+     "tipo": "whoosh",
+     "vol": 0.16
+    },
+    {
+     "t": 0.05,
+     "tipo": "estatica",
+     "vol": 0.08
+    },
+    {
+     "t": 0.4,
+     "tipo": "golpe",
+     "vol": 0.24
+    },
+    {
+     "t": 3,
+     "tipo": "whoosh",
+     "vol": 0.1
+    },
+    {
+     "t": 3.1,
+     "tipo": "clic",
+     "vol": 0.05
+    },
+    {
+     "t": 3.23,
+     "tipo": "clic",
+     "vol": 0.05
+    },
+    {
+     "t": 3.3600000000000003,
+     "tipo": "clic",
+     "vol": 0.05
+    },
+    {
+     "t": 3.49,
+     "tipo": "clic",
+     "vol": 0.05
+    },
+    {
+     "t": 3.62,
+     "tipo": "clic",
+     "vol": 0.05
+    },
+    {
+     "t": 3.75,
+     "tipo": "clic",
+     "vol": 0.05
+    },
+    {
+     "t": 3.88,
+     "tipo": "clic",
+     "vol": 0.05
+    },
+    {
+     "t": 4.01,
+     "tipo": "clic",
+     "vol": 0.05
+    },
+    {
+     "t": 4.140000000000001,
+     "tipo": "clic",
+     "vol": 0.05
+    },
+    {
+     "t": 4.4,
+     "tipo": "ding",
+     "vol": 0.14
+    }
+   ]
+  },
+  {
+   "n": 3,
+   "t": "PIEZA",
+   "voz": "El corazón late con una señal eléctrica. En cada latido hay una ventana de veinte milisegundos donde un golpe puede desordenarla.",
+   "dur": 8.2,
+   "h": "LA VENTANA VULNERABLE",
+   "w": "VENTANA",
+   "sub": "",
+   "ic": "brillo",
+   "num": null,
+   "vs": null,
+   "bars": [],
+   "barsU": "",
+   "hi": -1,
+   "line": null,
+   "items": [],
+   "stops": [],
+   "end": "",
+   "donut": [],
+   "picto": null,
+   "top": [],
+   "myth": "",
+   "truth": "",
+   "zoom": null,
+   "capas": null,
+   "mira": null,
+   "impacto": null,
+   "red": null,
+   "termo": null,
+   "pila": null,
+   "cap": "primer paso: la señal eléctrica",
+   "papel": null,
+   "pilares": null,
+   "ciclo": null,
+   "duo": null,
+   "osc": null,
+   "cubo": null,
+   "diales": null,
+   "pieza": {
+    "id": "fut-ventana",
+    "props": {}
+   },
+   "cita": null,
+   "sc": "",
+   "modo": "VIRAL",
+   "tema": "oscuro",
+   "bg": "dark",
+   "ritmo": 1,
+   "total": 65.4,
+   "inicio": 14.4,
+   "fin": 22.6,
+   "texto": "El corazón late con una señal eléctrica. En cada latido hay una ventana de veinte milisegundos donde un golpe puede desordenarla.",
+   "tr": "semitono",
+   "trs": "corte",
    "sfx": [
     {
      "t": 0.04,
@@ -179,149 +306,39 @@
      "vol": 0.1
     },
     {
-     "t": 0.4959677419354838,
-     "tipo": "pop",
-     "vol": 0.14
+     "t": 1,
+     "tipo": "radar",
+     "vol": 0.12
     },
     {
-     "t": 1.4879032258064515,
-     "tipo": "clic",
-     "vol": 0.04
-    },
-    {
-     "t": 1.6179032258064514,
-     "tipo": "clic",
-     "vol": 0.04
-    },
-    {
-     "t": 1.686290322580645,
-     "tipo": "pop",
+     "t": 2.48,
+     "tipo": "thud",
      "vol": 0.16
     },
     {
-     "t": 1.7479032258064515,
-     "tipo": "clic",
-     "vol": 0.04
-    },
-    {
-     "t": 1.8779032258064516,
-     "tipo": "clic",
-     "vol": 0.04
-    },
-    {
-     "t": 2.0079032258064515,
-     "tipo": "clic",
-     "vol": 0.04
-    },
-    {
-     "t": 2.1379032258064514,
-     "tipo": "clic",
-     "vol": 0.04
-    },
-    {
-     "t": 2.2679032258064513,
-     "tipo": "clic",
-     "vol": 0.04
-    },
-    {
-     "t": 2.3979032258064517,
-     "tipo": "clic",
-     "vol": 0.04
-    },
-    {
-     "t": 2.5279032258064515,
-     "tipo": "clic",
-     "vol": 0.04
-    },
-    {
-     "t": 2.5790322580645157,
-     "tipo": "pop",
-     "vol": 0.16
-    },
-    {
-     "t": 2.6579032258064514,
-     "tipo": "clic",
-     "vol": 0.04
-    },
-    {
-     "t": 2.787903225806452,
-     "tipo": "clic",
-     "vol": 0.04
-    },
-    {
-     "t": 2.9179032258064517,
-     "tipo": "clic",
-     "vol": 0.04
-    },
-    {
-     "t": 3.0479032258064516,
-     "tipo": "clic",
-     "vol": 0.04
-    },
-    {
-     "t": 3.1779032258064515,
-     "tipo": "clic",
-     "vol": 0.04
-    },
-    {
-     "t": 3.3079032258064514,
-     "tipo": "clic",
-     "vol": 0.04
-    },
-    {
-     "t": 3.4379032258064517,
-     "tipo": "clic",
-     "vol": 0.04
-    },
-    {
-     "t": 3.4717741935483866,
-     "tipo": "pop",
-     "vol": 0.16
-    },
-    {
-     "t": 3.5679032258064516,
-     "tipo": "clic",
-     "vol": 0.04
-    },
-    {
-     "t": 3.6979032258064515,
-     "tipo": "clic",
-     "vol": 0.04
-    },
-    {
-     "t": 3.8279032258064514,
-     "tipo": "clic",
-     "vol": 0.04
-    },
-    {
-     "t": 4.364516129032258,
-     "tipo": "pop",
-     "vol": 0.16
-    },
-    {
-     "t": 5.257258064516129,
-     "tipo": "pop",
-     "vol": 0.16
-    },
-    {
-     "t": 5.6540322580645155,
+     "t": 4.448,
      "tipo": "golpe",
      "vol": 0.3
     },
     {
-     "t": 5.753225806451612,
-     "tipo": "ding",
-     "vol": 0.2
+     "t": 4.548,
+     "tipo": "estatica",
+     "vol": 0.18
+    },
+    {
+     "t": 6.4,
+     "tipo": "tick",
+     "vol": 0.1
     }
    ]
   },
   {
-   "n": 3,
+   "n": 4,
    "t": "PIEZA",
-   "voz": "Dos: no puedes hacerte cosquillas a ti mismo, porque tu cerebelo ya sabe que eres tú. ¡Real!",
-   "dur": 6.9,
-   "h": "COSQUILLAS A TI MISMO",
-   "w": "COSQUILLAS",
+   "voz": "Si coincide, el corazón deja de latir y solo tiembla: fibrilación ventricular. Ya no bombea sangre.",
+   "dur": 6.5,
+   "h": "EL CORAZÓN SOLO TIEMBLA",
+   "w": "TIEMBLA",
    "sub": "",
    "ic": "reloj",
    "num": null,
@@ -345,7 +362,7 @@
    "red": null,
    "termo": null,
    "pila": null,
-   "cap": "",
+   "cap": "segundo paso: fibrilación ventricular",
    "papel": null,
    "pilares": null,
    "ciclo": null,
@@ -354,7 +371,99 @@
    "cubo": null,
    "diales": null,
    "pieza": {
-    "id": "cur-cosquillas",
+    "id": "fut-fibrilacion",
+    "props": {}
+   },
+   "cita": null,
+   "sc": "",
+   "modo": "VIRAL",
+   "tema": "claro",
+   "bg": "light",
+   "ritmo": 1,
+   "total": 65.4,
+   "inicio": 22.6,
+   "fin": 29.1,
+   "texto": "Si coincide, el corazón deja de latir y solo tiembla: fibrilación ventricular. Ya no bombea sangre.",
+   "tr": "corte",
+   "trs": "semitono",
+   "sfx": [
+    {
+     "t": 0.04,
+     "tipo": "whoosh",
+     "vol": 0.16
+    },
+    {
+     "t": 0.05,
+     "tipo": "heartbeat",
+     "vol": 0.2
+    },
+    {
+     "t": 0.9,
+     "tipo": "heartbeat",
+     "vol": 0.2
+    },
+    {
+     "t": 1.4,
+     "tipo": "golpe",
+     "vol": 0.3
+    },
+    {
+     "t": 1.4,
+     "tipo": "estatica",
+     "vol": 0.2
+    },
+    {
+     "t": 2.6,
+     "tipo": "radar",
+     "vol": 0.14
+    },
+    {
+     "t": 4,
+     "tipo": "tick",
+     "vol": 0.12
+    }
+   ]
+  },
+  {
+   "n": 5,
+   "t": "PIEZA",
+   "voz": "Sin sangre, el cerebro se queda sin oxígeno. Se pierde el conocimiento en segundos, y cada minuto cuenta.",
+   "dur": 7.2,
+   "h": "CADA MINUTO CUENTA",
+   "w": "MINUTO",
+   "sub": "",
+   "ic": "tendencia-baja",
+   "num": null,
+   "vs": null,
+   "bars": [],
+   "barsU": "",
+   "hi": -1,
+   "line": null,
+   "items": [],
+   "stops": [],
+   "end": "",
+   "donut": [],
+   "picto": null,
+   "top": [],
+   "myth": "",
+   "truth": "",
+   "zoom": null,
+   "capas": null,
+   "mira": null,
+   "impacto": null,
+   "red": null,
+   "termo": null,
+   "pila": null,
+   "cap": "tercer paso: el cerebro",
+   "papel": null,
+   "pilares": null,
+   "ciclo": null,
+   "duo": null,
+   "osc": null,
+   "cubo": null,
+   "diales": null,
+   "pieza": {
+    "id": "fut-cerebro",
     "props": {}
    },
    "cita": null,
@@ -363,10 +472,10 @@
    "tema": "oscuro",
    "bg": "dark",
    "ritmo": 1,
-   "total": 58.1,
-   "inicio": 11.8,
-   "fin": 18.7,
-   "texto": "Dos: no puedes hacerte cosquillas a ti mismo, porque tu cerebelo ya sabe que eres tú. ¡Real!",
+   "total": 65.4,
+   "inicio": 29.1,
+   "fin": 36.3,
+   "texto": "Sin sangre, el cerebro se queda sin oxígeno. Se pierde el conocimiento en segundos, y cada minuto cuenta.",
    "tr": "semitono",
    "trs": "corte",
    "sfx": [
@@ -381,49 +490,174 @@
      "vol": 0.1
     },
     {
-     "t": 0.9,
-     "tipo": "pop",
-     "vol": 0.12
+     "t": 0.8,
+     "tipo": "clic",
+     "vol": 0.04
+    },
+    {
+     "t": 0.93,
+     "tipo": "clic",
+     "vol": 0.04
+    },
+    {
+     "t": 1.06,
+     "tipo": "clic",
+     "vol": 0.04
+    },
+    {
+     "t": 1.19,
+     "tipo": "clic",
+     "vol": 0.04
+    },
+    {
+     "t": 1.32,
+     "tipo": "clic",
+     "vol": 0.04
     },
     {
      "t": 1.4,
-     "tipo": "pop",
-     "vol": 0.12
+     "tipo": "tick",
+     "vol": 0.14
     },
     {
-     "t": 1.9,
-     "tipo": "pop",
-     "vol": 0.12
+     "t": 1.4500000000000002,
+     "tipo": "clic",
+     "vol": 0.04
+    },
+    {
+     "t": 1.58,
+     "tipo": "clic",
+     "vol": 0.04
+    },
+    {
+     "t": 1.71,
+     "tipo": "clic",
+     "vol": 0.04
+    },
+    {
+     "t": 1.84,
+     "tipo": "clic",
+     "vol": 0.04
+    },
+    {
+     "t": 1.97,
+     "tipo": "clic",
+     "vol": 0.04
+    },
+    {
+     "t": 2.1,
+     "tipo": "clic",
+     "vol": 0.04
+    },
+    {
+     "t": 2.2300000000000004,
+     "tipo": "clic",
+     "vol": 0.04
+    },
+    {
+     "t": 2.3600000000000003,
+     "tipo": "clic",
+     "vol": 0.04
+    },
+    {
+     "t": 2.49,
+     "tipo": "clic",
+     "vol": 0.04
+    },
+    {
+     "t": 2.62,
+     "tipo": "clic",
+     "vol": 0.04
+    },
+    {
+     "t": 2.75,
+     "tipo": "clic",
+     "vol": 0.04
+    },
+    {
+     "t": 2.88,
+     "tipo": "clic",
+     "vol": 0.04
     },
     {
      "t": 3,
+     "tipo": "radar",
+     "vol": 0.14
+    },
+    {
+     "t": 3.01,
+     "tipo": "clic",
+     "vol": 0.04
+    },
+    {
+     "t": 3.1399999999999997,
+     "tipo": "clic",
+     "vol": 0.04
+    },
+    {
+     "t": 3.2700000000000005,
+     "tipo": "clic",
+     "vol": 0.04
+    },
+    {
+     "t": 3.4000000000000004,
+     "tipo": "clic",
+     "vol": 0.04
+    },
+    {
+     "t": 3.5300000000000002,
+     "tipo": "clic",
+     "vol": 0.04
+    },
+    {
+     "t": 3.66,
+     "tipo": "clic",
+     "vol": 0.04
+    },
+    {
+     "t": 3.79,
+     "tipo": "clic",
+     "vol": 0.04
+    },
+    {
+     "t": 3.92,
+     "tipo": "clic",
+     "vol": 0.04
+    },
+    {
+     "t": 4.05,
+     "tipo": "clic",
+     "vol": 0.04
+    },
+    {
+     "t": 4.18,
+     "tipo": "clic",
+     "vol": 0.04
+    },
+    {
+     "t": 4.3100000000000005,
+     "tipo": "clic",
+     "vol": 0.04
+    },
+    {
+     "t": 4.44,
+     "tipo": "clic",
+     "vol": 0.04
+    },
+    {
+     "t": 5,
      "tipo": "thud",
-     "vol": 0.14
-    },
-    {
-     "t": 3.8,
-     "tipo": "zap",
-     "vol": 0.14
-    },
-    {
-     "t": 5.6,
-     "tipo": "golpe",
-     "vol": 0.3
-    },
-    {
-     "t": 5.699999999999999,
-     "tipo": "ding",
-     "vol": 0.2
+     "vol": 0.18
     }
    ]
   },
   {
-   "n": 4,
+   "n": 6,
    "t": "PIEZA",
-   "voz": "Tres: un chicle tragado tarda siete años en salir. ¡Mito! Normalmente sale en unos días.",
-   "dur": 6.2,
-   "h": "EL CHICLE DE 7 AÑOS",
-   "w": "CHICLE",
+   "voz": "Lo que reinicia el ritmo es una descarga con desfibrilador. En el registro de Estados Unidos, sobrevivió el cincuenta y ocho por ciento.",
+   "dur": 8.9,
+   "h": "LA DESCARGA REINICIA EL RITMO",
+   "w": "DESCARGA",
    "sub": "",
    "ic": "brillo",
    "num": null,
@@ -447,7 +681,7 @@
    "red": null,
    "termo": null,
    "pila": null,
-   "cap": "",
+   "cap": "qué lo revierte",
    "papel": null,
    "pilares": null,
    "ciclo": null,
@@ -456,7 +690,7 @@
    "cubo": null,
    "diales": null,
    "pieza": {
-    "id": "cur-chicle",
+    "id": "fut-descarga",
     "props": {}
    },
    "cita": null,
@@ -464,11 +698,11 @@
    "modo": "VIRAL",
    "tema": "claro",
    "bg": "light",
-   "ritmo": 0.9745762711864406,
-   "total": 58.1,
-   "inicio": 18.7,
-   "fin": 24.9,
-   "texto": "Tres: un chicle tragado tarda siete años en salir. ¡Mito! Normalmente sale en unos días.",
+   "ritmo": 1,
+   "total": 65.4,
+   "inicio": 36.3,
+   "fin": 45.2,
+   "texto": "Lo que reinicia el ritmo es una descarga con desfibrilador. En el registro de Estados Unidos, sobrevivió el cincuenta y ocho por ciento.",
    "tr": "corte",
    "trs": "semitono",
    "sfx": [
@@ -483,360 +717,51 @@
      "vol": 0.1
     },
     {
-     "t": 0.19491525423728814,
+     "t": 0.4,
      "tipo": "pop",
-     "vol": 0.12
-    },
-    {
-     "t": 0.9745762711864406,
-     "tipo": "tick",
-     "vol": 0.12
-    },
-    {
-     "t": 2.5338983050847457,
-     "tipo": "zap",
-     "vol": 0.16
-    },
-    {
-     "t": 3.6059322033898304,
-     "tipo": "golpe",
-     "vol": 0.3
-    },
-    {
-     "t": 3.6059322033898304,
-     "tipo": "estatica",
-     "vol": 0.18
-    },
-    {
-     "t": 3.995762711864406,
-     "tipo": "clic",
-     "vol": 0.04
-    },
-    {
-     "t": 4.1257627118644065,
-     "tipo": "clic",
-     "vol": 0.04
-    },
-    {
-     "t": 4.255762711864406,
-     "tipo": "clic",
-     "vol": 0.04
-    },
-    {
-     "t": 4.385762711864406,
-     "tipo": "clic",
-     "vol": 0.04
-    },
-    {
-     "t": 4.483050847457626,
-     "tipo": "ding",
      "vol": 0.14
     },
     {
-     "t": 4.515762711864406,
+     "t": 1.6,
      "tipo": "clic",
-     "vol": 0.04
-    },
-    {
-     "t": 4.645762711864406,
-     "tipo": "clic",
-     "vol": 0.04
-    },
-    {
-     "t": 4.775762711864406,
-     "tipo": "clic",
-     "vol": 0.04
-    },
-    {
-     "t": 4.905762711864406,
-     "tipo": "clic",
-     "vol": 0.04
-    },
-    {
-     "t": 5.035762711864406,
-     "tipo": "clic",
-     "vol": 0.04
-    },
-    {
-     "t": 5.1657627118644065,
-     "tipo": "clic",
-     "vol": 0.04
-    },
-    {
-     "t": 5.295762711864406,
-     "tipo": "clic",
-     "vol": 0.04
-    },
-    {
-     "t": 5.425762711864406,
-     "tipo": "clic",
-     "vol": 0.04
-    }
-   ]
-  },
-  {
-   "n": 5,
-   "t": "PIEZA",
-   "voz": "Cuatro: una pastilla de azúcar de dos dólares con cincuenta calma más el dolor que una de diez centavos. ¡Real!",
-   "dur": 7.9,
-   "h": "LA PASTILLA CARA",
-   "w": "PASTILLA",
-   "sub": "",
-   "ic": "dolar",
-   "num": null,
-   "vs": null,
-   "bars": [],
-   "barsU": "",
-   "hi": -1,
-   "line": null,
-   "items": [],
-   "stops": [],
-   "end": "",
-   "donut": [],
-   "picto": null,
-   "top": [],
-   "myth": "",
-   "truth": "",
-   "zoom": null,
-   "capas": null,
-   "mira": null,
-   "impacto": null,
-   "red": null,
-   "termo": null,
-   "pila": null,
-   "cap": "",
-   "papel": null,
-   "pilares": null,
-   "ciclo": null,
-   "duo": null,
-   "osc": null,
-   "cubo": null,
-   "diales": null,
-   "pieza": {
-    "id": "cur-pastilla",
-    "props": {}
-   },
-   "cita": null,
-   "sc": "",
-   "modo": "VIRAL",
-   "tema": "oscuro",
-   "bg": "dark",
-   "ritmo": 1,
-   "total": 58.1,
-   "inicio": 24.9,
-   "fin": 32.8,
-   "texto": "Cuatro: una pastilla de azúcar de dos dólares con cincuenta calma más el dolor que una de diez centavos. ¡Real!",
-   "tr": "semitono",
-   "trs": "corte",
-   "sfx": [
-    {
-     "t": 0.04,
-     "tipo": "whoosh",
      "vol": 0.16
     },
     {
-     "t": 0.05,
-     "tipo": "whoosh",
-     "vol": 0.1
-    },
-    {
-     "t": 0.5,
-     "tipo": "pop",
-     "vol": 0.12
-    },
-    {
-     "t": 1.4,
-     "tipo": "cash",
-     "vol": 0.16
-    },
-    {
-     "t": 3.3,
-     "tipo": "clic",
-     "vol": 0.04
-    },
-    {
-     "t": 3.4299999999999997,
-     "tipo": "clic",
-     "vol": 0.04
-    },
-    {
-     "t": 3.5599999999999996,
-     "tipo": "clic",
-     "vol": 0.04
-    },
-    {
-     "t": 3.69,
-     "tipo": "clic",
-     "vol": 0.04
-    },
-    {
-     "t": 3.82,
-     "tipo": "clic",
-     "vol": 0.04
-    },
-    {
-     "t": 3.9499999999999997,
-     "tipo": "clic",
-     "vol": 0.04
-    },
-    {
-     "t": 4.08,
-     "tipo": "clic",
-     "vol": 0.04
-    },
-    {
-     "t": 4.21,
-     "tipo": "clic",
-     "vol": 0.04
-    },
-    {
-     "t": 4.34,
-     "tipo": "clic",
-     "vol": 0.04
-    },
-    {
-     "t": 4.47,
-     "tipo": "clic",
-     "vol": 0.04
+     "t": 2.6,
+     "tipo": "radar",
+     "vol": 0.14
     },
     {
      "t": 4.6,
-     "tipo": "clic",
-     "vol": 0.04
-    },
-    {
-     "t": 4.73,
-     "tipo": "clic",
-     "vol": 0.04
-    },
-    {
-     "t": 4.859999999999999,
-     "tipo": "clic",
-     "vol": 0.04
-    },
-    {
-     "t": 5.5,
      "tipo": "zap",
-     "vol": 0.14
+     "vol": 0.3
     },
     {
-     "t": 6.6,
+     "t": 4.6,
      "tipo": "golpe",
      "vol": 0.3
     },
     {
-     "t": 6.699999999999999,
-     "tipo": "ding",
+     "t": 4.9,
+     "tipo": "heartbeat",
      "vol": 0.2
-    }
-   ]
-  },
-  {
-   "n": 6,
-   "t": "PIEZA",
-   "voz": "Cinco: un violinista tocó mientras le implantaban electrodos en el cerebro, y el tejido cerebral no siente dolor. ¡Real!",
-   "dur": 7.6,
-   "h": "VIOLÍN CON ELECTRODOS",
-   "w": "VIOLÍN",
-   "sub": "",
-   "ic": "idea",
-   "num": null,
-   "vs": null,
-   "bars": [],
-   "barsU": "",
-   "hi": -1,
-   "line": null,
-   "items": [],
-   "stops": [],
-   "end": "",
-   "donut": [],
-   "picto": null,
-   "top": [],
-   "myth": "",
-   "truth": "",
-   "zoom": null,
-   "capas": null,
-   "mira": null,
-   "impacto": null,
-   "red": null,
-   "termo": null,
-   "pila": null,
-   "cap": "",
-   "papel": null,
-   "pilares": null,
-   "ciclo": null,
-   "duo": null,
-   "osc": null,
-   "cubo": null,
-   "diales": null,
-   "pieza": {
-    "id": "cur-violin",
-    "props": {}
-   },
-   "cita": null,
-   "sc": "",
-   "modo": "VIRAL",
-   "tema": "claro",
-   "bg": "light",
-   "ritmo": 1,
-   "total": 58.1,
-   "inicio": 32.8,
-   "fin": 40.4,
-   "texto": "Cinco: un violinista tocó mientras le implantaban electrodos en el cerebro, y el tejido cerebral no siente dolor. ¡Real!",
-   "tr": "corte",
-   "trs": "semitono",
-   "sfx": [
-    {
-     "t": 0.04,
-     "tipo": "whoosh",
-     "vol": 0.16
     },
     {
-     "t": 0.05,
-     "tipo": "whoosh",
-     "vol": 0.1
-    },
-    {
-     "t": 0.3,
-     "tipo": "pop",
-     "vol": 0.12
-    },
-    {
-     "t": 0.9,
-     "tipo": "pop",
-     "vol": 0.14
-    },
-    {
-     "t": 2.2,
-     "tipo": "zap",
-     "vol": 0.16
-    },
-    {
-     "t": 4.8,
-     "tipo": "tick",
-     "vol": 0.14
-    },
-    {
-     "t": 6.2,
-     "tipo": "golpe",
-     "vol": 0.3
-    },
-    {
-     "t": 6.3,
+     "t": 5.8,
      "tipo": "ding",
-     "vol": 0.2
+     "vol": 0.18
     }
    ]
   },
   {
    "n": 7,
    "t": "PIEZA",
-   "voz": "Seis: tras una lesión cerebral, una noruega empezó a sonar alemana. Se llama síndrome del acento extranjero. ¡Real!",
-   "dur": 6.9,
-   "h": "ACENTO EXTRANJERO",
-   "w": "ACENTO",
+   "voz": "Si alguien está inconsciente y no respira: llama a emergencias, comprime el centro del pecho fuerte y rápido, y busca un desfibrilador.",
+   "dur": 8.6,
+   "h": "QUÉ HACER",
+   "w": "HACER",
    "sub": "",
-   "ic": "telefono",
+   "ic": "velocimetro",
    "num": null,
    "vs": null,
    "bars": [],
@@ -858,7 +783,7 @@
    "red": null,
    "termo": null,
    "pila": null,
-   "cap": "",
+   "cap": "tres pasos que salvan vidas",
    "papel": null,
    "pilares": null,
    "ciclo": null,
@@ -867,7 +792,7 @@
    "cubo": null,
    "diales": null,
    "pieza": {
-    "id": "cur-acento",
+    "id": "fut-rcp",
     "props": {}
    },
    "cita": null,
@@ -876,10 +801,10 @@
    "tema": "oscuro",
    "bg": "dark",
    "ritmo": 1,
-   "total": 58.1,
-   "inicio": 40.4,
-   "fin": 47.3,
-   "texto": "Seis: tras una lesión cerebral, una noruega empezó a sonar alemana. Se llama síndrome del acento extranjero. ¡Real!",
+   "total": 65.4,
+   "inicio": 45.2,
+   "fin": 53.8,
+   "texto": "Si alguien está inconsciente y no respira: llama a emergencias, comprime el centro del pecho fuerte y rápido, y busca un desfibrilador.",
    "tr": "semitono",
    "trs": "zoom",
    "sfx": [
@@ -894,49 +819,184 @@
      "vol": 0.1
     },
     {
-     "t": 0.3,
-     "tipo": "pop",
-     "vol": 0.12
-    },
-    {
-     "t": 1,
-     "tipo": "pop",
-     "vol": 0.12
-    },
-    {
-     "t": 2.3,
-     "tipo": "golpe",
-     "vol": 0.22
-    },
-    {
-     "t": 2.9,
+     "t": 2.6,
      "tipo": "pop",
      "vol": 0.14
     },
     {
-     "t": 4.1,
-     "tipo": "ding",
+     "t": 4.2,
+     "tipo": "pop",
      "vol": 0.14
     },
     {
-     "t": 5.6,
-     "tipo": "golpe",
-     "vol": 0.3
+     "t": 4.5,
+     "tipo": "clic",
+     "vol": 0.05
     },
     {
-     "t": 5.699999999999999,
-     "tipo": "ding",
-     "vol": 0.2
+     "t": 4.63,
+     "tipo": "clic",
+     "vol": 0.05
+    },
+    {
+     "t": 4.76,
+     "tipo": "clic",
+     "vol": 0.05
+    },
+    {
+     "t": 4.89,
+     "tipo": "clic",
+     "vol": 0.05
+    },
+    {
+     "t": 5.02,
+     "tipo": "clic",
+     "vol": 0.05
+    },
+    {
+     "t": 5.15,
+     "tipo": "clic",
+     "vol": 0.05
+    },
+    {
+     "t": 5.28,
+     "tipo": "clic",
+     "vol": 0.05
+    },
+    {
+     "t": 5.41,
+     "tipo": "clic",
+     "vol": 0.05
+    },
+    {
+     "t": 5.54,
+     "tipo": "clic",
+     "vol": 0.05
+    },
+    {
+     "t": 5.67,
+     "tipo": "clic",
+     "vol": 0.05
+    },
+    {
+     "t": 5.8,
+     "tipo": "clic",
+     "vol": 0.05
+    },
+    {
+     "t": 5.93,
+     "tipo": "clic",
+     "vol": 0.05
+    },
+    {
+     "t": 6.0600000000000005,
+     "tipo": "clic",
+     "vol": 0.05
+    },
+    {
+     "t": 6.1899999999999995,
+     "tipo": "clic",
+     "vol": 0.05
+    },
+    {
+     "t": 6.32,
+     "tipo": "clic",
+     "vol": 0.05
+    },
+    {
+     "t": 6.45,
+     "tipo": "clic",
+     "vol": 0.05
+    },
+    {
+     "t": 6.58,
+     "tipo": "clic",
+     "vol": 0.05
+    },
+    {
+     "t": 6.6,
+     "tipo": "pop",
+     "vol": 0.14
+    },
+    {
+     "t": 6.71,
+     "tipo": "clic",
+     "vol": 0.05
+    },
+    {
+     "t": 6.84,
+     "tipo": "clic",
+     "vol": 0.05
+    },
+    {
+     "t": 6.970000000000001,
+     "tipo": "clic",
+     "vol": 0.05
+    },
+    {
+     "t": 7.1,
+     "tipo": "clic",
+     "vol": 0.05
+    },
+    {
+     "t": 7.23,
+     "tipo": "clic",
+     "vol": 0.05
+    },
+    {
+     "t": 7.36,
+     "tipo": "clic",
+     "vol": 0.05
+    },
+    {
+     "t": 7.49,
+     "tipo": "clic",
+     "vol": 0.05
+    },
+    {
+     "t": 7.62,
+     "tipo": "clic",
+     "vol": 0.05
+    },
+    {
+     "t": 7.75,
+     "tipo": "clic",
+     "vol": 0.05
+    },
+    {
+     "t": 7.88,
+     "tipo": "clic",
+     "vol": 0.05
+    },
+    {
+     "t": 8.01,
+     "tipo": "clic",
+     "vol": 0.05
+    },
+    {
+     "t": 8.14,
+     "tipo": "clic",
+     "vol": 0.05
+    },
+    {
+     "t": 8.27,
+     "tipo": "clic",
+     "vol": 0.05
+    },
+    {
+     "t": 8.4,
+     "tipo": "clic",
+     "vol": 0.05
     }
    ]
   },
   {
    "n": 8,
    "t": "PIEZA",
-   "voz": "Cinco eran reales y uno, mito. ¿Cuántos acertaste? Cuéntame en los comentarios.",
-   "dur": 5.2,
-   "h": "¿CUÁNTOS ACERTASTE?",
-   "w": "ACERTASTE?",
+   "voz": "Aprender reanimación toma una tarde y puede salvar a alguien que quieres. Descanse en paz, Jesús de Miguel.",
+   "dur": 6.9,
+   "h": "APRENDE RCP",
+   "w": "RCP",
    "sub": "",
    "ic": "brillo",
    "num": null,
@@ -969,7 +1029,7 @@
    "cubo": null,
    "diales": null,
    "pieza": {
-    "id": "cur-marcador",
+    "id": "fut-cierre",
     "props": {}
    },
    "cita": null,
@@ -977,11 +1037,11 @@
    "modo": "VIRAL",
    "tema": "claro",
    "bg": "light",
-   "ritmo": 0.9895833333333334,
-   "total": 58.1,
-   "inicio": 47.3,
-   "fin": 52.5,
-   "texto": "Cinco eran reales y uno, mito. ¿Cuántos acertaste? Cuéntame en los comentarios.",
+   "ritmo": 1,
+   "total": 65.4,
+   "inicio": 53.8,
+   "fin": 60.7,
+   "texto": "Aprender reanimación toma una tarde y puede salvar a alguien que quieres. Descanse en paz, Jesús de Miguel.",
    "tr": "zoom",
    "trs": "barrido",
    "sfx": [
@@ -993,59 +1053,34 @@
     {
      "t": 0.05,
      "tipo": "whoosh",
+     "vol": 0.08
+    },
+    {
+     "t": 0.3,
+     "tipo": "pop",
      "vol": 0.1
     },
     {
-     "t": 0.4947916666666667,
+     "t": 3.6,
      "tipo": "ding",
-     "vol": 0.12
-    },
-    {
-     "t": 0.8708333333333333,
-     "tipo": "ding",
-     "vol": 0.12
-    },
-    {
-     "t": 1.246875,
-     "tipo": "golpe",
-     "vol": 0.2
-    },
-    {
-     "t": 1.6229166666666668,
-     "tipo": "ding",
-     "vol": 0.12
-    },
-    {
-     "t": 1.9989583333333334,
-     "tipo": "ding",
-     "vol": 0.12
-    },
-    {
-     "t": 2.375,
-     "tipo": "ding",
-     "vol": 0.12
-    },
-    {
-     "t": 2.96875,
-     "tipo": "cash",
-     "vol": 0.18
-    },
-    {
-     "t": 3.5625,
-     "tipo": "pop",
      "vol": 0.14
+    },
+    {
+     "t": 5,
+     "tipo": "tick",
+     "vol": 0.1
     }
    ]
   },
   {
    "n": 9,
    "t": "CTA",
-   "voz": "Mándaselo a ese amigo que cree que sabe de medicina y síguenos en Sinapsis.",
-   "dur": 5.6,
-   "h": "MÁNDASELO Y SÍGUENOS",
+   "voz": "Compártelo: alguien cerca de ti puede necesitar saberlo. Síguenos en Sinapsis.",
+   "dur": 4.7,
+   "h": "COMPÁRTELO Y SÍGUENOS",
    "w": "SÍGUENOS",
    "sub": "Más ciencia en SINAPSIS",
-   "ic": "cohete",
+   "ic": "pin",
    "num": null,
    "vs": null,
    "bars": [],
@@ -1082,10 +1117,10 @@
    "tema": "oscuro",
    "bg": "gold",
    "ritmo": 1,
-   "total": 58.1,
-   "inicio": 52.5,
-   "fin": 58.1,
-   "texto": "Mándaselo a ese amigo que cree que sabe de medicina y síguenos en Sinapsis.",
+   "total": 65.4,
+   "inicio": 60.7,
+   "fin": 65.4,
+   "texto": "Compártelo: alguien cerca de ti puede necesitar saberlo. Síguenos en Sinapsis.",
    "tr": "barrido",
    "trs": "barrido",
    "sfx": [

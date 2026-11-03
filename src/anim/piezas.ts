@@ -495,6 +495,43 @@ export const TCUR = {
   marcador: { luces: 0.5, luzPaso: 0.38, copa: 3.0, comentar: 3.6 },
 } as const;
 
+/** Datos del video sobre el paro cardíaco de un futbolista (SINAPSIS · medicina y actualidad; 3 nov 2026). Fuentes y precauciones en ejemplos/animacion-viral/guion-tecnico-futbolista.md.
+ *  La causa médica exacta NO se ha informado y hay una investigación policial: el video no la afirma, no culpa a nadie y explica fisiología y primeros auxilios en general. */
+export const FUT = {
+  /** ventana vulnerable de la commotio cordis (Link y cols., NEJM 1998, modelo en cerdos): impactos 15–30 ms antes del pico de la onda T producen fibrilación ventricular */
+  ventanaMsMin: 15, ventanaMsMax: 30,
+  /** registro de EE. UU. de commotio cordis (Heart Rhythm 2013): 31 de 53 sobrevivieron en los 6 años más recientes */
+  regSobrevivieron: 31, regTotal: 53,
+  /** sin RCP ni desfibrilación la supervivencia cae ≈ 7–10 % por minuto (marco de la cadena de supervivencia de la AHA) */
+  caidaPorMinMin: 7, caidaPorMinMax: 10,
+  /** RCP de adultos (AHA): 100–120 compresiones por minuto, 5–6 cm de profundidad */
+  rcpRitmoMin: 100, rcpRitmoMax: 120, rcpProfCmMin: 5, rcpProfCmMax: 6,
+  /** el jugador: Jesús de Miguel, delantero del CD Tenerife, 30 años; el club comunicó su fallecimiento el martes 3 nov 2026 a las 8:00 */
+  edad: 30,
+} as const;
+/** supervivencia ilustrativa (%) tras `min` minutos sin RCP ni desfibrilación: −10 % por minuto (orden de magnitud de la AHA, 7–10 %), desde 100 % */
+export const supervivenciaSinDescarga = (min: number): number => Math.max(0, 100 - 10 * min);
+const gauss = (x: number, mu: number, sg: number): number => Math.exp(-0.5 * Math.pow((x - mu) / sg, 2));
+/** onda de un electrocardiograma normal en la fase `f` (0–1 por latido): P, complejo QRS y onda T (pico de la T en 0,60) */
+export const ecgOnda = (f: number): number => {
+  const u = ((f % 1) + 1) % 1;
+  return 0.12 * gauss(u, 0.12, 0.025) - 0.1 * gauss(u, 0.295, 0.008) + 1.0 * gauss(u, 0.32, 0.009) - 0.22 * gauss(u, 0.345, 0.01) + 0.3 * gauss(u, 0.6, 0.045);
+};
+/** fibrilación ventricular: oscilación caótica de 4–8 Hz con amplitud irregular, en el instante `t` s */
+export const ecgFibrilacion = (t: number): number => 0.55 * Math.sin(t * 38 + 1.3 * Math.sin(t * 7.1)) * (0.6 + 0.4 * Math.sin(t * 3.3 + 0.7)) + 0.35 * Math.sin(t * 25.7 + 2) * (0.5 + 0.5 * Math.sin(t * 5.1)) + 0.15 * Math.sin(t * 61 + t * t);
+
+/** Tiempos del video del futbolista (segundos a ritmo normal), compartidos entre el dibujo y el sonido. */
+export const TFUT = {
+  gancho: { chip: 0.3, nombre: 0.6, ecg: 0.8, frase2: 3.8, frase3: 5.9, apaga: 6.0 },
+  causa: { sello: 0.4, sale: 3.0, term: 3.1, gloss: 4.4, fuente: 4.8 },
+  ventana: { ecg: 0.3, banda: 1.0, periodo: 0.8, golpe1: 2.48, golpe2: 4.448, nota: 6.4 },
+  fibrilacion: { corazon: 0.2, golpe: 1.4, rotulo: 2.6, sangre: 4.0 },
+  cerebro: { cerebro: 0.2, reloj: 0.8, relojDur: 4.2, marca10s: 1.4, marca4min: 3.0, cae: 5.0 },
+  descarga: { dea: 0.4, parches: 1.6, analiza: 2.6, carga: 3.6, cargaDur: 1.0, shock: 4.6, normal: 4.9, cifra: 5.8, nota: 7.2 },
+  rcp: { paso1: 2.6, paso2: 4.2, paso3: 6.6, ritmo: 110 },
+  cierre: { vela: 0.2, frase1: 0.3, frase2: 3.6, chip: 5.0 },
+} as const;
+
 /* ───────────── «La regla del 37 %» (problema de la parada óptima, ensayo abstracto para IMNOBA) ───────────── */
 
 /** Generador pseudoaleatorio determinista (mulberry32): mismos números en el render, en las pruebas y en cada fotograma. */
@@ -1146,6 +1183,39 @@ export const PIEZAS: Record<string, DefPieza> = {
   "cur-marcador": {
     id: "cur-marcador", nombre: "Real o mito · el marcador: 5 reales y 1 mito, trofeo y pregunta «¿cuántos acertaste?» (cierre)", ideal: 4.8, fondo: "dark", entra: "zoom",
     sfx: (_d, r) => [ev(0.05, "whoosh", 0.1), ...[0, 1, 2, 3, 4, 5].map((i) => ev((TCUR.marcador.luces + TCUR.marcador.luzPaso * i) * r, i === 2 ? "golpe" : "ding", i === 2 ? 0.2 : 0.12)), ev(TCUR.marcador.copa * r, "cash", 0.18), ev(TCUR.marcador.comentar * r, "pop", 0.14)],
+  },
+  /* ───────────── Futbolista: paro cardíaco tras un golpe en el pecho (SINAPSIS · medicina y actualidad) ───────────── */
+  "fut-gancho": {
+    id: "fut-gancho", nombre: "Futbolista · en memoria: tarjeta con el nombre, líneas de cancha y un ECG que se apaga con calma (gancho)", ideal: 7.4, fondo: "dark",
+    sfx: (_d, r) => [ev(0.05, "whoosh", 0.1), ev(TFUT.gancho.chip * r, "ding", 0.1), ...[0, 1, 2, 3, 4].map((i) => ev((TFUT.gancho.ecg + 0.8 * i) * r, "tick", 0.12)), ev(TFUT.gancho.frase2 * r, "thud", 0.2), ev(TFUT.gancho.frase3 * r, "radar", 0.12)],
+  },
+  "fut-causa": {
+    id: "fut-causa", nombre: "Futbolista · sello «causa médica no informada» y el término commotio cordis («agitación del corazón»)", ideal: 6.0, fondo: "dark", entra: "corte",
+    sfx: (_d, r) => [ev(0.05, "estatica", 0.08), ev(TFUT.causa.sello * r, "golpe", 0.24), ev(TFUT.causa.sale * r, "whoosh", 0.1), ...clics(TFUT.causa.term * r, 1.2 * r, 0.05), ev(TFUT.causa.gloss * r, "ding", 0.14)],
+  },
+  "fut-ventana": {
+    id: "fut-ventana", nombre: "Futbolista · un latido de ECG con su ventana vulnerable: el mismo golpe no hace nada fuera de ella y desencadena fibrilación dentro (esquema)", ideal: 7.7, fondo: "dark", entra: "semitono",
+    sfx: (_d, r) => [ev(0.05, "whoosh", 0.1), ev(TFUT.ventana.banda * r, "radar", 0.12), ev(TFUT.ventana.golpe1 * r, "thud", 0.16), ev(TFUT.ventana.golpe2 * r, "golpe", 0.3), ev((TFUT.ventana.golpe2 + 0.1) * r, "estatica", 0.18), ev(TFUT.ventana.nota * r, "tick", 0.1)],
+  },
+  "fut-fibrilacion": {
+    id: "fut-fibrilacion", nombre: "Futbolista · un corazón que latía con ritmo y de pronto solo tiembla: fibrilación ventricular, no bombea sangre", ideal: 6.0, fondo: "dark", entra: "corte",
+    sfx: (_d, r) => [ev(0.05, "heartbeat", 0.2), ev(0.9 * r, "heartbeat", 0.2), ev(TFUT.fibrilacion.golpe * r, "golpe", 0.3), ev(TFUT.fibrilacion.golpe * r, "estatica", 0.2), ev(TFUT.fibrilacion.rotulo * r, "radar", 0.14), ev(TFUT.fibrilacion.sangre * r, "tick", 0.12)],
+  },
+  "fut-cerebro": {
+    id: "fut-cerebro", nombre: "Futbolista · el cerebro sin oxígeno y la curva de supervivencia que cae ≈ 10 % por minuto sin descarga (ilustración)", ideal: 6.7, fondo: "dark", entra: "semitono",
+    sfx: (_d, r) => [ev(0.05, "whoosh", 0.1), ...clics(TFUT.cerebro.reloj * r, TFUT.cerebro.relojDur * r * 0.9, 0.04), ev(TFUT.cerebro.marca10s * r, "tick", 0.14), ev(TFUT.cerebro.marca4min * r, "radar", 0.14), ev(TFUT.cerebro.cae * r, "thud", 0.18)],
+  },
+  "fut-descarga": {
+    id: "fut-descarga", nombre: "Futbolista · un desfibrilador (DEA): analiza, carga, descarga y el ritmo vuelve; 58 % de supervivencia en el registro de EE. UU.", ideal: 8.4, fondo: "dark", entra: "corte",
+    sfx: (_d, r) => [ev(0.05, "whoosh", 0.1), ev(TFUT.descarga.dea * r, "pop", 0.14), ev(TFUT.descarga.parches * r, "clic", 0.16), ev(TFUT.descarga.analiza * r, "radar", 0.14), ev(TFUT.descarga.shock * r, "zap", 0.3), ev(TFUT.descarga.shock * r, "golpe", 0.3), ev(TFUT.descarga.normal * r, "heartbeat", 0.2), ev(TFUT.descarga.cifra * r, "ding", 0.18)],
+  },
+  "fut-rcp": {
+    id: "fut-rcp", nombre: "Futbolista · tres pasos: llama a emergencias, comprime el centro del pecho (100–120/min, 5–6 cm) y busca un DEA", ideal: 8.1, fondo: "dark", entra: "semitono",
+    sfx: (_d, r) => [ev(0.05, "whoosh", 0.1), ev(TFUT.rcp.paso1 * r, "pop", 0.14), ev(TFUT.rcp.paso2 * r, "pop", 0.14), ev(TFUT.rcp.paso3 * r, "pop", 0.14), ...clics(TFUT.rcp.paso2 * r + 0.3, 4.8 * r, 0.05)],
+  },
+  "fut-cierre": {
+    id: "fut-cierre", nombre: "Futbolista · una vela, «aprende RCP» y descanse en paz (cierre)", ideal: 6.4, fondo: "dark", entra: "zoom",
+    sfx: (_d, r) => [ev(0.05, "whoosh", 0.08), ev(TFUT.cierre.frase1 * r, "pop", 0.1), ev(TFUT.cierre.frase2 * r, "ding", 0.14), ev(TFUT.cierre.chip * r, "tick", 0.1)],
   },
   "astro-memoria": {
     id: "astro-memoria", nombre: "Astrocitos · en ratones, reactivarlos estimuló el recuerdo", ideal: 4.15, fondo: "dark", entra: "corte",

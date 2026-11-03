@@ -1,0 +1,14 @@
+{
+  "titulo": "Un golpe en el pecho y un corazón que se detiene",
+  "scenes": [
+    {"t": "PIEZA", "voz": "Tras un golpe en el pecho, el futbolista Jesús de Miguel sufrió un paro cardíaco y falleció. ¿Cómo puede pasar?", "dur": 7.9, "h": "UN GOLPE EN EL PECHO", "w": "PECHO", "pieza": {"id": "fut-gancho"}},
+    {"t": "PIEZA", "voz": "La causa médica exacta no se ha informado. Pero existe un mecanismo conocido: la commotio cordis.", "dur": 6.5, "h": "NO SE SABE LA CAUSA", "w": "CAUSA", "cap": "lo que sí sabe la medicina", "pieza": {"id": "fut-causa"}},
+    {"t": "PIEZA", "voz": "El corazón late con una señal eléctrica. En cada latido hay una ventana de veinte milisegundos donde un golpe puede desordenarla.", "dur": 8.2, "h": "LA VENTANA VULNERABLE", "w": "VENTANA", "cap": "primer paso: la señal eléctrica", "pieza": {"id": "fut-ventana"}},
+    {"t": "PIEZA", "voz": "Si coincide, el corazón deja de latir y solo tiembla: fibrilación ventricular. Ya no bombea sangre.", "dur": 6.5, "h": "EL CORAZÓN SOLO TIEMBLA", "w": "TIEMBLA", "cap": "segundo paso: fibrilación ventricular", "pieza": {"id": "fut-fibrilacion"}},
+    {"t": "PIEZA", "voz": "Sin sangre, el cerebro se queda sin oxígeno. Se pierde el conocimiento en segundos, y cada minuto cuenta.", "dur": 7.2, "h": "CADA MINUTO CUENTA", "w": "MINUTO", "cap": "tercer paso: el cerebro", "pieza": {"id": "fut-cerebro"}},
+    {"t": "PIEZA", "voz": "Lo que reinicia el ritmo es una descarga con desfibrilador. En el registro de Estados Unidos, sobrevivió el cincuenta y ocho por ciento.", "dur": 8.9, "h": "LA DESCARGA REINICIA EL RITMO", "w": "DESCARGA", "cap": "qué lo revierte", "pieza": {"id": "fut-descarga"}},
+    {"t": "PIEZA", "voz": "Si alguien está inconsciente y no respira: llama a emergencias, comprime el centro del pecho fuerte y rápido, y busca un desfibrilador.", "dur": 8.6, "h": "QUÉ HACER", "w": "HACER", "cap": "tres pasos que salvan vidas", "pieza": {"id": "fut-rcp"}},
+    {"t": "PIEZA", "voz": "Aprender reanimación toma una tarde y puede salvar a alguien que quieres. Descanse en paz, Jesús de Miguel.", "dur": 6.9, "h": "APRENDE RCP", "w": "RCP", "pieza": {"id": "fut-cierre"}},
+    {"t": "CTA", "voz": "Compártelo: alguien cerca de ti puede necesitar saberlo. Síguenos en Sinapsis.", "dur": 4.7, "h": "COMPÁRTELO Y SÍGUENOS", "w": "SÍGUENOS", "sub": "Más ciencia en SINAPSIS"}
+  ]
+}
