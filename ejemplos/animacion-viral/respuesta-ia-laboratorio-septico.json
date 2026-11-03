@@ -1,0 +1,17 @@
+{
+  "titulo": "El laboratorio bacteriano bajo tu terreno",
+  "scenes": [
+    { "t": "PIEZA", "voz": "Bajo un terreno aislado hay un laboratorio secreto, y lo operan millones de bacterias.", "dur": 5.6, "h": "UN LABORATORIO BAJO TU TERRENO", "w": "LABORATORIO", "cap": "bacterias", "pieza": { "id": "sep-gancho" } },
+    { "t": "PIEZA", "voz": "Pero un pozo cavado sin más es una bomba de tiempo. El agua sucia se filtra, huele y puede llegar a la napa.", "dur": 9.0, "h": "UN POZO SIN MÁS", "w": "BOMBA", "cap": "pozo ciego", "pieza": { "id": "sep-pozo" } },
+    { "t": "PIEZA", "voz": "La solución no es taparlo: es convertirlo en una planta de tratamiento con tres etapas.", "dur": 5.9, "h": "TRES ETAPAS", "w": "TRES", "cap": "planta de tratamiento", "pieza": { "id": "sep-idea" } },
+    { "t": "PIEZA", "voz": "Primera etapa, la cámara de decantación: lo pesado se hunde, la grasa flota y en el medio queda el agua más clara.", "dur": 8.3, "h": "CÁMARA DE DECANTACIÓN", "w": "DECANTACIÓN", "cap": "etapa 1", "pieza": { "id": "sep-decanta" } },
+    { "t": "PIEZA", "voz": "Abajo no hay oxígeno, y eso les encanta a las bacterias anaerobias: se comen parte de los sólidos y sueltan gas.", "dur": 7.9, "h": "BACTERIAS ANAEROBIAS", "w": "BACTERIAS", "cap": "sin oxígeno", "pieza": { "id": "sep-bacterias" } },
+    { "t": "PIEZA", "voz": "El agua pasa a una segunda cámara, más tranquila, donde terminan de asentarse las partículas.", "dur": 5.9, "h": "SEGUNDA CÁMARA", "w": "SEGUNDA", "cap": "se asienta", "pieza": { "id": "sep-camara2" } },
+    { "t": "PIEZA", "voz": "Un tubo de ventilación saca el gas, y una trampa de agua evita los olores.", "dur": 5.9, "h": "SIN OLORES", "w": "OLORES", "cap": "ventilación", "pieza": { "id": "sep-olores" } },
+    { "t": "PIEZA", "voz": "Segunda etapa: el agua sale a un lecho de grava, donde otras bacterias siguen limpiándola.", "dur": 5.9, "h": "LECHO DE GRAVA", "w": "GRAVA", "cap": "etapa 2", "pieza": { "id": "sep-grava" } },
+    { "t": "PIEZA", "voz": "Tercera etapa: la tierra termina el trabajo y el agua llega a la napa mucho más limpia.", "dur": 6.6, "h": "LA TIERRA TERMINA EL TRABAJO", "w": "TIERRA", "cap": "etapa 3", "pieza": { "id": "sep-suelo" } },
+    { "t": "PIEZA", "voz": "Eso sí, no es magia: hay que vaciar los lodos cada tres a cinco años y no echar cloro ni aceite.", "dur": 7.9, "h": "NO ES MAGIA", "w": "MAGIA", "cap": "mantenimiento", "pieza": { "id": "sep-mant" } },
+    { "t": "PIEZA", "voz": "Si vas a comprar un terreno sin alcantarillado, pregunta cómo trata sus aguas y revisa la norma de tu zona.", "dur": 7.6, "h": "ANTES DE COMPRAR UN LOTE", "w": "LOTE", "cap": "pregunta y revisa", "pieza": { "id": "sep-lote" } },
+    { "t": "CTA", "voz": "Guárdalo y síguenos en IMNOBA, tu plataforma de propiedades y vehículos.", "dur": 5.0, "h": "SÍGUENOS EN IMNOBA", "w": "IMNOBA", "ic": "casa" }
+  ]
+}

@@ -579,6 +579,29 @@ export const TTM = {
   tifon: { espiral: 0.2, balanceo: 0.8, cota: 3.0, barras: 4.5, chip: 5.8 },
 } as const;
 
+/** Datos del video «El laboratorio bacteriano bajo tu terreno» (IMNOBA · sistema séptico con lecho de grava). Fuentes y precauciones en ejemplos/animacion-viral/guion-tecnico-laboratorio-septico.md. */
+export const SEP = {
+  /** etapas: 1 cámaras (decantación + bacterias anaerobias), 2 lecho de grava, 3 el suelo */
+  etapas: 3, camaras: 2,
+  /** frecuencia habitual de vaciado de lodos para una familia (años), según resúmenes de la EPA: depende del tamaño del tanque y del uso */
+  lodosAniosMin: 3, lodosAniosMax: 5,
+} as const;
+
+/** Tiempos de «El laboratorio bacteriano bajo tu terreno» (s a ritmo normal), compartidos entre el dibujo y el sonido. */
+export const TSE = {
+  gancho: { cartel: 0.1, lab: 2.2, bact: 3.8 },
+  pozo: { huele: 0.8, fuga: 3.8, fugaDur: 4.0, napa: 6.4 },
+  idea: { muros: 0.5, murosDur: 3.0, e1: 2.0, e2: 3.0, e3: 4.0 },
+  decanta: { capas: 1.2, capasDur: 4.3, chip1: 2.0, chip2: 3.8, chip3: 5.6 },
+  bacterias: { bact: 0.6, bactDur: 1.6, gas: 4.4, chip: 5.8 },
+  camara2: { paso: 0.8, pasoDur: 1.7, chip: 3.6 },
+  olores: { trampa: 0.3, vent: 2.4, chip1: 1.4, chip2: 3.4 },
+  grava: { grava: 0.5, gravaDur: 2.3, filtra: 2.8, chip: 3.8 },
+  suelo: { baja: 0.4, napa: 3.2, napaDur: 1.4, pozo: 5.0 },
+  mant: { camion: 0.3, camionDur: 1.7, succion: 2.3, prohibido: 5.4 },
+  lote: { letrero: 0.3, c1: 3.4, c2: 4.4, c3: 5.4 },
+} as const;
+
 export const PIEZAS: Record<string, DefPieza> = {
   "metro-plano": {
     id: "metro-plano", nombre: "8 millones en un solo plano", ideal: 7.6, fondo: "dark",
@@ -1088,6 +1111,51 @@ export const PIEZAS: Record<string, DefPieza> = {
   "tmd-tifon": {
     id: "tmd-tifon", nombre: "Bola de 660 t · tifón Soudelor 2015: la bola se movió ≈ 1 m y frenó el vaivén (cierre)", ideal: 6.65, fondo: "dark", entra: "corte",
     sfx: (_d, r) => [ev(TTM.tifon.espiral * r, "whoosh", 0.14), ev(TTM.tifon.balanceo * r, "golpe", 0.16), ev(TTM.tifon.cota * r, "zap", 0.12), ev(TTM.tifon.barras * r, "pop", 0.12), ev(TTM.tifon.chip * r, "ding", 0.16)],
+  },
+  /* ───────────── «El laboratorio bacteriano bajo tu terreno» (IMNOBA · sistema séptico · corte geométrico) ───────────── */
+  "sep-gancho": {
+    id: "sep-gancho", nombre: "Laboratorio séptico · bajo un terreno aislado hay un laboratorio de bacterias (gancho)", ideal: 5.15, fondo: "dark",
+    sfx: (_d, r) => [ev(0.05, "estatica", 0.14), ev(0.6, "whoosh", 0.12), ev(TSE.gancho.lab * r, "zap", 0.14), ev(TSE.gancho.bact * r, "pop", 0.12)],
+  },
+  "sep-pozo": {
+    id: "sep-pozo", nombre: "Laboratorio séptico · el pozo cavado sin más: se filtra, huele y llega a la napa", ideal: 8.55, fondo: "dark", entra: "corte",
+    sfx: (_d, r) => [ev(0.05, "gota", 0.14), ev(TSE.pozo.huele * r, "estatica", 0.1), ev(TSE.pozo.fuga * r, "thud", 0.14), ev(TSE.pozo.napa * r, "radar", 0.14)],
+  },
+  "sep-idea": {
+    id: "sep-idea", nombre: "Laboratorio séptico · convertir el pozo en una planta de tratamiento con tres etapas", ideal: 5.45, fondo: "dark", entra: "semitono",
+    sfx: (_d, r) => [ev(TSE.idea.muros * r, "thud", 0.16), ev(TSE.idea.e1 * r, "pop", 0.12), ev(TSE.idea.e2 * r, "pop", 0.12), ev(TSE.idea.e3 * r, "ding", 0.14)],
+  },
+  "sep-decanta": {
+    id: "sep-decanta", nombre: "Laboratorio séptico · cámara de decantación: lo pesado se hunde, la grasa flota", ideal: 7.85, fondo: "dark", entra: "corte",
+    sfx: (_d, r) => [ev(TSE.decanta.capas * r, "whoosh", 0.1), ev(TSE.decanta.chip1 * r, "gota", 0.12), ev(TSE.decanta.chip2 * r, "pop", 0.1), ev(TSE.decanta.chip3 * r, "ding", 0.12)],
+  },
+  "sep-bacterias": {
+    id: "sep-bacterias", nombre: "Laboratorio séptico · bacterias anaerobias: se comen parte de los sólidos y sueltan gas", ideal: 7.45, fondo: "dark", entra: "zoom",
+    sfx: (_d, r) => [ev(TSE.bacterias.bact * r, "pop", 0.14), ev(TSE.bacterias.bact * r + 0.5, "tick", 0.1), ev(TSE.bacterias.gas * r, "zap", 0.1), ev(TSE.bacterias.chip * r, "ding", 0.12)],
+  },
+  "sep-camara2": {
+    id: "sep-camara2", nombre: "Laboratorio séptico · segunda cámara: se asienta el resto de las partículas", ideal: 5.45, fondo: "dark", entra: "corte",
+    sfx: (_d, r) => [ev(TSE.camara2.paso * r, "whoosh", 0.12), ev(TSE.camara2.paso * r + 0.9, "gota", 0.1), ev(TSE.camara2.chip * r, "pop", 0.12)],
+  },
+  "sep-olores": {
+    id: "sep-olores", nombre: "Laboratorio séptico · trampa de agua y ventilación: sin olores", ideal: 5.45, fondo: "dark", entra: "corte",
+    sfx: (_d, r) => [ev(TSE.olores.trampa * r, "gota", 0.14), ev(TSE.olores.chip1 * r, "tick", 0.1), ev(TSE.olores.vent * r, "radar", 0.12), ev(TSE.olores.chip2 * r, "ding", 0.14)],
+  },
+  "sep-grava": {
+    id: "sep-grava", nombre: "Laboratorio séptico · lecho de grava: otras bacterias siguen limpiando el agua", ideal: 5.45, fondo: "dark", entra: "corte",
+    sfx: (_d, r) => [ev(TSE.grava.grava * r, "thud", 0.14), ev(TSE.grava.filtra * r, "gota", 0.12), ev(TSE.grava.chip * r, "pop", 0.12)],
+  },
+  "sep-suelo": {
+    id: "sep-suelo", nombre: "Laboratorio séptico · la tierra termina el trabajo y el agua llega a la napa mucho más limpia", ideal: 6.15, fondo: "dark", entra: "corte",
+    sfx: (_d, r) => [ev(TSE.suelo.baja * r, "whoosh", 0.1), ev(TSE.suelo.napa * r, "radar", 0.14), ev(TSE.suelo.pozo * r, "ding", 0.16)],
+  },
+  "sep-mant": {
+    id: "sep-mant", nombre: "Laboratorio séptico · no es magia: vaciar los lodos cada 3 a 5 años y no echar cloro ni aceite", ideal: 7.45, fondo: "dark", entra: "corte",
+    sfx: (_d, r) => [ev(TSE.mant.camion * r, "thud", 0.16), ev(TSE.mant.succion * r, "estatica", 0.1), ev(TSE.mant.prohibido * r, "golpe", 0.18)],
+  },
+  "sep-lote": {
+    id: "sep-lote", nombre: "Laboratorio séptico · si compras un terreno sin alcantarillado, pregunta por su sistema (cierre)", ideal: 7.15, fondo: "dark", entra: "zoom",
+    sfx: (_d, r) => [ev(TSE.lote.letrero * r, "pop", 0.14), ev(TSE.lote.c1 * r, "tick", 0.1), ev(TSE.lote.c2 * r, "tick", 0.1), ev(TSE.lote.c3 * r, "ding", 0.16)],
   },
 };
 

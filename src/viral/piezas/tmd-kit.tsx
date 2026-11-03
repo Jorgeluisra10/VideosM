@@ -40,7 +40,7 @@ export const tonoOro = (l: number): string => {
   return mezclar(OROS[i], OROS[i + 1], x - i);
 };
 
-const fac = (p: Pt[], c: string, k: number, banda?: number): Faceta => ({ p, c, k: clamp(k), cx: p.reduce((a, q) => a + q[0], 0) / p.length, cy: p.reduce((a, q) => a + q[1], 0) / p.length, banda });
+export const fac = (p: Pt[], c: string, k: number, banda?: number): Faceta => ({ p, c, k: clamp(k), cx: p.reduce((a, q) => a + q[0], 0) / p.length, cy: p.reduce((a, q) => a + q[1], 0) / p.length, banda });
 const pts = (p: Pt[]): string => p.map((q) => `${q[0].toFixed(1)},${q[1].toFixed(1)}`).join(" ");
 
 /* ───────────── Mosaico ───────────── */

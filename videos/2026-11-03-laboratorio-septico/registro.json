@@ -1,0 +1,18 @@
+{
+  "version": 1,
+  "slug": "2026-11-03-laboratorio-septico",
+  "titulo": "El laboratorio bacteriano bajo tu terreno",
+  "serie": "ingenieria_extrema",
+  "estado": "grabado",
+  "guion": "Bajo un terreno aislado hay un laboratorio secreto, y lo operan millones de bacterias.\nPero un pozo cavado sin más es una bomba de tiempo. El agua sucia se filtra, huele y puede llegar a la napa.\nLa solución no es taparlo: es convertirlo en una planta de tratamiento con tres etapas.\nPrimera etapa, la cámara de decantación: lo pesado se hunde, la grasa flota y en el medio queda el agua más clara.\nAbajo no hay oxígeno, y eso les encanta a las bacterias anaerobias: se comen parte de los sólidos y sueltan gas.\nEl agua pasa a una segunda cámara, más tranquila, donde terminan de asentarse las partículas.\nUn tubo de ventilación saca el gas, y una trampa de agua evita los olores.\nSegunda etapa: el agua sale a un lecho de grava, donde otras bacterias siguen limpiándola.\nTercera etapa: la tierra termina el trabajo y el agua llega a la napa mucho más limpia.\nEso sí, no es magia: hay que vaciar los lodos cada tres a cinco años y no echar cloro ni aceite.\nSi vas a comprar un terreno sin alcantarillado, pregunta cómo trata sus aguas y revisa la norma de tu zona.\nGuárdalo y síguenos en IMNOBA, tu plataforma de propiedades y vehículos.",
+  "gancho": "Bajo un terreno aislado hay un laboratorio secreto, y lo operan millones de bacterias.",
+  "duracion_seg": 81.5,
+  "notas": "Espero que lo guarden y lo compartan por lo visual (corte geométrico con bacterias de caricatura) y que sigan a IMNOBA al final; público que mira terrenos sin alcantarillado. Métrica: retención a los 3 s y al llegar a la grava (≈ 50 s), guardados por cada 1.000 alcanzados. Ojo: sin voz, ponle voz antes de publicar.",
+  "voz_usada": "",
+  "instrucciones_voz": "",
+  "creado": "2026-11-03T22:47:38.567Z",
+  "origen_clave": "ccc881b1",
+  "video": "revision.mp4",
+  "miniatura": "miniatura.jpg",
+  "entrega": ""
+}
