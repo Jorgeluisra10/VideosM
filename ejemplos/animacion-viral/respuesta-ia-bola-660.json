@@ -1,0 +1,12 @@
+{
+  "titulo": "La bola de 660 toneladas",
+  "scenes": [
+    { "t": "PIEZA", "voz": "Dentro del Taipéi ciento uno cuelga una bola de acero de seiscientas sesenta toneladas. ¿Para qué?", "dur": 6.2, "h": "UNA BOLA DE 660 TONELADAS", "w": "660", "cap": "Taipei 101", "pieza": { "id": "tmd-gancho" } },
+    { "t": "PIEZA", "voz": "Los rascacielos se balancean con el viento. Esta bola se mueve al revés y lo frena.", "dur": 6.1, "h": "LA BOLA VA AL REVÉS", "w": "REVÉS", "cap": "contra el viento", "pieza": { "id": "tmd-viento" } },
+    { "t": "PIEZA", "voz": "Se armó dentro del edificio, plancha por plancha: cuarenta y un discos de acero soldados uno sobre otro.", "dur": 7.0, "h": "41 DISCOS SOLDADOS", "w": "41", "cap": "plancha por plancha", "pieza": { "id": "tmd-discos" } },
+    { "t": "PIEZA", "voz": "Cada uno mide doce centímetros y medio. Juntos forman una esfera de cinco metros y medio.", "dur": 6.2, "h": "UNA ESFERA DE 5,5 M", "w": "ESFERA", "cap": "12,5 cm cada disco", "pieza": { "id": "tmd-bola" } },
+    { "t": "PIEZA", "voz": "Cuelga de cables de acero entre los pisos ochenta y siete y noventa y dos.", "dur": 5.8, "h": "PISOS 87 A 92", "w": "92", "cap": "cables de acero", "pieza": { "id": "tmd-cuelga" } },
+    { "t": "PIEZA", "voz": "En el tifón de dos mil quince, la bola se movió cerca de un metro y frenó el vaivén.", "dur": 7.1, "h": "SE MOVIÓ CASI 1 METRO", "w": "METRO", "cap": "tifón Soudelor", "pieza": { "id": "tmd-tifon" } },
+    { "t": "CTA", "voz": "Guárdalo y síguenos en IMNOBA, tu plataforma de propiedades y vehículos.", "dur": 5.0, "h": "SÍGUENOS EN IMNOBA", "w": "IMNOBA", "ic": "casa" }
+  ]
+}

@@ -560,6 +560,25 @@ export const TSK = {
   llenado: { piscina: 0.15, grifo: 0.8, sube: 1.0, subeDur: 2.6, ding: 3.6, nada: 3.7, pregunta: 4.7 },
 } as const;
 
+/** Datos del video «La bola de 660 toneladas» (IMNOBA · ingeniería extrema; amortiguador de masa sintonizado del Taipei 101, Taiwán). Fuentes y precauciones en ejemplos/animacion-viral/guion-tecnico-bola-660.md. */
+export const TMD = {
+  masaTon: 660, discos: 41, grosorCm: 12.5, diametroM: 5.5,
+  /** colgada del piso 92 hasta el 87 */
+  pisoAlto: 92, pisoBajo: 87,
+  /** tifón Soudelor (8-ago-2015): la bola se movió cerca de 1 m; «hasta 40 %» de reducción es la cifra del edificio (un máximo) */
+  tifonAnio: 2015, tifonCm: 100, reduccionMaxPct: 40,
+} as const;
+
+/** Tiempos de «La bola de 660 toneladas» (s a ritmo normal), compartidos entre el dibujo y el sonido. */
+export const TTM = {
+  gancho: { torre: 0.0, torreDur: 1.5, lupa: 1.7, cuenta: 2.2, cuentaDur: 2.0, para: 4.2 },
+  viento: { viento: 0.4, sway: 0.8, bola: 2.8, flechas: 3.4, chip: 4.6 },
+  discos: { ini: 0.6, paso: 0.11, listo: 5.2, chip: 5.45 },
+  bola: { ensDur: 1.6, inset: 0.7, cota: 3.0, peso: 3.9, chip: 4.8 },
+  cuelga: { muros: 0.1, cables: 0.8, pisos: 2.0, pisosDur: 1.9, chip: 4.2 },
+  tifon: { espiral: 0.2, balanceo: 0.8, cota: 3.0, barras: 4.5, chip: 5.8 },
+} as const;
+
 export const PIEZAS: Record<string, DefPieza> = {
   "metro-plano": {
     id: "metro-plano", nombre: "8 millones en un solo plano", ideal: 7.6, fondo: "dark",
@@ -1044,6 +1063,31 @@ export const PIEZAS: Record<string, DefPieza> = {
   "sky-llenado": {
     id: "sky-llenado", nombre: "Piscina a 35 m · se llena de 0 a 150 t y alguien nada (cierre)", ideal: 5.5, fondo: "dark", entra: "zoom",
     sfx: (_d, r) => [ev(0.05, "whoosh", 0.1), ev(TSK.llenado.piscina * r, "thud", 0.1), ev(TSK.llenado.grifo * r, "gota", 0.14), ...clics(TSK.llenado.sube * r, TSK.llenado.subeDur * r * 0.9, 0.04), ev(TSK.llenado.ding * r, "ding", 0.2), ev(TSK.llenado.nada * r, "gota", 0.14), ev(TSK.llenado.pregunta * r, "pop", 0.1)],
+  },
+  /* ───────────── «La bola de 660 toneladas» (IMNOBA · amortiguador del Taipei 101 · figuras geométricas) ───────────── */
+  "tmd-gancho": {
+    id: "tmd-gancho", nombre: "Bola de 660 t · el rascacielos se arma con formas y dentro cuelga una bola dorada (gancho)", ideal: 5.75, fondo: "dark",
+    sfx: (_d, r) => [ev(0.05, "golpe", 0.2), ev(TTM.gancho.lupa * r, "zap", 0.14), ev(TTM.gancho.cuenta * r, "pop", 0.12), ev(TTM.gancho.para * r, "radar", 0.14)],
+  },
+  "tmd-viento": {
+    id: "tmd-viento", nombre: "Bola de 660 t · el viento mece el edificio y la bola se mueve al revés", ideal: 5.65, fondo: "dark", entra: "corte",
+    sfx: (_d, r) => [ev(0.1, "estatica", 0.1), ev(TTM.viento.sway * r, "whoosh", 0.14), ev(TTM.viento.bola * r, "thud", 0.16), ev(TTM.viento.flechas * r, "pop", 0.12), ev(TTM.viento.chip * r, "ding", 0.12)],
+  },
+  "tmd-discos": {
+    id: "tmd-discos", nombre: "Bola de 660 t · 41 discos de acero soldados plancha por plancha", ideal: 6.55, fondo: "dark", entra: "corte",
+    sfx: (_d, r) => [ev(TTM.discos.ini * r, "thud", 0.16), ...[1, 2, 3, 4, 5, 6, 7].map((i) => ev((TTM.discos.ini + i * 5 * TTM.discos.paso) * r, i % 2 ? "tick" : "gota", 0.1)), ev(TTM.discos.listo * r, "ding", 0.2), ev(TTM.discos.chip * r, "pop", 0.1)],
+  },
+  "tmd-bola": {
+    id: "tmd-bola", nombre: "Bola de 660 t · cada disco 12,5 cm; juntos una esfera de 5,5 m", ideal: 5.75, fondo: "dark", entra: "zoom",
+    sfx: (_d, r) => [ev(0.05, "gota", 0.14), ev(TTM.bola.peso * r, "tick", 0.1), ev(TTM.bola.cota * r, "pop", 0.12), ev(TTM.bola.inset * r, "zap", 0.1), ev(TTM.bola.chip * r, "ding", 0.14)],
+  },
+  "tmd-cuelga": {
+    id: "tmd-cuelga", nombre: "Bola de 660 t · cuelga de cables de acero entre los pisos 87 y 92", ideal: 5.35, fondo: "dark", entra: "corte",
+    sfx: (_d, r) => [ev(TTM.cuelga.muros * r, "pop", 0.1), ev(TTM.cuelga.cables * r, "thud", 0.14), ...[0, 1, 2, 3, 4, 5].map((i) => ev((TTM.cuelga.pisos + (i * TTM.cuelga.pisosDur) / 6) * r, "tick", 0.09)), ev(TTM.cuelga.chip * r, "ding", 0.14)],
+  },
+  "tmd-tifon": {
+    id: "tmd-tifon", nombre: "Bola de 660 t · tifón Soudelor 2015: la bola se movió ≈ 1 m y frenó el vaivén (cierre)", ideal: 6.65, fondo: "dark", entra: "corte",
+    sfx: (_d, r) => [ev(TTM.tifon.espiral * r, "whoosh", 0.14), ev(TTM.tifon.balanceo * r, "golpe", 0.16), ev(TTM.tifon.cota * r, "zap", 0.12), ev(TTM.tifon.barras * r, "pop", 0.12), ev(TTM.tifon.chip * r, "ding", 0.16)],
   },
 };
 
