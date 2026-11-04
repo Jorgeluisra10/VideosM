@@ -608,6 +608,26 @@ export const TRX = {
   cierre: { riesgo: 0.2, quema: 2.2, hoy: 3.3, dia: 4.4 },
 } as const;
 
+/** Datos del video «La cena en que tres médicos se durmieron» (SINAPSIS · historia de la anestesia). Fuentes y precauciones en ejemplos/animacion-viral/guion-tecnico-anestesia.md. */
+export const ANE = {
+  /** cena de Simpson con Keith y Duncan en Edimburgo: 4 nov 1847; «Día del éter» en Boston: 16 oct 1846; parto de la reina Victoria (Leopoldo) con John Snow: 7 abr 1853 */
+  cena: { a: 1847, m: 11, d: 4 }, eter: { a: 1846, m: 10, d: 16 }, reina: { a: 1853, m: 4, d: 7 },
+  /** amputación de Liston: ≈ 30 s según se cuenta (las fuentes dan 25, 28 o 30) */
+  listonSeg: 30,
+  hoyAnio: 2026,
+} as const;
+/** Tiempos del video de la anestesia (segundos a ritmo normal), compartidos entre el dibujo y el sonido. */
+export const TAN = {
+  gancho: { fecha: 0.2, anios: 1.6, aniosDur: 1.6, cae: 3.8, cena: 5.0, proposito: 6.1 },
+  carrera: { titulo: 0.2, carrera: 1.6, liston: 3.0, cuenta: 4.3, pierna: 5.4, treinta: 6.4 },
+  eter: { fecha: 0.2, funciona: 3.0, boston: 4.0, irrita: 5.7, olor: 6.4 },
+  busca: { edimburgo: 0.2, simpson: 0.9, mejor: 2.3, prueba: 3.3, ayudantes: 4.3, cloro: 5.0 },
+  noche: { inhalan: 0.9, charla: 2.6, caen: 4.3, silencio: 5.2 },
+  despierta: { ojos: 0.2, idea: 0.9, busca: 2.3, dias: 3.3, partos: 4.3 },
+  reina: { critica: 0.2, fecha: 1.9, reina: 4.3, parto: 6.4 },
+  cierre: { ya: 0.9, camino: 2.3, moderna: 4.7 },
+} as const;
+
 /* ───────────── «La regla del 37 %» (problema de la parada óptima, ensayo abstracto para IMNOBA) ───────────── */
 
 /** Generador pseudoaleatorio determinista (mulberry32): mismos números en el render, en las pruebas y en cada fotograma. */
@@ -1358,6 +1378,39 @@ export const PIEZAS: Record<string, DefPieza> = {
   "rx-cierre": {
     id: "rx-cierre", nombre: "Rayos X · los pioneros sin protección vs hoy con dosis medida; el 8 de noviembre es el Día Internacional de la Radiología (cierre)", ideal: 8.1, fondo: "dark", entra: "zoom",
     sfx: (_d, r) => [ev(0.05, "whoosh", 0.1), ev(TRX.cierre.quema * r, "thud", 0.18), ev(TRX.cierre.hoy * r, "pop", 0.16), ev((TRX.cierre.hoy + 0.1) * r, "ding", 0.16), ev(TRX.cierre.dia * r, "ding", 0.22), ev((TRX.cierre.dia + 0.15) * r, "pop", 0.14)],
+  },
+  /* ───────────── «La cena en que tres médicos se durmieron» (SINAPSIS · historia de la anestesia) ───────────── */
+  "an-gancho": {
+    id: "an-gancho", nombre: "Anestesia · 4 nov 1847: tres médicos se desmayan en una cena, a propósito; han pasado 179 años (gancho)", ideal: 7.3, fondo: "dark",
+    sfx: (_d, r) => [ev(0.05, "whoosh", 0.1), ev(TAN.gancho.anios * r, "tick", 0.1), ev(TAN.gancho.cae * r, "thud", 0.2), ev((TAN.gancho.cae + 0.45) * r, "thud", 0.2), ev((TAN.gancho.cae + 0.9) * r, "thud", 0.2), ev(TAN.gancho.proposito * r, "ding", 0.16)],
+  },
+  "an-carrera": {
+    id: "an-carrera", nombre: "Anestesia · antes, operar era una carrera: Robert Liston, según se cuenta, amputaba una pierna en ≈ 30 s", ideal: 7.8, fondo: "dark", entra: "corte",
+    sfx: (_d, r) => [ev(0.05, "whoosh", 0.1), ...clics(TAN.carrera.carrera * r, 1.2 * r, 0.05), ev(TAN.carrera.liston * r, "pop", 0.14), ev(TAN.carrera.cuenta * r, "tick", 0.1), ev(TAN.carrera.pierna * r, "thud", 0.2), ...clics(TAN.carrera.treinta * r, 1.0 * r, 0.05)],
+  },
+  "an-eter": {
+    id: "an-eter", nombre: "Anestesia · 16 oct 1846, Boston: el éter funciona, pero irrita y huele muy fuerte", ideal: 7.8, fondo: "dark", entra: "semitono",
+    sfx: (_d, r) => [ev(0.05, "whoosh", 0.1), ev(TAN.eter.fecha * r + 0.3, "pop", 0.12), ev(TAN.eter.funciona * r, "ding", 0.2), ev(TAN.eter.boston * r, "tick", 0.1), ev(TAN.eter.irrita * r, "thud", 0.16), ev(TAN.eter.olor * r, "whoosh", 0.12)],
+  },
+  "an-busca": {
+    id: "an-busca", nombre: "Anestesia · Edimburgo: Simpson y sus ayudantes prueban sustancias hasta dar con el cloroformo", ideal: 5.6, fondo: "dark", entra: "corte",
+    sfx: (_d, r) => [ev(0.05, "whoosh", 0.1), ev(TAN.busca.simpson * r, "pop", 0.12), ...[0, 1, 2, 3, 4].map((i) => ev((TAN.busca.prueba - 0.8 + i * 0.5) * r, "clic", 0.12)), ev(TAN.busca.ayudantes * r, "tick", 0.1), ev(TAN.busca.cloro * r, "ding", 0.2)],
+  },
+  "an-noche": {
+    id: "an-noche", nombre: "Anestesia · la noche del 4 nov 1847: inhalan cloroformo, conversan animados y pierden el conocimiento", ideal: 6.0, fondo: "dark", entra: "zoom",
+    sfx: (_d, r) => [ev(0.05, "whoosh", 0.1), ev(TAN.noche.inhalan * r, "whoosh", 0.14), ev(TAN.noche.charla * r, "pop", 0.12), ev((TAN.noche.charla + 0.5) * r, "pop", 0.1), ev(TAN.noche.caen * r, "thud", 0.2), ev((TAN.noche.caen + 0.35) * r, "thud", 0.2), ev((TAN.noche.caen + 0.7) * r, "thud", 0.2)],
+  },
+  "an-despierta": {
+    id: "an-despierta", nombre: "Anestesia · Simpson despierta y comprende que ha encontrado lo que buscaba; pocos días después, el primer parto con cloroformo", ideal: 6.2, fondo: "dark", entra: "semitono",
+    sfx: (_d, r) => [ev(0.05, "whoosh", 0.1), ev(TAN.despierta.ojos * r + 0.2, "pop", 0.12), ev(TAN.despierta.idea * r, "ding", 0.2), ...clics(TAN.despierta.dias * r, 0.9 * r, 0.05), ev(TAN.despierta.partos * r, "ding", 0.18)],
+  },
+  "an-reina": {
+    id: "an-reina", nombre: "Anestesia · críticas religiosas y 7 abr 1853: la reina Victoria usa cloroformo en un parto, administrado por John Snow", ideal: 7.3, fondo: "dark", entra: "corte",
+    sfx: (_d, r) => [ev(0.05, "whoosh", 0.1), ev(TAN.reina.critica * r + 0.3, "thud", 0.14), ev(TAN.reina.fecha * r, "tick", 0.12), ev(TAN.reina.reina * r, "ding", 0.2), ev(TAN.reina.parto * r, "pop", 0.14)],
+  },
+  "an-cierre": {
+    id: "an-cierre", nombre: "Anestesia · el cloroformo ya no se usa, pero esa cena abrió el camino de la anestesia moderna (cierre)", ideal: 5.9, fondo: "dark", entra: "zoom",
+    sfx: (_d, r) => [ev(0.05, "whoosh", 0.1), ev(TAN.cierre.ya * r, "thud", 0.22), ev(TAN.cierre.camino * r, "whoosh", 0.14), ev(TAN.cierre.moderna * r, "ding", 0.2), ev((TAN.cierre.moderna + 0.3) * r, "heartbeat", 0.2)],
   },
   "astro-memoria": {
     id: "astro-memoria", nombre: "Astrocitos · en ratones, reactivarlos estimuló el recuerdo", ideal: 4.15, fondo: "dark", entra: "corte",

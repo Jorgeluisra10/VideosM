@@ -1,0 +1,14 @@
+{
+ "titulo": "La cena en que tres médicos se durmieron",
+ "scenes": [
+  { "t": "PIEZA", "voz": "Un cuatro de noviembre, hace ciento setenta y nueve años, tres médicos se desmayaron en una cena. Y fue a propósito.", "dur": 7.8, "h": "TRES MÉDICOS SE DESMAYAN", "w": "PROPÓSITO", "pieza": { "id": "an-gancho" } },
+  { "t": "PIEZA", "voz": "Antes de la anestesia operar era una carrera: el cirujano Robert Liston, según se cuenta, amputaba una pierna en unos treinta segundos.", "dur": 8.3, "h": "OPERAR ERA UNA CARRERA", "w": "CARRERA", "cap": "antes de la anestesia", "pieza": { "id": "an-carrera" } },
+  { "t": "PIEZA", "voz": "En octubre de mil ochocientos cuarenta y seis, el éter funcionó en un hospital de Boston. Pero irritaba y olía muy fuerte.", "dur": 8.3, "h": "EL ÉTER FUNCIONA", "w": "ÉTER", "cap": "Boston, 1846", "pieza": { "id": "an-eter" } },
+  { "t": "PIEZA", "voz": "En Edimburgo, el obstetra James Simpson buscaba algo mejor, y probaba sustancias con sus ayudantes.", "dur": 6.0, "h": "SIMPSON BUSCA ALGO MEJOR", "w": "MEJOR", "cap": "Edimburgo", "pieza": { "id": "an-busca" } },
+  { "t": "PIEZA", "voz": "Aquella noche inhalaron cloroformo en el comedor, empezaron a conversar animados y todos perdieron el conocimiento.", "dur": 6.4, "h": "PIERDEN EL CONOCIMIENTO", "w": "CONOCIMIENTO", "cap": "4 de noviembre de 1847", "pieza": { "id": "an-noche" } },
+  { "t": "PIEZA", "voz": "Al despertar, Simpson comprendió que tenía lo que buscaba. Pocos días después ya lo usaba en partos.", "dur": 6.6, "h": "LO QUE BUSCABA", "w": "PARTOS", "pieza": { "id": "an-despierta" } },
+  { "t": "PIEZA", "voz": "Algunos lo criticaron por religión, pero en mil ochocientos cincuenta y tres lo usó hasta la reina Victoria, en su parto.", "dur": 7.8, "h": "HASTA LA REINA VICTORIA", "w": "REINA", "cap": "abril de 1853", "pieza": { "id": "an-reina" } },
+  { "t": "PIEZA", "voz": "El cloroformo ya no se usa, pero esa cena abrió el camino de la anestesia moderna.", "dur": 6.4, "h": "LA ANESTESIA MODERNA", "w": "MODERNA", "pieza": { "id": "an-cierre" } },
+  { "t": "CTA", "voz": "Compártelo con alguien que estudie salud. Síguenos en Sinapsis.", "dur": 4.8, "h": "COMPÁRTELO Y SÍGUENOS", "w": "SÍGUENOS", "sub": "Más ciencia en SINAPSIS" }
+ ]
+}
