@@ -1,6 +1,6 @@
 {
  "version": 1,
- "titulo": "Un golpe en el pecho y un corazón que se detiene",
+ "titulo": "El viaje de una gota de sangre",
  "paleta": "medicina",
  "sfx": true,
  "fps": 60,
@@ -9,336 +9,10 @@
   {
    "n": 1,
    "t": "PIEZA",
-   "voz": "Tras un golpe en el pecho, el futbolista Jesús de Miguel sufrió un paro cardíaco y falleció. ¿Cómo puede pasar?",
-   "dur": 7.9,
-   "h": "UN GOLPE EN EL PECHO",
-   "w": "PECHO",
-   "sub": "",
-   "ic": "brillo",
-   "num": null,
-   "vs": null,
-   "bars": [],
-   "barsU": "",
-   "hi": -1,
-   "line": null,
-   "items": [],
-   "stops": [],
-   "end": "",
-   "donut": [],
-   "picto": null,
-   "top": [],
-   "myth": "",
-   "truth": "",
-   "zoom": null,
-   "capas": null,
-   "mira": null,
-   "impacto": null,
-   "red": null,
-   "termo": null,
-   "pila": null,
-   "cap": "",
-   "papel": null,
-   "pilares": null,
-   "ciclo": null,
-   "duo": null,
-   "osc": null,
-   "cubo": null,
-   "diales": null,
-   "pieza": {
-    "id": "fut-gancho",
-    "props": {}
-   },
-   "cita": null,
-   "sc": "",
-   "modo": "VIRAL",
-   "tema": "oscuro",
-   "bg": "dark",
-   "ritmo": 1,
-   "total": 65.4,
-   "inicio": 0,
-   "fin": 7.9,
-   "texto": "Tras un golpe en el pecho, el futbolista Jesús de Miguel sufrió un paro cardíaco y falleció. ¿Cómo puede pasar?",
-   "tr": "barrido",
-   "trs": "corte",
-   "sfx": [
-    {
-     "t": 0.04,
-     "tipo": "whoosh",
-     "vol": 0.16
-    },
-    {
-     "t": 0.05,
-     "tipo": "whoosh",
-     "vol": 0.1
-    },
-    {
-     "t": 0.3,
-     "tipo": "ding",
-     "vol": 0.1
-    },
-    {
-     "t": 0.8,
-     "tipo": "tick",
-     "vol": 0.12
-    },
-    {
-     "t": 1.6,
-     "tipo": "tick",
-     "vol": 0.12
-    },
-    {
-     "t": 2.4000000000000004,
-     "tipo": "tick",
-     "vol": 0.12
-    },
-    {
-     "t": 3.2,
-     "tipo": "tick",
-     "vol": 0.12
-    },
-    {
-     "t": 3.8,
-     "tipo": "thud",
-     "vol": 0.2
-    },
-    {
-     "t": 4,
-     "tipo": "tick",
-     "vol": 0.12
-    },
-    {
-     "t": 5.9,
-     "tipo": "radar",
-     "vol": 0.12
-    }
-   ]
-  },
-  {
-   "n": 2,
-   "t": "PIEZA",
-   "voz": "La causa médica exacta no se ha informado. Pero existe un mecanismo conocido: la commotio cordis.",
-   "dur": 6.5,
-   "h": "NO SE SABE LA CAUSA",
-   "w": "CAUSA",
-   "sub": "",
-   "ic": "brillo",
-   "num": null,
-   "vs": null,
-   "bars": [],
-   "barsU": "",
-   "hi": -1,
-   "line": null,
-   "items": [],
-   "stops": [],
-   "end": "",
-   "donut": [],
-   "picto": null,
-   "top": [],
-   "myth": "",
-   "truth": "",
-   "zoom": null,
-   "capas": null,
-   "mira": null,
-   "impacto": null,
-   "red": null,
-   "termo": null,
-   "pila": null,
-   "cap": "lo que sí sabe la medicina",
-   "papel": null,
-   "pilares": null,
-   "ciclo": null,
-   "duo": null,
-   "osc": null,
-   "cubo": null,
-   "diales": null,
-   "pieza": {
-    "id": "fut-causa",
-    "props": {}
-   },
-   "cita": null,
-   "sc": "",
-   "modo": "VIRAL",
-   "tema": "claro",
-   "bg": "light",
-   "ritmo": 1,
-   "total": 65.4,
-   "inicio": 7.9,
-   "fin": 14.4,
-   "texto": "La causa médica exacta no se ha informado. Pero existe un mecanismo conocido: la commotio cordis.",
-   "tr": "corte",
-   "trs": "semitono",
-   "sfx": [
-    {
-     "t": 0.04,
-     "tipo": "whoosh",
-     "vol": 0.16
-    },
-    {
-     "t": 0.05,
-     "tipo": "estatica",
-     "vol": 0.08
-    },
-    {
-     "t": 0.4,
-     "tipo": "golpe",
-     "vol": 0.24
-    },
-    {
-     "t": 3,
-     "tipo": "whoosh",
-     "vol": 0.1
-    },
-    {
-     "t": 3.1,
-     "tipo": "clic",
-     "vol": 0.05
-    },
-    {
-     "t": 3.23,
-     "tipo": "clic",
-     "vol": 0.05
-    },
-    {
-     "t": 3.3600000000000003,
-     "tipo": "clic",
-     "vol": 0.05
-    },
-    {
-     "t": 3.49,
-     "tipo": "clic",
-     "vol": 0.05
-    },
-    {
-     "t": 3.62,
-     "tipo": "clic",
-     "vol": 0.05
-    },
-    {
-     "t": 3.75,
-     "tipo": "clic",
-     "vol": 0.05
-    },
-    {
-     "t": 3.88,
-     "tipo": "clic",
-     "vol": 0.05
-    },
-    {
-     "t": 4.01,
-     "tipo": "clic",
-     "vol": 0.05
-    },
-    {
-     "t": 4.140000000000001,
-     "tipo": "clic",
-     "vol": 0.05
-    },
-    {
-     "t": 4.4,
-     "tipo": "ding",
-     "vol": 0.14
-    }
-   ]
-  },
-  {
-   "n": 3,
-   "t": "PIEZA",
-   "voz": "El corazón late con una señal eléctrica. En cada latido hay una ventana de veinte milisegundos donde un golpe puede desordenarla.",
-   "dur": 8.2,
-   "h": "LA VENTANA VULNERABLE",
-   "w": "VENTANA",
-   "sub": "",
-   "ic": "brillo",
-   "num": null,
-   "vs": null,
-   "bars": [],
-   "barsU": "",
-   "hi": -1,
-   "line": null,
-   "items": [],
-   "stops": [],
-   "end": "",
-   "donut": [],
-   "picto": null,
-   "top": [],
-   "myth": "",
-   "truth": "",
-   "zoom": null,
-   "capas": null,
-   "mira": null,
-   "impacto": null,
-   "red": null,
-   "termo": null,
-   "pila": null,
-   "cap": "primer paso: la señal eléctrica",
-   "papel": null,
-   "pilares": null,
-   "ciclo": null,
-   "duo": null,
-   "osc": null,
-   "cubo": null,
-   "diales": null,
-   "pieza": {
-    "id": "fut-ventana",
-    "props": {}
-   },
-   "cita": null,
-   "sc": "",
-   "modo": "VIRAL",
-   "tema": "oscuro",
-   "bg": "dark",
-   "ritmo": 1,
-   "total": 65.4,
-   "inicio": 14.4,
-   "fin": 22.6,
-   "texto": "El corazón late con una señal eléctrica. En cada latido hay una ventana de veinte milisegundos donde un golpe puede desordenarla.",
-   "tr": "semitono",
-   "trs": "corte",
-   "sfx": [
-    {
-     "t": 0.04,
-     "tipo": "whoosh",
-     "vol": 0.16
-    },
-    {
-     "t": 0.05,
-     "tipo": "whoosh",
-     "vol": 0.1
-    },
-    {
-     "t": 1,
-     "tipo": "radar",
-     "vol": 0.12
-    },
-    {
-     "t": 2.48,
-     "tipo": "thud",
-     "vol": 0.16
-    },
-    {
-     "t": 4.448,
-     "tipo": "golpe",
-     "vol": 0.3
-    },
-    {
-     "t": 4.548,
-     "tipo": "estatica",
-     "vol": 0.18
-    },
-    {
-     "t": 6.4,
-     "tipo": "tick",
-     "vol": 0.1
-    }
-   ]
-  },
-  {
-   "n": 4,
-   "t": "PIEZA",
-   "voz": "Si coincide, el corazón deja de latir y solo tiembla: fibrilación ventricular. Ya no bombea sangre.",
-   "dur": 6.5,
-   "h": "EL CORAZÓN SOLO TIEMBLA",
-   "w": "TIEMBLA",
+   "voz": "Una gota de tu sangre da la vuelta a todo tu cuerpo en solo un minuto. Acompáñala.",
+   "dur": 6.8,
+   "h": "UNA GOTA DE TU SANGRE",
+   "w": "SANGRE",
    "sub": "",
    "ic": "reloj",
    "num": null,
@@ -362,7 +36,7 @@
    "red": null,
    "termo": null,
    "pila": null,
-   "cap": "segundo paso: fibrilación ventricular",
+   "cap": "",
    "papel": null,
    "pilares": null,
    "ciclo": null,
@@ -371,21 +45,21 @@
    "cubo": null,
    "diales": null,
    "pieza": {
-    "id": "fut-fibrilacion",
+    "id": "san-gancho",
     "props": {}
    },
    "cita": null,
    "sc": "",
    "modo": "VIRAL",
-   "tema": "claro",
-   "bg": "light",
-   "ritmo": 1,
+   "tema": "oscuro",
+   "bg": "dark",
+   "ritmo": 0.9477611940298507,
    "total": 65.4,
-   "inicio": 22.6,
-   "fin": 29.1,
-   "texto": "Si coincide, el corazón deja de latir y solo tiembla: fibrilación ventricular. Ya no bombea sangre.",
-   "tr": "corte",
-   "trs": "semitono",
+   "inicio": 0,
+   "fin": 6.8,
+   "texto": "Una gota de tu sangre da la vuelta a todo tu cuerpo en solo un minuto. Acompáñala.",
+   "tr": "barrido",
+   "trs": "zoom",
    "sfx": [
     {
      "t": 0.04,
@@ -394,45 +68,45 @@
     },
     {
      "t": 0.05,
-     "tipo": "heartbeat",
-     "vol": 0.2
-    },
-    {
-     "t": 0.9,
-     "tipo": "heartbeat",
-     "vol": 0.2
-    },
-    {
-     "t": 1.4,
-     "tipo": "golpe",
-     "vol": 0.3
-    },
-    {
-     "t": 1.4,
-     "tipo": "estatica",
-     "vol": 0.2
-    },
-    {
-     "t": 2.6,
-     "tipo": "radar",
-     "vol": 0.14
-    },
-    {
-     "t": 4,
-     "tipo": "tick",
+     "tipo": "whoosh",
      "vol": 0.12
+    },
+    {
+     "t": 0.2843283582089552,
+     "tipo": "pop",
+     "vol": 0.16
+    },
+    {
+     "t": 0.4843283582089552,
+     "tipo": "heartbeat",
+     "vol": 0.24
+    },
+    {
+     "t": 1.042537313432836,
+     "tipo": "heartbeat",
+     "vol": 0.24
+    },
+    {
+     "t": 3.0328358208955226,
+     "tipo": "ding",
+     "vol": 0.12
+    },
+    {
+     "t": 5.9708955223880595,
+     "tipo": "whoosh",
+     "vol": 0.2
     }
    ]
   },
   {
-   "n": 5,
+   "n": 2,
    "t": "PIEZA",
-   "voz": "Sin sangre, el cerebro se queda sin oxígeno. Se pierde el conocimiento en segundos, y cada minuto cuenta.",
-   "dur": 7.2,
-   "h": "CADA MINUTO CUENTA",
-   "w": "MINUTO",
+   "voz": "Todo empieza en el ventrículo izquierdo: setenta mililitros por latido, casi cinco litros por minuto, siete mil al día.",
+   "dur": 7.4,
+   "h": "EL VENTRÍCULO IZQUIERDO",
+   "w": "VENTRÍCULO",
    "sub": "",
-   "ic": "tendencia-baja",
+   "ic": "reloj",
    "num": null,
    "vs": null,
    "bars": [],
@@ -454,7 +128,7 @@
    "red": null,
    "termo": null,
    "pila": null,
-   "cap": "tercer paso: el cerebro",
+   "cap": "salida: el corazón",
    "papel": null,
    "pilares": null,
    "ciclo": null,
@@ -463,7 +137,94 @@
    "cubo": null,
    "diales": null,
    "pieza": {
-    "id": "fut-cerebro",
+    "id": "san-corazon",
+    "props": {}
+   },
+   "cita": null,
+   "sc": "",
+   "modo": "VIRAL",
+   "tema": "claro",
+   "bg": "light",
+   "ritmo": 0.9391891891891891,
+   "total": 65.4,
+   "inicio": 6.8,
+   "fin": 14.2,
+   "texto": "Todo empieza en el ventrículo izquierdo: setenta mililitros por latido, casi cinco litros por minuto, siete mil al día.",
+   "tr": "zoom",
+   "trs": "corte",
+   "sfx": [
+    {
+     "t": 0.04,
+     "tipo": "whoosh",
+     "vol": 0.16
+    },
+    {
+     "t": 0.05,
+     "tipo": "heartbeat",
+     "vol": 0.3
+    },
+    {
+     "t": 2.0662162162162163,
+     "tipo": "pop",
+     "vol": 0.12
+    },
+    {
+     "t": 3.475,
+     "tipo": "pop",
+     "vol": 0.12
+    },
+    {
+     "t": 5.071621621621622,
+     "tipo": "ding",
+     "vol": 0.18
+    },
+    {
+     "t": 5.16554054054054,
+     "tipo": "thud",
+     "vol": 0.2
+    }
+   ]
+  },
+  {
+   "n": 3,
+   "t": "PIEZA",
+   "voz": "Sale por la aorta, un tubo de unos tres centímetros de ancho, y desde ahí se ramifica sin parar.",
+   "dur": 7.4,
+   "h": "SALE POR LA AORTA",
+   "w": "AORTA",
+   "sub": "",
+   "ic": "tren",
+   "num": null,
+   "vs": null,
+   "bars": [],
+   "barsU": "",
+   "hi": -1,
+   "line": null,
+   "items": [],
+   "stops": [],
+   "end": "",
+   "donut": [],
+   "picto": null,
+   "top": [],
+   "myth": "",
+   "truth": "",
+   "zoom": null,
+   "capas": null,
+   "mira": null,
+   "impacto": null,
+   "red": null,
+   "termo": null,
+   "pila": null,
+   "cap": "dentro de la aorta",
+   "papel": null,
+   "pilares": null,
+   "ciclo": null,
+   "duo": null,
+   "osc": null,
+   "cubo": null,
+   "diales": null,
+   "pieza": {
+    "id": "san-aorta",
     "props": {}
    },
    "cita": null,
@@ -471,11 +232,98 @@
    "modo": "VIRAL",
    "tema": "oscuro",
    "bg": "dark",
-   "ritmo": 1,
+   "ritmo": 0.9391891891891891,
    "total": 65.4,
-   "inicio": 29.1,
-   "fin": 36.3,
-   "texto": "Sin sangre, el cerebro se queda sin oxígeno. Se pierde el conocimiento en segundos, y cada minuto cuenta.",
+   "inicio": 14.2,
+   "fin": 21.6,
+   "texto": "Sale por la aorta, un tubo de unos tres centímetros de ancho, y desde ahí se ramifica sin parar.",
+   "tr": "corte",
+   "trs": "semitono",
+   "sfx": [
+    {
+     "t": 0.04,
+     "tipo": "whoosh",
+     "vol": 0.16
+    },
+    {
+     "t": 0.05,
+     "tipo": "whoosh",
+     "vol": 0.16
+    },
+    {
+     "t": 0.37567567567567567,
+     "tipo": "heartbeat",
+     "vol": 0.26
+    },
+    {
+     "t": 2.535810810810811,
+     "tipo": "pop",
+     "vol": 0.12
+    },
+    {
+     "t": 4.977702702702702,
+     "tipo": "whoosh",
+     "vol": 0.14
+    },
+    {
+     "t": 6.10472972972973,
+     "tipo": "ding",
+     "vol": 0.14
+    }
+   ]
+  },
+  {
+   "n": 4,
+   "t": "PIEZA",
+   "voz": "Cada rama es más fina que la anterior, hasta llegar a vasos casi diez veces más delgados que un cabello.",
+   "dur": 7.8,
+   "h": "CADA RAMA ES MÁS FINA",
+   "w": "FINA",
+   "sub": "",
+   "ic": "brillo",
+   "num": null,
+   "vs": null,
+   "bars": [],
+   "barsU": "",
+   "hi": -1,
+   "line": null,
+   "items": [],
+   "stops": [],
+   "end": "",
+   "donut": [],
+   "picto": null,
+   "top": [],
+   "myth": "",
+   "truth": "",
+   "zoom": null,
+   "capas": null,
+   "mira": null,
+   "impacto": null,
+   "red": null,
+   "termo": null,
+   "pila": null,
+   "cap": "de la aorta al capilar",
+   "papel": null,
+   "pilares": null,
+   "ciclo": null,
+   "duo": null,
+   "osc": null,
+   "cubo": null,
+   "diales": null,
+   "pieza": {
+    "id": "san-ramas",
+    "props": {}
+   },
+   "cita": null,
+   "sc": "",
+   "modo": "VIRAL",
+   "tema": "claro",
+   "bg": "light",
+   "ritmo": 0.9932432432432432,
+   "total": 65.4,
+   "inicio": 21.6,
+   "fin": 29.4,
+   "texto": "Cada rama es más fina que la anterior, hasta llegar a vasos casi diez veces más delgados que un cabello.",
    "tr": "semitono",
    "trs": "corte",
    "sfx": [
@@ -490,176 +338,46 @@
      "vol": 0.1
     },
     {
-     "t": 0.8,
-     "tipo": "clic",
-     "vol": 0.04
+     "t": 0.2979729729729729,
+     "tipo": "pop",
+     "vol": 0.12
     },
     {
-     "t": 0.93,
-     "tipo": "clic",
-     "vol": 0.04
+     "t": 1.1918918918918917,
+     "tipo": "pop",
+     "vol": 0.12
     },
     {
-     "t": 1.06,
-     "tipo": "clic",
-     "vol": 0.04
+     "t": 2.085810810810811,
+     "tipo": "pop",
+     "vol": 0.12
     },
     {
-     "t": 1.19,
-     "tipo": "clic",
-     "vol": 0.04
+     "t": 2.97972972972973,
+     "tipo": "pop",
+     "vol": 0.12
     },
     {
-     "t": 1.32,
-     "tipo": "clic",
-     "vol": 0.04
+     "t": 4.171621621621622,
+     "tipo": "ding",
+     "vol": 0.14
     },
     {
-     "t": 1.4,
+     "t": 5.95945945945946,
      "tipo": "tick",
      "vol": 0.14
-    },
-    {
-     "t": 1.4500000000000002,
-     "tipo": "clic",
-     "vol": 0.04
-    },
-    {
-     "t": 1.58,
-     "tipo": "clic",
-     "vol": 0.04
-    },
-    {
-     "t": 1.71,
-     "tipo": "clic",
-     "vol": 0.04
-    },
-    {
-     "t": 1.84,
-     "tipo": "clic",
-     "vol": 0.04
-    },
-    {
-     "t": 1.97,
-     "tipo": "clic",
-     "vol": 0.04
-    },
-    {
-     "t": 2.1,
-     "tipo": "clic",
-     "vol": 0.04
-    },
-    {
-     "t": 2.2300000000000004,
-     "tipo": "clic",
-     "vol": 0.04
-    },
-    {
-     "t": 2.3600000000000003,
-     "tipo": "clic",
-     "vol": 0.04
-    },
-    {
-     "t": 2.49,
-     "tipo": "clic",
-     "vol": 0.04
-    },
-    {
-     "t": 2.62,
-     "tipo": "clic",
-     "vol": 0.04
-    },
-    {
-     "t": 2.75,
-     "tipo": "clic",
-     "vol": 0.04
-    },
-    {
-     "t": 2.88,
-     "tipo": "clic",
-     "vol": 0.04
-    },
-    {
-     "t": 3,
-     "tipo": "radar",
-     "vol": 0.14
-    },
-    {
-     "t": 3.01,
-     "tipo": "clic",
-     "vol": 0.04
-    },
-    {
-     "t": 3.1399999999999997,
-     "tipo": "clic",
-     "vol": 0.04
-    },
-    {
-     "t": 3.2700000000000005,
-     "tipo": "clic",
-     "vol": 0.04
-    },
-    {
-     "t": 3.4000000000000004,
-     "tipo": "clic",
-     "vol": 0.04
-    },
-    {
-     "t": 3.5300000000000002,
-     "tipo": "clic",
-     "vol": 0.04
-    },
-    {
-     "t": 3.66,
-     "tipo": "clic",
-     "vol": 0.04
-    },
-    {
-     "t": 3.79,
-     "tipo": "clic",
-     "vol": 0.04
-    },
-    {
-     "t": 3.92,
-     "tipo": "clic",
-     "vol": 0.04
-    },
-    {
-     "t": 4.05,
-     "tipo": "clic",
-     "vol": 0.04
-    },
-    {
-     "t": 4.18,
-     "tipo": "clic",
-     "vol": 0.04
-    },
-    {
-     "t": 4.3100000000000005,
-     "tipo": "clic",
-     "vol": 0.04
-    },
-    {
-     "t": 4.44,
-     "tipo": "clic",
-     "vol": 0.04
-    },
-    {
-     "t": 5,
-     "tipo": "thud",
-     "vol": 0.18
     }
    ]
   },
   {
-   "n": 6,
+   "n": 5,
    "t": "PIEZA",
-   "voz": "Lo que reinicia el ritmo es una descarga con desfibrilador. En el registro de Estados Unidos, sobrevivió el cincuenta y ocho por ciento.",
-   "dur": 8.9,
-   "h": "LA DESCARGA REINICIA EL RITMO",
-   "w": "DESCARGA",
+   "voz": "En el capilar pasan de a uno y entregan el oxígeno. Cada glóbulo lleva unos doscientos setenta millones de hemoglobinas.",
+   "dur": 7.5,
+   "h": "EL CAPILAR",
+   "w": "CAPILAR",
    "sub": "",
-   "ic": "brillo",
+   "ic": "billete",
    "num": null,
    "vs": null,
    "bars": [],
@@ -681,7 +399,7 @@
    "red": null,
    "termo": null,
    "pila": null,
-   "cap": "qué lo revierte",
+   "cap": "el intercambio",
    "papel": null,
    "pilares": null,
    "ciclo": null,
@@ -690,19 +408,19 @@
    "cubo": null,
    "diales": null,
    "pieza": {
-    "id": "fut-descarga",
+    "id": "san-capilar",
     "props": {}
    },
    "cita": null,
    "sc": "",
    "modo": "VIRAL",
-   "tema": "claro",
-   "bg": "light",
-   "ritmo": 1,
+   "tema": "oscuro",
+   "bg": "dark",
+   "ritmo": 0.9527027027027026,
    "total": 65.4,
-   "inicio": 36.3,
-   "fin": 45.2,
-   "texto": "Lo que reinicia el ritmo es una descarga con desfibrilador. En el registro de Estados Unidos, sobrevivió el cincuenta y ocho por ciento.",
+   "inicio": 29.4,
+   "fin": 36.9,
+   "texto": "En el capilar pasan de a uno y entregan el oxígeno. Cada glóbulo lleva unos doscientos setenta millones de hemoglobinas.",
    "tr": "corte",
    "trs": "semitono",
    "sfx": [
@@ -717,51 +435,86 @@
      "vol": 0.1
     },
     {
-     "t": 0.4,
+     "t": 1.1432432432432431,
      "tipo": "pop",
      "vol": 0.14
     },
     {
-     "t": 1.6,
-     "tipo": "clic",
-     "vol": 0.16
+     "t": 2.5722972972972973,
+     "tipo": "zap",
+     "vol": 0.12
     },
     {
-     "t": 2.6,
-     "tipo": "radar",
+     "t": 2.7722972972972975,
+     "tipo": "clic",
+     "vol": 0.04
+    },
+    {
+     "t": 2.9022972972972974,
+     "tipo": "clic",
+     "vol": 0.04
+    },
+    {
+     "t": 3.0322972972972977,
+     "tipo": "clic",
+     "vol": 0.04
+    },
+    {
+     "t": 3.1622972972972976,
+     "tipo": "clic",
+     "vol": 0.04
+    },
+    {
+     "t": 3.2922972972972975,
+     "tipo": "clic",
+     "vol": 0.04
+    },
+    {
+     "t": 3.4222972972972974,
+     "tipo": "clic",
+     "vol": 0.04
+    },
+    {
+     "t": 3.5522972972972973,
+     "tipo": "clic",
+     "vol": 0.04
+    },
+    {
+     "t": 3.6822972972972976,
+     "tipo": "clic",
+     "vol": 0.04
+    },
+    {
+     "t": 3.8122972972972975,
+     "tipo": "clic",
+     "vol": 0.04
+    },
+    {
+     "t": 3.9422972972972974,
+     "tipo": "clic",
+     "vol": 0.04
+    },
+    {
+     "t": 4.287162162162161,
+     "tipo": "ding",
      "vol": 0.14
     },
     {
-     "t": 4.6,
-     "tipo": "zap",
-     "vol": 0.3
-    },
-    {
-     "t": 4.6,
-     "tipo": "golpe",
-     "vol": 0.3
-    },
-    {
-     "t": 4.9,
-     "tipo": "heartbeat",
-     "vol": 0.2
-    },
-    {
-     "t": 5.8,
-     "tipo": "ding",
-     "vol": 0.18
+     "t": 5.9067567567567565,
+     "tipo": "tick",
+     "vol": 0.12
     }
    ]
   },
   {
-   "n": 7,
+   "n": 6,
    "t": "PIEZA",
-   "voz": "Si alguien está inconsciente y no respira: llama a emergencias, comprime el centro del pecho fuerte y rápido, y busca un desfibrilador.",
-   "dur": 8.6,
-   "h": "QUÉ HACER",
-   "w": "HACER",
+   "voz": "Vuelve por las venas. Sus válvulas solo la dejan subir, y el músculo la empuja contra la gravedad.",
+   "dur": 7.2,
+   "h": "VUELVE POR LAS VENAS",
+   "w": "VENAS",
    "sub": "",
-   "ic": "velocimetro",
+   "ic": "brillo",
    "num": null,
    "vs": null,
    "bars": [],
@@ -783,7 +536,7 @@
    "red": null,
    "termo": null,
    "pila": null,
-   "cap": "tres pasos que salvan vidas",
+   "cap": "sin oxígeno, de regreso",
    "papel": null,
    "pilares": null,
    "ciclo": null,
@@ -792,21 +545,21 @@
    "cubo": null,
    "diales": null,
    "pieza": {
-    "id": "fut-rcp",
+    "id": "san-venas",
     "props": {}
    },
    "cita": null,
    "sc": "",
    "modo": "VIRAL",
-   "tema": "oscuro",
-   "bg": "dark",
+   "tema": "claro",
+   "bg": "light",
    "ritmo": 1,
    "total": 65.4,
-   "inicio": 45.2,
-   "fin": 53.8,
-   "texto": "Si alguien está inconsciente y no respira: llama a emergencias, comprime el centro del pecho fuerte y rápido, y busca un desfibrilador.",
+   "inicio": 36.9,
+   "fin": 44.1,
+   "texto": "Vuelve por las venas. Sus válvulas solo la dejan subir, y el músculo la empuja contra la gravedad.",
    "tr": "semitono",
-   "trs": "zoom",
+   "trs": "semitono",
    "sfx": [
     {
      "t": 0.04,
@@ -819,186 +572,168 @@
      "vol": 0.1
     },
     {
-     "t": 2.6,
+     "t": 1.7,
+     "tipo": "clic",
+     "vol": 0.16
+    },
+    {
+     "t": 2.1,
+     "tipo": "clic",
+     "vol": 0.16
+    },
+    {
+     "t": 4,
+     "tipo": "thud",
+     "vol": 0.2
+    },
+    {
+     "t": 4.9,
+     "tipo": "thud",
+     "vol": 0.2
+    },
+    {
+     "t": 5.4,
+     "tipo": "ding",
+     "vol": 0.12
+    }
+   ]
+  },
+  {
+   "n": 7,
+   "t": "PIEZA",
+   "voz": "En los pulmones, en menos de un segundo, suelta el dióxido de carbono, recoge oxígeno y vuelve a ser rojo brillante.",
+   "dur": 7.8,
+   "h": "EN LOS PULMONES",
+   "w": "PULMONES",
+   "sub": "",
+   "ic": "brillo",
+   "num": null,
+   "vs": null,
+   "bars": [],
+   "barsU": "",
+   "hi": -1,
+   "line": null,
+   "items": [],
+   "stops": [],
+   "end": "",
+   "donut": [],
+   "picto": null,
+   "top": [],
+   "myth": "",
+   "truth": "",
+   "zoom": null,
+   "capas": null,
+   "mira": null,
+   "impacto": null,
+   "red": null,
+   "termo": null,
+   "pila": null,
+   "cap": "se recarga de oxígeno",
+   "papel": null,
+   "pilares": null,
+   "ciclo": null,
+   "duo": null,
+   "osc": null,
+   "cubo": null,
+   "diales": null,
+   "pieza": {
+    "id": "san-pulmon",
+    "props": {}
+   },
+   "cita": null,
+   "sc": "",
+   "modo": "VIRAL",
+   "tema": "oscuro",
+   "bg": "dark",
+   "ritmo": 1,
+   "total": 65.4,
+   "inicio": 44.1,
+   "fin": 51.9,
+   "texto": "En los pulmones, en menos de un segundo, suelta el dióxido de carbono, recoge oxígeno y vuelve a ser rojo brillante.",
+   "tr": "semitono",
+   "trs": "zoom",
+   "sfx": [
+    {
+     "t": 0.04,
+     "tipo": "whoosh",
+     "vol": 0.16
+    },
+    {
+     "t": 0.05,
+     "tipo": "whoosh",
+     "vol": 0.12
+    },
+    {
+     "t": 0.3,
      "tipo": "pop",
-     "vol": 0.14
+     "vol": 0.12
     },
     {
-     "t": 4.2,
-     "tipo": "pop",
-     "vol": 0.14
+     "t": 1.6,
+     "tipo": "zap",
+     "vol": 0.16
     },
     {
-     "t": 4.5,
+     "t": 3,
      "tipo": "clic",
-     "vol": 0.05
+     "vol": 0.04
     },
     {
-     "t": 4.63,
+     "t": 3.13,
      "tipo": "clic",
-     "vol": 0.05
+     "vol": 0.04
     },
     {
-     "t": 4.76,
+     "t": 3.26,
      "tipo": "clic",
-     "vol": 0.05
+     "vol": 0.04
     },
     {
-     "t": 4.89,
+     "t": 3.39,
      "tipo": "clic",
-     "vol": 0.05
+     "vol": 0.04
     },
     {
-     "t": 5.02,
+     "t": 3.52,
      "tipo": "clic",
-     "vol": 0.05
+     "vol": 0.04
     },
     {
-     "t": 5.15,
+     "t": 3.65,
      "tipo": "clic",
-     "vol": 0.05
+     "vol": 0.04
     },
     {
-     "t": 5.28,
+     "t": 3.7800000000000002,
      "tipo": "clic",
-     "vol": 0.05
+     "vol": 0.04
     },
     {
-     "t": 5.41,
+     "t": 3.91,
      "tipo": "clic",
-     "vol": 0.05
+     "vol": 0.04
     },
     {
-     "t": 5.54,
+     "t": 4.04,
      "tipo": "clic",
-     "vol": 0.05
+     "vol": 0.04
     },
     {
-     "t": 5.67,
-     "tipo": "clic",
-     "vol": 0.05
-    },
-    {
-     "t": 5.8,
-     "tipo": "clic",
-     "vol": 0.05
-    },
-    {
-     "t": 5.93,
-     "tipo": "clic",
-     "vol": 0.05
-    },
-    {
-     "t": 6.0600000000000005,
-     "tipo": "clic",
-     "vol": 0.05
-    },
-    {
-     "t": 6.1899999999999995,
-     "tipo": "clic",
-     "vol": 0.05
-    },
-    {
-     "t": 6.32,
-     "tipo": "clic",
-     "vol": 0.05
-    },
-    {
-     "t": 6.45,
-     "tipo": "clic",
-     "vol": 0.05
-    },
-    {
-     "t": 6.58,
-     "tipo": "clic",
-     "vol": 0.05
-    },
-    {
-     "t": 6.6,
-     "tipo": "pop",
-     "vol": 0.14
-    },
-    {
-     "t": 6.71,
-     "tipo": "clic",
-     "vol": 0.05
-    },
-    {
-     "t": 6.84,
-     "tipo": "clic",
-     "vol": 0.05
-    },
-    {
-     "t": 6.970000000000001,
-     "tipo": "clic",
-     "vol": 0.05
-    },
-    {
-     "t": 7.1,
-     "tipo": "clic",
-     "vol": 0.05
-    },
-    {
-     "t": 7.23,
-     "tipo": "clic",
-     "vol": 0.05
-    },
-    {
-     "t": 7.36,
-     "tipo": "clic",
-     "vol": 0.05
-    },
-    {
-     "t": 7.49,
-     "tipo": "clic",
-     "vol": 0.05
-    },
-    {
-     "t": 7.62,
-     "tipo": "clic",
-     "vol": 0.05
-    },
-    {
-     "t": 7.75,
-     "tipo": "clic",
-     "vol": 0.05
-    },
-    {
-     "t": 7.88,
-     "tipo": "clic",
-     "vol": 0.05
-    },
-    {
-     "t": 8.01,
-     "tipo": "clic",
-     "vol": 0.05
-    },
-    {
-     "t": 8.14,
-     "tipo": "clic",
-     "vol": 0.05
-    },
-    {
-     "t": 8.27,
-     "tipo": "clic",
-     "vol": 0.05
-    },
-    {
-     "t": 8.4,
-     "tipo": "clic",
-     "vol": 0.05
+     "t": 5.6,
+     "tipo": "ding",
+     "vol": 0.18
     }
    ]
   },
   {
    "n": 8,
    "t": "PIEZA",
-   "voz": "Aprender reanimación toma una tarde y puede salvar a alguien que quieres. Descanse en paz, Jesús de Miguel.",
-   "dur": 6.9,
-   "h": "APRENDE RCP",
-   "w": "RCP",
+   "voz": "Un glóbulo vive unos ciento veinte días y da unas ciento setenta y dos mil vueltas. La médula lo repone, millones por segundo.",
+   "dur": 8.9,
+   "h": "UN GLÓBULO VIVE 120 DÍAS",
+   "w": "120",
    "sub": "",
-   "ic": "brillo",
+   "ic": "billete",
    "num": null,
    "vs": null,
    "bars": [],
@@ -1029,7 +764,7 @@
    "cubo": null,
    "diales": null,
    "pieza": {
-    "id": "fut-cierre",
+    "id": "san-vida",
     "props": {}
    },
    "cita": null,
@@ -1039,9 +774,9 @@
    "bg": "light",
    "ritmo": 1,
    "total": 65.4,
-   "inicio": 53.8,
-   "fin": 60.7,
-   "texto": "Aprender reanimación toma una tarde y puede salvar a alguien que quieres. Descanse en paz, Jesús de Miguel.",
+   "inicio": 51.9,
+   "fin": 60.8,
+   "texto": "Un glóbulo vive unos ciento veinte días y da unas ciento setenta y dos mil vueltas. La médula lo repone, millones por segundo.",
    "tr": "zoom",
    "trs": "barrido",
    "sfx": [
@@ -1053,34 +788,174 @@
     {
      "t": 0.05,
      "tipo": "whoosh",
-     "vol": 0.08
-    },
-    {
-     "t": 0.3,
-     "tipo": "pop",
      "vol": 0.1
     },
     {
-     "t": 3.6,
+     "t": 0.4,
+     "tipo": "pop",
+     "vol": 0.12
+    },
+    {
+     "t": 1.4,
+     "tipo": "clic",
+     "vol": 0.05
+    },
+    {
+     "t": 1.5299999999999998,
+     "tipo": "clic",
+     "vol": 0.05
+    },
+    {
+     "t": 1.66,
+     "tipo": "clic",
+     "vol": 0.05
+    },
+    {
+     "t": 1.79,
+     "tipo": "clic",
+     "vol": 0.05
+    },
+    {
+     "t": 1.92,
+     "tipo": "clic",
+     "vol": 0.05
+    },
+    {
+     "t": 2.05,
+     "tipo": "clic",
+     "vol": 0.05
+    },
+    {
+     "t": 2.1799999999999997,
+     "tipo": "clic",
+     "vol": 0.05
+    },
+    {
+     "t": 2.31,
+     "tipo": "clic",
+     "vol": 0.05
+    },
+    {
+     "t": 2.44,
+     "tipo": "clic",
+     "vol": 0.05
+    },
+    {
+     "t": 2.57,
+     "tipo": "clic",
+     "vol": 0.05
+    },
+    {
+     "t": 2.7,
+     "tipo": "clic",
+     "vol": 0.05
+    },
+    {
+     "t": 2.83,
+     "tipo": "clic",
+     "vol": 0.05
+    },
+    {
+     "t": 2.96,
+     "tipo": "clic",
+     "vol": 0.05
+    },
+    {
+     "t": 3.09,
+     "tipo": "clic",
+     "vol": 0.05
+    },
+    {
+     "t": 3.2199999999999998,
+     "tipo": "clic",
+     "vol": 0.05
+    },
+    {
+     "t": 3.35,
+     "tipo": "clic",
+     "vol": 0.05
+    },
+    {
+     "t": 3.48,
+     "tipo": "clic",
+     "vol": 0.05
+    },
+    {
+     "t": 3.61,
+     "tipo": "clic",
+     "vol": 0.05
+    },
+    {
+     "t": 3.7399999999999998,
+     "tipo": "clic",
+     "vol": 0.05
+    },
+    {
+     "t": 3.87,
+     "tipo": "clic",
+     "vol": 0.05
+    },
+    {
+     "t": 4,
+     "tipo": "clic",
+     "vol": 0.05
+    },
+    {
+     "t": 4.13,
+     "tipo": "clic",
+     "vol": 0.05
+    },
+    {
+     "t": 4.26,
+     "tipo": "clic",
+     "vol": 0.05
+    },
+    {
+     "t": 4.390000000000001,
+     "tipo": "clic",
+     "vol": 0.05
+    },
+    {
+     "t": 4.52,
+     "tipo": "clic",
+     "vol": 0.05
+    },
+    {
+     "t": 4.65,
+     "tipo": "clic",
+     "vol": 0.05
+    },
+    {
+     "t": 4.779999999999999,
+     "tipo": "clic",
+     "vol": 0.05
+    },
+    {
+     "t": 5.4,
      "tipo": "ding",
+     "vol": 0.18
+    },
+    {
+     "t": 5.6,
+     "tipo": "pop",
      "vol": 0.14
     },
     {
-     "t": 5,
-     "tipo": "tick",
-     "vol": 0.1
+     "t": 7.4,
+     "tipo": "heartbeat",
+     "vol": 0.24
     }
    ]
   },
   {
    "n": 9,
    "t": "CTA",
-   "voz": "Compártelo: alguien cerca de ti puede necesitar saberlo. Síguenos en Sinapsis.",
-   "dur": 4.7,
+   "voz": "Tu sangre no se detiene nunca. Compártelo y síguenos en Sinapsis.",
+   "dur": 4.6,
    "h": "COMPÁRTELO Y SÍGUENOS",
    "w": "SÍGUENOS",
    "sub": "Más ciencia en SINAPSIS",
-   "ic": "pin",
+   "ic": "cohete",
    "num": null,
    "vs": null,
    "bars": [],
@@ -1118,9 +993,9 @@
    "bg": "gold",
    "ritmo": 1,
    "total": 65.4,
-   "inicio": 60.7,
+   "inicio": 60.8,
    "fin": 65.4,
-   "texto": "Compártelo: alguien cerca de ti puede necesitar saberlo. Síguenos en Sinapsis.",
+   "texto": "Tu sangre no se detiene nunca. Compártelo y síguenos en Sinapsis.",
    "tr": "barrido",
    "trs": "barrido",
    "sfx": [

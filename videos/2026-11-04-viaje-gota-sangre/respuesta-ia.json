@@ -1,0 +1,14 @@
+{
+ "titulo": "El viaje de una gota de sangre",
+ "scenes": [
+  { "t": "PIEZA", "voz": "Una gota de tu sangre da la vuelta a todo tu cuerpo en solo un minuto. Acompáñala.", "dur": 6.8, "h": "UNA GOTA DE TU SANGRE", "w": "MINUTO", "pieza": { "id": "san-gancho" } },
+  { "t": "PIEZA", "voz": "Todo empieza en el ventrículo izquierdo: setenta mililitros por latido, casi cinco litros por minuto, siete mil al día.", "dur": 7.4, "h": "EL VENTRÍCULO IZQUIERDO", "w": "VENTRÍCULO", "cap": "salida: el corazón", "pieza": { "id": "san-corazon" } },
+  { "t": "PIEZA", "voz": "Sale por la aorta, un tubo de unos tres centímetros de ancho, y desde ahí se ramifica sin parar.", "dur": 7.4, "h": "SALE POR LA AORTA", "w": "AORTA", "cap": "dentro de la aorta", "pieza": { "id": "san-aorta" } },
+  { "t": "PIEZA", "voz": "Cada rama es más fina que la anterior, hasta llegar a vasos casi diez veces más delgados que un cabello.", "dur": 7.8, "h": "CADA RAMA ES MÁS FINA", "w": "FINA", "cap": "de la aorta al capilar", "pieza": { "id": "san-ramas" } },
+  { "t": "PIEZA", "voz": "En el capilar pasan de a uno y entregan el oxígeno. Cada glóbulo lleva unos doscientos setenta millones de hemoglobinas.", "dur": 7.5, "h": "EL CAPILAR", "w": "CAPILAR", "cap": "el intercambio", "pieza": { "id": "san-capilar" } },
+  { "t": "PIEZA", "voz": "Vuelve por las venas. Sus válvulas solo la dejan subir, y el músculo la empuja contra la gravedad.", "dur": 7.2, "h": "VUELVE POR LAS VENAS", "w": "VENAS", "cap": "sin oxígeno, de regreso", "pieza": { "id": "san-venas" } },
+  { "t": "PIEZA", "voz": "En los pulmones, en menos de un segundo, suelta el dióxido de carbono, recoge oxígeno y vuelve a ser rojo brillante.", "dur": 7.8, "h": "EN LOS PULMONES", "w": "PULMONES", "cap": "se recarga de oxígeno", "pieza": { "id": "san-pulmon" } },
+  { "t": "PIEZA", "voz": "Un glóbulo vive unos ciento veinte días y da unas ciento setenta y dos mil vueltas. La médula lo repone, millones por segundo.", "dur": 8.9, "h": "UN GLÓBULO VIVE 120 DÍAS", "w": "VUELTAS", "pieza": { "id": "san-vida" } },
+  { "t": "CTA", "voz": "Tu sangre no se detiene nunca. Compártelo y síguenos en Sinapsis.", "dur": 4.6, "h": "COMPÁRTELO Y SÍGUENOS", "w": "SÍGUENOS", "sub": "Más ciencia en SINAPSIS" }
+ ]
+}

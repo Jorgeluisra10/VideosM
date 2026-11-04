@@ -532,6 +532,51 @@ export const TFUT = {
   cierre: { vela: 0.2, frase1: 0.3, frase2: 3.6, chip: 5.0 },
 } as const;
 
+/** Datos del video «El viaje de una gota de sangre» (SINAPSIS · anatomía humana). Fuentes y precauciones en ejemplos/animacion-viral/guion-tecnico-sangre.md. */
+export const SAN = {
+  /** latido en reposo: período del dibujo (0,8 s = 75 lpm) y frecuencia de referencia para los litros por día (72 lpm) */
+  periodo: 0.8, lpm: 72,
+  /** volumen sistólico ≈ 70 mL y gasto cardíaco en reposo ≈ 5 L/min (fuentes de fisiología); volumen de sangre ≈ 5 L */
+  mlLatido: 70, gastoLMin: 5, volumenSangreL: 5,
+  /** diámetros: aorta ascendente ≈ 3 cm (2,9–3,3), capilar ≈ 8 µm (5–10), glóbulo rojo ≈ 7,5–8,5 µm, cabello ≈ 70 µm */
+  aortaCm: 3, capilarUm: 8, globuloUm: 8, cabelloUm: 70,
+  /** hemoglobina ≈ 270 millones de moléculas por glóbulo rojo; cada una puede unir 4 O2 */
+  hbMillones: 270, o2PorHb: 4,
+  /** tránsito del glóbulo por el capilar pulmonar en reposo ≈ 0,75 s (el O2 se equilibra en ≈ 0,25 s) */
+  transitoPulmonS: 0.75,
+  /** vida del glóbulo rojo ≈ 120 días; la médula produce ≈ 2–3 millones por segundo (estimado) */
+  vidaDias: 120, medulaMillonesPorS: [2, 3] as const,
+  /** una vuelta completa ≈ volumen de sangre ÷ gasto cardíaco = 1 min (cálculo propio) */
+  vueltaS: 60,
+} as const;
+/** litros que bombea el corazón en un día: mL por latido × latidos por minuto × 1.440 min ÷ 1.000 */
+export const litrosPorDia = (mlLatido: number, lpm: number): number => (mlLatido * lpm * 1440) / 1000;
+/** vueltas de un glóbulo en su vida: días × 1.440 min ÷ (minutos por vuelta) */
+export const vueltasEnVida = (dias: number, vueltaS: number): number => Math.round((dias * 1440 * 60) / vueltaS);
+/** latidos en una vida de `anios` años a `lpm` latidos por minuto */
+export const latidosEnVida = (anios: number, lpm: number): number => anios * 365 * 1440 * lpm;
+/** fase del latido (0–1) en el instante t */
+export const fasePulso = (t: number, periodo: number = SAN.periodo): number => (((t / periodo) % 1) + 1) % 1;
+/** sístole (0–1): sube y baja durante el primer 38 % del latido */
+export const sistole = (t: number, periodo: number = SAN.periodo): number => { const f = fasePulso(t, periodo); return f < 0.38 ? Math.pow(Math.sin((Math.PI * f) / 0.38), 1.5) : 0; };
+/** avance acumulado del flujo: cada latido aporta una unidad en forma de empuje (flujo pulsátil) más un avance lento continuo */
+export const avancePulsatil = (t: number, periodo: number = SAN.periodo): number => {
+  const n = Math.floor(t / periodo), f = fasePulso(t, periodo), k = Math.min(1, f / 0.38);
+  return n + k * k * (3 - 2 * k) + 0.15 * t;
+};
+
+/** Tiempos del video «El viaje de una gota de sangre» (segundos a ritmo normal), compartidos entre el dibujo y el sonido. */
+export const TSAN = {
+  gancho: { gota: 0.3, anillo: 1.0, anilloDur: 5.0, frase2: 3.2, cae: 6.3 },
+  corazon: { camara: 0.2, ml: 2.2, minuto: 3.7, dia: 5.4 },
+  aorta: { tubo: 0.0, ancho: 2.7, ramas: 5.3 },
+  ramas: { arbol: 0.3, genDur: 0.9, escala: 4.2, cabello: 6.0 },
+  capilar: { tubo: 0.2, entra: 1.2, o2: 2.7, hb: 4.5, lento: 6.2 },
+  venas: { vena: 0.3, valvulas: 1.7, musculo: 4.0, sube: 5.4 },
+  pulmon: { alveolo: 0.3, pasa: 1.6, pasaDur: 2.4, co2: 3.0, bola: 5.6 },
+  vida: { anillo: 0.4, vueltas: 1.4, vueltasDur: 4.0, medula: 5.6, fin: 7.4 },
+} as const;
+
 /* ───────────── «La regla del 37 %» (problema de la parada óptima, ensayo abstracto para IMNOBA) ───────────── */
 
 /** Generador pseudoaleatorio determinista (mulberry32): mismos números en el render, en las pruebas y en cada fotograma. */
@@ -1216,6 +1261,39 @@ export const PIEZAS: Record<string, DefPieza> = {
   "fut-cierre": {
     id: "fut-cierre", nombre: "Futbolista · una vela, «aprende RCP» y descanse en paz (cierre)", ideal: 6.4, fondo: "dark", entra: "zoom",
     sfx: (_d, r) => [ev(0.05, "whoosh", 0.08), ev(TFUT.cierre.frase1 * r, "pop", 0.1), ev(TFUT.cierre.frase2 * r, "ding", 0.14), ev(TFUT.cierre.chip * r, "tick", 0.1)],
+  },
+  /* ───────────── «El viaje de una gota de sangre» (SINAPSIS · anatomía humana) ───────────── */
+  "san-gancho": {
+    id: "san-gancho", nombre: "Sangre · una gota brillante late en la oscuridad y un anillo marca la vuelta de ≈ 1 minuto; la cámara cae dentro (gancho)", ideal: 6.7, fondo: "dark",
+    sfx: (_d, r) => [ev(0.05, "whoosh", 0.12), ev(TSAN.gancho.gota * r, "pop", 0.16), ev(TSAN.gancho.gota * r + 0.2, "heartbeat", 0.24), ev((TSAN.gancho.gota + 0.8) * r, "heartbeat", 0.24), ev(TSAN.gancho.frase2 * r, "ding", 0.12), ev(TSAN.gancho.cae * r, "whoosh", 0.2)],
+  },
+  "san-corazon": {
+    id: "san-corazon", nombre: "Sangre · corte del ventrículo izquierdo: el músculo se contrae, la válvula se abre y 70 mL salen por la aorta (7.000 L al día)", ideal: 7.4, fondo: "dark", entra: "zoom",
+    sfx: (_d, r) => [ev(0.05, "heartbeat", 0.3), ev(TSAN.corazon.ml * r, "pop", 0.12), ev(TSAN.corazon.minuto * r, "pop", 0.12), ev(TSAN.corazon.dia * r, "ding", 0.18), ev((TSAN.corazon.dia + 0.1) * r, "thud", 0.2)],
+  },
+  "san-aorta": {
+    id: "san-aorta", nombre: "Sangre · vuelo dentro de la aorta (≈ 3 cm): paredes que laten, glóbulos que pasan y ramas que se abren", ideal: 7.4, fondo: "dark", entra: "corte",
+    sfx: (_d, r) => [ev(0.05, "whoosh", 0.16), ev(0.4 * r, "heartbeat", 0.26), ev(TSAN.aorta.ancho * r, "pop", 0.12), ev(TSAN.aorta.ramas * r, "whoosh", 0.14), ev((TSAN.aorta.ramas + 1.2) * r, "ding", 0.14)],
+  },
+  "san-ramas": {
+    id: "san-ramas", nombre: "Sangre · árbol arterial que se ramifica de ≈ 3 cm a ≈ 8 µm, comparado con un cabello (≈ 70 µm)", ideal: 7.4, fondo: "dark", entra: "semitono",
+    sfx: (_d, r) => [ev(0.05, "whoosh", 0.1), ...[0, 1, 2, 3].map((i) => ev((TSAN.ramas.arbol + TSAN.ramas.genDur * i) * r, "pop", 0.12)), ev(TSAN.ramas.escala * r, "ding", 0.14), ev(TSAN.ramas.cabello * r, "tick", 0.14)],
+  },
+  "san-capilar": {
+    id: "san-capilar", nombre: "Sangre · el capilar: los glóbulos rojos se deforman, avanzan en fila de a uno y entregan oxígeno a las células (≈ 270 millones de hemoglobinas)", ideal: 7.4, fondo: "dark", entra: "corte",
+    sfx: (_d, r) => [ev(0.05, "whoosh", 0.1), ev(TSAN.capilar.entra * r, "pop", 0.14), ev(TSAN.capilar.o2 * r, "zap", 0.12), ...clics(TSAN.capilar.o2 * r + 0.2, 1.4 * r, 0.04), ev(TSAN.capilar.hb * r, "ding", 0.14), ev(TSAN.capilar.lento * r, "tick", 0.12)],
+  },
+  "san-venas": {
+    id: "san-venas", nombre: "Sangre · una vena con válvulas y el músculo de la pantorrilla que empuja la sangre oscura hacia arriba", ideal: 6.4, fondo: "dark", entra: "semitono",
+    sfx: (_d, r) => [ev(0.05, "whoosh", 0.1), ev(TSAN.venas.valvulas * r, "clic", 0.16), ev((TSAN.venas.valvulas + 0.4) * r, "clic", 0.16), ev(TSAN.venas.musculo * r, "thud", 0.2), ev((TSAN.venas.musculo + 0.9) * r, "thud", 0.2), ev(TSAN.venas.sube * r, "ding", 0.12)],
+  },
+  "san-pulmon": {
+    id: "san-pulmon", nombre: "Sangre · el alvéolo: en ≈ 0,75 s el glóbulo suelta CO2 y recoge O2 y se vuelve rojo brillante", ideal: 7.1, fondo: "dark", entra: "semitono",
+    sfx: (_d, r) => [ev(0.05, "whoosh", 0.12), ev(TSAN.pulmon.alveolo * r, "pop", 0.12), ev(TSAN.pulmon.pasa * r, "zap", 0.16), ...clics(TSAN.pulmon.co2 * r, 1.2 * r, 0.04), ev(TSAN.pulmon.bola * r, "ding", 0.18)],
+  },
+  "san-vida": {
+    id: "san-vida", nombre: "Sangre · un glóbulo vive ≈ 120 días y da ≈ 172.000 vueltas; la médula fabrica ≈ 2–3 millones por segundo; el viaje cierra el círculo (cierre)", ideal: 8.4, fondo: "dark", entra: "zoom",
+    sfx: (_d, r) => [ev(0.05, "whoosh", 0.1), ev(TSAN.vida.anillo * r, "pop", 0.12), ...clics(TSAN.vida.vueltas * r, TSAN.vida.vueltasDur * r * 0.9, 0.05), ev((TSAN.vida.vueltas + TSAN.vida.vueltasDur) * r, "ding", 0.18), ev(TSAN.vida.medula * r, "pop", 0.14), ev(TSAN.vida.fin * r, "heartbeat", 0.24)],
   },
   "astro-memoria": {
     id: "astro-memoria", nombre: "Astrocitos · en ratones, reactivarlos estimuló el recuerdo", ideal: 4.15, fondo: "dark", entra: "corte",
