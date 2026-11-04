@@ -577,6 +577,37 @@ export const TSAN = {
   vida: { anillo: 0.4, vueltas: 1.4, vueltasDur: 4.0, medula: 5.6, fin: 7.4 },
 } as const;
 
+/** Datos del video «La noche que Röntgen vio a través de la piel» (SINAPSIS · historia de la medicina). Fuentes y precauciones en ejemplos/animacion-viral/guion-tecnico-rayos-x.md. */
+export const RXH = {
+  /** descubrimiento: Würzburg, 8 nov 1895; primera radiografía de la mano de Anna Bertha: 22 dic 1895 (exposición ≈ 15 min); artículo: 28 dic 1895 */
+  descubrimiento: { a: 1895, m: 11, d: 8 }, mano: { a: 1895, m: 12, d: 22 }, articulo: { a: 1895, m: 12, d: 28 }, expoManoMin: 15,
+  /** primer uso clínico documentado: John Hall-Edwards, 11 ene 1896 (una aguja clavada en una mano) */
+  aguja: { a: 1896, m: 1, d: 11 },
+  /** primer Premio Nobel de Física: 1901; rechazó patentar el descubrimiento */
+  nobelAnio: 1901,
+  /** Día Internacional de la Radiología: 8 de noviembre (primera edición en 2012) */
+  diaRadiologia: { m: 11, d: 8 },
+  /** año del «hoy» del video */
+  hoyAnio: 2026,
+} as const;
+/** años cumplidos entre dos años */
+export const aniversarioAnios = (anioHoy: number, anioBase: number): number => anioHoy - anioBase;
+/** días entre dos fechas (UTC, sin horario de verano) */
+export const diasEntreFechas = (a: { a: number; m: number; d: number }, b: { a: number; m: number; d: number }): number => Math.round((Date.UTC(b.a, b.m - 1, b.d) - Date.UTC(a.a, a.m - 1, a.d)) / 86400000);
+/** día de la semana en español de una fecha */
+export const diaSemana = (a: number, m: number, d: number): string => ["domingo", "lunes", "martes", "miércoles", "jueves", "viernes", "sábado"][new Date(Date.UTC(a, m - 1, d)).getUTCDay()];
+/** Tiempos del video de los rayos X (segundos a ritmo normal), compartidos entre el dibujo y el sonido. */
+export const TRX = {
+  gancho: { titulo: 0.2, anios: 1.4, aniosDur: 1.8, pantalla: 3.0, huesos: 5.0 },
+  tubo: { chip: 0.2, bobina: 0.6, carton: 1.2, luz: 3.6, brilla: 5.7 },
+  huesos: { rayos: 1.0, mano: 2.6, manoDur: 1.0, cuenta: 4.0, huesos: 5.0 },
+  x: { pregunta: 0.2, x: 1.8, incognita: 3.6 },
+  anna: { semanas: 0.2, fecha: 1.2, placa: 2.6, anillo: 5.0, tiempo: 6.0, cita: 6.4 },
+  mundo: { papel: 0.2, fecha: 1.2, enero: 2.6, aguja: 4.7 },
+  nobel: { patente: 0.2, sello: 0.8, medalla: 1.2, primer: 2.6, dinero: 4.0 },
+  cierre: { riesgo: 0.2, quema: 2.2, hoy: 3.3, dia: 4.4 },
+} as const;
+
 /* ───────────── «La regla del 37 %» (problema de la parada óptima, ensayo abstracto para IMNOBA) ───────────── */
 
 /** Generador pseudoaleatorio determinista (mulberry32): mismos números en el render, en las pruebas y en cada fotograma. */
@@ -1294,6 +1325,39 @@ export const PIEZAS: Record<string, DefPieza> = {
   "san-vida": {
     id: "san-vida", nombre: "Sangre · un glóbulo vive ≈ 120 días y da ≈ 172.000 vueltas; la médula fabrica ≈ 2–3 millones por segundo; el viaje cierra el círculo (cierre)", ideal: 8.4, fondo: "dark", entra: "zoom",
     sfx: (_d, r) => [ev(0.05, "whoosh", 0.1), ev(TSAN.vida.anillo * r, "pop", 0.12), ...clics(TSAN.vida.vueltas * r, TSAN.vida.vueltasDur * r * 0.9, 0.05), ev((TSAN.vida.vueltas + TSAN.vida.vueltasDur) * r, "ding", 0.18), ev(TSAN.vida.medula * r, "pop", 0.14), ev(TSAN.vida.fin * r, "heartbeat", 0.24)],
+  },
+  /* ───────────── «La noche que Röntgen vio a través de la piel» (SINAPSIS · historia de la medicina) ───────────── */
+  "rx-gancho": {
+    id: "rx-gancho", nombre: "Rayos X · una pantalla verde brilla en la oscuridad y aparecen huesos; han pasado 131 años del 8 de noviembre de 1895 (gancho)", ideal: 7.1, fondo: "dark",
+    sfx: (_d, r) => [ev(0.05, "whoosh", 0.12), ev(TRX.gancho.anios * r, "tick", 0.12), ev(TRX.gancho.pantalla * r, "zap", 0.14), ev(TRX.gancho.huesos * r, "ding", 0.2), ev(TRX.gancho.huesos * r + 0.1, "pop", 0.14)],
+  },
+  "rx-tubo": {
+    id: "rx-tubo", nombre: "Rayos X · Würzburg, 1895: el tubo cubierto con cartón negro, la luz se apaga y una pantalla cercana brilla", ideal: 7.3, fondo: "dark", entra: "corte",
+    sfx: (_d, r) => [ev(0.05, "whoosh", 0.1), ev(TRX.tubo.bobina * r, "zap", 0.12), ev(TRX.tubo.carton * r, "thud", 0.18), ev(TRX.tubo.luz * r, "clic", 0.2), ev(TRX.tubo.brilla * r, "ding", 0.16), ev(TRX.tubo.brilla * r + 0.05, "zap", 0.1)],
+  },
+  "rx-huesos": {
+    id: "rx-huesos", nombre: "Rayos X · rayos invisibles atraviesan el cartón; al interponer la mano aparecen sus huesos en la pantalla", ideal: 6.6, fondo: "dark", entra: "semitono",
+    sfx: (_d, r) => [ev(0.05, "whoosh", 0.1), ev(TRX.huesos.rayos * r, "zap", 0.14), ev(TRX.huesos.mano * r, "whoosh", 0.14), ev(TRX.huesos.cuenta * r, "tick", 0.1), ev(TRX.huesos.huesos * r, "ding", 0.2), ev(TRX.huesos.huesos * r + 0.1, "pop", 0.14)],
+  },
+  "rx-x": {
+    id: "rx-x", nombre: "Rayos X · no sabía qué eran, así que los llamó «X», la letra de la incógnita", ideal: 5.5, fondo: "dark", entra: "corte",
+    sfx: (_d, r) => [ev(0.05, "whoosh", 0.1), ev(TRX.x.pregunta * r, "pop", 0.1), ev(TRX.x.x * r, "thud", 0.2), ev(TRX.x.x * r + 0.05, "ding", 0.16), ev(TRX.x.incognita * r, "tick", 0.12)],
+  },
+  "rx-anna": {
+    id: "rx-anna", nombre: "Rayos X · 22 dic 1895: la radiografía de la mano de su esposa Anna Bertha, con su anillo (≈ 15 min de exposición)", ideal: 7.1, fondo: "dark", entra: "zoom",
+    sfx: (_d, r) => [ev(0.05, "whoosh", 0.1), ev(TRX.anna.fecha * r, "tick", 0.12), ev(TRX.anna.placa * r, "pop", 0.16), ev(TRX.anna.placa * r + 0.2, "zap", 0.12), ev(TRX.anna.anillo * r, "ding", 0.2), ev(TRX.anna.tiempo * r, "tick", 0.12), ev(TRX.anna.cita * r, "thud", 0.16)],
+  },
+  "rx-mundo": {
+    id: "rx-mundo", nombre: "Rayos X · 28 dic 1895 el artículo; en enero de 1896 la noticia da la vuelta al mundo y se radiografía una aguja clavada en una mano", ideal: 7.3, fondo: "dark", entra: "semitono",
+    sfx: (_d, r) => [ev(0.05, "whoosh", 0.1), ev(TRX.mundo.fecha * r, "pop", 0.14), ev(TRX.mundo.enero * r, "whoosh", 0.16), ...clics(TRX.mundo.enero * r + 0.2, 1.6 * r, 0.04), ev(TRX.mundo.aguja * r, "zap", 0.14), ev((TRX.mundo.aguja + 0.3) * r, "ding", 0.18)],
+  },
+  "rx-nobel": {
+    id: "rx-nobel", nombre: "Rayos X · rechazó patentarlo; 1901: primer Nobel de Física, y el dinero fue a su universidad", ideal: 6.5, fondo: "dark", entra: "zoom",
+    sfx: (_d, r) => [ev(0.05, "whoosh", 0.1), ev(TRX.nobel.sello * r, "thud", 0.24), ev(TRX.nobel.medalla * r, "pop", 0.16), ev((TRX.nobel.medalla + 0.1) * r, "ding", 0.2), ev(TRX.nobel.primer * r, "tick", 0.12), ...clics(TRX.nobel.dinero * r, 1.6 * r, 0.05)],
+  },
+  "rx-cierre": {
+    id: "rx-cierre", nombre: "Rayos X · los pioneros sin protección vs hoy con dosis medida; el 8 de noviembre es el Día Internacional de la Radiología (cierre)", ideal: 8.1, fondo: "dark", entra: "zoom",
+    sfx: (_d, r) => [ev(0.05, "whoosh", 0.1), ev(TRX.cierre.quema * r, "thud", 0.18), ev(TRX.cierre.hoy * r, "pop", 0.16), ev((TRX.cierre.hoy + 0.1) * r, "ding", 0.16), ev(TRX.cierre.dia * r, "ding", 0.22), ev((TRX.cierre.dia + 0.15) * r, "pop", 0.14)],
   },
   "astro-memoria": {
     id: "astro-memoria", nombre: "Astrocitos · en ratones, reactivarlos estimuló el recuerdo", ideal: 4.15, fondo: "dark", entra: "corte",

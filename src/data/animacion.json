@@ -1,20 +1,20 @@
 {
  "version": 1,
- "titulo": "El viaje de una gota de sangre",
+ "titulo": "La noche que Röntgen vio a través de la piel",
  "paleta": "medicina",
  "sfx": true,
  "fps": 60,
- "duracion": 65.4,
+ "duracion": 64.7,
  "escenas": [
   {
    "n": 1,
    "t": "PIEZA",
-   "voz": "Una gota de tu sangre da la vuelta a todo tu cuerpo en solo un minuto. Acompáñala.",
-   "dur": 6.8,
-   "h": "UNA GOTA DE TU SANGRE",
-   "w": "SANGRE",
+   "voz": "Este domingo se cumplen ciento treinta y un años de la noche en que un físico vio sus propios huesos.",
+   "dur": 7.6,
+   "h": "UNA NOCHE, 131 AÑOS",
+   "w": "131",
    "sub": "",
-   "ic": "reloj",
+   "ic": "brillo",
    "num": null,
    "vs": null,
    "bars": [],
@@ -45,7 +45,7 @@
    "cubo": null,
    "diales": null,
    "pieza": {
-    "id": "san-gancho",
+    "id": "rx-gancho",
     "props": {}
    },
    "cita": null,
@@ -53,104 +53,12 @@
    "modo": "VIRAL",
    "tema": "oscuro",
    "bg": "dark",
-   "ritmo": 0.9477611940298507,
-   "total": 65.4,
+   "ritmo": 1,
+   "total": 64.7,
    "inicio": 0,
-   "fin": 6.8,
-   "texto": "Una gota de tu sangre da la vuelta a todo tu cuerpo en solo un minuto. Acompáñala.",
+   "fin": 7.6,
+   "texto": "Este domingo se cumplen ciento treinta y un años de la noche en que un físico vio sus propios huesos.",
    "tr": "barrido",
-   "trs": "zoom",
-   "sfx": [
-    {
-     "t": 0.04,
-     "tipo": "whoosh",
-     "vol": 0.16
-    },
-    {
-     "t": 0.05,
-     "tipo": "whoosh",
-     "vol": 0.12
-    },
-    {
-     "t": 0.2843283582089552,
-     "tipo": "pop",
-     "vol": 0.16
-    },
-    {
-     "t": 0.4843283582089552,
-     "tipo": "heartbeat",
-     "vol": 0.24
-    },
-    {
-     "t": 1.042537313432836,
-     "tipo": "heartbeat",
-     "vol": 0.24
-    },
-    {
-     "t": 3.0328358208955226,
-     "tipo": "ding",
-     "vol": 0.12
-    },
-    {
-     "t": 5.9708955223880595,
-     "tipo": "whoosh",
-     "vol": 0.2
-    }
-   ]
-  },
-  {
-   "n": 2,
-   "t": "PIEZA",
-   "voz": "Todo empieza en el ventrículo izquierdo: setenta mililitros por latido, casi cinco litros por minuto, siete mil al día.",
-   "dur": 7.4,
-   "h": "EL VENTRÍCULO IZQUIERDO",
-   "w": "VENTRÍCULO",
-   "sub": "",
-   "ic": "reloj",
-   "num": null,
-   "vs": null,
-   "bars": [],
-   "barsU": "",
-   "hi": -1,
-   "line": null,
-   "items": [],
-   "stops": [],
-   "end": "",
-   "donut": [],
-   "picto": null,
-   "top": [],
-   "myth": "",
-   "truth": "",
-   "zoom": null,
-   "capas": null,
-   "mira": null,
-   "impacto": null,
-   "red": null,
-   "termo": null,
-   "pila": null,
-   "cap": "salida: el corazón",
-   "papel": null,
-   "pilares": null,
-   "ciclo": null,
-   "duo": null,
-   "osc": null,
-   "cubo": null,
-   "diales": null,
-   "pieza": {
-    "id": "san-corazon",
-    "props": {}
-   },
-   "cita": null,
-   "sc": "",
-   "modo": "VIRAL",
-   "tema": "claro",
-   "bg": "light",
-   "ritmo": 0.9391891891891891,
-   "total": 65.4,
-   "inicio": 6.8,
-   "fin": 14.2,
-   "texto": "Todo empieza en el ventrículo izquierdo: setenta mililitros por latido, casi cinco litros por minuto, siete mil al día.",
-   "tr": "zoom",
    "trs": "corte",
    "sfx": [
     {
@@ -160,40 +68,40 @@
     },
     {
      "t": 0.05,
-     "tipo": "heartbeat",
-     "vol": 0.3
-    },
-    {
-     "t": 2.0662162162162163,
-     "tipo": "pop",
+     "tipo": "whoosh",
      "vol": 0.12
     },
     {
-     "t": 3.475,
-     "tipo": "pop",
+     "t": 1.4,
+     "tipo": "tick",
      "vol": 0.12
     },
     {
-     "t": 5.071621621621622,
+     "t": 3,
+     "tipo": "zap",
+     "vol": 0.14
+    },
+    {
+     "t": 5,
      "tipo": "ding",
-     "vol": 0.18
+     "vol": 0.2
     },
     {
-     "t": 5.16554054054054,
-     "tipo": "thud",
-     "vol": 0.2
+     "t": 5.1,
+     "tipo": "pop",
+     "vol": 0.14
     }
    ]
   },
   {
-   "n": 3,
+   "n": 2,
    "t": "PIEZA",
-   "voz": "Sale por la aorta, un tubo de unos tres centímetros de ancho, y desde ahí se ramifica sin parar.",
-   "dur": 7.4,
-   "h": "SALE POR LA AORTA",
-   "w": "AORTA",
+   "voz": "En Würzburg, Röntgen cubre un tubo con cartón negro y apaga la luz. Aun así, una pantalla cercana empieza a brillar.",
+   "dur": 7.8,
+   "h": "EL TUBO CUBIERTO",
+   "w": "CUBIERTO",
    "sub": "",
-   "ic": "tren",
+   "ic": "pin",
    "num": null,
    "vs": null,
    "bars": [],
@@ -215,7 +123,7 @@
    "red": null,
    "termo": null,
    "pila": null,
-   "cap": "dentro de la aorta",
+   "cap": "Würzburg, 1895",
    "papel": null,
    "pilares": null,
    "ciclo": null,
@@ -224,19 +132,19 @@
    "cubo": null,
    "diales": null,
    "pieza": {
-    "id": "san-aorta",
+    "id": "rx-tubo",
     "props": {}
    },
    "cita": null,
    "sc": "",
    "modo": "VIRAL",
-   "tema": "oscuro",
-   "bg": "dark",
-   "ritmo": 0.9391891891891891,
-   "total": 65.4,
-   "inicio": 14.2,
-   "fin": 21.6,
-   "texto": "Sale por la aorta, un tubo de unos tres centímetros de ancho, y desde ahí se ramifica sin parar.",
+   "tema": "claro",
+   "bg": "light",
+   "ritmo": 1,
+   "total": 64.7,
+   "inicio": 7.6,
+   "fin": 15.4,
+   "texto": "En Würzburg, Röntgen cubre un tubo con cartón negro y apaga la luz. Aun así, una pantalla cercana empieza a brillar.",
    "tr": "corte",
    "trs": "semitono",
    "sfx": [
@@ -248,26 +156,123 @@
     {
      "t": 0.05,
      "tipo": "whoosh",
-     "vol": 0.16
+     "vol": 0.1
     },
     {
-     "t": 0.37567567567567567,
-     "tipo": "heartbeat",
-     "vol": 0.26
-    },
-    {
-     "t": 2.535810810810811,
-     "tipo": "pop",
+     "t": 0.6,
+     "tipo": "zap",
      "vol": 0.12
     },
     {
-     "t": 4.977702702702702,
+     "t": 1.2,
+     "tipo": "thud",
+     "vol": 0.18
+    },
+    {
+     "t": 3.6,
+     "tipo": "clic",
+     "vol": 0.2
+    },
+    {
+     "t": 5.7,
+     "tipo": "ding",
+     "vol": 0.16
+    },
+    {
+     "t": 5.75,
+     "tipo": "zap",
+     "vol": 0.1
+    }
+   ]
+  },
+  {
+   "n": 3,
+   "t": "PIEZA",
+   "voz": "Eran rayos invisibles que atravesaban el cartón. Al interponer su mano, según se cuenta, vio sus propios huesos.",
+   "dur": 7,
+   "h": "VIO SUS HUESOS",
+   "w": "HUESOS",
+   "sub": "",
+   "ic": "brillo",
+   "num": null,
+   "vs": null,
+   "bars": [],
+   "barsU": "",
+   "hi": -1,
+   "line": null,
+   "items": [],
+   "stops": [],
+   "end": "",
+   "donut": [],
+   "picto": null,
+   "top": [],
+   "myth": "",
+   "truth": "",
+   "zoom": null,
+   "capas": null,
+   "mira": null,
+   "impacto": null,
+   "red": null,
+   "termo": null,
+   "pila": null,
+   "cap": "rayos invisibles",
+   "papel": null,
+   "pilares": null,
+   "ciclo": null,
+   "duo": null,
+   "osc": null,
+   "cubo": null,
+   "diales": null,
+   "pieza": {
+    "id": "rx-huesos",
+    "props": {}
+   },
+   "cita": null,
+   "sc": "",
+   "modo": "VIRAL",
+   "tema": "oscuro",
+   "bg": "dark",
+   "ritmo": 0.9924242424242424,
+   "total": 64.7,
+   "inicio": 15.4,
+   "fin": 22.4,
+   "texto": "Eran rayos invisibles que atravesaban el cartón. Al interponer su mano, según se cuenta, vio sus propios huesos.",
+   "tr": "semitono",
+   "trs": "corte",
+   "sfx": [
+    {
+     "t": 0.04,
+     "tipo": "whoosh",
+     "vol": 0.16
+    },
+    {
+     "t": 0.05,
+     "tipo": "whoosh",
+     "vol": 0.1
+    },
+    {
+     "t": 0.9924242424242424,
+     "tipo": "zap",
+     "vol": 0.14
+    },
+    {
+     "t": 2.5803030303030305,
      "tipo": "whoosh",
      "vol": 0.14
     },
     {
-     "t": 6.10472972972973,
+     "t": 3.9696969696969697,
+     "tipo": "tick",
+     "vol": 0.1
+    },
+    {
+     "t": 4.962121212121212,
      "tipo": "ding",
+     "vol": 0.2
+    },
+    {
+     "t": 5.062121212121212,
+     "tipo": "pop",
      "vol": 0.14
     }
    ]
@@ -275,10 +280,10 @@
   {
    "n": 4,
    "t": "PIEZA",
-   "voz": "Cada rama es más fina que la anterior, hasta llegar a vasos casi diez veces más delgados que un cabello.",
-   "dur": 7.8,
-   "h": "CADA RAMA ES MÁS FINA",
-   "w": "FINA",
+   "voz": "No sabía qué eran, así que los llamó rayos X, la letra de la incógnita.",
+   "dur": 6,
+   "h": "RAYOS X",
+   "w": "RAYOS",
    "sub": "",
    "ic": "brillo",
    "num": null,
@@ -302,7 +307,7 @@
    "red": null,
    "termo": null,
    "pila": null,
-   "cap": "de la aorta al capilar",
+   "cap": "",
    "papel": null,
    "pilares": null,
    "ciclo": null,
@@ -311,7 +316,7 @@
    "cubo": null,
    "diales": null,
    "pieza": {
-    "id": "san-ramas",
+    "id": "rx-x",
     "props": {}
    },
    "cita": null,
@@ -319,13 +324,13 @@
    "modo": "VIRAL",
    "tema": "claro",
    "bg": "light",
-   "ritmo": 0.9932432432432432,
-   "total": 65.4,
-   "inicio": 21.6,
-   "fin": 29.4,
-   "texto": "Cada rama es más fina que la anterior, hasta llegar a vasos casi diez veces más delgados que un cabello.",
-   "tr": "semitono",
-   "trs": "corte",
+   "ritmo": 1,
+   "total": 64.7,
+   "inicio": 22.4,
+   "fin": 28.4,
+   "texto": "No sabía qué eran, así que los llamó rayos X, la letra de la incógnita.",
+   "tr": "corte",
+   "trs": "zoom",
    "sfx": [
     {
      "t": 0.04,
@@ -338,46 +343,36 @@
      "vol": 0.1
     },
     {
-     "t": 0.2979729729729729,
+     "t": 0.2,
      "tipo": "pop",
-     "vol": 0.12
+     "vol": 0.1
     },
     {
-     "t": 1.1918918918918917,
-     "tipo": "pop",
-     "vol": 0.12
+     "t": 1.8,
+     "tipo": "thud",
+     "vol": 0.2
     },
     {
-     "t": 2.085810810810811,
-     "tipo": "pop",
-     "vol": 0.12
-    },
-    {
-     "t": 2.97972972972973,
-     "tipo": "pop",
-     "vol": 0.12
-    },
-    {
-     "t": 4.171621621621622,
+     "t": 1.85,
      "tipo": "ding",
-     "vol": 0.14
+     "vol": 0.16
     },
     {
-     "t": 5.95945945945946,
+     "t": 3.6,
      "tipo": "tick",
-     "vol": 0.14
+     "vol": 0.12
     }
    ]
   },
   {
    "n": 5,
    "t": "PIEZA",
-   "voz": "En el capilar pasan de a uno y entregan el oxígeno. Cada glóbulo lleva unos doscientos setenta millones de hemoglobinas.",
-   "dur": 7.5,
-   "h": "EL CAPILAR",
-   "w": "CAPILAR",
+   "voz": "Seis semanas después, el veintidós de diciembre, radiografió la mano de su esposa Anna Bertha, con su anillo. Tardó quince minutos.",
+   "dur": 7.8,
+   "h": "LA MANO DE SU ESPOSA",
+   "w": "ESPOSA",
    "sub": "",
-   "ic": "billete",
+   "ic": "reloj",
    "num": null,
    "vs": null,
    "bars": [],
@@ -399,7 +394,7 @@
    "red": null,
    "termo": null,
    "pila": null,
-   "cap": "el intercambio",
+   "cap": "22 de diciembre de 1895",
    "papel": null,
    "pilares": null,
    "ciclo": null,
@@ -408,7 +403,7 @@
    "cubo": null,
    "diales": null,
    "pieza": {
-    "id": "san-capilar",
+    "id": "rx-anna",
     "props": {}
    },
    "cita": null,
@@ -416,12 +411,12 @@
    "modo": "VIRAL",
    "tema": "oscuro",
    "bg": "dark",
-   "ritmo": 0.9527027027027026,
-   "total": 65.4,
-   "inicio": 29.4,
-   "fin": 36.9,
-   "texto": "En el capilar pasan de a uno y entregan el oxígeno. Cada glóbulo lleva unos doscientos setenta millones de hemoglobinas.",
-   "tr": "corte",
+   "ritmo": 1,
+   "total": 64.7,
+   "inicio": 28.4,
+   "fin": 36.2,
+   "texto": "Seis semanas después, el veintidós de diciembre, radiografió la mano de su esposa Anna Bertha, con su anillo. Tardó quince minutos.",
+   "tr": "zoom",
    "trs": "semitono",
    "sfx": [
     {
@@ -435,86 +430,46 @@
      "vol": 0.1
     },
     {
-     "t": 1.1432432432432431,
-     "tipo": "pop",
-     "vol": 0.14
+     "t": 1.2,
+     "tipo": "tick",
+     "vol": 0.12
     },
     {
-     "t": 2.5722972972972973,
+     "t": 2.6,
+     "tipo": "pop",
+     "vol": 0.16
+    },
+    {
+     "t": 2.8000000000000003,
      "tipo": "zap",
      "vol": 0.12
     },
     {
-     "t": 2.7722972972972975,
-     "tipo": "clic",
-     "vol": 0.04
-    },
-    {
-     "t": 2.9022972972972974,
-     "tipo": "clic",
-     "vol": 0.04
-    },
-    {
-     "t": 3.0322972972972977,
-     "tipo": "clic",
-     "vol": 0.04
-    },
-    {
-     "t": 3.1622972972972976,
-     "tipo": "clic",
-     "vol": 0.04
-    },
-    {
-     "t": 3.2922972972972975,
-     "tipo": "clic",
-     "vol": 0.04
-    },
-    {
-     "t": 3.4222972972972974,
-     "tipo": "clic",
-     "vol": 0.04
-    },
-    {
-     "t": 3.5522972972972973,
-     "tipo": "clic",
-     "vol": 0.04
-    },
-    {
-     "t": 3.6822972972972976,
-     "tipo": "clic",
-     "vol": 0.04
-    },
-    {
-     "t": 3.8122972972972975,
-     "tipo": "clic",
-     "vol": 0.04
-    },
-    {
-     "t": 3.9422972972972974,
-     "tipo": "clic",
-     "vol": 0.04
-    },
-    {
-     "t": 4.287162162162161,
+     "t": 5,
      "tipo": "ding",
-     "vol": 0.14
+     "vol": 0.2
     },
     {
-     "t": 5.9067567567567565,
+     "t": 6,
      "tipo": "tick",
      "vol": 0.12
+    },
+    {
+     "t": 6.4,
+     "tipo": "thud",
+     "vol": 0.16
     }
    ]
   },
   {
    "n": 6,
    "t": "PIEZA",
-   "voz": "Vuelve por las venas. Sus válvulas solo la dejan subir, y el músculo la empuja contra la gravedad.",
-   "dur": 7.2,
-   "h": "VUELVE POR LAS VENAS",
-   "w": "VENAS",
+   "voz": "Publicó el hallazgo el veintiocho de diciembre. En enero ya se usaba para ver una aguja clavada en una mano.",
+   "dur": 7.8,
+   "h": "EL MUNDO LO USA",
+   "w": "MUNDO",
    "sub": "",
-   "ic": "brillo",
+   "ic": "reloj",
    "num": null,
    "vs": null,
    "bars": [],
@@ -536,7 +491,7 @@
    "red": null,
    "termo": null,
    "pila": null,
-   "cap": "sin oxígeno, de regreso",
+   "cap": "enero de 1896",
    "papel": null,
    "pilares": null,
    "ciclo": null,
@@ -545,7 +500,7 @@
    "cubo": null,
    "diales": null,
    "pieza": {
-    "id": "san-venas",
+    "id": "rx-mundo",
     "props": {}
    },
    "cita": null,
@@ -554,102 +509,10 @@
    "tema": "claro",
    "bg": "light",
    "ritmo": 1,
-   "total": 65.4,
-   "inicio": 36.9,
-   "fin": 44.1,
-   "texto": "Vuelve por las venas. Sus válvulas solo la dejan subir, y el músculo la empuja contra la gravedad.",
-   "tr": "semitono",
-   "trs": "semitono",
-   "sfx": [
-    {
-     "t": 0.04,
-     "tipo": "whoosh",
-     "vol": 0.16
-    },
-    {
-     "t": 0.05,
-     "tipo": "whoosh",
-     "vol": 0.1
-    },
-    {
-     "t": 1.7,
-     "tipo": "clic",
-     "vol": 0.16
-    },
-    {
-     "t": 2.1,
-     "tipo": "clic",
-     "vol": 0.16
-    },
-    {
-     "t": 4,
-     "tipo": "thud",
-     "vol": 0.2
-    },
-    {
-     "t": 4.9,
-     "tipo": "thud",
-     "vol": 0.2
-    },
-    {
-     "t": 5.4,
-     "tipo": "ding",
-     "vol": 0.12
-    }
-   ]
-  },
-  {
-   "n": 7,
-   "t": "PIEZA",
-   "voz": "En los pulmones, en menos de un segundo, suelta el dióxido de carbono, recoge oxígeno y vuelve a ser rojo brillante.",
-   "dur": 7.8,
-   "h": "EN LOS PULMONES",
-   "w": "PULMONES",
-   "sub": "",
-   "ic": "brillo",
-   "num": null,
-   "vs": null,
-   "bars": [],
-   "barsU": "",
-   "hi": -1,
-   "line": null,
-   "items": [],
-   "stops": [],
-   "end": "",
-   "donut": [],
-   "picto": null,
-   "top": [],
-   "myth": "",
-   "truth": "",
-   "zoom": null,
-   "capas": null,
-   "mira": null,
-   "impacto": null,
-   "red": null,
-   "termo": null,
-   "pila": null,
-   "cap": "se recarga de oxígeno",
-   "papel": null,
-   "pilares": null,
-   "ciclo": null,
-   "duo": null,
-   "osc": null,
-   "cubo": null,
-   "diales": null,
-   "pieza": {
-    "id": "san-pulmon",
-    "props": {}
-   },
-   "cita": null,
-   "sc": "",
-   "modo": "VIRAL",
-   "tema": "oscuro",
-   "bg": "dark",
-   "ritmo": 1,
-   "total": 65.4,
-   "inicio": 44.1,
-   "fin": 51.9,
-   "texto": "En los pulmones, en menos de un segundo, suelta el dióxido de carbono, recoge oxígeno y vuelve a ser rojo brillante.",
+   "total": 64.7,
+   "inicio": 36.2,
+   "fin": 44,
+   "texto": "Publicó el hallazgo el veintiocho de diciembre. En enero ya se usaba para ver una aguja clavada en una mano.",
    "tr": "semitono",
    "trs": "zoom",
    "sfx": [
@@ -661,77 +524,97 @@
     {
      "t": 0.05,
      "tipo": "whoosh",
-     "vol": 0.12
+     "vol": 0.1
     },
     {
-     "t": 0.3,
+     "t": 1.2,
      "tipo": "pop",
-     "vol": 0.12
+     "vol": 0.14
     },
     {
-     "t": 1.6,
-     "tipo": "zap",
+     "t": 2.6,
+     "tipo": "whoosh",
      "vol": 0.16
     },
     {
-     "t": 3,
+     "t": 2.8000000000000003,
      "tipo": "clic",
      "vol": 0.04
     },
     {
-     "t": 3.13,
+     "t": 2.93,
      "tipo": "clic",
      "vol": 0.04
     },
     {
-     "t": 3.26,
+     "t": 3.0600000000000005,
      "tipo": "clic",
      "vol": 0.04
     },
     {
-     "t": 3.39,
+     "t": 3.1900000000000004,
      "tipo": "clic",
      "vol": 0.04
     },
     {
-     "t": 3.52,
+     "t": 3.3200000000000003,
      "tipo": "clic",
      "vol": 0.04
     },
     {
-     "t": 3.65,
+     "t": 3.45,
      "tipo": "clic",
      "vol": 0.04
     },
     {
-     "t": 3.7800000000000002,
+     "t": 3.58,
      "tipo": "clic",
      "vol": 0.04
     },
     {
-     "t": 3.91,
+     "t": 3.7100000000000004,
      "tipo": "clic",
      "vol": 0.04
     },
     {
-     "t": 4.04,
+     "t": 3.8400000000000003,
      "tipo": "clic",
      "vol": 0.04
     },
     {
-     "t": 5.6,
+     "t": 3.97,
+     "tipo": "clic",
+     "vol": 0.04
+    },
+    {
+     "t": 4.1000000000000005,
+     "tipo": "clic",
+     "vol": 0.04
+    },
+    {
+     "t": 4.23,
+     "tipo": "clic",
+     "vol": 0.04
+    },
+    {
+     "t": 4.7,
+     "tipo": "zap",
+     "vol": 0.14
+    },
+    {
+     "t": 5,
      "tipo": "ding",
      "vol": 0.18
     }
    ]
   },
   {
-   "n": 8,
+   "n": 7,
    "t": "PIEZA",
-   "voz": "Un glóbulo vive unos ciento veinte días y da unas ciento setenta y dos mil vueltas. La médula lo repone, millones por segundo.",
-   "dur": 8.9,
-   "h": "UN GLÓBULO VIVE 120 DÍAS",
-   "w": "120",
+   "voz": "Rechazó patentarlo. En mil novecientos uno recibió el primer Nobel de Física, y entregó el dinero a su universidad.",
+   "dur": 7.1,
+   "h": "NO LO PATENTÓ",
+   "w": "PATENTÓ",
    "sub": "",
    "ic": "billete",
    "num": null,
@@ -764,21 +647,21 @@
    "cubo": null,
    "diales": null,
    "pieza": {
-    "id": "san-vida",
+    "id": "rx-nobel",
     "props": {}
    },
    "cita": null,
    "sc": "",
    "modo": "VIRAL",
-   "tema": "claro",
-   "bg": "light",
+   "tema": "oscuro",
+   "bg": "dark",
    "ritmo": 1,
-   "total": 65.4,
-   "inicio": 51.9,
-   "fin": 60.8,
-   "texto": "Un glóbulo vive unos ciento veinte días y da unas ciento setenta y dos mil vueltas. La médula lo repone, millones por segundo.",
+   "total": 64.7,
+   "inicio": 44,
+   "fin": 51.1,
+   "texto": "Rechazó patentarlo. En mil novecientos uno recibió el primer Nobel de Física, y entregó el dinero a su universidad.",
    "tr": "zoom",
-   "trs": "barrido",
+   "trs": "zoom",
    "sfx": [
     {
      "t": 0.04,
@@ -791,109 +674,24 @@
      "vol": 0.1
     },
     {
-     "t": 0.4,
+     "t": 0.8,
+     "tipo": "thud",
+     "vol": 0.24
+    },
+    {
+     "t": 1.2,
      "tipo": "pop",
+     "vol": 0.16
+    },
+    {
+     "t": 1.3,
+     "tipo": "ding",
+     "vol": 0.2
+    },
+    {
+     "t": 2.6,
+     "tipo": "tick",
      "vol": 0.12
-    },
-    {
-     "t": 1.4,
-     "tipo": "clic",
-     "vol": 0.05
-    },
-    {
-     "t": 1.5299999999999998,
-     "tipo": "clic",
-     "vol": 0.05
-    },
-    {
-     "t": 1.66,
-     "tipo": "clic",
-     "vol": 0.05
-    },
-    {
-     "t": 1.79,
-     "tipo": "clic",
-     "vol": 0.05
-    },
-    {
-     "t": 1.92,
-     "tipo": "clic",
-     "vol": 0.05
-    },
-    {
-     "t": 2.05,
-     "tipo": "clic",
-     "vol": 0.05
-    },
-    {
-     "t": 2.1799999999999997,
-     "tipo": "clic",
-     "vol": 0.05
-    },
-    {
-     "t": 2.31,
-     "tipo": "clic",
-     "vol": 0.05
-    },
-    {
-     "t": 2.44,
-     "tipo": "clic",
-     "vol": 0.05
-    },
-    {
-     "t": 2.57,
-     "tipo": "clic",
-     "vol": 0.05
-    },
-    {
-     "t": 2.7,
-     "tipo": "clic",
-     "vol": 0.05
-    },
-    {
-     "t": 2.83,
-     "tipo": "clic",
-     "vol": 0.05
-    },
-    {
-     "t": 2.96,
-     "tipo": "clic",
-     "vol": 0.05
-    },
-    {
-     "t": 3.09,
-     "tipo": "clic",
-     "vol": 0.05
-    },
-    {
-     "t": 3.2199999999999998,
-     "tipo": "clic",
-     "vol": 0.05
-    },
-    {
-     "t": 3.35,
-     "tipo": "clic",
-     "vol": 0.05
-    },
-    {
-     "t": 3.48,
-     "tipo": "clic",
-     "vol": 0.05
-    },
-    {
-     "t": 3.61,
-     "tipo": "clic",
-     "vol": 0.05
-    },
-    {
-     "t": 3.7399999999999998,
-     "tipo": "clic",
-     "vol": 0.05
-    },
-    {
-     "t": 3.87,
-     "tipo": "clic",
-     "vol": 0.05
     },
     {
      "t": 4,
@@ -911,7 +709,7 @@
      "vol": 0.05
     },
     {
-     "t": 4.390000000000001,
+     "t": 4.39,
      "tipo": "clic",
      "vol": 0.05
     },
@@ -926,32 +724,134 @@
      "vol": 0.05
     },
     {
-     "t": 4.779999999999999,
+     "t": 4.78,
      "tipo": "clic",
      "vol": 0.05
     },
     {
-     "t": 5.4,
-     "tipo": "ding",
+     "t": 4.91,
+     "tipo": "clic",
+     "vol": 0.05
+    },
+    {
+     "t": 5.04,
+     "tipo": "clic",
+     "vol": 0.05
+    },
+    {
+     "t": 5.17,
+     "tipo": "clic",
+     "vol": 0.05
+    },
+    {
+     "t": 5.3,
+     "tipo": "clic",
+     "vol": 0.05
+    },
+    {
+     "t": 5.43,
+     "tipo": "clic",
+     "vol": 0.05
+    }
+   ]
+  },
+  {
+   "n": 8,
+   "t": "PIEZA",
+   "voz": "Los pioneros no conocían el riesgo y sufrieron quemaduras. Hoy se dosifican, y el ocho de noviembre es el Día Internacional de la Radiología.",
+   "dur": 8.8,
+   "h": "8 DE NOVIEMBRE",
+   "w": "8",
+   "sub": "",
+   "ic": "alerta",
+   "num": null,
+   "vs": null,
+   "bars": [],
+   "barsU": "",
+   "hi": -1,
+   "line": null,
+   "items": [],
+   "stops": [],
+   "end": "",
+   "donut": [],
+   "picto": null,
+   "top": [],
+   "myth": "",
+   "truth": "",
+   "zoom": null,
+   "capas": null,
+   "mira": null,
+   "impacto": null,
+   "red": null,
+   "termo": null,
+   "pila": null,
+   "cap": "",
+   "papel": null,
+   "pilares": null,
+   "ciclo": null,
+   "duo": null,
+   "osc": null,
+   "cubo": null,
+   "diales": null,
+   "pieza": {
+    "id": "rx-cierre",
+    "props": {}
+   },
+   "cita": null,
+   "sc": "",
+   "modo": "VIRAL",
+   "tema": "claro",
+   "bg": "light",
+   "ritmo": 1,
+   "total": 64.7,
+   "inicio": 51.1,
+   "fin": 59.9,
+   "texto": "Los pioneros no conocían el riesgo y sufrieron quemaduras. Hoy se dosifican, y el ocho de noviembre es el Día Internacional de la Radiología.",
+   "tr": "zoom",
+   "trs": "barrido",
+   "sfx": [
+    {
+     "t": 0.04,
+     "tipo": "whoosh",
+     "vol": 0.16
+    },
+    {
+     "t": 0.05,
+     "tipo": "whoosh",
+     "vol": 0.1
+    },
+    {
+     "t": 2.2,
+     "tipo": "thud",
      "vol": 0.18
     },
     {
-     "t": 5.6,
+     "t": 3.3,
      "tipo": "pop",
-     "vol": 0.14
+     "vol": 0.16
     },
     {
-     "t": 7.4,
-     "tipo": "heartbeat",
-     "vol": 0.24
+     "t": 3.4,
+     "tipo": "ding",
+     "vol": 0.16
+    },
+    {
+     "t": 4.4,
+     "tipo": "ding",
+     "vol": 0.22
+    },
+    {
+     "t": 4.550000000000001,
+     "tipo": "pop",
+     "vol": 0.14
     }
    ]
   },
   {
    "n": 9,
    "t": "CTA",
-   "voz": "Tu sangre no se detiene nunca. Compártelo y síguenos en Sinapsis.",
-   "dur": 4.6,
+   "voz": "Compártelo con alguien que estudie salud. Síguenos en Sinapsis.",
+   "dur": 4.8,
    "h": "COMPÁRTELO Y SÍGUENOS",
    "w": "SÍGUENOS",
    "sub": "Más ciencia en SINAPSIS",
@@ -992,10 +892,10 @@
    "tema": "oscuro",
    "bg": "gold",
    "ritmo": 1,
-   "total": 65.4,
-   "inicio": 60.8,
-   "fin": 65.4,
-   "texto": "Tu sangre no se detiene nunca. Compártelo y síguenos en Sinapsis.",
+   "total": 64.7,
+   "inicio": 59.9,
+   "fin": 64.7,
+   "texto": "Compártelo con alguien que estudie salud. Síguenos en Sinapsis.",
    "tr": "barrido",
    "trs": "barrido",
    "sfx": [

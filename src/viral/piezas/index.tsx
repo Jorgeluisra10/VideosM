@@ -2,6 +2,8 @@
  * Registro de piezas a medida (carril B): id → componente. El motor las dibuja cuando una escena es de tipo PIEZA.
  * Para añadir una pieza nueva: (1) su ficha pura en src/anim/piezas.ts (duración ideal, fondo, sonido), (2) su componente aquí.
  */
+import { RxGancho, RxHuesos, RxTubo, RxX } from "./rx1";
+import { RxAnna, RxCierre, RxMundo, RxNobel } from "./rx2";
 import { SanAorta, SanCorazon, SanGancho, SanRamas } from "./san1";
 import { SanCapilar, SanPulmon, SanVenas, SanVida } from "./san2";
 import { FutCausa, FutFibrilacion, FutGancho, FutVentana } from "./fut1";
@@ -115,6 +117,7 @@ export const COMPONENTES_PIEZA: Record<string, React.FC<{ e: EscenaViralGuardada
   "tej-hueso": TejHueso,
   "tej-muscular": TejMuscular,
   "tej-nervioso": TejNervioso,
+  "rx-gancho": RxGancho, "rx-tubo": RxTubo, "rx-huesos": RxHuesos, "rx-x": RxX, "rx-anna": RxAnna, "rx-mundo": RxMundo, "rx-nobel": RxNobel, "rx-cierre": RxCierre,
   "san-gancho": SanGancho, "san-corazon": SanCorazon, "san-aorta": SanAorta, "san-ramas": SanRamas, "san-capilar": SanCapilar, "san-venas": SanVenas, "san-pulmon": SanPulmon, "san-vida": SanVida,
   "fut-gancho": FutGancho, "fut-causa": FutCausa, "fut-ventana": FutVentana, "fut-fibrilacion": FutFibrilacion, "fut-cerebro": FutCerebro, "fut-descarga": FutDescarga, "fut-rcp": FutRcp, "fut-cierre": FutCierre,
   "cur-gancho": CurGancho, "cur-hipo": CurHipo, "cur-cosquillas": CurCosquillas, "cur-chicle": CurChicle, "cur-pastilla": CurPastilla, "cur-violin": CurViolin, "cur-acento": CurAcento, "cur-marcador": CurMarcador,

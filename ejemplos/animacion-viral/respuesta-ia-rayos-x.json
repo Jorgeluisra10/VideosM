@@ -1,0 +1,14 @@
+{
+ "titulo": "La noche que Röntgen vio a través de la piel",
+ "scenes": [
+  { "t": "PIEZA", "voz": "Este domingo se cumplen ciento treinta y un años de la noche en que un físico vio sus propios huesos.", "dur": 7.6, "h": "UNA NOCHE, 131 AÑOS", "w": "HUESOS", "pieza": { "id": "rx-gancho" } },
+  { "t": "PIEZA", "voz": "En Würzburg, Röntgen cubre un tubo con cartón negro y apaga la luz. Aun así, una pantalla cercana empieza a brillar.", "dur": 7.8, "h": "EL TUBO CUBIERTO", "w": "BRILLAR", "cap": "Würzburg, 1895", "pieza": { "id": "rx-tubo" } },
+  { "t": "PIEZA", "voz": "Eran rayos invisibles que atravesaban el cartón. Al interponer su mano, según se cuenta, vio sus propios huesos.", "dur": 7.0, "h": "VIO SUS HUESOS", "w": "HUESOS", "cap": "rayos invisibles", "pieza": { "id": "rx-huesos" } },
+  { "t": "PIEZA", "voz": "No sabía qué eran, así que los llamó rayos X, la letra de la incógnita.", "dur": 6.0, "h": "RAYOS X", "w": "INCÓGNITA", "pieza": { "id": "rx-x" } },
+  { "t": "PIEZA", "voz": "Seis semanas después, el veintidós de diciembre, radiografió la mano de su esposa Anna Bertha, con su anillo. Tardó quince minutos.", "dur": 7.8, "h": "LA MANO DE SU ESPOSA", "w": "ANILLO", "cap": "22 de diciembre de 1895", "pieza": { "id": "rx-anna" } },
+  { "t": "PIEZA", "voz": "Publicó el hallazgo el veintiocho de diciembre. En enero ya se usaba para ver una aguja clavada en una mano.", "dur": 7.8, "h": "EL MUNDO LO USA", "w": "AGUJA", "cap": "enero de 1896", "pieza": { "id": "rx-mundo" } },
+  { "t": "PIEZA", "voz": "Rechazó patentarlo. En mil novecientos uno recibió el primer Nobel de Física, y entregó el dinero a su universidad.", "dur": 7.0, "h": "NO LO PATENTÓ", "w": "NOBEL", "pieza": { "id": "rx-nobel" } },
+  { "t": "PIEZA", "voz": "Los pioneros no conocían el riesgo y sufrieron quemaduras. Hoy se dosifican, y el ocho de noviembre es el Día Internacional de la Radiología.", "dur": 8.6, "h": "8 DE NOVIEMBRE", "w": "RADIOLOGÍA", "pieza": { "id": "rx-cierre" } },
+  { "t": "CTA", "voz": "Compártelo con alguien que estudie salud. Síguenos en Sinapsis.", "dur": 4.8, "h": "COMPÁRTELO Y SÍGUENOS", "w": "SÍGUENOS", "sub": "Más ciencia en SINAPSIS" }
+ ]
+}
