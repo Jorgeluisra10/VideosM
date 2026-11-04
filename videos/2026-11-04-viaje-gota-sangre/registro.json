@@ -1,0 +1,18 @@
+{
+  "version": 1,
+  "slug": "2026-11-04-viaje-gota-sangre",
+  "titulo": "El viaje de una gota de sangre",
+  "serie": "anatomia",
+  "estado": "grabado",
+  "guion": "Una gota de tu sangre da la vuelta a todo tu cuerpo en solo un minuto. Acompáñala.\nTodo empieza en el ventrículo izquierdo: setenta mililitros por latido, casi cinco litros por minuto, siete mil al día.\nSale por la aorta, un tubo de unos tres centímetros de ancho, y desde ahí se ramifica sin parar.\nCada rama es más fina que la anterior, hasta llegar a vasos casi diez veces más delgados que un cabello.\nEn el capilar pasan de a uno y entregan el oxígeno. Cada glóbulo lleva unos doscientos setenta millones de hemoglobinas.\nVuelve por las venas. Sus válvulas solo la dejan subir, y el músculo la empuja contra la gravedad.\nEn los pulmones, en menos de un segundo, suelta el dióxido de carbono, recoge oxígeno y vuelve a ser rojo brillante.\nUn glóbulo vive unos ciento veinte días y da unas ciento setenta y dos mil vueltas. La médula lo repone, millones por segundo.\nTu sangre no se detiene nunca. Compártelo y síguenos en Sinapsis.",
+  "gancho": "Una gota de tu sangre da la vuelta a todo tu cuerpo en solo un minuto.",
+  "duracion_seg": 65.4,
+  "notas": "Espero guardados y compartidos por la sorpresa visual (viaje por dentro del cuerpo) y las cifras (una vuelta en ≈ 1 min, 172.800 vueltas). Métrica: retención al pasar la escena 3 (≈ 14 s, entrada a la aorta) y guardados por 1.000 alcanzados. Cálculos propios con cifras de reposo; reloj del viaje ilustrativo. Sin voz: no publicar así.",
+  "voz_usada": "",
+  "instrucciones_voz": "",
+  "creado": "2026-11-04T02:45:29.310Z",
+  "origen_clave": "8c74f139",
+  "video": "revision.mp4",
+  "miniatura": "miniatura.jpg",
+  "entrega": "entrega.md"
+}
