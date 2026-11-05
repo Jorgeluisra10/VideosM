@@ -1,0 +1,14 @@
+{
+ "titulo": "Los cuadernos radiactivos de Marie Curie",
+ "scenes": [
+  { "t": "PIEZA", "voz": "Los cuadernos de Marie Curie siguen siendo radiactivos. Este sábado se cumplen ciento cincuenta y nueve años de su nacimiento.", "dur": 7.6, "h": "SIGUEN SIENDO RADIACTIVOS", "w": "RADIACTIVOS", "pieza": { "id": "mc-gancho" } },
+  { "t": "PIEZA", "voz": "Nació en Varsovia, donde las mujeres no podían estudiar en la universidad, y se fue a París.", "dur": 6.6, "h": "NACIÓ EN VARSOVIA", "w": "PARÍS", "cap": "Varsovia, 1867", "pieza": { "id": "mc-paris" } },
+  { "t": "PIEZA", "voz": "En mil ochocientos noventa y ocho, con Pierre, descubrió el polonio, que nombró por su país, y el radio.", "dur": 7.3, "h": "POLONIO Y RADIO", "w": "RADIO", "cap": "1898", "pieza": { "id": "mc-elementos" } },
+  { "t": "PIEZA", "voz": "Para obtener una décima de gramo de radio, procesó toneladas de mineral durante años.", "dur": 5.6, "h": "TONELADAS DE MINERAL", "w": "TONELADAS", "pieza": { "id": "mc-toneladas" } },
+  { "t": "PIEZA", "voz": "Ganó dos Nobel, en Física y en Química: fue la primera mujer en ganarlo y la única persona premiada en dos ciencias.", "dur": 8.3, "h": "DOS NOBEL", "w": "NOBEL", "cap": "1903 y 1911", "pieza": { "id": "mc-nobel" } },
+  { "t": "PIEZA", "voz": "En la Primera Guerra Mundial creó ambulancias con rayos X para encontrar balas y huesos rotos, las llamadas pequeñas Curies.", "dur": 7.6, "h": "AMBULANCIAS CON RAYOS X", "w": "AMBULANCIAS", "cap": "1914", "pieza": { "id": "mc-guerra" } },
+  { "t": "PIEZA", "voz": "Manejaba tubos y sales de radio sin protección; murió en mil novecientos treinta y cuatro, probablemente por la radiación.", "dur": 7.3, "h": "SIN PROTECCIÓN", "w": "PROTECCIÓN", "pieza": { "id": "mc-riesgo" } },
+  { "t": "PIEZA", "voz": "Hoy están en cajas de plomo, y tardarán unos mil quinientos años en perder la mitad de su radiactividad.", "dur": 7.3, "h": "CAJAS DE PLOMO", "w": "PLOMO", "pieza": { "id": "mc-cuadernos" } },
+  { "t": "CTA", "voz": "Compártelo con alguien que ame la ciencia. Síguenos en Sinapsis.", "dur": 4.8, "h": "COMPÁRTELO Y SÍGUENOS", "w": "SÍGUENOS", "sub": "Más ciencia en SINAPSIS" }
+ ]
+}

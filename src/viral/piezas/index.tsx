@@ -2,6 +2,8 @@
  * Registro de piezas a medida (carril B): id → componente. El motor las dibuja cuando una escena es de tipo PIEZA.
  * Para añadir una pieza nueva: (1) su ficha pura en src/anim/piezas.ts (duración ideal, fondo, sonido), (2) su componente aquí.
  */
+import { McElementos, McGancho, McParis, McToneladas } from "./mc1";
+import { McCuadernos, McGuerra, McNobel, McRiesgo } from "./mc2";
 import { AnBusca, AnCarrera, AnEter, AnGancho } from "./an1";
 import { AnCierre, AnDespierta, AnNoche, AnReina } from "./an2";
 import { RxGancho, RxHuesos, RxTubo, RxX } from "./rx1";
@@ -119,6 +121,7 @@ export const COMPONENTES_PIEZA: Record<string, React.FC<{ e: EscenaViralGuardada
   "tej-hueso": TejHueso,
   "tej-muscular": TejMuscular,
   "tej-nervioso": TejNervioso,
+  "mc-gancho": McGancho, "mc-paris": McParis, "mc-elementos": McElementos, "mc-toneladas": McToneladas, "mc-nobel": McNobel, "mc-guerra": McGuerra, "mc-riesgo": McRiesgo, "mc-cuadernos": McCuadernos,
   "an-gancho": AnGancho, "an-carrera": AnCarrera, "an-eter": AnEter, "an-busca": AnBusca, "an-noche": AnNoche, "an-despierta": AnDespierta, "an-reina": AnReina, "an-cierre": AnCierre,
   "rx-gancho": RxGancho, "rx-tubo": RxTubo, "rx-huesos": RxHuesos, "rx-x": RxX, "rx-anna": RxAnna, "rx-mundo": RxMundo, "rx-nobel": RxNobel, "rx-cierre": RxCierre,
   "san-gancho": SanGancho, "san-corazon": SanCorazon, "san-aorta": SanAorta, "san-ramas": SanRamas, "san-capilar": SanCapilar, "san-venas": SanVenas, "san-pulmon": SanPulmon, "san-vida": SanVida,

@@ -11,3 +11,4 @@ futbolista-paro-cardiaco.wav · creada por el sistema (síntesis con `videos/202
 viaje-gota-sangre.wav · creada por el sistema (síntesis con `videos/2026-11-04-viaje-gota-sangre/componer-musica.mjs`; el WAV no se sube a git, se regenera) · libre de derechos · ninguna · 2026-11-04
 rayos-x-roentgen.wav · creada por el sistema (síntesis con `videos/2026-11-04-rayos-x-roentgen/componer-musica.mjs`; el WAV no se sube a git, se regenera) · libre de derechos · ninguna · 2026-11-04
 cena-cloroformo.wav · creada por el sistema (síntesis con `videos/2026-11-04-cena-cloroformo/componer-musica.mjs`; el WAV no se sube a git, se regenera) · libre de derechos · ninguna · 2026-11-04
+curie-cuadernos.wav · creada por el sistema (síntesis con `videos/2026-11-05-curie-cuadernos/componer-musica.mjs`; el WAV no se sube a git, se regenera) · libre de derechos · ninguna · 2026-11-05

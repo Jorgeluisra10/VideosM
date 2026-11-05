@@ -1,6 +1,6 @@
 {
  "version": 1,
- "titulo": "La cena en que tres médicos se durmieron",
+ "titulo": "Los cuadernos radiactivos de Marie Curie",
  "paleta": "medicina",
  "sfx": true,
  "fps": 60,
@@ -9,10 +9,10 @@
   {
    "n": 1,
    "t": "PIEZA",
-   "voz": "Un cuatro de noviembre, hace ciento setenta y nueve años, tres médicos se desmayaron en una cena. Y fue a propósito.",
-   "dur": 7.8,
-   "h": "TRES MÉDICOS SE DESMAYAN",
-   "w": "DESMAYAN",
+   "voz": "Los cuadernos de Marie Curie siguen siendo radiactivos. Este sábado se cumplen ciento cincuenta y nueve años de su nacimiento.",
+   "dur": 7.6,
+   "h": "SIGUEN SIENDO RADIACTIVOS",
+   "w": "RADIACTIVOS",
    "sub": "",
    "ic": "brillo",
    "num": null,
@@ -45,7 +45,7 @@
    "cubo": null,
    "diales": null,
    "pieza": {
-    "id": "an-gancho",
+    "id": "mc-gancho",
     "props": {}
    },
    "cita": null,
@@ -56,8 +56,8 @@
    "ritmo": 1,
    "total": 62.4,
    "inicio": 0,
-   "fin": 7.8,
-   "texto": "Un cuatro de noviembre, hace ciento setenta y nueve años, tres médicos se desmayaron en una cena. Y fue a propósito.",
+   "fin": 7.6,
+   "texto": "Los cuadernos de Marie Curie siguen siendo radiactivos. Este sábado se cumplen ciento cincuenta y nueve años de su nacimiento.",
    "tr": "barrido",
    "trs": "corte",
    "sfx": [
@@ -72,41 +72,136 @@
      "vol": 0.1
     },
     {
-     "t": 1.6,
+     "t": 0.2,
+     "tipo": "clic",
+     "vol": 0.05
+    },
+    {
+     "t": 0.33,
+     "tipo": "clic",
+     "vol": 0.05
+    },
+    {
+     "t": 0.46,
+     "tipo": "clic",
+     "vol": 0.05
+    },
+    {
+     "t": 0.5900000000000001,
+     "tipo": "clic",
+     "vol": 0.05
+    },
+    {
+     "t": 0.72,
+     "tipo": "clic",
+     "vol": 0.05
+    },
+    {
+     "t": 0.8500000000000001,
+     "tipo": "clic",
+     "vol": 0.05
+    },
+    {
+     "t": 0.9,
+     "tipo": "thud",
+     "vol": 0.18
+    },
+    {
+     "t": 0.98,
+     "tipo": "clic",
+     "vol": 0.05
+    },
+    {
+     "t": 1.11,
+     "tipo": "clic",
+     "vol": 0.05
+    },
+    {
+     "t": 1.24,
+     "tipo": "clic",
+     "vol": 0.05
+    },
+    {
+     "t": 1.3699999999999999,
+     "tipo": "clic",
+     "vol": 0.05
+    },
+    {
+     "t": 1.5,
+     "tipo": "clic",
+     "vol": 0.05
+    },
+    {
+     "t": 1.6300000000000001,
+     "tipo": "clic",
+     "vol": 0.05
+    },
+    {
+     "t": 1.76,
+     "tipo": "clic",
+     "vol": 0.05
+    },
+    {
+     "t": 1.89,
+     "tipo": "clic",
+     "vol": 0.05
+    },
+    {
+     "t": 2.02,
+     "tipo": "clic",
+     "vol": 0.05
+    },
+    {
+     "t": 2.1500000000000004,
+     "tipo": "clic",
+     "vol": 0.05
+    },
+    {
+     "t": 2.2800000000000002,
+     "tipo": "clic",
+     "vol": 0.05
+    },
+    {
+     "t": 2.41,
+     "tipo": "clic",
+     "vol": 0.05
+    },
+    {
+     "t": 2.54,
+     "tipo": "clic",
+     "vol": 0.05
+    },
+    {
+     "t": 2.6700000000000004,
+     "tipo": "clic",
+     "vol": 0.05
+    },
+    {
+     "t": 3,
+     "tipo": "tick",
+     "vol": 0.12
+    },
+    {
+     "t": 4.3,
      "tipo": "tick",
      "vol": 0.1
     },
     {
-     "t": 3.8,
-     "tipo": "thud",
-     "vol": 0.2
-    },
-    {
-     "t": 4.25,
-     "tipo": "thud",
-     "vol": 0.2
-    },
-    {
-     "t": 4.7,
-     "tipo": "thud",
-     "vol": 0.2
-    },
-    {
-     "t": 6.1,
+     "t": 5.9,
      "tipo": "ding",
-     "vol": 0.16
+     "vol": 0.18
     }
    ]
   },
   {
    "n": 2,
    "t": "PIEZA",
-   "voz": "Antes de la anestesia operar era una carrera: el cirujano Robert Liston, según se cuenta, amputaba una pierna en unos treinta segundos.",
-   "dur": 8.3,
-   "h": "OPERAR ERA UNA CARRERA",
-   "w": "CARRERA",
+   "voz": "Nació en Varsovia, donde las mujeres no podían estudiar en la universidad, y se fue a París.",
+   "dur": 6.6,
+   "h": "NACIÓ EN VARSOVIA",
+   "w": "VARSOVIA",
    "sub": "",
-   "ic": "brillo",
+   "ic": "colegio",
    "num": null,
    "vs": null,
    "bars": [],
@@ -128,7 +223,7 @@
    "red": null,
    "termo": null,
    "pila": null,
-   "cap": "antes de la anestesia",
+   "cap": "Varsovia, 1867",
    "papel": null,
    "pilares": null,
    "ciclo": null,
@@ -137,7 +232,7 @@
    "cubo": null,
    "diales": null,
    "pieza": {
-    "id": "an-carrera",
+    "id": "mc-paris",
     "props": {}
    },
    "cita": null,
@@ -147,9 +242,9 @@
    "bg": "light",
    "ritmo": 1,
    "total": 62.4,
-   "inicio": 7.8,
-   "fin": 16.1,
-   "texto": "Antes de la anestesia operar era una carrera: el cirujano Robert Liston, según se cuenta, amputaba una pierna en unos treinta segundos.",
+   "inicio": 7.6,
+   "fin": 14.2,
+   "texto": "Nació en Varsovia, donde las mujeres no podían estudiar en la universidad, y se fue a París.",
    "tr": "corte",
    "trs": "semitono",
    "sfx": [
@@ -164,109 +259,34 @@
      "vol": 0.1
     },
     {
-     "t": 1.6,
-     "tipo": "clic",
-     "vol": 0.05
-    },
-    {
-     "t": 1.73,
-     "tipo": "clic",
-     "vol": 0.05
-    },
-    {
-     "t": 1.86,
-     "tipo": "clic",
-     "vol": 0.05
-    },
-    {
-     "t": 1.9900000000000002,
-     "tipo": "clic",
-     "vol": 0.05
-    },
-    {
-     "t": 2.12,
-     "tipo": "clic",
-     "vol": 0.05
-    },
-    {
-     "t": 2.25,
-     "tipo": "clic",
-     "vol": 0.05
-    },
-    {
-     "t": 2.38,
-     "tipo": "clic",
-     "vol": 0.05
-    },
-    {
-     "t": 2.5100000000000002,
-     "tipo": "clic",
-     "vol": 0.05
-    },
-    {
-     "t": 2.64,
-     "tipo": "clic",
-     "vol": 0.05
-    },
-    {
-     "t": 3,
+     "t": 0.4,
      "tipo": "pop",
-     "vol": 0.14
+     "vol": 0.12
     },
     {
-     "t": 4.3,
-     "tipo": "tick",
-     "vol": 0.1
-    },
-    {
-     "t": 5.4,
+     "t": 1.2,
      "tipo": "thud",
      "vol": 0.2
     },
     {
-     "t": 6.4,
-     "tipo": "clic",
-     "vol": 0.05
+     "t": 4.3,
+     "tipo": "whoosh",
+     "vol": 0.16
     },
     {
-     "t": 6.53,
-     "tipo": "clic",
-     "vol": 0.05
-    },
-    {
-     "t": 6.66,
-     "tipo": "clic",
-     "vol": 0.05
-    },
-    {
-     "t": 6.79,
-     "tipo": "clic",
-     "vol": 0.05
-    },
-    {
-     "t": 6.92,
-     "tipo": "clic",
-     "vol": 0.05
-    },
-    {
-     "t": 7.050000000000001,
-     "tipo": "clic",
-     "vol": 0.05
-    },
-    {
-     "t": 7.180000000000001,
-     "tipo": "clic",
-     "vol": 0.05
+     "t": 5.7,
+     "tipo": "ding",
+     "vol": 0.18
     }
    ]
   },
   {
    "n": 3,
    "t": "PIEZA",
-   "voz": "En octubre de mil ochocientos cuarenta y seis, el éter funcionó en un hospital de Boston. Pero irritaba y olía muy fuerte.",
-   "dur": 8.3,
-   "h": "EL ÉTER FUNCIONA",
-   "w": "ÉTER",
+   "voz": "En mil ochocientos noventa y ocho, con Pierre, descubrió el polonio, que nombró por su país, y el radio.",
+   "dur": 7.3,
+   "h": "POLONIO Y RADIO",
+   "w": "RADIO",
    "sub": "",
    "ic": "brillo",
    "num": null,
@@ -290,7 +310,7 @@
    "red": null,
    "termo": null,
    "pila": null,
-   "cap": "Boston, 1846",
+   "cap": "1898",
    "papel": null,
    "pilares": null,
    "ciclo": null,
@@ -299,7 +319,7 @@
    "cubo": null,
    "diales": null,
    "pieza": {
-    "id": "an-eter",
+    "id": "mc-elementos",
     "props": {}
    },
    "cita": null,
@@ -309,9 +329,9 @@
    "bg": "dark",
    "ritmo": 1,
    "total": 62.4,
-   "inicio": 16.1,
-   "fin": 24.4,
-   "texto": "En octubre de mil ochocientos cuarenta y seis, el éter funcionó en un hospital de Boston. Pero irritaba y olía muy fuerte.",
+   "inicio": 14.2,
+   "fin": 21.5,
+   "texto": "En mil ochocientos noventa y ocho, con Pierre, descubrió el polonio, que nombró por su país, y el radio.",
    "tr": "semitono",
    "trs": "corte",
    "sfx": [
@@ -326,14 +346,19 @@
      "vol": 0.1
     },
     {
-     "t": 0.5,
-     "tipo": "pop",
-     "vol": 0.12
+     "t": 0.4,
+     "tipo": "tick",
+     "vol": 0.1
     },
     {
      "t": 3,
+     "tipo": "pop",
+     "vol": 0.16
+    },
+    {
+     "t": 3.1,
      "tipo": "ding",
-     "vol": 0.2
+     "vol": 0.18
     },
     {
      "t": 4,
@@ -342,25 +367,25 @@
     },
     {
      "t": 5.7,
-     "tipo": "thud",
+     "tipo": "pop",
      "vol": 0.16
     },
     {
-     "t": 6.4,
-     "tipo": "whoosh",
-     "vol": 0.12
+     "t": 5.8,
+     "tipo": "ding",
+     "vol": 0.2
     }
    ]
   },
   {
    "n": 4,
    "t": "PIEZA",
-   "voz": "En Edimburgo, el obstetra James Simpson buscaba algo mejor, y probaba sustancias con sus ayudantes.",
-   "dur": 6,
-   "h": "SIMPSON BUSCA ALGO MEJOR",
-   "w": "MEJOR",
+   "voz": "Para obtener una décima de gramo de radio, procesó toneladas de mineral durante años.",
+   "dur": 5.6,
+   "h": "TONELADAS DE MINERAL",
+   "w": "TONELADAS",
    "sub": "",
-   "ic": "premio",
+   "ic": "brillo",
    "num": null,
    "vs": null,
    "bars": [],
@@ -382,7 +407,7 @@
    "red": null,
    "termo": null,
    "pila": null,
-   "cap": "Edimburgo",
+   "cap": "",
    "papel": null,
    "pilares": null,
    "ciclo": null,
@@ -391,7 +416,7 @@
    "cubo": null,
    "diales": null,
    "pieza": {
-    "id": "an-busca",
+    "id": "mc-toneladas",
     "props": {}
    },
    "cita": null,
@@ -399,11 +424,11 @@
    "modo": "VIRAL",
    "tema": "claro",
    "bg": "light",
-   "ritmo": 0.9910714285714286,
+   "ritmo": 1,
    "total": 62.4,
-   "inicio": 24.4,
-   "fin": 30.4,
-   "texto": "En Edimburgo, el obstetra James Simpson buscaba algo mejor, y probaba sustancias con sus ayudantes.",
+   "inicio": 21.5,
+   "fin": 27.1,
+   "texto": "Para obtener una décima de gramo de radio, procesó toneladas de mineral durante años.",
    "tr": "corte",
    "trs": "zoom",
    "sfx": [
@@ -418,56 +443,76 @@
      "vol": 0.1
     },
     {
-     "t": 0.8919642857142858,
+     "t": 0.4,
      "tipo": "pop",
      "vol": 0.12
     },
     {
-     "t": 2.4776785714285716,
+     "t": 3,
      "tipo": "clic",
-     "vol": 0.12
+     "vol": 0.05
     },
     {
-     "t": 2.9732142857142856,
-     "tipo": "clic",
-     "vol": 0.12
-    },
-    {
-     "t": 3.46875,
-     "tipo": "clic",
-     "vol": 0.12
-    },
-    {
-     "t": 3.9642857142857144,
-     "tipo": "clic",
-     "vol": 0.12
-    },
-    {
-     "t": 4.261607142857143,
-     "tipo": "tick",
-     "vol": 0.1
-    },
-    {
-     "t": 4.459821428571429,
-     "tipo": "clic",
-     "vol": 0.12
-    },
-    {
-     "t": 4.955357142857143,
-     "tipo": "ding",
+     "t": 3,
+     "tipo": "thud",
      "vol": 0.2
+    },
+    {
+     "t": 3.13,
+     "tipo": "clic",
+     "vol": 0.05
+    },
+    {
+     "t": 3.26,
+     "tipo": "clic",
+     "vol": 0.05
+    },
+    {
+     "t": 3.39,
+     "tipo": "clic",
+     "vol": 0.05
+    },
+    {
+     "t": 3.52,
+     "tipo": "clic",
+     "vol": 0.05
+    },
+    {
+     "t": 3.65,
+     "tipo": "clic",
+     "vol": 0.05
+    },
+    {
+     "t": 3.7800000000000002,
+     "tipo": "clic",
+     "vol": 0.05
+    },
+    {
+     "t": 3.91,
+     "tipo": "clic",
+     "vol": 0.05
+    },
+    {
+     "t": 4.04,
+     "tipo": "clic",
+     "vol": 0.05
+    },
+    {
+     "t": 4.3,
+     "tipo": "tick",
+     "vol": 0.12
     }
    ]
   },
   {
    "n": 5,
    "t": "PIEZA",
-   "voz": "Aquella noche inhalaron cloroformo en el comedor, empezaron a conversar animados y todos perdieron el conocimiento.",
-   "dur": 6.4,
-   "h": "PIERDEN EL CONOCIMIENTO",
-   "w": "CONOCIMIENTO",
+   "voz": "Ganó dos Nobel, en Física y en Química: fue la primera mujer en ganarlo y la única persona premiada en dos ciencias.",
+   "dur": 8.3,
+   "h": "DOS NOBEL",
+   "w": "NOBEL",
    "sub": "",
-   "ic": "tendencia-baja",
+   "ic": "brillo",
    "num": null,
    "vs": null,
    "bars": [],
@@ -489,7 +534,7 @@
    "red": null,
    "termo": null,
    "pila": null,
-   "cap": "4 de noviembre de 1847",
+   "cap": "1903 y 1911",
    "papel": null,
    "pilares": null,
    "ciclo": null,
@@ -498,7 +543,7 @@
    "cubo": null,
    "diales": null,
    "pieza": {
-    "id": "an-noche",
+    "id": "mc-nobel",
     "props": {}
    },
    "cita": null,
@@ -506,11 +551,11 @@
    "modo": "VIRAL",
    "tema": "oscuro",
    "bg": "dark",
-   "ritmo": 0.9916666666666667,
+   "ritmo": 1,
    "total": 62.4,
-   "inicio": 30.4,
-   "fin": 36.8,
-   "texto": "Aquella noche inhalaron cloroformo en el comedor, empezaron a conversar animados y todos perdieron el conocimiento.",
+   "inicio": 27.1,
+   "fin": 35.4,
+   "texto": "Ganó dos Nobel, en Física y en Química: fue la primera mujer en ganarlo y la única persona premiada en dos ciencias.",
    "tr": "zoom",
    "trs": "semitono",
    "sfx": [
@@ -525,46 +570,143 @@
      "vol": 0.1
     },
     {
-     "t": 0.8925000000000001,
-     "tipo": "whoosh",
-     "vol": 0.14
+     "t": 1,
+     "tipo": "pop",
+     "vol": 0.16
     },
     {
-     "t": 2.5783333333333336,
+     "t": 1.1,
+     "tipo": "ding",
+     "vol": 0.2
+    },
+    {
+     "t": 2,
      "tipo": "pop",
+     "vol": 0.16
+    },
+    {
+     "t": 2.1,
+     "tipo": "ding",
+     "vol": 0.2
+    },
+    {
+     "t": 3,
+     "tipo": "tick",
      "vol": 0.12
     },
     {
-     "t": 3.0741666666666667,
-     "tipo": "pop",
-     "vol": 0.1
-    },
-    {
-     "t": 4.264166666666666,
-     "tipo": "thud",
-     "vol": 0.2
-    },
-    {
-     "t": 4.611249999999999,
-     "tipo": "thud",
-     "vol": 0.2
-    },
-    {
-     "t": 4.958333333333334,
-     "tipo": "thud",
-     "vol": 0.2
+     "t": 5,
+     "tipo": "ding",
+     "vol": 0.18
     }
    ]
   },
   {
    "n": 6,
    "t": "PIEZA",
-   "voz": "Al despertar, Simpson comprendió que tenía lo que buscaba. Pocos días después ya lo usaba en partos.",
-   "dur": 6.6,
-   "h": "LO QUE BUSCABA",
-   "w": "BUSCABA",
+   "voz": "En la Primera Guerra Mundial creó ambulancias con rayos X para encontrar balas y huesos rotos, las llamadas pequeñas Curies.",
+   "dur": 7.6,
+   "h": "AMBULANCIAS CON RAYOS X",
+   "w": "AMBULANCIAS",
    "sub": "",
-   "ic": "reloj",
+   "ic": "telefono",
+   "num": null,
+   "vs": null,
+   "bars": [],
+   "barsU": "",
+   "hi": -1,
+   "line": null,
+   "items": [],
+   "stops": [],
+   "end": "",
+   "donut": [],
+   "picto": null,
+   "top": [],
+   "myth": "",
+   "truth": "",
+   "zoom": null,
+   "capas": null,
+   "mira": null,
+   "impacto": null,
+   "red": null,
+   "termo": null,
+   "pila": null,
+   "cap": "1914",
+   "papel": null,
+   "pilares": null,
+   "ciclo": null,
+   "duo": null,
+   "osc": null,
+   "cubo": null,
+   "diales": null,
+   "pieza": {
+    "id": "mc-guerra",
+    "props": {}
+   },
+   "cita": null,
+   "sc": "",
+   "modo": "VIRAL",
+   "tema": "claro",
+   "bg": "light",
+   "ritmo": 1,
+   "total": 62.4,
+   "inicio": 35.4,
+   "fin": 43,
+   "texto": "En la Primera Guerra Mundial creó ambulancias con rayos X para encontrar balas y huesos rotos, las llamadas pequeñas Curies.",
+   "tr": "semitono",
+   "trs": "corte",
+   "sfx": [
+    {
+     "t": 0.04,
+     "tipo": "whoosh",
+     "vol": 0.16
+    },
+    {
+     "t": 0.05,
+     "tipo": "whoosh",
+     "vol": 0.1
+    },
+    {
+     "t": 0.4,
+     "tipo": "tick",
+     "vol": 0.12
+    },
+    {
+     "t": 1.9,
+     "tipo": "whoosh",
+     "vol": 0.18
+    },
+    {
+     "t": 3.6,
+     "tipo": "zap",
+     "vol": 0.16
+    },
+    {
+     "t": 3.9,
+     "tipo": "ding",
+     "vol": 0.18
+    },
+    {
+     "t": 5.7,
+     "tipo": "pop",
+     "vol": 0.14
+    },
+    {
+     "t": 6.3,
+     "tipo": "tick",
+     "vol": 0.12
+    }
+   ]
+  },
+  {
+   "n": 7,
+   "t": "PIEZA",
+   "voz": "Manejaba tubos y sales de radio sin protección; murió en mil novecientos treinta y cuatro, probablemente por la radiación.",
+   "dur": 7.3,
+   "h": "SIN PROTECCIÓN",
+   "w": "PROTECCIÓN",
+   "sub": "",
+   "ic": "seguridad",
    "num": null,
    "vs": null,
    "bars": [],
@@ -595,21 +737,21 @@
    "cubo": null,
    "diales": null,
    "pieza": {
-    "id": "an-despierta",
+    "id": "mc-riesgo",
     "props": {}
    },
    "cita": null,
    "sc": "",
    "modo": "VIRAL",
-   "tema": "claro",
-   "bg": "light",
-   "ritmo": 0.9919354838709676,
+   "tema": "oscuro",
+   "bg": "dark",
+   "ritmo": 1,
    "total": 62.4,
-   "inicio": 36.8,
-   "fin": 43.4,
-   "texto": "Al despertar, Simpson comprendió que tenía lo que buscaba. Pocos días después ya lo usaba en partos.",
-   "tr": "semitono",
-   "trs": "corte",
+   "inicio": 43,
+   "fin": 50.3,
+   "texto": "Manejaba tubos y sales de radio sin protección; murió en mil novecientos treinta y cuatro, probablemente por la radiación.",
+   "tr": "corte",
+   "trs": "zoom",
    "sfx": [
     {
      "t": 0.04,
@@ -622,59 +764,119 @@
      "vol": 0.1
     },
     {
-     "t": 0.39838709677419354,
-     "tipo": "pop",
-     "vol": 0.12
-    },
-    {
-     "t": 0.8927419354838709,
-     "tipo": "ding",
-     "vol": 0.2
-    },
-    {
-     "t": 3.273387096774193,
+     "t": 0.2,
      "tipo": "clic",
-     "vol": 0.05
+     "vol": 0.04
     },
     {
-     "t": 3.403387096774193,
+     "t": 0.33,
      "tipo": "clic",
-     "vol": 0.05
+     "vol": 0.04
     },
     {
-     "t": 3.5333870967741934,
+     "t": 0.46,
      "tipo": "clic",
-     "vol": 0.05
+     "vol": 0.04
     },
     {
-     "t": 3.6633870967741933,
+     "t": 0.5900000000000001,
      "tipo": "clic",
-     "vol": 0.05
+     "vol": 0.04
     },
     {
-     "t": 3.793387096774193,
+     "t": 0.72,
      "tipo": "clic",
-     "vol": 0.05
+     "vol": 0.04
     },
     {
-     "t": 3.923387096774193,
+     "t": 0.8500000000000001,
      "tipo": "clic",
-     "vol": 0.05
+     "vol": 0.04
     },
     {
-     "t": 4.265322580645161,
-     "tipo": "ding",
-     "vol": 0.18
+     "t": 0.98,
+     "tipo": "clic",
+     "vol": 0.04
+    },
+    {
+     "t": 1,
+     "tipo": "thud",
+     "vol": 0.16
+    },
+    {
+     "t": 1.11,
+     "tipo": "clic",
+     "vol": 0.04
+    },
+    {
+     "t": 1.24,
+     "tipo": "clic",
+     "vol": 0.04
+    },
+    {
+     "t": 1.3699999999999999,
+     "tipo": "clic",
+     "vol": 0.04
+    },
+    {
+     "t": 1.5,
+     "tipo": "clic",
+     "vol": 0.04
+    },
+    {
+     "t": 1.6300000000000001,
+     "tipo": "clic",
+     "vol": 0.04
+    },
+    {
+     "t": 1.76,
+     "tipo": "clic",
+     "vol": 0.04
+    },
+    {
+     "t": 1.89,
+     "tipo": "clic",
+     "vol": 0.04
+    },
+    {
+     "t": 2.02,
+     "tipo": "clic",
+     "vol": 0.04
+    },
+    {
+     "t": 2.1500000000000004,
+     "tipo": "clic",
+     "vol": 0.04
+    },
+    {
+     "t": 2.2800000000000002,
+     "tipo": "clic",
+     "vol": 0.04
+    },
+    {
+     "t": 2.41,
+     "tipo": "clic",
+     "vol": 0.04
+    },
+    {
+     "t": 3,
+     "tipo": "thud",
+     "vol": 0.22
+    },
+    {
+     "t": 5.4,
+     "tipo": "tick",
+     "vol": 0.1
     }
    ]
   },
   {
-   "n": 7,
+   "n": 8,
    "t": "PIEZA",
-   "voz": "Algunos lo criticaron por religión, pero en mil ochocientos cincuenta y tres lo usó hasta la reina Victoria, en su parto.",
-   "dur": 7.8,
-   "h": "HASTA LA REINA VICTORIA",
-   "w": "REINA",
+   "voz": "Hoy están en cajas de plomo, y tardarán unos mil quinientos años en perder la mitad de su radiactividad.",
+   "dur": 7.3,
+   "h": "CAJAS DE PLOMO",
+   "w": "PLOMO",
    "sub": "",
    "ic": "brillo",
    "num": null,
@@ -698,93 +900,6 @@
    "red": null,
    "termo": null,
    "pila": null,
-   "cap": "abril de 1853",
-   "papel": null,
-   "pilares": null,
-   "ciclo": null,
-   "duo": null,
-   "osc": null,
-   "cubo": null,
-   "diales": null,
-   "pieza": {
-    "id": "an-reina",
-    "props": {}
-   },
-   "cita": null,
-   "sc": "",
-   "modo": "VIRAL",
-   "tema": "oscuro",
-   "bg": "dark",
-   "ritmo": 1,
-   "total": 62.4,
-   "inicio": 43.4,
-   "fin": 51.2,
-   "texto": "Algunos lo criticaron por religión, pero en mil ochocientos cincuenta y tres lo usó hasta la reina Victoria, en su parto.",
-   "tr": "corte",
-   "trs": "zoom",
-   "sfx": [
-    {
-     "t": 0.04,
-     "tipo": "whoosh",
-     "vol": 0.16
-    },
-    {
-     "t": 0.05,
-     "tipo": "whoosh",
-     "vol": 0.1
-    },
-    {
-     "t": 0.5,
-     "tipo": "thud",
-     "vol": 0.14
-    },
-    {
-     "t": 1.9,
-     "tipo": "tick",
-     "vol": 0.12
-    },
-    {
-     "t": 4.3,
-     "tipo": "ding",
-     "vol": 0.2
-    },
-    {
-     "t": 6.4,
-     "tipo": "pop",
-     "vol": 0.14
-    }
-   ]
-  },
-  {
-   "n": 8,
-   "t": "PIEZA",
-   "voz": "El cloroformo ya no se usa, pero esa cena abrió el camino de la anestesia moderna.",
-   "dur": 6.4,
-   "h": "LA ANESTESIA MODERNA",
-   "w": "MODERNA",
-   "sub": "",
-   "ic": "reloj",
-   "num": null,
-   "vs": null,
-   "bars": [],
-   "barsU": "",
-   "hi": -1,
-   "line": null,
-   "items": [],
-   "stops": [],
-   "end": "",
-   "donut": [],
-   "picto": null,
-   "top": [],
-   "myth": "",
-   "truth": "",
-   "zoom": null,
-   "capas": null,
-   "mira": null,
-   "impacto": null,
-   "red": null,
-   "termo": null,
-   "pila": null,
    "cap": "",
    "papel": null,
    "pilares": null,
@@ -794,7 +909,7 @@
    "cubo": null,
    "diales": null,
    "pieza": {
-    "id": "an-cierre",
+    "id": "mc-cuadernos",
     "props": {}
    },
    "cita": null,
@@ -804,9 +919,9 @@
    "bg": "light",
    "ritmo": 1,
    "total": 62.4,
-   "inicio": 51.2,
+   "inicio": 50.3,
    "fin": 57.6,
-   "texto": "El cloroformo ya no se usa, pero esa cena abrió el camino de la anestesia moderna.",
+   "texto": "Hoy están en cajas de plomo, y tardarán unos mil quinientos años en perder la mitad de su radiactividad.",
    "tr": "zoom",
    "trs": "barrido",
    "sfx": [
@@ -821,31 +936,101 @@
      "vol": 0.1
     },
     {
-     "t": 0.9,
+     "t": 0.4,
      "tipo": "thud",
-     "vol": 0.22
+     "vol": 0.2
     },
     {
      "t": 2.3,
-     "tipo": "whoosh",
-     "vol": 0.14
+     "tipo": "clic",
+     "vol": 0.04
     },
     {
-     "t": 4.7,
+     "t": 2.4299999999999997,
+     "tipo": "clic",
+     "vol": 0.04
+    },
+    {
+     "t": 2.5599999999999996,
+     "tipo": "clic",
+     "vol": 0.04
+    },
+    {
+     "t": 2.69,
+     "tipo": "clic",
+     "vol": 0.04
+    },
+    {
+     "t": 2.82,
+     "tipo": "clic",
+     "vol": 0.04
+    },
+    {
+     "t": 2.9499999999999997,
+     "tipo": "clic",
+     "vol": 0.04
+    },
+    {
+     "t": 3.08,
+     "tipo": "clic",
+     "vol": 0.04
+    },
+    {
+     "t": 3.21,
+     "tipo": "clic",
+     "vol": 0.04
+    },
+    {
+     "t": 3.34,
+     "tipo": "clic",
+     "vol": 0.04
+    },
+    {
+     "t": 3.4699999999999998,
+     "tipo": "clic",
+     "vol": 0.04
+    },
+    {
+     "t": 3.5999999999999996,
+     "tipo": "clic",
+     "vol": 0.04
+    },
+    {
+     "t": 3.73,
+     "tipo": "clic",
+     "vol": 0.04
+    },
+    {
+     "t": 3.86,
+     "tipo": "clic",
+     "vol": 0.04
+    },
+    {
+     "t": 3.9899999999999998,
+     "tipo": "clic",
+     "vol": 0.04
+    },
+    {
+     "t": 4.12,
+     "tipo": "clic",
+     "vol": 0.04
+    },
+    {
+     "t": 4.3,
      "tipo": "ding",
      "vol": 0.2
     },
     {
-     "t": 5,
-     "tipo": "heartbeat",
-     "vol": 0.2
+     "t": 5.6,
+     "tipo": "tick",
+     "vol": 0.12
     }
    ]
   },
   {
    "n": 9,
    "t": "CTA",
-   "voz": "Compártelo con alguien que estudie salud. Síguenos en Sinapsis.",
+   "voz": "Compártelo con alguien que ame la ciencia. Síguenos en Sinapsis.",
    "dur": 4.8,
    "h": "COMPÁRTELO Y SÍGUENOS",
    "w": "SÍGUENOS",
@@ -890,7 +1075,7 @@
    "total": 62.4,
    "inicio": 57.6,
    "fin": 62.4,
-   "texto": "Compártelo con alguien que estudie salud. Síguenos en Sinapsis.",
+   "texto": "Compártelo con alguien que ame la ciencia. Síguenos en Sinapsis.",
    "tr": "barrido",
    "trs": "barrido",
    "sfx": [

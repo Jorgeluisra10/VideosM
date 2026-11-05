@@ -628,6 +628,32 @@ export const TAN = {
   cierre: { ya: 0.9, camino: 2.3, moderna: 4.7 },
 } as const;
 
+/** Datos del video «Los cuadernos radiactivos de Marie Curie» (SINAPSIS · historia de la medicina). Fuentes y precauciones en ejemplos/animacion-viral/guion-tecnico-curie.md. */
+export const MCU = {
+  /** nacimiento: Varsovia, 7 nov 1867; a París en 1891; polonio (jul 1898) y radio (dic 1898); Nobel de Física 1903 y de Química 1911; guerra 1914–1918; muerte: jul 1934 (probablemente por la radiación) */
+  nace: { a: 1867, m: 11, d: 7 }, paris: 1891, elementos: 1898, nobelFisica: 1903, nobelQuimica: 1911, guerra: 1914, muerte: 1934,
+  /** números atómicos: polonio 84, radio 88; en 1902 aisló ≈ 0,1 g de cloruro de radio (de toneladas de residuo de pecblenda, según las fuentes) */
+  zPolonio: 84, zRadio: 88, radioGramos: 0.1,
+  /** «pequeñas Curies»: ≈ 20 vehículos y ≈ 200 instalaciones fijas; heridos examinados: ≈ 900.000 según la propia Curie y «más de un millón» según otras estimaciones */
+  vehiculos: 20, instalaciones: 200, heridosCurie: 900000,
+  /** radio-226: semivida ≈ 1.600 años; los cuadernos tardarán ≈ 1.500 años en perder la MITAD de su radiactividad (no en dejar de serlo) */
+  semividaAnios: 1500,
+  hoyAnio: 2026,
+} as const;
+/** fracción de radiactividad que queda tras `anios` años con semivida `semivida` (decaimiento exponencial) */
+export const fraccionRestante = (anios: number, semivida: number): number => Math.pow(0.5, anios / semivida);
+/** Tiempos del video de Marie Curie (segundos a ritmo normal), compartidos entre el dibujo y el sonido. */
+export const TMC = {
+  gancho: { geiger: 0.2, caja: 0.9, fecha: 3.0, anios: 4.3, aniosDur: 1.6 },
+  paris: { varsovia: 0.2, puerta: 1.2, viaje: 4.3, viajeDur: 1.4, paris: 5.7 },
+  elementos: { anio: 0.2, pierre: 2.3, polonio: 3.0, pais: 4.0, radio: 5.7 },
+  toneladas: { gramo: 0.2, mineral: 3.0, anios: 4.3 },
+  nobel: { medalla1: 1.0, medalla2: 2.0, mujer: 3.0, unica: 5.0 },
+  guerra: { fecha: 0.2, furgon: 1.9, rayos: 3.6, apodo: 5.7, cifras: 6.3 },
+  riesgo: { tubo: 0.2, sin: 1.0, muerte: 3.0, prob: 5.4 },
+  cuadernos: { caja: 0.2, vida: 2.3, mitad: 4.3, permiso: 5.6 },
+} as const;
+
 /* ───────────── «La regla del 37 %» (problema de la parada óptima, ensayo abstracto para IMNOBA) ───────────── */
 
 /** Generador pseudoaleatorio determinista (mulberry32): mismos números en el render, en las pruebas y en cada fotograma. */
@@ -1411,6 +1437,39 @@ export const PIEZAS: Record<string, DefPieza> = {
   "an-cierre": {
     id: "an-cierre", nombre: "Anestesia · el cloroformo ya no se usa, pero esa cena abrió el camino de la anestesia moderna (cierre)", ideal: 5.9, fondo: "dark", entra: "zoom",
     sfx: (_d, r) => [ev(0.05, "whoosh", 0.1), ev(TAN.cierre.ya * r, "thud", 0.22), ev(TAN.cierre.camino * r, "whoosh", 0.14), ev(TAN.cierre.moderna * r, "ding", 0.2), ev((TAN.cierre.moderna + 0.3) * r, "heartbeat", 0.2)],
+  },
+  /* ───────────── «Los cuadernos radiactivos de Marie Curie» (SINAPSIS · historia de la medicina) ───────────── */
+  "mc-gancho": {
+    id: "mc-gancho", nombre: "Curie · una caja de plomo con el cuaderno que aún brilla y un contador Geiger que chasquea; 159 años de su nacimiento (gancho)", ideal: 7.1, fondo: "dark",
+    sfx: (_d, r) => [ev(0.05, "whoosh", 0.1), ...clics(TMC.gancho.geiger * r, 2.6 * r, 0.05), ev(TMC.gancho.caja * r, "thud", 0.18), ev(TMC.gancho.fecha * r, "tick", 0.12), ev(TMC.gancho.anios * r, "tick", 0.1), ev((TMC.gancho.anios + TMC.gancho.aniosDur) * r, "ding", 0.18)],
+  },
+  "mc-paris": {
+    id: "mc-paris", nombre: "Curie · nació en Varsovia, donde las mujeres no podían estudiar en la universidad, y se fue a París (1891)", ideal: 6.1, fondo: "dark", entra: "corte",
+    sfx: (_d, r) => [ev(0.05, "whoosh", 0.1), ev(TMC.paris.varsovia * r + 0.2, "pop", 0.12), ev(TMC.paris.puerta * r, "thud", 0.2), ev(TMC.paris.viaje * r, "whoosh", 0.16), ev(TMC.paris.paris * r, "ding", 0.18)],
+  },
+  "mc-elementos": {
+    id: "mc-elementos", nombre: "Curie · 1898: con Pierre descubre el polonio (nombrado por su país) y el radio", ideal: 6.8, fondo: "dark", entra: "semitono",
+    sfx: (_d, r) => [ev(0.05, "whoosh", 0.1), ev(TMC.elementos.anio * r + 0.2, "tick", 0.1), ev(TMC.elementos.polonio * r, "pop", 0.16), ev((TMC.elementos.polonio + 0.1) * r, "ding", 0.18), ev(TMC.elementos.pais * r, "tick", 0.1), ev(TMC.elementos.radio * r, "pop", 0.16), ev((TMC.elementos.radio + 0.1) * r, "ding", 0.2)],
+  },
+  "mc-toneladas": {
+    id: "mc-toneladas", nombre: "Curie · para obtener una décima de gramo de radio procesó toneladas de mineral durante años", ideal: 5.1, fondo: "dark", entra: "corte",
+    sfx: (_d, r) => [ev(0.05, "whoosh", 0.1), ev(TMC.toneladas.gramo * r + 0.2, "pop", 0.12), ...clics(TMC.toneladas.mineral * r, 1.2 * r, 0.05), ev(TMC.toneladas.mineral * r, "thud", 0.2), ev(TMC.toneladas.anios * r, "tick", 0.12)],
+  },
+  "mc-nobel": {
+    id: "mc-nobel", nombre: "Curie · dos Nobel (Física 1903, Química 1911): primera mujer y única persona premiada en dos ciencias", ideal: 7.8, fondo: "dark", entra: "zoom",
+    sfx: (_d, r) => [ev(0.05, "whoosh", 0.1), ev(TMC.nobel.medalla1 * r, "pop", 0.16), ev((TMC.nobel.medalla1 + 0.1) * r, "ding", 0.2), ev(TMC.nobel.medalla2 * r, "pop", 0.16), ev((TMC.nobel.medalla2 + 0.1) * r, "ding", 0.2), ev(TMC.nobel.mujer * r, "tick", 0.12), ev(TMC.nobel.unica * r, "ding", 0.18)],
+  },
+  "mc-guerra": {
+    id: "mc-guerra", nombre: "Curie · Primera Guerra Mundial: ambulancias con rayos X («pequeñas Curies») para localizar balas y fracturas", ideal: 7.1, fondo: "dark", entra: "semitono",
+    sfx: (_d, r) => [ev(0.05, "whoosh", 0.1), ev(TMC.guerra.fecha * r + 0.2, "tick", 0.12), ev(TMC.guerra.furgon * r, "whoosh", 0.18), ev(TMC.guerra.rayos * r, "zap", 0.16), ev((TMC.guerra.rayos + 0.3) * r, "ding", 0.18), ev(TMC.guerra.apodo * r, "pop", 0.14), ev(TMC.guerra.cifras * r, "tick", 0.12)],
+  },
+  "mc-riesgo": {
+    id: "mc-riesgo", nombre: "Curie · manejaba tubos y sales de radio sin protección; murió en 1934, probablemente por la radiación", ideal: 6.8, fondo: "dark", entra: "corte",
+    sfx: (_d, r) => [ev(0.05, "whoosh", 0.1), ...clics(TMC.riesgo.tubo * r, 2.4 * r, 0.04), ev(TMC.riesgo.sin * r, "thud", 0.16), ev(TMC.riesgo.muerte * r, "thud", 0.22), ev(TMC.riesgo.prob * r, "tick", 0.1)],
+  },
+  "mc-cuadernos": {
+    id: "mc-cuadernos", nombre: "Curie · sus cuadernos están en cajas de plomo y tardarán ≈ 1.500 años en perder la mitad de su radiactividad (cierre)", ideal: 6.8, fondo: "dark", entra: "zoom",
+    sfx: (_d, r) => [ev(0.05, "whoosh", 0.1), ev(TMC.cuadernos.caja * r + 0.2, "thud", 0.2), ...clics(TMC.cuadernos.vida * r, 2.0 * r, 0.04), ev(TMC.cuadernos.mitad * r, "ding", 0.2), ev(TMC.cuadernos.permiso * r, "tick", 0.12)],
   },
   "astro-memoria": {
     id: "astro-memoria", nombre: "Astrocitos · en ratones, reactivarlos estimuló el recuerdo", ideal: 4.15, fondo: "dark", entra: "corte",
