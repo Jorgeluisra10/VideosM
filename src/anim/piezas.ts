@@ -654,6 +654,27 @@ export const TMC = {
   cuadernos: { caja: 0.2, vida: 2.3, mitad: 4.3, permiso: 5.6 },
 } as const;
 
+/** Datos del video «La inyección que cambió todo» (SINAPSIS · historia de la insulina). Fuentes y precauciones en ejemplos/animacion-viral/guion-tecnico-insulina.md. */
+export const INS = {
+  /** Frederick Banting nació el 14 nov 1891 (Día Mundial de la Diabetes, IDF y OMS 1991; ONU 2006); trabajo con Best en Toronto 1921; primera inyección a Leonard Thompson 11 ene 1922 (extracto impuro: apenas funcionó y dio reacción alérgica); segunda, con el extracto purificado por Collip, 23 ene 1922; Nobel 1923 (Banting y Macleod); patente cedida a la Universidad de Toronto por 1 dólar */
+  banting: { a: 1891, m: 11, d: 14 }, perros: 1921, primera: { a: 1922, m: 1, d: 11 }, segunda: { a: 1922, m: 1, d: 23 }, nobel: 1923,
+  /** Leonard Thompson pesaba ≈ 65 libras ≈ 29 kg (la edad varía por fuente: 13 o 14 años) */
+  libras: 65, patenteUsd: 1, hoyAnio: 2026,
+} as const;
+/** libras → kilogramos (1 lb = 0,45359237 kg) */
+export const librasAKg = (lb: number): number => lb * 0.45359237;
+/** Tiempos del video de la insulina (segundos a ritmo normal), compartidos entre el dibujo y el sonido. */
+export const TIN = {
+  gancho: { calendario: 0.2, banting: 0.9, aniosDur: 1.6, sabado: 2.6, dia: 3.3, dolar: 6.0 },
+  hambre: { sala: 0.2, mortal: 1.6, dieta: 3.6 },
+  perros: { toronto: 0.2, doctores: 2.3, extracto: 4.3, baja: 5.3 },
+  primera: { fecha: 0.2, nino: 3.0, inyeccion: 4.7, fallo: 6.1 },
+  segunda: { collip: 0.2, filtro: 0.6, fecha: 1.9, inyeccion: 3.3, reloj: 4.7, mejora: 5.7 },
+  nobel: { medalla: 0.2, nombres: 1.6, comparten: 3.3 },
+  patente: { doc: 0.2, dolar: 3.0, fabrica: 4.3 },
+  hoy: { mundo: 0.2, dia: 3.0, circulo: 4.2 },
+} as const;
+
 /* ───────────── «La regla del 37 %» (problema de la parada óptima, ensayo abstracto para IMNOBA) ───────────── */
 
 /** Generador pseudoaleatorio determinista (mulberry32): mismos números en el render, en las pruebas y en cada fotograma. */
@@ -1470,6 +1491,39 @@ export const PIEZAS: Record<string, DefPieza> = {
   "mc-cuadernos": {
     id: "mc-cuadernos", nombre: "Curie · sus cuadernos están en cajas de plomo y tardarán ≈ 1.500 años en perder la mitad de su radiactividad (cierre)", ideal: 6.8, fondo: "dark", entra: "zoom",
     sfx: (_d, r) => [ev(0.05, "whoosh", 0.1), ev(TMC.cuadernos.caja * r + 0.2, "thud", 0.2), ...clics(TMC.cuadernos.vida * r, 2.0 * r, 0.04), ev(TMC.cuadernos.mitad * r, "ding", 0.2), ev(TMC.cuadernos.permiso * r, "tick", 0.12)],
+  },
+  /* ───────────── «La inyección que cambió todo» (SINAPSIS · historia de la insulina) ───────────── */
+  "ins-gancho": {
+    id: "ins-gancho", nombre: "Insulina · el calendario del 14 de noviembre: Banting cumpliría 135 años, su cumpleaños es el Día Mundial de la Diabetes y vendió su patente por un dólar (gancho)", ideal: 7.8, fondo: "dark",
+    sfx: (_d, r) => [ev(0.05, "whoosh", 0.1), ev(TIN.gancho.calendario * r + 0.1, "pop", 0.12), ...clics(TIN.gancho.banting * r, TIN.gancho.aniosDur * r, 0.04), ev(TIN.gancho.dia * r, "ding", 0.2), ev(TIN.gancho.dolar * r, "pop", 0.16), ev((TIN.gancho.dolar + 0.1) * r, "ding", 0.18)],
+  },
+  "ins-hambre": {
+    id: "ins-hambre", nombre: "Insulina · antes de 1922 la diabetes tipo 1 era mortal y el tratamiento era una dieta de hambre", ideal: 6.1, fondo: "dark", entra: "corte",
+    sfx: (_d, r) => [ev(0.05, "whoosh", 0.1), ev(TIN.hambre.sala * r + 0.2, "heartbeat", 0.2), ev(TIN.hambre.mortal * r, "thud", 0.2), ev(TIN.hambre.dieta * r, "tick", 0.12), ev((TIN.hambre.dieta + 0.4) * r, "tick", 0.1)],
+  },
+  "ins-perros": {
+    id: "ins-perros", nombre: "Insulina · Toronto 1921: Banting y Best prueban un extracto de páncreas en perros y el azúcar en sangre baja", ideal: 6.8, fondo: "dark", entra: "semitono",
+    sfx: (_d, r) => [ev(0.05, "whoosh", 0.1), ev(TIN.perros.toronto * r + 0.2, "pop", 0.1), ev(TIN.perros.doctores * r, "pop", 0.12), ev(TIN.perros.extracto * r, "zap", 0.12), ...clics(TIN.perros.baja * r, 1.2 * r, 0.04), ev((TIN.perros.baja + 1.2) * r, "ding", 0.18)],
+  },
+  "ins-primera": {
+    id: "ins-primera", nombre: "Insulina · 11 ene 1922: un niño de 29 kg recibe la primera inyección; el extracto impuro apenas funciona", ideal: 6.8, fondo: "dark", entra: "zoom",
+    sfx: (_d, r) => [ev(0.05, "whoosh", 0.1), ev(TIN.primera.fecha * r + 0.2, "tick", 0.12), ev(TIN.primera.nino * r, "pop", 0.14), ev(TIN.primera.inyeccion * r, "zap", 0.14), ev(TIN.primera.fallo * r, "thud", 0.2)],
+  },
+  "ins-segunda": {
+    id: "ins-segunda", nombre: "Insulina · Collip purifica el extracto; el 23 ene 1922 lo inyectan de nuevo y en un día los síntomas casi desaparecen", ideal: 6.8, fondo: "dark", entra: "semitono",
+    sfx: (_d, r) => [ev(0.05, "whoosh", 0.1), ev(TIN.segunda.filtro * r, "pop", 0.12), ev(TIN.segunda.fecha * r, "tick", 0.12), ev(TIN.segunda.inyeccion * r, "zap", 0.14), ...clics(TIN.segunda.reloj * r, 1.0 * r, 0.05), ev(TIN.segunda.mejora * r, "ding", 0.22)],
+  },
+  "ins-nobel": {
+    id: "ins-nobel", nombre: "Insulina · Nobel de Medicina 1923 para Banting y Macleod, que comparten el dinero con Best y Collip", ideal: 5.9, fondo: "dark", entra: "zoom",
+    sfx: (_d, r) => [ev(0.05, "whoosh", 0.1), ev(TIN.nobel.medalla * r + 0.2, "pop", 0.16), ev((TIN.nobel.medalla + 0.3) * r, "ding", 0.2), ev(TIN.nobel.nombres * r, "tick", 0.12), ev(TIN.nobel.comparten * r, "pop", 0.14), ev((TIN.nobel.comparten + 0.4) * r, "pop", 0.14)],
+  },
+  "ins-patente": {
+    id: "ins-patente", nombre: "Insulina · la patente se vende a la Universidad de Toronto por un dólar para que la insulina se fabrique sin trabas", ideal: 6.8, fondo: "dark", entra: "corte",
+    sfx: (_d, r) => [ev(0.05, "whoosh", 0.1), ev(TIN.patente.doc * r + 0.2, "pop", 0.12), ev(TIN.patente.dolar * r, "thud", 0.22), ev((TIN.patente.dolar + 0.1) * r, "ding", 0.2), ...clics(TIN.patente.fabrica * r, 1.8 * r, 0.05)],
+  },
+  "ins-hoy": {
+    id: "ins-hoy", nombre: "Insulina · hoy millones de personas con diabetes usan insulina; cada 14 de noviembre se recuerda esta historia (cierre)", ideal: 5.9, fondo: "dark", entra: "zoom",
+    sfx: (_d, r) => [ev(0.05, "whoosh", 0.1), ...clics(TIN.hoy.mundo * r + 0.4, 2.2 * r, 0.04), ev(TIN.hoy.dia * r, "ding", 0.2), ev(TIN.hoy.circulo * r, "pop", 0.16), ev((TIN.hoy.circulo + 0.1) * r, "heartbeat", 0.2)],
   },
   "astro-memoria": {
     id: "astro-memoria", nombre: "Astrocitos · en ratones, reactivarlos estimuló el recuerdo", ideal: 4.15, fondo: "dark", entra: "corte",

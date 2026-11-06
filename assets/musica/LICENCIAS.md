@@ -12,3 +12,4 @@ viaje-gota-sangre.wav · creada por el sistema (síntesis con `videos/2026-11-04
 rayos-x-roentgen.wav · creada por el sistema (síntesis con `videos/2026-11-04-rayos-x-roentgen/componer-musica.mjs`; el WAV no se sube a git, se regenera) · libre de derechos · ninguna · 2026-11-04
 cena-cloroformo.wav · creada por el sistema (síntesis con `videos/2026-11-04-cena-cloroformo/componer-musica.mjs`; el WAV no se sube a git, se regenera) · libre de derechos · ninguna · 2026-11-04
 curie-cuadernos.wav · creada por el sistema (síntesis con `videos/2026-11-05-curie-cuadernos/componer-musica.mjs`; el WAV no se sube a git, se regenera) · libre de derechos · ninguna · 2026-11-05
+insulina-un-dolar.wav · creada por el sistema (síntesis con `videos/2026-11-06-insulina-un-dolar/componer-musica.mjs`; el WAV no se sube a git, se regenera) · libre de derechos · ninguna · 2026-11-06

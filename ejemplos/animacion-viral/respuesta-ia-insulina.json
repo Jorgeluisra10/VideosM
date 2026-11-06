@@ -1,0 +1,14 @@
+{
+ "titulo": "La inyección que cambió todo",
+ "scenes": [
+  { "t": "PIEZA", "voz": "Banting cumpliría ciento treinta y cinco años este sábado: su cumpleaños es el Día Mundial de la Diabetes. Vendió su patente por un dólar.", "dur": 8.6, "h": "VENDIÓ SU PATENTE POR $1", "w": "DÓLAR", "pieza": { "id": "ins-gancho" } },
+  { "t": "PIEZA", "voz": "Antes de la insulina, la diabetes tipo uno era mortal, y el tratamiento era una dieta de hambre.", "dur": 6.6, "h": "ANTES DE LA INSULINA", "w": "HAMBRE", "cap": "antes de 1922", "pieza": { "id": "ins-hambre" } },
+  { "t": "PIEZA", "voz": "En Toronto, en mil novecientos veintiuno, Frederick Banting y el estudiante Charles Best probaron un extracto de páncreas en perros.", "dur": 7.3, "h": "UN EXTRACTO DE PÁNCREAS", "w": "PERROS", "cap": "Toronto, 1921", "pieza": { "id": "ins-perros" } },
+  { "t": "PIEZA", "voz": "El once de enero de mil novecientos veintidós, un niño de veintinueve kilos recibió la primera inyección. Apenas funcionó.", "dur": 7.3, "h": "LA PRIMERA INYECCIÓN", "w": "INYECCIÓN", "cap": "11 de enero de 1922", "pieza": { "id": "ins-primera" } },
+  { "t": "PIEZA", "voz": "James Collip purificó el extracto. El veintitrés de enero lo inyectaron de nuevo y, en un día, los síntomas casi desaparecieron.", "dur": 7.8, "h": "COLLIP PURIFICA", "w": "DESAPARECIERON", "cap": "23 de enero de 1922", "pieza": { "id": "ins-segunda" } },
+  { "t": "PIEZA", "voz": "En mil novecientos veintitrés, Banting y Macleod recibieron el Nobel y compartieron el dinero con Best y Collip.", "dur": 6.4, "h": "EL NOBEL COMPARTIDO", "w": "NOBEL", "cap": "1923", "pieza": { "id": "ins-nobel" } },
+  { "t": "PIEZA", "voz": "La patente se vendió a la Universidad de Toronto por un dólar, para que la insulina pudiera fabricarse sin trabas.", "dur": 7.3, "h": "POR UN DÓLAR", "w": "DÓLAR", "pieza": { "id": "ins-patente" } },
+  { "t": "PIEZA", "voz": "Hoy millones de personas con diabetes usan insulina, y cada catorce de noviembre se recuerda esta historia.", "dur": 6.4, "h": "HOY, MILLONES", "w": "MILLONES", "pieza": { "id": "ins-hoy" } },
+  { "t": "CTA", "voz": "Compártelo con quien ame la historia de la medicina. Síguenos en Sinapsis.", "dur": 4.8, "h": "COMPÁRTELO Y SÍGUENOS", "w": "SÍGUENOS", "sub": "Más ciencia en SINAPSIS" }
+ ]
+}

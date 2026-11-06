@@ -1,20 +1,20 @@
 {
  "version": 1,
- "titulo": "Los cuadernos radiactivos de Marie Curie",
+ "titulo": "La inyección que cambió todo",
  "paleta": "medicina",
  "sfx": true,
  "fps": 60,
- "duracion": 62.4,
+ "duracion": 63.3,
  "escenas": [
   {
    "n": 1,
    "t": "PIEZA",
-   "voz": "Los cuadernos de Marie Curie siguen siendo radiactivos. Este sábado se cumplen ciento cincuenta y nueve años de su nacimiento.",
-   "dur": 7.6,
-   "h": "SIGUEN SIENDO RADIACTIVOS",
-   "w": "RADIACTIVOS",
+   "voz": "Banting cumpliría ciento treinta y cinco años este sábado: su cumpleaños es el Día Mundial de la Diabetes. Vendió su patente por un dólar.",
+   "dur": 8.8,
+   "h": "VENDIÓ SU PATENTE POR $1",
+   "w": "$1",
    "sub": "",
-   "ic": "brillo",
+   "ic": "dolar",
    "num": null,
    "vs": null,
    "bars": [],
@@ -45,7 +45,7 @@
    "cubo": null,
    "diales": null,
    "pieza": {
-    "id": "mc-gancho",
+    "id": "ins-gancho",
     "props": {}
    },
    "cita": null,
@@ -54,10 +54,10 @@
    "tema": "oscuro",
    "bg": "dark",
    "ritmo": 1,
-   "total": 62.4,
+   "total": 63.3,
    "inicio": 0,
-   "fin": 7.6,
-   "texto": "Los cuadernos de Marie Curie siguen siendo radiactivos. Este sábado se cumplen ciento cincuenta y nueve años de su nacimiento.",
+   "fin": 8.8,
+   "texto": "Banting cumpliría ciento treinta y cinco años este sábado: su cumpleaños es el Día Mundial de la Diabetes. Vendió su patente por un dólar.",
    "tr": "barrido",
    "trs": "corte",
    "sfx": [
@@ -72,122 +72,82 @@
      "vol": 0.1
     },
     {
-     "t": 0.2,
-     "tipo": "clic",
-     "vol": 0.05
-    },
-    {
-     "t": 0.33,
-     "tipo": "clic",
-     "vol": 0.05
-    },
-    {
-     "t": 0.46,
-     "tipo": "clic",
-     "vol": 0.05
-    },
-    {
-     "t": 0.5900000000000001,
-     "tipo": "clic",
-     "vol": 0.05
-    },
-    {
-     "t": 0.72,
-     "tipo": "clic",
-     "vol": 0.05
-    },
-    {
-     "t": 0.8500000000000001,
-     "tipo": "clic",
-     "vol": 0.05
-    },
-    {
-     "t": 0.9,
-     "tipo": "thud",
-     "vol": 0.18
-    },
-    {
-     "t": 0.98,
-     "tipo": "clic",
-     "vol": 0.05
-    },
-    {
-     "t": 1.11,
-     "tipo": "clic",
-     "vol": 0.05
-    },
-    {
-     "t": 1.24,
-     "tipo": "clic",
-     "vol": 0.05
-    },
-    {
-     "t": 1.3699999999999999,
-     "tipo": "clic",
-     "vol": 0.05
-    },
-    {
-     "t": 1.5,
-     "tipo": "clic",
-     "vol": 0.05
-    },
-    {
-     "t": 1.6300000000000001,
-     "tipo": "clic",
-     "vol": 0.05
-    },
-    {
-     "t": 1.76,
-     "tipo": "clic",
-     "vol": 0.05
-    },
-    {
-     "t": 1.89,
-     "tipo": "clic",
-     "vol": 0.05
-    },
-    {
-     "t": 2.02,
-     "tipo": "clic",
-     "vol": 0.05
-    },
-    {
-     "t": 2.1500000000000004,
-     "tipo": "clic",
-     "vol": 0.05
-    },
-    {
-     "t": 2.2800000000000002,
-     "tipo": "clic",
-     "vol": 0.05
-    },
-    {
-     "t": 2.41,
-     "tipo": "clic",
-     "vol": 0.05
-    },
-    {
-     "t": 2.54,
-     "tipo": "clic",
-     "vol": 0.05
-    },
-    {
-     "t": 2.6700000000000004,
-     "tipo": "clic",
-     "vol": 0.05
-    },
-    {
-     "t": 3,
-     "tipo": "tick",
+     "t": 0.30000000000000004,
+     "tipo": "pop",
      "vol": 0.12
     },
     {
-     "t": 4.3,
-     "tipo": "tick",
-     "vol": 0.1
+     "t": 0.9,
+     "tipo": "clic",
+     "vol": 0.04
     },
     {
-     "t": 5.9,
+     "t": 1.03,
+     "tipo": "clic",
+     "vol": 0.04
+    },
+    {
+     "t": 1.1600000000000001,
+     "tipo": "clic",
+     "vol": 0.04
+    },
+    {
+     "t": 1.29,
+     "tipo": "clic",
+     "vol": 0.04
+    },
+    {
+     "t": 1.42,
+     "tipo": "clic",
+     "vol": 0.04
+    },
+    {
+     "t": 1.55,
+     "tipo": "clic",
+     "vol": 0.04
+    },
+    {
+     "t": 1.6800000000000002,
+     "tipo": "clic",
+     "vol": 0.04
+    },
+    {
+     "t": 1.81,
+     "tipo": "clic",
+     "vol": 0.04
+    },
+    {
+     "t": 1.94,
+     "tipo": "clic",
+     "vol": 0.04
+    },
+    {
+     "t": 2.07,
+     "tipo": "clic",
+     "vol": 0.04
+    },
+    {
+     "t": 2.2,
+     "tipo": "clic",
+     "vol": 0.04
+    },
+    {
+     "t": 2.33,
+     "tipo": "clic",
+     "vol": 0.04
+    },
+    {
+     "t": 3.3,
+     "tipo": "ding",
+     "vol": 0.2
+    },
+    {
+     "t": 6,
+     "tipo": "pop",
+     "vol": 0.16
+    },
+    {
+     "t": 6.1,
      "tipo": "ding",
      "vol": 0.18
     }
@@ -196,12 +156,12 @@
   {
    "n": 2,
    "t": "PIEZA",
-   "voz": "Nació en Varsovia, donde las mujeres no podían estudiar en la universidad, y se fue a París.",
-   "dur": 6.6,
-   "h": "NACIÓ EN VARSOVIA",
-   "w": "VARSOVIA",
+   "voz": "Antes de la insulina, la diabetes tipo uno era mortal, y el tratamiento era una dieta de hambre.",
+   "dur": 6.7,
+   "h": "ANTES DE LA INSULINA",
+   "w": "INSULINA",
    "sub": "",
-   "ic": "colegio",
+   "ic": "brillo",
    "num": null,
    "vs": null,
    "bars": [],
@@ -223,7 +183,7 @@
    "red": null,
    "termo": null,
    "pila": null,
-   "cap": "Varsovia, 1867",
+   "cap": "antes de 1922",
    "papel": null,
    "pilares": null,
    "ciclo": null,
@@ -232,7 +192,7 @@
    "cubo": null,
    "diales": null,
    "pieza": {
-    "id": "mc-paris",
+    "id": "ins-hambre",
     "props": {}
    },
    "cita": null,
@@ -241,10 +201,10 @@
    "tema": "claro",
    "bg": "light",
    "ritmo": 1,
-   "total": 62.4,
-   "inicio": 7.6,
-   "fin": 14.2,
-   "texto": "Nació en Varsovia, donde las mujeres no podían estudiar en la universidad, y se fue a París.",
+   "total": 63.3,
+   "inicio": 8.8,
+   "fin": 15.5,
+   "texto": "Antes de la insulina, la diabetes tipo uno era mortal, y el tratamiento era una dieta de hambre.",
    "tr": "corte",
    "trs": "semitono",
    "sfx": [
@@ -260,33 +220,33 @@
     },
     {
      "t": 0.4,
-     "tipo": "pop",
-     "vol": 0.12
+     "tipo": "heartbeat",
+     "vol": 0.2
     },
     {
-     "t": 1.2,
+     "t": 1.6,
      "tipo": "thud",
      "vol": 0.2
     },
     {
-     "t": 4.3,
-     "tipo": "whoosh",
-     "vol": 0.16
+     "t": 3.6,
+     "tipo": "tick",
+     "vol": 0.12
     },
     {
-     "t": 5.7,
-     "tipo": "ding",
-     "vol": 0.18
+     "t": 4,
+     "tipo": "tick",
+     "vol": 0.1
     }
    ]
   },
   {
    "n": 3,
    "t": "PIEZA",
-   "voz": "En mil ochocientos noventa y ocho, con Pierre, descubrió el polonio, que nombró por su país, y el radio.",
-   "dur": 7.3,
-   "h": "POLONIO Y RADIO",
-   "w": "RADIO",
+   "voz": "En Toronto, en mil novecientos veintiuno, Frederick Banting y el estudiante Charles Best probaron un extracto de páncreas en perros.",
+   "dur": 7.4,
+   "h": "UN EXTRACTO DE PÁNCREAS",
+   "w": "EXTRACTO",
    "sub": "",
    "ic": "brillo",
    "num": null,
@@ -310,7 +270,7 @@
    "red": null,
    "termo": null,
    "pila": null,
-   "cap": "1898",
+   "cap": "Toronto, 1921",
    "papel": null,
    "pilares": null,
    "ciclo": null,
@@ -319,7 +279,7 @@
    "cubo": null,
    "diales": null,
    "pieza": {
-    "id": "mc-elementos",
+    "id": "ins-perros",
     "props": {}
    },
    "cita": null,
@@ -328,108 +288,11 @@
    "tema": "oscuro",
    "bg": "dark",
    "ritmo": 1,
-   "total": 62.4,
-   "inicio": 14.2,
-   "fin": 21.5,
-   "texto": "En mil ochocientos noventa y ocho, con Pierre, descubrió el polonio, que nombró por su país, y el radio.",
+   "total": 63.3,
+   "inicio": 15.5,
+   "fin": 22.9,
+   "texto": "En Toronto, en mil novecientos veintiuno, Frederick Banting y el estudiante Charles Best probaron un extracto de páncreas en perros.",
    "tr": "semitono",
-   "trs": "corte",
-   "sfx": [
-    {
-     "t": 0.04,
-     "tipo": "whoosh",
-     "vol": 0.16
-    },
-    {
-     "t": 0.05,
-     "tipo": "whoosh",
-     "vol": 0.1
-    },
-    {
-     "t": 0.4,
-     "tipo": "tick",
-     "vol": 0.1
-    },
-    {
-     "t": 3,
-     "tipo": "pop",
-     "vol": 0.16
-    },
-    {
-     "t": 3.1,
-     "tipo": "ding",
-     "vol": 0.18
-    },
-    {
-     "t": 4,
-     "tipo": "tick",
-     "vol": 0.1
-    },
-    {
-     "t": 5.7,
-     "tipo": "pop",
-     "vol": 0.16
-    },
-    {
-     "t": 5.8,
-     "tipo": "ding",
-     "vol": 0.2
-    }
-   ]
-  },
-  {
-   "n": 4,
-   "t": "PIEZA",
-   "voz": "Para obtener una décima de gramo de radio, procesó toneladas de mineral durante años.",
-   "dur": 5.6,
-   "h": "TONELADAS DE MINERAL",
-   "w": "TONELADAS",
-   "sub": "",
-   "ic": "brillo",
-   "num": null,
-   "vs": null,
-   "bars": [],
-   "barsU": "",
-   "hi": -1,
-   "line": null,
-   "items": [],
-   "stops": [],
-   "end": "",
-   "donut": [],
-   "picto": null,
-   "top": [],
-   "myth": "",
-   "truth": "",
-   "zoom": null,
-   "capas": null,
-   "mira": null,
-   "impacto": null,
-   "red": null,
-   "termo": null,
-   "pila": null,
-   "cap": "",
-   "papel": null,
-   "pilares": null,
-   "ciclo": null,
-   "duo": null,
-   "osc": null,
-   "cubo": null,
-   "diales": null,
-   "pieza": {
-    "id": "mc-toneladas",
-    "props": {}
-   },
-   "cita": null,
-   "sc": "",
-   "modo": "VIRAL",
-   "tema": "claro",
-   "bg": "light",
-   "ritmo": 1,
-   "total": 62.4,
-   "inicio": 21.5,
-   "fin": 27.1,
-   "texto": "Para obtener una décima de gramo de radio, procesó toneladas de mineral durante años.",
-   "tr": "corte",
    "trs": "zoom",
    "sfx": [
     {
@@ -445,72 +308,77 @@
     {
      "t": 0.4,
      "tipo": "pop",
+     "vol": 0.1
+    },
+    {
+     "t": 2.3,
+     "tipo": "pop",
      "vol": 0.12
-    },
-    {
-     "t": 3,
-     "tipo": "clic",
-     "vol": 0.05
-    },
-    {
-     "t": 3,
-     "tipo": "thud",
-     "vol": 0.2
-    },
-    {
-     "t": 3.13,
-     "tipo": "clic",
-     "vol": 0.05
-    },
-    {
-     "t": 3.26,
-     "tipo": "clic",
-     "vol": 0.05
-    },
-    {
-     "t": 3.39,
-     "tipo": "clic",
-     "vol": 0.05
-    },
-    {
-     "t": 3.52,
-     "tipo": "clic",
-     "vol": 0.05
-    },
-    {
-     "t": 3.65,
-     "tipo": "clic",
-     "vol": 0.05
-    },
-    {
-     "t": 3.7800000000000002,
-     "tipo": "clic",
-     "vol": 0.05
-    },
-    {
-     "t": 3.91,
-     "tipo": "clic",
-     "vol": 0.05
-    },
-    {
-     "t": 4.04,
-     "tipo": "clic",
-     "vol": 0.05
     },
     {
      "t": 4.3,
-     "tipo": "tick",
+     "tipo": "zap",
      "vol": 0.12
+    },
+    {
+     "t": 5.3,
+     "tipo": "clic",
+     "vol": 0.04
+    },
+    {
+     "t": 5.43,
+     "tipo": "clic",
+     "vol": 0.04
+    },
+    {
+     "t": 5.56,
+     "tipo": "clic",
+     "vol": 0.04
+    },
+    {
+     "t": 5.6899999999999995,
+     "tipo": "clic",
+     "vol": 0.04
+    },
+    {
+     "t": 5.82,
+     "tipo": "clic",
+     "vol": 0.04
+    },
+    {
+     "t": 5.95,
+     "tipo": "clic",
+     "vol": 0.04
+    },
+    {
+     "t": 6.08,
+     "tipo": "clic",
+     "vol": 0.04
+    },
+    {
+     "t": 6.21,
+     "tipo": "clic",
+     "vol": 0.04
+    },
+    {
+     "t": 6.34,
+     "tipo": "clic",
+     "vol": 0.04
+    },
+    {
+     "t": 6.5,
+     "tipo": "ding",
+     "vol": 0.18
     }
    ]
   },
   {
-   "n": 5,
+   "n": 4,
    "t": "PIEZA",
-   "voz": "Ganó dos Nobel, en Física y en Química: fue la primera mujer en ganarlo y la única persona premiada en dos ciencias.",
-   "dur": 8.3,
-   "h": "DOS NOBEL",
-   "w": "NOBEL",
+   "voz": "El once de enero de mil novecientos veintidós, un niño de veintinueve kilos recibió la primera inyección. Apenas funcionó.",
+   "dur": 7.3,
+   "h": "LA PRIMERA INYECCIÓN",
+   "w": "INYECCIÓN",
    "sub": "",
    "ic": "brillo",
    "num": null,
@@ -534,7 +402,7 @@
    "red": null,
    "termo": null,
    "pila": null,
-   "cap": "1903 y 1911",
+   "cap": "11 de enero de 1922",
    "papel": null,
    "pilares": null,
    "ciclo": null,
@@ -543,19 +411,19 @@
    "cubo": null,
    "diales": null,
    "pieza": {
-    "id": "mc-nobel",
+    "id": "ins-primera",
     "props": {}
    },
    "cita": null,
    "sc": "",
    "modo": "VIRAL",
-   "tema": "oscuro",
-   "bg": "dark",
+   "tema": "claro",
+   "bg": "light",
    "ritmo": 1,
-   "total": 62.4,
-   "inicio": 27.1,
-   "fin": 35.4,
-   "texto": "Ganó dos Nobel, en Física y en Química: fue la primera mujer en ganarlo y la única persona premiada en dos ciencias.",
+   "total": 63.3,
+   "inicio": 22.9,
+   "fin": 30.2,
+   "texto": "El once de enero de mil novecientos veintidós, un niño de veintinueve kilos recibió la primera inyección. Apenas funcionó.",
    "tr": "zoom",
    "trs": "semitono",
    "sfx": [
@@ -570,313 +438,34 @@
      "vol": 0.1
     },
     {
-     "t": 1,
-     "tipo": "pop",
-     "vol": 0.16
-    },
-    {
-     "t": 1.1,
-     "tipo": "ding",
-     "vol": 0.2
-    },
-    {
-     "t": 2,
-     "tipo": "pop",
-     "vol": 0.16
-    },
-    {
-     "t": 2.1,
-     "tipo": "ding",
-     "vol": 0.2
-    },
-    {
-     "t": 3,
-     "tipo": "tick",
-     "vol": 0.12
-    },
-    {
-     "t": 5,
-     "tipo": "ding",
-     "vol": 0.18
-    }
-   ]
-  },
-  {
-   "n": 6,
-   "t": "PIEZA",
-   "voz": "En la Primera Guerra Mundial creó ambulancias con rayos X para encontrar balas y huesos rotos, las llamadas pequeñas Curies.",
-   "dur": 7.6,
-   "h": "AMBULANCIAS CON RAYOS X",
-   "w": "AMBULANCIAS",
-   "sub": "",
-   "ic": "telefono",
-   "num": null,
-   "vs": null,
-   "bars": [],
-   "barsU": "",
-   "hi": -1,
-   "line": null,
-   "items": [],
-   "stops": [],
-   "end": "",
-   "donut": [],
-   "picto": null,
-   "top": [],
-   "myth": "",
-   "truth": "",
-   "zoom": null,
-   "capas": null,
-   "mira": null,
-   "impacto": null,
-   "red": null,
-   "termo": null,
-   "pila": null,
-   "cap": "1914",
-   "papel": null,
-   "pilares": null,
-   "ciclo": null,
-   "duo": null,
-   "osc": null,
-   "cubo": null,
-   "diales": null,
-   "pieza": {
-    "id": "mc-guerra",
-    "props": {}
-   },
-   "cita": null,
-   "sc": "",
-   "modo": "VIRAL",
-   "tema": "claro",
-   "bg": "light",
-   "ritmo": 1,
-   "total": 62.4,
-   "inicio": 35.4,
-   "fin": 43,
-   "texto": "En la Primera Guerra Mundial creó ambulancias con rayos X para encontrar balas y huesos rotos, las llamadas pequeñas Curies.",
-   "tr": "semitono",
-   "trs": "corte",
-   "sfx": [
-    {
-     "t": 0.04,
-     "tipo": "whoosh",
-     "vol": 0.16
-    },
-    {
-     "t": 0.05,
-     "tipo": "whoosh",
-     "vol": 0.1
-    },
-    {
      "t": 0.4,
      "tipo": "tick",
      "vol": 0.12
     },
     {
-     "t": 1.9,
-     "tipo": "whoosh",
-     "vol": 0.18
-    },
-    {
-     "t": 3.6,
-     "tipo": "zap",
-     "vol": 0.16
-    },
-    {
-     "t": 3.9,
-     "tipo": "ding",
-     "vol": 0.18
-    },
-    {
-     "t": 5.7,
+     "t": 3,
      "tipo": "pop",
      "vol": 0.14
     },
     {
-     "t": 6.3,
-     "tipo": "tick",
-     "vol": 0.12
+     "t": 4.7,
+     "tipo": "zap",
+     "vol": 0.14
+    },
+    {
+     "t": 6.1,
+     "tipo": "thud",
+     "vol": 0.2
     }
    ]
   },
   {
-   "n": 7,
+   "n": 5,
    "t": "PIEZA",
-   "voz": "Manejaba tubos y sales de radio sin protección; murió en mil novecientos treinta y cuatro, probablemente por la radiación.",
-   "dur": 7.3,
-   "h": "SIN PROTECCIÓN",
-   "w": "PROTECCIÓN",
-   "sub": "",
-   "ic": "seguridad",
-   "num": null,
-   "vs": null,
-   "bars": [],
-   "barsU": "",
-   "hi": -1,
-   "line": null,
-   "items": [],
-   "stops": [],
-   "end": "",
-   "donut": [],
-   "picto": null,
-   "top": [],
-   "myth": "",
-   "truth": "",
-   "zoom": null,
-   "capas": null,
-   "mira": null,
-   "impacto": null,
-   "red": null,
-   "termo": null,
-   "pila": null,
-   "cap": "",
-   "papel": null,
-   "pilares": null,
-   "ciclo": null,
-   "duo": null,
-   "osc": null,
-   "cubo": null,
-   "diales": null,
-   "pieza": {
-    "id": "mc-riesgo",
-    "props": {}
-   },
-   "cita": null,
-   "sc": "",
-   "modo": "VIRAL",
-   "tema": "oscuro",
-   "bg": "dark",
-   "ritmo": 1,
-   "total": 62.4,
-   "inicio": 43,
-   "fin": 50.3,
-   "texto": "Manejaba tubos y sales de radio sin protección; murió en mil novecientos treinta y cuatro, probablemente por la radiación.",
-   "tr": "corte",
-   "trs": "zoom",
-   "sfx": [
-    {
-     "t": 0.04,
-     "tipo": "whoosh",
-     "vol": 0.16
-    },
-    {
-     "t": 0.05,
-     "tipo": "whoosh",
-     "vol": 0.1
-    },
-    {
-     "t": 0.2,
-     "tipo": "clic",
-     "vol": 0.04
-    },
-    {
-     "t": 0.33,
-     "tipo": "clic",
-     "vol": 0.04
-    },
-    {
-     "t": 0.46,
-     "tipo": "clic",
-     "vol": 0.04
-    },
-    {
-     "t": 0.5900000000000001,
-     "tipo": "clic",
-     "vol": 0.04
-    },
-    {
-     "t": 0.72,
-     "tipo": "clic",
-     "vol": 0.04
-    },
-    {
-     "t": 0.8500000000000001,
-     "tipo": "clic",
-     "vol": 0.04
-    },
-    {
-     "t": 0.98,
-     "tipo": "clic",
-     "vol": 0.04
-    },
-    {
-     "t": 1,
-     "tipo": "thud",
-     "vol": 0.16
-    },
-    {
-     "t": 1.11,
-     "tipo": "clic",
-     "vol": 0.04
-    },
-    {
-     "t": 1.24,
-     "tipo": "clic",
-     "vol": 0.04
-    },
-    {
-     "t": 1.3699999999999999,
-     "tipo": "clic",
-     "vol": 0.04
-    },
-    {
-     "t": 1.5,
-     "tipo": "clic",
-     "vol": 0.04
-    },
-    {
-     "t": 1.6300000000000001,
-     "tipo": "clic",
-     "vol": 0.04
-    },
-    {
-     "t": 1.76,
-     "tipo": "clic",
-     "vol": 0.04
-    },
-    {
-     "t": 1.89,
-     "tipo": "clic",
-     "vol": 0.04
-    },
-    {
-     "t": 2.02,
-     "tipo": "clic",
-     "vol": 0.04
-    },
-    {
-     "t": 2.1500000000000004,
-     "tipo": "clic",
-     "vol": 0.04
-    },
-    {
-     "t": 2.2800000000000002,
-     "tipo": "clic",
-     "vol": 0.04
-    },
-    {
-     "t": 2.41,
-     "tipo": "clic",
-     "vol": 0.04
-    },
-    {
-     "t": 3,
-     "tipo": "thud",
-     "vol": 0.22
-    },
-    {
-     "t": 5.4,
-     "tipo": "tick",
-     "vol": 0.1
-    }
-   ]
-  },
-  {
-   "n": 8,
-   "t": "PIEZA",
-   "voz": "Hoy están en cajas de plomo, y tardarán unos mil quinientos años en perder la mitad de su radiactividad.",
-   "dur": 7.3,
-   "h": "CAJAS DE PLOMO",
-   "w": "PLOMO",
+   "voz": "James Collip purificó el extracto. El veintitrés de enero lo inyectaron de nuevo y, en un día, los síntomas casi desaparecieron.",
+   "dur": 7.8,
+   "h": "COLLIP PURIFICA",
+   "w": "PURIFICA",
    "sub": "",
    "ic": "brillo",
    "num": null,
@@ -900,6 +489,220 @@
    "red": null,
    "termo": null,
    "pila": null,
+   "cap": "23 de enero de 1922",
+   "papel": null,
+   "pilares": null,
+   "ciclo": null,
+   "duo": null,
+   "osc": null,
+   "cubo": null,
+   "diales": null,
+   "pieza": {
+    "id": "ins-segunda",
+    "props": {}
+   },
+   "cita": null,
+   "sc": "",
+   "modo": "VIRAL",
+   "tema": "oscuro",
+   "bg": "dark",
+   "ritmo": 1,
+   "total": 63.3,
+   "inicio": 30.2,
+   "fin": 38,
+   "texto": "James Collip purificó el extracto. El veintitrés de enero lo inyectaron de nuevo y, en un día, los síntomas casi desaparecieron.",
+   "tr": "semitono",
+   "trs": "zoom",
+   "sfx": [
+    {
+     "t": 0.04,
+     "tipo": "whoosh",
+     "vol": 0.16
+    },
+    {
+     "t": 0.05,
+     "tipo": "whoosh",
+     "vol": 0.1
+    },
+    {
+     "t": 0.6,
+     "tipo": "pop",
+     "vol": 0.12
+    },
+    {
+     "t": 1.9,
+     "tipo": "tick",
+     "vol": 0.12
+    },
+    {
+     "t": 3.3,
+     "tipo": "zap",
+     "vol": 0.14
+    },
+    {
+     "t": 4.7,
+     "tipo": "clic",
+     "vol": 0.05
+    },
+    {
+     "t": 4.83,
+     "tipo": "clic",
+     "vol": 0.05
+    },
+    {
+     "t": 4.96,
+     "tipo": "clic",
+     "vol": 0.05
+    },
+    {
+     "t": 5.09,
+     "tipo": "clic",
+     "vol": 0.05
+    },
+    {
+     "t": 5.220000000000001,
+     "tipo": "clic",
+     "vol": 0.05
+    },
+    {
+     "t": 5.3500000000000005,
+     "tipo": "clic",
+     "vol": 0.05
+    },
+    {
+     "t": 5.48,
+     "tipo": "clic",
+     "vol": 0.05
+    },
+    {
+     "t": 5.7,
+     "tipo": "ding",
+     "vol": 0.22
+    }
+   ]
+  },
+  {
+   "n": 6,
+   "t": "PIEZA",
+   "voz": "En mil novecientos veintitrés, Banting y Macleod recibieron el Nobel y compartieron el dinero con Best y Collip.",
+   "dur": 6.7,
+   "h": "EL NOBEL COMPARTIDO",
+   "w": "NOBEL",
+   "sub": "",
+   "ic": "billete",
+   "num": null,
+   "vs": null,
+   "bars": [],
+   "barsU": "",
+   "hi": -1,
+   "line": null,
+   "items": [],
+   "stops": [],
+   "end": "",
+   "donut": [],
+   "picto": null,
+   "top": [],
+   "myth": "",
+   "truth": "",
+   "zoom": null,
+   "capas": null,
+   "mira": null,
+   "impacto": null,
+   "red": null,
+   "termo": null,
+   "pila": null,
+   "cap": "1923",
+   "papel": null,
+   "pilares": null,
+   "ciclo": null,
+   "duo": null,
+   "osc": null,
+   "cubo": null,
+   "diales": null,
+   "pieza": {
+    "id": "ins-nobel",
+    "props": {}
+   },
+   "cita": null,
+   "sc": "",
+   "modo": "VIRAL",
+   "tema": "claro",
+   "bg": "light",
+   "ritmo": 1,
+   "total": 63.3,
+   "inicio": 38,
+   "fin": 44.7,
+   "texto": "En mil novecientos veintitrés, Banting y Macleod recibieron el Nobel y compartieron el dinero con Best y Collip.",
+   "tr": "zoom",
+   "trs": "corte",
+   "sfx": [
+    {
+     "t": 0.04,
+     "tipo": "whoosh",
+     "vol": 0.16
+    },
+    {
+     "t": 0.05,
+     "tipo": "whoosh",
+     "vol": 0.1
+    },
+    {
+     "t": 0.4,
+     "tipo": "pop",
+     "vol": 0.16
+    },
+    {
+     "t": 0.5,
+     "tipo": "ding",
+     "vol": 0.2
+    },
+    {
+     "t": 1.6,
+     "tipo": "tick",
+     "vol": 0.12
+    },
+    {
+     "t": 3.3,
+     "tipo": "pop",
+     "vol": 0.14
+    },
+    {
+     "t": 3.6999999999999997,
+     "tipo": "pop",
+     "vol": 0.14
+    }
+   ]
+  },
+  {
+   "n": 7,
+   "t": "PIEZA",
+   "voz": "La patente se vendió a la Universidad de Toronto por un dólar, para que la insulina pudiera fabricarse sin trabas.",
+   "dur": 7.4,
+   "h": "POR UN DÓLAR",
+   "w": "DÓLAR",
+   "sub": "",
+   "ic": "dolar",
+   "num": null,
+   "vs": null,
+   "bars": [],
+   "barsU": "",
+   "hi": -1,
+   "line": null,
+   "items": [],
+   "stops": [],
+   "end": "",
+   "donut": [],
+   "picto": null,
+   "top": [],
+   "myth": "",
+   "truth": "",
+   "zoom": null,
+   "capas": null,
+   "mira": null,
+   "impacto": null,
+   "red": null,
+   "termo": null,
+   "pila": null,
    "cap": "",
    "papel": null,
    "pilares": null,
@@ -909,7 +712,154 @@
    "cubo": null,
    "diales": null,
    "pieza": {
-    "id": "mc-cuadernos",
+    "id": "ins-patente",
+    "props": {}
+   },
+   "cita": null,
+   "sc": "",
+   "modo": "VIRAL",
+   "tema": "oscuro",
+   "bg": "dark",
+   "ritmo": 1,
+   "total": 63.3,
+   "inicio": 44.7,
+   "fin": 52.1,
+   "texto": "La patente se vendió a la Universidad de Toronto por un dólar, para que la insulina pudiera fabricarse sin trabas.",
+   "tr": "corte",
+   "trs": "zoom",
+   "sfx": [
+    {
+     "t": 0.04,
+     "tipo": "whoosh",
+     "vol": 0.16
+    },
+    {
+     "t": 0.05,
+     "tipo": "whoosh",
+     "vol": 0.1
+    },
+    {
+     "t": 0.4,
+     "tipo": "pop",
+     "vol": 0.12
+    },
+    {
+     "t": 3,
+     "tipo": "thud",
+     "vol": 0.22
+    },
+    {
+     "t": 3.1,
+     "tipo": "ding",
+     "vol": 0.2
+    },
+    {
+     "t": 4.3,
+     "tipo": "clic",
+     "vol": 0.05
+    },
+    {
+     "t": 4.43,
+     "tipo": "clic",
+     "vol": 0.05
+    },
+    {
+     "t": 4.56,
+     "tipo": "clic",
+     "vol": 0.05
+    },
+    {
+     "t": 4.6899999999999995,
+     "tipo": "clic",
+     "vol": 0.05
+    },
+    {
+     "t": 4.82,
+     "tipo": "clic",
+     "vol": 0.05
+    },
+    {
+     "t": 4.95,
+     "tipo": "clic",
+     "vol": 0.05
+    },
+    {
+     "t": 5.08,
+     "tipo": "clic",
+     "vol": 0.05
+    },
+    {
+     "t": 5.21,
+     "tipo": "clic",
+     "vol": 0.05
+    },
+    {
+     "t": 5.34,
+     "tipo": "clic",
+     "vol": 0.05
+    },
+    {
+     "t": 5.47,
+     "tipo": "clic",
+     "vol": 0.05
+    },
+    {
+     "t": 5.6,
+     "tipo": "clic",
+     "vol": 0.05
+    },
+    {
+     "t": 5.73,
+     "tipo": "clic",
+     "vol": 0.05
+    },
+    {
+     "t": 5.859999999999999,
+     "tipo": "clic",
+     "vol": 0.05
+    }
+   ]
+  },
+  {
+   "n": 8,
+   "t": "PIEZA",
+   "voz": "Hoy millones de personas con diabetes usan insulina, y cada catorce de noviembre se recuerda esta historia.",
+   "dur": 6.4,
+   "h": "HOY, MILLONES",
+   "w": "MILLONES",
+   "sub": "",
+   "ic": "billete",
+   "num": null,
+   "vs": null,
+   "bars": [],
+   "barsU": "",
+   "hi": -1,
+   "line": null,
+   "items": [],
+   "stops": [],
+   "end": "",
+   "donut": [],
+   "picto": null,
+   "top": [],
+   "myth": "",
+   "truth": "",
+   "zoom": null,
+   "capas": null,
+   "mira": null,
+   "impacto": null,
+   "red": null,
+   "termo": null,
+   "pila": null,
+   "cap": "",
+   "papel": null,
+   "pilares": null,
+   "ciclo": null,
+   "duo": null,
+   "osc": null,
+   "cubo": null,
+   "diales": null,
+   "pieza": {
+    "id": "ins-hoy",
     "props": {}
    },
    "cita": null,
@@ -918,10 +868,10 @@
    "tema": "claro",
    "bg": "light",
    "ritmo": 1,
-   "total": 62.4,
-   "inicio": 50.3,
-   "fin": 57.6,
-   "texto": "Hoy están en cajas de plomo, y tardarán unos mil quinientos años en perder la mitad de su radiactividad.",
+   "total": 63.3,
+   "inicio": 52.1,
+   "fin": 58.5,
+   "texto": "Hoy millones de personas con diabetes usan insulina, y cada catorce de noviembre se recuerda esta historia.",
    "tr": "zoom",
    "trs": "barrido",
    "sfx": [
@@ -936,101 +886,106 @@
      "vol": 0.1
     },
     {
-     "t": 0.4,
-     "tipo": "thud",
-     "vol": 0.2
-    },
-    {
-     "t": 2.3,
+     "t": 0.6000000000000001,
      "tipo": "clic",
      "vol": 0.04
     },
     {
-     "t": 2.4299999999999997,
+     "t": 0.7300000000000001,
      "tipo": "clic",
      "vol": 0.04
     },
     {
-     "t": 2.5599999999999996,
+     "t": 0.8600000000000001,
      "tipo": "clic",
      "vol": 0.04
     },
     {
-     "t": 2.69,
+     "t": 0.9900000000000001,
      "tipo": "clic",
      "vol": 0.04
     },
     {
-     "t": 2.82,
+     "t": 1.12,
      "tipo": "clic",
      "vol": 0.04
     },
     {
-     "t": 2.9499999999999997,
+     "t": 1.25,
      "tipo": "clic",
      "vol": 0.04
     },
     {
-     "t": 3.08,
+     "t": 1.3800000000000001,
      "tipo": "clic",
      "vol": 0.04
     },
     {
-     "t": 3.21,
+     "t": 1.5100000000000002,
      "tipo": "clic",
      "vol": 0.04
     },
     {
-     "t": 3.34,
+     "t": 1.6400000000000001,
      "tipo": "clic",
      "vol": 0.04
     },
     {
-     "t": 3.4699999999999998,
+     "t": 1.77,
      "tipo": "clic",
      "vol": 0.04
     },
     {
-     "t": 3.5999999999999996,
+     "t": 1.9000000000000001,
      "tipo": "clic",
      "vol": 0.04
     },
     {
-     "t": 3.73,
+     "t": 2.0300000000000002,
      "tipo": "clic",
      "vol": 0.04
     },
     {
-     "t": 3.86,
+     "t": 2.16,
      "tipo": "clic",
      "vol": 0.04
     },
     {
-     "t": 3.9899999999999998,
+     "t": 2.29,
      "tipo": "clic",
      "vol": 0.04
     },
     {
-     "t": 4.12,
+     "t": 2.42,
      "tipo": "clic",
      "vol": 0.04
     },
     {
-     "t": 4.3,
+     "t": 2.5500000000000003,
+     "tipo": "clic",
+     "vol": 0.04
+    },
+    {
+     "t": 3,
      "tipo": "ding",
      "vol": 0.2
     },
     {
-     "t": 5.6,
-     "tipo": "tick",
-     "vol": 0.12
+     "t": 4.2,
+     "tipo": "pop",
+     "vol": 0.16
+    },
+    {
+     "t": 4.3,
+     "tipo": "heartbeat",
+     "vol": 0.2
     }
    ]
   },
   {
    "n": 9,
    "t": "CTA",
-   "voz": "Compártelo con alguien que ame la ciencia. Síguenos en Sinapsis.",
+   "voz": "Compártelo con quien ame la historia de la medicina. Síguenos en Sinapsis.",
    "dur": 4.8,
    "h": "COMPÁRTELO Y SÍGUENOS",
    "w": "SÍGUENOS",
@@ -1072,10 +1027,10 @@
    "tema": "oscuro",
    "bg": "gold",
    "ritmo": 1,
-   "total": 62.4,
-   "inicio": 57.6,
-   "fin": 62.4,
-   "texto": "Compártelo con alguien que ame la ciencia. Síguenos en Sinapsis.",
+   "total": 63.3,
+   "inicio": 58.5,
+   "fin": 63.3,
+   "texto": "Compártelo con quien ame la historia de la medicina. Síguenos en Sinapsis.",
    "tr": "barrido",
    "trs": "barrido",
    "sfx": [
