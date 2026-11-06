@@ -4,6 +4,8 @@
  */
 import { PisAcrilico, PisGancho, PisUnion, PisVidrio } from "./pis1";
 import { PisCarga, PisTinas, PisViento, PisZoom } from "./pis2";
+import { AutGancho, AutLlanta, AutTanque } from "./aut1";
+import { AutEdad, AutRepaso, AutVin } from "./aut2";
 import { SepBacterias, SepCamara2, SepDecanta, SepGancho, SepIdea, SepPozo } from "./sep1";
 import { SepGrava, SepLote, SepMant, SepOlores, SepSuelo } from "./sep2";
 import { TmdDiscos, TmdGancho, TmdViento } from "./tmd1";
@@ -117,6 +119,7 @@ export const COMPONENTES_PIEZA: Record<string, React.FC<{ e: EscenaViralGuardada
   "sky-gancho": SkyGancho, "sky-espesor": SkyEspesor, "sky-union": SkyUnion, "sky-izado": SkyIzado, "sky-apoyos": SkyApoyos, "sky-llenado": SkyLlenado,
   "tmd-gancho": TmdGancho, "tmd-viento": TmdViento, "tmd-discos": TmdDiscos, "tmd-bola": TmdBola, "tmd-cuelga": TmdCuelga, "tmd-tifon": TmdTifon,
   "sep-gancho": SepGancho, "sep-pozo": SepPozo, "sep-idea": SepIdea, "sep-decanta": SepDecanta, "sep-bacterias": SepBacterias, "sep-camara2": SepCamara2, "sep-olores": SepOlores, "sep-grava": SepGrava, "sep-suelo": SepSuelo, "sep-mant": SepMant, "sep-lote": SepLote,
+  "aut-gancho": AutGancho, "aut-tanque": AutTanque, "aut-llanta": AutLlanta, "aut-edad": AutEdad, "aut-vin": AutVin, "aut-repaso": AutRepaso,
   "cab-gancho": CabGancho, "cab-caja": CabCaja, "cab-largo": CabLargo, "cab-flexible": CabFlexible, "cab-nudos": CabNudos, "cab-receta": CabReceta,
   "rui-gancho": RuiGancho, "rui-dia": RuiDia, "rui-noche": RuiNoche, "rui-ritmos": RuiRitmos, "rui-friccion": RuiFriccion, "rui-remate": RuiRemate, "rui-tally": RuiTally, "rui-micro": RuiMicro,
   "pte-gancho": PteGancho, "pte-parabola": PteParabola, "pte-duelo": PteDuelo, "pte-roebling": PteRoebling, "pte-bloque": PteBloque, "pte-cubo": PteCubo, "pte-zoom": PteZoom,

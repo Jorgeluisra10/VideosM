@@ -1,0 +1,12 @@
+{
+  "titulo": "Los 3 códigos escondidos en tu vehículo",
+  "scenes": [
+    { "t": "PIEZA", "voz": "Esa flechita junto al medidor de gasolina no está de adorno. Y hay dos códigos más escondidos.", "dur": 6.4, "h": "ESA FLECHITA NO ES DE ADORNO", "w": "FLECHITA", "cap": "3 códigos", "pieza": { "id": "aut-gancho" } },
+    { "t": "PIEZA", "voz": "Apunta al lado donde está la tapa del tanque, así nunca te equivocas de lado en la bomba.", "dur": 6.9, "h": "APUNTA A LA TAPA", "w": "TAPA", "cap": "código 1", "pieza": { "id": "aut-tanque" } },
+    { "t": "PIEZA", "voz": "Segundo: en la llanta, los últimos cuatro números del DOT son semana y año de fabricación.", "dur": 6.1, "h": "EL CÓDIGO DOT", "w": "DOT", "cap": "código 2", "pieza": { "id": "aut-llanta" } },
+    { "t": "PIEZA", "voz": "Muchos fabricantes recomiendan cambiarlas entre los seis y diez años, aunque tengan dibujo.", "dur": 5.3, "h": "LAS LLANTAS VENCEN", "w": "VENCEN", "cap": "6 a 10 años", "pieza": { "id": "aut-edad" } },
+    { "t": "PIEZA", "voz": "Tercero: el VIN. Su décimo carácter es el año modelo; la T, por ejemplo, es dos mil veintiséis.", "dur": 6.9, "h": "EL VIN", "w": "VIN", "cap": "código 3", "pieza": { "id": "aut-vin" } },
+    { "t": "PIEZA", "voz": "Lo encuentras en el parabrisas y en la tarjeta de propiedad. Revísalo antes de comprar.", "dur": 5.9, "h": "DÓNDE MIRAR", "w": "REVÍSALO", "cap": "antes de comprar", "pieza": { "id": "aut-repaso" } },
+    { "t": "CTA", "voz": "Guárdalo y síguenos en IMNOBA, tu plataforma de propiedades y vehículos.", "dur": 5.0, "h": "SÍGUENOS EN IMNOBA", "w": "IMNOBA", "ic": "casa" }
+  ]
+}

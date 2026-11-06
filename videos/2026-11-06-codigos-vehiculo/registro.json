@@ -1,0 +1,18 @@
+{
+  "version": 1,
+  "slug": "2026-11-06-codigos-vehiculo",
+  "titulo": "Los 3 códigos escondidos en tu vehículo",
+  "serie": "ingenieria_extrema",
+  "estado": "grabado",
+  "guion": "Esa flechita junto al medidor de gasolina no está de adorno. Y hay dos códigos más escondidos.\nApunta al lado donde está la tapa del tanque, así nunca te equivocas de lado en la bomba.\nSegundo: en la llanta, los últimos cuatro números del DOT son semana y año de fabricación.\nMuchos fabricantes recomiendan cambiarlas entre los seis y diez años, aunque tengan dibujo.\nTercero: el VIN. Su décimo carácter es el año modelo; la T, por ejemplo, es dos mil veintiséis.\nLo encuentras en el parabrisas y en la tarjeta de propiedad. Revísalo antes de comprar.\nGuárdalo y síguenos en IMNOBA, tu plataforma de propiedades y vehículos.",
+  "gancho": "Esa flechita junto al medidor de gasolina no está de adorno.",
+  "duracion_seg": 42.5,
+  "notas": "Espero que lo guarden como lista para revisar antes de comprar un vehículo y lo compartan por la curiosidad de la flechita; que sigan a IMNOBA al final. Métrica: retención a los 3 s y al pasar el segundo código (≈ 13 s), guardados por cada 1.000 alcanzados. Ojo: sin voz, ponle voz antes de publicar.",
+  "voz_usada": "",
+  "instrucciones_voz": "",
+  "creado": "2026-11-06T21:16:12.737Z",
+  "origen_clave": "a6e26bd3",
+  "video": "revision.mp4",
+  "miniatura": "miniatura.jpg",
+  "entrega": ""
+}

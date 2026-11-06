@@ -602,6 +602,34 @@ export const TSE = {
   lote: { letrero: 0.3, c1: 3.4, c2: 4.4, c3: 5.4 },
 } as const;
 
+/** Datos del video «Los 3 códigos escondidos en tu vehículo» (IMNOBA · vehículos). Fuentes y precauciones en ejemplos/animacion-viral/guion-tecnico-codigos-vehiculo.md. */
+export const AUT = {
+  /** ejemplo de código DOT: «3624» = semana 36 de 2024 (los 4 últimos dígitos: semana y año; llantas fabricadas desde 2000) */
+  dotEjemplo: "3624", semana: 36, anio: 2024,
+  /** muchos fabricantes recomiendan cambiar las llantas entre 6 y 10 años después de su fabricación, sin importar el dibujo */
+  llantaAniosMin: 6, llantaAniosMax: 10,
+  /** el 10.º carácter del VIN es el año modelo (en la mayoría de vehículos) */
+  vinPosAnio: 10,
+} as const;
+/** Año modelo que indica el carácter del VIN (posición 10) en el ciclo 2010–2039; null si no es un carácter válido (no se usan I, O, Q, U, Z ni 0). El mismo carácter vale también 30 años antes (S = 1995 o 2025). */
+export function vinAnioModelo(c: string): number | null {
+  const letras = "ABCDEFGHJKLMNPRSTVWXY";
+  const u = c.toUpperCase();
+  const i = letras.indexOf(u);
+  if (i >= 0) return 2010 + i;
+  if (/^[1-9]$/.test(u)) return 2030 + Number(u);
+  return null;
+}
+/** Tiempos de «Los 3 códigos escondidos en tu vehículo» (s a ritmo normal), compartidos entre el dibujo y el sonido. */
+export const TAT = {
+  gancho: { medidor: 0.2, aguja: 1.6, flecha: 1.6, dos: 4.4 },
+  tanque: { auto: 0.3, flecha: 0.9, puerta: 1.8, manguera: 2.4, mangueraDur: 1.2, cambia: 4.0, puerta2: 4.8, manguera2: 5.2, chip: 2.2, chip2: 5.4 },
+  llanta: { llanta: 0.2, zoom: 1.2, zoomDur: 1.0, luz: 2.4, chip1: 2.8, chip2: 3.4, calendario: 3.9 },
+  edad: { env: 0.4, envDur: 3.6, seis: 2.0, diez: 3.8, chip: 4.4 },
+  vin: { placa: 0.2, placaDur: 1.8, resalta: 3.0, tabla: 4.2, chip: 5.6 },
+  repaso: { parabrisas: 0.3, tarjeta: 2.4, c1: 3.8, c2: 4.3, c3: 4.8 },
+} as const;
+
 export const PIEZAS: Record<string, DefPieza> = {
   "metro-plano": {
     id: "metro-plano", nombre: "8 millones en un solo plano", ideal: 7.6, fondo: "dark",
@@ -1156,6 +1184,31 @@ export const PIEZAS: Record<string, DefPieza> = {
   "sep-lote": {
     id: "sep-lote", nombre: "Laboratorio séptico · si compras un terreno sin alcantarillado, pregunta por su sistema (cierre)", ideal: 7.15, fondo: "dark", entra: "zoom",
     sfx: (_d, r) => [ev(TSE.lote.letrero * r, "pop", 0.14), ev(TSE.lote.c1 * r, "tick", 0.1), ev(TSE.lote.c2 * r, "tick", 0.1), ev(TSE.lote.c3 * r, "ding", 0.16)],
+  },
+  /* ───────────── «Los 3 códigos escondidos en tu vehículo» (IMNOBA · vehículos · figuras realistas) ───────────── */
+  "aut-gancho": {
+    id: "aut-gancho", nombre: "Códigos del vehículo · la flechita del medidor de gasolina no es de adorno (gancho)", ideal: 5.95, fondo: "dark",
+    sfx: (_d, r) => [ev(0.05, "golpe", 0.2), ev(TAT.gancho.aguja * r, "zap", 0.14), ev(TAT.gancho.flecha * r + 0.3, "ding", 0.18), ev(TAT.gancho.dos * r, "pop", 0.12)],
+  },
+  "aut-tanque": {
+    id: "aut-tanque", nombre: "Códigos del vehículo · la flecha indica el lado de la tapa del tanque (izquierda o derecha)", ideal: 6.45, fondo: "dark", entra: "corte",
+    sfx: (_d, r) => [ev(TAT.tanque.auto * r, "whoosh", 0.12), ev(TAT.tanque.puerta * r, "pop", 0.14), ev(TAT.tanque.manguera * r + 0.9, "thud", 0.16), ev(TAT.tanque.cambia * r, "tick", 0.12), ev(TAT.tanque.manguera2 * r + 0.9, "gota", 0.14)],
+  },
+  "aut-llanta": {
+    id: "aut-llanta", nombre: "Códigos del vehículo · el código DOT de la llanta: semana y año de fabricación", ideal: 5.65, fondo: "dark", entra: "corte",
+    sfx: (_d, r) => [ev(TAT.llanta.llanta * r, "thud", 0.14), ev(TAT.llanta.zoom * r, "whoosh", 0.14), ev(TAT.llanta.luz * r, "zap", 0.12), ev(TAT.llanta.calendario * r, "tick", 0.12), ev(TAT.llanta.chip2 * r, "ding", 0.14)],
+  },
+  "aut-edad": {
+    id: "aut-edad", nombre: "Códigos del vehículo · las llantas vencen: muchos fabricantes recomiendan cambiarlas entre 6 y 10 años", ideal: 4.85, fondo: "dark", entra: "corte",
+    sfx: (_d, r) => [ev(TAT.edad.env * r, "estatica", 0.1), ev(TAT.edad.seis * r, "radar", 0.12), ev(TAT.edad.diez * r, "golpe", 0.16), ev(TAT.edad.chip * r, "ding", 0.12)],
+  },
+  "aut-vin": {
+    id: "aut-vin", nombre: "Códigos del vehículo · el VIN: su décimo carácter es el año modelo (la T = 2026)", ideal: 6.45, fondo: "dark", entra: "zoom",
+    sfx: (_d, r) => [ev(TAT.vin.placa * r, "whoosh", 0.1), ev(TAT.vin.resalta * r, "zap", 0.14), ev(TAT.vin.resalta * r + 0.15, "ding", 0.18), ev(TAT.vin.tabla * r, "pop", 0.12), ev(TAT.vin.chip * r, "tick", 0.1)],
+  },
+  "aut-repaso": {
+    id: "aut-repaso", nombre: "Códigos del vehículo · dónde mirar el VIN y repaso de los tres códigos (cierre)", ideal: 5.45, fondo: "dark", entra: "corte",
+    sfx: (_d, r) => [ev(TAT.repaso.parabrisas * r, "radar", 0.12), ev(TAT.repaso.tarjeta * r, "thud", 0.14), ev(TAT.repaso.c1 * r, "pop", 0.12), ev(TAT.repaso.c2 * r, "pop", 0.12), ev(TAT.repaso.c3 * r, "ding", 0.16)],
   },
 };
 
