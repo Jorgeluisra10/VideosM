@@ -2,6 +2,8 @@
  * Registro de piezas a medida (carril B): id → componente. El motor las dibuja cuando una escena es de tipo PIEZA.
  * Para añadir una pieza nueva: (1) su ficha pura en src/anim/piezas.ts (duración ideal, fondo, sonido), (2) su componente aquí.
  */
+import { MeCola, MeColumna, MeGancho, MeMariposa } from "./me1";
+import { MeLesion, MePuente, MeReflejo, MeVelocidad } from "./me2";
 import { InsGancho, InsHambre, InsPerros, InsPrimera } from "./in1";
 import { InsHoy, InsNobel, InsPatente, InsSegunda } from "./in2";
 import { McElementos, McGancho, McParis, McToneladas } from "./mc1";
@@ -123,6 +125,7 @@ export const COMPONENTES_PIEZA: Record<string, React.FC<{ e: EscenaViralGuardada
   "tej-hueso": TejHueso,
   "tej-muscular": TejMuscular,
   "tej-nervioso": TejNervioso,
+  "me-gancho": MeGancho, "me-columna": MeColumna, "me-cola": MeCola, "me-mariposa": MeMariposa, "me-velocidad": MeVelocidad, "me-reflejo": MeReflejo, "me-lesion": MeLesion, "me-puente": MePuente,
   "ins-gancho": InsGancho, "ins-hambre": InsHambre, "ins-perros": InsPerros, "ins-primera": InsPrimera, "ins-segunda": InsSegunda, "ins-nobel": InsNobel, "ins-patente": InsPatente, "ins-hoy": InsHoy,
   "mc-gancho": McGancho, "mc-paris": McParis, "mc-elementos": McElementos, "mc-toneladas": McToneladas, "mc-nobel": McNobel, "mc-guerra": McGuerra, "mc-riesgo": McRiesgo, "mc-cuadernos": McCuadernos,
   "an-gancho": AnGancho, "an-carrera": AnCarrera, "an-eter": AnEter, "an-busca": AnBusca, "an-noche": AnNoche, "an-despierta": AnDespierta, "an-reina": AnReina, "an-cierre": AnCierre,

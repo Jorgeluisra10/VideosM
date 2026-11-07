@@ -675,6 +675,35 @@ export const TIN = {
   hoy: { mundo: 0.2, dia: 3.0, circulo: 4.2 },
 } as const;
 
+/** Datos del video «La médula espinal: el atajo del cuerpo» (SINAPSIS · neuroanatomía). Fuentes y precauciones en ejemplos/animacion-viral/guion-tecnico-medula.md. */
+export const MDE = {
+  /** longitud de la médula del adulto ≈ 42–45 cm (anatomía clásica); termina en L1–L2 en la mayoría (rango T12–L3); la punción lumbar se hace por debajo (L3–L4 o L4–L5) */
+  longitudCm: 45, conoNivel: "L1–L2", puncionNivel: "L3–L4",
+  /** vértebras móviles: 7 cervicales, 12 torácicas, 5 lumbares; pares de nervios espinales: 8 cervicales, 12 torácicos, 5 lumbares, 5 sacros, 1 coccígeo */
+  vertebras: { c: 7, t: 12, l: 5 }, pares: { c: 8, t: 12, l: 5, s: 5, co: 1 },
+  /** el reflejo rotuliano es monosináptico y pasa por los segmentos L2–L4 de la médula, sin pasar por el cerebro */
+  reflejoRotuliano: "L2–L4",
+  /** velocidad máxima de conducción de los axones mielinizados más rápidos ≈ 120 m/s (≈ 430 km/h) */
+  velocidadMaxMs: 120,
+  /** interfaz cerebro–médula (Lorach et al., Nature, 24 mayo 2023): un participante con lesión crónica por un accidente en 2011; camina con muletas */
+  bsi: { anio: 2023, lesion: 2011, participantes: 1 },
+} as const;
+/** total de pares de nervios espinales */
+export const totalPares = (p: { c: number; t: number; l: number; s: number; co: number }): number => p.c + p.t + p.l + p.s + p.co;
+/** m/s → km/h */
+export const msAKmh = (ms: number): number => ms * 3.6;
+/** Tiempos del video de la médula (segundos a ritmo normal), compartidos entre el dibujo y el sonido. */
+export const TME = {
+  gancho: { golpe: 1.9, arco: 0.7, cerebro: 2.5, medula: 4.7 },
+  columna: { medula: 0.2, regla: 0.6, columna: 2.6, nervios: 4.3, conteo: 5.0 },
+  cola: { arriba: 0.2, lumbar: 1.6, nervios: 4.7, caballo: 6.1, puncion: 6.6 },
+  mariposa: { forma: 0.2, gris: 2.3, procesa: 3.3, blanca: 5.0, autopistas: 6.4 },
+  velocidad: { axon: 0.2, mielina: 1.2, cifra: 3.0, cifraDur: 1.4, kmh: 5.0 },
+  reflejo: { toca: 2.4, aparta: 2.6, cerebro: 4.0, dolor: 5.6 },
+  lesion: { rotura: 0.2, desconecta: 1.9, sube: 4.7, funciones: 5.7 },
+  puente: { anio: 0.2, hombre: 1.6, camina: 3.6, puente: 5.4, entre: 7.1 },
+} as const;
+
 /* ───────────── «La regla del 37 %» (problema de la parada óptima, ensayo abstracto para IMNOBA) ───────────── */
 
 /** Generador pseudoaleatorio determinista (mulberry32): mismos números en el render, en las pruebas y en cada fotograma. */
@@ -1524,6 +1553,39 @@ export const PIEZAS: Record<string, DefPieza> = {
   "ins-hoy": {
     id: "ins-hoy", nombre: "Insulina · hoy millones de personas con diabetes usan insulina; cada 14 de noviembre se recuerda esta historia (cierre)", ideal: 5.9, fondo: "dark", entra: "zoom",
     sfx: (_d, r) => [ev(0.05, "whoosh", 0.1), ...clics(TIN.hoy.mundo * r + 0.4, 2.2 * r, 0.04), ev(TIN.hoy.dia * r, "ding", 0.2), ev(TIN.hoy.circulo * r, "pop", 0.16), ev((TIN.hoy.circulo + 0.1) * r, "heartbeat", 0.2)],
+  },
+  /* ───────────── «La médula espinal: el atajo del cuerpo» (SINAPSIS · neuroanatomía) ───────────── */
+  "me-gancho": {
+    id: "me-gancho", nombre: "Médula · el reflejo rotuliano: el martillo golpea la rodilla y la orden sale de la médula, no del cerebro (gancho)", ideal: 6.5, fondo: "dark",
+    sfx: (_d, r) => [ev(0.05, "whoosh", 0.1), ev(TME.gancho.golpe * r, "thud", 0.24), ev((TME.gancho.golpe + 0.1) * r, "zap", 0.14), ev((TME.gancho.golpe + 0.35) * r, "pop", 0.14), ev(TME.gancho.cerebro * r, "tick", 0.12), ev(TME.gancho.medula * r, "ding", 0.2)],
+  },
+  "me-columna": {
+    id: "me-columna", nombre: "Médula · ≈ 45 cm dentro de la columna vertebral y 31 pares de nervios", ideal: 7.3, fondo: "dark", entra: "corte",
+    sfx: (_d, r) => [ev(0.05, "whoosh", 0.1), ev(TME.columna.regla * r, "pop", 0.12), ev(TME.columna.columna * r, "tick", 0.12), ...clics(TME.columna.nervios * r, 2.0 * r, 0.04), ev(TME.columna.conteo * r + 1.8, "ding", 0.2)],
+  },
+  "me-cola": {
+    id: "me-cola", nombre: "Médula · termina a la altura de L1–L2; debajo solo hay raíces nerviosas: la cola de caballo", ideal: 7.3, fondo: "dark", entra: "semitono",
+    sfx: (_d, r) => [ev(0.05, "whoosh", 0.1), ev(TME.cola.lumbar * r, "pop", 0.14), ev(TME.cola.nervios * r, "whoosh", 0.12), ev(TME.cola.caballo * r, "ding", 0.18), ev(TME.cola.puncion * r, "tick", 0.14)],
+  },
+  "me-mariposa": {
+    id: "me-mariposa", nombre: "Médula · corte transversal: mariposa de sustancia gris rodeada de sustancia blanca", ideal: 7.1, fondo: "dark", entra: "zoom",
+    sfx: (_d, r) => [ev(0.05, "whoosh", 0.1), ev(TME.mariposa.forma * r + 0.2, "pop", 0.14), ev(TME.mariposa.gris * r, "pop", 0.12), ...clics(TME.mariposa.procesa * r, 1.4 * r, 0.04), ev(TME.mariposa.blanca * r, "pop", 0.12), ev(TME.mariposa.autopistas * r, "whoosh", 0.16)],
+  },
+  "me-velocidad": {
+    id: "me-velocidad", nombre: "Médula · axones con mielina: la señal salta de nodo en nodo hasta ≈ 120 m/s (≈ 430 km/h)", ideal: 7.1, fondo: "dark", entra: "corte",
+    sfx: (_d, r) => [ev(0.05, "whoosh", 0.1), ev(TME.velocidad.mielina * r, "pop", 0.12), ...clics(TME.velocidad.cifra * r, TME.velocidad.cifraDur * r, 0.05), ev((TME.velocidad.cifra + TME.velocidad.cifraDur) * r, "ding", 0.18), ev(TME.velocidad.kmh * r, "whoosh", 0.18)],
+  },
+  "me-reflejo": {
+    id: "me-reflejo", nombre: "Médula · reflejo de retirada: la mano se aparta por un arco espinal corto, casi antes de sentir el dolor", ideal: 6.4, fondo: "dark", entra: "semitono",
+    sfx: (_d, r) => [ev(0.05, "whoosh", 0.1), ev(TME.reflejo.toca * r, "zap", 0.16), ev(TME.reflejo.aparta * r, "whoosh", 0.2), ev((TME.reflejo.aparta + 0.2) * r, "pop", 0.14), ev(TME.reflejo.cerebro * r, "tick", 0.12), ev(TME.reflejo.dolor * r, "thud", 0.22)],
+  },
+  "me-lesion": {
+    id: "me-lesion", nombre: "Médula · si se lesiona, cerebro y cuerpo se desconectan: cuanto más arriba, más funciones se afectan", ideal: 7.1, fondo: "dark", entra: "corte",
+    sfx: (_d, r) => [ev(0.05, "whoosh", 0.1), ev(TME.lesion.rotura * r + 0.2, "thud", 0.24), ev(TME.lesion.desconecta * r, "zap", 0.12), ev(TME.lesion.sube * r, "whoosh", 0.16), ev(TME.lesion.funciones * r, "tick", 0.14)],
+  },
+  "me-puente": {
+    id: "me-puente", nombre: "Médula · 2023: un hombre paralizado vuelve a caminar con muletas gracias a un puente digital cerebro–médula (cierre)", ideal: 8.1, fondo: "dark", entra: "zoom",
+    sfx: (_d, r) => [ev(0.05, "whoosh", 0.1), ev(TME.puente.anio * r + 0.2, "tick", 0.12), ev(TME.puente.camina * r, "pop", 0.14), ...clics(TME.puente.camina * r, 1.4 * r, 0.04), ev(TME.puente.puente * r, "zap", 0.16), ev(TME.puente.entre * r, "ding", 0.22)],
   },
   "astro-memoria": {
     id: "astro-memoria", nombre: "Astrocitos · en ratones, reactivarlos estimuló el recuerdo", ideal: 4.15, fondo: "dark", entra: "corte",

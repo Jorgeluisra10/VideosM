@@ -1,0 +1,14 @@
+{
+ "titulo": "La médula espinal: el atajo del cuerpo",
+ "scenes": [
+  { "t": "PIEZA", "voz": "Cuando el médico golpea tu rodilla, la orden no sale de tu cerebro: sale de tu médula espinal.", "dur": 7.0, "h": "NO SALE DEL CEREBRO", "w": "MÉDULA", "pieza": { "id": "me-gancho" } },
+  { "t": "PIEZA", "voz": "La médula mide unos cuarenta y cinco centímetros, baja por la columna y de ella salen treinta y un pares de nervios.", "dur": 7.9, "h": "31 PARES DE NERVIOS", "w": "NERVIOS", "cap": "dentro de la columna", "pieza": { "id": "me-columna" } },
+  { "t": "PIEZA", "voz": "Pero termina muy arriba: a la altura de la primera o segunda vértebra lumbar; debajo solo hay nervios, la cola de caballo.", "dur": 7.9, "h": "LA COLA DE CABALLO", "w": "CABALLO", "cap": "termina en L1–L2", "pieza": { "id": "me-cola" } },
+  { "t": "PIEZA", "voz": "Por dentro tiene forma de mariposa: la sustancia gris, donde se procesan las señales, rodeada de sustancia blanca, las autopistas.", "dur": 7.6, "h": "POR DENTRO: UNA MARIPOSA", "w": "MARIPOSA", "cap": "corte transversal", "pieza": { "id": "me-mariposa" } },
+  { "t": "PIEZA", "voz": "Las señales más rápidas viajan por axones con mielina hasta a ciento veinte metros por segundo: más de cuatrocientos kilómetros por hora.", "dur": 7.6, "h": "MÁS DE 400 KM/H", "w": "MIELINA", "cap": "axones con mielina", "pieza": { "id": "me-velocidad" } },
+  { "t": "PIEZA", "voz": "Por eso, al tocar algo muy caliente, tu mano se aparta casi antes de que sientas el dolor.", "dur": 6.9, "h": "EL REFLEJO DE RETIRADA", "w": "MANO", "pieza": { "id": "me-reflejo" } },
+  { "t": "PIEZA", "voz": "Si la médula se lesiona, el cerebro y el cuerpo dejan de comunicarse; cuanto más arriba, más funciones se afectan.", "dur": 7.6, "h": "SI LA MÉDULA SE LESIONA", "w": "LESIONA", "pieza": { "id": "me-lesion" } },
+  { "t": "PIEZA", "voz": "En dos mil veintitrés, un hombre paralizado desde hacía años volvió a caminar con muletas gracias a un puente digital entre cerebro y médula.", "dur": 8.6, "h": "UN PUENTE DIGITAL", "w": "PUENTE", "cap": "Nature, 2023", "pieza": { "id": "me-puente" } },
+  { "t": "CTA", "voz": "Compártelo con alguien que ame el cerebro. Síguenos en Sinapsis.", "dur": 4.8, "h": "COMPÁRTELO Y SÍGUENOS", "w": "SÍGUENOS", "sub": "Más ciencia en SINAPSIS" }
+ ]
+}
