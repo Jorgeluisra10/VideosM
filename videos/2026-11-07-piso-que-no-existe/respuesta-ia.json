@@ -1,0 +1,79 @@
+{
+  "titulo": "El piso que no existe",
+  "scenes": [
+    {
+      "t": "PIEZA",
+      "voz": "Mira este ascensor: salta del doce al catorce. ¿Adónde se fue el piso trece?",
+      "dur": 5.5,
+      "h": "¿DÓNDE ESTÁ EL PISO 13?",
+      "w": "13",
+      "cap": "ascensor",
+      "pieza": {
+        "id": "flo-gancho"
+      }
+    },
+    {
+      "t": "PIEZA",
+      "voz": "Sí existe: solo lo llaman catorce. Muchos edificios evitan el trece por superstición.",
+      "dur": 5.2,
+      "h": "SÍ EXISTE",
+      "w": "EXISTE",
+      "cap": "piso 13",
+      "pieza": {
+        "id": "flo-torre"
+      }
+    },
+    {
+      "t": "PIEZA",
+      "voz": "En un conteo de Manhattan, solo cincuenta y cinco de seiscientos veintinueve edificios altos lo muestran.",
+      "dur": 6.1,
+      "h": "55 DE 629",
+      "w": "55",
+      "cap": "Manhattan",
+      "pieza": {
+        "id": "flo-conteo"
+      }
+    },
+    {
+      "t": "PIEZA",
+      "voz": "En China, Japón y Corea el cuatro suena parecido a muerte. Por eso muchos edificios se lo saltan.",
+      "dur": 6.9,
+      "h": "SIN PISO 4",
+      "w": "CUATRO",
+      "cap": "Asia",
+      "pieza": {
+        "id": "flo-asia"
+      }
+    },
+    {
+      "t": "PIEZA",
+      "voz": "El ocho suena a prosperidad. En Vancouver y Hong Kong, el cuatro se vende más barato y el ocho, a veces, más caro.",
+      "dur": 9.0,
+      "h": "8 SUBE, 4 BAJA",
+      "w": "OCHO",
+      "cap": "estudios",
+      "pieza": {
+        "id": "flo-precio"
+      }
+    },
+    {
+      "t": "PIEZA",
+      "voz": "Si compras un apartamento, cuenta los pisos reales y mira el plano: el botón puede esconder uno.",
+      "dur": 7.2,
+      "h": "CUENTA LOS PISOS",
+      "w": "REALES",
+      "cap": "antes de comprar",
+      "pieza": {
+        "id": "flo-consejo"
+      }
+    },
+    {
+      "t": "CTA",
+      "voz": "Guárdalo y síguenos en IMNOBA, tu plataforma de propiedades y vehículos.",
+      "dur": 5.0,
+      "h": "SÍGUENOS EN IMNOBA",
+      "w": "IMNOBA",
+      "ic": "casa"
+    }
+  ]
+}

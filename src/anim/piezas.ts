@@ -630,6 +630,31 @@ export const TAT = {
   repaso: { parabrisas: 0.3, tarjeta: 2.4, c1: 3.8, c2: 4.3, c3: 4.8 },
 } as const;
 
+/** Datos del video «El piso que no existe» (IMNOBA · pisos 13 y 4). Fuentes y precauciones en ejemplos/animacion-viral/guion-tecnico-piso-que-no-existe.md. */
+export const FLO = {
+  /** conteo de City Realty (citado por 99 % Invisible): de 629 edificios de Manhattan con 13 o más pisos, solo 55 rotulan un piso 13 */
+  manhattan: { conTrece: 55, total: 629 },
+  /** estudio de Vancouver (citado por 99 % Invisible): direcciones con 8 ≈ +2,5 % y con 4 ≈ −2,2 % */
+  vancouver: { ocho: 2.5, cuatro: -2.2 },
+  /** tesis de la Universidad de Hong Kong: unidades en pisos con 4 ≈ −4,2 % frente a unidades similares */
+  hongKong: { cuatro: -4.2 },
+} as const;
+/** Rótulo del botón del piso físico `i` (1 = planta baja) en un edificio que se salta los números de `saltados`. */
+export function rotuloPiso(i: number, saltados: number[] = [13]): number {
+  let n = i;
+  for (const s of [...saltados].sort((a, b) => a - b)) if (n >= s) n++;
+  return n;
+}
+/** Tiempos de «El piso que no existe» (s a ritmo normal), compartidos entre el dibujo y el sonido. */
+export const TFL = {
+  gancho: { panel: 0.2, doce: 1.2, catorce: 2.2, fantasma: 2.8, pregunta: 3.9 },
+  torre: { torre: 0.3, sube: 0.4, subeDur: 2.0, trece: 2.7, rotulos: 3.4, chip: 4.0 },
+  conteo: { cuadros: 0.2, cuadrosDur: 1.4, dorados: 2.0, doradosDur: 1.4, chip: 4.6 },
+  asia: { panel: 0.2, hueco: 1.4, muerte: 2.6, saltan: 4.8 },
+  precio: { ocho: 0.4, cuatro: 2.2, barra1: 4.2, barra2: 5.4, barra3: 6.6, chip: 8.0 },
+  consejo: { cuenta: 0.4, cuentaDur: 3.2, rotulos: 3.8, plano: 4.9, chip: 6.0 },
+} as const;
+
 export const PIEZAS: Record<string, DefPieza> = {
   "metro-plano": {
     id: "metro-plano", nombre: "8 millones en un solo plano", ideal: 7.6, fondo: "dark",
@@ -1209,6 +1234,31 @@ export const PIEZAS: Record<string, DefPieza> = {
   "aut-repaso": {
     id: "aut-repaso", nombre: "Códigos del vehículo · dónde mirar el VIN y repaso de los tres códigos (cierre)", ideal: 5.45, fondo: "dark", entra: "corte",
     sfx: (_d, r) => [ev(TAT.repaso.parabrisas * r, "radar", 0.12), ev(TAT.repaso.tarjeta * r, "thud", 0.14), ev(TAT.repaso.c1 * r, "pop", 0.12), ev(TAT.repaso.c2 * r, "pop", 0.12), ev(TAT.repaso.c3 * r, "ding", 0.16)],
+  },
+  /* ───────────── «El piso que no existe» (IMNOBA · pisos 13 y 4 · figuras realistas) ───────────── */
+  "flo-gancho": {
+    id: "flo-gancho", nombre: "Pisos · el ascensor salta del 12 al 14: ¿dónde está el piso 13? (gancho)", ideal: 5.05, fondo: "dark",
+    sfx: (_d, r) => [ev(0.05, "golpe", 0.14), ev(TFL.gancho.panel * r, "tick", 0.12), ev(TFL.gancho.doce * r, "pop", 0.14), ev(TFL.gancho.catorce * r, "ding", 0.2), ev(TFL.gancho.fantasma * r, "radar", 0.12)],
+  },
+  "flo-torre": {
+    id: "flo-torre", nombre: "Pisos · el piso 13 sí existe: solo lo rotulan 14", ideal: 4.75, fondo: "dark", entra: "corte",
+    sfx: (_d, r) => [ev(TFL.torre.sube * r, "whoosh", 0.12), ev(TFL.torre.trece * r, "zap", 0.14), ev(TFL.torre.rotulos * r, "pop", 0.12), ev(TFL.torre.chip * r, "ding", 0.12)],
+  },
+  "flo-conteo": {
+    id: "flo-conteo", nombre: "Pisos · conteo de Manhattan: solo 55 de 629 edificios altos muestran un piso 13", ideal: 5.45, fondo: "dark", entra: "corte",
+    sfx: (_d, r) => [ev(TFL.conteo.cuadros * r, "pop", 0.1), ev(TFL.conteo.dorados * r, "tick", 0.12), ev(TFL.conteo.dorados * r + 1.2, "zap", 0.12), ev(TFL.conteo.chip * r, "ding", 0.14)],
+  },
+  "flo-asia": {
+    id: "flo-asia", nombre: "Pisos · en China, Japón y Corea el 4 suena parecido a muerte y muchos edificios se lo saltan", ideal: 6.45, fondo: "dark", entra: "semitono",
+    sfx: (_d, r) => [ev(TFL.asia.panel * r, "whoosh", 0.1), ev(TFL.asia.hueco * r, "thud", 0.16), ev(TFL.asia.muerte * r, "radar", 0.14), ev(TFL.asia.saltan * r, "pop", 0.12)],
+  },
+  "flo-precio": {
+    id: "flo-precio", nombre: "Pisos · el 8 suena a prosperidad; estudios de Vancouver y Hong Kong: el 4 se vende más barato y el 8, a veces, más caro", ideal: 8.85, fondo: "dark", entra: "corte",
+    sfx: (_d, r) => [ev(TFL.precio.ocho * r, "ding", 0.16), ev(TFL.precio.cuatro * r, "thud", 0.14), ev(TFL.precio.barra1 * r, "pop", 0.12), ev(TFL.precio.barra2 * r, "pop", 0.12), ev(TFL.precio.barra3 * r, "pop", 0.12), ev(TFL.precio.chip * r, "tick", 0.1)],
+  },
+  "flo-consejo": {
+    id: "flo-consejo", nombre: "Pisos · si compras, cuenta los pisos reales y mira el plano: el botón puede esconder uno (cierre)", ideal: 6.75, fondo: "dark", entra: "zoom",
+    sfx: (_d, r) => [ev(TFL.consejo.cuenta * r, "whoosh", 0.1), ev(TFL.consejo.rotulos * r, "zap", 0.14), ev(TFL.consejo.plano * r, "pop", 0.12), ev(TFL.consejo.chip * r, "ding", 0.16)],
   },
 };
 

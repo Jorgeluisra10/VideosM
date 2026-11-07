@@ -1,0 +1,18 @@
+{
+  "version": 1,
+  "slug": "2026-11-07-piso-que-no-existe",
+  "titulo": "El piso que no existe",
+  "serie": "ingenieria_extrema",
+  "estado": "grabado",
+  "guion": "Mira este ascensor: salta del doce al catorce. ¿Adónde se fue el piso trece?\nSí existe: solo lo llaman catorce. Muchos edificios evitan el trece por superstición.\nEn un conteo de Manhattan, solo cincuenta y cinco de seiscientos veintinueve edificios altos lo muestran.\nEn China, Japón y Corea el cuatro suena parecido a muerte. Por eso muchos edificios se lo saltan.\nEl ocho suena a prosperidad. En Vancouver y Hong Kong, el cuatro se vende más barato y el ocho, a veces, más caro.\nSi compras un apartamento, cuenta los pisos reales y mira el plano: el botón puede esconder uno.\nGuárdalo y síguenos en IMNOBA, tu plataforma de propiedades y vehículos.",
+  "gancho": "Mira este ascensor: salta del doce al catorce.",
+  "duracion_seg": 44.9,
+  "notas": "Espero que lo guarden y lo compartan por la curiosidad del piso 13 y que sigan a IMNOBA al final; público que mira apartamentos y edificios. Métrica: retención a los 3 s y al pasar el dato de Manhattan (≈ 11 s), guardados por cada 1.000 alcanzados. Ojo: sin voz, ponle voz antes de publicar.",
+  "voz_usada": "",
+  "instrucciones_voz": "",
+  "creado": "2026-11-07T13:22:20.005Z",
+  "origen_clave": "d55448d9",
+  "video": "revision.mp4",
+  "miniatura": "miniatura.jpg",
+  "entrega": ""
+}
