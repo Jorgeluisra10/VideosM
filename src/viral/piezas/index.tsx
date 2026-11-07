@@ -3,6 +3,8 @@
  * Para añadir una pieza nueva: (1) su ficha pura en src/anim/piezas.ts (duración ideal, fondo, sonido), (2) su componente aquí.
  */
 import { MeCola, MeColumna, MeGancho, MeMariposa } from "./me1";
+import { Pc0Fritsch, Pc0Gancho, Pc0Numero, Pc0Recorrido } from "./pc1";
+import { Pc0Gnrh, Pc0Kallmann, Pc0Libro, Pc0Misterio } from "./pc2";
 import { MeLesion, MePuente, MeReflejo, MeVelocidad } from "./me2";
 import { InsGancho, InsHambre, InsPerros, InsPrimera } from "./in1";
 import { InsHoy, InsNobel, InsPatente, InsSegunda } from "./in2";
@@ -125,6 +127,8 @@ export const COMPONENTES_PIEZA: Record<string, React.FC<{ e: EscenaViralGuardada
   "tej-hueso": TejHueso,
   "tej-muscular": TejMuscular,
   "tej-nervioso": TejNervioso,
+  "pc0-gancho": Pc0Gancho, "pc0-fritsch": Pc0Fritsch, "pc0-recorrido": Pc0Recorrido, "pc0-numero": Pc0Numero,
+  "pc0-gnrh": Pc0Gnrh, "pc0-kallmann": Pc0Kallmann, "pc0-misterio": Pc0Misterio, "pc0-libro": Pc0Libro,
   "me-gancho": MeGancho, "me-columna": MeColumna, "me-cola": MeCola, "me-mariposa": MeMariposa, "me-velocidad": MeVelocidad, "me-reflejo": MeReflejo, "me-lesion": MeLesion, "me-puente": MePuente,
   "ins-gancho": InsGancho, "ins-hambre": InsHambre, "ins-perros": InsPerros, "ins-primera": InsPrimera, "ins-segunda": InsSegunda, "ins-nobel": InsNobel, "ins-patente": InsPatente, "ins-hoy": InsHoy,
   "mc-gancho": McGancho, "mc-paris": McParis, "mc-elementos": McElementos, "mc-toneladas": McToneladas, "mc-nobel": McNobel, "mc-guerra": McGuerra, "mc-riesgo": McRiesgo, "mc-cuadernos": McCuadernos,

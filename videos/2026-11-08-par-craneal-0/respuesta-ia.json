@@ -1,0 +1,14 @@
+{
+ "titulo": "El par craneal 0: el nervio que casi nadie te enseñó",
+ "scenes": [
+  { "t": "PIEZA", "voz": "Te enseñaron doce pares craneales, pero hay uno más, y viene antes del primero: el par craneal cero.", "dur": 7.0, "h": "EL PAR CRANEAL 0", "w": "CERO", "pieza": { "id": "pc0-gancho" } },
+  { "t": "PIEZA", "voz": "En mil ochocientos setenta y ocho, Gustav Fritsch lo describió por primera vez, no en personas, sino en tiburones.", "dur": 7.1, "h": "1878: TIBURONES", "w": "TIBURONES", "cap": "Gustav Fritsch", "pieza": { "id": "pc0-fritsch" } },
+  { "t": "PIEZA", "voz": "Es una red de fibras finísimas, sin mielina, junto al nervio olfatorio, que atraviesa la lámina cribosa y llega al cerebro.", "dur": 7.8, "h": "FIBRAS FINÍSIMAS", "w": "FIBRAS", "cap": "nervio terminal", "pieza": { "id": "pc0-recorrido" } },
+  { "t": "PIEZA", "voz": "Lo bautizaron cero a finales de los años ochenta, porque está por delante del par uno, el olfatorio.", "dur": 7.0, "h": "POR QUÉ SE LLAMA 0", "w": "CERO", "cap": "vista inferior", "pieza": { "id": "pc0-numero" } },
+  { "t": "PIEZA", "voz": "En el embrión, neuronas con GnRH, la hormona que activa la pubertad, viajan de la nariz al cerebro siguiendo este nervio.", "dur": 8.1, "h": "NEURONAS VIAJERAS", "w": "GnRH", "cap": "en el embrión", "pieza": { "id": "pc0-gnrh" } },
+  { "t": "PIEZA", "voz": "Si esa ruta falla, puede aparecer el síndrome de Kallmann: sin olfato y con una pubertad que no llega o se retrasa.", "dur": 8.1, "h": "SÍNDROME DE KALLMANN", "w": "KALLMANN", "cap": "cuando la ruta falla", "pieza": { "id": "pc0-kallmann" } },
+  { "t": "PIEZA", "voz": "¿Y en adultos? Aún no se sabe: se ha propuesto que modula la reproducción o detecta feromonas, pero nada está demostrado.", "dur": 7.8, "h": "AÚN NO SE SABE", "w": "MISTERIO", "cap": "función en adultos", "pieza": { "id": "pc0-misterio" } },
+  { "t": "PIEZA", "voz": "La nomenclatura anatómica internacional lo incluye desde mil novecientos noventa y ocho, pero muchos libros siguen enseñando solo doce.", "dur": 7.8, "h": "INCLUIDO DESDE 1998", "w": "LIBROS", "cap": "nomenclatura anatómica", "pieza": { "id": "pc0-libro" } },
+  { "t": "CTA", "voz": "Compártelo con alguien que ame el cerebro. Síguenos en Sinapsis.", "dur": 4.8, "h": "COMPÁRTELO Y SÍGUENOS", "w": "SÍGUENOS", "sub": "Más ciencia en SINAPSIS" }
+ ]
+}

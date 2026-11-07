@@ -1,18 +1,18 @@
 {
  "version": 1,
- "titulo": "La médula espinal: el atajo del cuerpo",
+ "titulo": "El par craneal 0: el nervio que casi nadie te enseñó",
  "paleta": "medicina",
  "sfx": true,
  "fps": 60,
- "duracion": 67,
+ "duracion": 65.5,
  "escenas": [
   {
    "n": 1,
    "t": "PIEZA",
-   "voz": "Cuando el médico golpea tu rodilla, la orden no sale de tu cerebro: sale de tu médula espinal.",
+   "voz": "Te enseñaron doce pares craneales, pero hay uno más, y viene antes del primero: el par craneal cero.",
    "dur": 7,
-   "h": "NO SALE DEL CEREBRO",
-   "w": "CEREBRO",
+   "h": "EL PAR CRANEAL 0",
+   "w": "0",
    "sub": "",
    "ic": "brillo",
    "num": null,
@@ -45,7 +45,7 @@
    "cubo": null,
    "diales": null,
    "pieza": {
-    "id": "me-gancho",
+    "id": "pc0-gancho",
     "props": {}
    },
    "cita": null,
@@ -54,10 +54,10 @@
    "tema": "oscuro",
    "bg": "dark",
    "ritmo": 1,
-   "total": 67,
+   "total": 65.5,
    "inicio": 0,
    "fin": 7,
-   "texto": "Cuando el médico golpea tu rodilla, la orden no sale de tu cerebro: sale de tu médula espinal.",
+   "texto": "Te enseñaron doce pares craneales, pero hay uno más, y viene antes del primero: el par craneal cero.",
    "tr": "barrido",
    "trs": "corte",
    "sfx": [
@@ -72,27 +72,97 @@
      "vol": 0.1
     },
     {
-     "t": 1.9,
-     "tipo": "thud",
-     "vol": 0.24
+     "t": 0.4,
+     "tipo": "clic",
+     "vol": 0.04
     },
     {
-     "t": 2,
-     "tipo": "zap",
-     "vol": 0.14
+     "t": 0.53,
+     "tipo": "clic",
+     "vol": 0.04
     },
     {
-     "t": 2.25,
+     "t": 0.66,
+     "tipo": "clic",
+     "vol": 0.04
+    },
+    {
+     "t": 0.79,
+     "tipo": "clic",
+     "vol": 0.04
+    },
+    {
+     "t": 0.92,
+     "tipo": "clic",
+     "vol": 0.04
+    },
+    {
+     "t": 1.05,
+     "tipo": "clic",
+     "vol": 0.04
+    },
+    {
+     "t": 1.1800000000000002,
+     "tipo": "clic",
+     "vol": 0.04
+    },
+    {
+     "t": 1.31,
+     "tipo": "clic",
+     "vol": 0.04
+    },
+    {
+     "t": 1.44,
+     "tipo": "clic",
+     "vol": 0.04
+    },
+    {
+     "t": 1.5699999999999998,
+     "tipo": "clic",
+     "vol": 0.04
+    },
+    {
+     "t": 1.7000000000000002,
+     "tipo": "clic",
+     "vol": 0.04
+    },
+    {
+     "t": 1.83,
+     "tipo": "clic",
+     "vol": 0.04
+    },
+    {
+     "t": 1.96,
+     "tipo": "clic",
+     "vol": 0.04
+    },
+    {
+     "t": 2.09,
+     "tipo": "clic",
+     "vol": 0.04
+    },
+    {
+     "t": 2.22,
+     "tipo": "clic",
+     "vol": 0.04
+    },
+    {
+     "t": 2.8,
      "tipo": "pop",
      "vol": 0.14
     },
     {
-     "t": 2.5,
+     "t": 3.9,
      "tipo": "tick",
      "vol": 0.12
     },
     {
-     "t": 4.7,
+     "t": 5.6,
+     "tipo": "zap",
+     "vol": 0.16
+    },
+    {
+     "t": 5.8,
      "tipo": "ding",
      "vol": 0.2
     }
@@ -101,12 +171,12 @@
   {
    "n": 2,
    "t": "PIEZA",
-   "voz": "La médula mide unos cuarenta y cinco centímetros, baja por la columna y de ella salen treinta y un pares de nervios.",
-   "dur": 8.1,
-   "h": "31 PARES DE NERVIOS",
-   "w": "NERVIOS",
+   "voz": "En mil ochocientos setenta y ocho, Gustav Fritsch lo describió por primera vez, no en personas, sino en tiburones.",
+   "dur": 7.1,
+   "h": "1878: TIBURONES",
+   "w": "TIBURONES",
    "sub": "",
-   "ic": "tren",
+   "ic": "chat",
    "num": null,
    "vs": null,
    "bars": [],
@@ -128,7 +198,7 @@
    "red": null,
    "termo": null,
    "pila": null,
-   "cap": "dentro de la columna",
+   "cap": "Gustav Fritsch",
    "papel": null,
    "pilares": null,
    "ciclo": null,
@@ -137,7 +207,7 @@
    "cubo": null,
    "diales": null,
    "pieza": {
-    "id": "me-columna",
+    "id": "pc0-fritsch",
     "props": {}
    },
    "cita": null,
@@ -146,10 +216,10 @@
    "tema": "claro",
    "bg": "light",
    "ritmo": 1,
-   "total": 67,
+   "total": 65.5,
    "inicio": 7,
-   "fin": 15.1,
-   "texto": "La médula mide unos cuarenta y cinco centímetros, baja por la columna y de ella salen treinta y un pares de nervios.",
+   "fin": 14.1,
+   "texto": "En mil ochocientos setenta y ocho, Gustav Fritsch lo describió por primera vez, no en personas, sino en tiburones.",
    "tr": "corte",
    "trs": "semitono",
    "sfx": [
@@ -164,104 +234,94 @@
      "vol": 0.1
     },
     {
-     "t": 0.6,
+     "t": 0.4,
+     "tipo": "clic",
+     "vol": 0.04
+    },
+    {
+     "t": 0.53,
+     "tipo": "clic",
+     "vol": 0.04
+    },
+    {
+     "t": 0.66,
+     "tipo": "clic",
+     "vol": 0.04
+    },
+    {
+     "t": 0.79,
+     "tipo": "clic",
+     "vol": 0.04
+    },
+    {
+     "t": 0.92,
+     "tipo": "clic",
+     "vol": 0.04
+    },
+    {
+     "t": 1.05,
+     "tipo": "clic",
+     "vol": 0.04
+    },
+    {
+     "t": 1.1800000000000002,
+     "tipo": "clic",
+     "vol": 0.04
+    },
+    {
+     "t": 1.31,
+     "tipo": "clic",
+     "vol": 0.04
+    },
+    {
+     "t": 1.44,
+     "tipo": "clic",
+     "vol": 0.04
+    },
+    {
+     "t": 1.5699999999999998,
+     "tipo": "clic",
+     "vol": 0.04
+    },
+    {
+     "t": 1.7000000000000002,
+     "tipo": "clic",
+     "vol": 0.04
+    },
+    {
+     "t": 1.83,
+     "tipo": "clic",
+     "vol": 0.04
+    },
+    {
+     "t": 2.3,
      "tipo": "pop",
      "vol": 0.12
     },
     {
-     "t": 2.6,
-     "tipo": "tick",
-     "vol": 0.12
+     "t": 4.9,
+     "tipo": "thud",
+     "vol": 0.16
     },
     {
-     "t": 4.3,
-     "tipo": "clic",
-     "vol": 0.04
+     "t": 5.7,
+     "tipo": "whoosh",
+     "vol": 0.14
     },
     {
-     "t": 4.43,
-     "tipo": "clic",
-     "vol": 0.04
-    },
-    {
-     "t": 4.56,
-     "tipo": "clic",
-     "vol": 0.04
-    },
-    {
-     "t": 4.6899999999999995,
-     "tipo": "clic",
-     "vol": 0.04
-    },
-    {
-     "t": 4.82,
-     "tipo": "clic",
-     "vol": 0.04
-    },
-    {
-     "t": 4.95,
-     "tipo": "clic",
-     "vol": 0.04
-    },
-    {
-     "t": 5.08,
-     "tipo": "clic",
-     "vol": 0.04
-    },
-    {
-     "t": 5.21,
-     "tipo": "clic",
-     "vol": 0.04
-    },
-    {
-     "t": 5.34,
-     "tipo": "clic",
-     "vol": 0.04
-    },
-    {
-     "t": 5.47,
-     "tipo": "clic",
-     "vol": 0.04
-    },
-    {
-     "t": 5.6,
-     "tipo": "clic",
-     "vol": 0.04
-    },
-    {
-     "t": 5.73,
-     "tipo": "clic",
-     "vol": 0.04
-    },
-    {
-     "t": 5.859999999999999,
-     "tipo": "clic",
-     "vol": 0.04
-    },
-    {
-     "t": 5.99,
-     "tipo": "clic",
-     "vol": 0.04
-    },
-    {
-     "t": 6.12,
-     "tipo": "clic",
-     "vol": 0.04
-    },
-    {
-     "t": 6.8,
+     "t": 6.2,
      "tipo": "ding",
-     "vol": 0.2
+     "vol": 0.18
     }
    ]
   },
   {
    "n": 3,
    "t": "PIEZA",
-   "voz": "Pero termina muy arriba: a la altura de la primera o segunda vértebra lumbar; debajo solo hay nervios, la cola de caballo.",
-   "dur": 8.1,
-   "h": "LA COLA DE CABALLO",
-   "w": "CABALLO",
+   "voz": "Es una red de fibras finísimas, sin mielina, junto al nervio olfatorio, que atraviesa la lámina cribosa y llega al cerebro.",
+   "dur": 7.8,
+   "h": "FIBRAS FINÍSIMAS",
+   "w": "FIBRAS",
    "sub": "",
    "ic": "brillo",
    "num": null,
@@ -285,7 +345,7 @@
    "red": null,
    "termo": null,
    "pila": null,
-   "cap": "termina en L1–L2",
+   "cap": "nervio terminal",
    "papel": null,
    "pilares": null,
    "ciclo": null,
@@ -294,7 +354,7 @@
    "cubo": null,
    "diales": null,
    "pieza": {
-    "id": "me-cola",
+    "id": "pc0-recorrido",
     "props": {}
    },
    "cita": null,
@@ -303,10 +363,10 @@
    "tema": "oscuro",
    "bg": "dark",
    "ritmo": 1,
-   "total": 67,
-   "inicio": 15.1,
-   "fin": 23.2,
-   "texto": "Pero termina muy arriba: a la altura de la primera o segunda vértebra lumbar; debajo solo hay nervios, la cola de caballo.",
+   "total": 65.5,
+   "inicio": 14.1,
+   "fin": 21.9,
+   "texto": "Es una red de fibras finísimas, sin mielina, junto al nervio olfatorio, que atraviesa la lámina cribosa y llega al cerebro.",
    "tr": "semitono",
    "trs": "zoom",
    "sfx": [
@@ -321,36 +381,76 @@
      "vol": 0.1
     },
     {
-     "t": 1.6,
+     "t": 0.4,
      "tipo": "pop",
-     "vol": 0.14
-    },
-    {
-     "t": 4.7,
-     "tipo": "whoosh",
      "vol": 0.12
     },
     {
-     "t": 6.1,
-     "tipo": "ding",
-     "vol": 0.18
+     "t": 2.4,
+     "tipo": "tick",
+     "vol": 0.12
     },
     {
-     "t": 6.6,
-     "tipo": "tick",
-     "vol": 0.14
+     "t": 3.3,
+     "tipo": "pop",
+     "vol": 0.12
+    },
+    {
+     "t": 5,
+     "tipo": "ding",
+     "vol": 0.16
+    },
+    {
+     "t": 6.5,
+     "tipo": "clic",
+     "vol": 0.04
+    },
+    {
+     "t": 6.63,
+     "tipo": "clic",
+     "vol": 0.04
+    },
+    {
+     "t": 6.76,
+     "tipo": "clic",
+     "vol": 0.04
+    },
+    {
+     "t": 6.89,
+     "tipo": "clic",
+     "vol": 0.04
+    },
+    {
+     "t": 7.02,
+     "tipo": "clic",
+     "vol": 0.04
+    },
+    {
+     "t": 7.15,
+     "tipo": "clic",
+     "vol": 0.04
+    },
+    {
+     "t": 7.28,
+     "tipo": "clic",
+     "vol": 0.04
+    },
+    {
+     "t": 7.5,
+     "tipo": "ding",
+     "vol": 0.18
     }
    ]
   },
   {
    "n": 4,
    "t": "PIEZA",
-   "voz": "Por dentro tiene forma de mariposa: la sustancia gris, donde se procesan las señales, rodeada de sustancia blanca, las autopistas.",
-   "dur": 7.6,
-   "h": "POR DENTRO: UNA MARIPOSA",
-   "w": "MARIPOSA",
+   "voz": "Lo bautizaron cero a finales de los años ochenta, porque está por delante del par uno, el olfatorio.",
+   "dur": 7,
+   "h": "POR QUÉ SE LLAMA 0",
+   "w": "0",
    "sub": "",
-   "ic": "auto",
+   "ic": "telefono",
    "num": null,
    "vs": null,
    "bars": [],
@@ -372,7 +472,7 @@
    "red": null,
    "termo": null,
    "pila": null,
-   "cap": "corte transversal",
+   "cap": "vista inferior",
    "papel": null,
    "pilares": null,
    "ciclo": null,
@@ -381,7 +481,7 @@
    "cubo": null,
    "diales": null,
    "pieza": {
-    "id": "me-mariposa",
+    "id": "pc0-numero",
     "props": {}
    },
    "cita": null,
@@ -390,10 +490,10 @@
    "tema": "claro",
    "bg": "light",
    "ritmo": 1,
-   "total": 67,
-   "inicio": 23.2,
-   "fin": 30.8,
-   "texto": "Por dentro tiene forma de mariposa: la sustancia gris, donde se procesan las señales, rodeada de sustancia blanca, las autopistas.",
+   "total": 65.5,
+   "inicio": 21.9,
+   "fin": 28.9,
+   "texto": "Lo bautizaron cero a finales de los años ochenta, porque está por delante del par uno, el olfatorio.",
    "tr": "zoom",
    "trs": "corte",
    "sfx": [
@@ -408,86 +508,36 @@
      "vol": 0.1
     },
     {
-     "t": 0.4,
+     "t": 0.6,
      "tipo": "pop",
      "vol": 0.14
     },
     {
-     "t": 2.3,
-     "tipo": "pop",
+     "t": 2,
+     "tipo": "tick",
      "vol": 0.12
     },
     {
-     "t": 3.3,
-     "tipo": "clic",
-     "vol": 0.04
-    },
-    {
-     "t": 3.4299999999999997,
-     "tipo": "clic",
-     "vol": 0.04
-    },
-    {
-     "t": 3.5599999999999996,
-     "tipo": "clic",
-     "vol": 0.04
-    },
-    {
-     "t": 3.69,
-     "tipo": "clic",
-     "vol": 0.04
-    },
-    {
-     "t": 3.82,
-     "tipo": "clic",
-     "vol": 0.04
-    },
-    {
-     "t": 3.9499999999999997,
-     "tipo": "clic",
-     "vol": 0.04
-    },
-    {
-     "t": 4.08,
-     "tipo": "clic",
-     "vol": 0.04
-    },
-    {
-     "t": 4.21,
-     "tipo": "clic",
-     "vol": 0.04
-    },
-    {
-     "t": 4.34,
-     "tipo": "clic",
-     "vol": 0.04
-    },
-    {
-     "t": 4.47,
-     "tipo": "clic",
-     "vol": 0.04
-    },
-    {
-     "t": 5,
-     "tipo": "pop",
-     "vol": 0.12
-    },
-    {
-     "t": 6.4,
+     "t": 3.9,
      "tipo": "whoosh",
-     "vol": 0.16
+     "vol": 0.14
+    },
+    {
+     "t": 5.6,
+     "tipo": "ding",
+     "vol": 0.18
     }
    ]
   },
   {
    "n": 5,
    "t": "PIEZA",
-   "voz": "Las señales más rápidas viajan por axones con mielina hasta a ciento veinte metros por segundo: más de cuatrocientos kilómetros por hora.",
+   "voz": "En el embrión, neuronas con GnRH, la hormona que activa la pubertad, viajan de la nariz al cerebro siguiendo este nervio.",
    "dur": 8.1,
-   "h": "MÁS DE 400 KM/H",
-   "w": "400",
+   "h": "NEURONAS VIAJERAS",
+   "w": "NEURONAS",
    "sub": "",
-   "ic": "tren",
+   "ic": "brillo",
    "num": null,
    "vs": null,
    "bars": [],
@@ -509,7 +559,7 @@
    "red": null,
    "termo": null,
    "pila": null,
-   "cap": "axones con mielina",
+   "cap": "en el embrión",
    "papel": null,
    "pilares": null,
    "ciclo": null,
@@ -518,7 +568,7 @@
    "cubo": null,
    "diales": null,
    "pieza": {
-    "id": "me-velocidad",
+    "id": "pc0-gnrh",
     "props": {}
    },
    "cita": null,
@@ -527,10 +577,10 @@
    "tema": "oscuro",
    "bg": "dark",
    "ritmo": 1,
-   "total": 67,
-   "inicio": 30.8,
-   "fin": 38.9,
-   "texto": "Las señales más rápidas viajan por axones con mielina hasta a ciento veinte metros por segundo: más de cuatrocientos kilómetros por hora.",
+   "total": 65.5,
+   "inicio": 28.9,
+   "fin": 37,
+   "texto": "En el embrión, neuronas con GnRH, la hormona que activa la pubertad, viajan de la nariz al cerebro siguiendo este nervio.",
    "tr": "corte",
    "trs": "semitono",
    "sfx": [
@@ -545,81 +595,101 @@
      "vol": 0.1
     },
     {
-     "t": 1.2,
+     "t": 0.4,
      "tipo": "pop",
      "vol": 0.12
     },
     {
-     "t": 3,
-     "tipo": "clic",
-     "vol": 0.05
-    },
-    {
-     "t": 3.13,
-     "tipo": "clic",
-     "vol": 0.05
-    },
-    {
-     "t": 3.26,
-     "tipo": "clic",
-     "vol": 0.05
-    },
-    {
-     "t": 3.39,
-     "tipo": "clic",
-     "vol": 0.05
-    },
-    {
-     "t": 3.52,
-     "tipo": "clic",
-     "vol": 0.05
-    },
-    {
-     "t": 3.65,
-     "tipo": "clic",
-     "vol": 0.05
-    },
-    {
-     "t": 3.7800000000000002,
-     "tipo": "clic",
-     "vol": 0.05
-    },
-    {
-     "t": 3.91,
-     "tipo": "clic",
-     "vol": 0.05
-    },
-    {
-     "t": 4.04,
-     "tipo": "clic",
-     "vol": 0.05
-    },
-    {
-     "t": 4.17,
-     "tipo": "clic",
-     "vol": 0.05
-    },
-    {
-     "t": 4.4,
+     "t": 1.3,
      "tipo": "ding",
-     "vol": 0.18
+     "vol": 0.16
     },
     {
-     "t": 5,
-     "tipo": "whoosh",
-     "vol": 0.18
+     "t": 2.4,
+     "tipo": "pop",
+     "vol": 0.12
+    },
+    {
+     "t": 4.6,
+     "tipo": "clic",
+     "vol": 0.04
+    },
+    {
+     "t": 4.7299999999999995,
+     "tipo": "clic",
+     "vol": 0.04
+    },
+    {
+     "t": 4.859999999999999,
+     "tipo": "clic",
+     "vol": 0.04
+    },
+    {
+     "t": 4.989999999999999,
+     "tipo": "clic",
+     "vol": 0.04
+    },
+    {
+     "t": 5.119999999999999,
+     "tipo": "clic",
+     "vol": 0.04
+    },
+    {
+     "t": 5.25,
+     "tipo": "clic",
+     "vol": 0.04
+    },
+    {
+     "t": 5.38,
+     "tipo": "clic",
+     "vol": 0.04
+    },
+    {
+     "t": 5.51,
+     "tipo": "clic",
+     "vol": 0.04
+    },
+    {
+     "t": 5.64,
+     "tipo": "clic",
+     "vol": 0.04
+    },
+    {
+     "t": 5.77,
+     "tipo": "clic",
+     "vol": 0.04
+    },
+    {
+     "t": 5.8999999999999995,
+     "tipo": "clic",
+     "vol": 0.04
+    },
+    {
+     "t": 6.029999999999999,
+     "tipo": "clic",
+     "vol": 0.04
+    },
+    {
+     "t": 6.16,
+     "tipo": "clic",
+     "vol": 0.04
+    },
+    {
+     "t": 6.3999999999999995,
+     "tipo": "ding",
+     "vol": 0.2
     }
    ]
   },
   {
    "n": 6,
    "t": "PIEZA",
-   "voz": "Por eso, al tocar algo muy caliente, tu mano se aparta casi antes de que sientas el dolor.",
-   "dur": 6.9,
-   "h": "EL REFLEJO DE RETIRADA",
-   "w": "RETIRADA",
+   "voz": "Si esa ruta falla, puede aparecer el síndrome de Kallmann: sin olfato y con una pubertad que no llega o se retrasa.",
+   "dur": 8.1,
+   "h": "SÍNDROME DE KALLMANN",
+   "w": "KALLMANN",
    "sub": "",
-   "ic": "brillo",
+   "ic": "bus",
    "num": null,
    "vs": null,
    "bars": [],
@@ -641,7 +711,7 @@
    "red": null,
    "termo": null,
    "pila": null,
-   "cap": "",
+   "cap": "cuando la ruta falla",
    "papel": null,
    "pilares": null,
    "ciclo": null,
@@ -650,7 +720,7 @@
    "cubo": null,
    "diales": null,
    "pieza": {
-    "id": "me-reflejo",
+    "id": "pc0-kallmann",
     "props": {}
    },
    "cita": null,
@@ -659,10 +729,10 @@
    "tema": "claro",
    "bg": "light",
    "ritmo": 1,
-   "total": 67,
-   "inicio": 38.9,
-   "fin": 45.8,
-   "texto": "Por eso, al tocar algo muy caliente, tu mano se aparta casi antes de que sientas el dolor.",
+   "total": 65.5,
+   "inicio": 37,
+   "fin": 45.1,
+   "texto": "Si esa ruta falla, puede aparecer el síndrome de Kallmann: sin olfato y con una pubertad que no llega o se retrasa.",
    "tr": "semitono",
    "trs": "corte",
    "sfx": [
@@ -677,39 +747,39 @@
      "vol": 0.1
     },
     {
-     "t": 2.4,
+     "t": 0.5,
+     "tipo": "thud",
+     "vol": 0.18
+    },
+    {
+     "t": 0.6000000000000001,
      "tipo": "zap",
-     "vol": 0.16
+     "vol": 0.12
     },
     {
-     "t": 2.6,
-     "tipo": "whoosh",
-     "vol": 0.2
-    },
-    {
-     "t": 2.8000000000000003,
+     "t": 1.8,
      "tipo": "pop",
      "vol": 0.14
     },
     {
-     "t": 4,
-     "tipo": "tick",
-     "vol": 0.12
+     "t": 3.8,
+     "tipo": "thud",
+     "vol": 0.14
     },
     {
-     "t": 5.6,
-     "tipo": "thud",
-     "vol": 0.22
+     "t": 4.9,
+     "tipo": "tick",
+     "vol": 0.14
     }
    ]
   },
   {
    "n": 7,
    "t": "PIEZA",
-   "voz": "Si la médula se lesiona, el cerebro y el cuerpo dejan de comunicarse; cuanto más arriba, más funciones se afectan.",
-   "dur": 7.6,
-   "h": "SI LA MÉDULA SE LESIONA",
-   "w": "LESIONA",
+   "voz": "¿Y en adultos? Aún no se sabe: se ha propuesto que modula la reproducción o detecta feromonas, pero nada está demostrado.",
+   "dur": 7.8,
+   "h": "AÚN NO SE SABE",
+   "w": "SABE",
    "sub": "",
    "ic": "brillo",
    "num": null,
@@ -733,7 +803,7 @@
    "red": null,
    "termo": null,
    "pila": null,
-   "cap": "",
+   "cap": "función en adultos",
    "papel": null,
    "pilares": null,
    "ciclo": null,
@@ -742,7 +812,7 @@
    "cubo": null,
    "diales": null,
    "pieza": {
-    "id": "me-lesion",
+    "id": "pc0-misterio",
     "props": {}
    },
    "cita": null,
@@ -751,10 +821,10 @@
    "tema": "oscuro",
    "bg": "dark",
    "ritmo": 1,
-   "total": 67,
-   "inicio": 45.8,
-   "fin": 53.4,
-   "texto": "Si la médula se lesiona, el cerebro y el cuerpo dejan de comunicarse; cuanto más arriba, más funciones se afectan.",
+   "total": 65.5,
+   "inicio": 45.1,
+   "fin": 52.9,
+   "texto": "¿Y en adultos? Aún no se sabe: se ha propuesto que modula la reproducción o detecta feromonas, pero nada está demostrado.",
    "tr": "corte",
    "trs": "zoom",
    "sfx": [
@@ -770,33 +840,38 @@
     },
     {
      "t": 0.4,
-     "tipo": "thud",
-     "vol": 0.24
-    },
-    {
-     "t": 1.9,
-     "tipo": "zap",
+     "tipo": "pop",
      "vol": 0.12
     },
     {
-     "t": 4.7,
-     "tipo": "whoosh",
-     "vol": 0.16
+     "t": 1.4,
+     "tipo": "tick",
+     "vol": 0.12
     },
     {
-     "t": 5.7,
-     "tipo": "tick",
-     "vol": 0.14
+     "t": 3,
+     "tipo": "pop",
+     "vol": 0.12
+    },
+    {
+     "t": 5.2,
+     "tipo": "pop",
+     "vol": 0.12
+    },
+    {
+     "t": 6.7,
+     "tipo": "thud",
+     "vol": 0.2
     }
    ]
   },
   {
    "n": 8,
    "t": "PIEZA",
-   "voz": "En dos mil veintitrés, un hombre paralizado desde hacía años volvió a caminar con muletas gracias a un puente digital entre cerebro y médula.",
-   "dur": 8.8,
-   "h": "UN PUENTE DIGITAL",
-   "w": "PUENTE",
+   "voz": "La nomenclatura anatómica internacional lo incluye desde mil novecientos noventa y ocho, pero muchos libros siguen enseñando solo doce.",
+   "dur": 7.8,
+   "h": "INCLUIDO DESDE 1998",
+   "w": "1998",
    "sub": "",
    "ic": "brillo",
    "num": null,
@@ -820,7 +895,7 @@
    "red": null,
    "termo": null,
    "pila": null,
-   "cap": "Nature, 2023",
+   "cap": "nomenclatura anatómica",
    "papel": null,
    "pilares": null,
    "ciclo": null,
@@ -829,7 +904,7 @@
    "cubo": null,
    "diales": null,
    "pieza": {
-    "id": "me-puente",
+    "id": "pc0-libro",
     "props": {}
    },
    "cita": null,
@@ -838,10 +913,10 @@
    "tema": "claro",
    "bg": "light",
    "ritmo": 1,
-   "total": 67,
-   "inicio": 53.4,
-   "fin": 62.2,
-   "texto": "En dos mil veintitrés, un hombre paralizado desde hacía años volvió a caminar con muletas gracias a un puente digital entre cerebro y médula.",
+   "total": 65.5,
+   "inicio": 52.9,
+   "fin": 60.7,
+   "texto": "La nomenclatura anatómica internacional lo incluye desde mil novecientos noventa y ocho, pero muchos libros siguen enseñando solo doce.",
    "tr": "zoom",
    "trs": "barrido",
    "sfx": [
@@ -857,73 +932,23 @@
     },
     {
      "t": 0.4,
+     "tipo": "pop",
+     "vol": 0.12
+    },
+    {
+     "t": 2.3,
      "tipo": "tick",
      "vol": 0.12
     },
     {
-     "t": 3.6,
-     "tipo": "pop",
-     "vol": 0.14
-    },
-    {
-     "t": 3.6,
-     "tipo": "clic",
-     "vol": 0.04
-    },
-    {
-     "t": 3.73,
-     "tipo": "clic",
-     "vol": 0.04
-    },
-    {
-     "t": 3.8600000000000003,
-     "tipo": "clic",
-     "vol": 0.04
-    },
-    {
-     "t": 3.99,
-     "tipo": "clic",
-     "vol": 0.04
-    },
-    {
-     "t": 4.12,
-     "tipo": "clic",
-     "vol": 0.04
-    },
-    {
-     "t": 4.25,
-     "tipo": "clic",
-     "vol": 0.04
-    },
-    {
-     "t": 4.38,
-     "tipo": "clic",
-     "vol": 0.04
-    },
-    {
-     "t": 4.51,
-     "tipo": "clic",
-     "vol": 0.04
-    },
-    {
-     "t": 4.640000000000001,
-     "tipo": "clic",
-     "vol": 0.04
-    },
-    {
-     "t": 4.77,
-     "tipo": "clic",
-     "vol": 0.04
-    },
-    {
-     "t": 5.4,
-     "tipo": "zap",
+     "t": 5.2,
+     "tipo": "thud",
      "vol": 0.16
     },
     {
-     "t": 7.1,
+     "t": 6.4,
      "tipo": "ding",
-     "vol": 0.22
+     "vol": 0.2
     }
    ]
   },
@@ -972,9 +997,9 @@
    "tema": "oscuro",
    "bg": "gold",
    "ritmo": 1,
-   "total": 67,
-   "inicio": 62.2,
-   "fin": 67,
+   "total": 65.5,
+   "inicio": 60.7,
+   "fin": 65.5,
    "texto": "Compártelo con alguien que ame el cerebro. Síguenos en Sinapsis.",
    "tr": "barrido",
    "trs": "barrido",

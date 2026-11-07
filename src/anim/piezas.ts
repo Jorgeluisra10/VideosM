@@ -704,6 +704,33 @@ export const TME = {
   puente: { anio: 0.2, hombre: 1.6, camina: 3.6, puente: 5.4, entre: 7.1 },
 } as const;
 
+/** Datos del video «El par craneal 0» (SINAPSIS · neuroanatomía). Fuentes y precauciones en ejemplos/animacion-viral/guion-tecnico-par-craneal-0.md. */
+export const PC0 = {
+  /** Gustav Fritsch lo describió en 1878 en elasmobranquios (tiburones y rayas): lo llamó «nervio supernumerario» */
+  fritsch: 1878,
+  /** el nombre «par craneal cero» se propuso a finales de los años 80 (por delante del I, el olfatorio) */
+  nombreCero: "finales de los años 80",
+  /** la Terminologia Anatomica de 1998 lo incluye como nervio terminal */
+  terminologia: 1998,
+  /** pares craneales que enseña la mayoría de los textos */
+  paresClasicos: 12,
+  /** es un plexo de fibras sin mielina que cruza la lámina cribosa; las neuronas GnRH migran por su ruta en el embrión; su relación con el síndrome de Kallmann es clínica; su función en adultos no está demostrada */
+  amielinico: true, funcionDemostrada: false,
+} as const;
+/** total de pares craneales contando el cero */
+export const totalCraneales = (clasicos: number): number => clasicos + 1;
+/** Tiempos del video del par craneal 0 (segundos a ritmo normal), compartidos entre el dibujo y el sonido. */
+export const TPC = {
+  gancho: { doce: 0.4, uno: 2.8, antes: 3.9, cero: 5.6 },
+  fritsch: { anio: 0.2, nombre: 2.3, personas: 4.9, tiburon: 5.7 },
+  recorrido: { red: 0.2, mielina: 2.4, olfatorio: 3.3, placa: 5.0, cerebro: 6.5 },
+  numero: { bautizo: 0.6, ochenta: 2.0, delante: 3.9, olfatorio: 5.6 },
+  gnrh: { embrion: 0.2, gnrh: 1.3, hormona: 2.4, viaja: 4.6, nervio: 6.2 },
+  kallmann: { falla: 0.2, sindrome: 1.8, olfato: 3.8, pubertad: 4.9 },
+  misterio: { adultos: 0.2, nose: 1.4, repro: 3.0, feromonas: 5.2, nada: 6.7 },
+  libro: { nomenclatura: 0.2, anio: 2.3, libros: 5.2 },
+} as const;
+
 /* ───────────── «La regla del 37 %» (problema de la parada óptima, ensayo abstracto para IMNOBA) ───────────── */
 
 /** Generador pseudoaleatorio determinista (mulberry32): mismos números en el render, en las pruebas y en cada fotograma. */
@@ -1586,6 +1613,38 @@ export const PIEZAS: Record<string, DefPieza> = {
   "me-puente": {
     id: "me-puente", nombre: "Médula · 2023: un hombre paralizado vuelve a caminar con muletas gracias a un puente digital cerebro–médula (cierre)", ideal: 8.1, fondo: "dark", entra: "zoom",
     sfx: (_d, r) => [ev(0.05, "whoosh", 0.1), ev(TME.puente.anio * r + 0.2, "tick", 0.12), ev(TME.puente.camina * r, "pop", 0.14), ...clics(TME.puente.camina * r, 1.4 * r, 0.04), ev(TME.puente.puente * r, "zap", 0.16), ev(TME.puente.entre * r, "ding", 0.22)],
+  },
+  "pc0-gancho": {
+    id: "pc0-gancho", nombre: "Par craneal 0 · te enseñaron 12 pares craneales, pero hay uno más: el cero (gancho)", ideal: 6.5, fondo: "dark", entra: "zoom",
+    sfx: (_d, r) => [ev(0.05, "whoosh", 0.1), ...clics(TPC.gancho.doce * r, 2.0 * r, 0.04), ev(TPC.gancho.uno * r, "pop", 0.14), ev(TPC.gancho.antes * r, "tick", 0.12), ev(TPC.gancho.cero * r, "zap", 0.16), ev((TPC.gancho.cero + 0.2) * r, "ding", 0.2)],
+  },
+  "pc0-fritsch": {
+    id: "pc0-fritsch", nombre: "Par craneal 0 · 1878: Gustav Fritsch lo describió por primera vez, no en personas sino en tiburones", ideal: 6.6, fondo: "dark", entra: "corte",
+    sfx: (_d, r) => [ev(0.05, "whoosh", 0.1), ...clics(TPC.fritsch.anio * r + 0.2, 1.6 * r, 0.04), ev(TPC.fritsch.nombre * r, "pop", 0.12), ev(TPC.fritsch.personas * r, "thud", 0.16), ev(TPC.fritsch.tiburon * r, "whoosh", 0.14), ev((TPC.fritsch.tiburon + 0.5) * r, "ding", 0.18)],
+  },
+  "pc0-recorrido": {
+    id: "pc0-recorrido", nombre: "Par craneal 0 · red de fibras finas sin mielina, junto al nervio olfatorio, que cruza la lámina cribosa y llega al cerebro", ideal: 7.3, fondo: "dark", entra: "semitono",
+    sfx: (_d, r) => [ev(0.05, "whoosh", 0.1), ev(TPC.recorrido.red * r + 0.2, "pop", 0.12), ev(TPC.recorrido.mielina * r, "tick", 0.12), ev(TPC.recorrido.olfatorio * r, "pop", 0.12), ev(TPC.recorrido.placa * r, "ding", 0.16), ...clics(TPC.recorrido.cerebro * r, 1.0 * r, 0.04), ev((TPC.recorrido.cerebro + 1.0) * r, "ding", 0.18)],
+  },
+  "pc0-numero": {
+    id: "pc0-numero", nombre: "Par craneal 0 · se llama cero porque está por delante del par I, el olfatorio (vista inferior esquemática del cerebro)", ideal: 6.5, fondo: "dark", entra: "zoom",
+    sfx: (_d, r) => [ev(0.05, "whoosh", 0.1), ev(TPC.numero.bautizo * r, "pop", 0.14), ev(TPC.numero.ochenta * r, "tick", 0.12), ev(TPC.numero.delante * r, "whoosh", 0.14), ev(TPC.numero.olfatorio * r, "ding", 0.18)],
+  },
+  "pc0-gnrh": {
+    id: "pc0-gnrh", nombre: "Par craneal 0 · en el embrión, neuronas con GnRH viajan de la nariz al cerebro siguiendo este nervio", ideal: 7.6, fondo: "dark", entra: "corte",
+    sfx: (_d, r) => [ev(0.05, "whoosh", 0.1), ev(TPC.gnrh.embrion * r + 0.2, "pop", 0.12), ev(TPC.gnrh.gnrh * r, "ding", 0.16), ev(TPC.gnrh.hormona * r, "pop", 0.12), ...clics(TPC.gnrh.viaja * r, 1.8 * r, 0.04), ev((TPC.gnrh.viaja + 1.8) * r, "ding", 0.2)],
+  },
+  "pc0-kallmann": {
+    id: "pc0-kallmann", nombre: "Par craneal 0 · si esa ruta falla puede aparecer el síndrome de Kallmann: sin olfato y pubertad ausente o retrasada", ideal: 7.6, fondo: "dark", entra: "semitono",
+    sfx: (_d, r) => [ev(0.05, "whoosh", 0.1), ev(TPC.kallmann.falla * r + 0.3, "thud", 0.18), ev((TPC.kallmann.falla + 0.1) * r + 0.3, "zap", 0.12), ev(TPC.kallmann.sindrome * r, "pop", 0.14), ev(TPC.kallmann.olfato * r, "thud", 0.14), ev(TPC.kallmann.pubertad * r, "tick", 0.14)],
+  },
+  "pc0-misterio": {
+    id: "pc0-misterio", nombre: "Par craneal 0 · en adultos su función no se conoce: se propone que modula la reproducción o detecta feromonas, sin demostrar", ideal: 7.3, fondo: "dark", entra: "corte",
+    sfx: (_d, r) => [ev(0.05, "whoosh", 0.1), ev(TPC.misterio.adultos * r + 0.2, "pop", 0.12), ev(TPC.misterio.nose * r, "tick", 0.12), ev(TPC.misterio.repro * r, "pop", 0.12), ev(TPC.misterio.feromonas * r, "pop", 0.12), ev(TPC.misterio.nada * r, "thud", 0.2)],
+  },
+  "pc0-libro": {
+    id: "pc0-libro", nombre: "Par craneal 0 · incluido en la nomenclatura anatómica internacional desde 1998, pero muchos libros siguen enseñando solo 12 pares (cierre)", ideal: 7.3, fondo: "dark", entra: "zoom",
+    sfx: (_d, r) => [ev(0.05, "whoosh", 0.1), ev(TPC.libro.nomenclatura * r + 0.2, "pop", 0.12), ev(TPC.libro.anio * r, "tick", 0.12), ev(TPC.libro.libros * r, "thud", 0.16), ev((TPC.libro.libros + 1.2) * r, "ding", 0.2)],
   },
   "astro-memoria": {
     id: "astro-memoria", nombre: "Astrocitos · en ratones, reactivarlos estimuló el recuerdo", ideal: 4.15, fondo: "dark", entra: "corte",
