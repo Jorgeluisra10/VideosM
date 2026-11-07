@@ -1,0 +1,18 @@
+{
+  "version": 1,
+  "slug": "2026-11-07-medula-espinal",
+  "titulo": "La médula espinal: el atajo del cuerpo",
+  "serie": "neuroanatomia",
+  "estado": "grabado",
+  "guion": "Cuando el médico golpea tu rodilla, la orden no sale de tu cerebro: sale de tu médula espinal.\nLa médula mide unos cuarenta y cinco centímetros, baja por la columna y de ella salen treinta y un pares de nervios.\nPero termina muy arriba: a la altura de la primera o segunda vértebra lumbar; debajo solo hay nervios, la cola de caballo.\nPor dentro tiene forma de mariposa: la sustancia gris, donde se procesan las señales, rodeada de sustancia blanca, las autopistas.\nLas señales más rápidas viajan por axones con mielina hasta a ciento veinte metros por segundo: más de cuatrocientos kilómetros por hora.\nPor eso, al tocar algo muy caliente, tu mano se aparta casi antes de que sientas el dolor.\nSi la médula se lesiona, el cerebro y el cuerpo dejan de comunicarse; cuanto más arriba, más funciones se afectan.\nEn dos mil veintitrés, un hombre paralizado desde hacía años volvió a caminar con muletas gracias a un puente digital entre cerebro y médula.\nCompártelo con alguien que ame el cerebro. Síguenos en Sinapsis.",
+  "gancho": "Cuando el médico golpea tu rodilla, la orden no sale de tu cerebro: sale de tu médula espinal.",
+  "duracion_seg": 67,
+  "notas": "Médula espinal: reflejo rotuliano, 45 cm, 31 pares, cono L1–L2, mariposa, 120 m/s, reflejo de retirada, lesión y puente digital (Nature 2023, un solo participante, no es una cura). Dibujos esquemáticos; cifras de manual sin verificar en fuente primaria; sin voz (−27 LUFS).",
+  "voz_usada": "",
+  "instrucciones_voz": "",
+  "creado": "2026-11-07T10:36:30.719Z",
+  "origen_clave": "d7f763bc",
+  "video": "revision.mp4",
+  "miniatura": "miniatura.jpg",
+  "entrega": "entrega.md"
+}
