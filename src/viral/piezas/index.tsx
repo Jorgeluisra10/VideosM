@@ -4,6 +4,8 @@
  */
 import { PisAcrilico, PisGancho, PisUnion, PisVidrio } from "./pis1";
 import { PisCarga, PisTinas, PisViento, PisZoom } from "./pis2";
+import { JapDemole, JapGancho, JapGrafico } from "./jap1";
+import { JapLeccion, JapPorque, JapVacias } from "./jap2";
 import { FloConteo, FloGancho, FloTorre } from "./flo1";
 import { FloAsia, FloConsejo, FloPrecio } from "./flo2";
 import { AutGancho, AutLlanta, AutTanque } from "./aut1";
@@ -123,6 +125,7 @@ export const COMPONENTES_PIEZA: Record<string, React.FC<{ e: EscenaViralGuardada
   "sep-gancho": SepGancho, "sep-pozo": SepPozo, "sep-idea": SepIdea, "sep-decanta": SepDecanta, "sep-bacterias": SepBacterias, "sep-camara2": SepCamara2, "sep-olores": SepOlores, "sep-grava": SepGrava, "sep-suelo": SepSuelo, "sep-mant": SepMant, "sep-lote": SepLote,
   "aut-gancho": AutGancho, "aut-tanque": AutTanque, "aut-llanta": AutLlanta, "aut-edad": AutEdad, "aut-vin": AutVin, "aut-repaso": AutRepaso,
   "flo-gancho": FloGancho, "flo-torre": FloTorre, "flo-conteo": FloConteo, "flo-asia": FloAsia, "flo-precio": FloPrecio, "flo-consejo": FloConsejo,
+  "jap-gancho": JapGancho, "jap-grafico": JapGrafico, "jap-demole": JapDemole, "jap-porque": JapPorque, "jap-vacias": JapVacias, "jap-leccion": JapLeccion,
   "cab-gancho": CabGancho, "cab-caja": CabCaja, "cab-largo": CabLargo, "cab-flexible": CabFlexible, "cab-nudos": CabNudos, "cab-receta": CabReceta,
   "rui-gancho": RuiGancho, "rui-dia": RuiDia, "rui-noche": RuiNoche, "rui-ritmos": RuiRitmos, "rui-friccion": RuiFriccion, "rui-remate": RuiRemate, "rui-tally": RuiTally, "rui-micro": RuiMicro,
   "pte-gancho": PteGancho, "pte-parabola": PteParabola, "pte-duelo": PteDuelo, "pte-roebling": PteRoebling, "pte-bloque": PteBloque, "pte-cubo": PteCubo, "pte-zoom": PteZoom,

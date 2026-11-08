@@ -655,6 +655,27 @@ export const TFL = {
   consejo: { cuenta: 0.4, cuentaDur: 3.2, rotulos: 3.8, plano: 4.9, chip: 6.0 },
 } as const;
 
+/** Datos del video «La casa que vale menos cada año» (IMNOBA · Japón). Fuentes y precauciones en ejemplos/animacion-viral/guion-tecnico-casas-japon.md. */
+export const JAP = {
+  /** edad promedio de las casas DEMOLIDAS (dato de 2008 del ministerio de transporte, vía resúmenes): Japón 32,1 · EE. UU. 66,6 · Reino Unido 80,6. No es la vida física de las casas. */
+  demolida: { japon: 32.1, eeuu: 66.6, reinoUnido: 80.6 },
+  /** vida útil legal de una casa de madera para efectos tributarios en Japón (años) */
+  depreciacionAnios: 22,
+  /** Encuesta de Vivienda y Suelo 2023: ≈ 9 millones de viviendas vacías, 13,8 % de 65,05 millones; solo ≈ 3,6 % están a la venta */
+  vacias: { millones: 9, pct: 13.8, total: 65.05, enVentaPct: 3.6 },
+} as const;
+/** Valor contable (0–1) de una construcción con depreciación lineal a `vida` años; el terreno no se deprecia. */
+export const valorContable = (anios: number, vida: number = JAP.depreciacionAnios): number => Math.max(0, 1 - anios / vida);
+/** Tiempos de «La casa que vale menos cada año» (s a ritmo normal), compartidos entre el dibujo y el sonido. */
+export const TJP = {
+  gancho: { casa: 0.2, anios: 1.0, aniosDur: 3.6, tierra: 4.6, chip: 5.0 },
+  grafico: { ejes: 0.2, casa: 1.0, casaDur: 2.8, tierra: 1.0, marca22: 4.8, chip: 6.0 },
+  demole: { casa: 0.2, golpe: 2.0, caida: 2.3, barra1: 4.0, barra2: 5.0, barra3: 6.0, chip: 7.0 },
+  porque: { viejas: 0.3, flecha: 1.6, nueva: 2.2, onda: 2.8, chip1: 3.4, chip2: 4.8 },
+  vacias: { grid: 0.2, gridDur: 1.6, vacias: 2.2, vaciasDur: 2.0, dato: 3.2, chip: 5.4 },
+  leccion: { casa: 0.3, parte: 1.8, tarjeta: 3.2, filas: 4.0, chip: 5.6 },
+} as const;
+
 export const PIEZAS: Record<string, DefPieza> = {
   "metro-plano": {
     id: "metro-plano", nombre: "8 millones en un solo plano", ideal: 7.6, fondo: "dark",
@@ -1259,6 +1280,31 @@ export const PIEZAS: Record<string, DefPieza> = {
   "flo-consejo": {
     id: "flo-consejo", nombre: "Pisos · si compras, cuenta los pisos reales y mira el plano: el botón puede esconder uno (cierre)", ideal: 6.75, fondo: "dark", entra: "zoom",
     sfx: (_d, r) => [ev(TFL.consejo.cuenta * r, "whoosh", 0.1), ev(TFL.consejo.rotulos * r, "zap", 0.14), ev(TFL.consejo.plano * r, "pop", 0.12), ev(TFL.consejo.chip * r, "ding", 0.16)],
+  },
+  /* ───────────── «La casa que vale menos cada año» (IMNOBA · Japón · figuras realistas) ───────────── */
+  "jap-gancho": {
+    id: "jap-gancho", nombre: "Casas de Japón · a los 30 años la casa casi no vale, el terreno sí (gancho)", ideal: 6.15, fondo: "dark",
+    sfx: (_d, r) => [ev(0.05, "golpe", 0.14), ev(TJP.gancho.anios * r, "tick", 0.12), ...clics(TJP.gancho.anios * r, TJP.gancho.aniosDur * r * 0.8, 0.04), ev(TJP.gancho.tierra * r, "zap", 0.14), ev(TJP.gancho.chip * r, "ding", 0.16)],
+  },
+  "jap-grafico": {
+    id: "jap-grafico", nombre: "Casas de Japón · el terreno conserva su valor, la construcción se deprecia (22 años para impuestos)", ideal: 7.15, fondo: "dark", entra: "corte",
+    sfx: (_d, r) => [ev(TJP.grafico.ejes * r, "whoosh", 0.1), ev(TJP.grafico.casa * r, "zap", 0.12), ev(TJP.grafico.casa * r + 1.4, "tick", 0.1), ev(TJP.grafico.marca22 * r, "thud", 0.16), ev(TJP.grafico.chip * r, "ding", 0.14)],
+  },
+  "jap-demole": {
+    id: "jap-demole", nombre: "Casas de Japón · las casas demolidas tenían 32 años; en EE. UU., 66 (dato de 2008)", ideal: 7.45, fondo: "dark", entra: "corte",
+    sfx: (_d, r) => [ev(TJP.demole.golpe * r, "thud", 0.2), ev(TJP.demole.caida * r, "estatica", 0.16), ev(TJP.demole.barra1 * r, "pop", 0.12), ev(TJP.demole.barra2 * r, "pop", 0.12), ev(TJP.demole.barra3 * r, "pop", 0.12), ev(TJP.demole.chip * r, "ding", 0.12)],
+  },
+  "jap-porque": {
+    id: "jap-porque", nombre: "Casas de Japón · no se caen solas: preferencia por lo nuevo y normas antisísmicas que cambian", ideal: 6.15, fondo: "dark", entra: "corte",
+    sfx: (_d, r) => [ev(TJP.porque.viejas * r, "pop", 0.1), ev(TJP.porque.flecha * r, "whoosh", 0.12), ev(TJP.porque.nueva * r, "ding", 0.16), ev(TJP.porque.onda * r, "radar", 0.12), ev(TJP.porque.chip1 * r, "tick", 0.1), ev(TJP.porque.chip2 * r, "tick", 0.1)],
+  },
+  "jap-vacias": {
+    id: "jap-vacias", nombre: "Casas de Japón · 9 millones de viviendas vacías, casi 14 de cada 100 (2023)", ideal: 6.45, fondo: "dark", entra: "semitono",
+    sfx: (_d, r) => [ev(TJP.vacias.grid * r, "pop", 0.1), ...[0, 1, 2, 3, 4, 5, 6].map((i) => ev((TJP.vacias.vacias + i * 0.26) * r, "tick", 0.1)), ev(TJP.vacias.dato * r, "zap", 0.14), ev(TJP.vacias.chip * r, "ding", 0.12)],
+  },
+  "jap-leccion": {
+    id: "jap-leccion", nombre: "Casas de Japón · al comprar, pide que separen el valor del terreno y el de la construcción (cierre)", ideal: 6.45, fondo: "dark", entra: "zoom",
+    sfx: (_d, r) => [ev(TJP.leccion.casa * r, "whoosh", 0.1), ev(TJP.leccion.parte * r, "thud", 0.14), ev(TJP.leccion.tarjeta * r, "pop", 0.12), ev(TJP.leccion.filas * r, "tick", 0.1), ev(TJP.leccion.chip * r, "ding", 0.16)],
   },
 };
 

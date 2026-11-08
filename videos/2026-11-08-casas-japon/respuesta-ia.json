@@ -1,0 +1,12 @@
+{
+  "titulo": "La casa que vale menos cada año",
+  "scenes": [
+    { "t": "PIEZA", "voz": "En Japón, una casa de treinta años casi no vale nada. Pero el terreno donde está, sí.", "dur": 6.6, "h": "UNA CASA DE 30 AÑOS CASI NO VALE", "w": "TERRENO", "cap": "Japón", "pieza": { "id": "jap-gancho" } },
+    { "t": "PIEZA", "voz": "El terreno conserva su valor; la construcción se deprecia. Para impuestos, una casa de madera se deprecia en veintidós años.", "dur": 7.6, "h": "LA CONSTRUCCIÓN SE DEPRECIA", "w": "DEPRECIA", "cap": "22 años", "pieza": { "id": "jap-grafico" } },
+    { "t": "PIEZA", "voz": "En un dato oficial de dos mil ocho, las casas demolidas tenían treinta y dos años. En Estados Unidos, sesenta y seis.", "dur": 7.9, "h": "32 AÑOS CONTRA 66", "w": "32", "cap": "casas demolidas", "pieza": { "id": "jap-demole" } },
+    { "t": "PIEZA", "voz": "No se caen solas: muchas se reemplazan por preferencia a lo nuevo y por normas antisísmicas que cambian.", "dur": 6.6, "h": "SE REEMPLAZAN", "w": "REEMPLAZAN", "cap": "no se caen solas", "pieza": { "id": "jap-porque" } },
+    { "t": "PIEZA", "voz": "Japón también tiene nueve millones de casas vacías: casi catorce de cada cien viviendas, en dos mil veintitrés.", "dur": 6.9, "h": "9 MILLONES DE CASAS VACÍAS", "w": "VACÍAS", "cap": "13,8 %", "pieza": { "id": "jap-vacias" } },
+    { "t": "PIEZA", "voz": "Si compras, pide que separen el valor del terreno y el de la construcción. Ahí está la clave.", "dur": 6.9, "h": "SEPARA TERRENO Y CONSTRUCCIÓN", "w": "SEPARA", "cap": "al comprar", "pieza": { "id": "jap-leccion" } },
+    { "t": "CTA", "voz": "Guárdalo y síguenos en IMNOBA, tu plataforma de propiedades y vehículos.", "dur": 5.0, "h": "SÍGUENOS EN IMNOBA", "w": "IMNOBA", "ic": "casa" }
+  ]
+}
