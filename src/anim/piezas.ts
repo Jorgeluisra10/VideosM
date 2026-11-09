@@ -731,6 +731,31 @@ export const TPC = {
   libro: { nomenclatura: 0.2, anio: 2.3, libros: 5.2 },
 } as const;
 
+/** Datos del video «El par craneal I: el nervio que renace» (SINAPSIS · pares craneales). Fuentes y precauciones en ejemplos/animacion-viral/guion-tecnico-par-craneal-1.md. */
+export const OL = {
+  /** receptores olfativos funcionales en humanos ≈ 350–400 (la familia génica ronda 1000; Axel y Buck, Nobel 2004) */
+  receptoresFuncionales: 400,
+  /** en ratones, la mayoría de las neuronas olfatorias vive 1–3 meses (no hay cifra humana validada) */
+  ratonMeses: { min: 1, max: 3 },
+  /** entrenamiento olfativo clásico (Hummel y cols., 2009): 4 aromas (rosa, limón, clavo, eucalipto), 2 veces al día, 12 semanas; estudios pequeños */
+  entrenamiento: { aromas: 4, vecesDia: 2, semanas: 12 },
+  /** cada neurona olfatoria expresa un solo receptor; cada olor activa varios receptores a la vez (código combinatorio) */
+  receptoresPorNeurona: 1,
+  /** la mayoría de las neuronas olfatorias no se reemplazan en el cerebro; las del epitelio olfatorio se renuevan durante toda la vida (disminuye con la edad) */
+  funcionDemostradaCovid: false,
+} as const;
+/** Tiempos del video del par craneal I (segundos a ritmo normal), compartidos entre el dibujo y el sonido. */
+export const TOL = {
+  gancho: { mayoria: 0.3, pero: 3.3, par: 4.6, renuevan: 6.0 },
+  mucosa: { techo: 0.2, aire: 2.4, dano: 4.8 },
+  ciclo: { ratones: 0.2, meses: 1.1, madre: 4.0, nuevas: 5.7 },
+  receptor: { uno: 0.2, cuatro: 3.0, olor: 5.8 },
+  axones: { cruzan: 0.2, nuevas: 3.0, bulbo: 5.4 },
+  memoria: { bulbo: 0.2, amigdala: 1.6, hipocampo: 3.3, recuerdo: 5.4 },
+  dano: { golpe: 0.2, covid: 3.6, soporte: 5.4, noneuronas: 6.6 },
+  recupera: { recuperan: 0.2, entrena: 3.9, cuatro: 5.0, estudios: 6.3 },
+} as const;
+
 /* ───────────── «La regla del 37 %» (problema de la parada óptima, ensayo abstracto para IMNOBA) ───────────── */
 
 /** Generador pseudoaleatorio determinista (mulberry32): mismos números en el render, en las pruebas y en cada fotograma. */
@@ -1645,6 +1670,38 @@ export const PIEZAS: Record<string, DefPieza> = {
   "pc0-libro": {
     id: "pc0-libro", nombre: "Par craneal 0 · incluido en la nomenclatura anatómica internacional desde 1998, pero muchos libros siguen enseñando solo 12 pares (cierre)", ideal: 7.3, fondo: "dark", entra: "zoom",
     sfx: (_d, r) => [ev(0.05, "whoosh", 0.1), ev(TPC.libro.nomenclatura * r + 0.2, "pop", 0.12), ev(TPC.libro.anio * r, "tick", 0.12), ev(TPC.libro.libros * r, "thud", 0.16), ev((TPC.libro.libros + 1.2) * r, "ding", 0.2)],
+  },
+  "ol-gancho": {
+    id: "ol-gancho", nombre: "Par I · la mayoría de las neuronas no se reemplaza, pero las del olfato se renuevan toda la vida (gancho)", ideal: 7.3, fondo: "dark", entra: "zoom",
+    sfx: (_d, r) => [ev(0.05, "whoosh", 0.1), ev(TOL.gancho.mayoria * r + 0.2, "pop", 0.12), ev(TOL.gancho.pero * r, "tick", 0.12), ev(TOL.gancho.par * r, "pop", 0.14), ...clics(TOL.gancho.renuevan * r, 1.4 * r, 0.04), ev((TOL.gancho.renuevan + 0.2) * r, "ding", 0.2)],
+  },
+  "ol-mucosa": {
+    id: "ol-mucosa", nombre: "Par I · las neuronas olfatorias están en el techo de la nariz, expuestas al aire que respiras", ideal: 7.3, fondo: "dark", entra: "corte",
+    sfx: (_d, r) => [ev(0.05, "whoosh", 0.1), ev(TOL.mucosa.techo * r + 0.2, "pop", 0.12), ev(TOL.mucosa.aire * r, "whoosh", 0.12), ev(TOL.mucosa.dano * r, "thud", 0.16), ev((TOL.mucosa.dano + 0.4) * r, "zap", 0.12)],
+  },
+  "ol-ciclo": {
+    id: "ol-ciclo", nombre: "Par I · en ratones la mayoría vive 1–3 meses y células madre fabrican neuronas nuevas sin parar", ideal: 7.3, fondo: "dark", entra: "semitono",
+    sfx: (_d, r) => [ev(0.05, "whoosh", 0.1), ev(TOL.ciclo.ratones * r + 0.2, "pop", 0.12), ...clics(TOL.ciclo.meses * r, 1.6 * r, 0.04), ev(TOL.ciclo.madre * r, "pop", 0.14), ev(TOL.ciclo.nuevas * r, "ding", 0.18)],
+  },
+  "ol-receptor": {
+    id: "ol-receptor", nombre: "Par I · cada neurona fabrica un solo tipo de receptor (≈ 400 funcionales en humanos) y cada olor activa varios", ideal: 8.0, fondo: "dark", entra: "zoom",
+    sfx: (_d, r) => [ev(0.05, "whoosh", 0.1), ev(TOL.receptor.uno * r + 0.2, "pop", 0.12), ...clics(TOL.receptor.cuatro * r, 1.6 * r, 0.04), ev((TOL.receptor.cuatro + 1.7) * r, "ding", 0.16), ev(TOL.receptor.olor * r, "zap", 0.14), ev((TOL.receptor.olor + 1.1) * r, "zap", 0.12)],
+  },
+  "ol-axones": {
+    id: "ol-axones", nombre: "Par I · los axones cruzan la lámina cribosa y las neuronas nuevas deben reconectarse con el bulbo olfatorio", ideal: 6.6, fondo: "dark", entra: "corte",
+    sfx: (_d, r) => [ev(0.05, "whoosh", 0.1), ev(TOL.axones.cruzan * r + 0.2, "pop", 0.12), ev(TOL.axones.nuevas * r, "tick", 0.12), ...clics(TOL.axones.nuevas * r + 0.2, 1.6 * r, 0.04), ev(TOL.axones.bulbo * r, "ding", 0.18)],
+  },
+  "ol-memoria": {
+    id: "ol-memoria", nombre: "Par I · desde el bulbo las señales llegan a la amígdala y al hipocampo: un olor puede traer un recuerdo", ideal: 7.6, fondo: "dark", entra: "zoom",
+    sfx: (_d, r) => [ev(0.05, "whoosh", 0.1), ev(TOL.memoria.bulbo * r + 0.2, "pop", 0.12), ev(TOL.memoria.amigdala * r, "pop", 0.14), ev(TOL.memoria.hipocampo * r, "pop", 0.14), ev(TOL.memoria.recuerdo * r, "zap", 0.14), ev((TOL.memoria.recuerdo + 0.3) * r, "ding", 0.2)],
+  },
+  "ol-dano": {
+    id: "ol-dano", nombre: "Par I · un golpe en la cabeza puede cortar sus fibras; en el COVID-19 el virus parece dañar sobre todo las células de soporte", ideal: 7.3, fondo: "dark", entra: "semitono",
+    sfx: (_d, r) => [ev(0.05, "whoosh", 0.1), ev(TOL.dano.golpe * r + 0.5, "thud", 0.22), ev(TOL.dano.golpe * r + 0.6, "zap", 0.14), ev(TOL.dano.covid * r, "whoosh", 0.12), ev(TOL.dano.soporte * r, "pop", 0.14), ev(TOL.dano.noneuronas * r, "ding", 0.16)],
+  },
+  "ol-recupera": {
+    id: "ol-recupera", nombre: "Par I · muchas personas recuperan el olfato y el entrenamiento olfativo con 4 aromas ayudó en estudios pequeños (cierre)", ideal: 7.0, fondo: "dark", entra: "zoom",
+    sfx: (_d, r) => [ev(0.05, "whoosh", 0.1), ev(TOL.recupera.recuperan * r + 0.2, "pop", 0.12), ev(TOL.recupera.entrena * r, "tick", 0.12), ...[0, 1, 2, 3].map((k) => ev((TOL.recupera.cuatro + k * 0.28) * r, "pop", 0.12)), ev(TOL.recupera.estudios * r, "ding", 0.2)],
   },
   "astro-memoria": {
     id: "astro-memoria", nombre: "Astrocitos · en ratones, reactivarlos estimuló el recuerdo", ideal: 4.15, fondo: "dark", entra: "corte",

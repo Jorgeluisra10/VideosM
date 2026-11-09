@@ -15,3 +15,4 @@ curie-cuadernos.wav · creada por el sistema (síntesis con `videos/2026-11-05-c
 insulina-un-dolar.wav · creada por el sistema (síntesis con `videos/2026-11-06-insulina-un-dolar/componer-musica.mjs`; el WAV no se sube a git, se regenera) · libre de derechos · ninguna · 2026-11-06
 medula-espinal.wav · creada por el sistema (síntesis con `videos/2026-11-07-medula-espinal/componer-musica.mjs`; el WAV no se sube a git, se regenera) · libre de derechos · ninguna · 2026-11-07
 par-craneal-0.wav · creada por el sistema (síntesis con `videos/2026-11-08-par-craneal-0/componer-musica.mjs`; el WAV no se sube a git, se regenera) · libre de derechos · ninguna · 2026-11-08
+par-craneal-1.wav · creada por el sistema (síntesis con `videos/2026-11-09-par-craneal-1/componer-musica.mjs`; el WAV no se sube a git, se regenera) · libre de derechos · ninguna · 2026-11-09

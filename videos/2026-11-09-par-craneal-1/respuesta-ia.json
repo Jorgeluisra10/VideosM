@@ -1,0 +1,14 @@
+{
+ "titulo": "El par craneal I: el nervio que renace",
+ "scenes": [
+  { "t": "PIEZA", "voz": "La mayoría de tus neuronas no se reemplaza, pero las del olfato, el par craneal uno, se renuevan toda la vida.", "dur": 7.8, "h": "NEURONAS QUE RENACEN", "w": "RENACEN", "pieza": { "id": "ol-gancho" } },
+  { "t": "PIEZA", "voz": "Están en el techo de la nariz, expuestas al aire que respiras, y por eso se dañan y mueren con facilidad.", "dur": 7.8, "h": "EXPUESTAS AL AIRE", "w": "AIRE", "cap": "techo de la nariz", "pieza": { "id": "ol-mucosa" } },
+  { "t": "PIEZA", "voz": "En ratones, la mayoría vive de uno a tres meses y células madre de la mucosa fabrican neuronas nuevas sin parar.", "dur": 7.8, "h": "CÉLULAS MADRE", "w": "MADRE", "cap": "dato de ratones", "pieza": { "id": "ol-ciclo" } },
+  { "t": "PIEZA", "voz": "Cada neurona fabrica un solo tipo de receptor, de unos cuatrocientos que funcionan en humanos, y cada olor activa varios a la vez.", "dur": 8.5, "h": "400 RECEPTORES", "w": "RECEPTORES", "cap": "un olor, varios receptores", "pieza": { "id": "ol-receptor" } },
+  { "t": "PIEZA", "voz": "Sus axones cruzan la lámina cribosa y las neuronas nuevas deben volver a conectarse con el bulbo olfatorio.", "dur": 7.0, "h": "LÁMINA CRIBOSA", "w": "CRIBOSA", "cap": "bulbo olfatorio", "pieza": { "id": "ol-axones" } },
+  { "t": "PIEZA", "voz": "Desde el bulbo, las señales llegan a la amígdala y al hipocampo: por eso un olor puede traerte un recuerdo de golpe.", "dur": 8.1, "h": "UN OLOR, UN RECUERDO", "w": "RECUERDO", "cap": "amígdala e hipocampo", "pieza": { "id": "ol-memoria" } },
+  { "t": "PIEZA", "voz": "Un golpe en la cabeza puede cortar sus fibras, y el COVID-19 parece dañar sobre todo células de soporte, no neuronas.", "dur": 7.8, "h": "GOLPE Y COVID-19", "w": "SOPORTE", "cap": "cuando se pierde el olfato", "pieza": { "id": "ol-dano" } },
+  { "t": "PIEZA", "voz": "Muchas personas recuperan el olfato en semanas o meses, y el entrenamiento olfativo, con cuatro aromas, ayudó en estudios pequeños.", "dur": 7.5, "h": "SE PUEDE RECUPERAR", "w": "RECUPERAR", "cap": "entrenamiento olfativo", "pieza": { "id": "ol-recupera" } },
+  { "t": "CTA", "voz": "Compártelo con alguien que ame el cerebro. Síguenos en Sinapsis.", "dur": 4.8, "h": "COMPÁRTELO Y SÍGUENOS", "w": "SÍGUENOS", "sub": "Más ciencia en SINAPSIS" }
+ ]
+}

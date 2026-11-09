@@ -3,6 +3,8 @@
  * Para añadir una pieza nueva: (1) su ficha pura en src/anim/piezas.ts (duración ideal, fondo, sonido), (2) su componente aquí.
  */
 import { MeCola, MeColumna, MeGancho, MeMariposa } from "./me1";
+import { OlCiclo, OlGancho, OlMucosa, OlReceptor } from "./ol1";
+import { OlAxones, OlDano, OlMemoria, OlRecupera } from "./ol2";
 import { Pc0Fritsch, Pc0Gancho, Pc0Numero, Pc0Recorrido } from "./pc1";
 import { Pc0Gnrh, Pc0Kallmann, Pc0Libro, Pc0Misterio } from "./pc2";
 import { MeLesion, MePuente, MeReflejo, MeVelocidad } from "./me2";
@@ -127,6 +129,8 @@ export const COMPONENTES_PIEZA: Record<string, React.FC<{ e: EscenaViralGuardada
   "tej-hueso": TejHueso,
   "tej-muscular": TejMuscular,
   "tej-nervioso": TejNervioso,
+  "ol-gancho": OlGancho, "ol-mucosa": OlMucosa, "ol-ciclo": OlCiclo, "ol-receptor": OlReceptor,
+  "ol-axones": OlAxones, "ol-memoria": OlMemoria, "ol-dano": OlDano, "ol-recupera": OlRecupera,
   "pc0-gancho": Pc0Gancho, "pc0-fritsch": Pc0Fritsch, "pc0-recorrido": Pc0Recorrido, "pc0-numero": Pc0Numero,
   "pc0-gnrh": Pc0Gnrh, "pc0-kallmann": Pc0Kallmann, "pc0-misterio": Pc0Misterio, "pc0-libro": Pc0Libro,
   "me-gancho": MeGancho, "me-columna": MeColumna, "me-cola": MeCola, "me-mariposa": MeMariposa, "me-velocidad": MeVelocidad, "me-reflejo": MeReflejo, "me-lesion": MeLesion, "me-puente": MePuente,

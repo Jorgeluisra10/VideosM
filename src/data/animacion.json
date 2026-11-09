@@ -1,18 +1,18 @@
 {
  "version": 1,
- "titulo": "El par craneal 0: el nervio que casi nadie te enseñó",
+ "titulo": "El par craneal I: el nervio que renace",
  "paleta": "medicina",
  "sfx": true,
  "fps": 60,
- "duracion": 65.5,
+ "duracion": 67.1,
  "escenas": [
   {
    "n": 1,
    "t": "PIEZA",
-   "voz": "Te enseñaron doce pares craneales, pero hay uno más, y viene antes del primero: el par craneal cero.",
-   "dur": 7,
-   "h": "EL PAR CRANEAL 0",
-   "w": "0",
+   "voz": "La mayoría de tus neuronas no se reemplaza, pero las del olfato, el par craneal uno, se renuevan toda la vida.",
+   "dur": 7.8,
+   "h": "NEURONAS QUE RENACEN",
+   "w": "RENACEN",
    "sub": "",
    "ic": "brillo",
    "num": null,
@@ -45,7 +45,7 @@
    "cubo": null,
    "diales": null,
    "pieza": {
-    "id": "pc0-gancho",
+    "id": "ol-gancho",
     "props": {}
    },
    "cita": null,
@@ -54,10 +54,10 @@
    "tema": "oscuro",
    "bg": "dark",
    "ritmo": 1,
-   "total": 65.5,
+   "total": 67.1,
    "inicio": 0,
-   "fin": 7,
-   "texto": "Te enseñaron doce pares craneales, pero hay uno más, y viene antes del primero: el par craneal cero.",
+   "fin": 7.8,
+   "texto": "La mayoría de tus neuronas no se reemplaza, pero las del olfato, el par craneal uno, se renuevan toda la vida.",
    "tr": "barrido",
    "trs": "corte",
    "sfx": [
@@ -72,256 +72,84 @@
      "vol": 0.1
     },
     {
-     "t": 0.4,
-     "tipo": "clic",
-     "vol": 0.04
-    },
-    {
-     "t": 0.53,
-     "tipo": "clic",
-     "vol": 0.04
-    },
-    {
-     "t": 0.66,
-     "tipo": "clic",
-     "vol": 0.04
-    },
-    {
-     "t": 0.79,
-     "tipo": "clic",
-     "vol": 0.04
-    },
-    {
-     "t": 0.92,
-     "tipo": "clic",
-     "vol": 0.04
-    },
-    {
-     "t": 1.05,
-     "tipo": "clic",
-     "vol": 0.04
-    },
-    {
-     "t": 1.1800000000000002,
-     "tipo": "clic",
-     "vol": 0.04
-    },
-    {
-     "t": 1.31,
-     "tipo": "clic",
-     "vol": 0.04
-    },
-    {
-     "t": 1.44,
-     "tipo": "clic",
-     "vol": 0.04
-    },
-    {
-     "t": 1.5699999999999998,
-     "tipo": "clic",
-     "vol": 0.04
-    },
-    {
-     "t": 1.7000000000000002,
-     "tipo": "clic",
-     "vol": 0.04
-    },
-    {
-     "t": 1.83,
-     "tipo": "clic",
-     "vol": 0.04
-    },
-    {
-     "t": 1.96,
-     "tipo": "clic",
-     "vol": 0.04
-    },
-    {
-     "t": 2.09,
-     "tipo": "clic",
-     "vol": 0.04
-    },
-    {
-     "t": 2.22,
-     "tipo": "clic",
-     "vol": 0.04
-    },
-    {
-     "t": 2.8,
+     "t": 0.5,
      "tipo": "pop",
-     "vol": 0.14
+     "vol": 0.12
     },
     {
-     "t": 3.9,
+     "t": 3.3,
      "tipo": "tick",
      "vol": 0.12
     },
     {
-     "t": 5.6,
-     "tipo": "zap",
-     "vol": 0.16
+     "t": 4.6,
+     "tipo": "pop",
+     "vol": 0.14
     },
     {
-     "t": 5.8,
+     "t": 6,
+     "tipo": "clic",
+     "vol": 0.04
+    },
+    {
+     "t": 6.13,
+     "tipo": "clic",
+     "vol": 0.04
+    },
+    {
+     "t": 6.2,
      "tipo": "ding",
      "vol": 0.2
+    },
+    {
+     "t": 6.26,
+     "tipo": "clic",
+     "vol": 0.04
+    },
+    {
+     "t": 6.39,
+     "tipo": "clic",
+     "vol": 0.04
+    },
+    {
+     "t": 6.52,
+     "tipo": "clic",
+     "vol": 0.04
+    },
+    {
+     "t": 6.65,
+     "tipo": "clic",
+     "vol": 0.04
+    },
+    {
+     "t": 6.78,
+     "tipo": "clic",
+     "vol": 0.04
+    },
+    {
+     "t": 6.91,
+     "tipo": "clic",
+     "vol": 0.04
+    },
+    {
+     "t": 7.04,
+     "tipo": "clic",
+     "vol": 0.04
+    },
+    {
+     "t": 7.17,
+     "tipo": "clic",
+     "vol": 0.04
     }
    ]
   },
   {
    "n": 2,
    "t": "PIEZA",
-   "voz": "En mil ochocientos setenta y ocho, Gustav Fritsch lo describió por primera vez, no en personas, sino en tiburones.",
-   "dur": 7.1,
-   "h": "1878: TIBURONES",
-   "w": "TIBURONES",
-   "sub": "",
-   "ic": "chat",
-   "num": null,
-   "vs": null,
-   "bars": [],
-   "barsU": "",
-   "hi": -1,
-   "line": null,
-   "items": [],
-   "stops": [],
-   "end": "",
-   "donut": [],
-   "picto": null,
-   "top": [],
-   "myth": "",
-   "truth": "",
-   "zoom": null,
-   "capas": null,
-   "mira": null,
-   "impacto": null,
-   "red": null,
-   "termo": null,
-   "pila": null,
-   "cap": "Gustav Fritsch",
-   "papel": null,
-   "pilares": null,
-   "ciclo": null,
-   "duo": null,
-   "osc": null,
-   "cubo": null,
-   "diales": null,
-   "pieza": {
-    "id": "pc0-fritsch",
-    "props": {}
-   },
-   "cita": null,
-   "sc": "",
-   "modo": "VIRAL",
-   "tema": "claro",
-   "bg": "light",
-   "ritmo": 1,
-   "total": 65.5,
-   "inicio": 7,
-   "fin": 14.1,
-   "texto": "En mil ochocientos setenta y ocho, Gustav Fritsch lo describió por primera vez, no en personas, sino en tiburones.",
-   "tr": "corte",
-   "trs": "semitono",
-   "sfx": [
-    {
-     "t": 0.04,
-     "tipo": "whoosh",
-     "vol": 0.16
-    },
-    {
-     "t": 0.05,
-     "tipo": "whoosh",
-     "vol": 0.1
-    },
-    {
-     "t": 0.4,
-     "tipo": "clic",
-     "vol": 0.04
-    },
-    {
-     "t": 0.53,
-     "tipo": "clic",
-     "vol": 0.04
-    },
-    {
-     "t": 0.66,
-     "tipo": "clic",
-     "vol": 0.04
-    },
-    {
-     "t": 0.79,
-     "tipo": "clic",
-     "vol": 0.04
-    },
-    {
-     "t": 0.92,
-     "tipo": "clic",
-     "vol": 0.04
-    },
-    {
-     "t": 1.05,
-     "tipo": "clic",
-     "vol": 0.04
-    },
-    {
-     "t": 1.1800000000000002,
-     "tipo": "clic",
-     "vol": 0.04
-    },
-    {
-     "t": 1.31,
-     "tipo": "clic",
-     "vol": 0.04
-    },
-    {
-     "t": 1.44,
-     "tipo": "clic",
-     "vol": 0.04
-    },
-    {
-     "t": 1.5699999999999998,
-     "tipo": "clic",
-     "vol": 0.04
-    },
-    {
-     "t": 1.7000000000000002,
-     "tipo": "clic",
-     "vol": 0.04
-    },
-    {
-     "t": 1.83,
-     "tipo": "clic",
-     "vol": 0.04
-    },
-    {
-     "t": 2.3,
-     "tipo": "pop",
-     "vol": 0.12
-    },
-    {
-     "t": 4.9,
-     "tipo": "thud",
-     "vol": 0.16
-    },
-    {
-     "t": 5.7,
-     "tipo": "whoosh",
-     "vol": 0.14
-    },
-    {
-     "t": 6.2,
-     "tipo": "ding",
-     "vol": 0.18
-    }
-   ]
-  },
-  {
-   "n": 3,
-   "t": "PIEZA",
-   "voz": "Es una red de fibras finísimas, sin mielina, junto al nervio olfatorio, que atraviesa la lámina cribosa y llega al cerebro.",
+   "voz": "Están en el techo de la nariz, expuestas al aire que respiras, y por eso se dañan y mueren con facilidad.",
    "dur": 7.8,
-   "h": "FIBRAS FINÍSIMAS",
-   "w": "FIBRAS",
+   "h": "EXPUESTAS AL AIRE",
+   "w": "AIRE",
    "sub": "",
    "ic": "brillo",
    "num": null,
@@ -345,7 +173,7 @@
    "red": null,
    "termo": null,
    "pila": null,
-   "cap": "nervio terminal",
+   "cap": "techo de la nariz",
    "papel": null,
    "pilares": null,
    "ciclo": null,
@@ -354,21 +182,21 @@
    "cubo": null,
    "diales": null,
    "pieza": {
-    "id": "pc0-recorrido",
+    "id": "ol-mucosa",
     "props": {}
    },
    "cita": null,
    "sc": "",
    "modo": "VIRAL",
-   "tema": "oscuro",
-   "bg": "dark",
+   "tema": "claro",
+   "bg": "light",
    "ritmo": 1,
-   "total": 65.5,
-   "inicio": 14.1,
-   "fin": 21.9,
-   "texto": "Es una red de fibras finísimas, sin mielina, junto al nervio olfatorio, que atraviesa la lámina cribosa y llega al cerebro.",
-   "tr": "semitono",
-   "trs": "zoom",
+   "total": 67.1,
+   "inicio": 7.8,
+   "fin": 15.6,
+   "texto": "Están en el techo de la nariz, expuestas al aire que respiras, y por eso se dañan y mueren con facilidad.",
+   "tr": "corte",
+   "trs": "semitono",
    "sfx": [
     {
      "t": 0.04,
@@ -387,70 +215,30 @@
     },
     {
      "t": 2.4,
-     "tipo": "tick",
+     "tipo": "whoosh",
      "vol": 0.12
     },
     {
-     "t": 3.3,
-     "tipo": "pop",
-     "vol": 0.12
-    },
-    {
-     "t": 5,
-     "tipo": "ding",
+     "t": 4.8,
+     "tipo": "thud",
      "vol": 0.16
     },
     {
-     "t": 6.5,
-     "tipo": "clic",
-     "vol": 0.04
-    },
-    {
-     "t": 6.63,
-     "tipo": "clic",
-     "vol": 0.04
-    },
-    {
-     "t": 6.76,
-     "tipo": "clic",
-     "vol": 0.04
-    },
-    {
-     "t": 6.89,
-     "tipo": "clic",
-     "vol": 0.04
-    },
-    {
-     "t": 7.02,
-     "tipo": "clic",
-     "vol": 0.04
-    },
-    {
-     "t": 7.15,
-     "tipo": "clic",
-     "vol": 0.04
-    },
-    {
-     "t": 7.28,
-     "tipo": "clic",
-     "vol": 0.04
-    },
-    {
-     "t": 7.5,
-     "tipo": "ding",
-     "vol": 0.18
+     "t": 5.2,
+     "tipo": "zap",
+     "vol": 0.12
     }
    ]
   },
   {
-   "n": 4,
+   "n": 3,
    "t": "PIEZA",
-   "voz": "Lo bautizaron cero a finales de los años ochenta, porque está por delante del par uno, el olfatorio.",
-   "dur": 7,
-   "h": "POR QUÉ SE LLAMA 0",
-   "w": "0",
+   "voz": "En ratones, la mayoría vive de uno a tres meses y células madre de la mucosa fabrican neuronas nuevas sin parar.",
+   "dur": 7.8,
+   "h": "CÉLULAS MADRE",
+   "w": "MADRE",
    "sub": "",
-   "ic": "telefono",
+   "ic": "brillo",
    "num": null,
    "vs": null,
    "bars": [],
@@ -472,7 +260,7 @@
    "red": null,
    "termo": null,
    "pila": null,
-   "cap": "vista inferior",
+   "cap": "dato de ratones",
    "papel": null,
    "pilares": null,
    "ciclo": null,
@@ -481,7 +269,149 @@
    "cubo": null,
    "diales": null,
    "pieza": {
-    "id": "pc0-numero",
+    "id": "ol-ciclo",
+    "props": {}
+   },
+   "cita": null,
+   "sc": "",
+   "modo": "VIRAL",
+   "tema": "oscuro",
+   "bg": "dark",
+   "ritmo": 1,
+   "total": 67.1,
+   "inicio": 15.6,
+   "fin": 23.4,
+   "texto": "En ratones, la mayoría vive de uno a tres meses y células madre de la mucosa fabrican neuronas nuevas sin parar.",
+   "tr": "semitono",
+   "trs": "zoom",
+   "sfx": [
+    {
+     "t": 0.04,
+     "tipo": "whoosh",
+     "vol": 0.16
+    },
+    {
+     "t": 0.05,
+     "tipo": "whoosh",
+     "vol": 0.1
+    },
+    {
+     "t": 0.4,
+     "tipo": "pop",
+     "vol": 0.12
+    },
+    {
+     "t": 1.1,
+     "tipo": "clic",
+     "vol": 0.04
+    },
+    {
+     "t": 1.23,
+     "tipo": "clic",
+     "vol": 0.04
+    },
+    {
+     "t": 1.36,
+     "tipo": "clic",
+     "vol": 0.04
+    },
+    {
+     "t": 1.4900000000000002,
+     "tipo": "clic",
+     "vol": 0.04
+    },
+    {
+     "t": 1.62,
+     "tipo": "clic",
+     "vol": 0.04
+    },
+    {
+     "t": 1.75,
+     "tipo": "clic",
+     "vol": 0.04
+    },
+    {
+     "t": 1.8800000000000001,
+     "tipo": "clic",
+     "vol": 0.04
+    },
+    {
+     "t": 2.0100000000000002,
+     "tipo": "clic",
+     "vol": 0.04
+    },
+    {
+     "t": 2.14,
+     "tipo": "clic",
+     "vol": 0.04
+    },
+    {
+     "t": 2.27,
+     "tipo": "clic",
+     "vol": 0.04
+    },
+    {
+     "t": 2.4000000000000004,
+     "tipo": "clic",
+     "vol": 0.04
+    },
+    {
+     "t": 2.5300000000000002,
+     "tipo": "clic",
+     "vol": 0.04
+    },
+    {
+     "t": 4,
+     "tipo": "pop",
+     "vol": 0.14
+    },
+    {
+     "t": 5.7,
+     "tipo": "ding",
+     "vol": 0.18
+    }
+   ]
+  },
+  {
+   "n": 4,
+   "t": "PIEZA",
+   "voz": "Cada neurona fabrica un solo tipo de receptor, de unos cuatrocientos que funcionan en humanos, y cada olor activa varios a la vez.",
+   "dur": 8.5,
+   "h": "400 RECEPTORES",
+   "w": "RECEPTORES",
+   "sub": "",
+   "ic": "brillo",
+   "num": null,
+   "vs": null,
+   "bars": [],
+   "barsU": "",
+   "hi": -1,
+   "line": null,
+   "items": [],
+   "stops": [],
+   "end": "",
+   "donut": [],
+   "picto": null,
+   "top": [],
+   "myth": "",
+   "truth": "",
+   "zoom": null,
+   "capas": null,
+   "mira": null,
+   "impacto": null,
+   "red": null,
+   "termo": null,
+   "pila": null,
+   "cap": "un olor, varios receptores",
+   "papel": null,
+   "pilares": null,
+   "ciclo": null,
+   "duo": null,
+   "osc": null,
+   "cubo": null,
+   "diales": null,
+   "pieza": {
+    "id": "ol-receptor",
     "props": {}
    },
    "cita": null,
@@ -490,10 +420,10 @@
    "tema": "claro",
    "bg": "light",
    "ritmo": 1,
-   "total": 65.5,
-   "inicio": 21.9,
-   "fin": 28.9,
-   "texto": "Lo bautizaron cero a finales de los años ochenta, porque está por delante del par uno, el olfatorio.",
+   "total": 67.1,
+   "inicio": 23.4,
+   "fin": 31.9,
+   "texto": "Cada neurona fabrica un solo tipo de receptor, de unos cuatrocientos que funcionan en humanos, y cada olor activa varios a la vez.",
    "tr": "zoom",
    "trs": "corte",
    "sfx": [
@@ -508,34 +438,94 @@
      "vol": 0.1
     },
     {
-     "t": 0.6,
+     "t": 0.4,
      "tipo": "pop",
-     "vol": 0.14
-    },
-    {
-     "t": 2,
-     "tipo": "tick",
      "vol": 0.12
     },
     {
-     "t": 3.9,
-     "tipo": "whoosh",
+     "t": 3,
+     "tipo": "clic",
+     "vol": 0.04
+    },
+    {
+     "t": 3.13,
+     "tipo": "clic",
+     "vol": 0.04
+    },
+    {
+     "t": 3.26,
+     "tipo": "clic",
+     "vol": 0.04
+    },
+    {
+     "t": 3.39,
+     "tipo": "clic",
+     "vol": 0.04
+    },
+    {
+     "t": 3.52,
+     "tipo": "clic",
+     "vol": 0.04
+    },
+    {
+     "t": 3.65,
+     "tipo": "clic",
+     "vol": 0.04
+    },
+    {
+     "t": 3.7800000000000002,
+     "tipo": "clic",
+     "vol": 0.04
+    },
+    {
+     "t": 3.91,
+     "tipo": "clic",
+     "vol": 0.04
+    },
+    {
+     "t": 4.04,
+     "tipo": "clic",
+     "vol": 0.04
+    },
+    {
+     "t": 4.17,
+     "tipo": "clic",
+     "vol": 0.04
+    },
+    {
+     "t": 4.3,
+     "tipo": "clic",
+     "vol": 0.04
+    },
+    {
+     "t": 4.43,
+     "tipo": "clic",
+     "vol": 0.04
+    },
+    {
+     "t": 4.7,
+     "tipo": "ding",
+     "vol": 0.16
+    },
+    {
+     "t": 5.8,
+     "tipo": "zap",
      "vol": 0.14
     },
     {
-     "t": 5.6,
-     "tipo": "ding",
-     "vol": 0.18
+     "t": 6.9,
+     "tipo": "zap",
+     "vol": 0.12
     }
    ]
   },
   {
    "n": 5,
    "t": "PIEZA",
-   "voz": "En el embrión, neuronas con GnRH, la hormona que activa la pubertad, viajan de la nariz al cerebro siguiendo este nervio.",
-   "dur": 8.1,
-   "h": "NEURONAS VIAJERAS",
-   "w": "NEURONAS",
+   "voz": "Sus axones cruzan la lámina cribosa y las neuronas nuevas deben volver a conectarse con el bulbo olfatorio.",
+   "dur": 7,
+   "h": "LÁMINA CRIBOSA",
+   "w": "CRIBOSA",
    "sub": "",
    "ic": "brillo",
    "num": null,
@@ -559,7 +549,7 @@
    "red": null,
    "termo": null,
    "pila": null,
-   "cap": "en el embrión",
+   "cap": "bulbo olfatorio",
    "papel": null,
    "pilares": null,
    "ciclo": null,
@@ -568,7 +558,7 @@
    "cubo": null,
    "diales": null,
    "pieza": {
-    "id": "pc0-gnrh",
+    "id": "ol-axones",
     "props": {}
    },
    "cita": null,
@@ -576,12 +566,154 @@
    "modo": "VIRAL",
    "tema": "oscuro",
    "bg": "dark",
-   "ritmo": 1,
-   "total": 65.5,
-   "inicio": 28.9,
-   "fin": 37,
-   "texto": "En el embrión, neuronas con GnRH, la hormona que activa la pubertad, viajan de la nariz al cerebro siguiendo este nervio.",
+   "ritmo": 0.9924242424242424,
+   "total": 67.1,
+   "inicio": 31.9,
+   "fin": 38.9,
+   "texto": "Sus axones cruzan la lámina cribosa y las neuronas nuevas deben volver a conectarse con el bulbo olfatorio.",
    "tr": "corte",
+   "trs": "zoom",
+   "sfx": [
+    {
+     "t": 0.04,
+     "tipo": "whoosh",
+     "vol": 0.16
+    },
+    {
+     "t": 0.05,
+     "tipo": "whoosh",
+     "vol": 0.1
+    },
+    {
+     "t": 0.3984848484848485,
+     "tipo": "pop",
+     "vol": 0.12
+    },
+    {
+     "t": 2.9772727272727275,
+     "tipo": "tick",
+     "vol": 0.12
+    },
+    {
+     "t": 3.1772727272727277,
+     "tipo": "clic",
+     "vol": 0.04
+    },
+    {
+     "t": 3.3072727272727276,
+     "tipo": "clic",
+     "vol": 0.04
+    },
+    {
+     "t": 3.4372727272727275,
+     "tipo": "clic",
+     "vol": 0.04
+    },
+    {
+     "t": 3.567272727272728,
+     "tipo": "clic",
+     "vol": 0.04
+    },
+    {
+     "t": 3.6972727272727277,
+     "tipo": "clic",
+     "vol": 0.04
+    },
+    {
+     "t": 3.8272727272727276,
+     "tipo": "clic",
+     "vol": 0.04
+    },
+    {
+     "t": 3.957272727272728,
+     "tipo": "clic",
+     "vol": 0.04
+    },
+    {
+     "t": 4.087272727272728,
+     "tipo": "clic",
+     "vol": 0.04
+    },
+    {
+     "t": 4.217272727272728,
+     "tipo": "clic",
+     "vol": 0.04
+    },
+    {
+     "t": 4.347272727272728,
+     "tipo": "clic",
+     "vol": 0.04
+    },
+    {
+     "t": 4.4772727272727275,
+     "tipo": "clic",
+     "vol": 0.04
+    },
+    {
+     "t": 4.607272727272727,
+     "tipo": "clic",
+     "vol": 0.04
+    },
+    {
+     "t": 5.359090909090909,
+     "tipo": "ding",
+     "vol": 0.18
+    }
+   ]
+  },
+  {
+   "n": 6,
+   "t": "PIEZA",
+   "voz": "Desde el bulbo, las señales llegan a la amígdala y al hipocampo: por eso un olor puede traerte un recuerdo de golpe.",
+   "dur": 8.1,
+   "h": "UN OLOR, UN RECUERDO",
+   "w": "RECUERDO",
+   "sub": "",
+   "ic": "brillo",
+   "num": null,
+   "vs": null,
+   "bars": [],
+   "barsU": "",
+   "hi": -1,
+   "line": null,
+   "items": [],
+   "stops": [],
+   "end": "",
+   "donut": [],
+   "picto": null,
+   "top": [],
+   "myth": "",
+   "truth": "",
+   "zoom": null,
+   "capas": null,
+   "mira": null,
+   "impacto": null,
+   "red": null,
+   "termo": null,
+   "pila": null,
+   "cap": "amígdala e hipocampo",
+   "papel": null,
+   "pilares": null,
+   "ciclo": null,
+   "duo": null,
+   "osc": null,
+   "cubo": null,
+   "diales": null,
+   "pieza": {
+    "id": "ol-memoria",
+    "props": {}
+   },
+   "cita": null,
+   "sc": "",
+   "modo": "VIRAL",
+   "tema": "claro",
+   "bg": "light",
+   "ritmo": 1,
+   "total": 67.1,
+   "inicio": 38.9,
+   "fin": 47,
+   "texto": "Desde el bulbo, las señales llegan a la amígdala y al hipocampo: por eso un olor puede traerte un recuerdo de golpe.",
+   "tr": "zoom",
    "trs": "semitono",
    "sfx": [
     {
@@ -600,186 +732,34 @@
      "vol": 0.12
     },
     {
-     "t": 1.3,
-     "tipo": "ding",
-     "vol": 0.16
-    },
-    {
-     "t": 2.4,
+     "t": 1.6,
      "tipo": "pop",
-     "vol": 0.12
+     "vol": 0.14
     },
     {
-     "t": 4.6,
-     "tipo": "clic",
-     "vol": 0.04
+     "t": 3.3,
+     "tipo": "pop",
+     "vol": 0.14
     },
     {
-     "t": 4.7299999999999995,
-     "tipo": "clic",
-     "vol": 0.04
+     "t": 5.4,
+     "tipo": "zap",
+     "vol": 0.14
     },
     {
-     "t": 4.859999999999999,
-     "tipo": "clic",
-     "vol": 0.04
-    },
-    {
-     "t": 4.989999999999999,
-     "tipo": "clic",
-     "vol": 0.04
-    },
-    {
-     "t": 5.119999999999999,
-     "tipo": "clic",
-     "vol": 0.04
-    },
-    {
-     "t": 5.25,
-     "tipo": "clic",
-     "vol": 0.04
-    },
-    {
-     "t": 5.38,
-     "tipo": "clic",
-     "vol": 0.04
-    },
-    {
-     "t": 5.51,
-     "tipo": "clic",
-     "vol": 0.04
-    },
-    {
-     "t": 5.64,
-     "tipo": "clic",
-     "vol": 0.04
-    },
-    {
-     "t": 5.77,
-     "tipo": "clic",
-     "vol": 0.04
-    },
-    {
-     "t": 5.8999999999999995,
-     "tipo": "clic",
-     "vol": 0.04
-    },
-    {
-     "t": 6.029999999999999,
-     "tipo": "clic",
-     "vol": 0.04
-    },
-    {
-     "t": 6.16,
-     "tipo": "clic",
-     "vol": 0.04
-    },
-    {
-     "t": 6.3999999999999995,
+     "t": 5.7,
      "tipo": "ding",
      "vol": 0.2
     }
    ]
   },
   {
-   "n": 6,
-   "t": "PIEZA",
-   "voz": "Si esa ruta falla, puede aparecer el síndrome de Kallmann: sin olfato y con una pubertad que no llega o se retrasa.",
-   "dur": 8.1,
-   "h": "SÍNDROME DE KALLMANN",
-   "w": "KALLMANN",
-   "sub": "",
-   "ic": "bus",
-   "num": null,
-   "vs": null,
-   "bars": [],
-   "barsU": "",
-   "hi": -1,
-   "line": null,
-   "items": [],
-   "stops": [],
-   "end": "",
-   "donut": [],
-   "picto": null,
-   "top": [],
-   "myth": "",
-   "truth": "",
-   "zoom": null,
-   "capas": null,
-   "mira": null,
-   "impacto": null,
-   "red": null,
-   "termo": null,
-   "pila": null,
-   "cap": "cuando la ruta falla",
-   "papel": null,
-   "pilares": null,
-   "ciclo": null,
-   "duo": null,
-   "osc": null,
-   "cubo": null,
-   "diales": null,
-   "pieza": {
-    "id": "pc0-kallmann",
-    "props": {}
-   },
-   "cita": null,
-   "sc": "",
-   "modo": "VIRAL",
-   "tema": "claro",
-   "bg": "light",
-   "ritmo": 1,
-   "total": 65.5,
-   "inicio": 37,
-   "fin": 45.1,
-   "texto": "Si esa ruta falla, puede aparecer el síndrome de Kallmann: sin olfato y con una pubertad que no llega o se retrasa.",
-   "tr": "semitono",
-   "trs": "corte",
-   "sfx": [
-    {
-     "t": 0.04,
-     "tipo": "whoosh",
-     "vol": 0.16
-    },
-    {
-     "t": 0.05,
-     "tipo": "whoosh",
-     "vol": 0.1
-    },
-    {
-     "t": 0.5,
-     "tipo": "thud",
-     "vol": 0.18
-    },
-    {
-     "t": 0.6000000000000001,
-     "tipo": "zap",
-     "vol": 0.12
-    },
-    {
-     "t": 1.8,
-     "tipo": "pop",
-     "vol": 0.14
-    },
-    {
-     "t": 3.8,
-     "tipo": "thud",
-     "vol": 0.14
-    },
-    {
-     "t": 4.9,
-     "tipo": "tick",
-     "vol": 0.14
-    }
-   ]
-  },
-  {
    "n": 7,
    "t": "PIEZA",
-   "voz": "¿Y en adultos? Aún no se sabe: se ha propuesto que modula la reproducción o detecta feromonas, pero nada está demostrado.",
+   "voz": "Un golpe en la cabeza puede cortar sus fibras, y el COVID-19 parece dañar sobre todo células de soporte, no neuronas.",
    "dur": 7.8,
-   "h": "AÚN NO SE SABE",
-   "w": "SABE",
+   "h": "GOLPE Y COVID-19",
+   "w": "COVID-19",
    "sub": "",
    "ic": "brillo",
    "num": null,
@@ -803,7 +783,7 @@
    "red": null,
    "termo": null,
    "pila": null,
-   "cap": "función en adultos",
+   "cap": "cuando se pierde el olfato",
    "papel": null,
    "pilares": null,
    "ciclo": null,
@@ -812,7 +792,7 @@
    "cubo": null,
    "diales": null,
    "pieza": {
-    "id": "pc0-misterio",
+    "id": "ol-dano",
     "props": {}
    },
    "cita": null,
@@ -821,11 +801,11 @@
    "tema": "oscuro",
    "bg": "dark",
    "ritmo": 1,
-   "total": 65.5,
-   "inicio": 45.1,
-   "fin": 52.9,
-   "texto": "¿Y en adultos? Aún no se sabe: se ha propuesto que modula la reproducción o detecta feromonas, pero nada está demostrado.",
-   "tr": "corte",
+   "total": 67.1,
+   "inicio": 47,
+   "fin": 54.8,
+   "texto": "Un golpe en la cabeza puede cortar sus fibras, y el COVID-19 parece dañar sobre todo células de soporte, no neuronas.",
+   "tr": "semitono",
    "trs": "zoom",
    "sfx": [
     {
@@ -839,41 +819,41 @@
      "vol": 0.1
     },
     {
-     "t": 0.4,
-     "tipo": "pop",
-     "vol": 0.12
-    },
-    {
-     "t": 1.4,
-     "tipo": "tick",
-     "vol": 0.12
-    },
-    {
-     "t": 3,
-     "tipo": "pop",
-     "vol": 0.12
-    },
-    {
-     "t": 5.2,
-     "tipo": "pop",
-     "vol": 0.12
-    },
-    {
-     "t": 6.7,
+     "t": 0.7,
      "tipo": "thud",
-     "vol": 0.2
+     "vol": 0.22
+    },
+    {
+     "t": 0.8,
+     "tipo": "zap",
+     "vol": 0.14
+    },
+    {
+     "t": 3.6,
+     "tipo": "whoosh",
+     "vol": 0.12
+    },
+    {
+     "t": 5.4,
+     "tipo": "pop",
+     "vol": 0.14
+    },
+    {
+     "t": 6.6,
+     "tipo": "ding",
+     "vol": 0.16
     }
    ]
   },
   {
    "n": 8,
    "t": "PIEZA",
-   "voz": "La nomenclatura anatómica internacional lo incluye desde mil novecientos noventa y ocho, pero muchos libros siguen enseñando solo doce.",
-   "dur": 7.8,
-   "h": "INCLUIDO DESDE 1998",
-   "w": "1998",
+   "voz": "Muchas personas recuperan el olfato en semanas o meses, y el entrenamiento olfativo, con cuatro aromas, ayudó en estudios pequeños.",
+   "dur": 7.5,
+   "h": "SE PUEDE RECUPERAR",
+   "w": "RECUPERAR",
    "sub": "",
-   "ic": "brillo",
+   "ic": "tren",
    "num": null,
    "vs": null,
    "bars": [],
@@ -895,7 +875,7 @@
    "red": null,
    "termo": null,
    "pila": null,
-   "cap": "nomenclatura anatómica",
+   "cap": "entrenamiento olfativo",
    "papel": null,
    "pilares": null,
    "ciclo": null,
@@ -904,7 +884,7 @@
    "cubo": null,
    "diales": null,
    "pieza": {
-    "id": "pc0-libro",
+    "id": "ol-recupera",
     "props": {}
    },
    "cita": null,
@@ -913,10 +893,10 @@
    "tema": "claro",
    "bg": "light",
    "ritmo": 1,
-   "total": 65.5,
-   "inicio": 52.9,
-   "fin": 60.7,
-   "texto": "La nomenclatura anatómica internacional lo incluye desde mil novecientos noventa y ocho, pero muchos libros siguen enseñando solo doce.",
+   "total": 67.1,
+   "inicio": 54.8,
+   "fin": 62.3,
+   "texto": "Muchas personas recuperan el olfato en semanas o meses, y el entrenamiento olfativo, con cuatro aromas, ayudó en estudios pequeños.",
    "tr": "zoom",
    "trs": "barrido",
    "sfx": [
@@ -936,17 +916,32 @@
      "vol": 0.12
     },
     {
-     "t": 2.3,
+     "t": 3.9,
      "tipo": "tick",
      "vol": 0.12
     },
     {
-     "t": 5.2,
-     "tipo": "thud",
-     "vol": 0.16
+     "t": 5,
+     "tipo": "pop",
+     "vol": 0.12
     },
     {
-     "t": 6.4,
+     "t": 5.28,
+     "tipo": "pop",
+     "vol": 0.12
+    },
+    {
+     "t": 5.5600000000000005,
+     "tipo": "pop",
+     "vol": 0.12
+    },
+    {
+     "t": 5.84,
+     "tipo": "pop",
+     "vol": 0.12
+    },
+    {
+     "t": 6.3,
      "tipo": "ding",
      "vol": 0.2
     }
@@ -997,9 +992,9 @@
    "tema": "oscuro",
    "bg": "gold",
    "ritmo": 1,
-   "total": 65.5,
-   "inicio": 60.7,
-   "fin": 65.5,
+   "total": 67.1,
+   "inicio": 62.3,
+   "fin": 67.1,
    "texto": "Compártelo con alguien que ame el cerebro. Síguenos en Sinapsis.",
    "tr": "barrido",
    "trs": "barrido",
