@@ -756,6 +756,29 @@ export const TOL = {
   recupera: { recuperan: 0.2, entrena: 3.9, cuatro: 5.0, estudios: 6.3 },
 } as const;
 
+/** Datos del video «El nervio óptico: la parte del cerebro que sale a mirar» (SINAPSIS · pares craneales). Fuentes y precauciones en ejemplos/animacion-viral/guion-tecnico-par-craneal-2.md. */
+export const OP = {
+  /** cada nervio óptico lleva entre ≈ 770 000 y 1 700 000 axones de células ganglionares de la retina («cerca de un millón») */
+  fibras: { min: 770_000, tipico: 1_000_000, max: 1_700_000 },
+  /** el campo visual izquierdo de AMBOS ojos se procesa en el hemisferio derecho (las fibras de la retina nasal se cruzan en el quiasma) */
+  campoIzquierdoVa: "derecho",
+  /** Lu y cols., Nature, dic. 2020: OSK (OCT4, SOX2, KLF4) por AAV en ratones; regeneración axonal tras lesión y mejora de la visión en glaucoma murino y ratones viejos */
+  reprogramacion: { anio: 2020, genes: 3, ratones: true },
+  /** ensayo de fase 1 de ER-100 (Life Biosciences, NCT07290244): inyección intravítrea única + doxiciclina 8 semanas; primer paciente junio de 2026; primeros datos intermedios el 8 de octubre de 2026 en 3 personas con glaucoma de ángulo abierto, bien tolerado hasta el día 56 */
+  ensayo: { fase: 1, participantes: 3, diasSeguimiento: 56, objetivoPrincipal: "seguridad", eficaciaDemostrada: false },
+} as const;
+/** Tiempos del video del par craneal II (segundos a ritmo normal), compartidos entre el dibujo y el sonido. */
+export const TOP = {
+  gancho: { par: 0.2, optico: 1.7, comun: 3.1, extension: 4.6 },
+  origen: { diencefalo: 0.2, meninges: 2.2, millon: 4.2 },
+  ciego: { sale: 0.2, sinFoto: 2.3, punto: 4.2, rellena: 6.0 },
+  quiasma: { quiasma: 0.2, cruzan: 2.0, izquierda: 4.0, derecho: 5.6 },
+  regenera: { parte: 0.2, noRegenera: 2.1, olfatorio: 3.5, glaucoma: 5.2 },
+  genes: { anio: 0.2, ratones: 1.7, tres: 3.3, rejuvenece: 4.4, mejora: 6.3 },
+  ensayo: { hoy: 0.2, personas: 2.6, octubre: 5.2, tolerada: 6.5 },
+  temprano: { temprano: 0.2, seguridad: 1.8, tres: 3.4, noDemuestra: 4.9 },
+} as const;
+
 /* ───────────── «La regla del 37 %» (problema de la parada óptima, ensayo abstracto para IMNOBA) ───────────── */
 
 /** Generador pseudoaleatorio determinista (mulberry32): mismos números en el render, en las pruebas y en cada fotograma. */
@@ -1702,6 +1725,38 @@ export const PIEZAS: Record<string, DefPieza> = {
   "ol-recupera": {
     id: "ol-recupera", nombre: "Par I · muchas personas recuperan el olfato y el entrenamiento olfativo con 4 aromas ayudó en estudios pequeños (cierre)", ideal: 7.0, fondo: "dark", entra: "zoom",
     sfx: (_d, r) => [ev(0.05, "whoosh", 0.1), ev(TOL.recupera.recuperan * r + 0.2, "pop", 0.12), ev(TOL.recupera.entrena * r, "tick", 0.12), ...[0, 1, 2, 3].map((k) => ev((TOL.recupera.cuatro + k * 0.28) * r, "pop", 0.12)), ev(TOL.recupera.estudios * r, "ding", 0.2)],
+  },
+  "op-gancho": {
+    id: "op-gancho", nombre: "Par II · el nervio óptico no es un nervio común: es una extensión del cerebro (gancho)", ideal: 6.5, fondo: "dark", entra: "zoom",
+    sfx: (_d, r) => [ev(0.05, "whoosh", 0.1), ev(TOP.gancho.par * r + 0.2, "pop", 0.12), ev(TOP.gancho.optico * r, "pop", 0.14), ev(TOP.gancho.comun * r, "tick", 0.12), ev(TOP.gancho.extension * r, "zap", 0.14), ev((TOP.gancho.extension + 0.3) * r, "ding", 0.2)],
+  },
+  "op-origen": {
+    id: "op-origen", nombre: "Par II · nace del diencéfalo, lo envuelven las meninges y lleva cerca de un millón de fibras desde la retina", ideal: 6.5, fondo: "dark", entra: "corte",
+    sfx: (_d, r) => [ev(0.05, "whoosh", 0.1), ev(TOP.origen.diencefalo * r + 0.2, "pop", 0.12), ev(TOP.origen.meninges * r, "pop", 0.14), ...clics(TOP.origen.millon * r, 1.8 * r, 0.04), ev((TOP.origen.millon + 1.9) * r, "ding", 0.18)],
+  },
+  "op-ciego": {
+    id: "op-ciego", nombre: "Par II · donde el nervio sale del ojo no hay fotorreceptores: el punto ciego que el cerebro rellena", ideal: 8.0, fondo: "dark", entra: "semitono",
+    sfx: (_d, r) => [ev(0.05, "whoosh", 0.1), ev(TOP.ciego.sale * r + 0.2, "pop", 0.12), ev(TOP.ciego.sinFoto * r, "tick", 0.14), ev(TOP.ciego.punto * r, "pop", 0.14), ev(TOP.ciego.rellena * r, "zap", 0.16), ev((TOP.ciego.rellena + 0.3) * r, "ding", 0.18)],
+  },
+  "op-quiasma": {
+    id: "op-quiasma", nombre: "Par II · en el quiasma se cruzan las fibras nasales: lo que ves a la izquierda lo procesa el hemisferio derecho", ideal: 7.0, fondo: "dark", entra: "corte",
+    sfx: (_d, r) => [ev(0.05, "whoosh", 0.1), ev(TOP.quiasma.quiasma * r + 0.2, "pop", 0.12), ev(TOP.quiasma.cruzan * r, "whoosh", 0.14), ...clics(TOP.quiasma.cruzan * r + 0.2, 1.4 * r, 0.04), ev(TOP.quiasma.izquierda * r, "pop", 0.14), ev(TOP.quiasma.derecho * r, "ding", 0.18)],
+  },
+  "op-regenera": {
+    id: "op-regenera", nombre: "Par II · al ser parte del cerebro no se regenera, a diferencia del olfatorio: en el glaucoma las fibras perdidas no vuelven", ideal: 7.3, fondo: "dark", entra: "semitono",
+    sfx: (_d, r) => [ev(0.05, "whoosh", 0.1), ev(TOP.regenera.parte * r + 0.2, "pop", 0.12), ev(TOP.regenera.noRegenera * r, "thud", 0.18), ev(TOP.regenera.olfatorio * r, "pop", 0.14), ...clics(TOP.regenera.glaucoma * r, 1.6 * r, 0.04), ev((TOP.regenera.glaucoma + 1.8) * r, "thud", 0.16)],
+  },
+  "op-genes": {
+    id: "op-genes", nombre: "Par II · 2020: tres genes reprograman las células del nervio óptico en ratones y mejoran su visión", ideal: 7.0, fondo: "dark", entra: "zoom",
+    sfx: (_d, r) => [ev(0.05, "whoosh", 0.1), ev(TOP.genes.anio * r + 0.2, "tick", 0.12), ev(TOP.genes.ratones * r, "pop", 0.12), ev(TOP.genes.tres * r, "zap", 0.14), ...clics(TOP.genes.rejuvenece * r, 1.6 * r, 0.04), ev(TOP.genes.mejora * r, "ding", 0.2)],
+  },
+  "op-ensayo": {
+    id: "op-ensayo", nombre: "Par II · hoy un ensayo de fase 1 prueba esa idea en personas con glaucoma: primeros datos de octubre de 2026, bien tolerada", ideal: 7.3, fondo: "dark", entra: "corte",
+    sfx: (_d, r) => [ev(0.05, "whoosh", 0.1), ev(TOP.ensayo.hoy * r + 0.2, "pop", 0.12), ev(TOP.ensayo.personas * r, "tick", 0.12), ...[0, 1, 2].map((k) => ev((TOP.ensayo.personas + 0.4 * k) * r, "pop", 0.12)), ev(TOP.ensayo.octubre * r, "pop", 0.14), ev(TOP.ensayo.tolerada * r, "ding", 0.2)],
+  },
+  "op-temprano": {
+    id: "op-temprano", nombre: "Par II · es muy temprano: el objetivo es la seguridad, con tres personas, y aún no demuestra que devuelva la vista (cierre)", ideal: 6.6, fondo: "dark", entra: "zoom",
+    sfx: (_d, r) => [ev(0.05, "whoosh", 0.1), ev(TOP.temprano.temprano * r + 0.2, "thud", 0.16), ev(TOP.temprano.seguridad * r, "pop", 0.12), ev(TOP.temprano.tres * r, "tick", 0.12), ev(TOP.temprano.noDemuestra * r, "thud", 0.2), ev((TOP.temprano.noDemuestra + 0.8) * r, "ding", 0.18)],
   },
   "astro-memoria": {
     id: "astro-memoria", nombre: "Astrocitos · en ratones, reactivarlos estimuló el recuerdo", ideal: 4.15, fondo: "dark", entra: "corte",

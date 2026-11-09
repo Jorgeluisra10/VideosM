@@ -3,6 +3,8 @@
  * Para añadir una pieza nueva: (1) su ficha pura en src/anim/piezas.ts (duración ideal, fondo, sonido), (2) su componente aquí.
  */
 import { MeCola, MeColumna, MeGancho, MeMariposa } from "./me1";
+import { OpCiego, OpGancho, OpOrigen, OpQuiasma } from "./op1";
+import { OpEnsayo, OpGenes, OpRegenera, OpTemprano } from "./op2";
 import { OlCiclo, OlGancho, OlMucosa, OlReceptor } from "./ol1";
 import { OlAxones, OlDano, OlMemoria, OlRecupera } from "./ol2";
 import { Pc0Fritsch, Pc0Gancho, Pc0Numero, Pc0Recorrido } from "./pc1";
@@ -129,6 +131,8 @@ export const COMPONENTES_PIEZA: Record<string, React.FC<{ e: EscenaViralGuardada
   "tej-hueso": TejHueso,
   "tej-muscular": TejMuscular,
   "tej-nervioso": TejNervioso,
+  "op-gancho": OpGancho, "op-origen": OpOrigen, "op-ciego": OpCiego, "op-quiasma": OpQuiasma,
+  "op-regenera": OpRegenera, "op-genes": OpGenes, "op-ensayo": OpEnsayo, "op-temprano": OpTemprano,
   "ol-gancho": OlGancho, "ol-mucosa": OlMucosa, "ol-ciclo": OlCiclo, "ol-receptor": OlReceptor,
   "ol-axones": OlAxones, "ol-memoria": OlMemoria, "ol-dano": OlDano, "ol-recupera": OlRecupera,
   "pc0-gancho": Pc0Gancho, "pc0-fritsch": Pc0Fritsch, "pc0-recorrido": Pc0Recorrido, "pc0-numero": Pc0Numero,

@@ -1,0 +1,14 @@
+{
+ "titulo": "El nervio óptico: la parte del cerebro que sale a mirar",
+ "scenes": [
+  { "t": "PIEZA", "voz": "El par craneal dos, el nervio óptico, no es un nervio común: es una extensión de tu cerebro.", "dur": 7.0, "h": "PARTE DE TU CEREBRO", "w": "CEREBRO", "pieza": { "id": "op-gancho" } },
+  { "t": "PIEZA", "voz": "Nace del diencéfalo, lo envuelven las meninges y lleva cerca de un millón de fibras desde la retina.", "dur": 7.0, "h": "UN MILLÓN DE FIBRAS", "w": "MILLÓN", "cap": "nervio óptico", "pieza": { "id": "op-origen" } },
+  { "t": "PIEZA", "voz": "Donde el nervio sale del ojo no hay fotorreceptores: todos tenemos un punto ciego, y tu cerebro lo rellena sin que lo notes.", "dur": 8.5, "h": "TU PUNTO CIEGO", "w": "CIEGO", "cap": "papila óptica", "pieza": { "id": "op-ciego" } },
+  { "t": "PIEZA", "voz": "En el quiasma óptico se cruzan las fibras nasales: lo que ves a la izquierda lo procesa tu hemisferio derecho.", "dur": 7.5, "h": "EL QUIASMA ÓPTICO", "w": "QUIASMA", "cap": "vista desde arriba", "pieza": { "id": "op-quiasma" } },
+  { "t": "PIEZA", "voz": "Pero, al ser parte del cerebro, no se regenera, a diferencia del olfatorio: en el glaucoma, las fibras perdidas no vuelven.", "dur": 7.8, "h": "NO SE REGENERA", "w": "GLAUCOMA", "cap": "glaucoma", "pieza": { "id": "op-regenera" } },
+  { "t": "PIEZA", "voz": "En dos mil veinte, un estudio en ratones usó tres genes para rejuvenecer las células del nervio óptico y mejoró su visión.", "dur": 7.5, "h": "TRES GENES", "w": "GENES", "cap": "solo en ratones", "pieza": { "id": "op-genes" } },
+  { "t": "PIEZA", "voz": "Hoy, un ensayo de fase uno ya prueba esa idea en personas con glaucoma: en octubre informaron que fue bien tolerada.", "dur": 7.8, "h": "YA SE PRUEBA EN PERSONAS", "w": "ENSAYO", "cap": "ensayo de fase 1", "pieza": { "id": "op-ensayo" } },
+  { "t": "PIEZA", "voz": "Es muy temprano: el objetivo es la seguridad, con tres personas, y aún no demuestra que devuelva la vista.", "dur": 7.1, "h": "AÚN ES MUY TEMPRANO", "w": "TEMPRANO", "cap": "sin promesas", "pieza": { "id": "op-temprano" } },
+  { "t": "CTA", "voz": "Compártelo con alguien que ame el cerebro. Síguenos en Sinapsis.", "dur": 4.8, "h": "COMPÁRTELO Y SÍGUENOS", "w": "SÍGUENOS", "sub": "Más ciencia en SINAPSIS" }
+ ]
+}
