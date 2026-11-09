@@ -1,0 +1,18 @@
+{
+  "version": 1,
+  "slug": "2026-11-10-par-craneal-2",
+  "titulo": "El nervio óptico: la parte del cerebro que sale a mirar",
+  "serie": "pares_craneales",
+  "estado": "grabado",
+  "guion": "El par craneal dos, el nervio óptico, no es un nervio común: es una extensión de tu cerebro.\nNace del diencéfalo, lo envuelven las meninges y lleva cerca de un millón de fibras desde la retina.\nDonde el nervio sale del ojo no hay fotorreceptores: todos tenemos un punto ciego, y tu cerebro lo rellena sin que lo notes.\nEn el quiasma óptico se cruzan las fibras nasales: lo que ves a la izquierda lo procesa tu hemisferio derecho.\nPero, al ser parte del cerebro, no se regenera, a diferencia del olfatorio: en el glaucoma, las fibras perdidas no vuelven.\nEn dos mil veinte, un estudio en ratones usó tres genes para rejuvenecer las células del nervio óptico y mejoró su visión.\nHoy, un ensayo de fase uno ya prueba esa idea en personas con glaucoma: en octubre informaron que fue bien tolerada.\nEs muy temprano: el objetivo es la seguridad, con tres personas, y aún no demuestra que devuelva la vista.\nCompártelo con alguien que ame el cerebro. Síguenos en Sinapsis.",
+  "gancho": "El par craneal dos, el nervio óptico, no es un nervio común: es una extensión de tu cerebro.",
+  "duracion_seg": 65.6,
+  "notas": "Par craneal II (nervio óptico): extensión del cerebro, ≈ 1 millón de fibras, punto ciego, quiasma, no regeneración y glaucoma, reprogramación OSK 2020 (SOLO ratones) y ensayo de fase 1 ER-100 (datos de prensa del 8 oct 2026, 3 personas, seguridad; eficacia no demostrada). Sin promesas de cura ni vista; dibujos esquemáticos; sin voz (−27 LUFS); fuentes sin abrir en original.",
+  "voz_usada": "",
+  "instrucciones_voz": "",
+  "creado": "2026-11-09T11:40:44.395Z",
+  "origen_clave": "d94e6611",
+  "video": "revision.mp4",
+  "miniatura": "miniatura.jpg",
+  "entrega": "entrega.md"
+}
