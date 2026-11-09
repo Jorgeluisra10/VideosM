@@ -1,0 +1,18 @@
+{
+  "version": 1,
+  "slug": "2026-11-09-par-craneal-1",
+  "titulo": "El par craneal I: el nervio que renace",
+  "serie": "pares_craneales",
+  "estado": "grabado",
+  "guion": "La mayoría de tus neuronas no se reemplaza, pero las del olfato, el par craneal uno, se renuevan toda la vida.\nEstán en el techo de la nariz, expuestas al aire que respiras, y por eso se dañan y mueren con facilidad.\nEn ratones, la mayoría vive de uno a tres meses y células madre de la mucosa fabrican neuronas nuevas sin parar.\nCada neurona fabrica un solo tipo de receptor, de unos cuatrocientos que funcionan en humanos, y cada olor activa varios a la vez.\nSus axones cruzan la lámina cribosa y las neuronas nuevas deben volver a conectarse con el bulbo olfatorio.\nDesde el bulbo, las señales llegan a la amígdala y al hipocampo: por eso un olor puede traerte un recuerdo de golpe.\nUn golpe en la cabeza puede cortar sus fibras, y el COVID-19 parece dañar sobre todo células de soporte, no neuronas.\nMuchas personas recuperan el olfato en semanas o meses, y el entrenamiento olfativo, con cuatro aromas, ayudó en estudios pequeños.\nCompártelo con alguien que ame el cerebro. Síguenos en Sinapsis.",
+  "gancho": "La mayoría de tus neuronas no se reemplaza, pero las del olfato, el par craneal uno, se renuevan toda la vida.",
+  "duracion_seg": 67.1,
+  "notas": "Par craneal I (olfatorio): neuronas olfatorias que se renuevan toda la vida, epitelio expuesto al aire, células madre (1–3 meses = dato de ratones), ≈ 400 receptores, lámina cribosa, memoria vía amígdala e hipocampo, golpe y COVID-19, entrenamiento olfativo (estudios pequeños). Dibujos esquemáticos; sin voz (−27 LUFS); fuentes sin abrir en original.",
+  "voz_usada": "",
+  "instrucciones_voz": "",
+  "creado": "2026-11-09T03:16:05.115Z",
+  "origen_clave": "c9c8e1b9",
+  "video": "revision.mp4",
+  "miniatura": "miniatura.jpg",
+  "entrega": "entrega.md"
+}
