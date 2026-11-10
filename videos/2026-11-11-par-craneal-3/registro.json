@@ -1,0 +1,18 @@
+{
+  "version": 1,
+  "slug": "2026-11-11-par-craneal-3",
+  "titulo": "El par craneal III: la pupila que avisa",
+  "serie": "pares_craneales",
+  "estado": "grabado",
+  "guion": "Una pupila dilatada tras un golpe en la cabeza puede ser una emergencia: el par craneal tres está pidiendo ayuda.\nEl oculomotor mueve cuatro de los seis músculos que giran cada ojo y además levanta el párpado.\nSi una luz entra en un ojo, el nervio óptico avisa y el oculomotor cierra las dos pupilas, no solo una.\nNace en el mesencéfalo, pasa entre dos arterias del cerebro y cruza el seno cavernoso hasta la órbita.\nLas fibras de la pupila van por la superficie del nervio: suelen ser las primeras en sufrir cuando algo lo comprime.\nSi sube la presión dentro del cráneo, el lóbulo temporal puede desplazarse, aplastar el nervio y dilatar la pupila.\nUn aneurisma cercano también puede comprimirlo: el párpado cae, el ojo se desvía hacia abajo y afuera y la pupila se dilata.\nUn párpado caído de golpe, con visión doble o dolor de cabeza intenso, merece atención médica urgente.\nCompártelo con alguien que ame el cerebro. Síguenos en Sinapsis.",
+  "gancho": "Una pupila dilatada tras un golpe en la cabeza puede ser una emergencia: el par craneal tres está pidiendo ayuda.",
+  "duracion_seg": 63.4,
+  "notas": "Par craneal III (oculomotor): pupila dilatada tras golpe en la cabeza (puede ser emergencia), 4 de 6 músculos y párpado, reflejo fotomotor con el II, recorrido, fibras superficiales (suelen sufrir primero), herniación, aneurisma y alerta de urgencias. Advertencia general, no diagnóstico; dibujos esquemáticos; sin voz (−27 LUFS); fuentes sin abrir en original.",
+  "voz_usada": "",
+  "instrucciones_voz": "",
+  "creado": "2026-11-10T01:13:11.214Z",
+  "origen_clave": "339853a4",
+  "video": "revision.mp4",
+  "miniatura": "miniatura.jpg",
+  "entrega": "entrega.md"
+}
