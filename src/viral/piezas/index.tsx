@@ -3,6 +3,8 @@
  * Para añadir una pieza nueva: (1) su ficha pura en src/anim/piezas.ts (duración ideal, fondo, sonido), (2) su componente aquí.
  */
 import { MeCola, MeColumna, MeGancho, MeMariposa } from "./me1";
+import { TrCruce, TrGancho, TrRecorrido, TrTroclea } from "./tr1";
+import { TrAccion, TrCausas, TrConsulta, TrParalisis } from "./tr2";
 import { OcGancho, OcMusculos, OcRecorrido, OcReflejo } from "./oc1";
 import { OcAneurisma, OcFibras, OcHerniacion, OcUrgencia } from "./oc2";
 import { OpCiego, OpGancho, OpOrigen, OpQuiasma } from "./op1";
@@ -133,6 +135,8 @@ export const COMPONENTES_PIEZA: Record<string, React.FC<{ e: EscenaViralGuardada
   "tej-hueso": TejHueso,
   "tej-muscular": TejMuscular,
   "tej-nervioso": TejNervioso,
+  "tr-gancho": TrGancho, "tr-cruce": TrCruce, "tr-recorrido": TrRecorrido, "tr-troclea": TrTroclea,
+  "tr-accion": TrAccion, "tr-paralisis": TrParalisis, "tr-causas": TrCausas, "tr-consulta": TrConsulta,
   "oc-gancho": OcGancho, "oc-musculos": OcMusculos, "oc-reflejo": OcReflejo, "oc-recorrido": OcRecorrido,
   "oc-fibras": OcFibras, "oc-herniacion": OcHerniacion, "oc-aneurisma": OcAneurisma, "oc-urgencia": OcUrgencia,
   "op-gancho": OpGancho, "op-origen": OpOrigen, "op-ciego": OpCiego, "op-quiasma": OpQuiasma,

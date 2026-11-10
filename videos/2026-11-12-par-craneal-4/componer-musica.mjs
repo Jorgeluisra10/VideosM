@@ -1,0 +1,214 @@
+#!/usr/bin/env node
+/**
+ * Diseño sonoro propio (síntesis, sin muestras ni licencias) para «El par craneal IV: el nervio que rompe las reglas» (64,6 s).
+ * Tono: curiosidad ingeniosa (una polea, un cruce) que termina en cautela sobria. Pista de «música» del motor: colchón armónico + eventos
+ * alineados con lo que se ve (los tiempos usan el ritmo REAL de cada escena).
+ *
+ *   colchón   acordes Re menor → Si bemol → Sol menor → Do → La menor → Re menor sobrio (la consulta)
+ *   gancho    pops del par IV, chispa de la salida dorsal y tic de la fibra diminuta
+ *   cruce     whoosh del cruce de las fibras azul y naranja
+ *   recorrido tics del nervio que rodea el tronco y campana de la órbita
+ *   tróclea   tics de la polea y campana del nombre
+ *   acción    pops del ojo que baja y gira
+ *   parálisis golpe de la falla, zap de la visión doble y cabeza que se inclina
+ *   causas    golpe del trauma y tic de la línea del tiempo congénita
+ *   consulta  zap de la doble imagen y cierre sobrio
+ *
+ * Uso:  node videos/2026-11-12-par-craneal-4/componer-musica.mjs   → assets/musica/par-craneal-4.wav
+ *       node scripts/anim/musica.mjs --usar=assets/musica/par-craneal-4.wav   (y --restaurar al terminar; el WAV no va a git)
+ */
+import { mkdirSync } from "node:fs";
+import { dirname, join } from "node:path";
+import { fileURLToPath } from "node:url";
+import { SR, escribirWavEstereo } from "../../scripts/audio.mjs";
+
+const RAIZ = join(dirname(fileURLToPath(import.meta.url)), "..", "..");
+export const DURACION = 67.3;
+const N = Math.round(DURACION * SR), TAU = Math.PI * 2;
+const x = new Float32Array(N);
+const prng = (s) => () => { let t = (s += 0x6d2b79f5); t = Math.imul(t ^ (t >>> 15), t | 1); t ^= t + Math.imul(t ^ (t >>> 7), t | 61); return ((t ^ (t >>> 14)) >>> 0) / 4294967296; };
+const R = prng(121112);
+const clamp = (v, a = 0, b = 1) => Math.min(b, Math.max(a, v));
+const sua = (v, a, b) => { const k = clamp((v - a) / (b - a)); return k * k * (3 - 2 * k); };
+const lerp = (a, b, k) => a + (b - a) * k;
+const ex = (t, tau) => Math.exp(-t / tau);
+const add = (t0, dur, fn) => { const i0 = Math.max(0, Math.round(t0 * SR)), i1 = Math.min(N, Math.round((t0 + dur) * SR)); for (let i = i0; i < i1; i++) x[i] += fn((i - i0) / SR, i / SR); };
+const osc = (fFn) => { let ph = 0; return (g) => { ph += (TAU * fFn(g)) / SR; return Math.sin(ph); }; };
+const lp = (fc) => { let y = 0; const a = 1 - Math.exp(-TAU * fc / SR); return (w) => (y += a * (w - y)); };
+const hz = (n) => 440 * Math.pow(2, (n - 69) / 12);
+const easeOut = (k) => 1 - Math.pow(1 - clamp(k), 3);
+
+
+/* ───────── tiempos reales ───────── */
+const dur = [7.5, 7.5, 7.5, 7.5, 8.2, 7.5, 7.1, 7, 4.8];
+const ideal = [7, 7, 7, 7, 7.6, 7, 6.6, 6.5, 1];
+const ini = dur.reduce((a, d, i) => (a.push(i ? a[i - 1] + dur[i - 1] : 0), a), []);
+const rit = dur.map((d, i) => Math.min(1, Math.max(0.55, (d - 0.45) / ideal[i])));
+const T = (n, t) => ini[n - 1] + t * rit[n - 1];
+const SC = { // los mismos tiempos que TTR en src/anim/piezas.ts
+  gancho: { par: 0.2, troclear: 1.9, pequeno: 3.0, detras: 4.4 },
+  cruce: { ademas: 0.2, cruzan: 1.0, izquierdo: 3.5, derecho: 5.3 },
+  recorrido: { vuelta: 0.2, largo: 3.2, craneo: 5.3, orbita: 6.4 },
+  troclea: { solo: 0.2, oblicuo: 1.9, polea: 3.6, nombre: 5.3 },
+  accion: { baja: 0.2, nariz: 2.0, gira: 3.8, leer: 5.4 },
+  paralisis: { falla: 0.2, doble: 1.2, abajo: 3.6, inclina: 5.6 },
+  causas: { golpe: 0.2, otras: 3.0, congenita: 3.9, anios: 5.3 },
+  consulta: { doble: 0.2, abajo: 2.2, medico: 4.0, causas: 5.6 },
+};
+
+/* ───────── elementos ───────── */
+const campana = (t0, n, g = 0.08, dec = 0.9) => { const f0 = hz(n); add(t0, dec * 4, (t) => g * (Math.sin(TAU * f0 * t) + 0.32 * Math.sin(TAU * f0 * 2 * t) + 0.12 * Math.sin(TAU * f0 * 3.01 * t) + 0.06 * Math.sin(TAU * f0 * 4.2 * t)) * ex(t, dec) * Math.min(1, t / 0.004)); };
+const tic = (t0, g = 0.07, f = 2600) => add(t0, 0.03, (t) => g * Math.sin(TAU * f * t) * ex(t, 0.006));
+const golpe = (t0, g = 0.4, f = 70) => { add(t0, 0.5, (t) => g * Math.sin(TAU * (f - 24 * t) * t) * ex(t, 0.12)); const l = lp(300); add(t0, 0.1, (t) => g * 0.6 * l(R() * 2 - 1) * 3 * ex(t, 0.025)); };
+const soplo = (t0, d, g, fc = 700) => { const l = lp(fc); add(t0, d, (t) => g * l(R() * 2 - 1) * 3 * Math.sin(Math.PI * clamp(t / d))); };
+const subida = (t0, d, f0, f1, g = 0.05) => { const w = osc((gg) => lerp(f0, f1, easeOut((gg - t0) / d))); add(t0, d + 0.15, (t, gg) => g * w(gg) * sua(t, 0, 0.08) * (1 - sua(t, d, d + 0.15))); };
+const chispas = (t0, d, g = 0.1) => { for (let s = t0; s < t0 + d; s += 0.04 + R() * 0.16) add(s, 0.02, (t) => g * (R() * 2 - 1) * ex(t, 0.004)); };
+const moneda = (t0, g = 0.06) => { const f = 2400 + R() * 900; add(t0, 0.35, (t) => g * (Math.sin(TAU * f * t) + 0.5 * Math.sin(TAU * f * 1.51 * t)) * ex(t, 0.07) * Math.min(1, t / 0.002)); };
+const ticsContador = (t0, d, curva, pasos, g = 0.05, f0 = 2000, f1 = 3200) => { let prev = 0; for (let ms = 0; ms <= d * 1000; ms++) { const k = ms / (d * 1000), v = Math.floor(curva(k) * pasos); if (v > prev) { prev = v; tic(t0 + ms / 1000, g, lerp(f0, f1, k)); } } };
+const penta = [0, 2, 4, 7, 9];
+
+const murmullo = (t0, d, g = 0.04, fc = 420) => { const l = lp(fc); add(t0, d, (t, gg) => g * l(R() * 2 - 1) * 3 * (0.55 + 0.45 * Math.sin(TAU * 3.7 * gg)) * sua(t, 0, 0.3) * (1 - sua(t, d - 0.3, d))); };
+const burbuja = (t0, g = 0.05) => { const f = 500 + R() * 900; add(t0, 0.12, (t) => g * Math.sin(TAU * (f + 900 * t) * t) * ex(t, 0.03) * Math.min(1, t / 0.003)); };
+const crujir = (t0, g = 0.2) => { const l = lp(700); add(t0, 0.25, (t) => g * l(R() * 2 - 1) * 3 * ex(t, 0.07) * Math.min(1, t / 0.01)); };   // tela y madera
+
+/** chasquidos de un contador Geiger entre t0 y t1; la frecuencia (clics/s) va de r0 a r1 */
+const geiger = (t0, t1, r0, r1) => { let g = t0; while (g < t1) { const r = lerp(r0, r1, (g - t0) / Math.max(0.01, t1 - t0)); add(g, 0.012, (t) => 0.09 * (R() * 2 - 1) * ex(t, 0.002) + 0.05 * Math.sin(TAU * 4200 * t) * ex(t, 0.003)); g += -Math.log(1 - R()) / Math.max(0.5, r); } };
+
+const lubdub = (t0, g = 0.4) => { golpe(t0, g, 62); golpe(t0 + 0.27, g * 0.7, 78); };
+const pitido = (t0, f = 1800, g = 0.06) => add(t0, 0.07, (t) => g * Math.sin(TAU * f * t) * Math.sin(Math.PI * clamp(t / 0.07)));
+
+/* 1 · COLCHÓN: acordes suaves */
+{
+  const acordes = [
+    { t: 0, notas: [26, 38, 45, 50, 53] },                          // Re menor
+    { t: T(2, 0), notas: [34, 46, 53, 58, 62] },                    // Si bemol mayor: el cruce
+    { t: T(4, 0), notas: [31, 43, 50, 55, 58] },                    // Sol menor: la polea
+    { t: T(5, 0), notas: [36, 48, 55, 60, 64] },                    // Do mayor: la acción
+    { t: T(6, 0), notas: [33, 45, 52, 57, 60] },                    // La menor: la parálisis
+    { t: T(8, 0), notas: [26, 38, 45, 50, 53, 57] },                // Re menor sobrio: la consulta
+  ];
+  const sala = lp(220);
+  acordes.forEach((c, i) => {
+    const a = c.t, b = i + 1 < acordes.length ? acordes[i + 1].t : DURACION;
+    add(a - 1.2, b - a + 2.4, (t, g) => {
+      const env = sua(g, a - 1.2, a + 0.6) * (1 - sua(g, b - 0.6, b + 1.2)) * sua(g, 0, 2.5) * (1 - sua(g, DURACION - 2.5, DURACION));
+      let s = 0;
+      c.notas.forEach((n, k) => { const f = hz(n); s += (Math.sin(TAU * f * g) + 0.5 * Math.sin(TAU * f * 1.003 * g + k)) * (n < 48 ? 1 : 0.55); });
+      return env * 0.014 * s * (0.85 + 0.15 * Math.sin(TAU * 0.11 * g + i));
+    });
+  });
+  add(0, DURACION, (t, g) => 0.01 * sala(R() * 2 - 1) * 4 * sua(g, 0, 2) * (1 - sua(g, DURACION - 2, DURACION)));
+}
+
+/* 2 · ESCENA 1: el más pequeño y el único por detrás */
+{
+  campana(T(1, SC.gancho.par) + 0.2, 62, 0.06, 1.0);
+  tic(T(1, SC.gancho.troclear), 0.1, 1800);
+  const tp = T(1, SC.gancho.pequeno);
+  campana(tp, 76, 0.05, 0.9); tic(tp + 0.3, 0.06, 3200);
+  const td = T(1, SC.gancho.detras);
+  chispas(td, 0.3, 0.07); subida(td, 0.4, 500, 1700, 0.04); [[0.1, 69], [0.22, 76], [0.34, 81]].forEach(([d, n]) => campana(td + d, n, 0.07, 1.4));
+}
+
+/* 3 · ESCENA 2: el cruce completo */
+{
+  campana(T(2, SC.cruce.ademas) + 0.2, 57, 0.06, 1.0);
+  const tc = T(2, SC.cruce.cruzan);
+  soplo(tc, 1.2, 0.05, 1300); subida(tc, 1.0, 300, 1500, 0.035); for (let k = 0; k < 9; k++) tic(tc + 0.2 + k * 0.16, 0.05, 1700 + 70 * k);
+  campana(T(2, SC.cruce.izquierdo), 69, 0.06, 1.0);
+  const td = T(2, SC.cruce.derecho);
+  [[0, 72], [0.12, 76], [0.24, 81]].forEach(([d, n]) => campana(td + d, n, 0.07, 1.4));
+}
+
+/* 4 · ESCENA 3: el recorrido más largo */
+{
+  const tv = T(3, SC.recorrido.vuelta);
+  campana(tv + 0.2, 62, 0.06, 1.0); for (let k = 0; k < 12; k++) tic(tv + 0.4 + k * 0.18, 0.04, 1500 + 70 * k);
+  tic(T(3, SC.recorrido.largo), 0.12, 1800); soplo(T(3, SC.recorrido.largo), 0.6, 0.04, 800);
+  campana(T(3, SC.recorrido.craneo), 69, 0.06, 1.0);
+  const to = T(3, SC.recorrido.orbita);
+  [[0, 76], [0.12, 81]].forEach(([d, n]) => campana(to + d, n, 0.07, 1.4));
+}
+
+/* 5 · ESCENA 4: el músculo y la polea */
+{
+  campana(T(4, SC.troclea.solo) + 0.2, 62, 0.06, 1.0);
+  tic(T(4, SC.troclea.oblicuo), 0.12, 1700);
+  const tp = T(4, SC.troclea.polea);
+  for (let k = 0; k < 9; k++) tic(tp + 0.1 + k * 0.14, 0.05, 2000 + 90 * k);
+  const tn = T(4, SC.troclea.nombre);
+  [[0, 72], [0.1, 76], [0.2, 81]].forEach(([d, n]) => campana(tn + d, n, 0.07, 1.4)); moneda(tn, 0.05);
+}
+
+/* 6 · ESCENA 5: baja y rota */
+{
+  campana(T(5, SC.accion.baja) + 0.2, 57, 0.06, 1.0);
+  soplo(T(5, SC.accion.baja) + 0.2, 0.6, 0.04, 900);
+  const tn = T(5, SC.accion.nariz);
+  soplo(tn, 0.7, 0.04, 1100); subida(tn, 0.6, 400, 1200, 0.03);
+  const tg = T(5, SC.accion.gira);
+  tic(tg, 0.1, 1800); for (let k = 0; k < 6; k++) tic(tg + 0.1 + k * 0.12, 0.04, 2200 + 80 * k);
+  const tl = T(5, SC.accion.leer);
+  [[0, 72], [0.12, 76]].forEach(([d, n]) => campana(tl + d, n, 0.06, 1.2)); moneda(tl + 0.2, 0.04);
+}
+
+/* 7 · ESCENA 6: visión doble e inclinación */
+{
+  const tf = T(6, SC.paralisis.falla) + 0.2;
+  golpe(tf, 0.3, 54); crujir(tf, 0.1);
+  const td = T(6, SC.paralisis.doble);
+  chispas(td, 0.3, 0.07); subida(td, 0.5, 400, 1400, 0.03);
+  const ta = T(6, SC.paralisis.abajo);
+  soplo(ta, 0.6, 0.04, 800); subida(ta, 0.6, 1000, 350, 0.03);
+  const ti = T(6, SC.paralisis.inclina);
+  [[0, 64], [0.14, 69], [0.28, 72]].forEach(([d, n]) => campana(ti + d, n, 0.06, 1.2));
+}
+
+/* 8 · ESCENA 7: causas */
+{
+  const tg = T(7, SC.causas.golpe) + 0.3;
+  golpe(tg, 0.4, 50); crujir(tg, 0.18); chispas(tg, 0.2, 0.06);
+  add(tg, 0.9, (t) => 0.04 * (Math.sin(TAU * 98 * t) + Math.sin(TAU * 103.5 * t)) * ex(t, 0.3));
+  tic(T(7, SC.causas.otras), 0.12, 1700);
+  const tc = T(7, SC.causas.congenita);
+  moneda(tc, 0.05); campana(tc, 69, 0.06, 1.0);
+  campana(T(7, SC.causas.anios), 62, 0.06, 1.4);
+}
+
+/* 9 · ESCENA 8: consulta */
+{
+  const td = T(8, SC.consulta.doble) + 0.2;
+  chispas(td, 0.3, 0.07); subida(td, 0.4, 400, 1500, 0.03);
+  soplo(T(8, SC.consulta.abajo), 0.6, 0.04, 800);
+  const tm = T(8, SC.consulta.medico);
+  campana(tm, 64, 0.07, 1.4); campana(tm + 0.14, 71, 0.05, 1.2); golpe(tm, 0.2, 58);
+  const tc = T(8, SC.consulta.causas);
+  [0, 0.25, 0.5].forEach((d) => tic(tc + d, 0.08, 1700 + d * 400));
+  [[0.6, 50], [0.7, 57], [0.8, 62]].forEach(([d, n]) => campana(tc + d, n, 0.06, 2.0));
+}
+
+/* 10 · ESCENA 9 (CTA): destellos suaves */
+{
+  const tc = T(9, 0.3);
+  [[0, 71], [0.15, 76], [0.3, 79], [0.45, 83]].forEach(([d, n]) => campana(tc + d, n, 0.05, 1.2));
+}
+
+/* reverb de sala y límite suave */
+{
+  const retardos = [33.1, 47.3, 67.9, 93.1, 123.7];
+  const y = new Float32Array(N);
+  for (const ms of retardos) { const dl = Math.round((ms * SR) / 1000), lin = new Float32Array(dl); let p = 0, l = 0; for (let i = 0; i < N; i++) { const o = lin[p]; l += 0.4 * (o - l); lin[p] = x[i] + 0.74 * l; y[i] += o; p = (p + 1) % dl; } }
+  for (let i = 0; i < N; i++) x[i] += y[i] * 0.2;
+}
+let pico = 0;
+for (let i = 0; i < N; i++) pico = Math.max(pico, Math.abs(x[i]));
+const gn = 0.9 / Math.max(1e-4, pico);
+for (let i = 0; i < N; i++) x[i] = Math.tanh(x[i] * gn * 1.05) * 0.9;
+const f = Math.round(0.03 * SR), fo = Math.round(1.5 * SR);
+for (let i = 0; i < f; i++) x[i] *= i / f;
+for (let i = 0; i < fo; i++) x[N - 1 - i] *= i / fo;
+mkdirSync(join(RAIZ, "assets", "musica"), { recursive: true });
+const salida = join(RAIZ, "assets", "musica", "par-craneal-4.wav");
+escribirWavEstereo(salida, x);
+console.log(`✅ ${salida} · ${DURACION} s`);
+console.log("   escenas (inicio · ritmo):", ini.map((a, i) => `${i + 1}:${a.toFixed(1)}s×${rit[i].toFixed(2)}`).join("  "));

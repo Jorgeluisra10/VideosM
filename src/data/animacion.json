@@ -1,18 +1,18 @@
 {
  "version": 1,
- "titulo": "El par craneal III: la pupila que avisa",
+ "titulo": "El par craneal IV: el nervio que rompe las reglas",
  "paleta": "medicina",
  "sfx": true,
  "fps": 60,
- "duracion": 63.4,
+ "duracion": 64.6,
  "escenas": [
   {
    "n": 1,
    "t": "PIEZA",
-   "voz": "Una pupila dilatada tras un golpe en la cabeza puede ser una emergencia: el par craneal tres está pidiendo ayuda.",
+   "voz": "El par craneal cuatro, el troclear, es el más pequeño y el único que sale por detrás del tronco encefálico.",
    "dur": 7.5,
-   "h": "LA PUPILA QUE AVISA",
-   "w": "PUPILA",
+   "h": "EL NERVIO QUE ROMPE REGLAS",
+   "w": "REGLAS",
    "sub": "",
    "ic": "brillo",
    "num": null,
@@ -45,7 +45,7 @@
    "cubo": null,
    "diales": null,
    "pieza": {
-    "id": "oc-gancho",
+    "id": "tr-gancho",
     "props": {}
    },
    "cita": null,
@@ -54,10 +54,10 @@
    "tema": "oscuro",
    "bg": "dark",
    "ritmo": 1,
-   "total": 63.4,
+   "total": 64.6,
    "inicio": 0,
    "fin": 7.5,
-   "texto": "Una pupila dilatada tras un golpe en la cabeza puede ser una emergencia: el par craneal tres está pidiendo ayuda.",
+   "texto": "El par craneal cuatro, el troclear, es el más pequeño y el único que sale por detrás del tronco encefálico.",
    "tr": "barrido",
    "trs": "corte",
    "sfx": [
@@ -77,22 +77,22 @@
      "vol": 0.12
     },
     {
-     "t": 1.8,
-     "tipo": "thud",
-     "vol": 0.2
-    },
-    {
-     "t": 1.9000000000000001,
-     "tipo": "zap",
+     "t": 1.9,
+     "tipo": "tick",
      "vol": 0.12
     },
     {
-     "t": 3.6,
+     "t": 3,
+     "tipo": "pop",
+     "vol": 0.14
+    },
+    {
+     "t": 4.4,
      "tipo": "zap",
      "vol": 0.16
     },
     {
-     "t": 5.2,
+     "t": 4.7,
      "tipo": "ding",
      "vol": 0.2
     }
@@ -101,12 +101,12 @@
   {
    "n": 2,
    "t": "PIEZA",
-   "voz": "El oculomotor mueve cuatro de los seis músculos que giran cada ojo y además levanta el párpado.",
-   "dur": 6.6,
-   "h": "4 DE 6 MÚSCULOS",
-   "w": "4",
+   "voz": "Además, todas sus fibras se cruzan al otro lado: el núcleo del lado izquierdo mueve un músculo del ojo derecho.",
+   "dur": 7.5,
+   "h": "SE CRUZA POR COMPLETO",
+   "w": "CRUZA",
    "sub": "",
-   "ic": "auto",
+   "ic": "brillo",
    "num": null,
    "vs": null,
    "bars": [],
@@ -128,7 +128,7 @@
    "red": null,
    "termo": null,
    "pila": null,
-   "cap": "nervio oculomotor",
+   "cap": "decusación",
    "papel": null,
    "pilares": null,
    "ciclo": null,
@@ -137,7 +137,7 @@
    "cubo": null,
    "diales": null,
    "pieza": {
-    "id": "oc-musculos",
+    "id": "tr-cruce",
     "props": {}
    },
    "cita": null,
@@ -146,10 +146,10 @@
    "tema": "claro",
    "bg": "light",
    "ritmo": 1,
-   "total": 63.4,
+   "total": 64.6,
    "inicio": 7.5,
-   "fin": 14.1,
-   "texto": "El oculomotor mueve cuatro de los seis músculos que giran cada ojo y además levanta el párpado.",
+   "fin": 15,
+   "texto": "Además, todas sus fibras se cruzan al otro lado: el núcleo del lado izquierdo mueve un músculo del ojo derecho.",
    "tr": "corte",
    "trs": "semitono",
    "sfx": [
@@ -169,32 +169,77 @@
      "vol": 0.12
     },
     {
-     "t": 1.7,
-     "tipo": "tick",
+     "t": 1,
+     "tipo": "whoosh",
      "vol": 0.14
     },
     {
-     "t": 1.7,
-     "tipo": "pop",
-     "vol": 0.12
+     "t": 1.2,
+     "tipo": "clic",
+     "vol": 0.04
     },
     {
-     "t": 2,
-     "tipo": "pop",
-     "vol": 0.12
+     "t": 1.33,
+     "tipo": "clic",
+     "vol": 0.04
     },
     {
-     "t": 2.3,
-     "tipo": "pop",
-     "vol": 0.12
+     "t": 1.46,
+     "tipo": "clic",
+     "vol": 0.04
     },
     {
-     "t": 2.5999999999999996,
-     "tipo": "pop",
-     "vol": 0.12
+     "t": 1.5899999999999999,
+     "tipo": "clic",
+     "vol": 0.04
     },
     {
-     "t": 5,
+     "t": 1.72,
+     "tipo": "clic",
+     "vol": 0.04
+    },
+    {
+     "t": 1.85,
+     "tipo": "clic",
+     "vol": 0.04
+    },
+    {
+     "t": 1.98,
+     "tipo": "clic",
+     "vol": 0.04
+    },
+    {
+     "t": 2.11,
+     "tipo": "clic",
+     "vol": 0.04
+    },
+    {
+     "t": 2.24,
+     "tipo": "clic",
+     "vol": 0.04
+    },
+    {
+     "t": 2.37,
+     "tipo": "clic",
+     "vol": 0.04
+    },
+    {
+     "t": 2.5,
+     "tipo": "clic",
+     "vol": 0.04
+    },
+    {
+     "t": 2.63,
+     "tipo": "clic",
+     "vol": 0.04
+    },
+    {
+     "t": 3.5,
+     "tipo": "pop",
+     "vol": 0.14
+    },
+    {
+     "t": 5.3,
      "tipo": "ding",
      "vol": 0.18
     }
@@ -203,147 +248,10 @@
   {
    "n": 3,
    "t": "PIEZA",
-   "voz": "Si una luz entra en un ojo, el nervio óptico avisa y el oculomotor cierra las dos pupilas, no solo una.",
-   "dur": 7.8,
-   "h": "LAS DOS PUPILAS",
-   "w": "DOS",
-   "sub": "",
-   "ic": "auto",
-   "num": null,
-   "vs": null,
-   "bars": [],
-   "barsU": "",
-   "hi": -1,
-   "line": null,
-   "items": [],
-   "stops": [],
-   "end": "",
-   "donut": [],
-   "picto": null,
-   "top": [],
-   "myth": "",
-   "truth": "",
-   "zoom": null,
-   "capas": null,
-   "mira": null,
-   "impacto": null,
-   "red": null,
-   "termo": null,
-   "pila": null,
-   "cap": "reflejo a la luz",
-   "papel": null,
-   "pilares": null,
-   "ciclo": null,
-   "duo": null,
-   "osc": null,
-   "cubo": null,
-   "diales": null,
-   "pieza": {
-    "id": "oc-reflejo",
-    "props": {}
-   },
-   "cita": null,
-   "sc": "",
-   "modo": "VIRAL",
-   "tema": "oscuro",
-   "bg": "dark",
-   "ritmo": 1,
-   "total": 63.4,
-   "inicio": 14.1,
-   "fin": 21.9,
-   "texto": "Si una luz entra en un ojo, el nervio óptico avisa y el oculomotor cierra las dos pupilas, no solo una.",
-   "tr": "semitono",
-   "trs": "corte",
-   "sfx": [
-    {
-     "t": 0.04,
-     "tipo": "whoosh",
-     "vol": 0.16
-    },
-    {
-     "t": 0.05,
-     "tipo": "whoosh",
-     "vol": 0.1
-    },
-    {
-     "t": 0.4,
-     "tipo": "zap",
-     "vol": 0.14
-    },
-    {
-     "t": 2.4,
-     "tipo": "pop",
-     "vol": 0.12
-    },
-    {
-     "t": 2.4,
-     "tipo": "clic",
-     "vol": 0.04
-    },
-    {
-     "t": 2.53,
-     "tipo": "clic",
-     "vol": 0.04
-    },
-    {
-     "t": 2.66,
-     "tipo": "clic",
-     "vol": 0.04
-    },
-    {
-     "t": 2.79,
-     "tipo": "clic",
-     "vol": 0.04
-    },
-    {
-     "t": 2.92,
-     "tipo": "clic",
-     "vol": 0.04
-    },
-    {
-     "t": 3.05,
-     "tipo": "clic",
-     "vol": 0.04
-    },
-    {
-     "t": 3.1799999999999997,
-     "tipo": "clic",
-     "vol": 0.04
-    },
-    {
-     "t": 3.31,
-     "tipo": "clic",
-     "vol": 0.04
-    },
-    {
-     "t": 3.44,
-     "tipo": "clic",
-     "vol": 0.04
-    },
-    {
-     "t": 3.57,
-     "tipo": "clic",
-     "vol": 0.04
-    },
-    {
-     "t": 4,
-     "tipo": "pop",
-     "vol": 0.14
-    },
-    {
-     "t": 5.5,
-     "tipo": "ding",
-     "vol": 0.18
-    }
-   ]
-  },
-  {
-   "n": 4,
-   "t": "PIEZA",
-   "voz": "Nace en el mesencéfalo, pasa entre dos arterias del cerebro y cruza el seno cavernoso hasta la órbita.",
-   "dur": 7,
-   "h": "ENTRE DOS ARTERIAS",
-   "w": "ARTERIAS",
+   "voz": "Da la vuelta alrededor del tronco encefálico, tiene el recorrido más largo dentro del cráneo y llega a la órbita.",
+   "dur": 7.5,
+   "h": "EL RECORRIDO MÁS LARGO",
+   "w": "LARGO",
    "sub": "",
    "ic": "brillo",
    "num": null,
@@ -376,21 +284,21 @@
    "cubo": null,
    "diales": null,
    "pieza": {
-    "id": "oc-recorrido",
+    "id": "tr-recorrido",
     "props": {}
    },
    "cita": null,
    "sc": "",
    "modo": "VIRAL",
-   "tema": "claro",
-   "bg": "light",
-   "ritmo": 0.9924242424242424,
-   "total": 63.4,
-   "inicio": 21.9,
-   "fin": 28.9,
-   "texto": "Nace en el mesencéfalo, pasa entre dos arterias del cerebro y cruza el seno cavernoso hasta la órbita.",
-   "tr": "corte",
-   "trs": "zoom",
+   "tema": "oscuro",
+   "bg": "dark",
+   "ritmo": 1,
+   "total": 64.6,
+   "inicio": 15,
+   "fin": 22.5,
+   "texto": "Da la vuelta alrededor del tronco encefálico, tiene el recorrido más largo dentro del cráneo y llega a la órbita.",
+   "tr": "semitono",
+   "trs": "corte",
    "sfx": [
     {
      "t": 0.04,
@@ -403,34 +311,124 @@
      "vol": 0.1
     },
     {
-     "t": 0.3984848484848485,
+     "t": 0.4,
      "tipo": "pop",
      "vol": 0.12
     },
     {
-     "t": 2.1833333333333336,
-     "tipo": "pop",
+     "t": 0.6000000000000001,
+     "tipo": "clic",
+     "vol": 0.04
+    },
+    {
+     "t": 0.7300000000000001,
+     "tipo": "clic",
+     "vol": 0.04
+    },
+    {
+     "t": 0.8600000000000001,
+     "tipo": "clic",
+     "vol": 0.04
+    },
+    {
+     "t": 0.9900000000000001,
+     "tipo": "clic",
+     "vol": 0.04
+    },
+    {
+     "t": 1.12,
+     "tipo": "clic",
+     "vol": 0.04
+    },
+    {
+     "t": 1.25,
+     "tipo": "clic",
+     "vol": 0.04
+    },
+    {
+     "t": 1.3800000000000001,
+     "tipo": "clic",
+     "vol": 0.04
+    },
+    {
+     "t": 1.5100000000000002,
+     "tipo": "clic",
+     "vol": 0.04
+    },
+    {
+     "t": 1.6400000000000001,
+     "tipo": "clic",
+     "vol": 0.04
+    },
+    {
+     "t": 1.77,
+     "tipo": "clic",
+     "vol": 0.04
+    },
+    {
+     "t": 1.9000000000000001,
+     "tipo": "clic",
+     "vol": 0.04
+    },
+    {
+     "t": 2.0300000000000002,
+     "tipo": "clic",
+     "vol": 0.04
+    },
+    {
+     "t": 2.16,
+     "tipo": "clic",
+     "vol": 0.04
+    },
+    {
+     "t": 2.29,
+     "tipo": "clic",
+     "vol": 0.04
+    },
+    {
+     "t": 2.42,
+     "tipo": "clic",
+     "vol": 0.04
+    },
+    {
+     "t": 2.5500000000000003,
+     "tipo": "clic",
+     "vol": 0.04
+    },
+    {
+     "t": 2.68,
+     "tipo": "clic",
+     "vol": 0.04
+    },
+    {
+     "t": 2.81,
+     "tipo": "clic",
+     "vol": 0.04
+    },
+    {
+     "t": 3.2,
+     "tipo": "tick",
      "vol": 0.14
     },
     {
-     "t": 4.5651515151515145,
-     "tipo": "whoosh",
+     "t": 5.3,
+     "tipo": "pop",
      "vol": 0.12
     },
     {
-     "t": 5.954545454545455,
+     "t": 6.4,
      "tipo": "ding",
      "vol": 0.18
     }
    ]
   },
   {
-   "n": 5,
+   "n": 4,
    "t": "PIEZA",
-   "voz": "Las fibras de la pupila van por la superficie del nervio: suelen ser las primeras en sufrir cuando algo lo comprime.",
-   "dur": 7.8,
-   "h": "FIBRAS EN LA SUPERFICIE",
-   "w": "SUPERFICIE",
+   "voz": "Mueve un solo músculo, el oblicuo superior, cuyo tendón pasa por una polea: la tróclea, que le da su nombre.",
+   "dur": 7.5,
+   "h": "UN MÚSCULO Y UNA POLEA",
+   "w": "POLEA",
    "sub": "",
    "ic": "brillo",
    "num": null,
@@ -454,7 +452,7 @@
    "red": null,
    "termo": null,
    "pila": null,
-   "cap": "corte del nervio",
+   "cap": "oblicuo superior",
    "papel": null,
    "pilares": null,
    "ciclo": null,
@@ -463,94 +461,7 @@
    "cubo": null,
    "diales": null,
    "pieza": {
-    "id": "oc-fibras",
-    "props": {}
-   },
-   "cita": null,
-   "sc": "",
-   "modo": "VIRAL",
-   "tema": "oscuro",
-   "bg": "dark",
-   "ritmo": 1,
-   "total": 63.4,
-   "inicio": 28.9,
-   "fin": 36.7,
-   "texto": "Las fibras de la pupila van por la superficie del nervio: suelen ser las primeras en sufrir cuando algo lo comprime.",
-   "tr": "zoom",
-   "trs": "semitono",
-   "sfx": [
-    {
-     "t": 0.04,
-     "tipo": "whoosh",
-     "vol": 0.16
-    },
-    {
-     "t": 0.05,
-     "tipo": "whoosh",
-     "vol": 0.1
-    },
-    {
-     "t": 0.4,
-     "tipo": "pop",
-     "vol": 0.12
-    },
-    {
-     "t": 4,
-     "tipo": "tick",
-     "vol": 0.14
-    },
-    {
-     "t": 5.9,
-     "tipo": "thud",
-     "vol": 0.2
-    },
-    {
-     "t": 6.300000000000001,
-     "tipo": "zap",
-     "vol": 0.12
-    }
-   ]
-  },
-  {
-   "n": 6,
-   "t": "PIEZA",
-   "voz": "Si sube la presión dentro del cráneo, el lóbulo temporal puede desplazarse, aplastar el nervio y dilatar la pupila.",
-   "dur": 7.1,
-   "h": "SUBE LA PRESIÓN",
-   "w": "PRESIÓN",
-   "sub": "",
-   "ic": "tendencia-alza",
-   "num": null,
-   "vs": null,
-   "bars": [],
-   "barsU": "",
-   "hi": -1,
-   "line": null,
-   "items": [],
-   "stops": [],
-   "end": "",
-   "donut": [],
-   "picto": null,
-   "top": [],
-   "myth": "",
-   "truth": "",
-   "zoom": null,
-   "capas": null,
-   "mira": null,
-   "impacto": null,
-   "red": null,
-   "termo": null,
-   "pila": null,
-   "cap": "herniación",
-   "papel": null,
-   "pilares": null,
-   "ciclo": null,
-   "duo": null,
-   "osc": null,
-   "cubo": null,
-   "diales": null,
-   "pieza": {
-    "id": "oc-herniacion",
+    "id": "tr-troclea",
     "props": {}
    },
    "cita": null,
@@ -559,12 +470,12 @@
    "tema": "claro",
    "bg": "light",
    "ritmo": 1,
-   "total": 63.4,
-   "inicio": 36.7,
-   "fin": 43.8,
-   "texto": "Si sube la presión dentro del cráneo, el lóbulo temporal puede desplazarse, aplastar el nervio y dilatar la pupila.",
-   "tr": "semitono",
-   "trs": "corte",
+   "total": 64.6,
+   "inicio": 22.5,
+   "fin": 30,
+   "texto": "Mueve un solo músculo, el oblicuo superior, cuyo tendón pasa por una polea: la tróclea, que le da su nombre.",
+   "tr": "corte",
+   "trs": "zoom",
    "sfx": [
     {
      "t": 0.04,
@@ -582,29 +493,74 @@
      "vol": 0.12
     },
     {
-     "t": 2.4,
-     "tipo": "whoosh",
-     "vol": 0.12
+     "t": 1.9,
+     "tipo": "pop",
+     "vol": 0.14
     },
     {
-     "t": 4.4,
-     "tipo": "thud",
-     "vol": 0.22
+     "t": 3.6,
+     "tipo": "tick",
+     "vol": 0.14
     },
     {
-     "t": 5.6,
-     "tipo": "zap",
-     "vol": 0.16
+     "t": 3.8000000000000003,
+     "tipo": "clic",
+     "vol": 0.04
+    },
+    {
+     "t": 3.93,
+     "tipo": "clic",
+     "vol": 0.04
+    },
+    {
+     "t": 4.0600000000000005,
+     "tipo": "clic",
+     "vol": 0.04
+    },
+    {
+     "t": 4.19,
+     "tipo": "clic",
+     "vol": 0.04
+    },
+    {
+     "t": 4.32,
+     "tipo": "clic",
+     "vol": 0.04
+    },
+    {
+     "t": 4.45,
+     "tipo": "clic",
+     "vol": 0.04
+    },
+    {
+     "t": 4.58,
+     "tipo": "clic",
+     "vol": 0.04
+    },
+    {
+     "t": 4.71,
+     "tipo": "clic",
+     "vol": 0.04
+    },
+    {
+     "t": 4.84,
+     "tipo": "clic",
+     "vol": 0.04
+    },
+    {
+     "t": 5.3,
+     "tipo": "ding",
+     "vol": 0.18
     }
    ]
   },
   {
-   "n": 7,
+   "n": 5,
    "t": "PIEZA",
-   "voz": "Un aneurisma cercano también puede comprimirlo: el párpado cae, el ojo se desvía hacia abajo y afuera y la pupila se dilata.",
+   "voz": "Ese músculo baja el ojo cuando mira hacia la nariz y lo rota hacia adentro, como al leer o al bajar escaleras.",
    "dur": 8.2,
-   "h": "UN ANEURISMA CERCANO",
-   "w": "ANEURISMA",
+   "h": "BAJA EL OJO",
+   "w": "BAJA",
    "sub": "",
    "ic": "tendencia-baja",
    "num": null,
@@ -628,7 +584,7 @@
    "red": null,
    "termo": null,
    "pila": null,
-   "cap": "párpado caído",
+   "cap": "mirar de cerca",
    "papel": null,
    "pilares": null,
    "ciclo": null,
@@ -637,7 +593,7 @@
    "cubo": null,
    "diales": null,
    "pieza": {
-    "id": "oc-aneurisma",
+    "id": "tr-accion",
     "props": {}
    },
    "cita": null,
@@ -646,12 +602,12 @@
    "tema": "oscuro",
    "bg": "dark",
    "ritmo": 1,
-   "total": 63.4,
-   "inicio": 43.8,
-   "fin": 52,
-   "texto": "Un aneurisma cercano también puede comprimirlo: el párpado cae, el ojo se desvía hacia abajo y afuera y la pupila se dilata.",
-   "tr": "corte",
-   "trs": "zoom",
+   "total": 64.6,
+   "inicio": 30,
+   "fin": 38.2,
+   "texto": "Ese músculo baja el ojo cuando mira hacia la nariz y lo rota hacia adentro, como al leer o al bajar escaleras.",
+   "tr": "zoom",
+   "trs": "semitono",
    "sfx": [
     {
      "t": 0.04,
@@ -669,29 +625,34 @@
      "vol": 0.12
     },
     {
-     "t": 3,
-     "tipo": "thud",
-     "vol": 0.16
-    },
-    {
-     "t": 4.4,
+     "t": 2,
      "tipo": "whoosh",
      "vol": 0.12
     },
     {
-     "t": 6.8,
-     "tipo": "zap",
+     "t": 3.8,
+     "tipo": "tick",
+     "vol": 0.14
+    },
+    {
+     "t": 5.4,
+     "tipo": "pop",
+     "vol": 0.14
+    },
+    {
+     "t": 5.9,
+     "tipo": "ding",
      "vol": 0.16
     }
    ]
   },
   {
-   "n": 8,
+   "n": 6,
    "t": "PIEZA",
-   "voz": "Un párpado caído de golpe, con visión doble o dolor de cabeza intenso, merece atención médica urgente.",
-   "dur": 6.6,
-   "h": "ATENCIÓN URGENTE",
-   "w": "URGENTE",
+   "voz": "Si falla, aparece visión doble vertical, sobre todo al mirar hacia abajo, y la persona inclina la cabeza para compensar.",
+   "dur": 7.5,
+   "h": "VISIÓN DOBLE Y CABEZA INCLINADA",
+   "w": "INCLINADA",
    "sub": "",
    "ic": "brillo",
    "num": null,
@@ -715,7 +676,7 @@
    "red": null,
    "termo": null,
    "pila": null,
-   "cap": "señales de alerta",
+   "cap": "cuando falla",
    "papel": null,
    "pilares": null,
    "ciclo": null,
@@ -724,7 +685,7 @@
    "cubo": null,
    "diales": null,
    "pieza": {
-    "id": "oc-urgencia",
+    "id": "tr-paralisis",
     "props": {}
    },
    "cita": null,
@@ -733,10 +694,194 @@
    "tema": "claro",
    "bg": "light",
    "ritmo": 1,
-   "total": 63.4,
-   "inicio": 52,
-   "fin": 58.6,
-   "texto": "Un párpado caído de golpe, con visión doble o dolor de cabeza intenso, merece atención médica urgente.",
+   "total": 64.6,
+   "inicio": 38.2,
+   "fin": 45.7,
+   "texto": "Si falla, aparece visión doble vertical, sobre todo al mirar hacia abajo, y la persona inclina la cabeza para compensar.",
+   "tr": "semitono",
+   "trs": "corte",
+   "sfx": [
+    {
+     "t": 0.04,
+     "tipo": "whoosh",
+     "vol": 0.16
+    },
+    {
+     "t": 0.05,
+     "tipo": "whoosh",
+     "vol": 0.1
+    },
+    {
+     "t": 0.4,
+     "tipo": "thud",
+     "vol": 0.18
+    },
+    {
+     "t": 1.2,
+     "tipo": "zap",
+     "vol": 0.12
+    },
+    {
+     "t": 3.6,
+     "tipo": "whoosh",
+     "vol": 0.12
+    },
+    {
+     "t": 5.6,
+     "tipo": "pop",
+     "vol": 0.14
+    },
+    {
+     "t": 6,
+     "tipo": "ding",
+     "vol": 0.16
+    }
+   ]
+  },
+  {
+   "n": 7,
+   "t": "PIEZA",
+   "voz": "Un golpe en la cabeza puede lesionarlo; otras veces es una parálisis congénita que solo se nota años después.",
+   "dur": 7.1,
+   "h": "GOLPE O CONGÉNITA",
+   "w": "CONGÉNITA",
+   "sub": "",
+   "ic": "brillo",
+   "num": null,
+   "vs": null,
+   "bars": [],
+   "barsU": "",
+   "hi": -1,
+   "line": null,
+   "items": [],
+   "stops": [],
+   "end": "",
+   "donut": [],
+   "picto": null,
+   "top": [],
+   "myth": "",
+   "truth": "",
+   "zoom": null,
+   "capas": null,
+   "mira": null,
+   "impacto": null,
+   "red": null,
+   "termo": null,
+   "pila": null,
+   "cap": "sus causas",
+   "papel": null,
+   "pilares": null,
+   "ciclo": null,
+   "duo": null,
+   "osc": null,
+   "cubo": null,
+   "diales": null,
+   "pieza": {
+    "id": "tr-causas",
+    "props": {}
+   },
+   "cita": null,
+   "sc": "",
+   "modo": "VIRAL",
+   "tema": "oscuro",
+   "bg": "dark",
+   "ritmo": 1,
+   "total": 64.6,
+   "inicio": 45.7,
+   "fin": 52.8,
+   "texto": "Un golpe en la cabeza puede lesionarlo; otras veces es una parálisis congénita que solo se nota años después.",
+   "tr": "corte",
+   "trs": "zoom",
+   "sfx": [
+    {
+     "t": 0.04,
+     "tipo": "whoosh",
+     "vol": 0.16
+    },
+    {
+     "t": 0.05,
+     "tipo": "whoosh",
+     "vol": 0.1
+    },
+    {
+     "t": 0.4,
+     "tipo": "thud",
+     "vol": 0.2
+    },
+    {
+     "t": 0.5,
+     "tipo": "zap",
+     "vol": 0.12
+    },
+    {
+     "t": 3,
+     "tipo": "tick",
+     "vol": 0.12
+    },
+    {
+     "t": 3.9,
+     "tipo": "pop",
+     "vol": 0.14
+    },
+    {
+     "t": 5.3,
+     "tipo": "ding",
+     "vol": 0.16
+    }
+   ]
+  },
+  {
+   "n": 8,
+   "t": "PIEZA",
+   "voz": "Si de repente ves doble, sobre todo al mirar hacia abajo, consulta con un médico: tiene muchas causas.",
+   "dur": 7,
+   "h": "SI VES DOBLE, CONSULTA",
+   "w": "CONSULTA",
+   "sub": "",
+   "ic": "brillo",
+   "num": null,
+   "vs": null,
+   "bars": [],
+   "barsU": "",
+   "hi": -1,
+   "line": null,
+   "items": [],
+   "stops": [],
+   "end": "",
+   "donut": [],
+   "picto": null,
+   "top": [],
+   "myth": "",
+   "truth": "",
+   "zoom": null,
+   "capas": null,
+   "mira": null,
+   "impacto": null,
+   "red": null,
+   "termo": null,
+   "pila": null,
+   "cap": "señal de alerta",
+   "papel": null,
+   "pilares": null,
+   "ciclo": null,
+   "duo": null,
+   "osc": null,
+   "cubo": null,
+   "diales": null,
+   "pieza": {
+    "id": "tr-consulta",
+    "props": {}
+   },
+   "cita": null,
+   "sc": "",
+   "modo": "VIRAL",
+   "tema": "claro",
+   "bg": "light",
+   "ritmo": 1,
+   "total": 64.6,
+   "inicio": 52.8,
+   "fin": 59.8,
+   "texto": "Si de repente ves doble, sobre todo al mirar hacia abajo, consulta con un médico: tiene muchas causas.",
    "tr": "zoom",
    "trs": "barrido",
    "sfx": [
@@ -752,28 +897,28 @@
     },
     {
      "t": 0.4,
-     "tipo": "thud",
-     "vol": 0.16
-    },
-    {
-     "t": 2.4,
-     "tipo": "tick",
-     "vol": 0.14
-    },
-    {
-     "t": 3.7,
-     "tipo": "tick",
-     "vol": 0.14
-    },
-    {
-     "t": 5.1,
      "tipo": "zap",
+     "vol": 0.14
+    },
+    {
+     "t": 2.2,
+     "tipo": "whoosh",
+     "vol": 0.12
+    },
+    {
+     "t": 4,
+     "tipo": "pop",
      "vol": 0.16
     },
     {
-     "t": 5.3999999999999995,
+     "t": 5.6,
+     "tipo": "tick",
+     "vol": 0.12
+    },
+    {
+     "t": 5.8999999999999995,
      "tipo": "ding",
-     "vol": 0.2
+     "vol": 0.18
     }
    ]
   },
@@ -822,9 +967,9 @@
    "tema": "oscuro",
    "bg": "gold",
    "ritmo": 1,
-   "total": 63.4,
-   "inicio": 58.6,
-   "fin": 63.4,
+   "total": 64.6,
+   "inicio": 59.8,
+   "fin": 64.6,
    "texto": "Compártelo con alguien que ame el cerebro. Síguenos en Sinapsis.",
    "tr": "barrido",
    "trs": "barrido",

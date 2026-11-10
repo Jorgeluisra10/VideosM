@@ -804,6 +804,33 @@ export const TOC = {
   urgencia: { parpado: 0.2, doble: 2.4, dolor: 3.7, urgente: 5.1 },
 } as const;
 
+/** Datos del video «El par craneal IV: el nervio que rompe las reglas» (SINAPSIS · pares craneales). Fuentes y precauciones en ejemplos/animacion-viral/guion-tecnico-par-craneal-4.md. */
+export const TRO = {
+  /** el troclear es el más pequeño en número de axones (las referencias dan unos 2 000–3 500; el óptico, ≈ 1 000 000) y el único que sale por la cara DORSAL del tronco encefálico, bajo el colículo inferior */
+  axonesOrden: { troclear: 3_400, optico: 1_000_000 },
+  /** todas sus fibras se cruzan (decusación) en el velo medular superior: el núcleo de un lado inerva el oblicuo superior del ojo contrario */
+  decusacionCompleta: true,
+  /** recorrido intracraneal más largo de todos los pares (rodea el pedúnculo cerebral, pasa por el seno cavernoso y la fisura orbitaria superior) */
+  musculo: "oblicuo superior", polea: "tróclea",
+  /** el oblicuo superior deprime el ojo aducido y lo rota hacia adentro (intorsión) */
+  accion: ["depresión", "intorsión"],
+  /** parálisis: diplopía vertical/torsional que empeora al mirar hacia abajo y cabeza inclinada hacia el lado contrario (con excepciones) */
+  inclinacion: "lado contrario",
+  /** un traumatismo puede lesionarlo (recorrido largo y fino) y a veces solo revela una parálisis congénita previa */
+  causasMencionadas: ["traumatismo", "congénita"],
+} as const;
+/** Tiempos del video del par craneal IV (segundos a ritmo normal), compartidos entre el dibujo y el sonido. */
+export const TTR = {
+  gancho: { par: 0.2, troclear: 1.9, pequeno: 3.0, detras: 4.4 },
+  cruce: { ademas: 0.2, cruzan: 1.0, izquierdo: 3.5, derecho: 5.3 },
+  recorrido: { vuelta: 0.2, largo: 3.2, craneo: 5.3, orbita: 6.4 },
+  troclea: { solo: 0.2, oblicuo: 1.9, polea: 3.6, nombre: 5.3 },
+  accion: { baja: 0.2, nariz: 2.0, gira: 3.8, leer: 5.4 },
+  paralisis: { falla: 0.2, doble: 1.2, abajo: 3.6, inclina: 5.6 },
+  causas: { golpe: 0.2, otras: 3.0, congenita: 3.9, anios: 5.3 },
+  consulta: { doble: 0.2, abajo: 2.2, medico: 4.0, causas: 5.6 },
+} as const;
+
 /* ───────────── «La regla del 37 %» (problema de la parada óptima, ensayo abstracto para IMNOBA) ───────────── */
 
 /** Generador pseudoaleatorio determinista (mulberry32): mismos números en el render, en las pruebas y en cada fotograma. */
@@ -1814,6 +1841,38 @@ export const PIEZAS: Record<string, DefPieza> = {
   "oc-urgencia": {
     id: "oc-urgencia", nombre: "Par III · un párpado caído de golpe, con visión doble o dolor de cabeza intenso, merece atención médica urgente (cierre)", ideal: 6.1, fondo: "dark", entra: "zoom",
     sfx: (_d, r) => [ev(0.05, "whoosh", 0.1), ev(TOC.urgencia.parpado * r + 0.2, "thud", 0.16), ev(TOC.urgencia.doble * r, "tick", 0.14), ev(TOC.urgencia.dolor * r, "tick", 0.14), ev(TOC.urgencia.urgente * r, "zap", 0.16), ev((TOC.urgencia.urgente + 0.3) * r, "ding", 0.2)],
+  },
+  "tr-gancho": {
+    id: "tr-gancho", nombre: "Par IV · el troclear es el más pequeño y el único que sale por detrás del tronco encefálico (gancho)", ideal: 7.0, fondo: "dark", entra: "zoom",
+    sfx: (_d, r) => [ev(0.05, "whoosh", 0.1), ev(TTR.gancho.par * r + 0.2, "pop", 0.12), ev(TTR.gancho.troclear * r, "tick", 0.12), ev(TTR.gancho.pequeno * r, "pop", 0.14), ev(TTR.gancho.detras * r, "zap", 0.16), ev((TTR.gancho.detras + 0.3) * r, "ding", 0.2)],
+  },
+  "tr-cruce": {
+    id: "tr-cruce", nombre: "Par IV · todas sus fibras se cruzan: el núcleo izquierdo mueve un músculo del ojo derecho", ideal: 7.0, fondo: "dark", entra: "corte",
+    sfx: (_d, r) => [ev(0.05, "whoosh", 0.1), ev(TTR.cruce.ademas * r + 0.2, "pop", 0.12), ev(TTR.cruce.cruzan * r, "whoosh", 0.14), ...clics(TTR.cruce.cruzan * r + 0.2, 1.6 * r, 0.04), ev(TTR.cruce.izquierdo * r, "pop", 0.14), ev(TTR.cruce.derecho * r, "ding", 0.18)],
+  },
+  "tr-recorrido": {
+    id: "tr-recorrido", nombre: "Par IV · da la vuelta alrededor del tronco encefálico, tiene el recorrido intracraneal más largo y llega a la órbita", ideal: 7.0, fondo: "dark", entra: "semitono",
+    sfx: (_d, r) => [ev(0.05, "whoosh", 0.1), ev(TTR.recorrido.vuelta * r + 0.2, "pop", 0.12), ...clics(TTR.recorrido.vuelta * r + 0.4, 2.4 * r, 0.04), ev(TTR.recorrido.largo * r, "tick", 0.14), ev(TTR.recorrido.craneo * r, "pop", 0.12), ev(TTR.recorrido.orbita * r, "ding", 0.18)],
+  },
+  "tr-troclea": {
+    id: "tr-troclea", nombre: "Par IV · mueve un solo músculo, el oblicuo superior, cuyo tendón pasa por una polea: la tróclea", ideal: 7.0, fondo: "dark", entra: "corte",
+    sfx: (_d, r) => [ev(0.05, "whoosh", 0.1), ev(TTR.troclea.solo * r + 0.2, "pop", 0.12), ev(TTR.troclea.oblicuo * r, "pop", 0.14), ev(TTR.troclea.polea * r, "tick", 0.14), ...clics(TTR.troclea.polea * r + 0.2, 1.2 * r, 0.04), ev(TTR.troclea.nombre * r, "ding", 0.18)],
+  },
+  "tr-accion": {
+    id: "tr-accion", nombre: "Par IV · el oblicuo superior baja el ojo cuando mira hacia la nariz y lo rota hacia adentro, como al leer o bajar escaleras", ideal: 7.6, fondo: "dark", entra: "zoom",
+    sfx: (_d, r) => [ev(0.05, "whoosh", 0.1), ev(TTR.accion.baja * r + 0.2, "pop", 0.12), ev(TTR.accion.nariz * r, "whoosh", 0.12), ev(TTR.accion.gira * r, "tick", 0.14), ev(TTR.accion.leer * r, "pop", 0.14), ev((TTR.accion.leer + 0.5) * r, "ding", 0.16)],
+  },
+  "tr-paralisis": {
+    id: "tr-paralisis", nombre: "Par IV · si falla: visión doble vertical, peor al mirar hacia abajo, y cabeza inclinada para compensar", ideal: 7.0, fondo: "dark", entra: "semitono",
+    sfx: (_d, r) => [ev(0.05, "whoosh", 0.1), ev(TTR.paralisis.falla * r + 0.2, "thud", 0.18), ev(TTR.paralisis.doble * r, "zap", 0.12), ev(TTR.paralisis.abajo * r, "whoosh", 0.12), ev(TTR.paralisis.inclina * r, "pop", 0.14), ev((TTR.paralisis.inclina + 0.4) * r, "ding", 0.16)],
+  },
+  "tr-causas": {
+    id: "tr-causas", nombre: "Par IV · un golpe en la cabeza puede lesionarlo; otras veces es una parálisis congénita que se nota años después", ideal: 6.6, fondo: "dark", entra: "corte",
+    sfx: (_d, r) => [ev(0.05, "whoosh", 0.1), ev(TTR.causas.golpe * r + 0.2, "thud", 0.2), ev((TTR.causas.golpe + 0.1) * r + 0.2, "zap", 0.12), ev(TTR.causas.otras * r, "tick", 0.12), ev(TTR.causas.congenita * r, "pop", 0.14), ev(TTR.causas.anios * r, "ding", 0.16)],
+  },
+  "tr-consulta": {
+    id: "tr-consulta", nombre: "Par IV · si de repente ves doble, sobre todo al mirar hacia abajo, consulta con un médico: tiene muchas causas (cierre)", ideal: 6.5, fondo: "dark", entra: "zoom",
+    sfx: (_d, r) => [ev(0.05, "whoosh", 0.1), ev(TTR.consulta.doble * r + 0.2, "zap", 0.14), ev(TTR.consulta.abajo * r, "whoosh", 0.12), ev(TTR.consulta.medico * r, "pop", 0.16), ev(TTR.consulta.causas * r, "tick", 0.12), ev((TTR.consulta.causas + 0.3) * r, "ding", 0.18)],
   },
   "astro-memoria": {
     id: "astro-memoria", nombre: "Astrocitos · en ratones, reactivarlos estimuló el recuerdo", ideal: 4.15, fondo: "dark", entra: "corte",

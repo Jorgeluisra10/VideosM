@@ -1,0 +1,14 @@
+{
+ "titulo": "El par craneal IV: el nervio que rompe las reglas",
+ "scenes": [
+  { "t": "PIEZA", "voz": "El par craneal cuatro, el troclear, es el más pequeño y el único que sale por detrás del tronco encefálico.", "dur": 7.5, "h": "EL NERVIO QUE ROMPE REGLAS", "w": "REGLAS", "pieza": { "id": "tr-gancho" } },
+  { "t": "PIEZA", "voz": "Además, todas sus fibras se cruzan al otro lado: el núcleo del lado izquierdo mueve un músculo del ojo derecho.", "dur": 7.5, "h": "SE CRUZA POR COMPLETO", "w": "CRUZA", "cap": "decusación", "pieza": { "id": "tr-cruce" } },
+  { "t": "PIEZA", "voz": "Da la vuelta alrededor del tronco encefálico, tiene el recorrido más largo dentro del cráneo y llega a la órbita.", "dur": 7.5, "h": "EL RECORRIDO MÁS LARGO", "w": "LARGO", "cap": "su recorrido", "pieza": { "id": "tr-recorrido" } },
+  { "t": "PIEZA", "voz": "Mueve un solo músculo, el oblicuo superior, cuyo tendón pasa por una polea: la tróclea, que le da su nombre.", "dur": 7.5, "h": "UN MÚSCULO Y UNA POLEA", "w": "POLEA", "cap": "oblicuo superior", "pieza": { "id": "tr-troclea" } },
+  { "t": "PIEZA", "voz": "Ese músculo baja el ojo cuando mira hacia la nariz y lo rota hacia adentro, como al leer o al bajar escaleras.", "dur": 8.2, "h": "BAJA EL OJO", "w": "BAJA", "cap": "mirar de cerca", "pieza": { "id": "tr-accion" } },
+  { "t": "PIEZA", "voz": "Si falla, aparece visión doble vertical, sobre todo al mirar hacia abajo, y la persona inclina la cabeza para compensar.", "dur": 7.5, "h": "VISIÓN DOBLE Y CABEZA INCLINADA", "w": "INCLINA", "cap": "cuando falla", "pieza": { "id": "tr-paralisis" } },
+  { "t": "PIEZA", "voz": "Un golpe en la cabeza puede lesionarlo; otras veces es una parálisis congénita que solo se nota años después.", "dur": 7.1, "h": "GOLPE O CONGÉNITA", "w": "CONGÉNITA", "cap": "sus causas", "pieza": { "id": "tr-causas" } },
+  { "t": "PIEZA", "voz": "Si de repente ves doble, sobre todo al mirar hacia abajo, consulta con un médico: tiene muchas causas.", "dur": 7.0, "h": "SI VES DOBLE, CONSULTA", "w": "CONSULTA", "cap": "señal de alerta", "pieza": { "id": "tr-consulta" } },
+  { "t": "CTA", "voz": "Compártelo con alguien que ame el cerebro. Síguenos en Sinapsis.", "dur": 4.8, "h": "COMPÁRTELO Y SÍGUENOS", "w": "SÍGUENOS", "sub": "Más ciencia en SINAPSIS" }
+ ]
+}
