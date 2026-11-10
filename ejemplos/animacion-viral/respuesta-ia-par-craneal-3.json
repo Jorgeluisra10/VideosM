@@ -1,0 +1,14 @@
+{
+ "titulo": "El par craneal III: la pupila que avisa",
+ "scenes": [
+  { "t": "PIEZA", "voz": "Una pupila dilatada tras un golpe en la cabeza puede ser una emergencia: el par craneal tres está pidiendo ayuda.", "dur": 7.5, "h": "LA PUPILA QUE AVISA", "w": "PUPILA", "pieza": { "id": "oc-gancho" } },
+  { "t": "PIEZA", "voz": "El oculomotor mueve cuatro de los seis músculos que giran cada ojo y además levanta el párpado.", "dur": 6.6, "h": "4 DE 6 MÚSCULOS", "w": "OCULOMOTOR", "cap": "nervio oculomotor", "pieza": { "id": "oc-musculos" } },
+  { "t": "PIEZA", "voz": "Si una luz entra en un ojo, el nervio óptico avisa y el oculomotor cierra las dos pupilas, no solo una.", "dur": 7.8, "h": "LAS DOS PUPILAS", "w": "DOS", "cap": "reflejo a la luz", "pieza": { "id": "oc-reflejo" } },
+  { "t": "PIEZA", "voz": "Nace en el mesencéfalo, pasa entre dos arterias del cerebro y cruza el seno cavernoso hasta la órbita.", "dur": 7.0, "h": "ENTRE DOS ARTERIAS", "w": "ARTERIAS", "cap": "su recorrido", "pieza": { "id": "oc-recorrido" } },
+  { "t": "PIEZA", "voz": "Las fibras de la pupila van por la superficie del nervio: suelen ser las primeras en sufrir cuando algo lo comprime.", "dur": 7.8, "h": "FIBRAS EN LA SUPERFICIE", "w": "SUPERFICIE", "cap": "corte del nervio", "pieza": { "id": "oc-fibras" } },
+  { "t": "PIEZA", "voz": "Si sube la presión dentro del cráneo, el lóbulo temporal puede desplazarse, aplastar el nervio y dilatar la pupila.", "dur": 7.1, "h": "SUBE LA PRESIÓN", "w": "PRESIÓN", "cap": "herniación", "pieza": { "id": "oc-herniacion" } },
+  { "t": "PIEZA", "voz": "Un aneurisma cercano también puede comprimirlo: el párpado cae, el ojo se desvía hacia abajo y afuera y la pupila se dilata.", "dur": 8.2, "h": "UN ANEURISMA CERCANO", "w": "ANEURISMA", "cap": "párpado caído", "pieza": { "id": "oc-aneurisma" } },
+  { "t": "PIEZA", "voz": "Un párpado caído de golpe, con visión doble o dolor de cabeza intenso, merece atención médica urgente.", "dur": 6.6, "h": "ATENCIÓN URGENTE", "w": "URGENTE", "cap": "señales de alerta", "pieza": { "id": "oc-urgencia" } },
+  { "t": "CTA", "voz": "Compártelo con alguien que ame el cerebro. Síguenos en Sinapsis.", "dur": 4.8, "h": "COMPÁRTELO Y SÍGUENOS", "w": "SÍGUENOS", "sub": "Más ciencia en SINAPSIS" }
+ ]
+}

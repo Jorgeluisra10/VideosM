@@ -3,6 +3,8 @@
  * Para añadir una pieza nueva: (1) su ficha pura en src/anim/piezas.ts (duración ideal, fondo, sonido), (2) su componente aquí.
  */
 import { MeCola, MeColumna, MeGancho, MeMariposa } from "./me1";
+import { OcGancho, OcMusculos, OcRecorrido, OcReflejo } from "./oc1";
+import { OcAneurisma, OcFibras, OcHerniacion, OcUrgencia } from "./oc2";
 import { OpCiego, OpGancho, OpOrigen, OpQuiasma } from "./op1";
 import { OpEnsayo, OpGenes, OpRegenera, OpTemprano } from "./op2";
 import { OlCiclo, OlGancho, OlMucosa, OlReceptor } from "./ol1";
@@ -131,6 +133,8 @@ export const COMPONENTES_PIEZA: Record<string, React.FC<{ e: EscenaViralGuardada
   "tej-hueso": TejHueso,
   "tej-muscular": TejMuscular,
   "tej-nervioso": TejNervioso,
+  "oc-gancho": OcGancho, "oc-musculos": OcMusculos, "oc-reflejo": OcReflejo, "oc-recorrido": OcRecorrido,
+  "oc-fibras": OcFibras, "oc-herniacion": OcHerniacion, "oc-aneurisma": OcAneurisma, "oc-urgencia": OcUrgencia,
   "op-gancho": OpGancho, "op-origen": OpOrigen, "op-ciego": OpCiego, "op-quiasma": OpQuiasma,
   "op-regenera": OpRegenera, "op-genes": OpGenes, "op-ensayo": OpEnsayo, "op-temprano": OpTemprano,
   "ol-gancho": OlGancho, "ol-mucosa": OlMucosa, "ol-ciclo": OlCiclo, "ol-receptor": OlReceptor,

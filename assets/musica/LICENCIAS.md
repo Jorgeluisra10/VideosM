@@ -17,3 +17,4 @@ medula-espinal.wav · creada por el sistema (síntesis con `videos/2026-11-07-me
 par-craneal-0.wav · creada por el sistema (síntesis con `videos/2026-11-08-par-craneal-0/componer-musica.mjs`; el WAV no se sube a git, se regenera) · libre de derechos · ninguna · 2026-11-08
 par-craneal-1.wav · creada por el sistema (síntesis con `videos/2026-11-09-par-craneal-1/componer-musica.mjs`; el WAV no se sube a git, se regenera) · libre de derechos · ninguna · 2026-11-09
 par-craneal-2.wav · creada por el sistema (síntesis con `videos/2026-11-10-par-craneal-2/componer-musica.mjs`; el WAV no se sube a git, se regenera) · libre de derechos · ninguna · 2026-11-10
+par-craneal-3.wav · creada por el sistema (síntesis con `videos/2026-11-11-par-craneal-3/componer-musica.mjs`; el WAV no se sube a git, se regenera) · libre de derechos · ninguna · 2026-11-11

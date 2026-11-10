@@ -779,6 +779,31 @@ export const TOP = {
   temprano: { temprano: 0.2, seguridad: 1.8, tres: 3.4, noDemuestra: 4.9 },
 } as const;
 
+/** Datos del video «El par craneal III: la pupila que avisa» (SINAPSIS · pares craneales). Fuentes y precauciones en ejemplos/animacion-viral/guion-tecnico-par-craneal-3.md. */
+export const OC = {
+  /** el oculomotor inerva 4 de los 6 músculos extrínsecos del ojo (recto superior, inferior y medial; oblicuo inferior) y el elevador del párpado; los otros dos: oblicuo superior (IV) y recto lateral (VI) */
+  musculos: { inervados: 4, totales: 6 },
+  /** nace en el mesencéfalo, sale en la fosa interpeduncular entre las arterias cerebral posterior y cerebelosa superior, cruza el seno cavernoso y entra por la fisura orbitaria superior */
+  nace: "mesencéfalo",
+  /** las fibras parasimpáticas (pupila y acomodación) van por la superficie del nervio y suelen ser las primeras en sufrir por compresión (herniación del uncus, aneurisma de la comunicante posterior); en la parálisis isquémica (diabetes, hipertensión) suele respetarse la pupila; la explicación es la clásica y hay matices (a veces hay miosis inicial; algunos aneurismas respetan la pupila) */
+  pupilaPrimero: "suele",
+  /** la luz en un ojo cierra las dos pupilas: aferencia por el nervio óptico (II), eferencia por el oculomotor (III) vía Edinger-Westphal */
+  reflejo: { aferente: "II", eferente: "III" },
+  /** parálisis completa: ptosis, ojo «hacia abajo y afuera» y pupila dilatada */
+  paralisis: ["ptosis", "abajo y afuera", "midriasis"],
+} as const;
+/** Tiempos del video del par craneal III (segundos a ritmo normal), compartidos entre el dibujo y el sonido. */
+export const TOC = {
+  gancho: { pupila: 0.2, golpe: 1.8, emergencia: 3.6, par: 5.2 },
+  musculos: { mueve: 0.2, cuatro: 1.7, giran: 3.6, parpado: 5.0 },
+  reflejo: { luz: 0.2, optico: 2.4, oculo: 4.0, dos: 5.5 },
+  recorrido: { nace: 0.2, arterias: 2.2, seno: 4.6, orbita: 6.0 },
+  fibras: { superficie: 0.2, primeras: 4.0, comprime: 5.9 },
+  herniacion: { presion: 0.2, lobulo: 2.4, aplasta: 4.4, dilata: 5.6 },
+  aneurisma: { aneurisma: 0.2, parpado: 3.0, ojo: 4.4, pupila: 6.8 },
+  urgencia: { parpado: 0.2, doble: 2.4, dolor: 3.7, urgente: 5.1 },
+} as const;
+
 /* ───────────── «La regla del 37 %» (problema de la parada óptima, ensayo abstracto para IMNOBA) ───────────── */
 
 /** Generador pseudoaleatorio determinista (mulberry32): mismos números en el render, en las pruebas y en cada fotograma. */
@@ -1757,6 +1782,38 @@ export const PIEZAS: Record<string, DefPieza> = {
   "op-temprano": {
     id: "op-temprano", nombre: "Par II · es muy temprano: el objetivo es la seguridad, con tres personas, y aún no demuestra que devuelva la vista (cierre)", ideal: 6.6, fondo: "dark", entra: "zoom",
     sfx: (_d, r) => [ev(0.05, "whoosh", 0.1), ev(TOP.temprano.temprano * r + 0.2, "thud", 0.16), ev(TOP.temprano.seguridad * r, "pop", 0.12), ev(TOP.temprano.tres * r, "tick", 0.12), ev(TOP.temprano.noDemuestra * r, "thud", 0.2), ev((TOP.temprano.noDemuestra + 0.8) * r, "ding", 0.18)],
+  },
+  "oc-gancho": {
+    id: "oc-gancho", nombre: "Par III · una pupila dilatada tras un golpe en la cabeza puede ser una emergencia: el oculomotor pide ayuda (gancho)", ideal: 7.0, fondo: "dark", entra: "zoom",
+    sfx: (_d, r) => [ev(0.05, "whoosh", 0.1), ev(TOC.gancho.pupila * r + 0.2, "pop", 0.12), ev(TOC.gancho.golpe * r, "thud", 0.2), ev((TOC.gancho.golpe + 0.1) * r, "zap", 0.12), ev(TOC.gancho.emergencia * r, "zap", 0.16), ev(TOC.gancho.par * r, "ding", 0.2)],
+  },
+  "oc-musculos": {
+    id: "oc-musculos", nombre: "Par III · mueve cuatro de los seis músculos de cada ojo y levanta el párpado", ideal: 6.1, fondo: "dark", entra: "corte",
+    sfx: (_d, r) => [ev(0.05, "whoosh", 0.1), ev(TOC.musculos.mueve * r + 0.2, "pop", 0.12), ev(TOC.musculos.cuatro * r, "tick", 0.14), ...[0, 1, 2, 3].map((k) => ev((TOC.musculos.cuatro + 0.3 * k) * r, "pop", 0.12)), ev(TOC.musculos.parpado * r, "ding", 0.18)],
+  },
+  "oc-reflejo": {
+    id: "oc-reflejo", nombre: "Par III · la luz en un ojo cierra las dos pupilas: el óptico avisa y el oculomotor responde", ideal: 7.3, fondo: "dark", entra: "semitono",
+    sfx: (_d, r) => [ev(0.05, "whoosh", 0.1), ev(TOC.reflejo.luz * r + 0.2, "zap", 0.14), ev(TOC.reflejo.optico * r, "pop", 0.12), ...clics(TOC.reflejo.optico * r, 1.4 * r, 0.04), ev(TOC.reflejo.oculo * r, "pop", 0.14), ev(TOC.reflejo.dos * r, "ding", 0.18)],
+  },
+  "oc-recorrido": {
+    id: "oc-recorrido", nombre: "Par III · nace en el mesencéfalo, pasa entre dos arterias del cerebro y cruza el seno cavernoso hasta la órbita", ideal: 6.6, fondo: "dark", entra: "corte",
+    sfx: (_d, r) => [ev(0.05, "whoosh", 0.1), ev(TOC.recorrido.nace * r + 0.2, "pop", 0.12), ev(TOC.recorrido.arterias * r, "pop", 0.14), ev(TOC.recorrido.seno * r, "whoosh", 0.12), ev(TOC.recorrido.orbita * r, "ding", 0.18)],
+  },
+  "oc-fibras": {
+    id: "oc-fibras", nombre: "Par III · las fibras de la pupila van por la superficie del nervio y suelen ser las primeras en sufrir al comprimirlo", ideal: 7.3, fondo: "dark", entra: "zoom",
+    sfx: (_d, r) => [ev(0.05, "whoosh", 0.1), ev(TOC.fibras.superficie * r + 0.2, "pop", 0.12), ev(TOC.fibras.primeras * r, "tick", 0.14), ev(TOC.fibras.comprime * r, "thud", 0.2), ev((TOC.fibras.comprime + 0.4) * r, "zap", 0.12)],
+  },
+  "oc-herniacion": {
+    id: "oc-herniacion", nombre: "Par III · si sube la presión dentro del cráneo, el lóbulo temporal puede aplastar el nervio y dilatar la pupila", ideal: 6.6, fondo: "dark", entra: "semitono",
+    sfx: (_d, r) => [ev(0.05, "whoosh", 0.1), ev(TOC.herniacion.presion * r + 0.2, "pop", 0.12), ev(TOC.herniacion.lobulo * r, "whoosh", 0.12), ev(TOC.herniacion.aplasta * r, "thud", 0.22), ev(TOC.herniacion.dilata * r, "zap", 0.16)],
+  },
+  "oc-aneurisma": {
+    id: "oc-aneurisma", nombre: "Par III · un aneurisma cercano también puede comprimirlo: párpado caído, ojo hacia abajo y afuera y pupila dilatada", ideal: 7.7, fondo: "dark", entra: "corte",
+    sfx: (_d, r) => [ev(0.05, "whoosh", 0.1), ev(TOC.aneurisma.aneurisma * r + 0.2, "pop", 0.12), ev(TOC.aneurisma.parpado * r, "thud", 0.16), ev(TOC.aneurisma.ojo * r, "whoosh", 0.12), ev(TOC.aneurisma.pupila * r, "zap", 0.16)],
+  },
+  "oc-urgencia": {
+    id: "oc-urgencia", nombre: "Par III · un párpado caído de golpe, con visión doble o dolor de cabeza intenso, merece atención médica urgente (cierre)", ideal: 6.1, fondo: "dark", entra: "zoom",
+    sfx: (_d, r) => [ev(0.05, "whoosh", 0.1), ev(TOC.urgencia.parpado * r + 0.2, "thud", 0.16), ev(TOC.urgencia.doble * r, "tick", 0.14), ev(TOC.urgencia.dolor * r, "tick", 0.14), ev(TOC.urgencia.urgente * r, "zap", 0.16), ev((TOC.urgencia.urgente + 0.3) * r, "ding", 0.2)],
   },
   "astro-memoria": {
     id: "astro-memoria", nombre: "Astrocitos · en ratones, reactivarlos estimuló el recuerdo", ideal: 4.15, fondo: "dark", entra: "corte",
