@@ -1,0 +1,18 @@
+{
+  "version": 1,
+  "slug": "2026-11-12-par-craneal-4",
+  "titulo": "El par craneal IV: el nervio que rompe las reglas",
+  "serie": "pares_craneales",
+  "estado": "grabado",
+  "guion": "El par craneal cuatro, el troclear, es el más pequeño y el único que sale por detrás del tronco encefálico.\nAdemás, todas sus fibras se cruzan al otro lado: el núcleo del lado izquierdo mueve un músculo del ojo derecho.\nDa la vuelta alrededor del tronco encefálico, tiene el recorrido más largo dentro del cráneo y llega a la órbita.\nMueve un solo músculo, el oblicuo superior, cuyo tendón pasa por una polea: la tróclea, que le da su nombre.\nEse músculo baja el ojo cuando mira hacia la nariz y lo rota hacia adentro, como al leer o al bajar escaleras.\nSi falla, aparece visión doble vertical, sobre todo al mirar hacia abajo, y la persona inclina la cabeza para compensar.\nUn golpe en la cabeza puede lesionarlo; otras veces es una parálisis congénita que solo se nota años después.\nSi de repente ves doble, sobre todo al mirar hacia abajo, consulta con un médico: tiene muchas causas.\nCompártelo con alguien que ame el cerebro. Síguenos en Sinapsis.",
+  "gancho": "El par craneal cuatro, el troclear, es el más pequeño y el único que sale por detrás del tronco encefálico.",
+  "duracion_seg": 64.6,
+  "notas": "Par craneal IV (troclear): el de menos axones, único con salida dorsal, decusación completa, recorrido largo, oblicuo superior y tróclea (polea), depresión e intorsión, visión doble vertical con cabeza inclinada, causas traumática y congénita. Advertencia general, no diagnóstico; cifra de axones aproximada; dibujos esquemáticos; sin voz (−27 LUFS); fuentes sin abrir en original.",
+  "voz_usada": "",
+  "instrucciones_voz": "",
+  "creado": "2026-11-10T18:55:11.651Z",
+  "origen_clave": "793528fa",
+  "video": "revision.mp4",
+  "miniatura": "miniatura.jpg",
+  "entrega": "entrega.md"
+}
