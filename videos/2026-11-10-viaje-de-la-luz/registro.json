@@ -1,0 +1,18 @@
+{
+  "version": 1,
+  "slug": "2026-11-10-viaje-de-la-luz",
+  "titulo": "El viaje de la luz",
+  "serie": "ingenieria_extrema",
+  "estado": "grabado",
+  "guion": "Aprietas un interruptor y se enciende la luz. ¿De dónde sale esa energía? Ven, sígueme.\nTodo empieza con fuego o con agua: una caldera quema combustible, o una presa deja caer el agua.\nEl vapor, o el agua que cae, empuja las aspas de una turbina gigante que no deja de girar.\nGira un imán dentro de bobinas de cobre. Imán en movimiento, cable cerca: ahí nace la electricidad.\nUn transformador sube el voltaje a cientos de miles de voltios, y la energía cruza el país por torres con menos pérdidas.\nEn tu barrio, otro transformador la baja a ciento veinte voltios, y llega a tu casa.\nY el truco: casi no se guarda. Cada segundo, las centrales producen justo lo que millones de casas consumen.\nY llega al enchufe. Un viaje de un instante que empezó en una central.\nGuárdalo y síguenos en IMNOBA, tu plataforma de propiedades y vehículos.",
+  "gancho": "Aprietas un interruptor y se enciende la luz.",
+  "duracion_seg": 60.9,
+  "notas": "Espero guardados y compartidos por el viaje inmersivo; mirar retención a los 3 s y en las torres (≈ 28 s), y guardados por cada 1.000 alcanzados.",
+  "voz_usada": "",
+  "instrucciones_voz": "",
+  "creado": "2026-11-10T19:16:41.540Z",
+  "origen_clave": "8a63303f",
+  "video": "revision.mp4",
+  "miniatura": "miniatura.jpg",
+  "entrega": ""
+}

@@ -676,6 +676,27 @@ export const TJP = {
   leccion: { casa: 0.3, parte: 1.8, tarjeta: 3.2, filas: 4.0, chip: 5.6 },
 } as const;
 
+/** Datos del video «El viaje de la luz» (IMNOBA · centrales eléctricas, POV). Sin cifras de producción: valores típicos y física básica; precauciones en ejemplos/animacion-viral/guion-tecnico-viaje-de-la-luz.md. */
+export const CEN = {
+  /** frecuencia de la red y tensión residencial típicas en Colombia (sin verificar en esta sesión: la búsqueda web no estaba disponible) */
+  hz: 60, voltiosCasa: 120,
+  /** la energía puede venir de quemar combustible o del agua que cae; ambas mueven una turbina */
+  fuentes: ["combustible", "agua"],
+} as const;
+/** Frecuencia (Hz) de la red que muestra el medidor: oscila muy poco alrededor de 60 cuando producción y consumo se igualan; `desbalance` (−1…1) la separa. */
+export const frecuenciaRed = (desbalance: number, t = 0): number => CEN.hz + 0.35 * desbalance + 0.04 * Math.sin(t * 7);
+/** Tiempos de «El viaje de la luz» (s a ritmo normal), compartidos entre el dibujo y el sonido. */
+export const TCE = {
+  gancho: { interruptor: 0.2, pulsa: 1.0, luz: 1.25, zoom: 2.7, zoomDur: 0.8, tunel: 3.5, chip: 4.2 },
+  fuente: { fuego: 0.2, agua: 0.9, paquete: 2.4, chip1: 1.8, chip2: 3.2, entra: 4.8 },
+  turbina: { turbina: 0.2, giro: 0.9, chip: 3.4, rapido: 4.8 },
+  generador: { gen: 0.2, iman: 1.0, bobinas: 2.4, onda: 3.4, chip: 5.0 },
+  transmision: { trafo: 0.2, sube: 1.4, chip: 2.4, torres: 3.4, vuelo: 3.4, chip2: 5.6 },
+  barrio: { poste: 0.2, baja: 1.2, chip: 2.0, casa: 3.4, medidor: 4.8, chip2: 5.4 },
+  balance: { barras: 0.3, casas: 1.8, hz: 3.4, chip: 5.0, chip2: 5.9 },
+  enchufe: { enchufe: 0.2, llega: 1.0, mete: 1.8, luz: 2.1, chip: 3.4 },
+} as const;
+
 export const PIEZAS: Record<string, DefPieza> = {
   "metro-plano": {
     id: "metro-plano", nombre: "8 millones en un solo plano", ideal: 7.6, fondo: "dark",
@@ -1305,6 +1326,39 @@ export const PIEZAS: Record<string, DefPieza> = {
   "jap-leccion": {
     id: "jap-leccion", nombre: "Casas de Japón · al comprar, pide que separen el valor del terreno y el de la construcción (cierre)", ideal: 6.45, fondo: "dark", entra: "zoom",
     sfx: (_d, r) => [ev(TJP.leccion.casa * r, "whoosh", 0.1), ev(TJP.leccion.parte * r, "thud", 0.14), ev(TJP.leccion.tarjeta * r, "pop", 0.12), ev(TJP.leccion.filas * r, "tick", 0.1), ev(TJP.leccion.chip * r, "ding", 0.16)],
+  },
+  /* ───────────── «El viaje de la luz» (IMNOBA · centrales eléctricas · POV) ───────────── */
+  "cen-gancho": {
+    id: "cen-gancho", nombre: "Viaje de la luz · aprietas el interruptor: ¿de dónde sale esa energía? (gancho, POV)", ideal: 5.65, fondo: "dark",
+    sfx: (_d, r) => [ev(0.05, "golpe", 0.14), ev(TCE.gancho.pulsa * r, "clic", 0.2), ev(TCE.gancho.luz * r, "zap", 0.16), ev(TCE.gancho.zoom * r, "whoosh", 0.18), ...clics(TCE.gancho.tunel * r, 1.2, 0.04), ev(TCE.gancho.chip * r, "ding", 0.14)],
+  },
+  "cen-fuente": {
+    id: "cen-fuente", nombre: "Viaje de la luz · fuego o agua: una caldera que quema o una presa que deja caer el agua", ideal: 6.55, fondo: "dark", entra: "corte",
+    sfx: (_d, r) => [ev(TCE.fuente.fuego * r, "estatica", 0.14), ev(TCE.fuente.agua * r, "gota", 0.16), ev(TCE.fuente.paquete * r, "zap", 0.14), ev(TCE.fuente.chip1 * r, "pop", 0.1), ev(TCE.fuente.chip2 * r, "pop", 0.1), ev(TCE.fuente.entra * r, "whoosh", 0.14)],
+  },
+  "cen-turbina": {
+    id: "cen-turbina", nombre: "Viaje de la luz · el vapor o el agua empujan las aspas de una turbina que no deja de girar", ideal: 6.75, fondo: "dark", entra: "zoom",
+    sfx: (_d, r) => [ev(TCE.turbina.turbina * r, "thud", 0.16), ...clics(TCE.turbina.giro * r, 2.4, 0.05), ev(TCE.turbina.chip * r, "pop", 0.1), ev(TCE.turbina.rapido * r, "radar", 0.14)],
+  },
+  "cen-generador": {
+    id: "cen-generador", nombre: "Viaje de la luz · un imán que gira dentro de bobinas de cobre crea la electricidad", ideal: 6.45, fondo: "dark", entra: "corte",
+    sfx: (_d, r) => [ev(TCE.generador.gen * r, "whoosh", 0.1), ev(TCE.generador.iman * r, "pop", 0.12), ev(TCE.generador.bobinas * r, "zap", 0.16), ev(TCE.generador.onda * r, "ding", 0.14), ev(TCE.generador.chip * r, "tick", 0.1)],
+  },
+  "cen-transmision": {
+    id: "cen-transmision", nombre: "Viaje de la luz · un transformador sube el voltaje y la energía cruza el país por las torres", ideal: 7.95, fondo: "dark", entra: "corte",
+    sfx: (_d, r) => [ev(TCE.transmision.trafo * r, "thud", 0.16), ev(TCE.transmision.sube * r, "zap", 0.18), ev(TCE.transmision.chip * r, "ding", 0.14), ev(TCE.transmision.torres * r, "whoosh", 0.2), ...clics(TCE.transmision.torres * r + 0.4, 2.8, 0.04), ev(TCE.transmision.chip2 * r, "pop", 0.1)],
+  },
+  "cen-barrio": {
+    id: "cen-barrio", nombre: "Viaje de la luz · otro transformador baja el voltaje a 120 V y llega a tu casa y a tu medidor", ideal: 6.75, fondo: "dark", entra: "corte",
+    sfx: (_d, r) => [ev(TCE.barrio.poste * r, "thud", 0.14), ev(TCE.barrio.baja * r, "zap", 0.14), ev(TCE.barrio.chip * r, "ding", 0.14), ev(TCE.barrio.casa * r, "whoosh", 0.12), ...clics(TCE.barrio.medidor * r, 1.6, 0.05), ev(TCE.barrio.chip2 * r, "tick", 0.1)],
+  },
+  "cen-balance": {
+    id: "cen-balance", nombre: "Viaje de la luz · la electricidad casi no se guarda: producción y consumo se igualan cada segundo", ideal: 6.95, fondo: "dark", entra: "semitono",
+    sfx: (_d, r) => [ev(TCE.balance.barras * r, "radar", 0.12), ...[0, 1, 2, 3, 4, 5, 6, 7].map((i) => ev((TCE.balance.casas + i * 0.2) * r, "tick", 0.09)), ev(TCE.balance.hz * r, "zap", 0.14), ev(TCE.balance.chip * r, "ding", 0.14), ev(TCE.balance.chip2 * r, "pop", 0.1)],
+  },
+  "cen-enchufe": {
+    id: "cen-enchufe", nombre: "Viaje de la luz · llega al enchufe y la luz se enciende: un viaje de un instante (cierre, loop)", ideal: 5.25, fondo: "dark", entra: "zoom",
+    sfx: (_d, r) => [ev(TCE.enchufe.enchufe * r, "whoosh", 0.12), ev(TCE.enchufe.llega * r, "radar", 0.12), ev(TCE.enchufe.mete * r, "thud", 0.18), ev(TCE.enchufe.luz * r, "zap", 0.2), ev(TCE.enchufe.luz * r + 0.15, "ding", 0.2), ev(TCE.enchufe.chip * r, "pop", 0.1)],
   },
 };
 

@@ -1,0 +1,14 @@
+{
+  "titulo": "El viaje de la luz",
+  "scenes": [
+    { "t": "PIEZA", "voz": "Aprietas un interruptor y se enciende la luz. ¿De dónde sale esa energía? Ven, sígueme.", "dur": 6.1, "h": "¿DE DÓNDE SALE LA LUZ?", "w": "LUZ", "cap": "viaje en primera persona", "pieza": { "id": "cen-gancho" } },
+    { "t": "PIEZA", "voz": "Todo empieza con fuego o con agua: una caldera quema combustible, o una presa deja caer el agua.", "dur": 7.0, "h": "FUEGO O AGUA", "w": "AGUA", "cap": "la fuente", "pieza": { "id": "cen-fuente" } },
+    { "t": "PIEZA", "voz": "El vapor, o el agua que cae, empuja las aspas de una turbina gigante que no deja de girar.", "dur": 7.2, "h": "UNA TURBINA GIGANTE", "w": "TURBINA", "cap": "gira sin parar", "pieza": { "id": "cen-turbina" } },
+    { "t": "PIEZA", "voz": "Gira un imán dentro de bobinas de cobre. Imán en movimiento, cable cerca: ahí nace la electricidad.", "dur": 6.9, "h": "AQUÍ NACE LA ELECTRICIDAD", "w": "IMÁN", "cap": "generador", "pieza": { "id": "cen-generador" } },
+    { "t": "PIEZA", "voz": "Un transformador sube el voltaje a cientos de miles de voltios, y la energía cruza el país por torres con menos pérdidas.", "dur": 8.4, "h": "ALTA TENSIÓN", "w": "VOLTAJE", "cap": "torres", "pieza": { "id": "cen-transmision" } },
+    { "t": "PIEZA", "voz": "En tu barrio, otro transformador la baja a ciento veinte voltios, y llega a tu casa.", "dur": 7.2, "h": "LLEGA A TU BARRIO", "w": "120", "cap": "120 V", "pieza": { "id": "cen-barrio" } },
+    { "t": "PIEZA", "voz": "Y el truco: casi no se guarda. Cada segundo, las centrales producen justo lo que millones de casas consumen.", "dur": 7.4, "h": "CASI NO SE GUARDA", "w": "TRUCO", "cap": "60 Hz", "pieza": { "id": "cen-balance" } },
+    { "t": "PIEZA", "voz": "Y llega al enchufe. Un viaje de un instante que empezó en una central.", "dur": 5.7, "h": "Y LLEGA AL ENCHUFE", "w": "ENCHUFE", "cap": "un instante", "pieza": { "id": "cen-enchufe" } },
+    { "t": "CTA", "voz": "Guárdalo y síguenos en IMNOBA, tu plataforma de propiedades y vehículos.", "dur": 5.0, "h": "SÍGUENOS EN IMNOBA", "w": "IMNOBA", "ic": "casa" }
+  ]
+}
