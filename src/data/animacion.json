@@ -1,18 +1,18 @@
 {
  "version": 1,
- "titulo": "El par craneal IV: el nervio que rompe las reglas",
+ "titulo": "El par craneal V: el picante no es un sabor",
  "paleta": "medicina",
  "sfx": true,
  "fps": 60,
- "duracion": 64.6,
+ "duracion": 62.4,
  "escenas": [
   {
    "n": 1,
    "t": "PIEZA",
-   "voz": "El par craneal cuatro, el troclear, es el más pequeño y el único que sale por detrás del tronco encefálico.",
-   "dur": 7.5,
-   "h": "EL NERVIO QUE ROMPE REGLAS",
-   "w": "REGLAS",
+   "voz": "El picante no es un sabor: es dolor y calor que detecta el nervio trigémino, el par craneal cinco.",
+   "dur": 7.1,
+   "h": "EL PICANTE NO ES UN SABOR",
+   "w": "SABOR",
    "sub": "",
    "ic": "brillo",
    "num": null,
@@ -45,7 +45,7 @@
    "cubo": null,
    "diales": null,
    "pieza": {
-    "id": "tr-gancho",
+    "id": "tg-gancho",
     "props": {}
    },
    "cita": null,
@@ -54,10 +54,10 @@
    "tema": "oscuro",
    "bg": "dark",
    "ritmo": 1,
-   "total": 64.6,
+   "total": 62.4,
    "inicio": 0,
-   "fin": 7.5,
-   "texto": "El par craneal cuatro, el troclear, es el más pequeño y el único que sale por detrás del tronco encefálico.",
+   "fin": 7.1,
+   "texto": "El picante no es un sabor: es dolor y calor que detecta el nervio trigémino, el par craneal cinco.",
    "tr": "barrido",
    "trs": "corte",
    "sfx": [
@@ -77,22 +77,22 @@
      "vol": 0.12
     },
     {
-     "t": 1.9,
-     "tipo": "tick",
-     "vol": 0.12
+     "t": 1.1,
+     "tipo": "thud",
+     "vol": 0.18
     },
     {
-     "t": 3,
-     "tipo": "pop",
+     "t": 2.4,
+     "tipo": "zap",
      "vol": 0.14
     },
     {
      "t": 4.4,
-     "tipo": "zap",
-     "vol": 0.16
+     "tipo": "pop",
+     "vol": 0.14
     },
     {
-     "t": 4.7,
+     "t": 4.800000000000001,
      "tipo": "ding",
      "vol": 0.2
     }
@@ -101,10 +101,10 @@
   {
    "n": 2,
    "t": "PIEZA",
-   "voz": "Además, todas sus fibras se cruzan al otro lado: el núcleo del lado izquierdo mueve un músculo del ojo derecho.",
-   "dur": 7.5,
-   "h": "SE CRUZA POR COMPLETO",
-   "w": "CRUZA",
+   "voz": "En el chile, la capsaicina activa el receptor de calor TRPV1 y tu cerebro cree que te estás quemando, aunque no hay fuego.",
+   "dur": 8.5,
+   "h": "TU CEREBRO CREE QUE TE QUEMAS",
+   "w": "QUEMAS",
    "sub": "",
    "ic": "brillo",
    "num": null,
@@ -128,7 +128,7 @@
    "red": null,
    "termo": null,
    "pila": null,
-   "cap": "decusación",
+   "cap": "capsaicina y TRPV1",
    "papel": null,
    "pilares": null,
    "ciclo": null,
@@ -137,7 +137,7 @@
    "cubo": null,
    "diales": null,
    "pieza": {
-    "id": "tr-cruce",
+    "id": "tg-capsaicina",
     "props": {}
    },
    "cita": null,
@@ -146,334 +146,10 @@
    "tema": "claro",
    "bg": "light",
    "ritmo": 1,
-   "total": 64.6,
-   "inicio": 7.5,
-   "fin": 15,
-   "texto": "Además, todas sus fibras se cruzan al otro lado: el núcleo del lado izquierdo mueve un músculo del ojo derecho.",
-   "tr": "corte",
-   "trs": "semitono",
-   "sfx": [
-    {
-     "t": 0.04,
-     "tipo": "whoosh",
-     "vol": 0.16
-    },
-    {
-     "t": 0.05,
-     "tipo": "whoosh",
-     "vol": 0.1
-    },
-    {
-     "t": 0.4,
-     "tipo": "pop",
-     "vol": 0.12
-    },
-    {
-     "t": 1,
-     "tipo": "whoosh",
-     "vol": 0.14
-    },
-    {
-     "t": 1.2,
-     "tipo": "clic",
-     "vol": 0.04
-    },
-    {
-     "t": 1.33,
-     "tipo": "clic",
-     "vol": 0.04
-    },
-    {
-     "t": 1.46,
-     "tipo": "clic",
-     "vol": 0.04
-    },
-    {
-     "t": 1.5899999999999999,
-     "tipo": "clic",
-     "vol": 0.04
-    },
-    {
-     "t": 1.72,
-     "tipo": "clic",
-     "vol": 0.04
-    },
-    {
-     "t": 1.85,
-     "tipo": "clic",
-     "vol": 0.04
-    },
-    {
-     "t": 1.98,
-     "tipo": "clic",
-     "vol": 0.04
-    },
-    {
-     "t": 2.11,
-     "tipo": "clic",
-     "vol": 0.04
-    },
-    {
-     "t": 2.24,
-     "tipo": "clic",
-     "vol": 0.04
-    },
-    {
-     "t": 2.37,
-     "tipo": "clic",
-     "vol": 0.04
-    },
-    {
-     "t": 2.5,
-     "tipo": "clic",
-     "vol": 0.04
-    },
-    {
-     "t": 2.63,
-     "tipo": "clic",
-     "vol": 0.04
-    },
-    {
-     "t": 3.5,
-     "tipo": "pop",
-     "vol": 0.14
-    },
-    {
-     "t": 5.3,
-     "tipo": "ding",
-     "vol": 0.18
-    }
-   ]
-  },
-  {
-   "n": 3,
-   "t": "PIEZA",
-   "voz": "Da la vuelta alrededor del tronco encefálico, tiene el recorrido más largo dentro del cráneo y llega a la órbita.",
-   "dur": 7.5,
-   "h": "EL RECORRIDO MÁS LARGO",
-   "w": "LARGO",
-   "sub": "",
-   "ic": "brillo",
-   "num": null,
-   "vs": null,
-   "bars": [],
-   "barsU": "",
-   "hi": -1,
-   "line": null,
-   "items": [],
-   "stops": [],
-   "end": "",
-   "donut": [],
-   "picto": null,
-   "top": [],
-   "myth": "",
-   "truth": "",
-   "zoom": null,
-   "capas": null,
-   "mira": null,
-   "impacto": null,
-   "red": null,
-   "termo": null,
-   "pila": null,
-   "cap": "su recorrido",
-   "papel": null,
-   "pilares": null,
-   "ciclo": null,
-   "duo": null,
-   "osc": null,
-   "cubo": null,
-   "diales": null,
-   "pieza": {
-    "id": "tr-recorrido",
-    "props": {}
-   },
-   "cita": null,
-   "sc": "",
-   "modo": "VIRAL",
-   "tema": "oscuro",
-   "bg": "dark",
-   "ritmo": 1,
-   "total": 64.6,
-   "inicio": 15,
-   "fin": 22.5,
-   "texto": "Da la vuelta alrededor del tronco encefálico, tiene el recorrido más largo dentro del cráneo y llega a la órbita.",
-   "tr": "semitono",
-   "trs": "corte",
-   "sfx": [
-    {
-     "t": 0.04,
-     "tipo": "whoosh",
-     "vol": 0.16
-    },
-    {
-     "t": 0.05,
-     "tipo": "whoosh",
-     "vol": 0.1
-    },
-    {
-     "t": 0.4,
-     "tipo": "pop",
-     "vol": 0.12
-    },
-    {
-     "t": 0.6000000000000001,
-     "tipo": "clic",
-     "vol": 0.04
-    },
-    {
-     "t": 0.7300000000000001,
-     "tipo": "clic",
-     "vol": 0.04
-    },
-    {
-     "t": 0.8600000000000001,
-     "tipo": "clic",
-     "vol": 0.04
-    },
-    {
-     "t": 0.9900000000000001,
-     "tipo": "clic",
-     "vol": 0.04
-    },
-    {
-     "t": 1.12,
-     "tipo": "clic",
-     "vol": 0.04
-    },
-    {
-     "t": 1.25,
-     "tipo": "clic",
-     "vol": 0.04
-    },
-    {
-     "t": 1.3800000000000001,
-     "tipo": "clic",
-     "vol": 0.04
-    },
-    {
-     "t": 1.5100000000000002,
-     "tipo": "clic",
-     "vol": 0.04
-    },
-    {
-     "t": 1.6400000000000001,
-     "tipo": "clic",
-     "vol": 0.04
-    },
-    {
-     "t": 1.77,
-     "tipo": "clic",
-     "vol": 0.04
-    },
-    {
-     "t": 1.9000000000000001,
-     "tipo": "clic",
-     "vol": 0.04
-    },
-    {
-     "t": 2.0300000000000002,
-     "tipo": "clic",
-     "vol": 0.04
-    },
-    {
-     "t": 2.16,
-     "tipo": "clic",
-     "vol": 0.04
-    },
-    {
-     "t": 2.29,
-     "tipo": "clic",
-     "vol": 0.04
-    },
-    {
-     "t": 2.42,
-     "tipo": "clic",
-     "vol": 0.04
-    },
-    {
-     "t": 2.5500000000000003,
-     "tipo": "clic",
-     "vol": 0.04
-    },
-    {
-     "t": 2.68,
-     "tipo": "clic",
-     "vol": 0.04
-    },
-    {
-     "t": 2.81,
-     "tipo": "clic",
-     "vol": 0.04
-    },
-    {
-     "t": 3.2,
-     "tipo": "tick",
-     "vol": 0.14
-    },
-    {
-     "t": 5.3,
-     "tipo": "pop",
-     "vol": 0.12
-    },
-    {
-     "t": 6.4,
-     "tipo": "ding",
-     "vol": 0.18
-    }
-   ]
-  },
-  {
-   "n": 4,
-   "t": "PIEZA",
-   "voz": "Mueve un solo músculo, el oblicuo superior, cuyo tendón pasa por una polea: la tróclea, que le da su nombre.",
-   "dur": 7.5,
-   "h": "UN MÚSCULO Y UNA POLEA",
-   "w": "POLEA",
-   "sub": "",
-   "ic": "brillo",
-   "num": null,
-   "vs": null,
-   "bars": [],
-   "barsU": "",
-   "hi": -1,
-   "line": null,
-   "items": [],
-   "stops": [],
-   "end": "",
-   "donut": [],
-   "picto": null,
-   "top": [],
-   "myth": "",
-   "truth": "",
-   "zoom": null,
-   "capas": null,
-   "mira": null,
-   "impacto": null,
-   "red": null,
-   "termo": null,
-   "pila": null,
-   "cap": "oblicuo superior",
-   "papel": null,
-   "pilares": null,
-   "ciclo": null,
-   "duo": null,
-   "osc": null,
-   "cubo": null,
-   "diales": null,
-   "pieza": {
-    "id": "tr-troclea",
-    "props": {}
-   },
-   "cita": null,
-   "sc": "",
-   "modo": "VIRAL",
-   "tema": "claro",
-   "bg": "light",
-   "ritmo": 1,
-   "total": 64.6,
-   "inicio": 22.5,
-   "fin": 30,
-   "texto": "Mueve un solo músculo, el oblicuo superior, cuyo tendón pasa por una polea: la tróclea, que le da su nombre.",
+   "total": 62.4,
+   "inicio": 7.1,
+   "fin": 15.6,
+   "texto": "En el chile, la capsaicina activa el receptor de calor TRPV1 y tu cerebro cree que te estás quemando, aunque no hay fuego.",
    "tr": "corte",
    "trs": "zoom",
    "sfx": [
@@ -493,74 +169,166 @@
      "vol": 0.12
     },
     {
-     "t": 1.9,
-     "tipo": "pop",
-     "vol": 0.14
-    },
-    {
-     "t": 3.6,
+     "t": 1.4,
      "tipo": "tick",
      "vol": 0.14
     },
     {
-     "t": 3.8000000000000003,
+     "t": 3.1,
+     "tipo": "zap",
+     "vol": 0.16
+    },
+    {
+     "t": 5.4,
      "tipo": "clic",
      "vol": 0.04
     },
     {
-     "t": 3.93,
+     "t": 5.53,
      "tipo": "clic",
      "vol": 0.04
     },
     {
-     "t": 4.0600000000000005,
+     "t": 5.66,
      "tipo": "clic",
      "vol": 0.04
     },
     {
-     "t": 4.19,
+     "t": 5.79,
      "tipo": "clic",
      "vol": 0.04
     },
     {
-     "t": 4.32,
+     "t": 5.92,
      "tipo": "clic",
      "vol": 0.04
     },
     {
-     "t": 4.45,
+     "t": 6.050000000000001,
      "tipo": "clic",
      "vol": 0.04
     },
     {
-     "t": 4.58,
+     "t": 6.180000000000001,
      "tipo": "clic",
      "vol": 0.04
     },
     {
-     "t": 4.71,
+     "t": 6.3100000000000005,
      "tipo": "clic",
      "vol": 0.04
     },
     {
-     "t": 4.84,
+     "t": 6.44,
      "tipo": "clic",
      "vol": 0.04
     },
     {
-     "t": 5.3,
+     "t": 6.57,
+     "tipo": "clic",
+     "vol": 0.04
+    },
+    {
+     "t": 7.7,
      "tipo": "ding",
      "vol": 0.18
     }
    ]
   },
   {
-   "n": 5,
+   "n": 3,
    "t": "PIEZA",
-   "voz": "Ese músculo baja el ojo cuando mira hacia la nariz y lo rota hacia adentro, como al leer o al bajar escaleras.",
-   "dur": 8.2,
-   "h": "BAJA EL OJO",
-   "w": "BAJA",
+   "voz": "Por descubrir ese receptor, David Julius compartió el Nobel de Medicina de dos mil veintiuno.",
+   "dur": 6.2,
+   "h": "NOBEL DE MEDICINA 2021",
+   "w": "NOBEL",
+   "sub": "",
+   "ic": "brillo",
+   "num": null,
+   "vs": null,
+   "bars": [],
+   "barsU": "",
+   "hi": -1,
+   "line": null,
+   "items": [],
+   "stops": [],
+   "end": "",
+   "donut": [],
+   "picto": null,
+   "top": [],
+   "myth": "",
+   "truth": "",
+   "zoom": null,
+   "capas": null,
+   "mira": null,
+   "impacto": null,
+   "red": null,
+   "termo": null,
+   "pila": null,
+   "cap": "David Julius",
+   "papel": null,
+   "pilares": null,
+   "ciclo": null,
+   "duo": null,
+   "osc": null,
+   "cubo": null,
+   "diales": null,
+   "pieza": {
+    "id": "tg-nobel",
+    "props": {}
+   },
+   "cita": null,
+   "sc": "",
+   "modo": "VIRAL",
+   "tema": "oscuro",
+   "bg": "dark",
+   "ritmo": 1,
+   "total": 62.4,
+   "inicio": 15.6,
+   "fin": 21.8,
+   "texto": "Por descubrir ese receptor, David Julius compartió el Nobel de Medicina de dos mil veintiuno.",
+   "tr": "zoom",
+   "trs": "semitono",
+   "sfx": [
+    {
+     "t": 0.04,
+     "tipo": "whoosh",
+     "vol": 0.16
+    },
+    {
+     "t": 0.05,
+     "tipo": "whoosh",
+     "vol": 0.1
+    },
+    {
+     "t": 0.4,
+     "tipo": "pop",
+     "vol": 0.12
+    },
+    {
+     "t": 2.4,
+     "tipo": "tick",
+     "vol": 0.14
+    },
+    {
+     "t": 3.7,
+     "tipo": "ding",
+     "vol": 0.2
+    },
+    {
+     "t": 5.1,
+     "tipo": "pop",
+     "vol": 0.12
+    }
+   ]
+  },
+  {
+   "n": 4,
+   "t": "PIEZA",
+   "voz": "Con el mentol pasa lo contrario: activa el receptor del frío y sientes fresco sin bajar la temperatura.",
+   "dur": 7,
+   "h": "FRESCO SIN FRÍO",
+   "w": "FRESCO",
    "sub": "",
    "ic": "tendencia-baja",
    "num": null,
@@ -584,7 +352,7 @@
    "red": null,
    "termo": null,
    "pila": null,
-   "cap": "mirar de cerca",
+   "cap": "receptor TRPM8",
    "papel": null,
    "pilares": null,
    "ciclo": null,
@@ -593,7 +361,94 @@
    "cubo": null,
    "diales": null,
    "pieza": {
-    "id": "tr-accion",
+    "id": "tg-mentol",
+    "props": {}
+   },
+   "cita": null,
+   "sc": "",
+   "modo": "VIRAL",
+   "tema": "claro",
+   "bg": "light",
+   "ritmo": 1,
+   "total": 62.4,
+   "inicio": 21.8,
+   "fin": 28.8,
+   "texto": "Con el mentol pasa lo contrario: activa el receptor del frío y sientes fresco sin bajar la temperatura.",
+   "tr": "semitono",
+   "trs": "corte",
+   "sfx": [
+    {
+     "t": 0.04,
+     "tipo": "whoosh",
+     "vol": 0.16
+    },
+    {
+     "t": 0.05,
+     "tipo": "whoosh",
+     "vol": 0.1
+    },
+    {
+     "t": 0.4,
+     "tipo": "pop",
+     "vol": 0.12
+    },
+    {
+     "t": 2.6,
+     "tipo": "zap",
+     "vol": 0.14
+    },
+    {
+     "t": 4.6,
+     "tipo": "ding",
+     "vol": 0.16
+    },
+    {
+     "t": 6,
+     "tipo": "tick",
+     "vol": 0.14
+    }
+   ]
+  },
+  {
+   "n": 5,
+   "t": "PIEZA",
+   "voz": "El trigémino, el nervio craneal más grande, tiene tres ramas y también mueve los músculos de la masticación.",
+   "dur": 7,
+   "h": "TRES RAMAS",
+   "w": "RAMAS",
+   "sub": "",
+   "ic": "brillo",
+   "num": null,
+   "vs": null,
+   "bars": [],
+   "barsU": "",
+   "hi": -1,
+   "line": null,
+   "items": [],
+   "stops": [],
+   "end": "",
+   "donut": [],
+   "picto": null,
+   "top": [],
+   "myth": "",
+   "truth": "",
+   "zoom": null,
+   "capas": null,
+   "mira": null,
+   "impacto": null,
+   "red": null,
+   "termo": null,
+   "pila": null,
+   "cap": "V1 · V2 · V3",
+   "papel": null,
+   "pilares": null,
+   "ciclo": null,
+   "duo": null,
+   "osc": null,
+   "cubo": null,
+   "diales": null,
+   "pieza": {
+    "id": "tg-ramas",
     "props": {}
    },
    "cita": null,
@@ -602,10 +457,167 @@
    "tema": "oscuro",
    "bg": "dark",
    "ritmo": 1,
-   "total": 64.6,
-   "inicio": 30,
-   "fin": 38.2,
-   "texto": "Ese músculo baja el ojo cuando mira hacia la nariz y lo rota hacia adentro, como al leer o al bajar escaleras.",
+   "total": 62.4,
+   "inicio": 28.8,
+   "fin": 35.8,
+   "texto": "El trigémino, el nervio craneal más grande, tiene tres ramas y también mueve los músculos de la masticación.",
+   "tr": "corte",
+   "trs": "zoom",
+   "sfx": [
+    {
+     "t": 0.04,
+     "tipo": "whoosh",
+     "vol": 0.16
+    },
+    {
+     "t": 0.05,
+     "tipo": "whoosh",
+     "vol": 0.1
+    },
+    {
+     "t": 0.4,
+     "tipo": "pop",
+     "vol": 0.12
+    },
+    {
+     "t": 1.6,
+     "tipo": "tick",
+     "vol": 0.12
+    },
+    {
+     "t": 3.6,
+     "tipo": "pop",
+     "vol": 0.14
+    },
+    {
+     "t": 3.9,
+     "tipo": "pop",
+     "vol": 0.14
+    },
+    {
+     "t": 4.2,
+     "tipo": "pop",
+     "vol": 0.14
+    },
+    {
+     "t": 5,
+     "tipo": "clic",
+     "vol": 0.05
+    },
+    {
+     "t": 5.13,
+     "tipo": "clic",
+     "vol": 0.05
+    },
+    {
+     "t": 5.26,
+     "tipo": "clic",
+     "vol": 0.05
+    },
+    {
+     "t": 5.39,
+     "tipo": "clic",
+     "vol": 0.05
+    },
+    {
+     "t": 5.52,
+     "tipo": "clic",
+     "vol": 0.05
+    },
+    {
+     "t": 5.65,
+     "tipo": "clic",
+     "vol": 0.05
+    },
+    {
+     "t": 5.78,
+     "tipo": "clic",
+     "vol": 0.05
+    },
+    {
+     "t": 5.91,
+     "tipo": "clic",
+     "vol": 0.05
+    },
+    {
+     "t": 6.04,
+     "tipo": "clic",
+     "vol": 0.05
+    },
+    {
+     "t": 6.17,
+     "tipo": "clic",
+     "vol": 0.05
+    },
+    {
+     "t": 6.3,
+     "tipo": "clic",
+     "vol": 0.05
+    },
+    {
+     "t": 6.43,
+     "tipo": "clic",
+     "vol": 0.05
+    },
+    {
+     "t": 6.6,
+     "tipo": "ding",
+     "vol": 0.16
+    }
+   ]
+  },
+  {
+   "n": 6,
+   "t": "PIEZA",
+   "voz": "Y se cree que explica el congelamiento cerebral: cuando el frío toca el paladar, el dolor aparece en la frente.",
+   "dur": 7.5,
+   "h": "CONGELAMIENTO CEREBRAL",
+   "w": "CONGELAMIENTO",
+   "sub": "",
+   "ic": "brillo",
+   "num": null,
+   "vs": null,
+   "bars": [],
+   "barsU": "",
+   "hi": -1,
+   "line": null,
+   "items": [],
+   "stops": [],
+   "end": "",
+   "donut": [],
+   "picto": null,
+   "top": [],
+   "myth": "",
+   "truth": "",
+   "zoom": null,
+   "capas": null,
+   "mira": null,
+   "impacto": null,
+   "red": null,
+   "termo": null,
+   "pila": null,
+   "cap": "dolor referido",
+   "papel": null,
+   "pilares": null,
+   "ciclo": null,
+   "duo": null,
+   "osc": null,
+   "cubo": null,
+   "diales": null,
+   "pieza": {
+    "id": "tg-helado",
+    "props": {}
+   },
+   "cita": null,
+   "sc": "",
+   "modo": "VIRAL",
+   "tema": "claro",
+   "bg": "light",
+   "ritmo": 1,
+   "total": 62.4,
+   "inicio": 35.8,
+   "fin": 43.3,
+   "texto": "Y se cree que explica el congelamiento cerebral: cuando el frío toca el paladar, el dolor aparece en la frente.",
    "tr": "zoom",
    "trs": "semitono",
    "sfx": [
@@ -625,115 +637,23 @@
      "vol": 0.12
     },
     {
-     "t": 2,
-     "tipo": "whoosh",
-     "vol": 0.12
-    },
-    {
-     "t": 3.8,
+     "t": 1.2,
      "tipo": "tick",
      "vol": 0.14
     },
     {
-     "t": 5.4,
-     "tipo": "pop",
+     "t": 3.8,
+     "tipo": "whoosh",
      "vol": 0.14
-    },
-    {
-     "t": 5.9,
-     "tipo": "ding",
-     "vol": 0.16
-    }
-   ]
-  },
-  {
-   "n": 6,
-   "t": "PIEZA",
-   "voz": "Si falla, aparece visión doble vertical, sobre todo al mirar hacia abajo, y la persona inclina la cabeza para compensar.",
-   "dur": 7.5,
-   "h": "VISIÓN DOBLE Y CABEZA INCLINADA",
-   "w": "INCLINADA",
-   "sub": "",
-   "ic": "brillo",
-   "num": null,
-   "vs": null,
-   "bars": [],
-   "barsU": "",
-   "hi": -1,
-   "line": null,
-   "items": [],
-   "stops": [],
-   "end": "",
-   "donut": [],
-   "picto": null,
-   "top": [],
-   "myth": "",
-   "truth": "",
-   "zoom": null,
-   "capas": null,
-   "mira": null,
-   "impacto": null,
-   "red": null,
-   "termo": null,
-   "pila": null,
-   "cap": "cuando falla",
-   "papel": null,
-   "pilares": null,
-   "ciclo": null,
-   "duo": null,
-   "osc": null,
-   "cubo": null,
-   "diales": null,
-   "pieza": {
-    "id": "tr-paralisis",
-    "props": {}
-   },
-   "cita": null,
-   "sc": "",
-   "modo": "VIRAL",
-   "tema": "claro",
-   "bg": "light",
-   "ritmo": 1,
-   "total": 64.6,
-   "inicio": 38.2,
-   "fin": 45.7,
-   "texto": "Si falla, aparece visión doble vertical, sobre todo al mirar hacia abajo, y la persona inclina la cabeza para compensar.",
-   "tr": "semitono",
-   "trs": "corte",
-   "sfx": [
-    {
-     "t": 0.04,
-     "tipo": "whoosh",
-     "vol": 0.16
-    },
-    {
-     "t": 0.05,
-     "tipo": "whoosh",
-     "vol": 0.1
-    },
-    {
-     "t": 0.4,
-     "tipo": "thud",
-     "vol": 0.18
-    },
-    {
-     "t": 1.2,
-     "tipo": "zap",
-     "vol": 0.12
-    },
-    {
-     "t": 3.6,
-     "tipo": "whoosh",
-     "vol": 0.12
     },
     {
      "t": 5.6,
-     "tipo": "pop",
-     "vol": 0.14
+     "tipo": "zap",
+     "vol": 0.18
     },
     {
-     "t": 6,
-     "tipo": "ding",
+     "t": 5.8999999999999995,
+     "tipo": "thud",
      "vol": 0.16
     }
    ]
@@ -741,10 +661,10 @@
   {
    "n": 7,
    "t": "PIEZA",
-   "voz": "Un golpe en la cabeza puede lesionarlo; otras veces es una parálisis congénita que solo se nota años después.",
-   "dur": 7.1,
-   "h": "GOLPE O CONGÉNITA",
-   "w": "CONGÉNITA",
+   "voz": "A veces el nervio se irrita: en la neuralgia del trigémino, un roce o el viento pueden desencadenar descargas de dolor.",
+   "dur": 7.8,
+   "h": "NEURALGIA DEL TRIGÉMINO",
+   "w": "NEURALGIA",
    "sub": "",
    "ic": "brillo",
    "num": null,
@@ -768,7 +688,7 @@
    "red": null,
    "termo": null,
    "pila": null,
-   "cap": "sus causas",
+   "cap": "dolor facial",
    "papel": null,
    "pilares": null,
    "ciclo": null,
@@ -777,7 +697,7 @@
    "cubo": null,
    "diales": null,
    "pieza": {
-    "id": "tr-causas",
+    "id": "tg-neuralgia",
     "props": {}
    },
    "cita": null,
@@ -786,11 +706,11 @@
    "tema": "oscuro",
    "bg": "dark",
    "ritmo": 1,
-   "total": 64.6,
-   "inicio": 45.7,
-   "fin": 52.8,
-   "texto": "Un golpe en la cabeza puede lesionarlo; otras veces es una parálisis congénita que solo se nota años después.",
-   "tr": "corte",
+   "total": 62.4,
+   "inicio": 43.3,
+   "fin": 51.1,
+   "texto": "A veces el nervio se irrita: en la neuralgia del trigémino, un roce o el viento pueden desencadenar descargas de dolor.",
+   "tr": "semitono",
    "trs": "zoom",
    "sfx": [
     {
@@ -805,40 +725,40 @@
     },
     {
      "t": 0.4,
-     "tipo": "thud",
-     "vol": 0.2
-    },
-    {
-     "t": 0.5,
-     "tipo": "zap",
-     "vol": 0.12
-    },
-    {
-     "t": 3,
-     "tipo": "tick",
-     "vol": 0.12
-    },
-    {
-     "t": 3.9,
      "tipo": "pop",
+     "vol": 0.12
+    },
+    {
+     "t": 2.2,
+     "tipo": "thud",
+     "vol": 0.16
+    },
+    {
+     "t": 4.4,
+     "tipo": "zap",
      "vol": 0.14
     },
     {
      "t": 5.3,
-     "tipo": "ding",
-     "vol": 0.16
+     "tipo": "zap",
+     "vol": 0.14
+    },
+    {
+     "t": 7,
+     "tipo": "thud",
+     "vol": 0.2
     }
    ]
   },
   {
    "n": 8,
    "t": "PIEZA",
-   "voz": "Si de repente ves doble, sobre todo al mirar hacia abajo, consulta con un médico: tiene muchas causas.",
-   "dur": 7,
-   "h": "SI VES DOBLE, CONSULTA",
-   "w": "CONSULTA",
+   "voz": "Ahora dime en los comentarios: ¿aguantas el picante, o el congelamiento cerebral te vence primero?",
+   "dur": 6.5,
+   "h": "AHORA TE TOCA A TI",
+   "w": "AHORA",
    "sub": "",
-   "ic": "brillo",
+   "ic": "reloj",
    "num": null,
    "vs": null,
    "bars": [],
@@ -860,7 +780,7 @@
    "red": null,
    "termo": null,
    "pila": null,
-   "cap": "señal de alerta",
+   "cap": "dime en los comentarios",
    "papel": null,
    "pilares": null,
    "ciclo": null,
@@ -869,7 +789,7 @@
    "cubo": null,
    "diales": null,
    "pieza": {
-    "id": "tr-consulta",
+    "id": "tg-comenta",
     "props": {}
    },
    "cita": null,
@@ -878,10 +798,10 @@
    "tema": "claro",
    "bg": "light",
    "ritmo": 1,
-   "total": 64.6,
-   "inicio": 52.8,
-   "fin": 59.8,
-   "texto": "Si de repente ves doble, sobre todo al mirar hacia abajo, consulta con un médico: tiene muchas causas.",
+   "total": 62.4,
+   "inicio": 51.1,
+   "fin": 57.6,
+   "texto": "Ahora dime en los comentarios: ¿aguantas el picante, o el congelamiento cerebral te vence primero?",
    "tr": "zoom",
    "trs": "barrido",
    "sfx": [
@@ -897,28 +817,23 @@
     },
     {
      "t": 0.4,
-     "tipo": "zap",
+     "tipo": "pop",
      "vol": 0.14
     },
     {
-     "t": 2.2,
-     "tipo": "whoosh",
-     "vol": 0.12
+     "t": 2.6,
+     "tipo": "pop",
+     "vol": 0.14
     },
     {
-     "t": 4,
+     "t": 4.2,
      "tipo": "pop",
-     "vol": 0.16
+     "vol": 0.14
     },
     {
      "t": 5.6,
-     "tipo": "tick",
-     "vol": 0.12
-    },
-    {
-     "t": 5.8999999999999995,
      "tipo": "ding",
-     "vol": 0.18
+     "vol": 0.2
     }
    ]
   },
@@ -967,9 +882,9 @@
    "tema": "oscuro",
    "bg": "gold",
    "ritmo": 1,
-   "total": 64.6,
-   "inicio": 59.8,
-   "fin": 64.6,
+   "total": 62.4,
+   "inicio": 57.6,
+   "fin": 62.4,
    "texto": "Compártelo con alguien que ame el cerebro. Síguenos en Sinapsis.",
    "tr": "barrido",
    "trs": "barrido",

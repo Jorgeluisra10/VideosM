@@ -831,6 +831,33 @@ export const TTR = {
   consulta: { doble: 0.2, abajo: 2.2, medico: 4.0, causas: 5.6 },
 } as const;
 
+/** Datos del video «El par craneal V: el picante no es un sabor» (SINAPSIS · pares craneales). Fuentes y precauciones en ejemplos/animacion-viral/guion-tecnico-par-craneal-5.md. */
+export const TG = {
+  /** el picante no es uno de los cinco sabores básicos (dulce, salado, ácido, amargo, umami): la capsaicina activa TRPV1, un receptor de calor doloroso (≈ 43 °C), en terminaciones nerviosas, sobre todo del trigémino */
+  saboresBasicos: 5,
+  /** Nobel de Fisiología o Medicina 2021: David Julius (TRPV1, capsaicina) y Ardem Patapoutian (Piezo, tacto), «por sus descubrimientos de receptores de temperatura y tacto» */
+  nobel: { anio: 2021, julius: "TRPV1", patapoutian: "Piezo" },
+  /** el mentol activa TRPM8, receptor del frío: sensación de frescor sin cambio real de temperatura */
+  mentol: "TRPM8",
+  /** el trigémino es el nervio craneal más grande: V1 oftálmica, V2 maxilar y V3 mandibular (la única con fibras motoras: músculos de la masticación) */
+  ramas: 3,
+  /** congelamiento cerebral: dolor referido de corta duración que se atribuye a respuestas vasculares y nerviosas por frío en el paladar, vía trigémino; el mecanismo exacto no está cerrado */
+  helado: "se cree",
+  /** neuralgia del trigémino: descargas de dolor facial (sobre todo V2 y V3) que desencadenan tocar la cara, el viento o cepillarse los dientes; consulta médica */
+  neuralgiaDesencadenantes: ["roce", "viento", "cepillado"],
+} as const;
+/** Tiempos del video del par craneal V (segundos a ritmo normal), compartidos entre el dibujo y el sonido. */
+export const TTG = {
+  gancho: { picante: 0.2, sabor: 1.1, dolorCalor: 2.4, trigemino: 4.4 },
+  capsaicina: { chile: 0.2, activa: 1.4, trpv1: 3.1, quemando: 5.4, fuego: 7.7 },
+  nobel: { descubrir: 0.2, julius: 2.4, nobel: 3.7, anio: 5.1 },
+  mentol: { contrario: 0.2, frio: 2.6, fresco: 4.6, temperatura: 6.0 },
+  ramas: { nombre: 0.2, grande: 1.6, ramas: 3.6, mastica: 5.0 },
+  helado: { cree: 0.2, congelamiento: 1.2, paladar: 3.8, frente: 5.6 },
+  neuralgia: { irrita: 0.2, neuralgia: 2.2, roce: 4.4, viento: 5.3, descargas: 7.0 },
+  comenta: { ahora: 0.2, picante: 2.6, helado: 4.2 },
+} as const;
+
 /* ───────────── «La regla del 37 %» (problema de la parada óptima, ensayo abstracto para IMNOBA) ───────────── */
 
 /** Generador pseudoaleatorio determinista (mulberry32): mismos números en el render, en las pruebas y en cada fotograma. */
@@ -1873,6 +1900,38 @@ export const PIEZAS: Record<string, DefPieza> = {
   "tr-consulta": {
     id: "tr-consulta", nombre: "Par IV · si de repente ves doble, sobre todo al mirar hacia abajo, consulta con un médico: tiene muchas causas (cierre)", ideal: 6.5, fondo: "dark", entra: "zoom",
     sfx: (_d, r) => [ev(0.05, "whoosh", 0.1), ev(TTR.consulta.doble * r + 0.2, "zap", 0.14), ev(TTR.consulta.abajo * r, "whoosh", 0.12), ev(TTR.consulta.medico * r, "pop", 0.16), ev(TTR.consulta.causas * r, "tick", 0.12), ev((TTR.consulta.causas + 0.3) * r, "ding", 0.18)],
+  },
+  "tg-gancho": {
+    id: "tg-gancho", nombre: "Par V · el picante no es un sabor: es dolor y calor que detecta el nervio trigémino (gancho)", ideal: 6.6, fondo: "dark", entra: "zoom",
+    sfx: (_d, r) => [ev(0.05, "whoosh", 0.1), ev(TTG.gancho.picante * r + 0.2, "pop", 0.12), ev(TTG.gancho.sabor * r, "thud", 0.18), ev(TTG.gancho.dolorCalor * r, "zap", 0.14), ev(TTG.gancho.trigemino * r, "pop", 0.14), ev((TTG.gancho.trigemino + 0.4) * r, "ding", 0.2)],
+  },
+  "tg-capsaicina": {
+    id: "tg-capsaicina", nombre: "Par V · la capsaicina del chile activa el receptor de calor TRPV1 y el cerebro cree que te estás quemando, aunque no hay fuego", ideal: 8.0, fondo: "dark", entra: "corte",
+    sfx: (_d, r) => [ev(0.05, "whoosh", 0.1), ev(TTG.capsaicina.chile * r + 0.2, "pop", 0.12), ev(TTG.capsaicina.activa * r, "tick", 0.14), ev(TTG.capsaicina.trpv1 * r, "zap", 0.16), ...clics(TTG.capsaicina.quemando * r, 1.4 * r, 0.04), ev(TTG.capsaicina.fuego * r, "ding", 0.18)],
+  },
+  "tg-nobel": {
+    id: "tg-nobel", nombre: "Par V · por descubrir ese receptor, David Julius compartió el Nobel de Medicina de 2021", ideal: 5.7, fondo: "dark", entra: "zoom",
+    sfx: (_d, r) => [ev(0.05, "whoosh", 0.1), ev(TTG.nobel.descubrir * r + 0.2, "pop", 0.12), ev(TTG.nobel.julius * r, "tick", 0.14), ev(TTG.nobel.nobel * r, "ding", 0.2), ev(TTG.nobel.anio * r, "pop", 0.12)],
+  },
+  "tg-mentol": {
+    id: "tg-mentol", nombre: "Par V · el mentol activa el receptor del frío y sientes fresco sin bajar la temperatura", ideal: 6.5, fondo: "dark", entra: "semitono",
+    sfx: (_d, r) => [ev(0.05, "whoosh", 0.1), ev(TTG.mentol.contrario * r + 0.2, "pop", 0.12), ev(TTG.mentol.frio * r, "zap", 0.14), ev(TTG.mentol.fresco * r, "ding", 0.16), ev(TTG.mentol.temperatura * r, "tick", 0.14)],
+  },
+  "tg-ramas": {
+    id: "tg-ramas", nombre: "Par V · el trigémino, el nervio craneal más grande, tiene tres ramas y mueve los músculos de la masticación", ideal: 6.5, fondo: "dark", entra: "corte",
+    sfx: (_d, r) => [ev(0.05, "whoosh", 0.1), ev(TTG.ramas.nombre * r + 0.2, "pop", 0.12), ev(TTG.ramas.grande * r, "tick", 0.12), ...[0, 1, 2].map((k) => ev((TTG.ramas.ramas + 0.3 * k) * r, "pop", 0.14)), ...clics(TTG.ramas.mastica * r, 1.6 * r, 0.05), ev((TTG.ramas.mastica + 1.6) * r, "ding", 0.16)],
+  },
+  "tg-helado": {
+    id: "tg-helado", nombre: "Par V · se cree que explica el congelamiento cerebral: el frío en el paladar duele en la frente", ideal: 7.0, fondo: "dark", entra: "zoom",
+    sfx: (_d, r) => [ev(0.05, "whoosh", 0.1), ev(TTG.helado.cree * r + 0.2, "pop", 0.12), ev(TTG.helado.congelamiento * r, "tick", 0.14), ev(TTG.helado.paladar * r, "whoosh", 0.14), ev(TTG.helado.frente * r, "zap", 0.18), ev((TTG.helado.frente + 0.3) * r, "thud", 0.16)],
+  },
+  "tg-neuralgia": {
+    id: "tg-neuralgia", nombre: "Par V · en la neuralgia del trigémino, un roce o el viento pueden desencadenar descargas de dolor", ideal: 7.3, fondo: "dark", entra: "semitono",
+    sfx: (_d, r) => [ev(0.05, "whoosh", 0.1), ev(TTG.neuralgia.irrita * r + 0.2, "pop", 0.12), ev(TTG.neuralgia.neuralgia * r, "thud", 0.16), ev(TTG.neuralgia.roce * r, "zap", 0.14), ev(TTG.neuralgia.viento * r, "zap", 0.14), ev(TTG.neuralgia.descargas * r, "thud", 0.2)],
+  },
+  "tg-comenta": {
+    id: "tg-comenta", nombre: "Par V · dime en los comentarios: ¿aguantas el picante o te vence el congelamiento cerebral? (cierre)", ideal: 6.0, fondo: "dark", entra: "zoom",
+    sfx: (_d, r) => [ev(0.05, "whoosh", 0.1), ev(TTG.comenta.ahora * r + 0.2, "pop", 0.14), ev(TTG.comenta.picante * r, "pop", 0.14), ev(TTG.comenta.helado * r, "pop", 0.14), ev((TTG.comenta.helado + 1.4) * r, "ding", 0.2)],
   },
   "astro-memoria": {
     id: "astro-memoria", nombre: "Astrocitos · en ratones, reactivarlos estimuló el recuerdo", ideal: 4.15, fondo: "dark", entra: "corte",
