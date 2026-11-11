@@ -1,0 +1,18 @@
+{
+  "version": 1,
+  "slug": "2026-11-13-par-craneal-5",
+  "titulo": "El par craneal V: el picante no es un sabor",
+  "serie": "pares_craneales",
+  "estado": "grabado",
+  "guion": "El picante no es un sabor: es dolor y calor que detecta el nervio trigémino, el par craneal cinco.\nEn el chile, la capsaicina activa el receptor de calor TRPV1 y tu cerebro cree que te estás quemando, aunque no hay fuego.\nPor descubrir ese receptor, David Julius compartió el Nobel de Medicina de dos mil veintiuno.\nCon el mentol pasa lo contrario: activa el receptor del frío y sientes fresco sin bajar la temperatura.\nEl trigémino, el nervio craneal más grande, tiene tres ramas y también mueve los músculos de la masticación.\nY se cree que explica el congelamiento cerebral: cuando el frío toca el paladar, el dolor aparece en la frente.\nA veces el nervio se irrita: en la neuralgia del trigémino, un roce o el viento pueden desencadenar descargas de dolor.\nAhora dime en los comentarios: ¿aguantas el picante, o el congelamiento cerebral te vence primero?\nCompártelo con alguien que ame el cerebro. Síguenos en Sinapsis.",
+  "gancho": "El picante no es un sabor: es dolor y calor que detecta el nervio trigémino, el par craneal cinco.",
+  "duracion_seg": 62.4,
+  "notas": "Par craneal V (trigémino): «el picante no es un sabor» (TRPV1, Nobel 2021), mentol (TRPM8), tres ramas y masticación, congelamiento cerebral (se cree), neuralgia solo informativa; cierre con pregunta picante vs congelamiento cerebral y escala 1–10 para comentarios (plan en capcut.md). Dibujos esquemáticos; sin voz (−27 LUFS); marco «no es un sabor» sin fuente específica.",
+  "voz_usada": "",
+  "instrucciones_voz": "",
+  "creado": "2026-11-11T03:25:21.935Z",
+  "origen_clave": "eba3006b",
+  "video": "revision.mp4",
+  "miniatura": "miniatura.jpg",
+  "entrega": "entrega.md"
+}
