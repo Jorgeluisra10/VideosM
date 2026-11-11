@@ -55,7 +55,7 @@ Divulgación científica; dibujos esquemáticos, no son imágenes médicas. No e
 ## 8 · Plan para que la gente comente (primeras 2 horas)
 1. **Fija el comentario** de arriba nada más publicar y **dale like**: arranca el hilo.
 2. **Responde rápido** a los primeros 10–15 comentarios con una pregunta corta: «¿y con qué comida lo notas más?», «¿del 1 al 10, cuánto aguantas?»; las respuestas cuentan como interacción.
-3. **Haz un duelo:** cuenta los emojis y publica un segundo comentario: «🌶️ va ganando 62–38; ¿quién se anima a cambiar el marcador?».
+3. **Haz un duelo:** cuenta los emojis y publica un segundo comentario con TUS números reales, por ejemplo: «🌶️ va ganando (tu conteo); ¿quién se anima a cambiar el marcador?».
 4. **Una historia con el siguiente video:** adelanta «en el próximo par craneal: …» para que te sigan (no prometas tema si no lo tienes).
 5. **Cuida el tono:** no diagnostiques dolores; si alguien cuenta dolor facial intenso, responde con calma y sugiere consultar a un médico.
 
