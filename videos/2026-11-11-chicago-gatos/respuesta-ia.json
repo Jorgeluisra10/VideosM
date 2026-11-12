@@ -3,7 +3,7 @@
  "scenes": [
   {
    "t": "PIEZA",
-   "voz": "Chicago levantó una ciudad entera, con la gente adentro. Sí, mientras tomaban el té. Ven, te cuento.",
+   "voz": "Chicago levantó una ciudad entera, con la gente adentro. ¡Tomando té! Ven, te cuento.",
    "dur": 6.6,
    "h": "CHICAGO LEVANTÓ SU CIUDAD",
    "w": "CIUDAD",
@@ -14,7 +14,7 @@
   },
   {
    "t": "PIEZA",
-   "voz": "Chicago nació sobre un pantano, casi al nivel del lago. Sus calles eran barro puro: se tragaban hasta las botas.",
+   "voz": "Chicago nació sobre un pantano, casi al nivel del lago. Sus calles eran barro puro.",
    "dur": 7.5,
    "h": "UNA CIUDAD SOBRE UN PANTANO",
    "w": "PANTANO",
@@ -25,7 +25,7 @@
   },
   {
    "t": "PIEZA",
-   "voz": "Y esa agua sucia trajo enfermedades. En mil ochocientos cincuenta y cuatro, el cólera mató a más de mil cuatrocientas personas.",
+   "voz": "El agua sucia trajo el cólera. En mil ochocientos cincuenta y cuatro mató a más de mil cuatrocientas.",
    "dur": 8.0,
    "h": "EL CÓLERA, 1854",
    "w": "CÓLERA",
@@ -36,7 +36,7 @@
   },
   {
    "t": "PIEZA",
-   "voz": "El ingeniero Ellis Chesbrough diseñó un sistema de cloacas. Problema: necesitan bajada, y el pantano era plano como una mesa.",
+   "voz": "El ingeniero Chesbrough diseñó cloacas. Problema: necesitan bajada, y el pantano era plano como una mesa.",
    "dur": 7.4,
    "h": "CLOACAS SIN BAJADA",
    "w": "BAJADA",
@@ -47,7 +47,7 @@
   },
   {
    "t": "PIEZA",
-   "voz": "La solución fue una locura: si el pantano no baja, subamos la ciudad. Varios metros, edificio por edificio.",
+   "voz": "La solución fue una locura: si el pantano no baja, subamos la ciudad. Varios metros.",
    "dur": 7.2,
    "h": "¡QUE SUBA LA CIUDAD!",
    "w": "SUBA",
@@ -58,7 +58,7 @@
   },
   {
    "t": "PIEZA",
-   "voz": "¿Con qué? Con gatos mecánicos: un tornillo es una rampa enrollada. Cada vuelta de manivela sube el peso un poquito.",
+   "voz": "¿Con qué? Con gatos mecánicos: un tornillo es una rampa enrollada. Cada vuelta, un poquito más arriba.",
    "dur": 7.8,
    "h": "EL GATO MECÁNICO",
    "w": "GATO",
@@ -69,7 +69,7 @@
   },
   {
    "t": "PIEZA",
-   "voz": "Una cuadra entera se apoyaba en miles de gatos. Cientos de obreros giraban a una señal, y el edificio subía milímetro a milímetro.",
+   "voz": "Una cuadra entera se apoyaba en miles de gatos. Cientos de obreros giraban a una señal: milímetro a milímetro.",
    "dur": 8.6,
    "h": "MILES DE GATOS",
    "w": "GATOS",
@@ -80,7 +80,7 @@
   },
   {
    "t": "PIEZA",
-   "voz": "Lo más absurdo: nadie se mudó. Los hoteles seguían abiertos, la gente tomaba su té, y algunos ni notaron que subían.",
+   "voz": "Nadie se mudó. Los hoteles seguían abiertos, la gente tomaba té, y algunos ni notaron que subían.",
    "dur": 8.0,
    "h": "NADIE SE MUDÓ",
    "w": "TÉ",
@@ -91,7 +91,7 @@
   },
   {
    "t": "PIEZA",
-   "voz": "Mientras tanto, la calle era un chiste: edificios arriba, otros abajo, y escaleras en cada acera. Cruzar era deporte extremo.",
+   "voz": "La calle era un chiste: edificios arriba, otros abajo, escaleras por todos lados. Cruzar, deporte extremo.",
    "dur": 7.8,
    "h": "UNA CALLE DE ESCALERAS",
    "w": "ESCALERAS",
@@ -102,7 +102,7 @@
   },
   {
    "t": "PIEZA",
-   "voz": "Al terminar, Chicago tenía cloacas que drenaban y calles firmes. Fue de los primeros sistemas de cloacas planificados del país.",
+   "voz": "Al terminar, Chicago tenía cloacas que drenaban y calles firmes. De las primeras planificadas del país.",
    "dur": 7.4,
    "h": "CALLES FIRMES, CLOACAS QUE DRENAN",
    "w": "CLOACAS",
@@ -113,7 +113,7 @@
   },
   {
    "t": "PIEZA",
-   "voz": "Años después, el gran incendio de mil ochocientos setenta y uno quemó buena parte del centro. Pero esa ya es otra historia.",
+   "voz": "Años después, el incendio de mil ochocientos setenta y uno quemó buena parte del centro. Otra historia.",
    "dur": 8.1,
    "h": "EL GRAN INCENDIO, 1871",
    "w": "INCENDIO",
@@ -124,7 +124,7 @@
   },
   {
    "t": "CTA",
-   "voz": "Guárdalo y síguenos en IMNOBA, tu plataforma de propiedades y vehículos.",
+   "voz": "Guárdalo y síguenos en IMNOBA: propiedades y vehículos.",
    "dur": 5.0,
    "h": "SÍGUENOS EN IMNOBA",
    "w": "IMNOBA",

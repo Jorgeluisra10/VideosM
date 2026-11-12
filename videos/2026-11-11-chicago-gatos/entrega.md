@@ -6,18 +6,18 @@
 `trabajo/archivo/2026-11-11-chicago-gatos/video-final.mp4` (1080×1920 · 60 fps · H.264 + AAC · 89,4 s · **sin voz**; audio nivelado a ≈ −15 LUFS: solo música y sonidos). Copia ligera de revisión en esta carpeta (`revision.mp4`). Pistas en `trabajo/archivo/2026-11-11-chicago-gatos/stems/` (`musica-y-efectos-normalizado.wav` para escuchar y `musica-y-efectos.wav` para reeditar con voz).
 
 ## 2 · Guion final (locución)
-1. Chicago levantó una ciudad entera, con la gente adentro. Sí, mientras tomaban el té. Ven, te cuento.
-2. Chicago nació sobre un pantano, casi al nivel del lago. Sus calles eran barro puro: se tragaban hasta las botas.
-3. Y esa agua sucia trajo enfermedades. En mil ochocientos cincuenta y cuatro, el cólera mató a más de mil cuatrocientas personas.
-4. El ingeniero Ellis Chesbrough diseñó un sistema de cloacas. Problema: necesitan bajada, y el pantano era plano como una mesa.
-5. La solución fue una locura: si el pantano no baja, subamos la ciudad. Varios metros, edificio por edificio.
-6. ¿Con qué? Con gatos mecánicos: un tornillo es una rampa enrollada. Cada vuelta de manivela sube el peso un poquito.
-7. Una cuadra entera se apoyaba en miles de gatos. Cientos de obreros giraban a una señal, y el edificio subía milímetro a milímetro.
-8. Lo más absurdo: nadie se mudó. Los hoteles seguían abiertos, la gente tomaba su té, y algunos ni notaron que subían.
-9. Mientras tanto, la calle era un chiste: edificios arriba, otros abajo, y escaleras en cada acera. Cruzar era deporte extremo.
-10. Al terminar, Chicago tenía cloacas que drenaban y calles firmes. Fue de los primeros sistemas de cloacas planificados del país.
-11. Años después, el gran incendio de mil ochocientos setenta y uno quemó buena parte del centro. Pero esa ya es otra historia.
-12. Guárdalo y síguenos en IMNOBA, tu plataforma de propiedades y vehículos.
+1. Chicago levantó una ciudad entera, con la gente adentro. ¡Tomando té! Ven, te cuento.
+2. Chicago nació sobre un pantano, casi al nivel del lago. Sus calles eran barro puro.
+3. El agua sucia trajo el cólera. En mil ochocientos cincuenta y cuatro mató a más de mil cuatrocientas.
+4. El ingeniero Chesbrough diseñó cloacas. Problema: necesitan bajada, y el pantano era plano como una mesa.
+5. La solución fue una locura: si el pantano no baja, subamos la ciudad. Varios metros.
+6. ¿Con qué? Con gatos mecánicos: un tornillo es una rampa enrollada. Cada vuelta, un poquito más arriba.
+7. Una cuadra entera se apoyaba en miles de gatos. Cientos de obreros giraban a una señal: milímetro a milímetro.
+8. Nadie se mudó. Los hoteles seguían abiertos, la gente tomaba té, y algunos ni notaron que subían.
+9. La calle era un chiste: edificios arriba, otros abajo, escaleras por todos lados. Cruzar, deporte extremo.
+10. Al terminar, Chicago tenía cloacas que drenaban y calles firmes. De las primeras planificadas del país.
+11. Años después, el incendio de mil ochocientos setenta y uno quemó buena parte del centro. Otra historia.
+12. Guárdalo y síguenos en IMNOBA: propiedades y vehículos.
 
 Guion técnico con precauciones: `ejemplos/animacion-viral/guion-tecnico-chicago-gatos.md`.
 
@@ -27,7 +27,7 @@ Guion técnico con precauciones: `ejemplos/animacion-viral/guion-tecnico-chicago
 - C) «Un hotel subió dos metros y los huéspedes siguieron tomando té.»
 
 ## 4 · Texto para publicar
-¿Y si para arreglar el agua de tu ciudad tuvieras que subir la ciudad entera? 🏙️⚙️ En el siglo XIX, Chicago estaba sobre un pantano, sin pendiente para sus cloacas y con el cólera encima. La solución: miles de gatos mecánicos y cientos de obreros levantando cuadras de ladrillo milímetro a milímetro… con los hoteles abiertos y la gente tomando té. ☕ Guárdalo y síguenos en IMNOBA, tu plataforma de propiedades y vehículos.
+¿Y si para arreglar el agua de tu ciudad tuvieras que subir la ciudad entera? 🏙️⚙️ En el siglo XIX, Chicago estaba sobre un pantano, sin pendiente para sus cloacas y con el cólera encima. La solución: miles de gatos mecánicos y cientos de obreros levantando cuadras de ladrillo milímetro a milímetro… con los hoteles abiertos y la gente tomando té. ☕ Guárdalo y síguenos en IMNOBA: propiedades y vehículos.
 #chicago #historia #ingenieria #curiosidades #imnoba
 
 ## 5 · Nota
