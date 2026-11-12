@@ -697,6 +697,33 @@ export const TCE = {
   enchufe: { enchufe: 0.2, llega: 1.0, mete: 1.8, luz: 2.1, chip: 3.4 },
 } as const;
 
+/** Datos de «La ciudad que subió con gatos» (IMNOBA · Chicago, décadas de 1850–1860). Cifras de fuentes secundarias (algunas se contradicen); precauciones en ejemplos/animacion-viral/guion-tecnico-chicago.md. */
+export const CHI = {
+  /** muertes por cólera en 1854 según los registros de la Junta de Salud de Chicago (más de 1.400) */
+  colera1854: 1400,
+  /** Lake Street (1860), cifras que citan varias fuentes y que no coinciden entre sí */
+  lakeStreet: { hombres: 600, gatos: 6000 },
+  /** el plan de cloacas de Ellis S. Chesbrough es de 1855; la subida de la ciudad duró hasta la década de 1860 */
+  planAnio: 1855, incendioAnio: 1871,
+  /** altura que subieron los edificios: de ≈ 1 a ≈ 4 metros (de 4 a 14 pies) */
+  subioM: { min: 1, max: 4 },
+} as const;
+
+/** Tiempos de «La ciudad que subió con gatos» (s a ritmo normal), compartidos entre el dibujo y el sonido. */
+export const TCH = {
+  gancho: { edificio: 0.2, sube0: 1.0, paso: 0.55, f2: 1.3, f3: 3.2, globo: 4.4, chip: 2.4 },
+  pantano: { suelo: 0.2, lago: 0.6, hombre: 1.4, hunde: 2.0, f2: 2.4, slurp: 3.3, chip: 3.6, f3: 4.8 },
+  colera: { pueblo: 0.2, nube: 1.0, f2: 1.6, agua: 2.2, dato: 3.2, chip: 5.8 },
+  plan: { plano: 0.2, ing: 0.7, pend: 1.6, f2: 1.8, chip: 2.4, plano2: 3.6, f3: 3.8, glub: 4.6, duda: 5.4 },
+  idea: { tubo: 0.3, relleno: 1.5, f2: 2.0, sube: 2.4, cavar: 4.0, subir: 4.8, chip: 5.4 },
+  gato: { gato: 0.2, giro: 0.8, f2: 2.2, rampa: 2.6, carga: 3.8, chip: 5.4, chip2: 6.2 },
+  ejercito: { bloque: 0.2, gatos: 0.9, obreros: 1.5, f2: 1.6, silbato: 2.6, paso: 1.15, dato: 3.4, f3: 4.6, chip: 6.8 },
+  te: { hotel: 0.2, sube0: 1.2, paso: 0.75, globo1: 2.2, f2: 3.2, chip: 3.0, globo2: 4.0, puerta: 5.4, plof: 6.3 },
+  calle: { calle: 0.2, gente: 0.8, f2: 2.0, caida: 3.6, f3: 4.4, chip: 5.2 },
+  nivel: { calle: 0.2, tubo: 1.0, agua: 1.8, f2: 2.2, placa: 3.4, ing: 4.2, chip: 5.0 },
+  fuego: { skyline: 0.2, calendario: 1.2, f2: 2.4, llamas: 2.6, humo: 3.8, continuara: 5.4 },
+} as const;
+
 export const PIEZAS: Record<string, DefPieza> = {
   "metro-plano": {
     id: "metro-plano", nombre: "8 millones en un solo plano", ideal: 7.6, fondo: "dark",
@@ -1359,6 +1386,51 @@ export const PIEZAS: Record<string, DefPieza> = {
   "cen-enchufe": {
     id: "cen-enchufe", nombre: "Viaje de la luz · llega al enchufe y la luz se enciende: un viaje de un instante (cierre, loop)", ideal: 5.25, fondo: "dark", entra: "zoom",
     sfx: (_d, r) => [ev(TCE.enchufe.enchufe * r, "whoosh", 0.12), ev(TCE.enchufe.llega * r, "radar", 0.12), ev(TCE.enchufe.mete * r, "thud", 0.18), ev(TCE.enchufe.luz * r, "zap", 0.2), ev(TCE.enchufe.luz * r + 0.15, "ding", 0.2), ev(TCE.enchufe.chip * r, "pop", 0.1)],
+  },
+  /* ───────────── «La ciudad que subió con gatos» (IMNOBA · Chicago · steampunk) ───────────── */
+  "chi-gancho": {
+    id: "chi-gancho", nombre: "Chicago · un hotel de ladrillo sube sobre gatos con la gente adentro (gancho)", ideal: 6.15, fondo: "dark",
+    sfx: (_d, r) => [ev(0.05, "golpe", 0.14), ev(TCH.gancho.edificio * r, "whoosh", 0.12), ...Array.from({ length: 5 }, (_, k) => ev((TCH.gancho.sube0 + k * TCH.gancho.paso) * r, "thud", 0.12)), ev(TCH.gancho.chip * r, "pop", 0.1), ev(TCH.gancho.globo * r, "ding", 0.14)],
+  },
+  "chi-pantano": {
+    id: "chi-pantano", nombre: "Chicago · una ciudad plana sobre un pantano, casi al nivel del lago, con calles de barro", ideal: 7.05, fondo: "dark", entra: "corte",
+    sfx: (_d, r) => [ev(TCH.pantano.suelo * r, "polvo", 0.14), ev(TCH.pantano.lago * r, "gota", 0.14), ev(TCH.pantano.hunde * r, "gota", 0.16), ev(TCH.pantano.slurp * r, "pop", 0.2), ev(TCH.pantano.chip * r, "ding", 0.12), ev(TCH.pantano.f3 * r, "tick", 0.1)],
+  },
+  "chi-colera": {
+    id: "chi-colera", nombre: "Chicago · el agua sucia trae el cólera (1854, más de 1.400 muertes)", ideal: 7.55, fondo: "dark", entra: "corte",
+    sfx: (_d, r) => [ev(TCH.colera.pueblo * r, "polvo", 0.1), ev(TCH.colera.nube * r, "estatica", 0.18), ev(TCH.colera.agua * r, "gota", 0.16), ...clics(TCH.colera.dato * r, 2.6, 0.05), ev((TCH.colera.dato + 2.7) * r, "golpe", 0.18), ev(TCH.colera.chip * r, "pop", 0.1)],
+  },
+  "chi-plan": {
+    id: "chi-plan", nombre: "Chicago · Chesbrough diseña cloacas que necesitan bajada, pero el pantano es plano", ideal: 6.95, fondo: "dark",
+    sfx: (_d, r) => [ev(TCH.plan.plano * r, "whoosh", 0.12), ev(TCH.plan.ing * r, "pop", 0.12), ev(TCH.plan.pend * r, "zap", 0.12), ev(TCH.plan.chip * r, "tick", 0.1), ev(TCH.plan.plano2 * r, "thud", 0.14), ev(TCH.plan.glub * r, "gota", 0.18), ev(TCH.plan.duda * r, "radar", 0.14)],
+  },
+  "chi-idea": {
+    id: "chi-idea", nombre: "Chicago · si las cloacas no pueden bajar, que suba la ciudad (relleno y edificios arriba)", ideal: 6.75, fondo: "dark", entra: "corte",
+    sfx: (_d, r) => [ev(TCH.idea.tubo * r, "thud", 0.14), ...Array.from({ length: 6 }, (_, k) => ev((TCH.idea.relleno + k * 0.25) * r, "polvo", 0.1)), ev(TCH.idea.sube * r, "whoosh", 0.16), ev(TCH.idea.cavar * r, "golpe", 0.16), ev(TCH.idea.subir * r, "ding", 0.18), ev(TCH.idea.chip * r, "pop", 0.1)],
+  },
+  "chi-gato": {
+    id: "chi-gato", nombre: "Chicago · el gato mecánico: un tornillo es una rampa enrollada", ideal: 7.35, fondo: "dark", entra: "zoom",
+    sfx: (_d, r) => [ev(TCH.gato.gato * r, "thud", 0.16), ...clics(TCH.gato.giro * r, 1.8, 0.06), ev(TCH.gato.rampa * r, "whoosh", 0.14), ev(TCH.gato.carga * r, "zap", 0.12), ev(TCH.gato.chip * r, "pop", 0.1), ev(TCH.gato.chip2 * r, "ding", 0.14)],
+  },
+  "chi-ejercito": {
+    id: "chi-ejercito", nombre: "Chicago · una cuadra sobre miles de gatos y cientos de obreros que giran a una señal", ideal: 8.15, fondo: "dark", entra: "zoom",
+    sfx: (_d, r) => [ev(TCH.ejercito.bloque * r, "thud", 0.16), ev(TCH.ejercito.gatos * r, "pop", 0.12), ev(TCH.ejercito.obreros * r, "whoosh", 0.1), ...Array.from({ length: 4 }, (_, k) => ev((TCH.ejercito.silbato + k * TCH.ejercito.paso) * r, "golpe", 0.2)), ...clics(TCH.ejercito.dato * r, 2.2, 0.05), ev(TCH.ejercito.chip * r, "ding", 0.14)],
+  },
+  "chi-te": {
+    id: "chi-te", nombre: "Chicago · el hotel sigue abierto mientras sube: té, mozos y un cliente que sale al vacío", ideal: 7.55, fondo: "dark", entra: "corte",
+    sfx: (_d, r) => [ev(TCH.te.hotel * r, "whoosh", 0.1), ...Array.from({ length: 5 }, (_, k) => ev((TCH.te.sube0 + k * TCH.te.paso) * r, "thud", 0.12)), ev(TCH.te.globo1 * r, "pop", 0.12), ev(TCH.te.chip * r, "tick", 0.1), ev(TCH.te.globo2 * r, "pop", 0.12), ev(TCH.te.puerta * r, "clic", 0.16), ev(TCH.te.plof * r, "thud", 0.22), ev((TCH.te.plof + 0.3) * r, "ding", 0.14)],
+  },
+  "chi-calle": {
+    id: "chi-calle", nombre: "Chicago · calles en desnivel: edificios arriba, otros abajo y escaleras en las aceras", ideal: 7.35, fondo: "dark", entra: "corte",
+    sfx: (_d, r) => [ev(TCH.calle.calle * r, "whoosh", 0.1), ...clics(TCH.calle.gente * r, 2.4, 0.05), ev(TCH.calle.caida * r, "golpe", 0.18), ev((TCH.calle.caida + 0.4) * r, "pop", 0.14), ev(TCH.calle.chip * r, "ding", 0.14)],
+  },
+  "chi-nivel": {
+    id: "chi-nivel", nombre: "Chicago · calles firmes a nivel nuevo y cloacas que drenan hacia el lago", ideal: 6.75, fondo: "dark",
+    sfx: (_d, r) => [ev(TCH.nivel.calle * r, "polvo", 0.12), ev(TCH.nivel.tubo * r, "thud", 0.14), ev(TCH.nivel.agua * r, "gota", 0.16), ...clics(TCH.nivel.agua * r + 0.2, 1.4, 0.04), ev(TCH.nivel.placa * r, "zap", 0.12), ev(TCH.nivel.ing * r, "pop", 0.12), ev(TCH.nivel.chip * r, "ding", 0.16)],
+  },
+  "chi-fuego": {
+    id: "chi-fuego", nombre: "Chicago · giro: el gran incendio de 1871 quemó buena parte del centro… «continuará»", ideal: 7.55, fondo: "dark", entra: "zoom",
+    sfx: (_d, r) => [ev(TCH.fuego.skyline * r, "whoosh", 0.1), ev(TCH.fuego.calendario * r, "tick", 0.16), ev((TCH.fuego.calendario + 0.2) * r, "tick", 0.14), ev(TCH.fuego.llamas * r, "estatica", 0.2), ev(TCH.fuego.humo * r, "polvo", 0.14), ev(TCH.fuego.continuara * r, "golpe", 0.2), ev((TCH.fuego.continuara + 0.3) * r, "ding", 0.14)],
   },
 };
 

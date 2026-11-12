@@ -1,0 +1,134 @@
+{
+ "titulo": "La ciudad que subió con gatos",
+ "scenes": [
+  {
+   "t": "PIEZA",
+   "voz": "Chicago levantó una ciudad entera, con la gente adentro. Sí, mientras tomaban el té. Ven, te cuento.",
+   "dur": 6.6,
+   "h": "CHICAGO LEVANTÓ SU CIUDAD",
+   "w": "CIUDAD",
+   "cap": "con la gente adentro",
+   "pieza": {
+    "id": "chi-gancho"
+   }
+  },
+  {
+   "t": "PIEZA",
+   "voz": "Chicago nació sobre un pantano, casi al nivel del lago. Sus calles eran barro puro: se tragaban hasta las botas.",
+   "dur": 7.5,
+   "h": "UNA CIUDAD SOBRE UN PANTANO",
+   "w": "PANTANO",
+   "cap": "casi al nivel del lago",
+   "pieza": {
+    "id": "chi-pantano"
+   }
+  },
+  {
+   "t": "PIEZA",
+   "voz": "Y esa agua sucia trajo enfermedades. En mil ochocientos cincuenta y cuatro, el cólera mató a más de mil cuatrocientas personas.",
+   "dur": 8.0,
+   "h": "EL CÓLERA, 1854",
+   "w": "CÓLERA",
+   "cap": "agua sucia",
+   "pieza": {
+    "id": "chi-colera"
+   }
+  },
+  {
+   "t": "PIEZA",
+   "voz": "El ingeniero Ellis Chesbrough diseñó un sistema de cloacas. Problema: necesitan bajada, y el pantano era plano como una mesa.",
+   "dur": 7.4,
+   "h": "CLOACAS SIN BAJADA",
+   "w": "BAJADA",
+   "cap": "Chesbrough",
+   "pieza": {
+    "id": "chi-plan"
+   }
+  },
+  {
+   "t": "PIEZA",
+   "voz": "La solución fue una locura: si el pantano no baja, subamos la ciudad. Varios metros, edificio por edificio.",
+   "dur": 7.2,
+   "h": "¡QUE SUBA LA CIUDAD!",
+   "w": "SUBA",
+   "cap": "relleno y edificios",
+   "pieza": {
+    "id": "chi-idea"
+   }
+  },
+  {
+   "t": "PIEZA",
+   "voz": "¿Con qué? Con gatos mecánicos: un tornillo es una rampa enrollada. Cada vuelta de manivela sube el peso un poquito.",
+   "dur": 7.8,
+   "h": "EL GATO MECÁNICO",
+   "w": "GATO",
+   "cap": "tornillo = rampa",
+   "pieza": {
+    "id": "chi-gato"
+   }
+  },
+  {
+   "t": "PIEZA",
+   "voz": "Una cuadra entera se apoyaba en miles de gatos. Cientos de obreros giraban a una señal, y el edificio subía milímetro a milímetro.",
+   "dur": 8.6,
+   "h": "MILES DE GATOS",
+   "w": "GATOS",
+   "cap": "a una señal",
+   "pieza": {
+    "id": "chi-ejercito"
+   }
+  },
+  {
+   "t": "PIEZA",
+   "voz": "Lo más absurdo: nadie se mudó. Los hoteles seguían abiertos, la gente tomaba su té, y algunos ni notaron que subían.",
+   "dur": 8.0,
+   "h": "NADIE SE MUDÓ",
+   "w": "TÉ",
+   "cap": "hotel abierto",
+   "pieza": {
+    "id": "chi-te"
+   }
+  },
+  {
+   "t": "PIEZA",
+   "voz": "Mientras tanto, la calle era un chiste: edificios arriba, otros abajo, y escaleras en cada acera. Cruzar era deporte extremo.",
+   "dur": 7.8,
+   "h": "UNA CALLE DE ESCALERAS",
+   "w": "ESCALERAS",
+   "cap": "aceras en desnivel",
+   "pieza": {
+    "id": "chi-calle"
+   }
+  },
+  {
+   "t": "PIEZA",
+   "voz": "Al terminar, Chicago tenía cloacas que drenaban y calles firmes. Fue de los primeros sistemas de cloacas planificados del país.",
+   "dur": 7.4,
+   "h": "CALLES FIRMES, CLOACAS QUE DRENAN",
+   "w": "CLOACAS",
+   "cap": "nuevo nivel",
+   "pieza": {
+    "id": "chi-nivel"
+   }
+  },
+  {
+   "t": "PIEZA",
+   "voz": "Años después, el gran incendio de mil ochocientos setenta y uno quemó buena parte del centro. Pero esa ya es otra historia.",
+   "dur": 8.1,
+   "h": "EL GRAN INCENDIO, 1871",
+   "w": "INCENDIO",
+   "cap": "continuará",
+   "pieza": {
+    "id": "chi-fuego"
+   }
+  },
+  {
+   "t": "CTA",
+   "voz": "Guárdalo y síguenos en IMNOBA, tu plataforma de propiedades y vehículos.",
+   "dur": 5.0,
+   "h": "SÍGUENOS EN IMNOBA",
+   "w": "IMNOBA",
+   "ic": "casa"
+  }
+ ]
+}

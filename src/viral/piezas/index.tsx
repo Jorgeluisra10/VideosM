@@ -6,6 +6,8 @@ import { PisAcrilico, PisGancho, PisUnion, PisVidrio } from "./pis1";
 import { PisCarga, PisTinas, PisViento, PisZoom } from "./pis2";
 import { CenFuente, CenGancho, CenGenerador, CenTurbina } from "./cen1";
 import { CenBalance, CenBarrio, CenEnchufe, CenTransmision } from "./cen2";
+import { ChiColera, ChiGancho, ChiIdea, ChiPantano, ChiPlan } from "./chi1";
+import { ChiCalle, ChiEjercito, ChiFuego, ChiGato, ChiNivel, ChiTe } from "./chi2";
 import { JapDemole, JapGancho, JapGrafico } from "./jap1";
 import { JapLeccion, JapPorque, JapVacias } from "./jap2";
 import { FloConteo, FloGancho, FloTorre } from "./flo1";
@@ -129,6 +131,7 @@ export const COMPONENTES_PIEZA: Record<string, React.FC<{ e: EscenaViralGuardada
   "flo-gancho": FloGancho, "flo-torre": FloTorre, "flo-conteo": FloConteo, "flo-asia": FloAsia, "flo-precio": FloPrecio, "flo-consejo": FloConsejo,
   "jap-gancho": JapGancho, "jap-grafico": JapGrafico, "jap-demole": JapDemole, "jap-porque": JapPorque, "jap-vacias": JapVacias, "jap-leccion": JapLeccion,
   "cen-gancho": CenGancho, "cen-fuente": CenFuente, "cen-turbina": CenTurbina, "cen-generador": CenGenerador, "cen-transmision": CenTransmision, "cen-barrio": CenBarrio, "cen-balance": CenBalance, "cen-enchufe": CenEnchufe,
+  "chi-gancho": ChiGancho, "chi-pantano": ChiPantano, "chi-colera": ChiColera, "chi-plan": ChiPlan, "chi-idea": ChiIdea, "chi-gato": ChiGato, "chi-ejercito": ChiEjercito, "chi-te": ChiTe, "chi-calle": ChiCalle, "chi-nivel": ChiNivel, "chi-fuego": ChiFuego,
   "cab-gancho": CabGancho, "cab-caja": CabCaja, "cab-largo": CabLargo, "cab-flexible": CabFlexible, "cab-nudos": CabNudos, "cab-receta": CabReceta,
   "rui-gancho": RuiGancho, "rui-dia": RuiDia, "rui-noche": RuiNoche, "rui-ritmos": RuiRitmos, "rui-friccion": RuiFriccion, "rui-remate": RuiRemate, "rui-tally": RuiTally, "rui-micro": RuiMicro,
   "pte-gancho": PteGancho, "pte-parabola": PteParabola, "pte-duelo": PteDuelo, "pte-roebling": PteRoebling, "pte-bloque": PteBloque, "pte-cubo": PteCubo, "pte-zoom": PteZoom,
