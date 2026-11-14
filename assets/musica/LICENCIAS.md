@@ -20,3 +20,4 @@ par-craneal-2.wav · creada por el sistema (síntesis con `videos/2026-11-10-par
 par-craneal-3.wav · creada por el sistema (síntesis con `videos/2026-11-11-par-craneal-3/componer-musica.mjs`; el WAV no se sube a git, se regenera) · libre de derechos · ninguna · 2026-11-11
 par-craneal-4.wav · creada por el sistema (síntesis con `videos/2026-11-12-par-craneal-4/componer-musica.mjs`; el WAV no se sube a git, se regenera) · libre de derechos · ninguna · 2026-11-12
 par-craneal-5.wav · creada por el sistema (síntesis con `videos/2026-11-13-par-craneal-5/componer-musica.mjs`; el WAV no se sube a git, se regenera) · libre de derechos · ninguna · 2026-11-13
+par-craneal-6.wav · creada por el sistema (síntesis con `videos/2026-11-14-par-craneal-6/componer-musica.mjs`; el WAV no se sube a git, se regenera) · libre de derechos · ninguna · 2026-11-14

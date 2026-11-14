@@ -1,0 +1,14 @@
+{
+ "titulo": "El par craneal VI: el chivato de la presión",
+ "scenes": [
+  { "t": "PIEZA", "voz": "Cuando miras de reojo, trabaja el par craneal seis, el abducens, que mueve un solo músculo: el recto lateral.", "dur": 7.1, "h": "CUANDO MIRAS DE REOJO", "w": "REOJO", "pieza": { "id": "ab-gancho" } },
+  { "t": "PIEZA", "voz": "Un truco clásico: el recto lateral es del seis, el oblicuo superior del cuatro, y el resto del tres.", "dur": 7.1, "h": "LR6 SO4 Y EL RESTO 3", "w": "TRUCO", "cap": "regla para recordar", "pieza": { "id": "ab-regla" } },
+  { "t": "PIEZA", "voz": "En el puente nace su núcleo, que además coordina los dos ojos: mueve uno hacia afuera y el otro hacia adentro.", "dur": 7.8, "h": "COORDINA LOS DOS OJOS", "w": "NÚCLEO", "cap": "núcleo en el puente", "pieza": { "id": "ab-nucleo" } },
+  { "t": "PIEZA", "voz": "Sube pegado al clivus y entra por el canal de Dorello, donde queda anclado bajo un ligamento.", "dur": 6.5, "h": "ANCLADO EN EL CANAL DE DORELLO", "w": "ANCLADO", "cap": "su recorrido", "pieza": { "id": "ab-dorello" } },
+  { "t": "PIEZA", "voz": "Cuando sube la presión dentro del cráneo, el nervio anclado puede estirarse y el ojo se desvía hacia adentro.", "dur": 7.1, "h": "SUBE LA PRESIÓN", "w": "PRESIÓN", "cap": "nervio estirado", "pieza": { "id": "ab-presion" } },
+  { "t": "PIEZA", "voz": "Es un falso signo localizador: el nervio falla aunque el problema esté lejos, como una masa en otra parte del cerebro.", "dur": 7.8, "h": "FALSO SIGNO LOCALIZADOR", "w": "LEJOS", "cap": "el problema está lejos", "pieza": { "id": "ab-falso" } },
+  { "t": "PIEZA", "voz": "Algunas personas nacen sin él: en el síndrome de Duane, el oculomotor inerva ese músculo y el ojo se retrae.", "dur": 7.5, "h": "SÍNDROME DE DUANE", "w": "DUANE", "cap": "nacer sin abducens", "pieza": { "id": "ab-duane" } },
+  { "t": "PIEZA", "voz": "Si ves doble al mirar hacia los lados, consulta con un médico: este nervio puede ser el primero en avisar.", "dur": 7.5, "h": "SI VES DOBLE, CONSULTA", "w": "CONSULTA", "cap": "señal de alerta", "pieza": { "id": "ab-consulta" } },
+  { "t": "CTA", "voz": "Compártelo con alguien que ame el cerebro. Síguenos en Sinapsis.", "dur": 4.8, "h": "COMPÁRTELO Y SÍGUENOS", "w": "SÍGUENOS", "sub": "Más ciencia en SINAPSIS" }
+ ]
+}

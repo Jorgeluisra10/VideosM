@@ -858,6 +858,32 @@ export const TTG = {
   comenta: { ahora: 0.2, picante: 2.6, helado: 4.2 },
 } as const;
 
+/** Datos del video «El par craneal VI: el chivato de la presión» (SINAPSIS · pares craneales). Fuentes y precauciones en ejemplos/animacion-viral/guion-tecnico-par-craneal-6.md. */
+export const AB = {
+  /** el abducens inerva un solo músculo: el recto lateral (abducción); regla LR6 SO4 y el resto 3: recto lateral = VI, oblicuo superior = IV, los demás = III */
+  musculo: "recto lateral",
+  regla: { lr: "VI", so: "IV", resto: "III" },
+  /** su núcleo (puente) tiene motoneuronas para el recto lateral ipsilateral e interneuronas que cruzan por el fascículo longitudinal medial al núcleo oculomotor contralateral (recto medial): mirada conjugada */
+  nucleoCoordina: true,
+  /** sube pegado al clivus y entra por el canal de Dorello, anclado bajo el ligamento petroclinoideo (Gruber): el aumento de la presión intracraneal lo estira */
+  ancla: "canal de Dorello",
+  /** parálisis: el ojo se desvía hacia adentro (esotropia) y falla la abducción; falso signo localizador (también con presión baja) */
+  falsoSignoLocalizador: true,
+  /** síndrome de Duane: ausencia congénita del VI; el oculomotor inerva el recto lateral; el globo se retrae al aducir */
+  duane: "ausencia congénita del abducens",
+} as const;
+/** Tiempos del video del par craneal VI (segundos a ritmo normal), compartidos entre el dibujo y el sonido. */
+export const TAB = {
+  gancho: { reojo: 0.2, par: 2.0, abducens: 3.7, musculo: 4.9 },
+  regla: { truco: 0.2, seis: 1.8, cuatro: 3.6, tres: 5.6 },
+  nucleo: { puente: 0.2, coordina: 2.4, afuera: 4.6, adentro: 5.7 },
+  dorello: { sube: 0.2, canal: 2.2, anclado: 4.2 },
+  presion: { presion: 0.2, anclado: 2.6, estira: 4.0, ojo: 5.2 },
+  falso: { falso: 0.2, lejos: 2.6, masa: 5.2 },
+  duane: { nacen: 0.2, duane: 2.4, oculo: 4.6, retrae: 6.4 },
+  consulta: { doble: 0.2, medico: 3.2, avisar: 4.8 },
+} as const;
+
 /* ───────────── «La regla del 37 %» (problema de la parada óptima, ensayo abstracto para IMNOBA) ───────────── */
 
 /** Generador pseudoaleatorio determinista (mulberry32): mismos números en el render, en las pruebas y en cada fotograma. */
@@ -1932,6 +1958,38 @@ export const PIEZAS: Record<string, DefPieza> = {
   "tg-comenta": {
     id: "tg-comenta", nombre: "Par V · dime en los comentarios: ¿aguantas el picante o te vence el congelamiento cerebral? (cierre)", ideal: 6.0, fondo: "dark", entra: "zoom",
     sfx: (_d, r) => [ev(0.05, "whoosh", 0.1), ev(TTG.comenta.ahora * r + 0.2, "pop", 0.14), ev(TTG.comenta.picante * r, "pop", 0.14), ev(TTG.comenta.helado * r, "pop", 0.14), ev((TTG.comenta.helado + 1.4) * r, "ding", 0.2)],
+  },
+  "ab-gancho": {
+    id: "ab-gancho", nombre: "Par VI · cuando miras de reojo trabaja el abducens, que mueve un solo músculo: el recto lateral (gancho)", ideal: 6.6, fondo: "dark", entra: "zoom",
+    sfx: (_d, r) => [ev(0.05, "whoosh", 0.1), ev(TAB.gancho.reojo * r + 0.2, "whoosh", 0.12), ev(TAB.gancho.par * r, "pop", 0.14), ev(TAB.gancho.abducens * r, "tick", 0.14), ev(TAB.gancho.musculo * r, "zap", 0.14), ev((TAB.gancho.musculo + 0.4) * r, "ding", 0.18)],
+  },
+  "ab-regla": {
+    id: "ab-regla", nombre: "Par VI · regla LR6 SO4 y el resto 3: el recto lateral es del VI, el oblicuo superior del IV y los demás del III", ideal: 6.6, fondo: "dark", entra: "corte",
+    sfx: (_d, r) => [ev(0.05, "whoosh", 0.1), ev(TAB.regla.truco * r + 0.2, "pop", 0.12), ev(TAB.regla.seis * r, "pop", 0.14), ev(TAB.regla.cuatro * r, "pop", 0.14), ev(TAB.regla.tres * r, "pop", 0.14), ev((TAB.regla.tres + 0.4) * r, "ding", 0.18)],
+  },
+  "ab-nucleo": {
+    id: "ab-nucleo", nombre: "Par VI · su núcleo, en el puente, coordina los dos ojos: uno hacia afuera y el otro hacia adentro", ideal: 7.3, fondo: "dark", entra: "semitono",
+    sfx: (_d, r) => [ev(0.05, "whoosh", 0.1), ev(TAB.nucleo.puente * r + 0.2, "pop", 0.12), ev(TAB.nucleo.coordina * r, "whoosh", 0.12), ...clics(TAB.nucleo.coordina * r + 0.2, 1.6 * r, 0.04), ev(TAB.nucleo.afuera * r, "pop", 0.14), ev(TAB.nucleo.adentro * r, "ding", 0.18)],
+  },
+  "ab-dorello": {
+    id: "ab-dorello", nombre: "Par VI · sube pegado al clivus y entra por el canal de Dorello, anclado bajo un ligamento", ideal: 6.0, fondo: "dark", entra: "corte",
+    sfx: (_d, r) => [ev(0.05, "whoosh", 0.1), ev(TAB.dorello.sube * r + 0.2, "pop", 0.12), ...clics(TAB.dorello.sube * r + 0.4, 1.6 * r, 0.04), ev(TAB.dorello.canal * r, "tick", 0.14), ev(TAB.dorello.anclado * r, "thud", 0.18)],
+  },
+  "ab-presion": {
+    id: "ab-presion", nombre: "Par VI · si sube la presión dentro del cráneo, el nervio anclado puede estirarse y el ojo se desvía hacia adentro", ideal: 6.6, fondo: "dark", entra: "zoom",
+    sfx: (_d, r) => [ev(0.05, "whoosh", 0.1), ev(TAB.presion.presion * r + 0.2, "pop", 0.12), ev(TAB.presion.anclado * r, "tick", 0.12), ev(TAB.presion.estira * r, "thud", 0.2), ev(TAB.presion.ojo * r, "zap", 0.16)],
+  },
+  "ab-falso": {
+    id: "ab-falso", nombre: "Par VI · es un falso signo localizador: el nervio falla aunque el problema esté lejos, como una masa en otra parte del cerebro", ideal: 7.3, fondo: "dark", entra: "semitono",
+    sfx: (_d, r) => [ev(0.05, "whoosh", 0.1), ev(TAB.falso.falso * r + 0.2, "thud", 0.18), ev(TAB.falso.lejos * r, "whoosh", 0.12), ev(TAB.falso.masa * r, "zap", 0.16), ev((TAB.falso.masa + 0.3) * r, "thud", 0.16)],
+  },
+  "ab-duane": {
+    id: "ab-duane", nombre: "Par VI · síndrome de Duane: algunas personas nacen sin él; el oculomotor inerva ese músculo y el ojo se retrae", ideal: 7.0, fondo: "dark", entra: "corte",
+    sfx: (_d, r) => [ev(0.05, "whoosh", 0.1), ev(TAB.duane.nacen * r + 0.2, "pop", 0.12), ev(TAB.duane.duane * r, "tick", 0.14), ev(TAB.duane.oculo * r, "pop", 0.14), ev(TAB.duane.retrae * r, "thud", 0.16)],
+  },
+  "ab-consulta": {
+    id: "ab-consulta", nombre: "Par VI · si ves doble al mirar hacia los lados, consulta con un médico: este nervio puede ser el primero en avisar (cierre)", ideal: 7.0, fondo: "dark", entra: "zoom",
+    sfx: (_d, r) => [ev(0.05, "whoosh", 0.1), ev(TAB.consulta.doble * r + 0.2, "zap", 0.14), ev(TAB.consulta.medico * r, "pop", 0.16), ev(TAB.consulta.avisar * r, "tick", 0.12), ev((TAB.consulta.avisar + 0.4) * r, "ding", 0.18)],
   },
   "astro-memoria": {
     id: "astro-memoria", nombre: "Astrocitos · en ratones, reactivarlos estimuló el recuerdo", ideal: 4.15, fondo: "dark", entra: "corte",
