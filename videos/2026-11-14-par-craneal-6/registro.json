@@ -1,0 +1,18 @@
+{
+  "version": 1,
+  "slug": "2026-11-14-par-craneal-6",
+  "titulo": "El par craneal VI: el chivato de la presión",
+  "serie": "pares_craneales",
+  "estado": "grabado",
+  "guion": "Cuando miras de reojo, trabaja el par craneal seis, el abducens, que mueve un solo músculo: el recto lateral.\nUn truco clásico: el recto lateral es del seis, el oblicuo superior del cuatro, y el resto del tres.\nEn el puente nace su núcleo, que además coordina los dos ojos: mueve uno hacia afuera y el otro hacia adentro.\nSube pegado al clivus y entra por el canal de Dorello, donde queda anclado bajo un ligamento.\nCuando sube la presión dentro del cráneo, el nervio anclado puede estirarse y el ojo se desvía hacia adentro.\nEs un falso signo localizador: el nervio falla aunque el problema esté lejos, como una masa en otra parte del cerebro.\nAlgunas personas nacen sin él: en el síndrome de Duane, el oculomotor inerva ese músculo y el ojo se retrae.\nSi ves doble al mirar hacia los lados, consulta con un médico: este nervio puede ser el primero en avisar.\nCompártelo con alguien que ame el cerebro. Síguenos en Sinapsis.",
+  "gancho": "Cuando miras de reojo, trabaja el par craneal seis, el abducens, que mueve un solo músculo: el recto lateral.",
+  "duracion_seg": 63.2,
+  "notas": "Par craneal VI (abducens): mirar de reojo (recto lateral), regla LR6 SO4 y el resto 3, núcleo que coordina la mirada, canal de Dorello, estiramiento por presión, falso signo localizador, síndrome de Duane y visión doble. No se atribuye al VI el recorrido más largo (es del troclear); la presión baja también puede causarlo; advertencia general, no diagnóstico; dibujos esquemáticos; sin voz (−28 LUFS); pregunta para comentar: trucos para memorizar los 12 pares craneales.",
+  "voz_usada": "",
+  "instrucciones_voz": "",
+  "creado": "2026-11-14T14:38:28.379Z",
+  "origen_clave": "17d7be1c",
+  "video": "revision.mp4",
+  "miniatura": "miniatura.jpg",
+  "entrega": "entrega.md"
+}
