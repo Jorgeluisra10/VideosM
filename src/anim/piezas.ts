@@ -724,6 +724,35 @@ export const TCH = {
   fuego: { skyline: 0.2, calendario: 1.2, f2: 2.4, llamas: 2.6, humo: 3.8, continuara: 5.4 },
 } as const;
 
+/** Datos de «El secreto perdido del hormigón romano» (IMNOBA · ingeniería forense). Cifras de la literatura científica y de divulgación; precauciones en ejemplos/animacion-viral/guion-tecnico-hormigon-romano.md. */
+export const ROM = {
+  /** el Panteón (≈ 126 d. C.): cúpula de hormigón sin armar de ≈ 43,3 m de diámetro; casi dos mil años en pie */
+  panteonAnio: 126, panteonDiametroM: 43.3, anios: 2000,
+  /** el cemento moderno se cuece a más de ≈ 1.400 °C y la industria emite entre ≈ 6 y 8 % del CO2 mundial (se usa ≈ 7 %) */
+  clinkerC: 1400, co2Pct: 7,
+  /** garantía de diseño que se parodia en el cartel del viaducto (las estructuras de hoy se diseñan para ≈ 50 a 100 años) */
+  disenoAnios: 50,
+  /** estudios: Jackson et al. (2013, 2017); Seymour, Masic et al. (Science Advances, 2023) */
+  estudios: ["Jackson 2013", "Jackson 2017", "Masic 2023"],
+} as const;
+
+/** Tiempos de «El secreto perdido del hormigón romano» (s a ritmo normal), compartidos entre el dibujo y el sonido. */
+export const TRM = {
+  gancho: { lab: 0.2, puente: 0.4, oxida: 1.0, f2: 1.9, chip1: 2.4, muelle: 3.4, f3: 3.6, brillo: 3.8, f4: 4.8, chip2: 5.0, insp: 5.8, f5: 6.6 },
+  oxido: { pilar: 0.2, chip1: 1.4, iones: 1.0, f2: 1.6, oxida: 2.4, f3: 4.0, grietas: 4.2, globo: 4.8, chip2: 5.6 },
+  ceniza: { volcan: 0.2, sacos: 1.6, barco: 2.6, f2: 2.8, chip: 3.4, gaviota: 4.2 },
+  receta: { mar: 0.2, iconos: 0.8, paso: 0.5, vierte: 2.4, sube: 2.6, f2: 3.0, acero: 4.6, f3: 4.8, chip: 5.4 },
+  zoom: { ret: 0.2, z1: 0.8, z2: 2.6, z3: 4.4, f2: 3.0, globo: 3.6, f3: 5.0, chip: 5.6 },
+  reaccion: { vista: 0.2, gotas: 0.8, permiso: 1.0, disuelve: 2.2, f2: 2.2, iones: 2.6, cristal: 4.4, f3: 4.4, chip: 5.4 },
+  cristal: { vista: 0.2, chip: 0.8, crece: 1.2, creceDur: 4.8, f2: 3.2, f3: 6.0 },
+  curita: { bloque: 0.2, grieta: 0.8, agua: 2.0, f2: 2.2, cristal: 3.2, f3: 4.0, sella: 4.8, curita: 5.8, chip: 6.4 },
+  grumos: { bloque: 0.2, grumo: 0.8, fisura: 2.0, f2: 2.4, disuelve: 3.0, tapa: 4.4, f3: 4.6, botiquin: 5.2, chip: 5.8 },
+  panteon: { viaducto: 0.2, cartel: 0.8, parte: 1.6, f2: 2.4, chip1: 2.8, panteon: 3.0, brillo: 4.0, f3: 4.8, chip2: 5.2 },
+  sesgo: { fila: 0.2, caen: 1.4, foco: 3.0, f2: 3.0, globo: 4.2, chip: 5.2 },
+  co2: { fabrica: 0.2, dato1: 1.0, dato2: 4.4, f2: 4.4, cof: 6.4, chip: 7.2 },
+  caso: { muelle: 0.2, brillo: 1.0, f2: 1.6, insp: 3.0, sello: 4.2, f3: 4.6, chip: 6.0 },
+} as const;
+
 export const PIEZAS: Record<string, DefPieza> = {
   "metro-plano": {
     id: "metro-plano", nombre: "8 millones en un solo plano", ideal: 7.6, fondo: "dark",
@@ -1431,6 +1460,59 @@ export const PIEZAS: Record<string, DefPieza> = {
   "chi-fuego": {
     id: "chi-fuego", nombre: "Chicago · giro: el gran incendio de 1871 quemó buena parte del centro… «continuará»", ideal: 7.55, fondo: "dark", entra: "zoom",
     sfx: (_d, r) => [ev(TCH.fuego.skyline * r, "whoosh", 0.1), ev(TCH.fuego.calendario * r, "tick", 0.16), ev((TCH.fuego.calendario + 0.2) * r, "tick", 0.14), ev(TCH.fuego.llamas * r, "estatica", 0.2), ev(TCH.fuego.humo * r, "polvo", 0.14), ev(TCH.fuego.continuara * r, "golpe", 0.2), ev((TCH.fuego.continuara + 0.3) * r, "ding", 0.14)],
+  },
+  /* ───────────── «El secreto perdido del hormigón romano» (IMNOBA · forense/microscópico) ───────────── */
+  "rom-gancho": {
+    id: "rom-gancho", nombre: "Hormigón romano · un puente moderno se pudre y un puerto romano mejora (gancho)", ideal: 7.55, fondo: "dark",
+    sfx: (_d, r) => [ev(0.05, "golpe", 0.14), ev(TRM.gancho.puente * r, "whoosh", 0.12), ev(TRM.gancho.oxida * r, "estatica", 0.12), ev(TRM.gancho.chip1 * r, "pop", 0.1), ev(TRM.gancho.muelle * r, "whoosh", 0.12), ev(TRM.gancho.brillo * r, "ding", 0.14), ev(TRM.gancho.chip2 * r, "pop", 0.1), ev(TRM.gancho.insp * r, "pop", 0.12), ev(TRM.gancho.f5 * r, "radar", 0.14)],
+  },
+  "rom-oxido": {
+    id: "rom-oxido", nombre: "Hormigón romano · la sal oxida el acero del hormigón moderno y el óxido hincha y rompe", ideal: 7.55, fondo: "dark", entra: "corte",
+    sfx: (_d, r) => [ev(TRM.oxido.pilar * r, "thud", 0.16), ev(TRM.oxido.iones * r, "gota", 0.14), ev(TRM.oxido.chip1 * r, "tick", 0.1), ev(TRM.oxido.oxida * r, "estatica", 0.16), ev(TRM.oxido.grietas * r, "golpe", 0.18), ev(TRM.oxido.globo * r, "pop", 0.12), ev(TRM.oxido.chip2 * r, "ding", 0.14)],
+  },
+  "rom-ceniza": {
+    id: "rom-ceniza", nombre: "Hormigón romano · cal y ceniza volcánica de Pozzuoli que viaja en barco", ideal: 7.15, fondo: "dark", entra: "corte",
+    sfx: (_d, r) => [ev(TRM.ceniza.volcan * r, "thud", 0.16), ev(TRM.ceniza.sacos * r, "polvo", 0.14), ev(TRM.ceniza.barco * r, "whoosh", 0.14), ev(TRM.ceniza.chip * r, "pop", 0.1), ev(TRM.ceniza.gaviota * r, "pop", 0.14)],
+  },
+  "rom-receta": {
+    id: "rom-receta", nombre: "Hormigón romano · cal, ceniza, agua y roca vertidas en moldes dentro del mar, sin acero", ideal: 7.15, fondo: "dark",
+    sfx: (_d, r) => [ev(TRM.receta.mar * r, "whoosh", 0.1), ev((TRM.receta.iconos + 0 * TRM.receta.paso) * r, "pop", 0.12), ev((TRM.receta.iconos + 1 * TRM.receta.paso) * r, "pop", 0.12), ev((TRM.receta.iconos + 2 * TRM.receta.paso) * r, "pop", 0.12), ev((TRM.receta.iconos + 3 * TRM.receta.paso) * r, "pop", 0.12), ev(TRM.receta.vierte * r, "polvo", 0.16), ev(TRM.receta.acero * r, "golpe", 0.18), ev(TRM.receta.chip * r, "ding", 0.14)],
+  },
+  "rom-zoom": {
+    id: "rom-zoom", nombre: "Hormigón romano · zoom hasta lo microscópico: granos de ceniza, poros y agua de mar", ideal: 6.95, fondo: "dark", entra: "zoom",
+    sfx: (_d, r) => [ev(TRM.zoom.ret * r, "radar", 0.12), ev(TRM.zoom.z1 * r, "whoosh", 0.14), ev(TRM.zoom.z2 * r, "whoosh", 0.16), ev(TRM.zoom.z3 * r, "whoosh", 0.18), ev(TRM.zoom.globo * r, "pop", 0.12), ev(TRM.zoom.chip * r, "ding", 0.14)],
+  },
+  "rom-reaccion": {
+    id: "rom-reaccion", nombre: "Hormigón romano · el agua de mar disuelve ceniza y cal y de ese caldo nacen cristales", ideal: 7.15, fondo: "dark", entra: "zoom",
+    sfx: (_d, r) => [ev(TRM.reaccion.gotas * r, "gota", 0.16), ev(TRM.reaccion.permiso * r, "pop", 0.12), ev(TRM.reaccion.disuelve * r, "estatica", 0.14), ev(TRM.reaccion.iones * r, "tick", 0.1), ev(TRM.reaccion.cristal * r, "zap", 0.16), ev(TRM.reaccion.chip * r, "ding", 0.14)],
+  },
+  "rom-cristal": {
+    id: "rom-cristal", nombre: "Hormigón romano · tobermorita: el cristal raro que crece en el mar (cámara rápida de 2.000 años)", ideal: 7.55, fondo: "dark",
+    sfx: (_d, r) => [ev(TRM.cristal.vista * r, "radar", 0.12), ev(TRM.cristal.chip * r, "pop", 0.1), ev(TRM.cristal.crece * r, "zap", 0.14), ev((TRM.cristal.crece + 1.2) * r, "tick", 0.1), ev((TRM.cristal.crece + 2.4) * r, "tick", 0.1), ev((TRM.cristal.crece + 3.6) * r, "tick", 0.1), ev((TRM.cristal.crece + TRM.cristal.creceDur) * r, "ding", 0.18)],
+  },
+  "rom-curita": {
+    id: "rom-curita", nombre: "Hormigón romano · una grieta que se sella sola con cristales (curita automática)", ideal: 7.55, fondo: "dark",
+    sfx: (_d, r) => [ev(TRM.curita.bloque * r, "thud", 0.14), ev(TRM.curita.grieta * r, "golpe", 0.2), ev(TRM.curita.agua * r, "gota", 0.16), ev(TRM.curita.cristal * r, "zap", 0.14), ev(TRM.curita.sella * r, "ding", 0.16), ev(TRM.curita.curita * r, "pop", 0.2), ev(TRM.curita.chip * r, "tick", 0.1)],
+  },
+  "rom-grumos": {
+    id: "rom-grumos", nombre: "Hormigón romano · grumos de cal que se disuelven y tapan la fisura (MIT 2023)", ideal: 6.75, fondo: "dark", entra: "corte",
+    sfx: (_d, r) => [ev(TRM.grumos.bloque * r, "thud", 0.14), ev(TRM.grumos.grumo * r, "pop", 0.12), ev(TRM.grumos.fisura * r, "golpe", 0.18), ev(TRM.grumos.disuelve * r, "gota", 0.16), ev(TRM.grumos.tapa * r, "ding", 0.16), ev(TRM.grumos.botiquin * r, "pop", 0.14), ev(TRM.grumos.chip * r, "tick", 0.1)],
+  },
+  "rom-panteon": {
+    id: "rom-panteon", nombre: "Hormigón romano · un viaducto moderno se parte y el Panteón sigue en pie casi dos mil años", ideal: 7.15, fondo: "dark", entra: "corte",
+    sfx: (_d, r) => [ev(TRM.panteon.viaducto * r, "whoosh", 0.1), ev(TRM.panteon.cartel * r, "pop", 0.12), ev(TRM.panteon.parte * r, "golpe", 0.22), ev((TRM.panteon.parte + 0.3) * r, "polvo", 0.16), ev(TRM.panteon.chip1 * r, "tick", 0.1), ev(TRM.panteon.panteon * r, "whoosh", 0.14), ev(TRM.panteon.brillo * r, "ding", 0.16), ev(TRM.panteon.chip2 * r, "pop", 0.12)],
+  },
+  "rom-sesgo": {
+    id: "rom-sesgo", nombre: "Hormigón romano · sesgo del sobreviviente: lo malo se cayó y nadie lo recuerda", ideal: 7.15, fondo: "dark",
+    sfx: (_d, r) => [ev(TRM.sesgo.fila * r, "whoosh", 0.1), ev((TRM.sesgo.caen + 0 * 0.35) * r, "thud", 0.14), ev((TRM.sesgo.caen + 1 * 0.35) * r, "thud", 0.14), ev((TRM.sesgo.caen + 2 * 0.35) * r, "thud", 0.14), ev((TRM.sesgo.caen + 3 * 0.35) * r, "thud", 0.14), ev(TRM.sesgo.foco * r, "zap", 0.14), ev(TRM.sesgo.globo * r, "pop", 0.12), ev(TRM.sesgo.chip * r, "ding", 0.12)],
+  },
+  "rom-co2": {
+    id: "rom-co2", nombre: "Hormigón romano · el cemento moderno se cuece a más de 1.400 °C y emite ≈ 7 % del CO2 mundial", ideal: 8.35, fondo: "dark", entra: "corte",
+    sfx: (_d, r) => [ev(TRM.co2.fabrica * r, "thud", 0.16), ev((TRM.co2.dato1 + 0 * 0.13) * r, "clic", 0.05), ev((TRM.co2.dato1 + 1 * 0.13) * r, "clic", 0.05), ev((TRM.co2.dato1 + 2 * 0.13) * r, "clic", 0.05), ev((TRM.co2.dato1 + 3 * 0.13) * r, "clic", 0.05), ev((TRM.co2.dato1 + 4 * 0.13) * r, "clic", 0.05), ev((TRM.co2.dato1 + 5 * 0.13) * r, "clic", 0.05), ev((TRM.co2.dato1 + 6 * 0.13) * r, "clic", 0.05), ev((TRM.co2.dato1 + 7 * 0.13) * r, "clic", 0.05), ev((TRM.co2.dato1 + 8 * 0.13) * r, "clic", 0.05), ev((TRM.co2.dato1 + 9 * 0.13) * r, "clic", 0.05), ev((TRM.co2.dato1 + 10 * 0.13) * r, "clic", 0.05), ev((TRM.co2.dato1 + 11 * 0.13) * r, "clic", 0.05), ev((TRM.co2.dato1 + 12 * 0.13) * r, "clic", 0.05), ev((TRM.co2.dato1 + 13 * 0.13) * r, "clic", 0.05), ev(TRM.co2.dato2 * r, "golpe", 0.18), ev(TRM.co2.cof * r, "pop", 0.14), ev(TRM.co2.chip * r, "tick", 0.1)],
+  },
+  "rom-caso": {
+    id: "rom-caso", nombre: "Hormigón romano · caso resuelto: química paciente; el mar lo terminó de construir (cierre)", ideal: 7.55, fondo: "dark", entra: "zoom",
+    sfx: (_d, r) => [ev(TRM.caso.muelle * r, "whoosh", 0.12), ev(TRM.caso.brillo * r, "ding", 0.14), ev(TRM.caso.insp * r, "pop", 0.12), ev(TRM.caso.sello * r, "golpe", 0.26), ev((TRM.caso.sello + 0.25) * r, "ding", 0.16), ev(TRM.caso.chip * r, "tick", 0.1)],
   },
 };
 

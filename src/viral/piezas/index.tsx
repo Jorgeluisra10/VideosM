@@ -8,6 +8,8 @@ import { CenFuente, CenGancho, CenGenerador, CenTurbina } from "./cen1";
 import { CenBalance, CenBarrio, CenEnchufe, CenTransmision } from "./cen2";
 import { ChiColera, ChiGancho, ChiIdea, ChiPantano, ChiPlan } from "./chi1";
 import { ChiCalle, ChiEjercito, ChiFuego, ChiGato, ChiNivel, ChiTe } from "./chi2";
+import { RomCeniza, RomGancho, RomOxido, RomReaccion, RomReceta, RomZoom } from "./rom1";
+import { RomCaso, RomCo2, RomCristal, RomCurita, RomGrumos, RomPanteon, RomSesgo } from "./rom2";
 import { JapDemole, JapGancho, JapGrafico } from "./jap1";
 import { JapLeccion, JapPorque, JapVacias } from "./jap2";
 import { FloConteo, FloGancho, FloTorre } from "./flo1";
@@ -132,6 +134,7 @@ export const COMPONENTES_PIEZA: Record<string, React.FC<{ e: EscenaViralGuardada
   "jap-gancho": JapGancho, "jap-grafico": JapGrafico, "jap-demole": JapDemole, "jap-porque": JapPorque, "jap-vacias": JapVacias, "jap-leccion": JapLeccion,
   "cen-gancho": CenGancho, "cen-fuente": CenFuente, "cen-turbina": CenTurbina, "cen-generador": CenGenerador, "cen-transmision": CenTransmision, "cen-barrio": CenBarrio, "cen-balance": CenBalance, "cen-enchufe": CenEnchufe,
   "chi-gancho": ChiGancho, "chi-pantano": ChiPantano, "chi-colera": ChiColera, "chi-plan": ChiPlan, "chi-idea": ChiIdea, "chi-gato": ChiGato, "chi-ejercito": ChiEjercito, "chi-te": ChiTe, "chi-calle": ChiCalle, "chi-nivel": ChiNivel, "chi-fuego": ChiFuego,
+  "rom-gancho": RomGancho, "rom-oxido": RomOxido, "rom-ceniza": RomCeniza, "rom-receta": RomReceta, "rom-zoom": RomZoom, "rom-reaccion": RomReaccion, "rom-cristal": RomCristal, "rom-curita": RomCurita, "rom-grumos": RomGrumos, "rom-panteon": RomPanteon, "rom-sesgo": RomSesgo, "rom-co2": RomCo2, "rom-caso": RomCaso,
   "cab-gancho": CabGancho, "cab-caja": CabCaja, "cab-largo": CabLargo, "cab-flexible": CabFlexible, "cab-nudos": CabNudos, "cab-receta": CabReceta,
   "rui-gancho": RuiGancho, "rui-dia": RuiDia, "rui-noche": RuiNoche, "rui-ritmos": RuiRitmos, "rui-friccion": RuiFriccion, "rui-remate": RuiRemate, "rui-tally": RuiTally, "rui-micro": RuiMicro,
   "pte-gancho": PteGancho, "pte-parabola": PteParabola, "pte-duelo": PteDuelo, "pte-roebling": PteRoebling, "pte-bloque": PteBloque, "pte-cubo": PteCubo, "pte-zoom": PteZoom,

@@ -1,0 +1,156 @@
+{
+ "titulo": "El secreto perdido del hormigón romano",
+ "scenes": [
+  {
+   "t": "PIEZA",
+   "voz": "Un puente moderno se pudre en décadas. Un puerto romano, bajo el mar, mejora con los siglos. ¿Cómo?",
+   "dur": 8.0,
+   "h": "¿CÓMO MEJORA CON LOS SIGLOS?",
+   "w": "SIGLOS",
+   "cap": "caso abierto",
+   "pieza": {
+    "id": "rom-gancho"
+   }
+  },
+  {
+   "t": "PIEZA",
+   "voz": "El agua salada oxida el acero del hormigón moderno. El óxido se hincha y rompe todo desde adentro.",
+   "dur": 8.0,
+   "h": "LA SAL OXIDA EL ACERO",
+   "w": "ÓXIDO",
+   "cap": "hormigón armado",
+   "pieza": {
+    "id": "rom-oxido"
+   }
+  },
+  {
+   "t": "PIEZA",
+   "voz": "Los romanos mezclaban cal con ceniza volcánica de Pozzuoli, cerca de Nápoles, y la enviaban en barco.",
+   "dur": 7.6,
+   "h": "CENIZA VOLCÁNICA",
+   "w": "CENIZA",
+   "cap": "pulvis puteolanus",
+   "pieza": {
+    "id": "rom-ceniza"
+   }
+  },
+  {
+   "t": "PIEZA",
+   "voz": "Cal, ceniza, agua y roca volcánica, vertidas en moldes dentro del mar. Sin acero, nada que oxidar.",
+   "dur": 7.6,
+   "h": "SIN ACERO, NADA QUE OXIDAR",
+   "w": "ACERO",
+   "cap": "la receta",
+   "pieza": {
+    "id": "rom-receta"
+   }
+  },
+  {
+   "t": "PIEZA",
+   "voz": "El secreto está en lo diminuto. Hagamos zoom: granos de ceniza, poros y agua de mar.",
+   "dur": 7.4,
+   "h": "EL SECRETO ESTÁ EN LO DIMINUTO",
+   "w": "ZOOM",
+   "cap": "microscopio",
+   "pieza": {
+    "id": "rom-zoom"
+   }
+  },
+  {
+   "t": "PIEZA",
+   "voz": "El agua de mar se cuela, disuelve ceniza y cal, y de ese caldo nacen cristales nuevos.",
+   "dur": 7.6,
+   "h": "NACEN CRISTALES NUEVOS",
+   "w": "CRISTALES",
+   "cap": "la reacción",
+   "pieza": {
+    "id": "rom-reaccion"
+   }
+  },
+  {
+   "t": "PIEZA",
+   "voz": "El protagonista: la tobermorita, un cristal raro que casi siempre exige mucho calor. Aquí crece en el mar.",
+   "dur": 8.0,
+   "h": "LA TOBERMORITA",
+   "w": "TOBERMORITA",
+   "cap": "cámara rápida",
+   "pieza": {
+    "id": "rom-cristal"
+   }
+  },
+  {
+   "t": "PIEZA",
+   "voz": "Si aparece una grieta, el agua entra, los cristales crecen y la sellan. Un hormigón con curitas automáticas.",
+   "dur": 8.0,
+   "h": "UN HORMIGÓN CON CURITAS",
+   "w": "CURITAS",
+   "cap": "se cura solo",
+   "pieza": {
+    "id": "rom-curita"
+   }
+  },
+  {
+   "t": "PIEZA",
+   "voz": "Además, la mezcla tiene grumos de cal. Si aparece una fisura, se disuelven y la tapan.",
+   "dur": 7.2,
+   "h": "GRUMOS DE CAL",
+   "w": "GRUMOS",
+   "cap": "MIT 2023",
+   "pieza": {
+    "id": "rom-grumos"
+   }
+  },
+  {
+   "t": "PIEZA",
+   "voz": "En Roma, la cúpula del Panteón, de hormigón sin acero, lleva casi dos mil años en pie.",
+   "dur": 7.6,
+   "h": "EL PANTEÓN SIGUE EN PIE",
+   "w": "PANTEÓN",
+   "cap": "dos mil años",
+   "pieza": {
+    "id": "rom-panteon"
+   }
+  },
+  {
+   "t": "PIEZA",
+   "voz": "Ojo: lo romano malo se cayó hace siglos y nadie lo recuerda. Se llama sesgo del sobreviviente.",
+   "dur": 7.6,
+   "h": "SESGO DEL SOBREVIVIENTE",
+   "w": "SESGO",
+   "cap": "ojo",
+   "pieza": {
+    "id": "rom-sesgo"
+   }
+  },
+  {
+   "t": "PIEZA",
+   "voz": "El cemento moderno se cocina a más de mil cuatrocientos grados. Y emite cerca del siete por ciento del CO2.",
+   "dur": 8.9,
+   "h": "EL CEMENTO MODERNO CONTAMINA",
+   "w": "CO2",
+   "cap": "1.400 °C",
+   "pieza": {
+    "id": "rom-co2"
+   }
+  },
+  {
+   "t": "PIEZA",
+   "voz": "Caso resuelto: no era magia, era química paciente. El mar no destruyó el puerto: lo terminó de construir.",
+   "dur": 8.0,
+   "h": "CASO RESUELTO",
+   "w": "QUÍMICA",
+   "cap": "química paciente",
+   "pieza": {
+    "id": "rom-caso"
+   }
+  },
+  {
+   "t": "CTA",
+   "voz": "Guárdalo y síguenos en IMNOBA: propiedades y vehículos.",
+   "dur": 5.0,
+   "h": "SÍGUENOS EN IMNOBA",
+   "w": "IMNOBA",
+   "ic": "casa"
+  }
+ ]
+}
