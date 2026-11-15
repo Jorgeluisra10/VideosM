@@ -1,0 +1,145 @@
+{
+ "titulo": "Derinkuyu: la ciudad bajo tierra",
+ "scenes": [
+  {
+   "t": "PIEZA",
+   "voz": "Un hombre derribó una pared del sótano… y encontró una ciudad.",
+   "dur": 8.0,
+   "h": "BAJO EL SÓTANO",
+   "w": "CIUDAD",
+   "cap": "el hallazgo",
+   "pieza": {
+    "id": "der-gancho"
+   }
+  },
+  {
+   "t": "PIEZA",
+   "voz": "La roca volcánica era blanda: se tallaba con picos.",
+   "dur": 7.0,
+   "h": "ROCA BLANDA",
+   "w": "ROCA",
+   "cap": "tallar",
+   "pieza": {
+    "id": "der-roca"
+   }
+  },
+  {
+   "t": "PIEZA",
+   "voz": "Primero, establos y casas.",
+   "dur": 8.0,
+   "h": "PRIMEROS PISOS",
+   "w": "PISOS",
+   "cap": "descenso",
+   "pieza": {
+    "id": "der-niveles-a"
+   }
+  },
+  {
+   "t": "PIEZA",
+   "voz": "Luego, bodegas, cocinas y escuelas.",
+   "dur": 8.0,
+   "h": "PISOS DEL MEDIO",
+   "w": "MEDIO",
+   "cap": "descenso",
+   "pieza": {
+    "id": "der-niveles-b"
+   }
+  },
+  {
+   "t": "PIEZA",
+   "voz": "Y abajo del todo, una iglesia.",
+   "dur": 8.0,
+   "h": "EL FONDO",
+   "w": "FONDO",
+   "cap": "descenso",
+   "pieza": {
+    "id": "der-niveles-c"
+   }
+  },
+  {
+   "t": "PIEZA",
+   "voz": "El aire frío baja. El caliente sube. Así respiraban.",
+   "dur": 10.0,
+   "h": "EL AIRE",
+   "w": "AIRE",
+   "cap": "ventilación",
+   "pieza": {
+    "id": "der-aire"
+   }
+  },
+  {
+   "t": "PIEZA",
+   "voz": "Una puerta de piedra de media tonelada. Se cerraba solo por dentro.",
+   "dur": 8.0,
+   "h": "PUERTA DE PIEDRA",
+   "w": "PIEDRA",
+   "cap": "defensa",
+   "pieza": {
+    "id": "der-puerta"
+   }
+  },
+  {
+   "t": "PIEZA",
+   "voz": "Hasta veinte mil personas, con sus animales.",
+   "dur": 8.0,
+   "h": "VEINTE MIL",
+   "w": "PERSONAS",
+   "cap": "población",
+   "pieza": {
+    "id": "der-gente"
+   }
+  },
+  {
+   "t": "PIEZA",
+   "voz": "Se cree que túneles unían ciudades vecinas.",
+   "dur": 7.0,
+   "h": "TÚNELES",
+   "w": "TÚNELES",
+   "cap": "conexión",
+   "pieza": {
+    "id": "der-tunel"
+   }
+  },
+  {
+   "t": "PIEZA",
+   "voz": "Arriba, los invasores no encontraban a nadie.",
+   "dur": 8.0,
+   "h": "NADIE",
+   "w": "NADIE",
+   "cap": "escondite",
+   "pieza": {
+    "id": "der-invasores"
+   }
+  },
+  {
+   "t": "PIEZA",
+   "voz": "Hoy solo se visita una parte.",
+   "dur": 7.0,
+   "h": "HOY",
+   "w": "PARTE",
+   "cap": "turismo",
+   "pieza": {
+    "id": "der-hoy"
+   }
+  },
+  {
+   "t": "PIEZA",
+   "voz": "¿Y si derribas otra pared?",
+   "dur": 8.0,
+   "h": "OTRA PARED",
+   "w": "PARED",
+   "cap": "remate",
+   "pieza": {
+    "id": "der-cierre"
+   }
+  },
+  {
+   "t": "CTA",
+   "voz": "Guárdalo y síguenos en IMNOBA: propiedades y vehículos.",
+   "dur": 5.0,
+   "h": "SÍGUENOS EN IMNOBA",
+   "w": "IMNOBA",
+   "ic": "casa"
+  }
+ ]
+}

@@ -753,6 +753,32 @@ export const TRM = {
   caso: { muelle: 0.2, brillo: 1.0, f2: 1.6, insp: 3.0, sello: 4.2, f3: 4.6, chip: 6.0 },
 } as const;
 
+/** Datos de «Derinkuyu» (IMNOBA · ciudad subterránea de Capadocia, Turquía). Cifras de fuentes de divulgación que no siempre coinciden; precauciones en ejemplos/animacion-viral/guion-tecnico-derinkuyu.md. */
+export const DER = {
+  /** hallazgo: en 1963 un vecino derribó la pared de un sótano al reformar su casa; hasta ≈ 85 m de profundidad (otras fuentes: ≈ 60–76 m); ≈ 18 niveles; hasta ≈ 20.000 personas */
+  hallazgo: 1963, profundidadM: 85, niveles: 18, personas: 20000,
+  /** puertas de piedra de molino: hasta ≈ 500 kg (1.000 lb), cierre desde dentro */
+  puertaKg: 500,
+  /** un pozo de ≈ 55 m servía de pozo de agua y de ventilación; túneles a Kaymaklı de ≈ 8–9 km (según se cree; no transitables hoy) */
+  pozoM: 55, tunelKm: 9,
+} as const;
+
+/** Tiempos de «Derinkuyu» (s a ritmo normal), compartidos entre el dibujo y el sonido. */
+export const TDR = {
+  gancho: { casa: 0.2, gallina: 0.8, golpe1: 1.8, golpe2: 2.7, rompe: 3.2, asoma: 3.9, dive: 4.6, diveDur: 3.2 },
+  roca: { pica: 0.2, crece: 0.6, creceDur: 4.4, seca: 3.0, topo: 2.6, topo2: 5.4 },
+  nivA: { baja: 0.4 },
+  nivB: { baja: 0.4 },
+  nivC: { iglesia: 0.4, zoomIglesia: 2.0, baja: 4.2 },
+  aire: { zoomOut: 0.2, frio: 1.0, caliente: 3.2, calorDur: 2.0, humo: 4.8, push: 5.4, pushDur: 3.0 },
+  puerta: { pasillo: 0.2, vienen: 0.6, rueda: 2.2, ruedaDur: 1.3, golpe: 3.5, lanza: 4.8, huyen: 5.6 },
+  gente: { zoomOut: 0.2, llena: 0.8, llenaDur: 5.2, dato: 1.6, datoDur: 4.4, pop: 6.4 },
+  tunel: { pan: 0.2, panDur: 6.4, murcielago: 1.6, ojos: 3.2, ciudad: 5.4 },
+  invasores: { llegan: 0.4, buscan: 2.2, silencio: 2.6, olfatea: 4.6, rascan: 5.4, huyen: 6.6 },
+  hoy: { baja: 0.2, bajaDur: 6.4, flash: 3.0, luces: 1.0, valla: 5.2, ojos: 5.6 },
+  cierre: { sube: 0.2, subeDur: 3.0, aparece: 3.4, mira: 4.0, martillo: 4.6, guino: 5.2, golpe: 5.8, luz: 5.9 },
+} as const;
+
 export const PIEZAS: Record<string, DefPieza> = {
   "metro-plano": {
     id: "metro-plano", nombre: "8 millones en un solo plano", ideal: 7.6, fondo: "dark",
@@ -1513,6 +1539,55 @@ export const PIEZAS: Record<string, DefPieza> = {
   "rom-caso": {
     id: "rom-caso", nombre: "Hormigón romano · caso resuelto: química paciente; el mar lo terminó de construir (cierre)", ideal: 7.55, fondo: "dark", entra: "zoom",
     sfx: (_d, r) => [ev(TRM.caso.muelle * r, "whoosh", 0.12), ev(TRM.caso.brillo * r, "ding", 0.14), ev(TRM.caso.insp * r, "pop", 0.12), ev(TRM.caso.sello * r, "golpe", 0.26), ev((TRM.caso.sello + 0.25) * r, "ding", 0.16), ev(TRM.caso.chip * r, "tick", 0.1)],
+  },
+  /* ───────────── «Derinkuyu» (IMNOBA · ciudad subterránea · corte transversal a pantalla completa) ───────────── */
+  "der-gancho": {
+    id: "der-gancho", nombre: "Derinkuyu · un hombre derriba la pared de su sótano y descubre una ciudad (gancho)", ideal: 7.55, fondo: "dark",
+    sfx: (_d, r) => [ev(0.05, "golpe", 0.12), ev(TDR.gancho.gallina * r, "pop", 0.14), ev(TDR.gancho.golpe1 * r, "thud", 0.3), ev(TDR.gancho.golpe2 * r, "thud", 0.32), ev(TDR.gancho.rompe * r, "golpe", 0.3), ev(TDR.gancho.asoma * r, "pop", 0.14), ev(TDR.gancho.dive * r, "whoosh", 0.2)],
+  },
+  "der-roca": {
+    id: "der-roca", nombre: "Derinkuyu · la toba volcánica es blanda: se talla con picos y se endurece al aire", ideal: 6.55, fondo: "dark", entra: "corte",
+    sfx: (_d, r) => [ev(TDR.roca.pica * r, "clic", 0.2), ev((TDR.roca.pica + 1 * 0.45) * r, "clic", 0.16), ev((TDR.roca.pica + 2 * 0.45) * r, "clic", 0.16), ev((TDR.roca.pica + 3 * 0.45) * r, "clic", 0.16), ev((TDR.roca.pica + 4 * 0.45) * r, "clic", 0.16), ev((TDR.roca.pica + 5 * 0.45) * r, "clic", 0.16), ev((TDR.roca.pica + 6 * 0.45) * r, "clic", 0.16), ev((TDR.roca.pica + 7 * 0.45) * r, "clic", 0.16), ev((TDR.roca.pica + 8 * 0.45) * r, "clic", 0.16), ev(TDR.roca.topo * r, "pop", 0.14), ev(TDR.roca.seca * r, "polvo", 0.16), ev(TDR.roca.topo2 * r, "pop", 0.14)],
+  },
+  "der-niveles-a": {
+    id: "der-niveles-a", nombre: "Derinkuyu · descenso por los pisos 1 a 6: establos y casas", ideal: 7.55, fondo: "dark", entra: "corte",
+    sfx: (_d, r) => [ev(0.1, "whoosh", 0.16), ev(0.90 * r, "tick", 0.12), ev(2.05 * r, "tick", 0.12), ev(3.20 * r, "tick", 0.12), ev(4.35 * r, "tick", 0.12), ev(5.50 * r, "tick", 0.12), ev(6.65 * r, "tick", 0.12)],
+  },
+  "der-niveles-b": {
+    id: "der-niveles-b", nombre: "Derinkuyu · descenso por los pisos 7 a 12: bodegas, cocinas y escuelas", ideal: 7.55, fondo: "dark", entra: "corte",
+    sfx: (_d, r) => [ev(0.1, "whoosh", 0.16), ev(0.90 * r, "tick", 0.12), ev(2.05 * r, "tick", 0.12), ev(3.20 * r, "tick", 0.12), ev(4.35 * r, "tick", 0.12), ev(5.50 * r, "tick", 0.12), ev(6.65 * r, "tick", 0.12)],
+  },
+  "der-niveles-c": {
+    id: "der-niveles-c", nombre: "Derinkuyu · descenso por los pisos 13 a 18: la iglesia y el fondo", ideal: 7.55, fondo: "dark", entra: "corte",
+    sfx: (_d, r) => [ev(0.1, "whoosh", 0.16), ev(TDR.nivC.iglesia * r, "ding", 0.16), ev(TDR.nivC.zoomIglesia * r, "pop", 0.12), ev(TDR.nivC.baja * r, "whoosh", 0.18), ev(6.4 * r, "thud", 0.2)],
+  },
+  "der-aire": {
+    id: "der-aire", nombre: "Derinkuyu · el aire frío baja por el pozo central y el caliente sube por los laterales", ideal: 8.55, fondo: "dark", entra: "zoom",
+    sfx: (_d, r) => [ev(TDR.aire.zoomOut * r, "whoosh", 0.18), ev(TDR.aire.frio * r, "radar", 0.14), ev(TDR.aire.caliente * r, "zap", 0.12), ev(TDR.aire.humo * r, "estatica", 0.12), ev(TDR.aire.push * r, "whoosh", 0.16), ev(7.8 * r, "ding", 0.14)],
+  },
+  "der-puerta": {
+    id: "der-puerta", nombre: "Derinkuyu · una puerta de piedra de media tonelada que solo se cierra por dentro", ideal: 7.55, fondo: "dark",
+    sfx: (_d, r) => [ev(TDR.puerta.vienen * r, "tick", 0.14), ev(TDR.puerta.rueda * r, "whoosh", 0.24), ev(TDR.puerta.golpe * r, "golpe", 0.34), ev((TDR.puerta.golpe + 0.2) * r, "polvo", 0.2), ev(TDR.puerta.lanza * r, "pop", 0.16), ev(TDR.puerta.huyen * r, "tick", 0.12)],
+  },
+  "der-gente": {
+    id: "der-gente", nombre: "Derinkuyu · hasta 20.000 personas con sus animales llenan los pisos", ideal: 7.55, fondo: "dark", entra: "zoom",
+    sfx: (_d, r) => [ev(TDR.gente.zoomOut * r, "whoosh", 0.16), ev(1.00 * r, "pop", 0.1), ev(1.55 * r, "pop", 0.1), ev(2.10 * r, "pop", 0.1), ev(2.65 * r, "pop", 0.1), ev(3.20 * r, "pop", 0.1), ev(3.75 * r, "pop", 0.1), ev(4.30 * r, "pop", 0.1), ev(4.85 * r, "pop", 0.1), ev(5.40 * r, "pop", 0.1), ev(TDR.gente.dato * r, "zap", 0.12), ev(TDR.gente.pop * r, "ding", 0.16)],
+  },
+  "der-tunel": {
+    id: "der-tunel", nombre: "Derinkuyu · se cree que túneles unían ciudades vecinas", ideal: 6.55, fondo: "dark", entra: "corte",
+    sfx: (_d, r) => [ev(TDR.tunel.pan * r, "whoosh", 0.14), ev(TDR.tunel.murcielago * r, "pop", 0.14), ev(TDR.tunel.ojos * r, "pop", 0.12), ev(TDR.tunel.ciudad * r, "ding", 0.16)],
+  },
+  "der-invasores": {
+    id: "der-invasores", nombre: "Derinkuyu · arriba los invasores no encuentran a nadie; abajo, silencio", ideal: 7.55, fondo: "dark", entra: "corte",
+    sfx: (_d, r) => [ev(TDR.invasores.llegan * r, "thud", 0.2), ev(1.4 * r, "thud", 0.2), ev(TDR.invasores.buscan * r, "tick", 0.12), ev(TDR.invasores.silencio * r, "estatica", 0.1), ev(TDR.invasores.olfatea * r, "pop", 0.14), ev(TDR.invasores.rascan * r, "pop", 0.14), ev(TDR.invasores.huyen * r, "whoosh", 0.18)],
+  },
+  "der-hoy": {
+    id: "der-hoy", nombre: "Derinkuyu · hoy solo se visita una parte, con luces, cascos y una valla", ideal: 6.55, fondo: "dark", entra: "corte",
+    sfx: (_d, r) => [ev(TDR.hoy.baja * r, "whoosh", 0.14), ev(TDR.hoy.luces * r, "zap", 0.12), ev(TDR.hoy.flash * r, "clic", 0.26), ev(TDR.hoy.valla * r, "thud", 0.18), ev(TDR.hoy.ojos * r, "pop", 0.14)],
+  },
+  "der-cierre": {
+    id: "der-cierre", nombre: "Derinkuyu · ¿y si derribas otra pared? (cierre con humor)", ideal: 7.55, fondo: "dark",
+    sfx: (_d, r) => [ev(TDR.cierre.sube * r, "whoosh", 0.24), ev(TDR.cierre.aparece * r, "pop", 0.14), ev(TDR.cierre.martillo * r, "tick", 0.16), ev(TDR.cierre.guino * r, "pop", 0.14), ev(TDR.cierre.golpe * r, "golpe", 0.34), ev(TDR.cierre.luz * r, "ding", 0.2)],
   },
 };
 
