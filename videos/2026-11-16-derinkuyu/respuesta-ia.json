@@ -3,7 +3,7 @@
  "scenes": [
   {
    "t": "PIEZA",
-   "voz": "Un hombre derribó una pared del sótano… y encontró una ciudad.",
+   "voz": "Un vecino derribó la pared de su sótano y encontró un túnel hacia una ciudad escondida.",
    "dur": 8.0,
    "h": "BAJO EL SÓTANO",
    "w": "CIUDAD",
@@ -14,7 +14,7 @@
   },
   {
    "t": "PIEZA",
-   "voz": "La roca volcánica era blanda: se tallaba con picos.",
+   "voz": "Excavada en roca volcánica blanda, que se tallaba con picos y se endurecía al aire.",
    "dur": 7.0,
    "h": "ROCA BLANDA",
    "w": "ROCA",
@@ -25,7 +25,7 @@
   },
   {
    "t": "PIEZA",
-   "voz": "Primero, establos y casas.",
+   "voz": "Bajamos por los primeros pisos: establos con caballos y burros, y casas con camas, hornos y antorchas.",
    "dur": 8.0,
    "h": "PRIMEROS PISOS",
    "w": "PISOS",
@@ -36,7 +36,7 @@
   },
   {
    "t": "PIEZA",
-   "voz": "Luego, bodegas, cocinas y escuelas.",
+   "voz": "Más abajo, bodegas con tinajas, cocinas con humo, una prensa de aceite y hasta una escuela.",
    "dur": 8.0,
    "h": "PISOS DEL MEDIO",
    "w": "MEDIO",
@@ -47,7 +47,7 @@
   },
   {
    "t": "PIEZA",
-   "voz": "Y abajo del todo, una iglesia.",
+   "voz": "Al fondo, una iglesia con cruz y velas, refugios para dormir y un pozo hasta el agua.",
    "dur": 8.0,
    "h": "EL FONDO",
    "w": "FONDO",
@@ -58,7 +58,7 @@
   },
   {
    "t": "PIEZA",
-   "voz": "El aire frío baja. El caliente sube. Así respiraban.",
+   "voz": "¿Y el aire? Seguramente bajaba frío por los pozos, se calentaba dentro y subía por los laterales, renovándose sin ventiladores.",
    "dur": 10.0,
    "h": "EL AIRE",
    "w": "AIRE",
@@ -69,7 +69,7 @@
   },
   {
    "t": "PIEZA",
-   "voz": "Una puerta de piedra de media tonelada. Se cerraba solo por dentro.",
+   "voz": "Si llegaban invasores, rodaban una puerta de piedra de media tonelada que solo se cerraba desde dentro.",
    "dur": 8.0,
    "h": "PUERTA DE PIEDRA",
    "w": "PIEDRA",
@@ -80,7 +80,7 @@
   },
   {
    "t": "PIEZA",
-   "voz": "Hasta veinte mil personas, con sus animales.",
+   "voz": "Así vivían hasta veinte mil personas, con caballos, cabras y gallinas, cocinando y durmiendo bajo tierra.",
    "dur": 8.0,
    "h": "VEINTE MIL",
    "w": "PERSONAS",
@@ -91,7 +91,7 @@
   },
   {
    "t": "PIEZA",
-   "voz": "Se cree que túneles unían ciudades vecinas.",
+   "voz": "Se cree que largos túneles unían otras ciudades subterráneas, aunque hoy no se recorren.",
    "dur": 7.0,
    "h": "TÚNELES",
    "w": "TÚNELES",
@@ -102,7 +102,7 @@
   },
   {
    "t": "PIEZA",
-   "voz": "Arriba, los invasores no encontraban a nadie.",
+   "voz": "Arriba, los soldados buscaban por todas partes y no encontraban a nadie: abajo, todos guardaban silencio.",
    "dur": 8.0,
    "h": "NADIE",
    "w": "NADIE",
@@ -113,7 +113,7 @@
   },
   {
    "t": "PIEZA",
-   "voz": "Hoy solo se visita una parte.",
+   "voz": "Hoy los turistas bajan con cascos y linternas, pero solo visitan una parte.",
    "dur": 7.0,
    "h": "HOY",
    "w": "PARTE",
@@ -124,7 +124,7 @@
   },
   {
    "t": "PIEZA",
-   "voz": "¿Y si derribas otra pared?",
+   "voz": "La próxima vez que reformes tu propiedad… ¿y si derribas otra pared? Quién sabe qué esconde.",
    "dur": 8.0,
    "h": "OTRA PARED",
    "w": "PARED",

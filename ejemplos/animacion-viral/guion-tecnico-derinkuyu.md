@@ -1,8 +1,8 @@
 # «Derinkuyu: la ciudad bajo tierra» · guion técnico (IMNOBA, 9:16, ≈ 99 s)
 
-**Marca:** IMNOBA · paleta `imnoba` · **Serie:** ingeniería extrema · **Estilo:** viaje inmersivo y claustrofóbico en corte transversal a pantalla completa, tipo aventura oscura de Indiana Jones: roca ocre con poros y vetas por todo el cuadro, antorchas que parpadean, polvo, murciélagos y personajes de caricatura con vida propia. **Casi sin texto:** solo el contador de profundidad (-NN m), la regla de metros y la cifra de 20.000; todo lo demás se explica dibujando (la voz solo suma ≈ 96 palabras en 99 s).
+**Marca:** IMNOBA · paleta `imnoba` · **Serie:** ingeniería extrema · **Estilo:** viaje inmersivo y claustrofóbico en corte transversal a pantalla completa, tipo aventura oscura de Indiana Jones: roca ocre con poros y vetas por todo el cuadro, antorchas que parpadean, polvo, murciélagos y personajes de caricatura con vida propia. **Casi sin texto:** solo el contador de profundidad (-NN m), la regla de metros y la cifra de 20.000; todo lo demás se explica dibujando (la voz, descriptiva, suma ≈ 200 palabras en 99 s).
 **Cómo se carga:** `node scripts/anim/desde-respuesta.mjs --idea=ejemplos/animacion-viral/idea-derinkuyu.txt --respuesta=ejemplos/animacion-viral/respuesta-ia-derinkuyu.json --paleta=imnoba`. Carpeta de trabajo: `videos/2026-11-16-derinkuyu/`. Código: `src/viral/piezas/der-kit.tsx` (`Camara`, `RocaFondo`, `Ciudad` con 18 niveles y sus salas, `Galerias`, `Aire`, `Superficie`, `CasaCorte`, `Aldeano`, `Soldado`, `Animal`, `Antorcha`, `PuertaPiedra`, `Polvo`, `Vineta`), `der1.tsx`, `der2.tsx`; datos y tiempos en `src/anim/piezas.ts` (`DER`, `TDR`).
-**Voz:** pensada para «Lively DJ» de CapCut (≈ 2,3 palabras por segundo): cada frase es corta y cabe con holgura (el resto de cada escena es música, sonido e imagen). `npm run capcut` deja el texto listo; mejor un audio por escena.
+**Voz:** pensada para «Lively DJ» de CapCut (≈ 2,3 palabras por segundo): cada frase describe lo que se ve y cabe en su escena. `npm run capcut` deja el texto listo; mejor un audio por escena.
 **Música y sonidos:** `videos/2026-11-16-derinkuyu/componer-musica.mjs` → `assets/musica/derinkuyu.wav` → `node scripts/anim/musica.mjs --usar=assets/musica/derinkuyu.wav` (y `--restaurar` al terminar; el WAV no va a git).
 
 ## Diseño sonoro (distinto en cada escena)
@@ -25,18 +25,18 @@ Cama: aventura oscura en re menor a 104 bpm (dron grave, cuerdas en trémolo, ti
 
 | # | Pieza | Voz en off | Qué se ve (casi sin texto) |
 |---|---|---|---|
-| 1 | `der-gancho` | «Un hombre derribó una pared del sótano… y encontró una ciudad.» | Casa de Capadocia en corte; el hombre rompe la pared con el mazo, una gallina entra al agujero y la cámara se lanza hacia abajo |
-| 2 | `der-roca` | «La roca volcánica era blanda: se tallaba con picos.» | Toba pálida que se oscurece, cámaras que crecen con obreros que pican, chispas de roca y topos curiosos |
-| 3 | `der-niveles-a` | «Primero, establos y casas.» | Descenso por los pisos 1–6 con caballos, burros, camas, hornos y antorchas |
-| 4 | `der-niveles-b` | «Luego, bodegas, cocinas y escuelas.» | Pisos 7–12: tinajas, hornos con humo, prensa de aceite y una clase |
-| 5 | `der-niveles-c` | «Y abajo del todo, una iglesia.» | Pisos 13–18: iglesia con cruz y velas, refugios, pozo y murciélagos |
-| 6 | `der-aire` | «El aire frío baja. El caliente sube. Así respiraban.» | Vista de toda la ciudad: lazos de partículas azules que bajan por el pozo central y naranjas que suben por los laterales |
-| 7 | `der-puerta` | «Una puerta de piedra de media tonelada. Se cerraba solo por dentro.» | Defensores que empujan la piedra de molino, soldados que chocan, lanza por el orificio y huida |
-| 8 | `der-gente` | «Hasta veinte mil personas, con sus animales.» | Toda la ciudad se llena de gente piso por piso y un contador que sube a 20.000 |
-| 9 | `der-tunel` | «Se cree que túneles unían ciudades vecinas.» | Panorámica de un túnel con gente y burros, murciélagos y unos ojos curiosos hasta otra ciudad |
-| 10 | `der-invasores` | «Arriba, los invasores no encontraban a nadie.» | Superficie con soldados a caballo y signos de interrogación; abajo, aldeanos callados |
-| 11 | `der-hoy` | «Hoy solo se visita una parte.» | Turistas con casco y linterna, guía con bandera, flash, valla y gran parte a oscuras (indicador de pisos encendidos) |
-| 12 | `der-cierre` | «¿Y si derribas otra pared?» | La cámara sube al sótano; el hombre guiña, alza el mazo, golpe y luz dorada |
+| 1 | `der-gancho` | «Un vecino derribó la pared de su sótano y encontró un túnel hacia una ciudad escondida.» | Casa de Capadocia en corte; el hombre rompe la pared con el mazo, una gallina entra al agujero y la cámara se lanza hacia abajo |
+| 2 | `der-roca` | «Excavada en roca volcánica blanda, que se tallaba con picos y se endurecía al aire.» | Toba pálida que se oscurece, cámaras que crecen con obreros que pican, chispas de roca y topos curiosos |
+| 3 | `der-niveles-a` | «Bajamos por los primeros pisos: establos con caballos y burros, y casas con camas, hornos y antorchas.» | Descenso por los pisos 1–6 con caballos, burros, camas, hornos y antorchas |
+| 4 | `der-niveles-b` | «Más abajo, bodegas con tinajas, cocinas con humo, una prensa de aceite y hasta una escuela.» | Pisos 7–12: tinajas, hornos con humo, prensa de aceite y una clase |
+| 5 | `der-niveles-c` | «Al fondo, una iglesia con cruz y velas, refugios para dormir y un pozo hasta el agua.» | Pisos 13–18: iglesia con cruz y velas, refugios, pozo y murciélagos |
+| 6 | `der-aire` | «¿Y el aire? Seguramente bajaba frío por los pozos, se calentaba dentro y subía por los laterales, renovándose sin ventiladores.» | Vista de toda la ciudad: lazos de partículas azules que bajan por el pozo central y naranjas que suben por los laterales |
+| 7 | `der-puerta` | «Si llegaban invasores, rodaban una puerta de piedra de media tonelada que solo se cerraba desde dentro.» | Defensores que empujan la piedra de molino, soldados que chocan, lanza por el orificio y huida |
+| 8 | `der-gente` | «Así vivían hasta veinte mil personas, con caballos, cabras y gallinas, cocinando y durmiendo bajo tierra.» | Toda la ciudad se llena de gente piso por piso y un contador que sube a 20.000 |
+| 9 | `der-tunel` | «Se cree que largos túneles unían otras ciudades subterráneas, aunque hoy no se recorren.» | Panorámica de un túnel con gente y burros, murciélagos y unos ojos curiosos hasta otra ciudad |
+| 10 | `der-invasores` | «Arriba, los soldados buscaban por todas partes y no encontraban a nadie: abajo, todos guardaban silencio.» | Superficie con soldados a caballo y signos de interrogación; abajo, aldeanos callados |
+| 11 | `der-hoy` | «Hoy los turistas bajan con cascos y linternas, pero solo visitan una parte.» | Turistas con casco y linterna, guía con bandera, flash, valla y gran parte a oscuras (indicador de pisos encendidos) |
+| 12 | `der-cierre` | «La próxima vez que reformes tu propiedad… ¿y si derribas otra pared? Quién sabe qué esconde.» | La cámara sube al sótano; el hombre guiña, alza el mazo, golpe y luz dorada |
 | 13 | `CTA` | «Guárdalo y síguenos en IMNOBA: propiedades y vehículos.» | Cierre con el logo |
 
 ## Precauciones antes de publicar (lo que NO se afirma o se matiza)

@@ -5,25 +5,25 @@
 ## 1 · Video final
 `trabajo/archivo/2026-11-16-derinkuyu/video-final.mp4` (1080×1920 · 60 fps · H.264 + AAC · 99 s · **sin voz**; audio nivelado a ≈ −17 LUFS, pico −2,1 dBFS: solo música y sonidos; 58 MB). Copia ligera de revisión en esta carpeta (`revision.mp4`). Pistas en `trabajo/archivo/2026-11-16-derinkuyu/stems/` (`musica-y-efectos-normalizado.wav` para escuchar y `musica-y-efectos.wav` para reeditar con voz).
 
-## 2 · Guion final (locución mínima: 96 palabras, ajustado a «Lively DJ» de CapCut)
-1. Un hombre derribó una pared del sótano… y encontró una ciudad.
-2. La roca volcánica era blanda: se tallaba con picos.
-3. Primero, establos y casas.
-4. Luego, bodegas, cocinas y escuelas.
-5. Y abajo del todo, una iglesia.
-6. El aire frío baja. El caliente sube. Así respiraban.
-7. Una puerta de piedra de media tonelada. Se cerraba solo por dentro.
-8. Hasta veinte mil personas, con sus animales.
-9. Se cree que túneles unían ciudades vecinas.
-10. Arriba, los invasores no encontraban a nadie.
-11. Hoy solo se visita una parte.
-12. ¿Y si derribas otra pared?
+## 2 · Guion final (locución descriptiva: ≈ 200 palabras, ajustada a «Lively DJ» de CapCut)
+1. Un vecino derribó la pared de su sótano y encontró un túnel hacia una ciudad escondida.
+2. Excavada en roca volcánica blanda, que se tallaba con picos y se endurecía al aire.
+3. Bajamos por los primeros pisos: establos con caballos y burros, y casas con camas, hornos y antorchas.
+4. Más abajo, bodegas con tinajas, cocinas con humo, una prensa de aceite y hasta una escuela.
+5. Al fondo, una iglesia con cruz y velas, refugios para dormir y un pozo hasta el agua.
+6. ¿Y el aire? Seguramente bajaba frío por los pozos, se calentaba dentro y subía por los laterales, renovándose sin ventiladores.
+7. Si llegaban invasores, rodaban una puerta de piedra de media tonelada que solo se cerraba desde dentro.
+8. Así vivían hasta veinte mil personas, con caballos, cabras y gallinas, cocinando y durmiendo bajo tierra.
+9. Se cree que largos túneles unían otras ciudades subterráneas, aunque hoy no se recorren.
+10. Arriba, los soldados buscaban por todas partes y no encontraban a nadie: abajo, todos guardaban silencio.
+11. Hoy los turistas bajan con cascos y linternas, pero solo visitan una parte.
+12. La próxima vez que reformes tu propiedad… ¿y si derribas otra pared? Quién sabe qué esconde.
 13. Guárdalo y síguenos en IMNOBA: propiedades y vehículos.
 
 Guion técnico con precauciones: `ejemplos/animacion-viral/guion-tecnico-derinkuyu.md`.
 
 ## 3 · Ganchos
-- A) «Un hombre derribó una pared del sótano… y encontró una ciudad.» ← **elegido**: arranca con una escena doméstica y graciosa (el mazo, la gallina que se mete al agujero) y se lanza al vacío; la imagen cuenta casi todo sin texto.
+- A) «Un vecino derribó la pared de su sótano y encontró un túnel hacia una ciudad escondida.» ← **elegido**: arranca con una escena doméstica y graciosa (el mazo, la gallina que se mete al agujero) y se lanza al vacío; la imagen cuenta casi todo sin texto.
 - B) «Detrás de esta pared había una ciudad de dieciocho pisos.»
 - C) «Esta ciudad respira sin ventiladores. ¿Cómo?»
 
@@ -41,13 +41,13 @@ Registrado en el Panel de Videos con estado «grabado» y serie «ingeniería ex
 - **Texto en pantalla:** solo el contador de profundidad (-NN m), la regla de metros del borde y la cifra de 20.000; todo lo demás es dibujo.
 - **Pantalla completa:** la roca ocre con poros y vetas cubre todo el cuadro; cuando la cámara se aleja, galerías laterales con gente, antorchas y animales llenan los costados; hay polvo, murciélagos y viñeta de claustrofobia.
 - **Casi nada estático:** antorchas que parpadean, aldeanos que duermen, rezan, bailan o empujan, caballos y burros que respiran y mueven la cola, hornos con humo, prensas que giran, escaleras con gente, partículas de aire azules que bajan y naranjas que suben.
-- **Humor:** la gallina que entra al agujero, el mazo, topos curiosos, soldados con signos de interrogación, el aldeano que baila, turistas con casco y flash, un par de ojos en la oscuridad y el final «¿Y si derribas otra pared?».
+- **Humor:** la gallina que entra al agujero, el mazo, topos curiosos, soldados con signos de interrogación, el aldeano que baila, turistas con casco y flash, un par de ojos en la oscuridad y el final «La próxima vez que reformes tu propiedad… ¿y si derribas otra pared? Quién sabe qué esconde.».
 
 ## Música y sonidos
 `videos/2026-11-16-derinkuyu/componer-musica.mjs`: aventura oscura en re menor a 104 bpm (dron grave, cuerdas en trémolo, timbales y tambores, motivo de metales y flauta tipo duduk) con eco de cueva y casi silencio con latido en los invasores. Más de 26 sonidos distintos por escena: golpes de mazo, derrumbe, cacareo, picos en la piedra, ascensor que baja, relincho y rebuzno, crepitar del horno, campanas de iglesia, coro, murciélagos, aullido del viento por el pozo, respiración, pasos que corren, piedra que rueda, lanza, murmullo de multitud, redoble, goteo, galope, olfateo, kazoo, obturador y fanfarria.
 
 ## Lo que conviene saber (dicho con claridad)
-- **Sin voz:** no hay `OPENAI_API_KEY`. El guion es mínimo (≈ 96 palabras en 99 s) y está ajustado a «Lively DJ» de CapCut (≈ 2,3 palabras por segundo): cada frase cabe con mucha holgura y el resto de cada escena lo llevan la música y el sonido. Genera la voz escena por escena y pega con `npm run capcut -- --escenas=carpeta`, o una sola pista con `--audio=`.
+- **Sin voz:** no hay `OPENAI_API_KEY`. El guion es descriptivo (≈ 200 palabras en 99 s) y está ajustado a «Lively DJ» de CapCut (≈ 2,3 palabras por segundo): cada frase cabe en su escena. Genera la voz escena por escena y pega con `npm run capcut -- --escenas=carpeta`, o una sola pista con `--audio=`.
 - **Cifras que no coinciden entre fuentes:** profundidad (≈ 85 m según la premisa y algunas fuentes; otras dan ≈ 60–76 m), niveles (≈ 18; solo se visitan ≈ 8 según una guía), capacidad (hasta ≈ 20.000 personas con sus animales) y fechas (Frigios, bizantinos). Por eso la voz no da cifras de profundidad ni de pisos.
 - **El hallazgo de 1963** se cuenta de varias formas; la gallina y el mazo son una dramatización humorística.
 - **Ventilación por convección:** los pozos de ventilación son un hecho descrito (uno de ≈ 55 m servía también de pozo de agua); que el aire frío bajara por el pozo central y el caliente subiera por los laterales es una **interpretación plausible** del diseño, no un estudio medido. Los lazos de partículas son un esquema, no una simulación de fluidos.
