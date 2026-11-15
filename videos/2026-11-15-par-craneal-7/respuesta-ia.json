@@ -1,0 +1,11 @@
+{"titulo": "El par craneal VII: el nervio de los gestos", "scenes": [
+{"t": "PIEZA", "voz": "Si la mitad de la cara se cae, ¿es parálisis de Bell o un ictus? La frente da una pista.", "dur": 7.5, "h": "¿BELL O ICTUS?", "w": "ICTUS", "pieza": {"id": "fa-gancho"}},
+{"t": "PIEZA", "voz": "Es el par craneal siete, el facial: el nervio de los gestos. Sonreír, guiñar, fruncir el ceño o soplar una vela.", "dur": 7.8, "h": "EL NERVIO DE LOS GESTOS", "w": "GESTOS", "cap": "par craneal VII", "pieza": {"id": "fa-gestos"}},
+{"t": "PIEZA", "voz": "No solo mueve: da el gusto de la punta de la lengua y ordena producir lágrimas y saliva.", "dur": 7.0, "h": "GUSTO, LÁGRIMAS Y SALIVA", "w": "LÁGRIMAS", "pieza": {"id": "fa-extras"}},
+{"t": "PIEZA", "voz": "Viaja por un túnel estrecho, como un cable en un tubo, y sale junto a la oreja abriéndose en ramas.", "dur": 8.2, "h": "UN TÚNEL ESTRECHO", "w": "TÚNEL", "pieza": {"id": "fa-tunel"}},
+{"t": "PIEZA", "voz": "Se cree que en Bell el nervio se inflama, se aprieta en su túnel y media cara se queda sin órdenes.", "dur": 7.8, "h": "PARÁLISIS DE BELL", "w": "BELL", "pieza": {"id": "fa-bell"}},
+{"t": "PIEZA", "voz": "La pista: la frente recibe órdenes de dos lados del cerebro. En el ictus suele salvarse; en Bell, no.", "dur": 7.5, "h": "LA PISTA ES LA FRENTE", "w": "FRENTE", "pieza": {"id": "fa-frente"}},
+{"t": "PIEZA", "voz": "Dato curioso, poco frecuente: tras recuperarse, algunos lloran al comer. Son las lágrimas de cocodrilo: cables mal reconectados.", "dur": 7.5, "h": "LÁGRIMAS DE COCODRILO", "w": "COCODRILO", "pieza": {"id": "fa-cocodrilo"}},
+{"t": "PIEZA", "voz": "Si la cara se cae de golpe, llama a emergencias. Dime en comentarios: ¿puedes subir solo una ceja?", "dur": 7.5, "h": "¿SOLO UNA CEJA?", "w": "CEJA", "pieza": {"id": "fa-urgencia"}},
+{"t": "CTA", "voz": "Compártelo con alguien que ame el cerebro. Síguenos en Sinapsis.", "dur": 4.8, "h": "COMPÁRTELO Y SÍGUENOS", "w": "SÍGUENOS", "sub": "Más ciencia en SINAPSIS"}
+]}

@@ -5,6 +5,8 @@
 import { MeCola, MeColumna, MeGancho, MeMariposa } from "./me1";
 import { AbDorello, AbGancho, AbNucleo, AbRegla } from "./ab1";
 import { AbConsulta, AbDuane, AbFalso, AbPresion } from "./ab2";
+import { FaGancho, FaGestos, FaExtras, FaTunel } from "./fa1";
+import { FaBell, FaFrente, FaCocodrilo, FaUrgencia } from "./fa2";
 import { TgCapsaicina, TgGancho, TgMentol, TgNobel } from "./tg1";
 import { TgComenta, TgHelado, TgNeuralgia, TgRamas } from "./tg2";
 import { TrCruce, TrGancho, TrRecorrido, TrTroclea } from "./tr1";
@@ -141,6 +143,8 @@ export const COMPONENTES_PIEZA: Record<string, React.FC<{ e: EscenaViralGuardada
   "tej-nervioso": TejNervioso,
   "ab-gancho": AbGancho, "ab-regla": AbRegla, "ab-nucleo": AbNucleo, "ab-dorello": AbDorello,
   "ab-presion": AbPresion, "ab-falso": AbFalso, "ab-duane": AbDuane, "ab-consulta": AbConsulta,
+  "fa-gancho": FaGancho, "fa-gestos": FaGestos, "fa-extras": FaExtras, "fa-tunel": FaTunel,
+  "fa-bell": FaBell, "fa-frente": FaFrente, "fa-cocodrilo": FaCocodrilo, "fa-urgencia": FaUrgencia,
   "tg-gancho": TgGancho, "tg-capsaicina": TgCapsaicina, "tg-nobel": TgNobel, "tg-mentol": TgMentol,
   "tg-ramas": TgRamas, "tg-helado": TgHelado, "tg-neuralgia": TgNeuralgia, "tg-comenta": TgComenta,
   "tr-gancho": TrGancho, "tr-cruce": TrCruce, "tr-recorrido": TrRecorrido, "tr-troclea": TrTroclea,

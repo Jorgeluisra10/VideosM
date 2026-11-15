@@ -884,6 +884,32 @@ export const TAB = {
   consulta: { doble: 0.2, medico: 3.2, avisar: 4.8 },
 } as const;
 
+/** Datos del video «El par craneal VII: el nervio de los gestos» (SINAPSIS · pares craneales). Fuentes y precauciones en ejemplos/animacion-viral/guion-tecnico-par-craneal-7.md. */
+export const FA = {
+  /** el facial es un nervio mixto: motor de los músculos de la expresión (y del estapedio), gusto de los 2/3 anteriores de la lengua y secreción de lágrimas y saliva (parasimpático) */
+  gestos: ["sonreír", "guiñar", "fruncir el ceño", "soplar una vela"],
+  funciones: { gusto: "2/3 anteriores de la lengua", glandulas: ["lagrimal", "submandibular", "sublingual"] },
+  /** recorre un conducto estrecho (canal facial) en el hueso temporal y sale junto a la oreja (agujero estilomastoideo) para abrirse en ramas por la cara */
+  tunel: "canal facial",
+  /** parálisis de Bell: se cree que hay inflamación del nervio (a menudo asociada a un virus) dentro de ese conducto; afecta a toda la hemicara, frente incluida; la mayoría mejora */
+  bell: { frenteAfectada: true, hemicara: true },
+  /** la frente recibe inervación cortical de ambos hemisferios: en una lesión central (ictus de hemisferio) suele respetarse; excepciones: ictus de tronco, otras causas periféricas */
+  ictusRespetaFrente: "suele",
+  /** lágrimas de cocodrilo (síndrome de Bogorad): lagrimeo al comer tras una lesión del facial, por regeneración aberrante; poco frecuente (≈ 3 % de las parálisis de Bell) */
+  cocodrilo: "regeneración aberrante",
+} as const;
+/** Tiempos del video del par craneal VII (segundos a ritmo normal), compartidos entre el dibujo y el sonido. */
+export const TFA = {
+  gancho: { cae: 0.2, bell: 2.6, ictus: 4.2, pista: 5.4 },
+  gestos: { par: 0.2, facial: 1.7, gestos: 2.8, sonreir: 4.2, guinar: 5.0, ceno: 5.8, vela: 6.8 },
+  extras: { gusto: 0.2, lagrimas: 3.4, saliva: 5.2 },
+  tunel: { tunel: 0.2, sale: 3.6, ramas: 5.6 },
+  bell: { bell: 0.2, inflama: 2.2, media: 4.6 },
+  frente: { pista: 0.2, dos: 2.0, ictus: 4.4, bell: 6.2 },
+  cocodrilo: { curioso: 0.2, recuperarse: 2.0, comer: 3.4, cocodrilo: 5.0, cables: 6.6 },
+  urgencia: { cae: 0.2, emergencias: 2.2, comentarios: 4.2, ceja: 5.8 },
+} as const;
+
 /* ───────────── «La regla del 37 %» (problema de la parada óptima, ensayo abstracto para IMNOBA) ───────────── */
 
 /** Generador pseudoaleatorio determinista (mulberry32): mismos números en el render, en las pruebas y en cada fotograma. */
@@ -1990,6 +2016,38 @@ export const PIEZAS: Record<string, DefPieza> = {
   "ab-consulta": {
     id: "ab-consulta", nombre: "Par VI · si ves doble al mirar hacia los lados, consulta con un médico: este nervio puede ser el primero en avisar (cierre)", ideal: 7.0, fondo: "dark", entra: "zoom",
     sfx: (_d, r) => [ev(0.05, "whoosh", 0.1), ev(TAB.consulta.doble * r + 0.2, "zap", 0.14), ev(TAB.consulta.medico * r, "pop", 0.16), ev(TAB.consulta.avisar * r, "tick", 0.12), ev((TAB.consulta.avisar + 0.4) * r, "ding", 0.18)],
+  },
+  "fa-gancho": {
+    id: "fa-gancho", nombre: "Par VII · si la mitad de la cara se cae: ¿parálisis de Bell o ictus? La frente da una pista (gancho)", ideal: 7.0, fondo: "dark", entra: "zoom",
+    sfx: (_d, r) => [ev(0.05, "whoosh", 0.1), ev(TFA.gancho.cae * r + 0.2, "thud", 0.18), ev(TFA.gancho.bell * r, "pop", 0.14), ev(TFA.gancho.ictus * r, "pop", 0.14), ev(TFA.gancho.pista * r, "zap", 0.16), ev((TFA.gancho.pista + 0.3) * r, "ding", 0.18)],
+  },
+  "fa-gestos": {
+    id: "fa-gestos", nombre: "Par VII · el facial es el nervio de los gestos: sonreír, guiñar, fruncir el ceño o soplar una vela", ideal: 7.3, fondo: "dark", entra: "corte",
+    sfx: (_d, r) => [ev(0.05, "whoosh", 0.1), ev(TFA.gestos.par * r + 0.2, "pop", 0.12), ev(TFA.gestos.gestos * r, "tick", 0.12), ev(TFA.gestos.sonreir * r, "pop", 0.14), ev(TFA.gestos.guinar * r, "pop", 0.14), ev(TFA.gestos.ceno * r, "pop", 0.14), ev(TFA.gestos.vela * r, "whoosh", 0.14)],
+  },
+  "fa-extras": {
+    id: "fa-extras", nombre: "Par VII · también da el gusto de la punta de la lengua y manda a producir lágrimas y saliva", ideal: 6.5, fondo: "dark", entra: "semitono",
+    sfx: (_d, r) => [ev(0.05, "whoosh", 0.1), ev(TFA.extras.gusto * r + 0.2, "pop", 0.12), ev(TFA.extras.lagrimas * r, "pop", 0.14), ev(TFA.extras.saliva * r, "pop", 0.14), ev((TFA.extras.saliva + 0.5) * r, "ding", 0.16)],
+  },
+  "fa-tunel": {
+    id: "fa-tunel", nombre: "Par VII · viaja por un túnel estrecho en el hueso del oído y sale junto a la oreja, abriéndose en ramas por la cara", ideal: 7.7, fondo: "dark", entra: "corte",
+    sfx: (_d, r) => [ev(0.05, "whoosh", 0.1), ev(TFA.tunel.tunel * r + 0.2, "pop", 0.12), ...clics(TFA.tunel.tunel * r + 0.4, 2.8 * r, 0.04), ev(TFA.tunel.sale * r, "tick", 0.14), ev(TFA.tunel.ramas * r, "whoosh", 0.14), ev((TFA.tunel.ramas + 0.6) * r, "ding", 0.18)],
+  },
+  "fa-bell": {
+    id: "fa-bell", nombre: "Par VII · en la parálisis de Bell se cree que el nervio se inflama en ese túnel y media cara pierde fuerza", ideal: 7.0, fondo: "dark", entra: "semitono",
+    sfx: (_d, r) => [ev(0.05, "whoosh", 0.1), ev(TFA.bell.bell * r + 0.2, "pop", 0.12), ev(TFA.bell.inflama * r, "thud", 0.16), ev((TFA.bell.inflama + 1.0) * r, "tick", 0.12), ev(TFA.bell.media * r, "thud", 0.18)],
+  },
+  "fa-frente": {
+    id: "fa-frente", nombre: "Par VII · la frente recibe órdenes de los dos lados del cerebro: en un ictus suele salvarse, en Bell no", ideal: 7.0, fondo: "dark", entra: "zoom",
+    sfx: (_d, r) => [ev(0.05, "whoosh", 0.1), ev(TFA.frente.pista * r + 0.2, "pop", 0.12), ev(TFA.frente.dos * r, "zap", 0.12), ev(TFA.frente.ictus * r, "pop", 0.14), ev(TFA.frente.bell * r, "pop", 0.14), ev((TFA.frente.bell + 0.4) * r, "ding", 0.18)],
+  },
+  "fa-cocodrilo": {
+    id: "fa-cocodrilo", nombre: "Par VII · lágrimas de cocodrilo: al recuperarse, algunas personas lloran al comer porque los cables se reconectan mal", ideal: 7.0, fondo: "dark", entra: "corte",
+    sfx: (_d, r) => [ev(0.05, "whoosh", 0.1), ev(TFA.cocodrilo.curioso * r + 0.2, "pop", 0.12), ev(TFA.cocodrilo.recuperarse * r, "tick", 0.12), ...clics(TFA.cocodrilo.comer * r, 1.4 * r, 0.05), ev(TFA.cocodrilo.cocodrilo * r, "thud", 0.16), ev(TFA.cocodrilo.cables * r, "zap", 0.14)],
+  },
+  "fa-urgencia": {
+    id: "fa-urgencia", nombre: "Par VII · si la cara se cae de golpe, llama a emergencias; y dime en los comentarios: ¿puedes levantar solo una ceja? (cierre)", ideal: 7.0, fondo: "dark", entra: "zoom",
+    sfx: (_d, r) => [ev(0.05, "whoosh", 0.1), ev(TFA.urgencia.cae * r + 0.2, "thud", 0.18), ev(TFA.urgencia.emergencias * r, "zap", 0.16), ev(TFA.urgencia.comentarios * r, "pop", 0.14), ev(TFA.urgencia.ceja * r, "pop", 0.16), ev((TFA.urgencia.ceja + 0.6) * r, "ding", 0.18)],
   },
   "astro-memoria": {
     id: "astro-memoria", nombre: "Astrocitos · en ratones, reactivarlos estimuló el recuerdo", ideal: 4.15, fondo: "dark", entra: "corte",
