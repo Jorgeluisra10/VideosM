@@ -1,0 +1,18 @@
+{
+  "version": 1,
+  "slug": "2026-11-15-par-craneal-7",
+  "titulo": "El par craneal VII: el nervio de los gestos",
+  "serie": "pares_craneales",
+  "estado": "grabado",
+  "guion": "Si la mitad de la cara se cae, ¿es parálisis de Bell o un ictus? La frente da una pista.\nEs el par craneal siete, el facial: el nervio de los gestos. Sonreír, guiñar, fruncir el ceño o soplar una vela.\nNo solo mueve: da el gusto de la punta de la lengua y ordena producir lágrimas y saliva.\nViaja por un túnel estrecho, como un cable en un tubo, y sale junto a la oreja abriéndose en ramas.\nSe cree que en Bell el nervio se inflama, se aprieta en su túnel y media cara se queda sin órdenes.\nLa pista: la frente recibe órdenes de dos lados del cerebro. En el ictus suele salvarse; en Bell, no.\nDato curioso, poco frecuente: tras recuperarse, algunos lloran al comer. Son las lágrimas de cocodrilo: cables mal reconectados.\nSi la cara se cae de golpe, llama a emergencias. Dime en comentarios: ¿puedes subir solo una ceja?\nCompártelo con alguien que ame el cerebro. Síguenos en Sinapsis.",
+  "gancho": "Si la mitad de la cara se cae, ¿es parálisis de Bell o un ictus?",
+  "duracion_seg": 65.6,
+  "notas": "Par craneal VII (facial): gestos cotidianos, gusto, lágrimas y saliva, túnel del hueso, parálisis de Bell, pista de la frente (Bell vs ictus, orientativa con excepciones), lágrimas de cocodrilo (poco frecuentes), urgencia sin número de país y pregunta para comentar (¿puedes subir solo una ceja?). Dibujos esquemáticos; no es diagnóstico; sin voz (−28 LUFS).",
+  "voz_usada": "",
+  "instrucciones_voz": "",
+  "creado": "2026-11-15T18:11:36.895Z",
+  "origen_clave": "063d7bdd",
+  "video": "revision.mp4",
+  "miniatura": "miniatura.jpg",
+  "entrega": "entrega.md"
+}
