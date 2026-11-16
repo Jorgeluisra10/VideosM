@@ -87,7 +87,7 @@ export const VaSigue: React.FC<P> = ({ e }) => {
       </svg>
       <InsigniaSinapsis y={900} k={kI} />
       <Chip x={540} y={1252} texto={"UN PAR CRANEAL A LA VEZ"} color={VAC.hueso} px={22} anchor="center" id="va-s-uno" opacidad={kPa} />
-      <Frases frases={[{ t: 0.2, texto: "ANTES DE SEGUIR…", px: 96 }, { t: S.sigue - 0.1, texto: "SÍGUENOS EN\nSINAPSIS", px: 100, color: VAC.oro }]} y={450} x={104} id="titular-va-sigue" />
+      <Frases frases={[{ t: 0.2, texto: "ANTES DE SEGUIR…", px: 84 }, { t: S.sigue - 0.1, texto: "SÍGUENOS EN\nSINAPSIS", px: 100, color: VAC.oro }]} y={450} x={104} id="titular-va-sigue" />
       <Cap e={e} />
     </Fondo>
   );
