@@ -1,0 +1,18 @@
+{
+  "version": 1,
+  "slug": "2026-11-16-par-craneal-8",
+  "titulo": "El par craneal VIII: el nervio que oye y equilibra",
+  "serie": "pares_craneales",
+  "estado": "grabado",
+  "guion": "Un nervio te deja oír y no caerte. Sus células sienten movimientos del tamaño de un átomo.\nAntes de seguir: síguenos en Sinapsis. No te pierdas ningún par.\nEs el par craneal ocho: una rama para oír, la coclear, y otra para el equilibrio, la vestibular.\nDentro del oído hay un caracol del tamaño de un guisante, la cóclea, con unas quince mil células ciliadas.\nCon el sonido más débil que oyes, sus pelitos se mueven apenas el ancho de un átomo.\nEn humanos no se regeneran: el ruido fuerte puede dañarlas de forma permanente. Las aves sí las renuevan.\nEl equilibrio: tres canales con líquido, como niveles de burbuja, y piedritas diminutas que sienten la gravedad.\nSi una piedrita se suelta, el mundo gira. Y el alcohol puede alterar el sistema: por eso la cama da vueltas.\nMueve la cabeza leyendo esto: tus ojos se compensan solos. ¿Te mareas leyendo en el coche? Cuéntame en comentarios.\nCompártelo con alguien que ame el cerebro. Síguenos en Sinapsis.",
+  "gancho": "Un nervio te deja oír y no caerte.",
+  "duracion_seg": 67.8,
+  "notas": "Par craneal VIII (vestibulococlear) con aviso temprano de síguenos en Sinapsis (2.ª escena): cóclea del tamaño de un guisante (comparación habitual, no confirmada), ≈ 15 000 células ciliadas, pelito ≈ 0,3 nm (el ancho de un átomo; no es el tímpano), ruido que daña y aves que regeneran, canales y otoconias, alcohol (hipótesis), reflejo vestíbulo-ocular y pregunta para comentar (¿te mareas leyendo en el coche?). Dibujos esquemáticos; no es diagnóstico; sin voz (−28 LUFS).",
+  "voz_usada": "",
+  "instrucciones_voz": "",
+  "creado": "2026-11-16T17:47:00.090Z",
+  "origen_clave": "e4062bee",
+  "video": "revision.mp4",
+  "miniatura": "miniatura.jpg",
+  "entrega": "entrega.md"
+}
