@@ -1,18 +1,18 @@
 {
  "version": 1,
- "titulo": "El par craneal VII: el nervio de los gestos",
+ "titulo": "El par craneal VIII: el nervio que oye y equilibra",
  "paleta": "medicina",
  "sfx": true,
  "fps": 60,
- "duracion": 65.6,
+ "duracion": 67.8,
  "escenas": [
   {
    "n": 1,
    "t": "PIEZA",
-   "voz": "Si la mitad de la cara se cae, ¿es parálisis de Bell o un ictus? La frente da una pista.",
-   "dur": 7.5,
-   "h": "¿BELL O ICTUS?",
-   "w": "ICTUS?",
+   "voz": "Un nervio te deja oír y no caerte. Sus células sienten movimientos del tamaño de un átomo.",
+   "dur": 6.5,
+   "h": "OÍR Y NO CAERTE",
+   "w": "CAERTE",
    "sub": "",
    "ic": "tendencia-baja",
    "num": null,
@@ -45,7 +45,7 @@
    "cubo": null,
    "diales": null,
    "pieza": {
-    "id": "fa-gancho",
+    "id": "va-gancho",
     "props": {}
    },
    "cita": null,
@@ -54,10 +54,10 @@
    "tema": "oscuro",
    "bg": "dark",
    "ritmo": 1,
-   "total": 65.6,
+   "total": 67.8,
    "inicio": 0,
-   "fin": 7.5,
-   "texto": "Si la mitad de la cara se cae, ¿es parálisis de Bell o un ictus? La frente da una pista.",
+   "fin": 6.5,
+   "texto": "Un nervio te deja oír y no caerte. Sus células sienten movimientos del tamaño de un átomo.",
    "tr": "barrido",
    "trs": "corte",
    "sfx": [
@@ -73,8 +73,13 @@
     },
     {
      "t": 0.4,
-     "tipo": "thud",
-     "vol": 0.18
+     "tipo": "pop",
+     "vol": 0.12
+    },
+    {
+     "t": 1.6,
+     "tipo": "pop",
+     "vol": 0.14
     },
     {
      "t": 2.6,
@@ -82,17 +87,17 @@
      "vol": 0.14
     },
     {
-     "t": 4.2,
-     "tipo": "pop",
-     "vol": 0.14
+     "t": 3.6,
+     "tipo": "tick",
+     "vol": 0.12
     },
     {
-     "t": 5.4,
+     "t": 4.8,
      "tipo": "zap",
      "vol": 0.16
     },
     {
-     "t": 5.7,
+     "t": 5.2,
      "tipo": "ding",
      "vol": 0.18
     }
@@ -101,107 +106,10 @@
   {
    "n": 2,
    "t": "PIEZA",
-   "voz": "Es el par craneal siete, el facial: el nervio de los gestos. Sonreír, guiñar, fruncir el ceño o soplar una vela.",
-   "dur": 7.8,
-   "h": "EL NERVIO DE LOS GESTOS",
-   "w": "GESTOS",
-   "sub": "",
-   "ic": "brillo",
-   "num": null,
-   "vs": null,
-   "bars": [],
-   "barsU": "",
-   "hi": -1,
-   "line": null,
-   "items": [],
-   "stops": [],
-   "end": "",
-   "donut": [],
-   "picto": null,
-   "top": [],
-   "myth": "",
-   "truth": "",
-   "zoom": null,
-   "capas": null,
-   "mira": null,
-   "impacto": null,
-   "red": null,
-   "termo": null,
-   "pila": null,
-   "cap": "par craneal VII",
-   "papel": null,
-   "pilares": null,
-   "ciclo": null,
-   "duo": null,
-   "osc": null,
-   "cubo": null,
-   "diales": null,
-   "pieza": {
-    "id": "fa-gestos",
-    "props": {}
-   },
-   "cita": null,
-   "sc": "",
-   "modo": "VIRAL",
-   "tema": "claro",
-   "bg": "light",
-   "ritmo": 1,
-   "total": 65.6,
-   "inicio": 7.5,
-   "fin": 15.3,
-   "texto": "Es el par craneal siete, el facial: el nervio de los gestos. Sonreír, guiñar, fruncir el ceño o soplar una vela.",
-   "tr": "corte",
-   "trs": "semitono",
-   "sfx": [
-    {
-     "t": 0.04,
-     "tipo": "whoosh",
-     "vol": 0.16
-    },
-    {
-     "t": 0.05,
-     "tipo": "whoosh",
-     "vol": 0.1
-    },
-    {
-     "t": 0.4,
-     "tipo": "pop",
-     "vol": 0.12
-    },
-    {
-     "t": 2.8,
-     "tipo": "tick",
-     "vol": 0.12
-    },
-    {
-     "t": 4.2,
-     "tipo": "pop",
-     "vol": 0.14
-    },
-    {
-     "t": 5,
-     "tipo": "pop",
-     "vol": 0.14
-    },
-    {
-     "t": 5.8,
-     "tipo": "pop",
-     "vol": 0.14
-    },
-    {
-     "t": 6.8,
-     "tipo": "whoosh",
-     "vol": 0.14
-    }
-   ]
-  },
-  {
-   "n": 3,
-   "t": "PIEZA",
-   "voz": "No solo mueve: da el gusto de la punta de la lengua y ordena producir lágrimas y saliva.",
-   "dur": 7,
-   "h": "GUSTO, LÁGRIMAS Y SALIVA",
-   "w": "LÁGRIMAS",
+   "voz": "Antes de seguir: síguenos en Sinapsis. No te pierdas ningún par.",
+   "dur": 4.5,
+   "h": "SÍGUENOS EN SINAPSIS",
+   "w": "SÍGUENOS",
    "sub": "",
    "ic": "brillo",
    "num": null,
@@ -234,20 +142,20 @@
    "cubo": null,
    "diales": null,
    "pieza": {
-    "id": "fa-extras",
+    "id": "va-sigue",
     "props": {}
    },
    "cita": null,
    "sc": "",
    "modo": "VIRAL",
-   "tema": "oscuro",
-   "bg": "dark",
+   "tema": "claro",
+   "bg": "light",
    "ritmo": 1,
-   "total": 65.6,
-   "inicio": 15.3,
-   "fin": 22.3,
-   "texto": "No solo mueve: da el gusto de la punta de la lengua y ordena producir lágrimas y saliva.",
-   "tr": "semitono",
+   "total": 67.8,
+   "inicio": 6.5,
+   "fin": 11,
+   "texto": "Antes de seguir: síguenos en Sinapsis. No te pierdas ningún par.",
+   "tr": "corte",
    "trs": "corte",
    "sfx": [
     {
@@ -266,29 +174,29 @@
      "vol": 0.12
     },
     {
-     "t": 3.4,
-     "tipo": "pop",
-     "vol": 0.14
-    },
-    {
-     "t": 5.2,
-     "tipo": "pop",
-     "vol": 0.14
-    },
-    {
-     "t": 5.7,
+     "t": 1.2,
      "tipo": "ding",
-     "vol": 0.16
+     "vol": 0.2
+    },
+    {
+     "t": 1.5,
+     "tipo": "pop",
+     "vol": 0.14
+    },
+    {
+     "t": 2.9,
+     "tipo": "tick",
+     "vol": 0.12
     }
    ]
   },
   {
-   "n": 4,
+   "n": 3,
    "t": "PIEZA",
-   "voz": "Viaja por un túnel estrecho, como un cable en un tubo, y sale junto a la oreja abriéndose en ramas.",
-   "dur": 8.2,
-   "h": "UN TÚNEL ESTRECHO",
-   "w": "TÚNEL",
+   "voz": "Es el par craneal ocho: una rama para oír, la coclear, y otra para el equilibrio, la vestibular.",
+   "dur": 7,
+   "h": "EL PAR CRANEAL VIII",
+   "w": "VIII",
    "sub": "",
    "ic": "brillo",
    "num": null,
@@ -312,7 +220,7 @@
    "red": null,
    "termo": null,
    "pila": null,
-   "cap": "",
+   "cap": "par craneal VIII",
    "papel": null,
    "pilares": null,
    "ciclo": null,
@@ -321,19 +229,19 @@
    "cubo": null,
    "diales": null,
    "pieza": {
-    "id": "fa-tunel",
+    "id": "va-par",
     "props": {}
    },
    "cita": null,
    "sc": "",
    "modo": "VIRAL",
-   "tema": "claro",
-   "bg": "light",
+   "tema": "oscuro",
+   "bg": "dark",
    "ritmo": 1,
-   "total": 65.6,
-   "inicio": 22.3,
-   "fin": 30.5,
-   "texto": "Viaja por un túnel estrecho, como un cable en un tubo, y sale junto a la oreja abriéndose en ramas.",
+   "total": 67.8,
+   "inicio": 11,
+   "fin": 18,
+   "texto": "Es el par craneal ocho: una rama para oír, la coclear, y otra para el equilibrio, la vestibular.",
    "tr": "corte",
    "trs": "semitono",
    "sfx": [
@@ -353,134 +261,34 @@
      "vol": 0.12
     },
     {
-     "t": 0.6000000000000001,
-     "tipo": "clic",
-     "vol": 0.04
-    },
-    {
-     "t": 0.7300000000000001,
-     "tipo": "clic",
-     "vol": 0.04
-    },
-    {
-     "t": 0.8600000000000001,
-     "tipo": "clic",
-     "vol": 0.04
-    },
-    {
-     "t": 0.9900000000000001,
-     "tipo": "clic",
-     "vol": 0.04
-    },
-    {
-     "t": 1.12,
-     "tipo": "clic",
-     "vol": 0.04
-    },
-    {
-     "t": 1.25,
-     "tipo": "clic",
-     "vol": 0.04
-    },
-    {
-     "t": 1.3800000000000001,
-     "tipo": "clic",
-     "vol": 0.04
-    },
-    {
-     "t": 1.5100000000000002,
-     "tipo": "clic",
-     "vol": 0.04
-    },
-    {
-     "t": 1.6400000000000001,
-     "tipo": "clic",
-     "vol": 0.04
-    },
-    {
-     "t": 1.77,
-     "tipo": "clic",
-     "vol": 0.04
-    },
-    {
-     "t": 1.9000000000000001,
-     "tipo": "clic",
-     "vol": 0.04
-    },
-    {
-     "t": 2.0300000000000002,
-     "tipo": "clic",
-     "vol": 0.04
-    },
-    {
-     "t": 2.16,
-     "tipo": "clic",
-     "vol": 0.04
-    },
-    {
-     "t": 2.29,
-     "tipo": "clic",
-     "vol": 0.04
-    },
-    {
-     "t": 2.42,
-     "tipo": "clic",
-     "vol": 0.04
-    },
-    {
-     "t": 2.5500000000000003,
-     "tipo": "clic",
-     "vol": 0.04
-    },
-    {
-     "t": 2.68,
-     "tipo": "clic",
-     "vol": 0.04
-    },
-    {
-     "t": 2.81,
-     "tipo": "clic",
-     "vol": 0.04
-    },
-    {
-     "t": 2.94,
-     "tipo": "clic",
-     "vol": 0.04
-    },
-    {
-     "t": 3.0700000000000003,
-     "tipo": "clic",
-     "vol": 0.04
-    },
-    {
-     "t": 3.2,
-     "tipo": "clic",
-     "vol": 0.04
-    },
-    {
-     "t": 3.6,
+     "t": 2.3,
      "tipo": "tick",
+     "vol": 0.12
+    },
+    {
+     "t": 3.4,
+     "tipo": "pop",
      "vol": 0.14
     },
     {
-     "t": 5.6,
-     "tipo": "whoosh",
-     "vol": 0.14
+     "t": 4.5,
+     "tipo": "tick",
+     "vol": 0.12
     },
     {
-     "t": 6.199999999999999,
-     "tipo": "ding",
-     "vol": 0.18
+     "t": 5.7,
+     "tipo": "pop",
+     "vol": 0.14
     }
    ]
   },
   {
-   "n": 5,
+   "n": 4,
    "t": "PIEZA",
-   "voz": "Se cree que en Bell el nervio se inflama, se aprieta en su túnel y media cara se queda sin órdenes.",
-   "dur": 7.8,
-   "h": "PARÁLISIS DE BELL",
-   "w": "BELL",
+   "voz": "Dentro del oído hay un caracol del tamaño de un guisante, la cóclea, con unas quince mil células ciliadas.",
+   "dur": 7.5,
+   "h": "UN CARACOL EN TU OÍDO",
+   "w": "CARACOL",
    "sub": "",
    "ic": "brillo",
    "num": null,
@@ -513,7 +321,159 @@
    "cubo": null,
    "diales": null,
    "pieza": {
-    "id": "fa-bell",
+    "id": "va-coclea",
+    "props": {}
+   },
+   "cita": null,
+   "sc": "",
+   "modo": "VIRAL",
+   "tema": "claro",
+   "bg": "light",
+   "ritmo": 1,
+   "total": 67.8,
+   "inicio": 18,
+   "fin": 25.5,
+   "texto": "Dentro del oído hay un caracol del tamaño de un guisante, la cóclea, con unas quince mil células ciliadas.",
+   "tr": "semitono",
+   "trs": "zoom",
+   "sfx": [
+    {
+     "t": 0.04,
+     "tipo": "whoosh",
+     "vol": 0.16
+    },
+    {
+     "t": 0.05,
+     "tipo": "whoosh",
+     "vol": 0.1
+    },
+    {
+     "t": 0.4,
+     "tipo": "pop",
+     "vol": 0.12
+    },
+    {
+     "t": 2.4,
+     "tipo": "pop",
+     "vol": 0.14
+    },
+    {
+     "t": 3.8,
+     "tipo": "whoosh",
+     "vol": 0.14
+    },
+    {
+     "t": 5,
+     "tipo": "clic",
+     "vol": 0.04
+    },
+    {
+     "t": 5.13,
+     "tipo": "clic",
+     "vol": 0.04
+    },
+    {
+     "t": 5.26,
+     "tipo": "clic",
+     "vol": 0.04
+    },
+    {
+     "t": 5.39,
+     "tipo": "clic",
+     "vol": 0.04
+    },
+    {
+     "t": 5.52,
+     "tipo": "clic",
+     "vol": 0.04
+    },
+    {
+     "t": 5.65,
+     "tipo": "clic",
+     "vol": 0.04
+    },
+    {
+     "t": 5.78,
+     "tipo": "clic",
+     "vol": 0.04
+    },
+    {
+     "t": 5.91,
+     "tipo": "clic",
+     "vol": 0.04
+    },
+    {
+     "t": 6.04,
+     "tipo": "clic",
+     "vol": 0.04
+    },
+    {
+     "t": 6.17,
+     "tipo": "clic",
+     "vol": 0.04
+    },
+    {
+     "t": 6.3,
+     "tipo": "clic",
+     "vol": 0.04
+    },
+    {
+     "t": 6.43,
+     "tipo": "clic",
+     "vol": 0.04
+    },
+    {
+     "t": 6.5600000000000005,
+     "tipo": "clic",
+     "vol": 0.04
+    },
+    {
+     "t": 6.9,
+     "tipo": "ding",
+     "vol": 0.18
+    }
+   ]
+  },
+  {
+   "n": 5,
+   "t": "PIEZA",
+   "voz": "Con el sonido más débil que oyes, sus pelitos se mueven apenas el ancho de un átomo.",
+   "dur": 7,
+   "h": "APENAS UN ÁTOMO",
+   "w": "ÁTOMO",
+   "sub": "",
+   "ic": "brillo",
+   "num": null,
+   "vs": null,
+   "bars": [],
+   "barsU": "",
+   "hi": -1,
+   "line": null,
+   "items": [],
+   "stops": [],
+   "end": "",
+   "donut": [],
+   "picto": null,
+   "top": [],
+   "myth": "",
+   "truth": "",
+   "zoom": null,
+   "capas": null,
+   "mira": null,
+   "impacto": null,
+   "red": null,
+   "termo": null,
+   "pila": null,
+   "cap": "",
+   "papel": null,
+   "pilares": null,
+   "ciclo": null,
+   "duo": null,
+   "osc": null,
+   "cubo": null,
+   "diales": null,
+   "pieza": {
+    "id": "va-atomo",
     "props": {}
    },
    "cita": null,
@@ -522,12 +482,104 @@
    "tema": "oscuro",
    "bg": "dark",
    "ritmo": 1,
-   "total": 65.6,
-   "inicio": 30.5,
-   "fin": 38.3,
-   "texto": "Se cree que en Bell el nervio se inflama, se aprieta en su túnel y media cara se queda sin órdenes.",
+   "total": 67.8,
+   "inicio": 25.5,
+   "fin": 32.5,
+   "texto": "Con el sonido más débil que oyes, sus pelitos se mueven apenas el ancho de un átomo.",
+   "tr": "zoom",
+   "trs": "semitono",
+   "sfx": [
+    {
+     "t": 0.04,
+     "tipo": "whoosh",
+     "vol": 0.16
+    },
+    {
+     "t": 0.05,
+     "tipo": "whoosh",
+     "vol": 0.1
+    },
+    {
+     "t": 0.4,
+     "tipo": "pop",
+     "vol": 0.12
+    },
+    {
+     "t": 2.6,
+     "tipo": "tick",
+     "vol": 0.12
+    },
+    {
+     "t": 3.8,
+     "tipo": "pop",
+     "vol": 0.14
+    },
+    {
+     "t": 4.8,
+     "tipo": "zap",
+     "vol": 0.16
+    },
+    {
+     "t": 5.2,
+     "tipo": "ding",
+     "vol": 0.18
+    }
+   ]
+  },
+  {
+   "n": 6,
+   "t": "PIEZA",
+   "voz": "En humanos no se regeneran: el ruido fuerte puede dañarlas de forma permanente. Las aves sí las renuevan.",
+   "dur": 7.5,
+   "h": "NO SE REGENERAN",
+   "w": "REGENERAN",
+   "sub": "",
+   "ic": "brillo",
+   "num": null,
+   "vs": null,
+   "bars": [],
+   "barsU": "",
+   "hi": -1,
+   "line": null,
+   "items": [],
+   "stops": [],
+   "end": "",
+   "donut": [],
+   "picto": null,
+   "top": [],
+   "myth": "",
+   "truth": "",
+   "zoom": null,
+   "capas": null,
+   "mira": null,
+   "impacto": null,
+   "red": null,
+   "termo": null,
+   "pila": null,
+   "cap": "",
+   "papel": null,
+   "pilares": null,
+   "ciclo": null,
+   "duo": null,
+   "osc": null,
+   "cubo": null,
+   "diales": null,
+   "pieza": {
+    "id": "va-ruido",
+    "props": {}
+   },
+   "cita": null,
+   "sc": "",
+   "modo": "VIRAL",
+   "tema": "claro",
+   "bg": "light",
+   "ritmo": 1,
+   "total": 67.8,
+   "inicio": 32.5,
+   "fin": 40,
+   "texto": "En humanos no se regeneran: el ruido fuerte puede dañarlas de forma permanente. Las aves sí las renuevan.",
    "tr": "semitono",
-   "trs": "zoom",
+   "trs": "corte",
    "sfx": [
     {
      "t": 0.04,
@@ -547,27 +599,32 @@
     {
      "t": 2.2,
      "tipo": "thud",
-     "vol": 0.16
+     "vol": 0.18
     },
     {
-     "t": 3.2,
-     "tipo": "tick",
-     "vol": 0.12
+     "t": 3.6,
+     "tipo": "pop",
+     "vol": 0.14
     },
     {
-     "t": 4.6,
-     "tipo": "thud",
+     "t": 5,
+     "tipo": "pop",
+     "vol": 0.14
+    },
+    {
+     "t": 5.8,
+     "tipo": "ding",
      "vol": 0.18
     }
    ]
   },
   {
-   "n": 6,
+   "n": 7,
    "t": "PIEZA",
-   "voz": "La pista: la frente recibe órdenes de dos lados del cerebro. En el ictus suele salvarse; en Bell, no.",
+   "voz": "El equilibrio: tres canales con líquido, como niveles de burbuja, y piedritas diminutas que sienten la gravedad.",
    "dur": 7.5,
-   "h": "LA PISTA ES LA FRENTE",
-   "w": "FRENTE",
+   "h": "EL EQUILIBRIO",
+   "w": "EQUILIBRIO",
    "sub": "",
    "ic": "brillo",
    "num": null,
@@ -600,21 +657,21 @@
    "cubo": null,
    "diales": null,
    "pieza": {
-    "id": "fa-frente",
+    "id": "va-equilibrio",
     "props": {}
    },
    "cita": null,
    "sc": "",
    "modo": "VIRAL",
-   "tema": "claro",
-   "bg": "light",
+   "tema": "oscuro",
+   "bg": "dark",
    "ritmo": 1,
-   "total": 65.6,
-   "inicio": 38.3,
-   "fin": 45.8,
-   "texto": "La pista: la frente recibe órdenes de dos lados del cerebro. En el ictus suele salvarse; en Bell, no.",
-   "tr": "zoom",
-   "trs": "corte",
+   "total": 67.8,
+   "inicio": 40,
+   "fin": 47.5,
+   "texto": "El equilibrio: tres canales con líquido, como niveles de burbuja, y piedritas diminutas que sienten la gravedad.",
+   "tr": "corte",
+   "trs": "semitono",
    "sfx": [
     {
      "t": 0.04,
@@ -632,9 +689,14 @@
      "vol": 0.12
     },
     {
-     "t": 2,
-     "tipo": "zap",
+     "t": 1.2,
+     "tipo": "tick",
      "vol": 0.12
+    },
+    {
+     "t": 3,
+     "tipo": "pop",
+     "vol": 0.14
     },
     {
      "t": 4.4,
@@ -642,24 +704,19 @@
      "vol": 0.14
     },
     {
-     "t": 6.2,
-     "tipo": "pop",
-     "vol": 0.14
-    },
-    {
-     "t": 6.6000000000000005,
-     "tipo": "ding",
-     "vol": 0.18
+     "t": 5.6,
+     "tipo": "tick",
+     "vol": 0.12
     }
    ]
   },
   {
-   "n": 7,
+   "n": 8,
    "t": "PIEZA",
-   "voz": "Dato curioso, poco frecuente: tras recuperarse, algunos lloran al comer. Son las lágrimas de cocodrilo: cables mal reconectados.",
-   "dur": 7.5,
-   "h": "LÁGRIMAS DE COCODRILO",
-   "w": "COCODRILO",
+   "voz": "Si una piedrita se suelta, el mundo gira. Y el alcohol puede alterar el sistema: por eso la cama da vueltas.",
+   "dur": 8,
+   "h": "SI UNA PIEDRITA SE SUELTA",
+   "w": "PIEDRITA",
    "sub": "",
    "ic": "brillo",
    "num": null,
@@ -692,20 +749,20 @@
    "cubo": null,
    "diales": null,
    "pieza": {
-    "id": "fa-cocodrilo",
+    "id": "va-alcohol",
     "props": {}
    },
    "cita": null,
    "sc": "",
    "modo": "VIRAL",
-   "tema": "oscuro",
-   "bg": "dark",
+   "tema": "claro",
+   "bg": "light",
    "ritmo": 1,
-   "total": 65.6,
-   "inicio": 45.8,
-   "fin": 53.3,
-   "texto": "Dato curioso, poco frecuente: tras recuperarse, algunos lloran al comer. Son las lágrimas de cocodrilo: cables mal reconectados.",
-   "tr": "corte",
+   "total": 67.8,
+   "inicio": 47.5,
+   "fin": 55.5,
+   "texto": "Si una piedrita se suelta, el mundo gira. Y el alcohol puede alterar el sistema: por eso la cama da vueltas.",
+   "tr": "semitono",
    "trs": "zoom",
    "sfx": [
     {
@@ -725,80 +782,35 @@
     },
     {
      "t": 2,
+     "tipo": "whoosh",
+     "vol": 0.16
+    },
+    {
+     "t": 3.4,
+     "tipo": "pop",
+     "vol": 0.14
+    },
+    {
+     "t": 4.8,
      "tipo": "tick",
      "vol": 0.12
     },
     {
-     "t": 3.4,
-     "tipo": "clic",
-     "vol": 0.05
-    },
-    {
-     "t": 3.53,
-     "tipo": "clic",
-     "vol": 0.05
-    },
-    {
-     "t": 3.66,
-     "tipo": "clic",
-     "vol": 0.05
-    },
-    {
-     "t": 3.79,
-     "tipo": "clic",
-     "vol": 0.05
-    },
-    {
-     "t": 3.92,
-     "tipo": "clic",
-     "vol": 0.05
-    },
-    {
-     "t": 4.05,
-     "tipo": "clic",
-     "vol": 0.05
-    },
-    {
-     "t": 4.18,
-     "tipo": "clic",
-     "vol": 0.05
-    },
-    {
-     "t": 4.31,
-     "tipo": "clic",
-     "vol": 0.05
-    },
-    {
-     "t": 4.4399999999999995,
-     "tipo": "clic",
-     "vol": 0.05
-    },
-    {
-     "t": 4.57,
-     "tipo": "clic",
-     "vol": 0.05
-    },
-    {
-     "t": 5,
-     "tipo": "thud",
+     "t": 6,
+     "tipo": "whoosh",
      "vol": 0.16
-    },
-    {
-     "t": 6.6,
-     "tipo": "zap",
-     "vol": 0.14
     }
    ]
   },
   {
-   "n": 8,
+   "n": 9,
    "t": "PIEZA",
-   "voz": "Si la cara se cae de golpe, llama a emergencias. Dime en comentarios: ¿puedes subir solo una ceja?",
+   "voz": "Mueve la cabeza leyendo esto: tus ojos se compensan solos. ¿Te mareas leyendo en el coche? Cuéntame en comentarios.",
    "dur": 7.5,
-   "h": "¿SOLO UNA CEJA?",
-   "w": "CEJA?",
+   "h": "¿TE MAREAS EN EL COCHE?",
+   "w": "COCHE?",
    "sub": "",
-   "ic": "tendencia-baja",
+   "ic": "brillo",
    "num": null,
    "vs": null,
    "bars": [],
@@ -829,19 +841,19 @@
    "cubo": null,
    "diales": null,
    "pieza": {
-    "id": "fa-urgencia",
+    "id": "va-reflejo",
     "props": {}
    },
    "cita": null,
    "sc": "",
    "modo": "VIRAL",
-   "tema": "claro",
-   "bg": "light",
+   "tema": "oscuro",
+   "bg": "dark",
    "ritmo": 1,
-   "total": 65.6,
-   "inicio": 53.3,
-   "fin": 60.8,
-   "texto": "Si la cara se cae de golpe, llama a emergencias. Dime en comentarios: ¿puedes subir solo una ceja?",
+   "total": 67.8,
+   "inicio": 55.5,
+   "fin": 63,
+   "texto": "Mueve la cabeza leyendo esto: tus ojos se compensan solos. ¿Te mareas leyendo en el coche? Cuéntame en comentarios.",
    "tr": "zoom",
    "trs": "barrido",
    "sfx": [
@@ -857,33 +869,28 @@
     },
     {
      "t": 0.4,
-     "tipo": "thud",
-     "vol": 0.18
+     "tipo": "pop",
+     "vol": 0.12
     },
     {
-     "t": 2.2,
+     "t": 3,
      "tipo": "zap",
-     "vol": 0.16
+     "vol": 0.14
     },
     {
-     "t": 4.2,
+     "t": 4.6,
      "tipo": "pop",
      "vol": 0.14
     },
     {
-     "t": 5.8,
-     "tipo": "pop",
-     "vol": 0.16
-    },
-    {
-     "t": 6.3999999999999995,
+     "t": 6,
      "tipo": "ding",
      "vol": 0.18
     }
    ]
   },
   {
-   "n": 9,
+   "n": 10,
    "t": "CTA",
    "voz": "Compártelo con alguien que ame el cerebro. Síguenos en Sinapsis.",
    "dur": 4.8,
@@ -927,9 +934,9 @@
    "tema": "oscuro",
    "bg": "gold",
    "ritmo": 1,
-   "total": 65.6,
-   "inicio": 60.8,
-   "fin": 65.6,
+   "total": 67.8,
+   "inicio": 63,
+   "fin": 67.8,
    "texto": "Compártelo con alguien que ame el cerebro. Síguenos en Sinapsis.",
    "tr": "barrido",
    "trs": "barrido",

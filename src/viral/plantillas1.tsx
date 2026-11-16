@@ -126,7 +126,7 @@ export const Vs: React.FC<P> = ({ e }) => {
 /* ───────────── CTA ───────────── */
 
 /** Insignia tipográfica de SINAPSIS para el cierre (neurona + nombre): tarjeta oscura con el azul clínico y el amarillo de los nervios. No es un logo oficial: si hay uno, se cambia aquí. */
-const InsigniaSinapsis: React.FC<{ y: number; k: number }> = ({ y, k }) => (
+export const InsigniaSinapsis: React.FC<{ y: number; k: number }> = ({ y, k }) => (
   <div data-texto="insignia-sinapsis" style={{ position: "absolute", left: 540 - 205, top: y - 205, width: 410, height: 410, borderRadius: 74, background: "#0B0F19", border: "5px solid #3B82F6", boxShadow: "0 40px 90px rgba(59,130,246,0.38)", display: "flex", flexDirection: "column", alignItems: "center", justifyContent: "center", gap: 14, transform: `scale(${0.7 + 0.3 * Math.max(0, k)})`, opacity: clamp(k * 2) }}>
     <svg width={190} height={150} viewBox="0 0 190 150" aria-hidden="true">
       <g stroke="#3B82F6" strokeWidth={6} strokeLinecap="round" fill="none"><path d="M95 75 L40 30" /><path d="M95 75 L150 28" /><path d="M95 75 L38 118" /><path d="M95 75 L152 120" /><path d="M40 30 L14 52" /><path d="M150 28 L178 50" /></g>

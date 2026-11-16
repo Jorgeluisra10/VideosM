@@ -7,6 +7,8 @@ import { AbDorello, AbGancho, AbNucleo, AbRegla } from "./ab1";
 import { AbConsulta, AbDuane, AbFalso, AbPresion } from "./ab2";
 import { FaGancho, FaGestos, FaExtras, FaTunel } from "./fa1";
 import { FaBell, FaFrente, FaCocodrilo, FaUrgencia } from "./fa2";
+import { VaGancho, VaSigue, VaPar, VaCoclea, VaAtomo } from "./va1";
+import { VaRuido, VaEquilibrio, VaAlcohol, VaReflejo } from "./va2";
 import { TgCapsaicina, TgGancho, TgMentol, TgNobel } from "./tg1";
 import { TgComenta, TgHelado, TgNeuralgia, TgRamas } from "./tg2";
 import { TrCruce, TrGancho, TrRecorrido, TrTroclea } from "./tr1";
@@ -145,6 +147,8 @@ export const COMPONENTES_PIEZA: Record<string, React.FC<{ e: EscenaViralGuardada
   "ab-presion": AbPresion, "ab-falso": AbFalso, "ab-duane": AbDuane, "ab-consulta": AbConsulta,
   "fa-gancho": FaGancho, "fa-gestos": FaGestos, "fa-extras": FaExtras, "fa-tunel": FaTunel,
   "fa-bell": FaBell, "fa-frente": FaFrente, "fa-cocodrilo": FaCocodrilo, "fa-urgencia": FaUrgencia,
+  "va-gancho": VaGancho, "va-sigue": VaSigue, "va-par": VaPar, "va-coclea": VaCoclea, "va-atomo": VaAtomo,
+  "va-ruido": VaRuido, "va-equilibrio": VaEquilibrio, "va-alcohol": VaAlcohol, "va-reflejo": VaReflejo,
   "tg-gancho": TgGancho, "tg-capsaicina": TgCapsaicina, "tg-nobel": TgNobel, "tg-mentol": TgMentol,
   "tg-ramas": TgRamas, "tg-helado": TgHelado, "tg-neuralgia": TgNeuralgia, "tg-comenta": TgComenta,
   "tr-gancho": TrGancho, "tr-cruce": TrCruce, "tr-recorrido": TrRecorrido, "tr-troclea": TrTroclea,

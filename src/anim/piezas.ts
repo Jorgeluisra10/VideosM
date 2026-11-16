@@ -910,6 +910,33 @@ export const TFA = {
   urgencia: { cae: 0.2, emergencias: 2.2, comentarios: 4.2, ceja: 5.8 },
 } as const;
 
+/* ───────────── «El par craneal VIII: el nervio que oye y equilibra» (SINAPSIS · pares craneales) ───────────── */
+
+/** Datos del video del par craneal VIII (vestibulococlear). El átomo es el del «pelito» (haz de estereocilios) de las células ciliadas en el umbral de audición (≈ 0,3 nm), NO el del tímpano. */
+export const VA = {
+  ramas: ["coclear", "vestibular"],
+  ciliadas: { total: 15000, internas: 3500, externasMin: 11000, externasMax: 12500 },
+  umbralNm: 0.3,
+  canales: 3,
+  piedritas: "otoconias",
+  regenera: { aves: true, humanosCoclea: false },
+  reflejoMs: { min: 7, max: 15 },
+  alcohol: "hipótesis de la cúpula ligera",
+  guisante: "tamaño de un guisante (comparación habitual, no confirmada en la búsqueda)",
+} as const;
+/** Tiempos del par craneal VIII (s a ritmo normal), compartidos entre el dibujo y el sonido. */
+export const TVA = {
+  gancho: { nervio: 0.2, oir: 1.6, caer: 2.6, celulas: 3.6, atomo: 4.8 },
+  sigue: { antes: 0.2, sigue: 1.2, pares: 2.9 },
+  par: { par: 0.2, oir: 2.3, coclear: 3.4, equilibrio: 4.5, vestibular: 5.7 },
+  coclea: { caracol: 0.2, guisante: 2.4, desenrolla: 3.8, celulas: 5.0 },
+  atomo: { debil: 0.2, pelos: 2.6, mueven: 3.8, atomo: 4.8 },
+  ruido: { humanos: 0.2, ruido: 2.2, dano: 3.6, aves: 5.0, renuevan: 5.8 },
+  equilibrio: { equilibrio: 0.2, canales: 1.2, burbuja: 3.0, piedritas: 4.4, gravedad: 5.6 },
+  alcohol: { suelta: 0.2, gira: 2.0, alcohol: 3.4, sistema: 4.8, cama: 6.0 },
+  reflejo: { mueve: 0.2, compensan: 3.0, coche: 4.6, comenta: 6.0 },
+} as const;
+
 /* ───────────── «La regla del 37 %» (problema de la parada óptima, ensayo abstracto para IMNOBA) ───────────── */
 
 /** Generador pseudoaleatorio determinista (mulberry32): mismos números en el render, en las pruebas y en cada fotograma. */
@@ -2048,6 +2075,42 @@ export const PIEZAS: Record<string, DefPieza> = {
   "fa-urgencia": {
     id: "fa-urgencia", nombre: "Par VII · si la cara se cae de golpe, llama a emergencias; y dime en los comentarios: ¿puedes levantar solo una ceja? (cierre)", ideal: 7.0, fondo: "dark", entra: "zoom",
     sfx: (_d, r) => [ev(0.05, "whoosh", 0.1), ev(TFA.urgencia.cae * r + 0.2, "thud", 0.18), ev(TFA.urgencia.emergencias * r, "zap", 0.16), ev(TFA.urgencia.comentarios * r, "pop", 0.14), ev(TFA.urgencia.ceja * r, "pop", 0.16), ev((TFA.urgencia.ceja + 0.6) * r, "ding", 0.18)],
+  },
+  "va-gancho": {
+    id: "va-gancho", nombre: "Par VIII · un nervio te deja oír y no caerte; sus células sienten movimientos del tamaño de un átomo (gancho)", ideal: 6.0, fondo: "dark", entra: "zoom",
+    sfx: (_d, r) => [ev(0.05, "whoosh", 0.1), ev(TVA.gancho.nervio * r + 0.2, "pop", 0.12), ev(TVA.gancho.oir * r, "pop", 0.14), ev(TVA.gancho.caer * r, "pop", 0.14), ev(TVA.gancho.celulas * r, "tick", 0.12), ev(TVA.gancho.atomo * r, "zap", 0.16), ev((TVA.gancho.atomo + 0.4) * r, "ding", 0.18)],
+  },
+  "va-sigue": {
+    id: "va-sigue", nombre: "Par VIII · aviso rápido: síguenos en SINAPSIS y no te pierdas ningún par craneal", ideal: 4.0, fondo: "dark", entra: "corte",
+    sfx: (_d, r) => [ev(0.05, "whoosh", 0.1), ev(TVA.sigue.antes * r + 0.2, "pop", 0.12), ev(TVA.sigue.sigue * r, "ding", 0.2), ev(TVA.sigue.sigue * r + 0.3, "pop", 0.14), ev(TVA.sigue.pares * r, "tick", 0.12)],
+  },
+  "va-par": {
+    id: "va-par", nombre: "Par VIII · el vestibulococlear: una rama para oír (coclear) y otra para el equilibrio (vestibular)", ideal: 6.5, fondo: "dark", entra: "corte",
+    sfx: (_d, r) => [ev(0.05, "whoosh", 0.1), ev(TVA.par.par * r + 0.2, "pop", 0.12), ev(TVA.par.oir * r, "tick", 0.12), ev(TVA.par.coclear * r, "pop", 0.14), ev(TVA.par.equilibrio * r, "tick", 0.12), ev(TVA.par.vestibular * r, "pop", 0.14)],
+  },
+  "va-coclea": {
+    id: "va-coclea", nombre: "Par VIII · la cóclea, un caracol del tamaño de un guisante, con unas quince mil células ciliadas", ideal: 7.0, fondo: "dark", entra: "semitono",
+    sfx: (_d, r) => [ev(0.05, "whoosh", 0.1), ev(TVA.coclea.caracol * r + 0.2, "pop", 0.12), ev(TVA.coclea.guisante * r, "pop", 0.14), ev(TVA.coclea.desenrolla * r, "whoosh", 0.14), ...clics(TVA.coclea.celulas * r, 1.8 * r, 0.04), ev((TVA.coclea.celulas + 1.9) * r, "ding", 0.18)],
+  },
+  "va-atomo": {
+    id: "va-atomo", nombre: "Par VIII · con el sonido más débil que oyes, los pelitos de las células se mueven apenas el ancho de un átomo", ideal: 6.5, fondo: "dark", entra: "zoom",
+    sfx: (_d, r) => [ev(0.05, "whoosh", 0.1), ev(TVA.atomo.debil * r + 0.2, "pop", 0.12), ev(TVA.atomo.pelos * r, "tick", 0.12), ev(TVA.atomo.mueven * r, "pop", 0.14), ev(TVA.atomo.atomo * r, "zap", 0.16), ev((TVA.atomo.atomo + 0.4) * r, "ding", 0.18)],
+  },
+  "va-ruido": {
+    id: "va-ruido", nombre: "Par VIII · las células ciliadas humanas no se regeneran: el ruido fuerte puede dañarlas; las aves sí las renuevan", ideal: 7.0, fondo: "dark", entra: "semitono",
+    sfx: (_d, r) => [ev(0.05, "whoosh", 0.1), ev(TVA.ruido.humanos * r + 0.2, "pop", 0.12), ev(TVA.ruido.ruido * r, "thud", 0.18), ev(TVA.ruido.dano * r, "pop", 0.14), ev(TVA.ruido.aves * r, "pop", 0.14), ev(TVA.ruido.renuevan * r, "ding", 0.18)],
+  },
+  "va-equilibrio": {
+    id: "va-equilibrio", nombre: "Par VIII · el equilibrio: tres canales con líquido, como niveles de burbuja, y piedritas que sienten la gravedad", ideal: 7.0, fondo: "dark", entra: "corte",
+    sfx: (_d, r) => [ev(0.05, "whoosh", 0.1), ev(TVA.equilibrio.equilibrio * r + 0.2, "pop", 0.12), ev(TVA.equilibrio.canales * r, "tick", 0.12), ev(TVA.equilibrio.burbuja * r, "pop", 0.14), ev(TVA.equilibrio.piedritas * r, "pop", 0.14), ev(TVA.equilibrio.gravedad * r, "tick", 0.12)],
+  },
+  "va-alcohol": {
+    id: "va-alcohol", nombre: "Par VIII · si una piedrita se suelta el mundo gira; el alcohol puede alterar el sistema y la cama da vueltas", ideal: 7.5, fondo: "dark", entra: "semitono",
+    sfx: (_d, r) => [ev(0.05, "whoosh", 0.1), ev(TVA.alcohol.suelta * r + 0.2, "pop", 0.12), ev(TVA.alcohol.gira * r, "whoosh", 0.16), ev(TVA.alcohol.alcohol * r, "pop", 0.14), ev(TVA.alcohol.sistema * r, "tick", 0.12), ev(TVA.alcohol.cama * r, "whoosh", 0.16)],
+  },
+  "va-reflejo": {
+    id: "va-reflejo", nombre: "Par VIII · mueve la cabeza leyendo: tus ojos se compensan solos; ¿te mareas leyendo en el coche? (comentarios)", ideal: 7.0, fondo: "dark", entra: "zoom",
+    sfx: (_d, r) => [ev(0.05, "whoosh", 0.1), ev(TVA.reflejo.mueve * r + 0.2, "pop", 0.12), ev(TVA.reflejo.compensan * r, "zap", 0.14), ev(TVA.reflejo.coche * r, "pop", 0.14), ev(TVA.reflejo.comenta * r, "ding", 0.18)],
   },
   "astro-memoria": {
     id: "astro-memoria", nombre: "Astrocitos · en ratones, reactivarlos estimuló el recuerdo", ideal: 4.15, fondo: "dark", entra: "corte",
