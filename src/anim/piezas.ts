@@ -937,6 +937,30 @@ export const TVA = {
   reflejo: { mueve: 0.2, compensan: 3.0, coche: 4.6, comenta: 6.0 },
 } as const;
 
+/* ───────────── «El par craneal IX: el nervio de la arcada y la presión» (SINAPSIS · pares craneales) ───────────── */
+
+/** Datos del video del par craneal IX (glosofaríngeo). La arcada ausente en sanos viene de un solo estudio (Davies et al., Lancet 1995, 140 adultos): se presenta como estimación. */
+export const GL = {
+  nombre: "glosofaríngeo",
+  arcada: { aferente: "IX", eferente: "X" },
+  tercioLengua: "tercio posterior de la lengua",
+  seno: { nombre: "seno carotídeo", nervio: "nervio del seno carotídeo (de Hering)", baro: true, quimio: "cuerpo carotídeo (O₂ y CO₂)" },
+  glandula: "parótida",
+  sinArcadaSanos: { n: 140, porcentaje: 37, fuente: "Davies et al., Lancet 1995" },
+  neuralgia: { por100mil: "0,2–0,7", sincope: "4 de ≈ 216 casos", disparadores: ["tragar", "bostezar"] },
+} as const;
+/** Tiempos del par craneal IX (s a ritmo normal), compartidos entre el dibujo y el sonido. */
+export const TGL = {
+  gancho: { nervio: 0.2, arcada: 2.0, cepillo: 3.3, presion: 5.0 },
+  par: { par: 0.2, glosofaringeo: 1.5, sabor: 2.7, sensibilidad: 4.2, saliva: 5.2 },
+  arcada: { toca: 0.2, garganta: 2.2, aviso: 3.6, vago: 5.0, arcada: 6.0 },
+  sin: { wow: 0.2, estudio: 1.2, tercio: 2.5, sanos: 3.7, sinArcada: 4.6, bien: 6.0 },
+  presion: { cuello: 0.2, sensor: 2.0, seno: 3.4, vigila: 4.6, avisa: 5.8 },
+  neuralgia: { rara: 0.2, neuralgia: 1.8, dolor: 3.2, tragar: 5.0, bostezar: 6.0 },
+  sincope: { pocos: 0.2, dolor: 1.6, desmayos: 3.0, cree: 4.4, frena: 5.8 },
+  prueba: { dolor: 0.2, consulta: 2.6, arcadas: 4.2, comenta: 5.6 },
+} as const;
+
 /* ───────────── «La regla del 37 %» (problema de la parada óptima, ensayo abstracto para IMNOBA) ───────────── */
 
 /** Generador pseudoaleatorio determinista (mulberry32): mismos números en el render, en las pruebas y en cada fotograma. */
@@ -2111,6 +2135,42 @@ export const PIEZAS: Record<string, DefPieza> = {
   "va-reflejo": {
     id: "va-reflejo", nombre: "Par VIII · mueve la cabeza leyendo: tus ojos se compensan solos; ¿te mareas leyendo en el coche? (comentarios)", ideal: 7.0, fondo: "dark", entra: "zoom",
     sfx: (_d, r) => [ev(0.05, "whoosh", 0.1), ev(TVA.reflejo.mueve * r + 0.2, "pop", 0.12), ev(TVA.reflejo.compensan * r, "zap", 0.14), ev(TVA.reflejo.coche * r, "pop", 0.14), ev(TVA.reflejo.comenta * r, "ding", 0.18)],
+  },
+  "gl-gancho": {
+    id: "gl-gancho", nombre: "Par IX · el mismo nervio que da la arcada con el cepillo también vigila la presión arterial (gancho)", ideal: 6.5, fondo: "dark", entra: "zoom",
+    sfx: (_d, r) => [ev(0.05, "whoosh", 0.1), ev(TGL.gancho.nervio * r + 0.2, "pop", 0.12), ev(TGL.gancho.arcada * r, "thud", 0.18), ev(TGL.gancho.cepillo * r, "pop", 0.14), ev(TGL.gancho.presion * r, "zap", 0.16), ev((TGL.gancho.presion + 0.4) * r, "ding", 0.18)],
+  },
+  "gl-sigue": {
+    id: "gl-sigue", nombre: "Par IX · aviso rápido: síguenos en SINAPSIS y no te pierdas ningún par craneal", ideal: 4.0, fondo: "dark", entra: "corte",
+    sfx: (_d, r) => [ev(0.05, "whoosh", 0.1), ev(TVA.sigue.antes * r + 0.2, "pop", 0.12), ev(TVA.sigue.sigue * r, "ding", 0.2), ev(TVA.sigue.sigue * r + 0.3, "pop", 0.14), ev(TVA.sigue.pares * r, "tick", 0.12)],
+  },
+  "gl-par": {
+    id: "gl-par", nombre: "Par IX · el glosofaríngeo: sabor del fondo de la lengua, sensibilidad y saliva", ideal: 5.8, fondo: "dark", entra: "corte",
+    sfx: (_d, r) => [ev(0.05, "whoosh", 0.1), ev(TGL.par.par * r + 0.2, "pop", 0.12), ev(TGL.par.glosofaringeo * r, "tick", 0.12), ev(TGL.par.sabor * r, "pop", 0.14), ev(TGL.par.sensibilidad * r, "pop", 0.14), ev(TGL.par.saliva * r, "pop", 0.14)],
+  },
+  "gl-arcada": {
+    id: "gl-arcada", nombre: "Par IX · si algo toca el fondo de la garganta, el IX avisa y el vago (X) ordena la arcada", ideal: 7.0, fondo: "dark", entra: "semitono",
+    sfx: (_d, r) => [ev(0.05, "whoosh", 0.1), ev(TGL.arcada.toca * r + 0.2, "pop", 0.12), ev(TGL.arcada.garganta * r, "tick", 0.12), ev(TGL.arcada.aviso * r, "zap", 0.14), ev(TGL.arcada.vago * r, "pop", 0.14), ev(TGL.arcada.arcada * r, "thud", 0.2)],
+  },
+  "gl-sin": {
+    id: "gl-sin", nombre: "Par IX · en un estudio, más de un tercio de adultos sanos no tenía arcada", ideal: 7.0, fondo: "dark", entra: "zoom",
+    sfx: (_d, r) => [ev(0.05, "whoosh", 0.1), ev(TGL.sin.wow * r + 0.2, "pop", 0.12), ev(TGL.sin.estudio * r, "tick", 0.12), ev(TGL.sin.tercio * r, "pop", 0.14), ev(TGL.sin.sinArcada * r, "pop", 0.14), ev(TGL.sin.bien * r, "ding", 0.18)],
+  },
+  "gl-presion": {
+    id: "gl-presion", nombre: "Par IX · el seno carotídeo es un sensor de presión que avisa al cerebro", ideal: 7.0, fondo: "dark", entra: "corte",
+    sfx: (_d, r) => [ev(0.05, "whoosh", 0.1), ev(TGL.presion.cuello * r + 0.2, "pop", 0.12), ev(TGL.presion.sensor * r, "tick", 0.12), ev(TGL.presion.seno * r, "pop", 0.14), ev(TGL.presion.vigila * r, "thud", 0.14), ev(TGL.presion.avisa * r, "zap", 0.14), ev((TGL.presion.avisa + 0.4) * r, "ding", 0.18)],
+  },
+  "gl-neuralgia": {
+    id: "gl-neuralgia", nombre: "Par IX · la neuralgia del glosofaríngeo: dolor muy fuerte en la garganta al tragar o bostezar", ideal: 7.0, fondo: "dark", entra: "semitono",
+    sfx: (_d, r) => [ev(0.05, "whoosh", 0.1), ev(TGL.neuralgia.rara * r + 0.2, "pop", 0.12), ev(TGL.neuralgia.neuralgia * r, "tick", 0.12), ev(TGL.neuralgia.dolor * r, "zap", 0.18), ev(TGL.neuralgia.tragar * r, "pop", 0.14), ev(TGL.neuralgia.bostezar * r, "pop", 0.14)],
+  },
+  "gl-sincope": {
+    id: "gl-sincope", nombre: "Par IX · en muy pocos casos el dolor viene con desmayos; se cree que el nervio también frena el corazón", ideal: 7.0, fondo: "dark", entra: "corte",
+    sfx: (_d, r) => [ev(0.05, "whoosh", 0.1), ev(TGL.sincope.pocos * r + 0.2, "pop", 0.12), ev(TGL.sincope.dolor * r, "zap", 0.14), ev(TGL.sincope.desmayos * r, "thud", 0.2), ev(TGL.sincope.cree * r, "tick", 0.12), ev(TGL.sincope.frena * r, "thud", 0.16)],
+  },
+  "gl-prueba": {
+    id: "gl-prueba", nombre: "Par IX · dolor fuerte al tragar o un desmayo: consulta a un médico; ¿qué te da arcadas? (comentarios)", ideal: 7.0, fondo: "dark", entra: "zoom",
+    sfx: (_d, r) => [ev(0.05, "whoosh", 0.1), ev(TGL.prueba.dolor * r + 0.2, "pop", 0.12), ev(TGL.prueba.consulta * r, "ding", 0.18), ev(TGL.prueba.arcadas * r, "pop", 0.14), ev(TGL.prueba.comenta * r, "ding", 0.18)],
   },
   "astro-memoria": {
     id: "astro-memoria", nombre: "Astrocitos · en ratones, reactivarlos estimuló el recuerdo", ideal: 4.15, fondo: "dark", entra: "corte",

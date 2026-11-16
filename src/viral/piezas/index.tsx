@@ -9,6 +9,8 @@ import { FaGancho, FaGestos, FaExtras, FaTunel } from "./fa1";
 import { FaBell, FaFrente, FaCocodrilo, FaUrgencia } from "./fa2";
 import { VaGancho, VaSigue, VaPar, VaCoclea, VaAtomo } from "./va1";
 import { VaRuido, VaEquilibrio, VaAlcohol, VaReflejo } from "./va2";
+import { GlGancho, GlSigue, GlPar, GlArcada, GlSin } from "./gl1";
+import { GlPresion, GlNeuralgia, GlSincope, GlPrueba } from "./gl2";
 import { TgCapsaicina, TgGancho, TgMentol, TgNobel } from "./tg1";
 import { TgComenta, TgHelado, TgNeuralgia, TgRamas } from "./tg2";
 import { TrCruce, TrGancho, TrRecorrido, TrTroclea } from "./tr1";
@@ -149,6 +151,8 @@ export const COMPONENTES_PIEZA: Record<string, React.FC<{ e: EscenaViralGuardada
   "fa-bell": FaBell, "fa-frente": FaFrente, "fa-cocodrilo": FaCocodrilo, "fa-urgencia": FaUrgencia,
   "va-gancho": VaGancho, "va-sigue": VaSigue, "va-par": VaPar, "va-coclea": VaCoclea, "va-atomo": VaAtomo,
   "va-ruido": VaRuido, "va-equilibrio": VaEquilibrio, "va-alcohol": VaAlcohol, "va-reflejo": VaReflejo,
+  "gl-gancho": GlGancho, "gl-sigue": GlSigue, "gl-par": GlPar, "gl-arcada": GlArcada, "gl-sin": GlSin,
+  "gl-presion": GlPresion, "gl-neuralgia": GlNeuralgia, "gl-sincope": GlSincope, "gl-prueba": GlPrueba,
   "tg-gancho": TgGancho, "tg-capsaicina": TgCapsaicina, "tg-nobel": TgNobel, "tg-mentol": TgMentol,
   "tg-ramas": TgRamas, "tg-helado": TgHelado, "tg-neuralgia": TgNeuralgia, "tg-comenta": TgComenta,
   "tr-gancho": TrGancho, "tr-cruce": TrCruce, "tr-recorrido": TrRecorrido, "tr-troclea": TrTroclea,

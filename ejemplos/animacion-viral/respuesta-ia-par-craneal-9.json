@@ -1,0 +1,12 @@
+{"titulo": "El par craneal IX: el nervio de la arcada y la presión", "scenes": [
+{"t": "PIEZA", "voz": "El mismo nervio que te da una arcada con el cepillo de dientes también vigila tu presión arterial.", "dur": 7.0, "h": "ARCADA Y PRESIÓN", "w": "PRESIÓN", "pieza": {"id": "gl-gancho"}},
+{"t": "PIEZA", "voz": "Antes de seguir: síguenos en Sinapsis. No te pierdas ningún par.", "dur": 4.5, "h": "SÍGUENOS EN SINAPSIS", "w": "SÍGUENOS", "pieza": {"id": "gl-sigue"}},
+{"t": "PIEZA", "voz": "Es el par craneal nueve, el glosofaríngeo: sabor del fondo de la lengua, sensibilidad y saliva.", "dur": 6.2, "h": "EL PAR CRANEAL IX", "w": "IX", "cap": "par craneal IX", "pieza": {"id": "gl-par"}},
+{"t": "PIEZA", "voz": "Si algo toca el fondo de tu garganta, este nervio da el aviso y el vago ordena la arcada.", "dur": 7.5, "h": "LA ARCADA", "w": "ARCADA", "pieza": {"id": "gl-arcada"}},
+{"t": "PIEZA", "voz": "Dato wow: en un estudio, más de un tercio de adultos sanos no tenía arcada, y estaban bien.", "dur": 7.5, "h": "UNO DE CADA TRES SIN ARCADA", "w": "TRES", "pieza": {"id": "gl-sin"}},
+{"t": "PIEZA", "voz": "Y en el cuello tiene un sensor de presión, el seno carotídeo: vigila la presión y avisa al cerebro.", "dur": 7.5, "h": "EL SENO CAROTÍDEO", "w": "SENSOR", "pieza": {"id": "gl-presion"}},
+{"t": "PIEZA", "voz": "Rara vez se irrita: la neuralgia del glosofaríngeo da un dolor muy fuerte en la garganta al tragar o bostezar.", "dur": 7.5, "h": "NEURALGIA DEL IX", "w": "DOLOR", "pieza": {"id": "gl-neuralgia"}},
+{"t": "PIEZA", "voz": "En muy pocos casos, ese dolor viene con desmayos: se cree que el nervio también frena el corazón.", "dur": 7.5, "h": "DOLOR Y DESMAYO", "w": "DESMAYO", "pieza": {"id": "gl-sincope"}},
+{"t": "PIEZA", "voz": "Dolor fuerte al tragar o un desmayo: consulta a un médico. ¿Qué te da más arcadas? Cuéntame en comentarios.", "dur": 7.5, "h": "¿QUÉ TE DA ARCADAS?", "w": "ARCADAS", "pieza": {"id": "gl-prueba"}},
+{"t": "CTA", "voz": "Compártelo con alguien que ame el cerebro. Síguenos en Sinapsis.", "dur": 4.8, "h": "COMPÁRTELO Y SÍGUENOS", "w": "SÍGUENOS", "sub": "Más ciencia en SINAPSIS"}
+]}

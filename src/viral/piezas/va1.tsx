@@ -62,7 +62,7 @@ export const VaGancho: React.FC<P> = ({ e }) => {
 /* ───────────── va-sigue ───────────── */
 
 const ROMANOS = ["0", "I", "II", "III", "IV", "V", "VI", "VII", "VIII", "IX", "X", "XI", "XII"];
-export const VaSigue: React.FC<P> = ({ e }) => {
+export const SigueActual: React.FC<P & { actual: number }> = ({ e, actual }) => {
   const { f, t, a } = useReloj();
   const S = TVA.sigue;
   const kI = spr(f, a(S.antes + 0.1), { damping: 11, stiffness: 150, mass: 0.8 }), kB = spr(f, a(S.sigue), { damping: 9, stiffness: 200, mass: 0.7 }), kPa = clamp((t - a(S.pares)) / 0.4);
@@ -80,9 +80,9 @@ export const VaSigue: React.FC<P> = ({ e }) => {
         </g>
         {/* fila de los 13 pares */}
         {ROMANOS.map((r, i) => {
-          const k = clamp((t - a(S.pares + i * 0.05)) / 0.3), actual = i === 8, hecho = i < 8;
-          const cx = 130 + i * 68.3, col = actual ? VAC.oro : hecho ? VAC.verde : "#4A5C92";
-          return <g key={r} opacity={k} transform={`translate(${cx} 1325) scale(${actual ? 1 + 0.12 * Math.sin(t * 8) : 1})`}><circle r={25} fill="rgba(11,18,40,0.95)" stroke={col} strokeWidth={actual ? 6 : 4} /><text y={7} textAnchor="middle" fontFamily={MONOF} fontWeight={800} fontSize={r.length > 2 ? 15 : 19} fill={col} data-texto={`va-s-${i}`}>{r}</text></g>;
+          const k = clamp((t - a(S.pares + i * 0.05)) / 0.3), esActual = i === actual, hecho = i < actual;
+          const cx = 130 + i * 68.3, col = esActual ? VAC.oro : hecho ? VAC.verde : "#4A5C92";
+          return <g key={r} opacity={k} transform={`translate(${cx} 1325) scale(${esActual ? 1 + 0.12 * Math.sin(t * 8) : 1})`}><circle r={25} fill="rgba(11,18,40,0.95)" stroke={col} strokeWidth={esActual ? 6 : 4} /><text y={7} textAnchor="middle" fontFamily={MONOF} fontWeight={800} fontSize={r.length > 2 ? 15 : 19} fill={col} data-texto={`va-s-${i}`}>{r}</text></g>;
         })}
       </svg>
       <InsigniaSinapsis y={900} k={kI} />
@@ -92,6 +92,8 @@ export const VaSigue: React.FC<P> = ({ e }) => {
     </Fondo>
   );
 };
+
+export const VaSigue: React.FC<P> = ({ e }) => <SigueActual e={e} actual={8} />;
 
 /* ───────────── va-par ───────────── */
 
