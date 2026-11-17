@@ -109,8 +109,8 @@ export const Manometro: React.FC<{ x: number; y: number; s?: number; valor?: num
 };
 
 /** Corazón con latido (`ritmo` 1 = latiendo, 0 = quieto). Origen = centro; ancho ≈ 140·s. */
-export const Corazon: React.FC<{ x: number; y: number; s?: number; t?: number; ritmo?: number; opacidad?: number; color?: string }> = ({ x, y, s = 1, t = 0, ritmo = 1, opacidad = 1, color = GLC.rojo }) => {
-  const lat = 1 + 0.1 * Math.max(0, Math.sin(t * 9)) * ritmo;
+export const Corazon: React.FC<{ x: number; y: number; s?: number; t?: number; ritmo?: number; opacidad?: number; color?: string; freq?: number }> = ({ x, y, s = 1, t = 0, ritmo = 1, opacidad = 1, color = GLC.rojo, freq = 9 }) => {
+  const lat = 1 + 0.1 * Math.max(0, Math.sin(t * freq)) * ritmo;
   return (
     <g transform={`translate(${x} ${y}) scale(${s * lat})`} opacity={opacidad}>
       <path d="M 0 60 C -90 -2 -78 -60 -36 -60 C -14 -60 0 -44 0 -30 C 0 -44 14 -60 36 -60 C 78 -60 90 -2 0 60 Z" fill={color} stroke="#fff" strokeOpacity={0.5} strokeWidth={4} />

@@ -1,0 +1,12 @@
+{"titulo": "El par craneal X: el vago, el nervio errante", "scenes": [
+{"t": "PIEZA", "voz": "El par craneal diez, el vago, significa errante: baja de la cabeza al abdomen y toca corazón, pulmones e intestino.", "dur": 7.5, "h": "EL VAGO, EL ERRANTE", "w": "ERRANTE", "pieza": {"id": "vg-gancho"}},
+{"t": "PIEZA", "voz": "Antes de seguir: síguenos en Sinapsis. No te pierdas ningún par.", "dur": 4.5, "h": "SÍGUENOS EN SINAPSIS", "w": "SÍGUENOS", "pieza": {"id": "vg-sigue"}},
+{"t": "PIEZA", "voz": "En 1921, Otto Loewi frenó el corazón de una rana con su vago: halló el primer mensajero químico nervioso.", "dur": 7.2, "h": "OTTO LOEWI, 1921", "w": "LOEWI", "pieza": {"id": "vg-loewi"}},
+{"t": "PIEZA", "voz": "Por eso ver sangre o estar mucho de pie puede frenar el corazón y provocar un desmayo: el vasovagal.", "dur": 7.2, "h": "EL DESMAYO VASOVAGAL", "w": "DESMAYO", "pieza": {"id": "vg-desmayo"}},
+{"t": "PIEZA", "voz": "Una rama del vago llega al conducto del oído: en algunas personas, tocarlo provoca tos.", "dur": 7.2, "h": "OÍDO Y TOS", "w": "TOS", "pieza": {"id": "vg-oido"}},
+{"t": "PIEZA", "voz": "Y habla con el intestino: se estima que la mayoría de sus fibras llevan información del cuerpo al cerebro.", "dur": 7.2, "h": "HABLA CON EL INTESTINO", "w": "INTESTINO", "pieza": {"id": "vg-intestino"}},
+{"t": "PIEZA", "voz": "Su rama de la voz, el laríngeo recurrente, baja y vuelve a subir: en la jirafa mide varios metros.", "dur": 7.2, "h": "EN LA JIRAFA, METROS", "w": "JIRAFA", "pieza": {"id": "vg-jirafa"}},
+{"t": "PIEZA", "voz": "Hoy, un implante que estimula el vago ayuda a algunos pacientes con epilepsia que no responden a los fármacos.", "dur": 7.2, "h": "EL VAGO EN LA CLÍNICA", "w": "IMPLANTE", "pieza": {"id": "vg-implante"}},
+{"t": "PIEZA", "voz": "Si te desmayas sin explicación, consulta a un médico. ¿Te desmayas al ver sangre? Cuéntame en comentarios.", "dur": 7.2, "h": "¿TE DESMAYAS AL VER SANGRE?", "w": "SANGRE", "pieza": {"id": "vg-prueba"}},
+{"t": "CTA", "voz": "Compártelo con alguien que ame el cerebro. Síguenos en Sinapsis.", "dur": 4.8, "h": "COMPÁRTELO Y SÍGUENOS", "w": "SÍGUENOS", "sub": "Más ciencia en SINAPSIS"}
+]}

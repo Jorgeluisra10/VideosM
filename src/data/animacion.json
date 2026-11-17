@@ -1,20 +1,20 @@
 {
  "version": 1,
- "titulo": "El par craneal IX: el nervio de la arcada y la presión",
+ "titulo": "El par craneal X: el vago, el nervio errante",
  "paleta": "medicina",
  "sfx": true,
  "fps": 60,
- "duracion": 67.5,
+ "duracion": 67.2,
  "escenas": [
   {
    "n": 1,
    "t": "PIEZA",
-   "voz": "El mismo nervio que te da una arcada con el cepillo de dientes también vigila tu presión arterial.",
-   "dur": 7,
-   "h": "ARCADA Y PRESIÓN",
-   "w": "PRESIÓN",
+   "voz": "El par craneal diez, el vago, significa errante: baja de la cabeza al abdomen y toca corazón, pulmones e intestino.",
+   "dur": 7.5,
+   "h": "EL VAGO, EL ERRANTE",
+   "w": "ERRANTE",
    "sub": "",
-   "ic": "brillo",
+   "ic": "tendencia-baja",
    "num": null,
    "vs": null,
    "bars": [],
@@ -45,7 +45,7 @@
    "cubo": null,
    "diales": null,
    "pieza": {
-    "id": "gl-gancho",
+    "id": "vg-gancho",
     "props": {}
    },
    "cita": null,
@@ -54,10 +54,10 @@
    "tema": "oscuro",
    "bg": "dark",
    "ritmo": 1,
-   "total": 67.5,
+   "total": 67.2,
    "inicio": 0,
-   "fin": 7,
-   "texto": "El mismo nervio que te da una arcada con el cepillo de dientes también vigila tu presión arterial.",
+   "fin": 7.5,
+   "texto": "El par craneal diez, el vago, significa errante: baja de la cabeza al abdomen y toca corazón, pulmones e intestino.",
    "tr": "barrido",
    "trs": "corte",
    "sfx": [
@@ -77,22 +77,27 @@
      "vol": 0.12
     },
     {
-     "t": 2,
-     "tipo": "thud",
-     "vol": 0.18
+     "t": 1.6,
+     "tipo": "tick",
+     "vol": 0.12
     },
     {
-     "t": 3.3,
+     "t": 2.5,
      "tipo": "pop",
      "vol": 0.14
     },
     {
-     "t": 5,
+     "t": 3.6,
+     "tipo": "whoosh",
+     "vol": 0.14
+    },
+    {
+     "t": 5.2,
      "tipo": "zap",
      "vol": 0.16
     },
     {
-     "t": 5.4,
+     "t": 5.7,
      "tipo": "ding",
      "vol": 0.18
     }
@@ -137,7 +142,7 @@
    "cubo": null,
    "diales": null,
    "pieza": {
-    "id": "gl-sigue",
+    "id": "vg-sigue",
     "props": {}
    },
    "cita": null,
@@ -146,9 +151,9 @@
    "tema": "claro",
    "bg": "light",
    "ritmo": 1,
-   "total": 67.5,
-   "inicio": 7,
-   "fin": 11.5,
+   "total": 67.2,
+   "inicio": 7.5,
+   "fin": 12,
    "texto": "Antes de seguir: síguenos en Sinapsis. No te pierdas ningún par.",
    "tr": "corte",
    "trs": "corte",
@@ -188,12 +193,12 @@
   {
    "n": 3,
    "t": "PIEZA",
-   "voz": "Es el par craneal nueve, el glosofaríngeo: sabor del fondo de la lengua, sensibilidad y saliva.",
-   "dur": 6.2,
-   "h": "EL PAR CRANEAL IX",
-   "w": "IX",
+   "voz": "En 1921, Otto Loewi frenó el corazón de una rana con su vago: halló el primer mensajero químico nervioso.",
+   "dur": 7.2,
+   "h": "OTTO LOEWI, 1921",
+   "w": "LOEWI,",
    "sub": "",
-   "ic": "brillo",
+   "ic": "chat",
    "num": null,
    "vs": null,
    "bars": [],
@@ -215,7 +220,7 @@
    "red": null,
    "termo": null,
    "pila": null,
-   "cap": "par craneal IX",
+   "cap": "",
    "papel": null,
    "pilares": null,
    "ciclo": null,
@@ -224,7 +229,7 @@
    "cubo": null,
    "diales": null,
    "pieza": {
-    "id": "gl-par",
+    "id": "vg-loewi",
     "props": {}
    },
    "cita": null,
@@ -232,11 +237,11 @@
    "modo": "VIRAL",
    "tema": "oscuro",
    "bg": "dark",
-   "ritmo": 0.9913793103448276,
-   "total": 67.5,
-   "inicio": 11.5,
-   "fin": 17.7,
-   "texto": "Es el par craneal nueve, el glosofaríngeo: sabor del fondo de la lengua, sensibilidad y saliva.",
+   "ritmo": 0.9926470588235294,
+   "total": 67.2,
+   "inicio": 12,
+   "fin": 19.2,
+   "texto": "En 1921, Otto Loewi frenó el corazón de una rana con su vago: halló el primer mensajero químico nervioso.",
    "tr": "corte",
    "trs": "semitono",
    "sfx": [
@@ -251,411 +256,43 @@
      "vol": 0.1
     },
     {
-     "t": 0.39827586206896554,
+     "t": 0.3985294117647059,
      "tipo": "pop",
      "vol": 0.12
     },
     {
-     "t": 1.4870689655172415,
+     "t": 1.1911764705882353,
      "tipo": "tick",
      "vol": 0.12
     },
     {
-     "t": 2.6767241379310347,
+     "t": 2.183823529411765,
+     "tipo": "zap",
+     "vol": 0.16
+    },
+    {
+     "t": 3.573529411764706,
      "tipo": "pop",
      "vol": 0.14
     },
     {
-     "t": 4.163793103448276,
-     "tipo": "pop",
+     "t": 4.5661764705882355,
+     "tipo": "thud",
      "vol": 0.14
     },
     {
-     "t": 5.155172413793104,
-     "tipo": "pop",
-     "vol": 0.14
+     "t": 5.5588235294117645,
+     "tipo": "ding",
+     "vol": 0.18
     }
    ]
   },
   {
    "n": 4,
    "t": "PIEZA",
-   "voz": "Si algo toca el fondo de tu garganta, este nervio da el aviso y el vago ordena la arcada.",
-   "dur": 7.5,
-   "h": "LA ARCADA",
-   "w": "ARCADA",
-   "sub": "",
-   "ic": "brillo",
-   "num": null,
-   "vs": null,
-   "bars": [],
-   "barsU": "",
-   "hi": -1,
-   "line": null,
-   "items": [],
-   "stops": [],
-   "end": "",
-   "donut": [],
-   "picto": null,
-   "top": [],
-   "myth": "",
-   "truth": "",
-   "zoom": null,
-   "capas": null,
-   "mira": null,
-   "impacto": null,
-   "red": null,
-   "termo": null,
-   "pila": null,
-   "cap": "",
-   "papel": null,
-   "pilares": null,
-   "ciclo": null,
-   "duo": null,
-   "osc": null,
-   "cubo": null,
-   "diales": null,
-   "pieza": {
-    "id": "gl-arcada",
-    "props": {}
-   },
-   "cita": null,
-   "sc": "",
-   "modo": "VIRAL",
-   "tema": "claro",
-   "bg": "light",
-   "ritmo": 1,
-   "total": 67.5,
-   "inicio": 17.7,
-   "fin": 25.2,
-   "texto": "Si algo toca el fondo de tu garganta, este nervio da el aviso y el vago ordena la arcada.",
-   "tr": "semitono",
-   "trs": "zoom",
-   "sfx": [
-    {
-     "t": 0.04,
-     "tipo": "whoosh",
-     "vol": 0.16
-    },
-    {
-     "t": 0.05,
-     "tipo": "whoosh",
-     "vol": 0.1
-    },
-    {
-     "t": 0.4,
-     "tipo": "pop",
-     "vol": 0.12
-    },
-    {
-     "t": 2.2,
-     "tipo": "tick",
-     "vol": 0.12
-    },
-    {
-     "t": 3.6,
-     "tipo": "zap",
-     "vol": 0.14
-    },
-    {
-     "t": 5,
-     "tipo": "pop",
-     "vol": 0.14
-    },
-    {
-     "t": 6,
-     "tipo": "thud",
-     "vol": 0.2
-    }
-   ]
-  },
-  {
-   "n": 5,
-   "t": "PIEZA",
-   "voz": "Dato wow: en un estudio, más de un tercio de adultos sanos no tenía arcada, y estaban bien.",
-   "dur": 7.5,
-   "h": "UNO DE CADA TRES SIN ARCADA",
-   "w": "TRES",
-   "sub": "",
-   "ic": "brillo",
-   "num": null,
-   "vs": null,
-   "bars": [],
-   "barsU": "",
-   "hi": -1,
-   "line": null,
-   "items": [],
-   "stops": [],
-   "end": "",
-   "donut": [],
-   "picto": null,
-   "top": [],
-   "myth": "",
-   "truth": "",
-   "zoom": null,
-   "capas": null,
-   "mira": null,
-   "impacto": null,
-   "red": null,
-   "termo": null,
-   "pila": null,
-   "cap": "",
-   "papel": null,
-   "pilares": null,
-   "ciclo": null,
-   "duo": null,
-   "osc": null,
-   "cubo": null,
-   "diales": null,
-   "pieza": {
-    "id": "gl-sin",
-    "props": {}
-   },
-   "cita": null,
-   "sc": "",
-   "modo": "VIRAL",
-   "tema": "oscuro",
-   "bg": "dark",
-   "ritmo": 1,
-   "total": 67.5,
-   "inicio": 25.2,
-   "fin": 32.7,
-   "texto": "Dato wow: en un estudio, más de un tercio de adultos sanos no tenía arcada, y estaban bien.",
-   "tr": "zoom",
-   "trs": "corte",
-   "sfx": [
-    {
-     "t": 0.04,
-     "tipo": "whoosh",
-     "vol": 0.16
-    },
-    {
-     "t": 0.05,
-     "tipo": "whoosh",
-     "vol": 0.1
-    },
-    {
-     "t": 0.4,
-     "tipo": "pop",
-     "vol": 0.12
-    },
-    {
-     "t": 1.2,
-     "tipo": "tick",
-     "vol": 0.12
-    },
-    {
-     "t": 2.5,
-     "tipo": "pop",
-     "vol": 0.14
-    },
-    {
-     "t": 4.6,
-     "tipo": "pop",
-     "vol": 0.14
-    },
-    {
-     "t": 6,
-     "tipo": "ding",
-     "vol": 0.18
-    }
-   ]
-  },
-  {
-   "n": 6,
-   "t": "PIEZA",
-   "voz": "Y en el cuello tiene un sensor de presión, el seno carotídeo: vigila la presión y avisa al cerebro.",
-   "dur": 7.5,
-   "h": "EL SENO CAROTÍDEO",
-   "w": "CAROTÍDEO",
-   "sub": "",
-   "ic": "brillo",
-   "num": null,
-   "vs": null,
-   "bars": [],
-   "barsU": "",
-   "hi": -1,
-   "line": null,
-   "items": [],
-   "stops": [],
-   "end": "",
-   "donut": [],
-   "picto": null,
-   "top": [],
-   "myth": "",
-   "truth": "",
-   "zoom": null,
-   "capas": null,
-   "mira": null,
-   "impacto": null,
-   "red": null,
-   "termo": null,
-   "pila": null,
-   "cap": "",
-   "papel": null,
-   "pilares": null,
-   "ciclo": null,
-   "duo": null,
-   "osc": null,
-   "cubo": null,
-   "diales": null,
-   "pieza": {
-    "id": "gl-presion",
-    "props": {}
-   },
-   "cita": null,
-   "sc": "",
-   "modo": "VIRAL",
-   "tema": "claro",
-   "bg": "light",
-   "ritmo": 1,
-   "total": 67.5,
-   "inicio": 32.7,
-   "fin": 40.2,
-   "texto": "Y en el cuello tiene un sensor de presión, el seno carotídeo: vigila la presión y avisa al cerebro.",
-   "tr": "corte",
-   "trs": "semitono",
-   "sfx": [
-    {
-     "t": 0.04,
-     "tipo": "whoosh",
-     "vol": 0.16
-    },
-    {
-     "t": 0.05,
-     "tipo": "whoosh",
-     "vol": 0.1
-    },
-    {
-     "t": 0.4,
-     "tipo": "pop",
-     "vol": 0.12
-    },
-    {
-     "t": 2,
-     "tipo": "tick",
-     "vol": 0.12
-    },
-    {
-     "t": 3.4,
-     "tipo": "pop",
-     "vol": 0.14
-    },
-    {
-     "t": 4.6,
-     "tipo": "thud",
-     "vol": 0.14
-    },
-    {
-     "t": 5.8,
-     "tipo": "zap",
-     "vol": 0.14
-    },
-    {
-     "t": 6.2,
-     "tipo": "ding",
-     "vol": 0.18
-    }
-   ]
-  },
-  {
-   "n": 7,
-   "t": "PIEZA",
-   "voz": "Rara vez se irrita: la neuralgia del glosofaríngeo da un dolor muy fuerte en la garganta al tragar o bostezar.",
-   "dur": 7.5,
-   "h": "NEURALGIA DEL IX",
-   "w": "NEURALGIA",
-   "sub": "",
-   "ic": "brillo",
-   "num": null,
-   "vs": null,
-   "bars": [],
-   "barsU": "",
-   "hi": -1,
-   "line": null,
-   "items": [],
-   "stops": [],
-   "end": "",
-   "donut": [],
-   "picto": null,
-   "top": [],
-   "myth": "",
-   "truth": "",
-   "zoom": null,
-   "capas": null,
-   "mira": null,
-   "impacto": null,
-   "red": null,
-   "termo": null,
-   "pila": null,
-   "cap": "",
-   "papel": null,
-   "pilares": null,
-   "ciclo": null,
-   "duo": null,
-   "osc": null,
-   "cubo": null,
-   "diales": null,
-   "pieza": {
-    "id": "gl-neuralgia",
-    "props": {}
-   },
-   "cita": null,
-   "sc": "",
-   "modo": "VIRAL",
-   "tema": "oscuro",
-   "bg": "dark",
-   "ritmo": 1,
-   "total": 67.5,
-   "inicio": 40.2,
-   "fin": 47.7,
-   "texto": "Rara vez se irrita: la neuralgia del glosofaríngeo da un dolor muy fuerte en la garganta al tragar o bostezar.",
-   "tr": "semitono",
-   "trs": "corte",
-   "sfx": [
-    {
-     "t": 0.04,
-     "tipo": "whoosh",
-     "vol": 0.16
-    },
-    {
-     "t": 0.05,
-     "tipo": "whoosh",
-     "vol": 0.1
-    },
-    {
-     "t": 0.4,
-     "tipo": "pop",
-     "vol": 0.12
-    },
-    {
-     "t": 1.8,
-     "tipo": "tick",
-     "vol": 0.12
-    },
-    {
-     "t": 3.2,
-     "tipo": "zap",
-     "vol": 0.18
-    },
-    {
-     "t": 5,
-     "tipo": "pop",
-     "vol": 0.14
-    },
-    {
-     "t": 6,
-     "tipo": "pop",
-     "vol": 0.14
-    }
-   ]
-  },
-  {
-   "n": 8,
-   "t": "PIEZA",
-   "voz": "En muy pocos casos, ese dolor viene con desmayos: se cree que el nervio también frena el corazón.",
-   "dur": 7.5,
-   "h": "DOLOR Y DESMAYO",
+   "voz": "Por eso ver sangre o estar mucho de pie puede frenar el corazón y provocar un desmayo: el vasovagal.",
+   "dur": 7.2,
+   "h": "EL DESMAYO VASOVAGAL",
    "w": "DESMAYO",
    "sub": "",
    "ic": "brillo",
@@ -689,7 +326,7 @@
    "cubo": null,
    "diales": null,
    "pieza": {
-    "id": "gl-sincope",
+    "id": "vg-desmayo",
     "props": {}
    },
    "cita": null,
@@ -697,12 +334,12 @@
    "modo": "VIRAL",
    "tema": "claro",
    "bg": "light",
-   "ritmo": 1,
-   "total": 67.5,
-   "inicio": 47.7,
-   "fin": 55.2,
-   "texto": "En muy pocos casos, ese dolor viene con desmayos: se cree que el nervio también frena el corazón.",
-   "tr": "corte",
+   "ritmo": 0.9926470588235294,
+   "total": 67.2,
+   "inicio": 19.2,
+   "fin": 26.4,
+   "texto": "Por eso ver sangre o estar mucho de pie puede frenar el corazón y provocar un desmayo: el vasovagal.",
+   "tr": "semitono",
    "trs": "zoom",
    "sfx": [
     {
@@ -716,39 +353,44 @@
      "vol": 0.1
     },
     {
-     "t": 0.4,
+     "t": 0.3985294117647059,
      "tipo": "pop",
      "vol": 0.12
     },
     {
-     "t": 1.6,
-     "tipo": "zap",
+     "t": 1.1911764705882353,
+     "tipo": "pop",
      "vol": 0.14
     },
     {
-     "t": 3,
-     "tipo": "thud",
-     "vol": 0.2
-    },
-    {
-     "t": 4.4,
+     "t": 2.3823529411764706,
      "tipo": "tick",
      "vol": 0.12
     },
     {
-     "t": 5.8,
+     "t": 3.7720588235294117,
      "tipo": "thud",
+     "vol": 0.16
+    },
+    {
+     "t": 4.963235294117647,
+     "tipo": "thud",
+     "vol": 0.2
+    },
+    {
+     "t": 5.955882352941177,
+     "tipo": "ding",
      "vol": 0.16
     }
    ]
   },
   {
-   "n": 9,
+   "n": 5,
    "t": "PIEZA",
-   "voz": "Dolor fuerte al tragar o un desmayo: consulta a un médico. ¿Qué te da más arcadas? Cuéntame en comentarios.",
-   "dur": 7.5,
-   "h": "¿QUÉ TE DA ARCADAS?",
-   "w": "ARCADAS?",
+   "voz": "Una rama del vago llega al conducto del oído: en algunas personas, tocarlo provoca tos.",
+   "dur": 7.2,
+   "h": "OÍDO Y TOS",
+   "w": "TOS",
    "sub": "",
    "ic": "brillo",
    "num": null,
@@ -781,7 +423,7 @@
    "cubo": null,
    "diales": null,
    "pieza": {
-    "id": "gl-prueba",
+    "id": "vg-oido",
     "props": {}
    },
    "cita": null,
@@ -789,11 +431,374 @@
    "modo": "VIRAL",
    "tema": "oscuro",
    "bg": "dark",
-   "ritmo": 1,
-   "total": 67.5,
+   "ritmo": 0.9926470588235294,
+   "total": 67.2,
+   "inicio": 26.4,
+   "fin": 33.6,
+   "texto": "Una rama del vago llega al conducto del oído: en algunas personas, tocarlo provoca tos.",
+   "tr": "zoom",
+   "trs": "corte",
+   "sfx": [
+    {
+     "t": 0.04,
+     "tipo": "whoosh",
+     "vol": 0.16
+    },
+    {
+     "t": 0.05,
+     "tipo": "whoosh",
+     "vol": 0.1
+    },
+    {
+     "t": 0.3985294117647059,
+     "tipo": "pop",
+     "vol": 0.12
+    },
+    {
+     "t": 1.9852941176470589,
+     "tipo": "tick",
+     "vol": 0.12
+    },
+    {
+     "t": 3.375,
+     "tipo": "pop",
+     "vol": 0.14
+    },
+    {
+     "t": 4.5661764705882355,
+     "tipo": "thud",
+     "vol": 0.2
+    }
+   ]
+  },
+  {
+   "n": 6,
+   "t": "PIEZA",
+   "voz": "Y habla con el intestino: se estima que la mayoría de sus fibras llevan información del cuerpo al cerebro.",
+   "dur": 7.2,
+   "h": "HABLA CON EL INTESTINO",
+   "w": "INTESTINO",
+   "sub": "",
+   "ic": "brillo",
+   "num": null,
+   "vs": null,
+   "bars": [],
+   "barsU": "",
+   "hi": -1,
+   "line": null,
+   "items": [],
+   "stops": [],
+   "end": "",
+   "donut": [],
+   "picto": null,
+   "top": [],
+   "myth": "",
+   "truth": "",
+   "zoom": null,
+   "capas": null,
+   "mira": null,
+   "impacto": null,
+   "red": null,
+   "termo": null,
+   "pila": null,
+   "cap": "",
+   "papel": null,
+   "pilares": null,
+   "ciclo": null,
+   "duo": null,
+   "osc": null,
+   "cubo": null,
+   "diales": null,
+   "pieza": {
+    "id": "vg-intestino",
+    "props": {}
+   },
+   "cita": null,
+   "sc": "",
+   "modo": "VIRAL",
+   "tema": "claro",
+   "bg": "light",
+   "ritmo": 0.9926470588235294,
+   "total": 67.2,
+   "inicio": 33.6,
+   "fin": 40.8,
+   "texto": "Y habla con el intestino: se estima que la mayoría de sus fibras llevan información del cuerpo al cerebro.",
+   "tr": "corte",
+   "trs": "semitono",
+   "sfx": [
+    {
+     "t": 0.04,
+     "tipo": "whoosh",
+     "vol": 0.16
+    },
+    {
+     "t": 0.05,
+     "tipo": "whoosh",
+     "vol": 0.1
+    },
+    {
+     "t": 0.3985294117647059,
+     "tipo": "pop",
+     "vol": 0.12
+    },
+    {
+     "t": 1.786764705882353,
+     "tipo": "tick",
+     "vol": 0.12
+    },
+    {
+     "t": 3.1764705882352944,
+     "tipo": "pop",
+     "vol": 0.14
+    },
+    {
+     "t": 4.36764705882353,
+     "tipo": "whoosh",
+     "vol": 0.14
+    },
+    {
+     "t": 5.5588235294117645,
+     "tipo": "ding",
+     "vol": 0.16
+    }
+   ]
+  },
+  {
+   "n": 7,
+   "t": "PIEZA",
+   "voz": "Su rama de la voz, el laríngeo recurrente, baja y vuelve a subir: en la jirafa mide varios metros.",
+   "dur": 7.2,
+   "h": "EN LA JIRAFA, METROS",
+   "w": "JIRAFA,",
+   "sub": "",
+   "ic": "tren",
+   "num": null,
+   "vs": null,
+   "bars": [],
+   "barsU": "",
+   "hi": -1,
+   "line": null,
+   "items": [],
+   "stops": [],
+   "end": "",
+   "donut": [],
+   "picto": null,
+   "top": [],
+   "myth": "",
+   "truth": "",
+   "zoom": null,
+   "capas": null,
+   "mira": null,
+   "impacto": null,
+   "red": null,
+   "termo": null,
+   "pila": null,
+   "cap": "",
+   "papel": null,
+   "pilares": null,
+   "ciclo": null,
+   "duo": null,
+   "osc": null,
+   "cubo": null,
+   "diales": null,
+   "pieza": {
+    "id": "vg-jirafa",
+    "props": {}
+   },
+   "cita": null,
+   "sc": "",
+   "modo": "VIRAL",
+   "tema": "oscuro",
+   "bg": "dark",
+   "ritmo": 0.9926470588235294,
+   "total": 67.2,
+   "inicio": 40.8,
+   "fin": 48,
+   "texto": "Su rama de la voz, el laríngeo recurrente, baja y vuelve a subir: en la jirafa mide varios metros.",
+   "tr": "semitono",
+   "trs": "zoom",
+   "sfx": [
+    {
+     "t": 0.04,
+     "tipo": "whoosh",
+     "vol": 0.16
+    },
+    {
+     "t": 0.05,
+     "tipo": "whoosh",
+     "vol": 0.1
+    },
+    {
+     "t": 0.3985294117647059,
+     "tipo": "pop",
+     "vol": 0.12
+    },
+    {
+     "t": 1.786764705882353,
+     "tipo": "tick",
+     "vol": 0.12
+    },
+    {
+     "t": 2.9779411764705883,
+     "tipo": "whoosh",
+     "vol": 0.14
+    },
+    {
+     "t": 4.5661764705882355,
+     "tipo": "pop",
+     "vol": 0.14
+    },
+    {
+     "t": 5.5588235294117645,
+     "tipo": "ding",
+     "vol": 0.18
+    }
+   ]
+  },
+  {
+   "n": 8,
+   "t": "PIEZA",
+   "voz": "Hoy, un implante que estimula el vago ayuda a algunos pacientes con epilepsia que no responden a los fármacos.",
+   "dur": 7.2,
+   "h": "EL VAGO EN LA CLÍNICA",
+   "w": "CLÍNICA",
+   "sub": "",
+   "ic": "idea",
+   "num": null,
+   "vs": null,
+   "bars": [],
+   "barsU": "",
+   "hi": -1,
+   "line": null,
+   "items": [],
+   "stops": [],
+   "end": "",
+   "donut": [],
+   "picto": null,
+   "top": [],
+   "myth": "",
+   "truth": "",
+   "zoom": null,
+   "capas": null,
+   "mira": null,
+   "impacto": null,
+   "red": null,
+   "termo": null,
+   "pila": null,
+   "cap": "",
+   "papel": null,
+   "pilares": null,
+   "ciclo": null,
+   "duo": null,
+   "osc": null,
+   "cubo": null,
+   "diales": null,
+   "pieza": {
+    "id": "vg-implante",
+    "props": {}
+   },
+   "cita": null,
+   "sc": "",
+   "modo": "VIRAL",
+   "tema": "claro",
+   "bg": "light",
+   "ritmo": 0.9926470588235294,
+   "total": 67.2,
+   "inicio": 48,
+   "fin": 55.2,
+   "texto": "Hoy, un implante que estimula el vago ayuda a algunos pacientes con epilepsia que no responden a los fármacos.",
+   "tr": "zoom",
+   "trs": "zoom",
+   "sfx": [
+    {
+     "t": 0.04,
+     "tipo": "whoosh",
+     "vol": 0.16
+    },
+    {
+     "t": 0.05,
+     "tipo": "whoosh",
+     "vol": 0.1
+    },
+    {
+     "t": 0.3985294117647059,
+     "tipo": "pop",
+     "vol": 0.12
+    },
+    {
+     "t": 1.1911764705882353,
+     "tipo": "tick",
+     "vol": 0.12
+    },
+    {
+     "t": 2.5808823529411766,
+     "tipo": "zap",
+     "vol": 0.16
+    },
+    {
+     "t": 4.169117647058823,
+     "tipo": "pop",
+     "vol": 0.14
+    },
+    {
+     "t": 5.5588235294117645,
+     "tipo": "ding",
+     "vol": 0.18
+    }
+   ]
+  },
+  {
+   "n": 9,
+   "t": "PIEZA",
+   "voz": "Si te desmayas sin explicación, consulta a un médico. ¿Te desmayas al ver sangre? Cuéntame en comentarios.",
+   "dur": 7.2,
+   "h": "¿TE DESMAYAS AL VER SANGRE?",
+   "w": "SANGRE?",
+   "sub": "",
+   "ic": "brillo",
+   "num": null,
+   "vs": null,
+   "bars": [],
+   "barsU": "",
+   "hi": -1,
+   "line": null,
+   "items": [],
+   "stops": [],
+   "end": "",
+   "donut": [],
+   "picto": null,
+   "top": [],
+   "myth": "",
+   "truth": "",
+   "zoom": null,
+   "capas": null,
+   "mira": null,
+   "impacto": null,
+   "red": null,
+   "termo": null,
+   "pila": null,
+   "cap": "",
+   "papel": null,
+   "pilares": null,
+   "ciclo": null,
+   "duo": null,
+   "osc": null,
+   "cubo": null,
+   "diales": null,
+   "pieza": {
+    "id": "vg-prueba",
+    "props": {}
+   },
+   "cita": null,
+   "sc": "",
+   "modo": "VIRAL",
+   "tema": "oscuro",
+   "bg": "dark",
+   "ritmo": 0.9926470588235294,
+   "total": 67.2,
    "inicio": 55.2,
-   "fin": 62.7,
-   "texto": "Dolor fuerte al tragar o un desmayo: consulta a un médico. ¿Qué te da más arcadas? Cuéntame en comentarios.",
+   "fin": 62.4,
+   "texto": "Si te desmayas sin explicación, consulta a un médico. ¿Te desmayas al ver sangre? Cuéntame en comentarios.",
    "tr": "zoom",
    "trs": "barrido",
    "sfx": [
@@ -808,22 +813,22 @@
      "vol": 0.1
     },
     {
-     "t": 0.4,
+     "t": 0.3985294117647059,
      "tipo": "pop",
      "vol": 0.12
     },
     {
-     "t": 2.6,
+     "t": 2.3823529411764706,
      "tipo": "ding",
      "vol": 0.18
     },
     {
-     "t": 4.2,
+     "t": 3.9705882352941178,
      "tipo": "pop",
      "vol": 0.14
     },
     {
-     "t": 5.6,
+     "t": 5.360294117647059,
      "tipo": "ding",
      "vol": 0.18
     }
@@ -874,9 +879,9 @@
    "tema": "oscuro",
    "bg": "gold",
    "ritmo": 1,
-   "total": 67.5,
-   "inicio": 62.7,
-   "fin": 67.5,
+   "total": 67.2,
+   "inicio": 62.4,
+   "fin": 67.2,
    "texto": "Compártelo con alguien que ame el cerebro. Síguenos en Sinapsis.",
    "tr": "barrido",
    "trs": "barrido",

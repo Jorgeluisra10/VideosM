@@ -961,6 +961,32 @@ export const TGL = {
   prueba: { dolor: 0.2, consulta: 2.6, arcadas: 4.2, comenta: 5.6 },
 } as const;
 
+/* ───────────── «El par craneal X: el vago, el nervio errante» (SINAPSIS · pares craneales) ───────────── */
+
+/** Datos del video del par craneal X (vago). El 80 % aferente es una cifra muy repetida pero de base antigua y discutida; la historia del sueño de Loewi es discutida (el experimento no). */
+export const VG = {
+  nombre: "vago",
+  significado: "errante",
+  organos: ["corazón", "pulmones", "intestino"],
+  loewi: { ano: 1921, premio: 1936, sustancia: "acetilcolina", primero: "primer neurotransmisor" },
+  desmayo: "vasovagal",
+  arnold: { rama: "rama auricular del vago", frecuencia: "≈ 2–4 % de las personas" },
+  fibras: { aferentes: "≈ 80 %", nota: "cifra repetida, de base antigua y discutida" },
+  recurrente: { jirafaMetros: "≈ 4,5 m (estimaciones de 4,5–5 m)" },
+  vns: { epilepsia: 1997, depresion: 2005 },
+} as const;
+/** Tiempos del par craneal X (s a ritmo normal), compartidos entre el dibujo y el sonido. */
+export const TVG = {
+  gancho: { par: 0.2, vago: 1.6, errante: 2.5, baja: 3.6, toca: 5.2 },
+  loewi: { ano: 0.2, loewi: 1.2, freno: 2.2, vago: 3.6, hallo: 4.6, mensajero: 5.6 },
+  desmayo: { eso: 0.2, sangre: 1.2, pie: 2.4, frenar: 3.8, desmayo: 5.0, vasovagal: 6.0 },
+  oido: { rama: 0.2, conducto: 2.0, personas: 3.4, tos: 4.6 },
+  intestino: { habla: 0.2, estima: 1.8, mayoria: 3.2, informacion: 4.4, cerebro: 5.6 },
+  jirafa: { voz: 0.2, recurrente: 1.8, baja: 3.0, jirafa: 4.6, metros: 5.6 },
+  implante: { hoy: 0.2, implante: 1.2, estimula: 2.6, epilepsia: 4.2, farmacos: 5.6 },
+  prueba: { desmayas: 0.2, consulta: 2.4, sangre: 4.0, comenta: 5.4 },
+} as const;
+
 /* ───────────── «La regla del 37 %» (problema de la parada óptima, ensayo abstracto para IMNOBA) ───────────── */
 
 /** Generador pseudoaleatorio determinista (mulberry32): mismos números en el render, en las pruebas y en cada fotograma. */
@@ -2171,6 +2197,42 @@ export const PIEZAS: Record<string, DefPieza> = {
   "gl-prueba": {
     id: "gl-prueba", nombre: "Par IX · dolor fuerte al tragar o un desmayo: consulta a un médico; ¿qué te da arcadas? (comentarios)", ideal: 7.0, fondo: "dark", entra: "zoom",
     sfx: (_d, r) => [ev(0.05, "whoosh", 0.1), ev(TGL.prueba.dolor * r + 0.2, "pop", 0.12), ev(TGL.prueba.consulta * r, "ding", 0.18), ev(TGL.prueba.arcadas * r, "pop", 0.14), ev(TGL.prueba.comenta * r, "ding", 0.18)],
+  },
+  "vg-gancho": {
+    id: "vg-gancho", nombre: "Par X · el vago, «el errante»: baja de la cabeza al abdomen y toca corazón, pulmones e intestino (gancho)", ideal: 7.0, fondo: "dark", entra: "zoom",
+    sfx: (_d, r) => [ev(0.05, "whoosh", 0.1), ev(TVG.gancho.par * r + 0.2, "pop", 0.12), ev(TVG.gancho.vago * r, "tick", 0.12), ev(TVG.gancho.errante * r, "pop", 0.14), ev(TVG.gancho.baja * r, "whoosh", 0.14), ev(TVG.gancho.toca * r, "zap", 0.16), ev((TVG.gancho.toca + 0.5) * r, "ding", 0.18)],
+  },
+  "vg-sigue": {
+    id: "vg-sigue", nombre: "Par X · aviso rápido: síguenos en SINAPSIS y no te pierdas ningún par craneal", ideal: 4.0, fondo: "dark", entra: "corte",
+    sfx: (_d, r) => [ev(0.05, "whoosh", 0.1), ev(TVA.sigue.antes * r + 0.2, "pop", 0.12), ev(TVA.sigue.sigue * r, "ding", 0.2), ev(TVA.sigue.sigue * r + 0.3, "pop", 0.14), ev(TVA.sigue.pares * r, "tick", 0.12)],
+  },
+  "vg-loewi": {
+    id: "vg-loewi", nombre: "Par X · Otto Loewi frenó el corazón de una rana con el vago y halló el primer mensajero químico nervioso (1921)", ideal: 6.8, fondo: "dark", entra: "corte",
+    sfx: (_d, r) => [ev(0.05, "whoosh", 0.1), ev(TVG.loewi.ano * r + 0.2, "pop", 0.12), ev(TVG.loewi.loewi * r, "tick", 0.12), ev(TVG.loewi.freno * r, "zap", 0.16), ev(TVG.loewi.vago * r, "pop", 0.14), ev(TVG.loewi.hallo * r, "thud", 0.14), ev(TVG.loewi.mensajero * r, "ding", 0.18)],
+  },
+  "vg-desmayo": {
+    id: "vg-desmayo", nombre: "Par X · ver sangre o estar mucho de pie puede frenar el corazón y provocar un desmayo vasovagal", ideal: 6.8, fondo: "dark", entra: "semitono",
+    sfx: (_d, r) => [ev(0.05, "whoosh", 0.1), ev(TVG.desmayo.eso * r + 0.2, "pop", 0.12), ev(TVG.desmayo.sangre * r, "pop", 0.14), ev(TVG.desmayo.pie * r, "tick", 0.12), ev(TVG.desmayo.frenar * r, "thud", 0.16), ev(TVG.desmayo.desmayo * r, "thud", 0.2), ev(TVG.desmayo.vasovagal * r, "ding", 0.16)],
+  },
+  "vg-oido": {
+    id: "vg-oido", nombre: "Par X · una rama del vago llega al conducto del oído: tocarlo provoca tos en algunas personas", ideal: 6.8, fondo: "dark", entra: "zoom",
+    sfx: (_d, r) => [ev(0.05, "whoosh", 0.1), ev(TVG.oido.rama * r + 0.2, "pop", 0.12), ev(TVG.oido.conducto * r, "tick", 0.12), ev(TVG.oido.personas * r, "pop", 0.14), ev(TVG.oido.tos * r, "thud", 0.2)],
+  },
+  "vg-intestino": {
+    id: "vg-intestino", nombre: "Par X · habla con el intestino: se estima que la mayoría de sus fibras llevan información al cerebro", ideal: 6.8, fondo: "dark", entra: "corte",
+    sfx: (_d, r) => [ev(0.05, "whoosh", 0.1), ev(TVG.intestino.habla * r + 0.2, "pop", 0.12), ev(TVG.intestino.estima * r, "tick", 0.12), ev(TVG.intestino.mayoria * r, "pop", 0.14), ev(TVG.intestino.informacion * r, "whoosh", 0.14), ev(TVG.intestino.cerebro * r, "ding", 0.16)],
+  },
+  "vg-jirafa": {
+    id: "vg-jirafa", nombre: "Par X · su rama de la voz, el laríngeo recurrente, baja y vuelve a subir: en la jirafa mide varios metros", ideal: 6.8, fondo: "dark", entra: "semitono",
+    sfx: (_d, r) => [ev(0.05, "whoosh", 0.1), ev(TVG.jirafa.voz * r + 0.2, "pop", 0.12), ev(TVG.jirafa.recurrente * r, "tick", 0.12), ev(TVG.jirafa.baja * r, "whoosh", 0.14), ev(TVG.jirafa.jirafa * r, "pop", 0.14), ev(TVG.jirafa.metros * r, "ding", 0.18)],
+  },
+  "vg-implante": {
+    id: "vg-implante", nombre: "Par X · un implante que estimula el vago ayuda a algunos pacientes con epilepsia que no responden a los fármacos", ideal: 6.8, fondo: "dark", entra: "zoom",
+    sfx: (_d, r) => [ev(0.05, "whoosh", 0.1), ev(TVG.implante.hoy * r + 0.2, "pop", 0.12), ev(TVG.implante.implante * r, "tick", 0.12), ev(TVG.implante.estimula * r, "zap", 0.16), ev(TVG.implante.epilepsia * r, "pop", 0.14), ev(TVG.implante.farmacos * r, "ding", 0.18)],
+  },
+  "vg-prueba": {
+    id: "vg-prueba", nombre: "Par X · si te desmayas sin explicación, consulta a un médico; ¿te desmayas al ver sangre? (comentarios)", ideal: 6.8, fondo: "dark", entra: "zoom",
+    sfx: (_d, r) => [ev(0.05, "whoosh", 0.1), ev(TVG.prueba.desmayas * r + 0.2, "pop", 0.12), ev(TVG.prueba.consulta * r, "ding", 0.18), ev(TVG.prueba.sangre * r, "pop", 0.14), ev(TVG.prueba.comenta * r, "ding", 0.18)],
   },
   "astro-memoria": {
     id: "astro-memoria", nombre: "Astrocitos · en ratones, reactivarlos estimuló el recuerdo", ideal: 4.15, fondo: "dark", entra: "corte",

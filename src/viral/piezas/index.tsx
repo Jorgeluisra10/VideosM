@@ -11,6 +11,8 @@ import { VaGancho, VaSigue, VaPar, VaCoclea, VaAtomo } from "./va1";
 import { VaRuido, VaEquilibrio, VaAlcohol, VaReflejo } from "./va2";
 import { GlGancho, GlSigue, GlPar, GlArcada, GlSin } from "./gl1";
 import { GlPresion, GlNeuralgia, GlSincope, GlPrueba } from "./gl2";
+import { VgGancho, VgSigue, VgLoewi, VgDesmayo, VgOido } from "./vg1";
+import { VgIntestino, VgJirafa, VgImplante, VgPrueba } from "./vg2";
 import { TgCapsaicina, TgGancho, TgMentol, TgNobel } from "./tg1";
 import { TgComenta, TgHelado, TgNeuralgia, TgRamas } from "./tg2";
 import { TrCruce, TrGancho, TrRecorrido, TrTroclea } from "./tr1";
@@ -153,6 +155,8 @@ export const COMPONENTES_PIEZA: Record<string, React.FC<{ e: EscenaViralGuardada
   "va-ruido": VaRuido, "va-equilibrio": VaEquilibrio, "va-alcohol": VaAlcohol, "va-reflejo": VaReflejo,
   "gl-gancho": GlGancho, "gl-sigue": GlSigue, "gl-par": GlPar, "gl-arcada": GlArcada, "gl-sin": GlSin,
   "gl-presion": GlPresion, "gl-neuralgia": GlNeuralgia, "gl-sincope": GlSincope, "gl-prueba": GlPrueba,
+  "vg-gancho": VgGancho, "vg-sigue": VgSigue, "vg-loewi": VgLoewi, "vg-desmayo": VgDesmayo, "vg-oido": VgOido,
+  "vg-intestino": VgIntestino, "vg-jirafa": VgJirafa, "vg-implante": VgImplante, "vg-prueba": VgPrueba,
   "tg-gancho": TgGancho, "tg-capsaicina": TgCapsaicina, "tg-nobel": TgNobel, "tg-mentol": TgMentol,
   "tg-ramas": TgRamas, "tg-helado": TgHelado, "tg-neuralgia": TgNeuralgia, "tg-comenta": TgComenta,
   "tr-gancho": TrGancho, "tr-cruce": TrCruce, "tr-recorrido": TrRecorrido, "tr-troclea": TrTroclea,
