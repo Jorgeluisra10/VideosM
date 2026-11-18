@@ -1,0 +1,156 @@
+{
+ "titulo": "El ascensor espacial",
+ "scenes": [
+  {
+   "t": "PIEZA",
+   "voz": "Un cohete quema toneladas de combustible solo para vencer la gravedad. ¿Y si subiéramos en ascensor?",
+   "dur": 8.0,
+   "h": "¿Y SI SUBIMOS EN ASCENSOR?",
+   "w": "ASCENSOR",
+   "cap": "gancho",
+   "pieza": {
+    "id": "esp-gancho"
+   }
+  },
+  {
+   "t": "PIEZA",
+   "voz": "Todo empieza en lo diminuto: átomos de carbono en red hexagonal, enrollados en nanotubos más fuertes que el acero.",
+   "dur": 9.0,
+   "h": "EL MATERIAL",
+   "w": "NANOTUBOS",
+   "cap": "zoom out",
+   "pieza": {
+    "id": "esp-nanotubo"
+   }
+  },
+  {
+   "t": "PIEZA",
+   "voz": "El cable sería una cinta plana: ancha como una puerta, más fina que una hoja de papel y larguísima.",
+   "dur": 9.0,
+   "h": "UNA CINTA",
+   "w": "CINTA",
+   "cap": "el cable",
+   "pieza": {
+    "id": "esp-cinta"
+   }
+  },
+  {
+   "t": "PIEZA",
+   "voz": "Todo se ancla a una plataforma oceánica móvil sobre el ecuador, en aguas tranquilas, lejos de los huracanes.",
+   "dur": 9.0,
+   "h": "EL ANCLA",
+   "w": "PLATAFORMA",
+   "cap": "ecuador",
+   "pieza": {
+    "id": "esp-plataforma"
+   }
+  },
+  {
+   "t": "PIEZA",
+   "voz": "Por la cinta trepa un robot. Un láser desde tierra le envía energía, y sus paneles la convierten en movimiento.",
+   "dur": 9.0,
+   "h": "EL TREPADOR",
+   "w": "LÁSER",
+   "cap": "energía",
+   "pieza": {
+    "id": "esp-trepador"
+   }
+  },
+  {
+   "t": "PIEZA",
+   "voz": "Primero atraviesa nubes de tormenta y sube hasta la estratosfera, donde el cielo ya se vuelve oscuro.",
+   "dur": 8.0,
+   "h": "TORMENTA",
+   "w": "TORMENTA",
+   "cap": "clima",
+   "pieza": {
+    "id": "esp-clima"
+   }
+  },
+  {
+   "t": "PIEZA",
+   "voz": "Más arriba cruza los cinturones de Van Allen, zonas de radiación peligrosas para las personas y la electrónica.",
+   "dur": 8.0,
+   "h": "RADIACIÓN",
+   "w": "VAN ALLEN",
+   "cap": "radiación",
+   "pieza": {
+    "id": "esp-vanallen"
+   }
+  },
+  {
+   "t": "PIEZA",
+   "voz": "Abajo manda la gravedad; arriba, la rotación de la Tierra. A treinta y seis mil kilómetros, se equilibran.",
+   "dur": 9.0,
+   "h": "EQUILIBRIO",
+   "w": "GEO",
+   "cap": "física",
+   "pieza": {
+    "id": "esp-fisica"
+   }
+  },
+  {
+   "t": "PIEZA",
+   "voz": "Un contrapeso, como la piedra de una honda, mantiene tensa la cinta, a unos noventa y seis mil kilómetros.",
+   "dur": 9.0,
+   "h": "EL CONTRAPESO",
+   "w": "HONDA",
+   "cap": "contrapeso",
+   "pieza": {
+    "id": "esp-contrapeso"
+   }
+  },
+  {
+   "t": "PIEZA",
+   "voz": "El viaje es lento: a doscientos kilómetros por hora, llegar a la estación toma una semana.",
+   "dur": 8.0,
+   "h": "UNA SEMANA",
+   "w": "SEMANA",
+   "cap": "viaje",
+   "pieza": {
+    "id": "esp-viaje"
+   }
+  },
+  {
+   "t": "PIEZA",
+   "voz": "Con acero no se podría: el cable se rompería por su propio peso mucho antes de llegar arriba.",
+   "dur": 8.0,
+   "h": "ACERO NO",
+   "w": "ACERO",
+   "cap": "acero",
+   "pieza": {
+    "id": "esp-acero"
+   }
+  },
+  {
+   "t": "PIEZA",
+   "voz": "El obstáculo real: hoy hacemos nanotubos de centímetros, y un defecto los debilita. Faltan miles de kilómetros sin fallos.",
+   "dur": 9.0,
+   "h": "EL OBSTÁCULO",
+   "w": "DEFECTO",
+   "cap": "laboratorio",
+   "pieza": {
+    "id": "esp-lab"
+   }
+  },
+  {
+   "t": "PIEZA",
+   "voz": "Hasta esta obra verifica sus materiales antes de empezar. En IMNOBA igual: bases reales, sin promesas en el aire.",
+   "dur": 9.0,
+   "h": "BASES REALES",
+   "w": "VERIFICADO",
+   "cap": "cierre",
+   "pieza": {
+    "id": "esp-cierre"
+   }
+  },
+  {
+   "t": "CTA",
+   "voz": "Guárdalo y síguenos en IMNOBA: propiedades y vehículos.",
+   "dur": 5.0,
+   "h": "SÍGUENOS EN IMNOBA",
+   "w": "IMNOBA",
+   "ic": "casa"
+  }
+ ]
+}

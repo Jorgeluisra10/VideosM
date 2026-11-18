@@ -779,6 +779,39 @@ export const TDR = {
   cierre: { sube: 0.2, subeDur: 3.0, aparece: 3.4, mira: 4.0, martillo: 4.6, guino: 5.2, golpe: 5.8, luz: 5.9 },
 } as const;
 
+/** Datos de «El ascensor espacial» (IMNOBA · NASA NIAC / Edwards y Obayashi). Cifras de fuentes de divulgación y de los informes; precauciones en ejemplos/animacion-viral/guion-tecnico-ascensor-espacial.md. */
+export const ASC = {
+  /** órbita geoestacionaria: ≈ 35.786 km sobre el ecuador; ahí gravedad y fuerza centrífuga se igualan */
+  geoKm: 35786,
+  /** Obayashi (2012): estación a ≈ 36.000 km, extremo del cable a ≈ 96.000 km (algunas fuentes lo dan como altura del cable, otras como la distancia del contrapeso), objetivo 2050 */
+  obayashiExtremoKm: 96000, obayashiAnio: 2050,
+  /** Edwards (NIAC, 2000–2003): cinta de hasta ≈ 100.000 km, ≈ 1 m de ancho y más fina que el papel; trepador de ≈ 7 t con ≈ 13 t de carga; láser en tierra; plataforma oceánica móvil */
+  edwardsCintaKm: 100000,
+  /** subida a ≈ 200 km/h: ≈ una semana hasta la estación (Obayashi: ≈ 7,5 días) */
+  velocidadKmh: 200, diasViaje: 7.5,
+  /** nanotubos de laboratorio: del orden de decenas de centímetros (récords ≈ 0,5–0,7 m); Obayashi decía en 2012 que solo se lograban ≈ 3 cm */
+  nanotuboLabCm: 50,
+  /** pioneros: Tsiolkovsky (1895), Artsutanov (1960) */
+  tsiolkovskyAnio: 1895, artsutanovAnio: 1960,
+} as const;
+
+/** Tiempos de «El ascensor espacial» (s a ritmo normal), compartidos entre el dibujo y el sonido. */
+export const TSP = {
+  gancho: { lanza: 0.3, apaga: 3.2, cae: 3.6, onoma: 3.9, ding: 4.4, trepa: 4.4, mira: 6.4 },
+  nanotubo: { hex: 0.2, enrolla: 2.6, haz: 4.6, cinta: 6.4 },
+  cinta: { cinta: 0.2, persona: 1.6, papel: 3.2, pelo: 5.0, ondea: 6.4 },
+  plataforma: { mar: 0.2, plat: 0.6, grua: 2.6, cinta: 4.2, globo: 5.6, gaviota: 6.6 },
+  trepador: { sube: 0.2, laser: 1.2, panel: 2.8, cara: 4.6, saludo: 6.4 },
+  clima: { nubes: 0.2, rayo1: 1.6, lluvia: 2.0, rayo2: 3.2, estrat: 4.4, oscuro: 5.6, gafas: 6.4 },
+  vanallen: { tierra: 0.2, anillos: 1.2, parti: 2.4, cruza: 3.4, gafas: 4.6, aurora: 5.6 },
+  fisica: { ejes: 0.2, grav: 1.0, cent: 3.2, geo: 5.6, honda: 7.0 },
+  contrapeso: { honda: 0.2, gira: 1.0, asteroide: 3.2, tenso: 5.0, km: 6.6 },
+  viaje: { sube: 0.2, cartas: 1.8, calendario: 3.0, musica: 3.6, pregunta: 4.8, estacion: 6.2 },
+  acero: { cable: 0.2, tensa: 1.6, rompe: 3.8, cinta: 5.2, ding: 6.0 },
+  lab: { pinza: 0.2, regla: 1.6, defecto: 3.4, grieta: 4.0, largo: 5.8, km: 7.4 },
+  cierre: { apice: 0.2, baja: 2.2, obra: 4.6, check1: 5.4, check2: 6.0, check3: 6.6, sello: 7.4 },
+} as const;
+
 export const PIEZAS: Record<string, DefPieza> = {
   "metro-plano": {
     id: "metro-plano", nombre: "8 millones en un solo plano", ideal: 7.6, fondo: "dark",
@@ -1588,6 +1621,59 @@ export const PIEZAS: Record<string, DefPieza> = {
   "der-cierre": {
     id: "der-cierre", nombre: "Derinkuyu · ¿y si derribas otra pared? (cierre con humor)", ideal: 7.55, fondo: "dark",
     sfx: (_d, r) => [ev(TDR.cierre.sube * r, "whoosh", 0.24), ev(TDR.cierre.aparece * r, "pop", 0.14), ev(TDR.cierre.martillo * r, "tick", 0.16), ev(TDR.cierre.guino * r, "pop", 0.14), ev(TDR.cierre.golpe * r, "golpe", 0.34), ev(TDR.cierre.luz * r, "ding", 0.2)],
+  },
+  /* ───────────── «El ascensor espacial» (IMNOBA · plano secuencia vertical) ───────────── */
+  "esp-gancho": {
+    id: "esp-gancho", nombre: "Ascensor espacial · un cohete gasta su combustible y cae mientras un trepador sube tranquilo (gancho)", ideal: 7.55, fondo: "dark",
+    sfx: (_d, r) => [ev(0.05, "golpe", 0.14), ev(TSP.gancho.lanza * r, "estatica", 0.22), ev(TSP.gancho.apaga * r, "pop", 0.16), ev(TSP.gancho.onoma * r, "pop", 0.18), ev(TSP.gancho.ding * r, "ding", 0.2), ev(TSP.gancho.trepa * r, "whoosh", 0.14)],
+  },
+  "esp-nanotubo": {
+    id: "esp-nanotubo", nombre: "Ascensor espacial · zoom out: de la red hexagonal de carbono al nanotubo y a la cinta", ideal: 8.55, fondo: "dark", entra: "zoom",
+    sfx: (_d, r) => [ev(TSP.nanotubo.hex * r, "radar", 0.12), ev(TSP.nanotubo.enrolla * r, "whoosh", 0.16), ev(TSP.nanotubo.haz * r, "whoosh", 0.18), ev(TSP.nanotubo.cinta * r, "ding", 0.18), ev(0.60 * r, "tick", 0.08), ev(1.10 * r, "tick", 0.08), ev(1.60 * r, "tick", 0.08), ev(2.10 * r, "tick", 0.08), ev(2.60 * r, "tick", 0.08), ev(3.10 * r, "tick", 0.08), ev(3.60 * r, "tick", 0.08), ev(4.10 * r, "tick", 0.08)],
+  },
+  "esp-cinta": {
+    id: "esp-cinta", nombre: "Ascensor espacial · una cinta ancha como una puerta y más fina que una hoja de papel", ideal: 8.55, fondo: "dark", entra: "corte",
+    sfx: (_d, r) => [ev(TSP.cinta.cinta * r, "whoosh", 0.18), ev(TSP.cinta.persona * r, "pop", 0.14), ev(TSP.cinta.papel * r, "tick", 0.14), ev(TSP.cinta.pelo * r, "pop", 0.14), ev(TSP.cinta.ondea * r, "zap", 0.1)],
+  },
+  "esp-plataforma": {
+    id: "esp-plataforma", nombre: "Ascensor espacial · plataforma oceánica móvil en el ecuador con aguas tranquilas", ideal: 8.55, fondo: "dark", entra: "corte",
+    sfx: (_d, r) => [ev(TSP.plataforma.mar * r, "gota", 0.14), ev(TSP.plataforma.plat * r, "thud", 0.2), ev(TSP.plataforma.grua * r, "tick", 0.14), ev(TSP.plataforma.cinta * r, "whoosh", 0.18), ev(TSP.plataforma.globo * r, "pop", 0.14), ev(TSP.plataforma.gaviota * r, "pop", 0.12)],
+  },
+  "esp-trepador": {
+    id: "esp-trepador", nombre: "Ascensor espacial · el trepador robótico recibe energía de un láser desde tierra", ideal: 8.55, fondo: "dark",
+    sfx: (_d, r) => [ev(TSP.trepador.sube * r, "whoosh", 0.16), ev(TSP.trepador.laser * r, "zap", 0.24), ev(TSP.trepador.panel * r, "ding", 0.14), ev(TSP.trepador.cara * r, "pop", 0.14), ev(TSP.trepador.saludo * r, "pop", 0.12), ev(1.00 * r, "clic", 0.08), ev(1.90 * r, "clic", 0.08), ev(2.80 * r, "clic", 0.08), ev(3.70 * r, "clic", 0.08), ev(4.60 * r, "clic", 0.08), ev(5.50 * r, "clic", 0.08), ev(6.40 * r, "clic", 0.08), ev(7.30 * r, "clic", 0.08)],
+  },
+  "esp-clima": {
+    id: "esp-clima", nombre: "Ascensor espacial · tormenta, estratosfera y cielo que oscurece", ideal: 7.55, fondo: "dark", entra: "corte",
+    sfx: (_d, r) => [ev(TSP.clima.nubes * r, "whoosh", 0.14), ev(TSP.clima.rayo1 * r, "golpe", 0.26), ev(TSP.clima.lluvia * r, "estatica", 0.14), ev(TSP.clima.rayo2 * r, "golpe", 0.28), ev(TSP.clima.estrat * r, "whoosh", 0.16), ev(TSP.clima.oscuro * r, "radar", 0.12), ev(TSP.clima.gafas * r, "pop", 0.12)],
+  },
+  "esp-vanallen": {
+    id: "esp-vanallen", nombre: "Ascensor espacial · cruza los cinturones de radiación de Van Allen", ideal: 7.55, fondo: "dark", entra: "zoom",
+    sfx: (_d, r) => [ev(TSP.vanallen.tierra * r, "whoosh", 0.16), ev(TSP.vanallen.anillos * r, "radar", 0.16), ev(TSP.vanallen.parti * r, "estatica", 0.16), ev(TSP.vanallen.cruza * r, "zap", 0.18), ev(TSP.vanallen.gafas * r, "pop", 0.12), ev(TSP.vanallen.aurora * r, "ding", 0.14), ev(3.40 * r, "tick", 0.07), ev(3.58 * r, "tick", 0.07), ev(3.76 * r, "tick", 0.07), ev(3.94 * r, "tick", 0.07), ev(4.12 * r, "tick", 0.07), ev(4.30 * r, "tick", 0.07), ev(4.48 * r, "tick", 0.07), ev(4.66 * r, "tick", 0.07), ev(4.84 * r, "tick", 0.07), ev(5.02 * r, "tick", 0.07)],
+  },
+  "esp-fisica": {
+    id: "esp-fisica", nombre: "Ascensor espacial · gravedad contra rotación: se igualan a 35.786 km", ideal: 8.55, fondo: "dark",
+    sfx: (_d, r) => [ev(TSP.fisica.ejes * r, "radar", 0.12), ev(TSP.fisica.grav * r, "thud", 0.18), ev(TSP.fisica.cent * r, "whoosh", 0.18), ev(TSP.fisica.geo * r, "ding", 0.22), ev(TSP.fisica.honda * r, "zap", 0.12)],
+  },
+  "esp-contrapeso": {
+    id: "esp-contrapeso", nombre: "Ascensor espacial · el contrapeso, como la piedra de una honda, mantiene tensa la cinta", ideal: 8.55, fondo: "dark", entra: "corte",
+    sfx: (_d, r) => [ev(TSP.contrapeso.honda * r, "whoosh", 0.16), ev(TSP.contrapeso.gira * r, "tick", 0.1), ev(TSP.contrapeso.asteroide * r, "thud", 0.2), ev(TSP.contrapeso.tenso * r, "zap", 0.16), ev(TSP.contrapeso.km * r, "ding", 0.16)],
+  },
+  "esp-viaje": {
+    id: "esp-viaje", nombre: "Ascensor espacial · un viaje lento de una semana con pasajeros aburridos y música de ascensor", ideal: 7.55, fondo: "dark", entra: "corte",
+    sfx: (_d, r) => [ev(TSP.viaje.sube * r, "whoosh", 0.14), ev(TSP.viaje.cartas * r, "pop", 0.12), ev(TSP.viaje.calendario * r, "tick", 0.14), ev(TSP.viaje.musica * r, "ding", 0.12), ev(TSP.viaje.pregunta * r, "pop", 0.14), ev(TSP.viaje.estacion * r, "thud", 0.2), ev((TSP.viaje.estacion + 0.3) * r, "ding", 0.2)],
+  },
+  "esp-acero": {
+    id: "esp-acero", nombre: "Ascensor espacial · un cable de acero se rompe por su propio peso y la cinta aguanta", ideal: 7.55, fondo: "dark", entra: "corte",
+    sfx: (_d, r) => [ev(TSP.acero.cable * r, "whoosh", 0.14), ev(TSP.acero.tensa * r, "estatica", 0.16), ev(TSP.acero.rompe * r, "golpe", 0.34), ev((TSP.acero.rompe + 0.15) * r, "zap", 0.2), ev(TSP.acero.cinta * r, "pop", 0.14), ev(TSP.acero.ding * r, "ding", 0.16)],
+  },
+  "esp-lab": {
+    id: "esp-lab", nombre: "Ascensor espacial · el obstáculo real: nanotubos de centímetros y un defecto que lo debilita", ideal: 8.55, fondo: "dark", entra: "corte",
+    sfx: (_d, r) => [ev(TSP.lab.pinza * r, "clic", 0.2), ev(TSP.lab.regla * r, "tick", 0.14), ev(TSP.lab.defecto * r, "pop", 0.16), ev(TSP.lab.grieta * r, "golpe", 0.26), ev(TSP.lab.largo * r, "whoosh", 0.2), ev(TSP.lab.km * r, "ding", 0.18)],
+  },
+  "esp-cierre": {
+    id: "esp-cierre", nombre: "Ascensor espacial · del contrapeso a una obra con bases verificadas (cierre)", ideal: 8.55, fondo: "dark", entra: "zoom",
+    sfx: (_d, r) => [ev(TSP.cierre.apice * r, "whoosh", 0.16), ev(TSP.cierre.baja * r, "whoosh", 0.22), ev(TSP.cierre.obra * r, "thud", 0.16), ev(TSP.cierre.check1 * r, "ding", 0.16), ev(TSP.cierre.check2 * r, "ding", 0.16), ev(TSP.cierre.check3 * r, "ding", 0.16), ev(TSP.cierre.sello * r, "golpe", 0.26)],
   },
 };
 

@@ -12,6 +12,8 @@ import { RomCeniza, RomGancho, RomOxido, RomReaccion, RomReceta, RomZoom } from 
 import { RomCaso, RomCo2, RomCristal, RomCurita, RomGrumos, RomPanteon, RomSesgo } from "./rom2";
 import { DerAire, DerGancho, DerNivelesA, DerNivelesB, DerNivelesC, DerRoca } from "./der1";
 import { DerCierre, DerGente, DerHoy, DerInvasores, DerPuerta, DerTunel } from "./der2";
+import { EspCinta, EspClima, EspGancho, EspNanotubo, EspPlataforma, EspTrepador } from "./esp1";
+import { EspAcero, EspCierre, EspContrapeso, EspFisica, EspLab, EspVanAllen, EspViaje } from "./esp2";
 import { JapDemole, JapGancho, JapGrafico } from "./jap1";
 import { JapLeccion, JapPorque, JapVacias } from "./jap2";
 import { FloConteo, FloGancho, FloTorre } from "./flo1";
@@ -138,6 +140,7 @@ export const COMPONENTES_PIEZA: Record<string, React.FC<{ e: EscenaViralGuardada
   "chi-gancho": ChiGancho, "chi-pantano": ChiPantano, "chi-colera": ChiColera, "chi-plan": ChiPlan, "chi-idea": ChiIdea, "chi-gato": ChiGato, "chi-ejercito": ChiEjercito, "chi-te": ChiTe, "chi-calle": ChiCalle, "chi-nivel": ChiNivel, "chi-fuego": ChiFuego,
   "rom-gancho": RomGancho, "rom-oxido": RomOxido, "rom-ceniza": RomCeniza, "rom-receta": RomReceta, "rom-zoom": RomZoom, "rom-reaccion": RomReaccion, "rom-cristal": RomCristal, "rom-curita": RomCurita, "rom-grumos": RomGrumos, "rom-panteon": RomPanteon, "rom-sesgo": RomSesgo, "rom-co2": RomCo2, "rom-caso": RomCaso,
   "der-gancho": DerGancho, "der-roca": DerRoca, "der-niveles-a": DerNivelesA, "der-niveles-b": DerNivelesB, "der-niveles-c": DerNivelesC, "der-aire": DerAire, "der-puerta": DerPuerta, "der-gente": DerGente, "der-tunel": DerTunel, "der-invasores": DerInvasores, "der-hoy": DerHoy, "der-cierre": DerCierre,
+  "esp-gancho": EspGancho, "esp-nanotubo": EspNanotubo, "esp-cinta": EspCinta, "esp-plataforma": EspPlataforma, "esp-trepador": EspTrepador, "esp-clima": EspClima, "esp-vanallen": EspVanAllen, "esp-fisica": EspFisica, "esp-contrapeso": EspContrapeso, "esp-viaje": EspViaje, "esp-acero": EspAcero, "esp-lab": EspLab, "esp-cierre": EspCierre,
   "cab-gancho": CabGancho, "cab-caja": CabCaja, "cab-largo": CabLargo, "cab-flexible": CabFlexible, "cab-nudos": CabNudos, "cab-receta": CabReceta,
   "rui-gancho": RuiGancho, "rui-dia": RuiDia, "rui-noche": RuiNoche, "rui-ritmos": RuiRitmos, "rui-friccion": RuiFriccion, "rui-remate": RuiRemate, "rui-tally": RuiTally, "rui-micro": RuiMicro,
   "pte-gancho": PteGancho, "pte-parabola": PteParabola, "pte-duelo": PteDuelo, "pte-roebling": PteRoebling, "pte-bloque": PteBloque, "pte-cubo": PteCubo, "pte-zoom": PteZoom,
